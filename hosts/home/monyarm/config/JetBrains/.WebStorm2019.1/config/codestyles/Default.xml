@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<code_scheme name="Default" version="173">
+  <JSCodeStyleSettings version="0">
+    <option name="REFORMAT_C_STYLE_COMMENTS" value="true"/>
+  </JSCodeStyleSettings>
+  <codeStyleSettings language="JavaScript">
+    <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true"/>
+  </codeStyleSettings>
+</code_scheme>

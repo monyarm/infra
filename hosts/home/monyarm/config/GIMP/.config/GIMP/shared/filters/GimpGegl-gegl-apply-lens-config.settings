@@ -1,0 +1,10 @@
+# settings
+
+(GimpGegl-gegl-apply-lens-config "2022-07-24 19:34:51"
+    (time 1658680491)
+    (gimp-mode color-erase)
+    (refraction-index 1.7)
+    (keep-surroundings yes)
+    (background-color (color-rgba 1 1 1 1)))
+
+# end of settings

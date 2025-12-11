@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<repositoriesConfiguration xmlns="http://www.battlescribe.net/schema/repositoriesSchema" battleScribeVersion="2.03">
+  <repositorySources>
+    <repositorySource name="BSData" description="Community created catpkg packages for roster editors (BattleScribe)" repositorySourceUrl="https://github.com/BSData/gallery/releases/latest/download/bsdata.catpkg-gallery.json" websiteUrl="https://battlescribedata.appspot.com" feedUrl="http://battlescribedata.appspot.com/repos/feeds/all.atom" twitterUrl="https://twitter.com/BSData" facebookUrl="https://facebook.com/BattleScribeData">
+      <repositories>
+        <repository name="wh40k-killteam" description="Warhammer 40,000: Kill Team" version="v3.8.2" lastUpdated="2023-02-05T19:45:31Z" lastUpdateDescription="A couple of Battle Honour fixes" indexUrl="https://github.com/BSData/wh40k-killteam/releases/latest/download/wh40k-killteam.latest.bsi" repositoryUrl="https://github.com/BSData/wh40k-killteam/releases/latest/download/wh40k-killteam.catpkg.json" feedUrl="https://github.com/BSData/wh40k-killteam/releases.atom" bugTrackerUrl="https://github.com/BSData/wh40k-killteam/issues" reportBugUrl="http://battlescribedata.appspot.com/#/repo/wh40k-killteam" archived="false"/>
+        <repository name="wh40k" description="Warhammer 40,000" version="v9.7.6" lastUpdated="2023-02-14T15:41:50Z" lastUpdateDescription="Bloodthirsty zealots, and also some World Eaters" indexUrl="https://github.com/BSData/wh40k/releases/latest/download/wh40k.latest.bsi" repositoryUrl="https://github.com/BSData/wh40k/releases/latest/download/wh40k.catpkg.json" feedUrl="https://github.com/BSData/wh40k/releases.atom" bugTrackerUrl="https://github.com/BSData/wh40k/issues" reportBugUrl="http://battlescribedata.appspot.com/#/repo/wh40k" archived="false"/>
+      </repositories>
+    </repositorySource>
+    <repositorySource name="BattleScribe Data" description="Community created data repositories for BattleScribe" repositorySourceUrl="https://battlescribedata.appspot.com/repos" websiteUrl="https://battlescribedata.appspot.com" feedUrl="https://battlescribedata.appspot.com/repos/feeds/all.atom" twitterUrl="https://twitter.com/BSData" facebookUrl="https://facebook.com/BattleScribeData"/>
+  </repositorySources>
+</repositoriesConfiguration>

@@ -1,0 +1,17 @@
+# GIMP gimp-crop-tool options
+
+(aspect-denominator 9)
+(aspect-numerator 16)
+(desired-fixed-size-height 6)
+(desired-fixed-size-width 4)
+(overridden-fixed-aspect yes)
+(overridden-fixed-size yes)
+(foreground
+    (color "R'G'B'A u8" 4 "\261\20\57\377" 0))
+(background
+    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
+(pattern "Warning!")
+(fill-type foreground)
+(delete-pixels yes)
+
+# end of gimp-crop-tool options

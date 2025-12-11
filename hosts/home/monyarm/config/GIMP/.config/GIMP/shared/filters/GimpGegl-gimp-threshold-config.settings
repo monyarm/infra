@@ -1,0 +1,9 @@
+# settings
+
+(GimpGegl-gimp-threshold-config "2022-07-20 23:05:49"
+    (time 1658347549)
+    (channel value)
+    (low 0)
+    (high 0.99215686274509807))
+
+# end of settings

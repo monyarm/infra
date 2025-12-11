@@ -1,0 +1,14 @@
+# settings
+
+(width 5)
+(height 1)
+(offset 0)
+(pixel-format "rgb-16bpc")
+(data-type "unsigned")
+(endianness "little-endian")
+(planar-configuration "contiguous")
+(palette-offset 0)
+(palette-type "rgb")
+(palette-file NULL)
+
+# end of settings

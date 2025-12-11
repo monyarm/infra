@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<application>
+  <component name="FileTypeManager" version="17">
+    <extensionMap>
+      <mapping ext="phtml" type="PHP"/>
+      <mapping ext="php" type="PHP"/>
+    </extensionMap>
+  </component>
+</application>

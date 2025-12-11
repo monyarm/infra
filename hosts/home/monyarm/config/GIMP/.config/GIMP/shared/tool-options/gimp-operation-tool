@@ -1,0 +1,10 @@
+# GIMP gimp-operation-tool options
+
+(foreground
+    (color "R'G'B'A u8" 4 "\261\20\57\377" 0))
+(background
+    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
+(blending-options-expanded yes)
+(merge-filter yes)
+
+# end of gimp-operation-tool options

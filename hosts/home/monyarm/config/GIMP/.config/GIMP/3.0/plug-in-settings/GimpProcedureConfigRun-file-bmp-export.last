@@ -1,0 +1,7 @@
+# settings
+
+(use-rle no)
+(write-color-space yes)
+(rgb-format "rgb-888")
+
+# end of settings

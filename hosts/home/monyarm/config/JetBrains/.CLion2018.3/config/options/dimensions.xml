@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<application>
+  <component name="DimensionService">
+    <location key="SettingsEditor.0.0.1920.1080" x="705" y="75"/>
+    <location key="FileChooserDialogImpl.0.0.1920.1080" x="1014" y="186"/>
+    <location key="WELCOME_SCREEN.0.0.1920.1080" x="1236" y="452"/>
+    <location key="com.intellij.ide.util.TipDialog.0.0.1920.1080" x="620" y="367"/>
+    <location key="#com.intellij.fileTypes.FileTypeChooser.0.0.1920.1080" x="663" y="344"/>
+    <size key="SettingsEditor.0.0.1920.1080" width="1042" height="705"/>
+    <size key="FileChooserDialogImpl.0.0.1920.1080" width="424" height="482"/>
+    <size key="ImportCMakeProjectWizard.topPanel.0.0.1920.1080" width="640" height="476"/>
+    <size key="ImportCMakeProjectWizard.bottomPanel.0.0.1920.1080" width="640" height="204"/>
+    <size key="#com.intellij.fileTypes.FileTypeChooser.0.0.1920.1080" width="584" height="389"/>
+  </component>
+</application>

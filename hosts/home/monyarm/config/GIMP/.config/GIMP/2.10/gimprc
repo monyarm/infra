@@ -1,0 +1,56 @@
+# GIMP gimprc
+# 
+# This is your personal gimprc file.  Any variable defined in this file takes
+# precedence over the value defined in the system-wide gimprc:
+# /etc/gimp/2.0/gimprc
+# Most values can be set within GIMP by changing some options in the
+# Preferences dialog.
+
+(color-management
+    (mode display)
+    (display-profile-from-gdk no)
+    (display-rendering-intent relative-colorimetric)
+    (display-use-black-point-compensation yes)
+    (display-optimize yes)
+    (simulation-rendering-intent perceptual)
+    (simulation-use-black-point-compensation no)
+    (simulation-optimize yes)
+    (simulation-gamut-check no)
+    (out-of-gamut-color (color-rgb 1 0 1))
+    (show-rgb-u8 yes)
+    (show-hsv yes)
+    (display-module "CdisplayLcms"))
+(import-raw-plug-in "${gimp_plug_in_dir}/plug-ins/gimp-org-file-raw-placeholder/gimp-org-file-raw-placeholder")
+(monitor-xresolution 102)
+(monitor-yresolution 102)
+(color-profile-policy keep)
+(image-convert-indexed-max-colors 2)
+(image-convert-indexed-dither-type fs-lowbleed)
+(image-convert-indexed-dither-alpha yes)
+(image-resize-fill-type background)
+(image-resize-layer-set all)
+(layer-new-name "watermark")
+(selection-grow-radius 5.9055119999999999)
+(selection-shrink-radius 4.7244089999999996)
+(fill-options
+    (style solid)
+    (antialias yes)
+    (feather no)
+    (feather-radius 10))
+(stroke-options
+    (style solid)
+    (antialias yes)
+    (feather no)
+    (feather-radius 10)
+    (method line)
+    (width 6)
+    (unit pixels)
+    (cap-style round)
+    (join-style bevel)
+    (miter-limit 10)
+    (dash-offset 0)
+    (dash-info 0)
+    (emulate-brush-dynamics no))
+
+
+# end of gimprc

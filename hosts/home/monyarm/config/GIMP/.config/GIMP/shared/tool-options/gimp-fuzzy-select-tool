@@ -1,0 +1,10 @@
+# GIMP gimp-fuzzy-select-tool options
+
+(feather-radius 9.5)
+(sample-merged yes)
+(diagonal-neighbors yes)
+(threshold 19.5)
+(select-criterion lch-lightness)
+(draw-mask yes)
+
+# end of gimp-fuzzy-select-tool options

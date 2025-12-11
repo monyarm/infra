@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.battlescribe.net/schema/configSchema" battleScribeVersion="2.03">
+  <settings>
+    <setting name="root-directory-path">
+      <value>/home/monyarm/BattleScribe</value>
+    </setting>
+    <setting name="latest-version-available">
+      <value>2.03.21.166</value>
+    </setting>
+    <setting name="last-version-update-check">
+      <value>2023-02-17</value>
+    </setting>
+    <setting name="roster-editor-height">
+      <value>720.0</value>
+    </setting>
+    <setting name="roster-editor-width">
+      <value>1280.0</value>
+    </setting>
+    <setting name="roster-editor-xpos">
+      <value>2003.0</value>
+    </setting>
+    <setting name="roster-editor-ypos">
+      <value>456.0</value>
+    </setting>
+    <setting name="roster-editor-entries-selections-split">
+      <value>769</value>
+    </setting>
+    <setting name="roster-editor-selections-customize-split">
+      <value>1573</value>
+    </setting>
+    <setting name="roster-editor-selections-messages-split">
+      <value>770</value>
+    </setting>
+    <setting name="last-sponsor-message-check">
+      <value>2023-02-17</value>
+    </setting>
+    <setting name="last-country-code-check">
+      <value>2023-02-17</value>
+    </setting>
+    <setting name="country-code">
+      <value>gb</value>
+    </setting>
+    <setting name="import-load-directory">
+      <value>/home/monyarm/Downloads</value>
+    </setting>
+    <setting name="last-version">
+      <value>2.03.21</value>
+    </setting>
+    <setting name="last-data-update-check">
+      <value>2023-02-17</value>
+    </setting>
+    <setting name="new-roster-selected-catalogue">
+      <value>228f-66c4-e3e0-2b01</value>
+    </setting>
+    <setting name="new-roster-selected-force-entry">
+      <value>262d-a61b-8669-ed10</value>
+    </setting>
+    <setting name="new-roster-selected-gamesystem">
+      <value>3b7e-7dab-f79f-2e74</value>
+    </setting>
+    <setting name="view-roster-show-advanced-options">
+      <value>true</value>
+    </setting>
+    <setting name="view-roster-target-render-option">
+      <value>document</value>
+    </setting>
+    <setting name="view-roster-header-footer-render-option">
+      <value>title-header</value>
+    </setting>
+    <setting name="view-roster-verbosity-render-option">
+      <value>full</value>
+    </setting>
+    <setting name="view-roster-force-layout-render-option">
+      <value>merge-forces</value>
+    </setting>
+    <setting name="view-roster-indentation-render-option">
+      <value>indent-2</value>
+    </setting>
+    <setting name="view-roster-cost-render-option">
+      <value>all-costs</value>
+    </setting>
+    <setting name="view-roster-category-render-option">
+      <value>no-categories</value>
+    </setting>
+    <setting name="view-roster-profile-render-option">
+      <value>profile-summary</value>
+    </setting>
+    <setting name="view-roster-rule-render-option">
+      <value>inline-summary-rules</value>
+    </setting>
+    <setting name="view-roster-custom-name-render-option">
+      <value>custom-names-notes</value>
+    </setting>
+    <setting name="view-roster-show-references">
+      <value>true</value>
+    </setting>
+    <setting name="view-roster-show-statistics">
+      <value>false</value>
+    </setting>
+    <setting name="data-editor-height">
+      <value>832.0</value>
+    </setting>
+    <setting name="data-editor-width">
+      <value>960.0</value>
+    </setting>
+    <setting name="data-editor-xpos">
+      <value>480.0</value>
+    </setting>
+    <setting name="data-editor-ypos">
+      <value>129.0</value>
+    </setting>
+    <setting name="data-editor-entries-customize-split">
+      <value>0.39979123173277664</value>
+    </setting>
+    <setting name="roster-editor-catalogue-roster-split">
+      <value>0.284037558685446</value>
+    </setting>
+    <setting name="roster-editor-roster-customize-split">
+      <value>0.7183098591549296</value>
+    </setting>
+    <setting name="include-archived-repositories">
+      <value>false</value>
+    </setting>
+    <setting name="roster-editor-save-directory">
+      <value>/home/monyarm/.dotfiles/Home/Battlescribe/BattleScribe/rosters</value>
+    </setting>
+  </settings>
+</configuration>

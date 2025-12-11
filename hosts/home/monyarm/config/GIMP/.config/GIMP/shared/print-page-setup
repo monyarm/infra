@@ -1,0 +1,10 @@
+[print-page-setup]
+Name=Cardboard Divider
+DisplayName=Cardboard Divider
+Width=105
+Height=290
+MarginTop=0
+MarginBottom=0
+MarginLeft=0
+MarginRight=0
+Orientation=portrait

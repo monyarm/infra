@@ -1,0 +1,34 @@
+Switch from devilspie to devilspie2
+Migrate all dotfiles from .dotfiles (zsh left to do)
+Create a jQueryFetcher, which takes the url and hash and:
+
+- query: the query to run
+- regex (optional): regex to match against the href/src of the results of the query
+- group (optional): which regex group use as the url (defaults to the whole match)
+  or
+- js: instead of query, it can take arbitrary js
+  It loads the page, injects jQuery, and then either uses query or js to get a list of urls to download. It downloads them to $out. If it's just 1 url, then $out is a file, if it's more then $out is a folder.
+
+add to zsh: export $(dbus-launch)
+
+Hardcoded Password:
+
+- home/config/WebDav.nix: webdavAuth = "user:strongpassword";
+
+Empty Password/API Key Fields (action required):
+
+- home/config/MPV/script-opts/dvd_browser.nix: wsl_password = "";
+- home/config/ComicTagger.nix: cv_api_key = "";
+- home/config/Minecraft.nix: accessToken = "";
+
+Secrets Managed by `sops` (good practice):
+
+- home/config/MPV/script-opts/lrc.nix: musixmatch_token
+- home/config/Nix.nix: github_access_token
+- home/config/Minecraft.nix: mojangClientToken
+
+JetBrains License Keys (need to migrate to secrets):
+
+- hosts/home/monyarm/config/JetBrains/.CLion2018.3/config/clion.key
+- hosts/home/monyarm/config/JetBrains/.PhpStorm2019.1/config/phpstorm.key
+- hosts/home/monyarm/config/JetBrains/.WebStorm2019.1/config/webstorm.key

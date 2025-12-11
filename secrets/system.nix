@@ -1,0 +1,3 @@
+_: {
+  sops.useSystemdActivation = false;
+}

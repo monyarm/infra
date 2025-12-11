@@ -1,0 +1,18 @@
+# GIMP gimp-smudge-tool options
+
+(foreground
+    (color "R'G'B'A u8" 4 "\261\20\57\377" 0))
+(background
+    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
+(opacity 0.43799999999999994)
+(brush "2. Hardness 075")
+(dynamics "Pressure Size")
+(pattern "Warning!")
+(gradient "Standard")
+(palette "Standard")
+(brush-size 4)
+(brush-hardness 0.75)
+(use-jitter yes)
+(use-smoothing yes)
+
+# end of gimp-smudge-tool options

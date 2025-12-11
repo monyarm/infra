@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<application>
+  <component name="NodeJsLocalInterpreters">
+    <local-interpreter path="/usr/bin/node"/>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ColorChooser.RecentColors" value="170-253-255-255"/>
+    <property name="MemberChooser.copyJavadoc" value="false"/>
+    <property name="MemberChooser.showClasses" value="true"/>
+    <property name="PluginConfigurable.selectionTab" value="1"/>
+    <property name="SettingsSearchHistory" value="Tab,Indent&#10;injection&#10;inject language&#10;actions&#10;refactor"/>
+    <property name="WebStorm.enableDefaultTooltipFixes" value="true"/>
+    <property name="WebStorm.enableSmartQuotes" value="true"/>
+    <property name="WebStorm.initialConfigurationShown" value="true"/>
+    <property name="ask.about.ctrl.y.shortcut" value="true"/>
+    <property name="evlsprt3.191" value="16"/>
+    <property name="file.chooser.recent.files" value="/srv/http"/>
+    <property name="file.gist.reindex.count" value="5590"/>
+    <property name="fileTypeChangedCounter" value="2"/>
+    <property name="ignoreUltimateEdition" value="true"/>
+    <property name="js.rename.search.for.text.occurrences" value="false"/>
+    <property name="js.rename.search.in.comments" value="true"/>
+    <property name="mt.showStatisticsAgreement" value="true"/>
+    <property name="selected.color.option.type" value="LESS_INJECTED_CODE"/>
+    <property name="settings.code.style.selected.tab.JavaScript" value="Tabs and Indents"/>
+    <property name="tasks.pass.word.conversion.enforced" value="true"/>
+    <property name="ts.lib.d.ts.version" value="3.4.1"/>
+  </component>
+</application>

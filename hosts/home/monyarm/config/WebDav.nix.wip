@@ -1,0 +1,60 @@
+{
+  pkgs,
+  lib,
+  dirs,
+  ...
+}:
+
+let
+  webdavServer = "${pkgs.go-webdav}/bin/go-webdav";
+
+  webdavPort = 8089;
+  webdavAuth = "user:strongpassword";
+
+  pgrepPattern = "${lib.strings.baseName webdavServer}.*-port ${toString webdavPort}";
+
+  webdavStartScript = pkgs.writeShellScript "start-webdav-server" ''
+    if pgrep -f "${pgrepPattern}" > /dev/null; then
+      exit 0
+    fi
+
+    mkdir -p "${dirs.webdav}"
+
+    ${webdavServer} \
+      -dir "${dirs.webdav}" \
+      -port "${toString webdavPort}" \
+      -auth "${webdavAuth}" \
+      &
+      
+    disown
+  '';
+
+in
+{
+  environment.systemPackages = [ pkgs.go-webdav ];
+
+  programs.niri.settings = {
+    spawn-at-startup = [
+      {
+        argv = [ "${webdavStartScript}" ];
+      }
+    ];
+
+    environment = {
+      WEBDAV_PORT = toString webdavPort;
+      WEBDAV_SHARE_DIR = dirs.webdav;
+    };
+  };
+
+  ## --- Home Manager Activation Script ---
+
+  home.activation = {
+    WebdavServer = lib.lowPrio ''
+      if pgrep -f "${pgrepPattern}" > /dev/null; then
+        pkill -f "${pgrepPattern}"
+        sleep 0.5
+      fi
+      ${webdavStartScript}
+    '';
+  };
+}

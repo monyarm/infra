@@ -1,0 +1,7 @@
+# GIMP gimp-scale-tool options
+
+(background
+    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
+(interpolation none)
+
+# end of gimp-scale-tool options

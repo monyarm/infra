@@ -1,0 +1,9 @@
+# settings
+
+(source-file no)
+(characters "foo")
+(font-size 10)
+(separate no)
+(aux-file NULL)
+
+# end of settings

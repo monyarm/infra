@@ -1,0 +1,18 @@
+# settings
+
+(GimpGegl-gegl-diffraction-patterns-config "2022-07-24 19:42:28"
+    (time 1658680948)
+    (red-frequency 8.3140000000000001)
+    (green-frequency 3.8370000000000002)
+    (blue-frequency 4.1280000000000001)
+    (red-contours 2.8490000000000002)
+    (green-contours 0)
+    (blue-contours 0)
+    (red-sedges 0.59299999999999997)
+    (green-sedges 0.67700000000000005)
+    (blue-sedges 0.63600000000000001)
+    (brightness 0.078)
+    (scattering 19.190000000000001)
+    (polarization -0.97099999999999997))
+
+# end of settings

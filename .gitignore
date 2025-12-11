@@ -1,0 +1,23 @@
+# keep-sorted start
+node_modules
+.ruff_cache
+nohup.out
+result
+package-lock.json
+__pycache__
+*.pyc
+*.pyo
+.goutputstream-*
+action-history_BACKUP_*
+action-history_BASE_*
+action-history_LOCAL_*
+action-history_REMOTE_*
+tool-options/.goutputstream-*
+*.lock
+!flake.lock
+config/port
+fus-sessions/
+plugins/availables.xml
+plugins/availables.xml.etag
+config/*.key
+# keep-sorted end

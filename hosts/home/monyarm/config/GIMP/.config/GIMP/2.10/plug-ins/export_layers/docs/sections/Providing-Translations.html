@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="#0099cc" name="theme-color">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+  
+    <link href="../assets/css/style.css" rel="stylesheet">
+  
+  <link href="../favicon.ico" rel="icon">
+  
+  
+</head>
+
+  
+  <body>
+    <section class="navbar">
+  <div class="navbar-container" role="navigation">
+    <div>
+      <ul>
+        
+        <li><a class="active" href="index.html">Documentation</a></li>
+        <li><a href="https://github.com/kamilburda/gimp-export-layers">View on GitHub</a></li>
+      </ul>
+    </div>
+    <div class="right">
+      <ul class="right">
+        
+        
+      </ul>
+    </div>
+  </div>
+</section>
+
+    
+    <section class="main-content">
+      <h1>Providing Translations</h1>
+      
+      <p>If you want to provide translations for Export Layers, it is recommended to use a translation tool such as <a href="https://poedit.net">Poedit</a> for easier usage.</p>
+
+<h2 id="how-do-i-translate-the-plug-in">How do I translate the plug-in?</h2>
+
+<p>First, make sure you use the <code class="language-plaintext highlighter-rouge">gimp-export-layers.pot</code> file for the latest plug-in version.
+Either use the .pot file in the <code class="language-plaintext highlighter-rouge">export_layers/locale</code> folder (inside the folder with the installed plug-in), or, if in doubt, <a href="https://github.com/kamilburda/gimp-export-layers/blob/main/export_layers/locale/gimp-export-layers.pot">download the latest version</a>.</p>
+
+<h3 id="poedit">Poedit</h3>
+
+<p>The following steps apply if you want to use Poedit.</p>
+
+<h4 id="creating-a-new-translation">Creating a New Translation</h4>
+
+<p>To create a new translation for your language:</p>
+
+<ol>
+  <li>Open Poedit, select <code class="language-plaintext highlighter-rouge">File → New from POT/PO file...</code> and select the <code class="language-plaintext highlighter-rouge">gimp-export-layers.pot</code> file in the <code class="language-plaintext highlighter-rouge">export_layers/locale</code> folder.</li>
+  <li>Set the language of the translation.</li>
+  <li>Translate the strings (by filling in the <code class="language-plaintext highlighter-rouge">Translation</code> text field for each string).</li>
+  <li>If desired, go to <code class="language-plaintext highlighter-rouge">Catalog → Properties...</code> and edit the translation file properties.
+If you don’t do this, warning messages may pop up when saving, but they should be harmless.</li>
+  <li>When done, save your .po file.</li>
+</ol>
+
+<h4 id="updating-an-existing-translation">Updating an Existing Translation</h4>
+
+<p>If you spotted some translation errors in your .po file or the plug-in was updated since the last translation was made, you may need to update the translation:</p>
+
+<ol>
+  <li>Open your .po file, select <code class="language-plaintext highlighter-rouge">Catalog → Update from POT file...</code> and select the <code class="language-plaintext highlighter-rouge">gimp-export-layers.pot</code> file for the latest plug-in version.</li>
+  <li>Update the translated strings.
+Make sure to check for:
+    <ul>
+      <li>new strings,</li>
+      <li>existing strings that were updated in the plug-in.
+Such strings may no longer be up-to-date and have a so-called “fuzzy” translation (and have a different color than other strings).
+Fuzzy strings that are not corrected will show up in the plug-in untranslated.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="terminal">Terminal</h3>
+
+<p>If you don’t want to use Poedit, you may use the terminal on Linux (or a Unix-like environment for Windows, such as Cygwin).</p>
+
+<h4 id="creating-a-new-translation-1">Creating a New Translation</h4>
+
+<p>To create a new translation for your language:</p>
+
+<ol>
+  <li>
+    <p>Make sure that the <code class="language-plaintext highlighter-rouge">gettext</code> package is installed in your system.
+If not, install the <code class="language-plaintext highlighter-rouge">gettext</code> package.
+The command varies across Linux distributions, e.g. in Ubuntu you would type:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install gettext
+</code></pre></div>    </div>
+  </li>
+  <li>Find the .pot file in the <code class="language-plaintext highlighter-rouge">export_layers/locale</code> folder.</li>
+  <li>
+    <p>Open up terminal and run</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd [folder where you extracted the package]/export_layers/locale
+./generate_po.sh [path to .pot file] [language]
+</code></pre></div>    </div>
+
+    <p>A .po file is generated in the same folder as the current working directory.</p>
+
+    <p><code class="language-plaintext highlighter-rouge">[language]</code> represents your language in the format <code class="language-plaintext highlighter-rouge">ll_CC</code>.
+<code class="language-plaintext highlighter-rouge">ll</code> is the language code and <code class="language-plaintext highlighter-rouge">CC</code> is the country code.
+For example, the French language is represented as <code class="language-plaintext highlighter-rouge">fr_FR</code>.
+If in doubt, you can consult the list of available language and country codes on the following pages:</p>
+    <ul>
+      <li><a href="https://www.gnu.org/software/gettext/manual/html_node/Usual-Language-Codes.html">Usual Language Codes</a></li>
+      <li><a href="https://www.gnu.org/software/gettext/manual/html_node/Rare-Language-Codes.html">Rare Language Codes</a></li>
+      <li><a href="https://www.gnu.org/software/gettext/manual/html_node/Country-Codes.html">Country Codes</a></li>
+    </ul>
+  </li>
+  <li>Open the .po file in a text editor and translate each string in the <code class="language-plaintext highlighter-rouge">msgid</code> field to a string in the corresponding <code class="language-plaintext highlighter-rouge">msgstr</code> field.</li>
+</ol>
+
+<h4 id="updating-an-existing-translation-1">Updating an Existing Translation</h4>
+
+<p>If you spotted some translation errors in the .po file or the plug-in is updated since the last translation was made, you may need to update the translation:</p>
+
+<ol>
+  <li>
+    <p>Run the following commands:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd [folder where you extracted the package]/export_layers/locale
+./update_po.sh [path to .po file] [path to .pot file]
+</code></pre></div>    </div>
+
+    <p>The old .po file is preserved and has the <code class="language-plaintext highlighter-rouge">.po.old</code> file extension.</p>
+  </li>
+  <li>
+    <p>Open the .po file in a text editor and update the translated strings.
+Make sure to check for:</p>
+    <ul>
+      <li>new strings,</li>
+      <li>existing strings that were updated in the plug-in.
+Such strings may no longer be up-to-date and have a so-called “fuzzy” translation.
+Fuzzy strings are marked with a <code class="language-plaintext highlighter-rouge">, fuzzy</code> comment above them.
+Once you update the translated string, make sure to remove the <code class="language-plaintext highlighter-rouge">, fuzzy</code> comment, otherwise the string will show up untranslated in the plug-in.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="ok-i-have-finished-the-translation-what-next">OK, I have finished the translation. What next?</h2>
+
+<p>You may want to test your translation first to make sure it works correctly, as described in the next section.</p>
+
+<p>You may also want share your translation with the rest of the world.
+You can do so by submitting your translated .po file as follows:</p>
+
+<ol>
+  <li>Open a git pull request for the <a href="https://github.com/kamilburda/gimp-export-layers">plug-in repository</a>.</li>
+  <li>
+    <p>Create a commit titled <code class="language-plaintext highlighter-rouge">Add [full language name] translation ([language])</code> (e.g. <code class="language-plaintext highlighter-rouge">Add French translation (fr_FR)</code>) that adds the translated .po file to the following path:</p>
+
+    <p>[repository root]/export_layers/locale/[language]/LC_MESSAGES/gimp-export-layers.po</p>
+  </li>
+</ol>
+
+<p>If you’re updating your translation, name your commit message <code class="language-plaintext highlighter-rouge">Update [full language name] translation ([language])</code> (e.g. <code class="language-plaintext highlighter-rouge">Update French translation (fr_FR)</code>).</p>
+
+<h2 id="how-can-i-test-my-translation">How can I test my translation?</h2>
+
+<p>First, make sure Export Layers is installed in the folder for GIMP plug-ins.
+You then need to generate an .mo file from the translated .po file.</p>
+
+<h3 id="generating-mo-file">Generating .mo file</h3>
+
+<h4 id="poedit-1">Poedit</h4>
+
+<p>Poedit automatically generates the .mo file when you save your .po file.
+Move and rename the .mo file to</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[GIMP plug-ins folder]/export_layers/locale/[language]/LC_MESSAGES/gimp-export-layers.mo
+</code></pre></div></div>
+
+<p>where <code class="language-plaintext highlighter-rouge">[language]</code> is the language in which you translated the plug-in.
+<code class="language-plaintext highlighter-rouge">[language]</code> is a part of the .po file, e.g. for a file named <code class="language-plaintext highlighter-rouge">fr_FR.po</code>, the language is <code class="language-plaintext highlighter-rouge">fr_FR</code>.</p>
+
+<h4 id="terminal-1">Terminal</h4>
+
+<p>Generate the .mo file as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd [GIMP plug-ins folder]/export_layers/locale
+./generate_mo.sh [path to .po file] [language]
+</code></pre></div></div>
+
+<h3 id="running-gimp">Running GIMP</h3>
+
+<p>With the .mo file properly renamed and in the proper folder, you can now test your translation in GIMP.</p>
+
+<h4 id="linux">Linux</h4>
+
+<p>Run GIMP from the terminal as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LANG="[language].UTF-8" gimp
+</code></pre></div></div>
+
+<h4 id="windows">Windows</h4>
+
+<p>Run GIMP from the Windows command line as follows:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set lang=[language].UTF-8
+gimp-[version].exe
+</code></pre></div></div>
+
+<p>where <code class="language-plaintext highlighter-rouge">[version]</code> is the GIMP version, e.g. <code class="language-plaintext highlighter-rouge">gimp-2.8.exe</code> for GIMP 2.8.</p>
+
+<p>If Windows does not recognize the GIMP executable, specify the full path.
+Assuming GIMP was installed in the default installation path, the full path is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"C:\Program Files\GIMP 2\bin\gimp-[version].exe"
+</code></pre></div></div>
+
+    </section>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="#0099cc" name="theme-color">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+  
+    <link href="../assets/css/style.css" rel="stylesheet">
+  
+  <link href="../favicon.ico" rel="icon">
+  
+  
+</head>
+
+  
+  <body>
+    <section class="navbar">
+  <div class="navbar-container" role="navigation">
+    <div>
+      <ul>
+        
+        <li><a class="active" href="index.html">Documentation</a></li>
+        <li><a href="https://github.com/kamilburda/gimp-export-layers">View on GitHub</a></li>
+      </ul>
+    </div>
+    <div class="right">
+      <ul class="right">
+        
+          <li>
+            <a href="Installation.html">« Installation</a>
+          </li>
+        
+        
+          <li>
+            <a href="Customizing-Export.html">Customizing Export »</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</section>
+
+    
+    <section class="main-content">
+      <h1>Usage</h1>
+      
+      <ul id="markdown-toc">
+  <li><a href="#basic-usage" id="markdown-toc-basic-usage">Basic Usage</a></li>
+  <li><a href="#repeating-last-export" id="markdown-toc-repeating-last-export">Repeating Last Export</a></li>
+  <li><a href="#changing-file-extension" id="markdown-toc-changing-file-extension">Changing File Extension</a></li>
+  <li><a href="#preview" id="markdown-toc-preview">Preview</a></li>
+  <li><a href="#managing-settings" id="markdown-toc-managing-settings">Managing Settings</a></li>
+  <li><a href="#more-customization" id="markdown-toc-more-customization">More Customization</a></li>
+  <li><a href="#running-export-without-dialog-non-interactively" id="markdown-toc-running-export-without-dialog-non-interactively">Running Export Without Dialog (Non-Interactively)</a></li>
+</ul>
+
+<h2 id="basic-usage">Basic Usage</h2>
+
+<p>Open your image in GIMP and select <code class="language-plaintext highlighter-rouge">File → Export Layers...</code>.
+A dialog that appears allows you to choose the output folder and file extension.</p>
+
+<p><img alt="Dialog for basic usage of Export Layers" src="../images/screenshot_dialog_basic_usage.png"></p>
+
+<p>To export layers, press the <code class="language-plaintext highlighter-rouge">Export</code> button.
+A dialog corresponding to the file format appears, allowing you to adjust export settings.
+Some file formats do not display dialogs, while some display the dialog for each layer (this cannot be prevented because such a file format only allows an interactive export).</p>
+
+<h2 id="repeating-last-export">Repeating Last Export</h2>
+
+<p>If you made changes to your image and you want to export again with the same settings, you can do so simply by running <code class="language-plaintext highlighter-rouge">File → Export Layers (repeat)</code>.</p>
+
+<h2 id="changing-file-extension">Changing File Extension</h2>
+
+<p>Type or choose your desired file extension in the <code class="language-plaintext highlighter-rouge">File extension</code> text entry.
+The dropdown list displays available file formats alongside their associated file extensions.
+If a file format contains multiple file extensions, the first is selected by default, but you may also choose from the other extensions (by clicking or pressing Tab).</p>
+
+<p>For now, the dropdown only contains a fixed list of file formats provided by GIMP and some recognized third-party plug-ins.
+However, you may still enter a file extension not in the list in case you use a file format plug-in not recognized by Export Layers.</p>
+
+<h2 id="preview">Preview</h2>
+
+<p>To have a better grasp of what layers are actually exported and how, the preview displays the layer names in a folder structure.
+If you select a layer, the layer contents will be displayed at the bottom of the preview.</p>
+
+<p>You can adjust the width of the entire preview by dragging the separator between the preview and the folder chooser.
+You can also adjust the height of the previewed image by dragging the separator above the image.</p>
+
+<p>If the previewed image takes too long to render, the preview is no longer updated automatically.
+A button next to the arrow button above the image is displayed that allows you to manually update the image.
+To switch between automatic and manual update, click on the arrow button and select <code class="language-plaintext highlighter-rouge">Update Preview Automatically</code>.</p>
+
+<h2 id="managing-settings">Managing Settings</h2>
+
+<p>After a successful export, your settings (output folder, file extension, dialog position and size, etc.) are preserved while GIMP is running.
+If you close GIMP, the settings will be reset.</p>
+
+<p>To save settings permanently, press the <code class="language-plaintext highlighter-rouge">Settings</code> button and choose <code class="language-plaintext highlighter-rouge">Save Settings</code>.
+Alternatively, you can save settings by pressing Ctrl + S anywhere in the dialog.</p>
+
+<p>To reset settings to their default values, press the <code class="language-plaintext highlighter-rouge">Settings</code> button and choose <code class="language-plaintext highlighter-rouge">Reset Settings</code>.</p>
+
+<p>You may also save the settings to a custom file by choosing <code class="language-plaintext highlighter-rouge">Settings → Export Settings...</code>.
+This allows swapping between different plug-in configurations and sharing them.</p>
+
+<p>To load settings from a custom file, choose <code class="language-plaintext highlighter-rouge">Settings → Import Settings...</code> and select the file.
+When loading from a file, settings in the default locations are also overridden (so that the loaded settings persist across sessions).</p>
+
+<h2 id="more-customization">More Customization</h2>
+
+<p>If you find yourself in the need of customizing layer names, applying additional procedures before exporting or excluding specific layers from the export, see <a href="Customizing-Export.html">Customizing Export</a>.</p>
+
+<h2 id="running-export-without-dialog-non-interactively">Running Export Without Dialog (Non-Interactively)</h2>
+
+<p>It is also possible to run Export Layers without the plug-in, allowing you to automate the export.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">plug-in-export-layers</code> procedure can run the export with default or last used settings.
+In the latter case, the settings are loaded if they were saved before (via <code class="language-plaintext highlighter-rouge">Settings → Save Settings</code>).</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">plug-in-export-layers-repeat</code> procedure always uses the last used settings.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">plug-in-export-layers-with-config</code> procedure allows you to run Export Layers using the specified settings file obtained via <code class="language-plaintext highlighter-rouge">Settings → Export Settings...</code> in the plug-in dialog.</p>
+
+    </section>
+  </body>
+</html>

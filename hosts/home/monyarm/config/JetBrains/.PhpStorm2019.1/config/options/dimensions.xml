@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<application>
+  <component name="DimensionService">
+    <location key="FileChooserDialogImpl.1920.0.1920.1080" x="2780" y="71"/>
+    <location key="WELCOME_SCREEN.1920.0.1920.1080" x="3046" y="467"/>
+    <location key="com.intellij.ide.util.TipDialog.1920.0.1920.1080" x="2518" y="123"/>
+    <location key="#WordPress.1920.0.1920.1080" x="2676" y="458"/>
+    <location key="SettingsEditor.1920.0.1920.1080" x="2348" y="138"/>
+    <location key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate.1920.0.1920.1080" x="2626" y="428"/>
+    <location key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog.1920.0.1920.1080" x="2611" y="279"/>
+    <location key="find.popup.1920.0.1920.1080" x="2540" y="217"/>
+    <location key="search.everywhere.popup.1920.0.1920.1080" x="2543" y="249"/>
+    <location key="com.intellij.ide.util.TipDialog.0.0.1920.1080" x="1918" y="357"/>
+    <size key="FileChooserDialogImpl.1920.0.1920.1080" width="428" height="474"/>
+    <size key="#WordPress.1920.0.1920.1080" width="398" height="183"/>
+    <size key="SettingsEditor.1920.0.1920.1080" width="1046" height="700"/>
+    <size key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate.1920.0.1920.1080" width="498" height="192"/>
+    <size key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog.1920.0.1920.1080" width="528" height="491"/>
+    <size key="find.popup.1920.0.1920.1080" width="680" height="660"/>
+    <size key="search.everywhere.popup.1920.0.1920.1080" width="672" height="678"/>
+  </component>
+</application>

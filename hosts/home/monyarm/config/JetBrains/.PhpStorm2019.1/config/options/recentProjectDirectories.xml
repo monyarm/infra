@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<application>
+  <component name="RecentDirectoryProjectsManager">
+    <option name="recentPaths">
+      <list>
+        <option value="/srv/http/wp_funbook"/>
+      </list>
+    </option>
+    <option name="openPaths">
+      <list>
+        <option value="/srv/http/wp_funbook"/>
+      </list>
+    </option>
+    <option name="lastPath" value="/srv/http/wp_funbook"/>
+    <option name="pid" value=""/>
+    <option name="additionalInfo">
+      <map>
+        <entry key="/srv/http/wp_funbook">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="PS-191.7141.52"/>
+              <option name="productionCode" value="PS"/>
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin"/>
+              <option name="projectOpenTimestamp" value="1565687230781"/>
+              <option name="buildTimestamp" value="1557314812918"/>
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</application>

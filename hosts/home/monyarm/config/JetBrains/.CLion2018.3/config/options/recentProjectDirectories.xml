@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<application>
+  <component name="RecentDirectoryProjectsManager">
+    <option name="recentPaths">
+      <list>
+        <option value="$USER_HOME$/Documents/basevm"/>
+      </list>
+    </option>
+    <option name="pid" value=""/>
+    <option name="additionalInfo">
+      <map>
+        <entry key="$USER_HOME$/Documents/basevm">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="CL-183.4284.156"/>
+              <option name="productionCode" value="CL"/>
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin"/>
+              <option name="projectOpenTimestamp" value="1543428111761"/>
+              <option name="buildTimestamp" value="1542986570009"/>
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/Documents/scummvm">
+          <value>
+            <RecentProjectMetaInfo>
+              <option name="build" value="CL-183.4284.156"/>
+              <option name="productionCode" value="CL"/>
+              <option name="binFolder" value="$APPLICATION_HOME_DIR$/bin"/>
+              <option name="projectOpenTimestamp" value="1543346150062"/>
+              <option name="buildTimestamp" value="1542986552177"/>
+            </RecentProjectMetaInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</application>

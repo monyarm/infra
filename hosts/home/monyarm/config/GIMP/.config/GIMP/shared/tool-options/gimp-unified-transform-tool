@@ -1,0 +1,9 @@
+# GIMP gimp-unified-transform-tool options
+
+(background
+    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
+(interpolation linear)
+(grid-type center-lines)
+(constrain-scale no)
+
+# end of gimp-unified-transform-tool options

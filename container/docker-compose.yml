@@ -1,0 +1,23 @@
+services:
+  matter:
+    container_name: matter
+    image: "ghcr.io/matter-js/python-matter-server:stable"
+    restart: unless-stopped
+    network_mode: host
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - /mnt/Media/MatterData:/data
+      - /run/dbus:/run/dbus:ro
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /mnt/Media/HAConfig:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    environment:
+      TZ: Europe/Sofia

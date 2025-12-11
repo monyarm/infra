@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<application>
+  <component name="DimensionService">
+    <location key="FileChooserDialogImpl.1920.0.1920.1080" x="2458" y="133"/>
+    <location key="WELCOME_SCREEN.1920.0.1920.1080" x="2677" y="393"/>
+    <location key="SettingsEditor.1920.0.1920.1080" x="2223" y="68"/>
+    <location key="search.everywhere.popup.1920.0.1920.1080" x="2543" y="249"/>
+    <location key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser.1920.0.1920.1080" x="2538" y="147"/>
+    <location key="#com.intellij.ide.util.MemberChooser.1920.0.1920.1080" x="2682" y="212"/>
+    <location key="#com.intellij.fileTypes.FileTypeChooser.1920.0.1920.1080" x="2531" y="304"/>
+    <size key="FileChooserDialogImpl.1920.0.1920.1080" width="428" height="474"/>
+    <size key="SettingsEditor.1920.0.1920.1080" width="1040" height="771"/>
+    <size key="search.everywhere.popup.1920.0.1920.1080" width="672" height="678"/>
+    <size key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser.1920.0.1920.1080" width="666" height="683"/>
+    <size key="#com.intellij.ide.util.MemberChooser.1920.0.1920.1080" width="378" height="552"/>
+    <size key="#com.intellij.fileTypes.FileTypeChooser.1920.0.1920.1080" width="684" height="405"/>
+  </component>
+</application>

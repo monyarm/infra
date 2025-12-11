@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="#0099cc" name="theme-color">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+  
+    <link href="../assets/css/style.css" rel="stylesheet">
+  
+  <link href="../favicon.ico" rel="icon">
+  
+  
+</head>
+
+  
+  <body>
+    <section class="navbar">
+  <div class="navbar-container" role="navigation">
+    <div>
+      <ul>
+        
+        <li><a class="active" href="index.html">Documentation</a></li>
+        <li><a href="https://github.com/kamilburda/gimp-export-layers">View on GitHub</a></li>
+      </ul>
+    </div>
+    <div class="right">
+      <ul class="right">
+        
+        
+          <li>
+            <a href="Usage.html">Usage »</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</section>
+
+    
+    <section class="main-content">
+      <h1>Installation</h1>
+      
+      <ul id="markdown-toc">
+  <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
+  <li><a href="#windows" id="markdown-toc-windows">Windows</a></li>
+  <li><a href="#linux" id="markdown-toc-linux">Linux</a>    <ul>
+      <li><a href="#if-gimp-is-installed-via-flatpak-or-appimage" id="markdown-toc-if-gimp-is-installed-via-flatpak-or-appimage">If GIMP is installed via Flatpak or AppImage</a></li>
+      <li><a href="#if-gimp-is-installed-via-package-manager" id="markdown-toc-if-gimp-is-installed-via-package-manager">If GIMP is installed via package manager</a></li>
+    </ul>
+  </li>
+  <li><a href="#macos" id="markdown-toc-macos">macOS</a></li>
+  <li><a href="#upgrading-to-33-and-above" id="markdown-toc-upgrading-to-33-and-above">Upgrading to 3.3 and above</a></li>
+</ul>
+
+<h2 id="requirements">Requirements</h2>
+
+<ul>
+  <li>GIMP 2.8 or 2.10</li>
+  <li>Python 2.7 or later from the 2.7.x series</li>
+</ul>
+
+<h2 id="windows">Windows</h2>
+
+<ol>
+  <li>Make sure you have GIMP installed with support for Python scripting.</li>
+  <li>Locate the folder containing GIMP plug-ins - open GIMP and go to <code class="language-plaintext highlighter-rouge">Edit → Preferences → Folders → Plug-Ins</code>.</li>
+  <li>
+    <p>Extract the following files and folders to one of the folders identified in step 2:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export_layers.py
+export_layers
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="linux">Linux</h2>
+
+<h3 id="if-gimp-is-installed-via-flatpak-or-appimage">If GIMP is installed via Flatpak or AppImage</h3>
+
+<p>The easier way to install any Python-based GIMP plug-in is to use a GIMP installation bundled in Flatpak (which can be downloaded from the <a href="https://www.gimp.org/downloads/index.html">official GIMP page</a>) or AppImage.</p>
+
+<ol>
+  <li>Locate the folder containing GIMP plug-ins - open GIMP and go to <code class="language-plaintext highlighter-rouge">Edit → Preferences → Folders → Plug-Ins</code>.</li>
+  <li>
+    <p>Extract the following files and folders to one of the folders identified in the previous step:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export_layers.py
+export_layers
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="if-gimp-is-installed-via-package-manager">If GIMP is installed via package manager</h3>
+
+<p>This is the less recommended way of installing plug-ins as of recently as certain distributions may have missing packages that are required for successful running of Python GIMP plug-ins (due to these distributions dropping packages dependent on Python 2).</p>
+
+<ol>
+  <li>Install Python 2.7.
+Usually by default, Linux distributions offer Python 3, which does not work with GIMP 2.8 or 2.10.</li>
+  <li>Install packages enabling the use of Python for GIMP plug-ins.
+  This varies across distributions.
+  For instance, on Arch Linux, you must install the <code class="language-plaintext highlighter-rouge">python2-gimp</code> package.</li>
+  <li>Locate the folder containing GIMP plug-ins - open GIMP and go to <code class="language-plaintext highlighter-rouge">Edit → Preferences → Folders → Plug-Ins</code>.</li>
+  <li>
+    <p>Extract the following files and folders to one of the folders identified in the previous step:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export_layers.py
+export_layers
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>To check if GIMP recognizes your Python 2.7 installation, open GIMP and run <code class="language-plaintext highlighter-rouge">Filters → Python-Fu → Console</code>.
+The console must display <code class="language-plaintext highlighter-rouge">Python 2.7</code> or later from the 2.7.x series.
+If this is not the case, open <code class="language-plaintext highlighter-rouge">/usr/lib/gimp/2.0/interpreters/pygimp.interp</code> and change its contents to the following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python=[path to Python 2.7 executable]
+/usr/bin/python=[path to Python 2.7 executable]
+:Python:E::py::python:
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">[path to Python 2.7 executable]</code> is usually <code class="language-plaintext highlighter-rouge">/usr/bin/python</code> or <code class="language-plaintext highlighter-rouge">/usr/bin/python2.7</code>.</p>
+
+<h2 id="macos">macOS</h2>
+
+<ol>
+  <li>Make sure you have Python 2.7 installed.</li>
+  <li>Locate the folder containing GIMP plug-ins - open GIMP and go to <code class="language-plaintext highlighter-rouge">Edit → Preferences → Folders → Plug-Ins</code>.</li>
+  <li>
+    <p>Extract the following files and folders to one of the folders identified in the previous step:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export_layers.py
+export_layers
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="upgrading-to-33-and-above">Upgrading to 3.3 and above</h2>
+
+<p>Due to significant changes in version 3.3, make sure you first perform complete reinstall when upgrading from an earlier version:</p>
+
+<ol>
+  <li>Still using the old version, run Export Layers, select <code class="language-plaintext highlighter-rouge">Settings → Show More Settings</code>, check <code class="language-plaintext highlighter-rouge">Remove procedures and constraints</code> and reset settings by pressing the <code class="language-plaintext highlighter-rouge">Reset Settings</code> button.</li>
+  <li>Close Export Layers.</li>
+  <li>Close GIMP.</li>
+  <li>Remove the <code class="language-plaintext highlighter-rouge">export_layers.py</code> file and the <code class="language-plaintext highlighter-rouge">export_layers</code> folder from the installation folder.
+If you used 3.0-RC1, remove the <code class="language-plaintext highlighter-rouge">pygimplib</code> folder as well.</li>
+  <li>In the folder above <code class="language-plaintext highlighter-rouge">plug-ins</code>, open <code class="language-plaintext highlighter-rouge">parasiterc</code> in a text editor and remove the entire line beginning with <code class="language-plaintext highlighter-rouge">(parasite "plug_in_export_layers"</code>.</li>
+  <li>Run GIMP without Export Layers installed (so that GIMP “forgets” about the plug-in).</li>
+  <li>Install the new version.</li>
+</ol>
+
+<p>You can still upgrade to the newest version if you did not perform steps 5 and 6.
+A warning dialog will ask you to reset the settings.
+However, calling <code class="language-plaintext highlighter-rouge">pdb.plug_in_export_layers</code> from the command line will probably result in an execution error due to the mismatch of arguments.</p>
+
+    </section>
+  </body>
+</html>

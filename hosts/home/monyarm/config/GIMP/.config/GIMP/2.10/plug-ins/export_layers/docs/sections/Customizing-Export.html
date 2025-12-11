@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="#0099cc" name="theme-color">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+  
+    <link href="../assets/css/style.css" rel="stylesheet">
+  
+  <link href="../favicon.ico" rel="icon">
+  
+  
+</head>
+
+  
+  <body>
+    <section class="navbar">
+  <div class="navbar-container" role="navigation">
+    <div>
+      <ul>
+        
+        <li><a class="active" href="index.html">Documentation</a></li>
+        <li><a href="https://github.com/kamilburda/gimp-export-layers">View on GitHub</a></li>
+      </ul>
+    </div>
+    <div class="right">
+      <ul class="right">
+        
+          <li>
+            <a href="Usage.html">« Usage</a>
+          </li>
+        
+        
+          <li>
+            <a href="Batch-Editing.html">Batch Editing »</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</section>
+
+    
+    <section class="main-content">
+      <h1>Customizing Export</h1>
+      
+      <ul id="markdown-toc">
+  <li><a href="#getting-started-with-customization" id="markdown-toc-getting-started-with-customization">Getting Started with Customization</a></li>
+  <li><a href="#examples" id="markdown-toc-examples">Examples</a></li>
+  <li><a href="#customizing-layer-names" id="markdown-toc-customizing-layer-names">Customizing Layer Names</a>    <ul>
+      <li><a href="#available-fields" id="markdown-toc-available-fields">Available fields</a></li>
+      <li><a href="#inserting-reserved-characters-in-arguments" id="markdown-toc-inserting-reserved-characters-in-arguments">Inserting reserved characters in arguments</a></li>
+    </ul>
+  </li>
+  <li><a href="#procedures" id="markdown-toc-procedures">Procedures</a>    <ul>
+      <li><a href="#built-in-procedures" id="markdown-toc-built-in-procedures">Built-in Procedures</a></li>
+      <li><a href="#adding-custom-procedures-" id="markdown-toc-adding-custom-procedures-">Adding Custom Procedures <a name="Adding-Custom-Procedures"></a></a></li>
+      <li><a href="#editing-procedures" id="markdown-toc-editing-procedures">Editing procedures</a></li>
+    </ul>
+  </li>
+  <li><a href="#constraints" id="markdown-toc-constraints">Constraints</a>    <ul>
+      <li><a href="#built-in-constraints" id="markdown-toc-built-in-constraints">Built-in Constraints</a></li>
+    </ul>
+  </li>
+  <li><a href="#tagging-layers" id="markdown-toc-tagging-layers">Tagging Layers</a></li>
+  <li><a href="#more-options" id="markdown-toc-more-options">More Options</a></li>
+</ul>
+
+<h2 id="getting-started-with-customization">Getting Started with Customization</h2>
+
+<p>Beyond the basic features, Export Layers allows you to:</p>
+<ul>
+  <li>customize the layer name,</li>
+  <li>apply additional <em>procedures</em> before the export (insert background, scale down, …),</li>
+  <li>selecting which layers to process by applying <em>constraints</em> (only visible layers, …),</li>
+  <li>customize export to save multi-layer images (e.g. multi-page PDFs).</li>
+</ul>
+
+<p>To enable customization, press the <code class="language-plaintext highlighter-rouge">Settings</code> button and select <code class="language-plaintext highlighter-rouge">Show More Settings</code>.</p>
+
+<p><img alt="Dialog of Export Layers with additional customization" src="../images/screenshot_dialog_customizing_export.png"></p>
+
+<p>You may adjust the height of the bottom pane by dragging the separator above the procedures and constraints.</p>
+
+<p>As the amount of customization may be overwhelming at first, you may want to take a look at a few <a href="#examples">examples</a> below to help you get accustomed to the plug-in’s features.</p>
+
+<h2 id="examples">Examples</h2>
+
+<p><strong>I want to export all layers using the image size, not the layer size.</strong></p>
+
+<p>Uncheck or remove the “Use layer size” procedure.</p>
+
+<p><strong>I want to export only visible layers.</strong></p>
+
+<p>Check the “Visible” constraint (or add one if not already).</p>
+
+<p><strong>I want to export only visible layers, including those that have invisible parent layer groups.</strong></p>
+
+<ol>
+  <li>Check the “Visible” constraint (or add one if not already).</li>
+  <li>Edit the “Visible” constraint (hover over the constraint and click on the pen and paper icon). In the dialog, click on <code class="language-plaintext highlighter-rouge">More options</code> and then uncheck <code class="language-plaintext highlighter-rouge">Also apply to parent folders</code>.</li>
+</ol>
+
+<p><strong>I don’t want to preserve folder hierarchy when exporting layers.</strong></p>
+
+<p>Add the “Ignore folder structure” procedure.</p>
+
+<p><strong>How do I rename the layers to form a sequence of numbers, e.g. “image001”, “image002”, …?</strong></p>
+
+<p>Click on the text entry next to <code class="language-plaintext highlighter-rouge">Save as:</code> and choose <code class="language-plaintext highlighter-rouge">image001</code>, or type <code class="language-plaintext highlighter-rouge">image[001]</code> in the entry.</p>
+
+<p><strong>My layers contain a ‘.’. All characters after the ‘.’ are replaced with the file extension. How do I prevent this?</strong></p>
+
+<p>In the text entry next to <code class="language-plaintext highlighter-rouge">Save as:</code>, type <code class="language-plaintext highlighter-rouge">[layer name, %e]</code>.
+This ensures that the resulting image name will be e.g. <code class="language-plaintext highlighter-rouge">some.layer.png</code> instead of <code class="language-plaintext highlighter-rouge">some.png</code> (the default behavior).</p>
+
+<p><strong>How do I export only layer groups at the top level?</strong></p>
+
+<ol>
+  <li>Uncheck the “Layers” constraint.</li>
+  <li>Add the “Layer groups” constraint.</li>
+  <li>Add the “Top-level” constraint.</li>
+</ol>
+
+<p><strong>I want to adjust brightness in my layers before export. Can this be done?</strong></p>
+
+<p>Yes, you may insert any GIMP filter as a procedure:</p>
+<ol>
+  <li>Select <code class="language-plaintext highlighter-rouge">Add Procedure...</code> → <code class="language-plaintext highlighter-rouge">Add Custom Procedure...</code></li>
+  <li>Find <code class="language-plaintext highlighter-rouge">gimp-brightness-contrast</code> in the procedure browser and select <code class="language-plaintext highlighter-rouge">Add</code>.</li>
+  <li>Adjust the parameters as desired.</li>
+  <li>Select <code class="language-plaintext highlighter-rouge">OK</code> to add the procedure.</li>
+</ol>
+
+<p><strong>I need every layer to have the same background.</strong></p>
+
+<ol>
+  <li>In the preview to the right, right-click on the layer name you want to be your background.</li>
+  <li>Check <code class="language-plaintext highlighter-rouge">Background</code>. A tag icon will be displayed next to the layer name.</li>
+  <li>To add more layers as background, repeat steps 1 and 2. If you need to achieve a particular order of background layers, you need to reorder the layers in GIMP (i.e. outside the plug-in). The plug-in will sync with the changes done in GIMP.</li>
+  <li>Add the “Insert background layers” procedure. If needed, you may place this procedure after “Use layer size” by dragging it onto “Use layer size”.</li>
+  <li>If you want to perform <a href="Batch-Editing.html">batch editing</a> rather than export, you may want to merge the inserted background with each layer. To do so, add the “Merge background” procedure.</li>
+</ol>
+
+<p><strong>I want to save the image as a multi-page PDF file.</strong></p>
+
+<p>While multi-page PDF export is already possible in GIMP without any third-party plug-ins, Export Layers allows you to apply custom procedures before the export or export each layer group (instead of the entire image).</p>
+
+<ol>
+  <li>Add the “Export” procedure.</li>
+  <li>Adjust the output folder as needed. The folder explorer in the main dialog will be ignored.</li>
+  <li>Type <code class="language-plaintext highlighter-rouge">pdf</code> next to <code class="language-plaintext highlighter-rouge">File extension</code>.</li>
+  <li>Select an option in <code class="language-plaintext highlighter-rouge">Perform export:</code>. To export a single image, select <code class="language-plaintext highlighter-rouge">For the entire image at once</code>.</li>
+  <li>If needed and if <code class="language-plaintext highlighter-rouge">For the entire image at once</code> was selected, adjust <code class="language-plaintext highlighter-rouge">Image filename pattern</code> as seen fit.</li>
+  <li>Specifically for the PDF format, you need to check <code class="language-plaintext highlighter-rouge">Layers as pages</code> when the native PDF export dialog is shown. Otherwise, only a single page will be exported.</li>
+  <li>You may also want to uncheck the “Use layer size” procedure to use the image size (since PDF pages have the same dimensions), otherwise you might obtain unexpected results.</li>
+</ol>
+
+<p>Also note that if you export top-level layer groups and the first layer group contains only a single layer, the <code class="language-plaintext highlighter-rouge">Layers as pages</code> option in the PDF dialog cannot be checked, even if subsequent layer groups contain multiple layers. This is the current behavior of the PDF export in GIMP (at least in GIMP 2.10).</p>
+
+<h2 id="customizing-layer-names">Customizing Layer Names</h2>
+
+<p>By default, layer names are used as filenames.
+The text entry next to <code class="language-plaintext highlighter-rouge">Save as</code> lets you customize the filenames.</p>
+
+<p>There are several built-in <em>fields</em> that you can combine to form a filename pattern.
+For example, <code class="language-plaintext highlighter-rouge">image[001]</code> renames the layers to <code class="language-plaintext highlighter-rouge">image001</code>, <code class="language-plaintext highlighter-rouge">image002</code> and so on.
+The text entry can show you examples of how each field is used if you place the text cursor inside a field.
+The fields are described below in detail.</p>
+
+<p>The preview automatically updates as you change the filename pattern and so can greatly help you figure out how your specified pattern affects the layer names.</p>
+
+<p>Fields must be enclosed in square brackets and must have a correct number of arguments.
+Arguments must be separated by commas.
+Invalid arguments result in the field being inserted literally.</p>
+
+<h3 id="available-fields">Available fields</h3>
+
+<p>You can choose the fields from the dropdown list displayed when clicking on the text entry or you can type the fields manually.</p>
+
+<p><strong>Number</strong></p>
+
+<p>A number incrementing for each layer.
+The numbering is separate for each layer group.</p>
+
+<p>Arguments:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">%n</code> - Continue numbering across layer groups.</li>
+  <li><code class="language-plaintext highlighter-rouge">%dnumber</code> - Use descending numbers, optionally with the specified padding (number of digits).
+If the number is 0, the first number is the number of layers to export within a layer group, or, if <code class="language-plaintext highlighter-rouge">%n</code> is also specified, the number of all layers to export.</li>
+</ul>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[1]</code> → <code class="language-plaintext highlighter-rouge">1</code>, <code class="language-plaintext highlighter-rouge">2</code>, …</li>
+  <li><code class="language-plaintext highlighter-rouge">[001]</code> → <code class="language-plaintext highlighter-rouge">001</code>, <code class="language-plaintext highlighter-rouge">002</code>, …, <code class="language-plaintext highlighter-rouge">009</code>, <code class="language-plaintext highlighter-rouge">010</code>, …, <code class="language-plaintext highlighter-rouge">999</code>, <code class="language-plaintext highlighter-rouge">1000</code>, …</li>
+  <li><code class="language-plaintext highlighter-rouge">[005]</code> → <code class="language-plaintext highlighter-rouge">005</code>, <code class="language-plaintext highlighter-rouge">006</code>, …</li>
+  <li><code class="language-plaintext highlighter-rouge">[001, %n]</code> → <code class="language-plaintext highlighter-rouge">001</code>, <code class="language-plaintext highlighter-rouge">002</code>, … (continues numbering across layer groups)</li>
+  <li><code class="language-plaintext highlighter-rouge">[000, %d]</code> → <code class="language-plaintext highlighter-rouge">010</code>, <code class="language-plaintext highlighter-rouge">009</code>, … (if the number of layers is 10)</li>
+  <li><code class="language-plaintext highlighter-rouge">[10, %d2]</code> → <code class="language-plaintext highlighter-rouge">10</code>, <code class="language-plaintext highlighter-rouge">09</code>, …</li>
+</ul>
+
+<p><strong>[layer name]</strong></p>
+
+<p>The layer name.</p>
+
+<p>Arguments:</p>
+<ul>
+  <li><em>file extension strip mode</em>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">%e</code>: If a layer has a recognized file extension, keep the extension.</li>
+      <li><code class="language-plaintext highlighter-rouge">%i</code>: If a layer has a recognized file extension that matches the one in the <code class="language-plaintext highlighter-rouge">File extension</code> text entry, keep the extension.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[layer name]</code> → <code class="language-plaintext highlighter-rouge">Frame.png</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[layer name, %e]</code> → <code class="language-plaintext highlighter-rouge">Frame.png</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[layer name, %i]</code> → <code class="language-plaintext highlighter-rouge">Frame.png</code> (if the file extension is <code class="language-plaintext highlighter-rouge">png</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">[layer name, %i]</code> → <code class="language-plaintext highlighter-rouge">Frame</code> (if the file extension is <code class="language-plaintext highlighter-rouge">jpg</code>)</li>
+</ul>
+
+<p><strong>[image name]</strong></p>
+
+<p>The current image name.</p>
+
+<p>Arguments:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">%e</code>: If the image has a file extension, keep the extension.</li>
+</ul>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[image name]</code> → <code class="language-plaintext highlighter-rouge">Image</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[image name, %e]</code> → <code class="language-plaintext highlighter-rouge">Image.xcf</code></li>
+</ul>
+
+<p><strong>[layer path]</strong></p>
+
+<p>The “full path” of a layer.
+For example, if the image has a layer group named <code class="language-plaintext highlighter-rouge">Body</code> containing a layer group named <code class="language-plaintext highlighter-rouge">Hands</code> containing a layer named <code class="language-plaintext highlighter-rouge">Left</code>, the layer path will be <code class="language-plaintext highlighter-rouge">Body-Hands-Left</code>.</p>
+
+<p>Arguments:</p>
+<ul>
+  <li><em>separator</em>: A string separating the path components.
+Defaults to <code class="language-plaintext highlighter-rouge">-</code>.</li>
+  <li><em>wrapper</em>: A string that wraps around each path component.
+The wrapper must contain <code class="language-plaintext highlighter-rouge">%c</code> denoting the path component.
+Defaults to <code class="language-plaintext highlighter-rouge">%c</code>.</li>
+  <li><em>file extension strip mode</em>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">%e</code>: If a layer has a recognized file extension, keep the extension.</li>
+      <li><code class="language-plaintext highlighter-rouge">%i</code>: If a layer has a recognized file extension that matches the one in the <code class="language-plaintext highlighter-rouge">File extension</code> text entry, keep the extension.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[layer path]</code> → <code class="language-plaintext highlighter-rouge">Body-Hands-Left</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[layer path, _]</code> → <code class="language-plaintext highlighter-rouge">Body_Hands_Left</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[layer path, _, (%c)]</code> → <code class="language-plaintext highlighter-rouge">(Body)_(Hands)_(Left)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[layer path, _, (%c), %e]</code> → <code class="language-plaintext highlighter-rouge">Body-Hands-Left.png</code> (if the layer name is <code class="language-plaintext highlighter-rouge">Left.png</code> and the file extension is <code class="language-plaintext highlighter-rouge">png</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">[layer path, _, (%c), %i]</code> → <code class="language-plaintext highlighter-rouge">Body-Hands-Left.png</code> (if the layer name is <code class="language-plaintext highlighter-rouge">Left.png</code> and the file extension is <code class="language-plaintext highlighter-rouge">png</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">[layer path, _, (%c), %i]</code> → <code class="language-plaintext highlighter-rouge">Body-Hands-Left</code> (if the layer name is <code class="language-plaintext highlighter-rouge">Left.png</code> and the file extension is e.g. <code class="language-plaintext highlighter-rouge">jpg</code>)</li>
+</ul>
+
+<p><strong>[replace]</strong></p>
+
+<p>Replaces a part of the specified field with another string.
+This essentially allows to fine-tune any field.
+Regular expressions are supported as well.</p>
+
+<p>Arguments:</p>
+<ul>
+  <li><em>field name</em>: Any recognized field described in this section, except “Number”.
+The field can be specified with arguments; if so, enclose the field in square brackets (<code class="language-plaintext highlighter-rouge">[</code> and <code class="language-plaintext highlighter-rouge">]</code>).</li>
+  <li><em>pattern</em>: Part of the field to replace.
+The pattern can also be a regular expression using the same syntax as defined for the <a href="https://docs.python.org/2/library/re.html"><code class="language-plaintext highlighter-rouge">re</code> module for Python</a>.</li>
+  <li><em>replacement</em>: Contents that should replace <em>pattern</em>.
+The replacement can also be a regular expression using the same syntax as defined for the <a href="https://docs.python.org/2/library/re.html"><code class="language-plaintext highlighter-rouge">re</code> module for Python</a>.</li>
+  <li>(optional) <em>count</em>: Number of replacements to perform if the pattern matches multiple parts.
+If 0, perform replacements for all parts.</li>
+  <li>(optional) <em>flags</em>: Flags further adjusting how the replacement should be performed.
+Flags are specified in the <a href="https://docs.python.org/2/library/re.html"><code class="language-plaintext highlighter-rouge">re</code> module for Python</a>.
+Use the name without the <code class="language-plaintext highlighter-rouge">re.</code> prefix.
+For example, to ignore case, type <code class="language-plaintext highlighter-rouge">IGNORECASE</code> or <code class="language-plaintext highlighter-rouge">ignorecase</code>.
+You can specify multiple flags separated by commas.</li>
+</ul>
+
+<p>For the example below, suppose that a layer is named “Animal copy #1”.
+While the square brackets (<code class="language-plaintext highlighter-rouge">[</code> and <code class="language-plaintext highlighter-rouge">]</code>) enclosing the first three field arguments are optional, they are necessary in case you need to specify an empty string (<code class="language-plaintext highlighter-rouge">[]</code>), leading spaces or commas.</p>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[replace, [layer name], [a], [b] ]</code> → <code class="language-plaintext highlighter-rouge">Animbl copy #1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[replace, [layer name], [a], [b], 1, ignorecase]</code> → <code class="language-plaintext highlighter-rouge">bnimal copy #1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[replace, [layer name], [ copy(?: #[[0-9]]+)*$], [] ]</code> → <code class="language-plaintext highlighter-rouge">Animal</code></li>
+</ul>
+
+<p><strong>[tags]</strong></p>
+
+<p>All tags assigned to a layer.
+For example, suppose that a layer has the following tags: <code class="language-plaintext highlighter-rouge">left</code>, <code class="language-plaintext highlighter-rouge">middle</code>, <code class="language-plaintext highlighter-rouge">right</code>.
+Then (by default) the tags will be formatted as <code class="language-plaintext highlighter-rouge">left-middle-right</code>.</p>
+
+<p>Without arguments, tags are inserted in alphabetical order.</p>
+
+<p>See <a href="#tagging-layers">Tagging Layers</a> for information about layer tags.</p>
+
+<p>Arguments:</p>
+<ul>
+  <li><em>separator</em>: A string separating the tags.
+Defaults to <code class="language-plaintext highlighter-rouge">-</code>.</li>
+  <li><em>wrapper</em>: A string that wraps around each tag.
+The wrapper must contain <code class="language-plaintext highlighter-rouge">%t</code> denoting the tag.</li>
+  <li><em>tags…</em>: Specific tag names as comma-separated arguments.
+If omitted, all tags are inserted.
+Tags not assigned to a layer are ignored.</li>
+</ul>
+
+<p>If at least two arguments are specified and the second argument contains <code class="language-plaintext highlighter-rouge">%t</code>, then the first argument is considered to be the <em>separator</em> argument and the second argument the <em>wrapper</em> argument.</p>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[tags]</code> → <code class="language-plaintext highlighter-rouge">left-middle-right</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[tags, right, left]</code> → <code class="language-plaintext highlighter-rouge">right-left</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[tags, _, (%t)]</code> → <code class="language-plaintext highlighter-rouge">(left)_(middle)_(right)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[tags, _, (%t), right, left]</code> → <code class="language-plaintext highlighter-rouge">(right)_(left)</code></li>
+</ul>
+
+<p><strong>[current date]</strong></p>
+
+<p>The current date.</p>
+
+<p>Arguments:</p>
+<ul>
+  <li><em>format</em>: Date format as per the <a href="http://strftime.org/index.html">Python <code class="language-plaintext highlighter-rouge">strftime</code> function</a>.
+Defaults to <code class="language-plaintext highlighter-rouge">%Y-%m-%d</code> (year-month-day).</li>
+</ul>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[current date]</code> → <code class="language-plaintext highlighter-rouge">2019-01-28</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[current date, %m.%d.%Y_%H-%M]</code> → <code class="language-plaintext highlighter-rouge">28.01.2019_19-04</code></li>
+</ul>
+
+<p><strong>[attributes]</strong></p>
+
+<p>Layer or image attributes.</p>
+
+<p>Arguments</p>
+<ul>
+  <li><em>pattern</em>: A string formatting the attributes.
+Available attributes:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">%w</code> - The layer width.</li>
+      <li><code class="language-plaintext highlighter-rouge">%h</code> - The layer height.</li>
+      <li><code class="language-plaintext highlighter-rouge">%x</code> - The layer <em>x</em>-offset.</li>
+      <li><code class="language-plaintext highlighter-rouge">%y</code> - The layer <em>y</em>-offset.</li>
+      <li><code class="language-plaintext highlighter-rouge">%iw</code> - The image width.</li>
+      <li><code class="language-plaintext highlighter-rouge">%ih</code> - The image height.</li>
+    </ul>
+  </li>
+  <li><em>measure</em>: The measure in which the attribute values are displayed.
+Applies to <code class="language-plaintext highlighter-rouge">%w</code>, <code class="language-plaintext highlighter-rouge">%h</code>, <code class="language-plaintext highlighter-rouge">%x</code> and <code class="language-plaintext highlighter-rouge">%y</code> only.
+Available measures:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">%px</code> (default) - Display absolute values in pixels.</li>
+      <li><code class="language-plaintext highlighter-rouge">%pc</code> - Display percentages relative to the image.
+A number may be included after <code class="language-plaintext highlighter-rouge">%pc</code> to specify the number of digits to round to (2 by default).
+For example, <code class="language-plaintext highlighter-rouge">%pc1</code> displays percentages rounded to a single decimal digit.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[attributes, %w-%h-%x-%y]</code> → <code class="language-plaintext highlighter-rouge">1000-270-0-40</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[attributes, %w-%h-%x-%y, %pc]</code> → <code class="language-plaintext highlighter-rouge">1.0-0.54-0.0-0.08</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[attributes, %w-%h-%x-%y, %pc1]</code> → <code class="language-plaintext highlighter-rouge">1.0-0.5-0.0-0.1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[attributes, %iw-%ih]</code> → <code class="language-plaintext highlighter-rouge">1000-500</code></li>
+</ul>
+
+<h3 id="inserting-reserved-characters-in-arguments">Inserting reserved characters in arguments</h3>
+
+<p>To insert a literal space or comma in a field argument, enclose the argument with square brackets.
+To insert a literal square bracket (<code class="language-plaintext highlighter-rouge">[</code> or <code class="language-plaintext highlighter-rouge">]</code>), double the bracket and enclose the argument with square brackets (e.g. <code class="language-plaintext highlighter-rouge">[[[]</code> to insert a literal <code class="language-plaintext highlighter-rouge">[</code>).</p>
+
+<p>If the last argument is enclosed in square brackets, leave a single space between the last and the second to last closing square bracket.</p>
+
+<p>Examples:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">[layer path, [ ] ]</code> → <code class="language-plaintext highlighter-rouge">Body Hands Left</code></li>
+  <li><code class="language-plaintext highlighter-rouge">[layer path, [,], [[[%c]]] ]</code> → <code class="language-plaintext highlighter-rouge">[Body],[Hands],[Left]</code></li>
+</ul>
+
+<h2 id="procedures">Procedures</h2>
+
+<p>Procedures allow you to apply image filters to each layer.
+Press the <code class="language-plaintext highlighter-rouge">Add Procedure...</code> button and select one of the available procedures, or add a <a href="#Adding-Custom-Procedures">custom procedure</a>.</p>
+
+<p>For each added procedure, you may perform any of the following:</p>
+<ul>
+  <li>enable and disable the procedure,</li>
+  <li>move the procedure up/down by dragging the procedure with mouse or by keyboard,</li>
+  <li>edit the procedure.
+You may edit the name and the values of its arguments (if any) that are applied to each layer.</li>
+  <li>remove the procedure.</li>
+</ul>
+
+<p>You can add the same procedure multiple times.</p>
+
+<h3 id="built-in-procedures">Built-in Procedures</h3>
+
+<p><strong>Export</strong></p>
+
+<p>Performs export with additional customization not available in the main dialog.</p>
+
+<p>Options:</p>
+<ul>
+  <li><em>Output folder</em>: Folder to save the output image(s).
+When this procedure is added, the output folder is set to the folder displayed in the main dialog upon the plug-in startup.</li>
+  <li><em>File extension</em>: File extension of the output image(s).
+This overrides the file extension in the main dialog.</li>
+  <li><em>Perform export</em>: Whether to export each layer separately (“For each layer”), each top-level layer or layer group separately (“For each top-level layer or group”), or a single image containing all layers (“For the entire image at once”).
+The latter two options provide multi-layer export. This allows exporting e.g. multi-page PDFs or animated GIFs per top-level layer group and/or with additional custom procedures applied before the export.</li>
+  <li><em>Image filename pattern</em>: Filename pattern available when a single image is exported (the “Entire image at once” option is selected).
+The text entry next to <code class="language-plaintext highlighter-rouge">Save as</code> still applies to individual layer names (since some multi-layer file formats also store layer names, e.g. TIFF or PSD).</li>
+  <li><em>Use file extension in layer name</em>: If a layer name has a recognized file extension, use that file extension instead of the one in the <code class="language-plaintext highlighter-rouge">File extension</code> text entry.
+You very likely need to type <code class="language-plaintext highlighter-rouge">[layer name, %e]</code> in the text entry next to <code class="language-plaintext highlighter-rouge">Save as</code> to preserve file extensions in layer names.</li>
+  <li><em>Convert file extension to lowercase</em>: File extensions in layer names are converted to lowercase.</li>
+  <li><em>Preserve layer name after export</em>: If enabled, layer names will revert to the state before export (i.e. without adding a file extension to them).
+This is probably only ever useful if you want to perform export multiple times, e.g. with multiple different file formats (which is possible by adding multiple Export procedures).</li>
+</ul>
+
+<p>When exporting each layer separately (the default), the Export procedure usually makes sense to be applied as the last procedure since procedures after Export would have no effect.</p>
+
+<p><strong>Ignore folder structure</strong></p>
+
+<p>Export all layers to the output folder on the same level, i.e. do not create subfolders for layer groups.</p>
+
+<p><strong>Inherit transparency from layer groups</strong></p>
+
+<p>Combine opacity from all parent layer groups for each layer.
+This corresponds to how the layer is actually displayed in the image canvas.</p>
+
+<p>For example, if a layer has 50% opacity and its parent group also has 50% opacity, the resulting opacity of the layer will be 25%.</p>
+
+<p><strong>Insert background layers</strong></p>
+
+<p>Insert layers tagged with <code class="language-plaintext highlighter-rouge">Background</code> as background for each layer.
+To set a layer as a background layer, see <a href="#tagging-layers">Tagging Layers</a>.</p>
+
+<p>Note that even background layers are processed and exported - to prevent this behavior, enable the <code class="language-plaintext highlighter-rouge">Without tags</code> constraint.</p>
+
+<p>You may modify the tag representing the background layers by editing the procedure argument <code class="language-plaintext highlighter-rouge">Tag</code>.</p>
+
+<p>In the dialog, this procedure is always inserted in the first position.
+This prevents potential confusion when <code class="language-plaintext highlighter-rouge">Use layer size</code> is unchecked and the background is offset relative to the layer rather than the image canvas.
+If this is your intention, you can always move this procedure below <code class="language-plaintext highlighter-rouge">Use layer size</code>.</p>
+
+<p><strong>Insert foreground layers</strong></p>
+
+<p>Insert layers tagged with <code class="language-plaintext highlighter-rouge">Foreground</code> as foreground for each layer.
+To set a layer as a foreground layer, see <a href="#tagging-layers">Tagging Layers</a>.</p>
+
+<p>For more information, see “Insert background layers” above.</p>
+
+<p><strong>Merge background</strong></p>
+
+<p>Merges an already inserted background layer (via “Insert background layers”, see above) with the current layer.</p>
+
+<p>This is useful if you wish to have a single merged layer rather than the background as a separate layer.</p>
+
+<p>When exporting layers, the background is merged automatically before the export, hence this procedure is only useful when batch editing layers.</p>
+
+<p>If there is no background layer inserted, this procedure has no effect.</p>
+
+<p><strong>Merge foreground</strong></p>
+
+<p>Merges an already inserted foreground layer (via “Insert foreground layers”, see above) with the current layer.</p>
+
+<p>For more information, see “Merge background” above.</p>
+
+<p><strong>Rename layer</strong></p>
+
+<p>Rename a layer according to the specified pattern.
+This procedure uses the same text entry for patterns as the one next to <code class="language-plaintext highlighter-rouge">Save as</code> (as described in <a href="#customizing-layer-names">Customizing Layer Names</a>).
+If this procedure is specified, the text entry next to <code class="language-plaintext highlighter-rouge">Save as</code> has no effect.</p>
+
+<p>Additionally, this procedure allows customizing whether to also rename folders (by enabling <code class="language-plaintext highlighter-rouge">Rename folders</code>) or only rename folders (by enabling <code class="language-plaintext highlighter-rouge">Rename folders</code> and disabling <code class="language-plaintext highlighter-rouge">Rename layers</code>).</p>
+
+<p><strong>Use layer size</strong></p>
+
+<p>If enabled, layers will be resized (not scaled) to their size instead of the image size.
+This procedure is enabled by default.</p>
+
+<p>To keep the size of the image canvas and the layer position within the image, disable this setting.
+Note that in that case the layers will be cut off if they are partially outside the image canvas.
+To export the entire layer, leave this setting enabled.</p>
+
+<p>When batch editing, you may want to disable this procedure as the image will be resized to the last processed layer’s dimensions.</p>
+
+<h3 id="adding-custom-procedures-">Adding Custom Procedures <a name="Adding-Custom-Procedures"></a></h3>
+
+<p>You can add any procedure available in the GIMP Procedural Database (PDB) by pressing <code class="language-plaintext highlighter-rouge">Add Procedure...</code> and then selecting <code class="language-plaintext highlighter-rouge">Add Custom Procedure...</code>.
+Select the desired procedure from the browser dialog and press <code class="language-plaintext highlighter-rouge">Add</code>.
+The edit dialog allows you to edit the procedure name and the values of its arguments.</p>
+
+<h3 id="editing-procedures">Editing procedures</h3>
+
+<p>When editing a procedure, you may (and sometimes have to) adjust its arguments.
+GIMP PDB procedures are usually accompanied with descriptions of the entire procedure as well as its arguments.
+Hover over argument names to display tooltips describing them in more detail.
+The description for an argument often indicates the range of valid values.</p>
+
+<p>If a procedure contains a layer/drawable/item argument, you may select one of the following:</p>
+<ul>
+  <li>(default) “Current Layer” - applies the procedure to the currently processed layer.</li>
+  <li>“Background Layer” - applies the procedure to the layer representing background, inserted via the “Insert background layers” procedure. If there is no such layer, the procedure will have no effect.</li>
+  <li>“Foreground Layer” - applies the procedure to the layer representing foreground, inserted via the “Insert foreground layers” procedure. If there is no such layer, the procedure will have no effect.</li>
+</ul>
+
+<h2 id="constraints">Constraints</h2>
+
+<p>To exclude certain layers from processing and export, press the <code class="language-plaintext highlighter-rouge">Add Constraint...</code> button and select one of the available constraints.
+As with procedures, you can enable, disable, reorder, edit or remove constraints as needed.
+Adding the same constraint multiple times is also possible.</p>
+
+<h3 id="built-in-constraints">Built-in Constraints</h3>
+
+<p><strong>Layers</strong></p>
+
+<p>Process only layers (i.e. ignore layer groups).
+This constraint is enabled by default.</p>
+
+<p><strong>Layer groups</strong></p>
+
+<p>Process only layer groups.</p>
+
+<p><strong>Matching file extension</strong></p>
+
+<p>Process only layers having a file extension matching the extension typed in the text entry.</p>
+
+<p><strong>Selected in preview</strong></p>
+
+<p>Process only layers selected in the preview.
+If you save settings, the selection is saved as well.</p>
+
+<p><strong>Top-level</strong></p>
+
+<p>Process only layers at the top of the layer tree (i.e. do not process layers inside any layer group).</p>
+
+<p><strong>Visible</strong></p>
+
+<p>Process only visible layers.</p>
+
+<p>By default, layers (visible or not) whose parent layer groups are invisible are also ignored.
+To disable this behavior, edit the constraint, click on <code class="language-plaintext highlighter-rouge">More options</code> and then uncheck <code class="language-plaintext highlighter-rouge">Also apply to parent folders</code>.</p>
+
+<p><strong>With tags</strong></p>
+
+<p>Process only layers with tags.</p>
+
+<p>By default, all layers without tags are excluded.
+To process only layers with specific tags, edit this constraint and add the tags for the <code class="language-plaintext highlighter-rouge">Tags</code> argument.
+For example, by adding <code class="language-plaintext highlighter-rouge">background</code>, only layers containing the <code class="language-plaintext highlighter-rouge">background</code> tag will be processed.
+Other tagged layers will be excluded.</p>
+
+<p>See <a href="#tagging-layers">Tagging Layers</a> for information about tags.</p>
+
+<p><strong>Without tags</strong></p>
+
+<p>Process only layers with no tags.</p>
+
+<p>By default, all layers with tags are excluded.
+To ignore only specific tags, edit this constraint and add the tags for the <code class="language-plaintext highlighter-rouge">Tags</code> argument.</p>
+
+<p>See <a href="#tagging-layers">Tagging Layers</a> for information about tags.</p>
+
+<h2 id="tagging-layers">Tagging Layers</h2>
+
+<p>Tags attached to layers allow you to customize each layer individually.
+To attach a tag to one or more layers, select them in the preview, right-click on the selection and choose your tag.
+Tagged layers are indicated with a tag icon in the preview.</p>
+
+<p>Adding or removing tags modifies the current image.
+Save the image to keep the tags permanently.</p>
+
+<p>By default, Export Layers provides <code class="language-plaintext highlighter-rouge">Background</code> and <code class="language-plaintext highlighter-rouge">Foreground</code> tags.
+To add custom tags, right-click anywhere on the preview, select <code class="language-plaintext highlighter-rouge">Add New Tag...</code> and name your new tag.
+The new tag will be immediately added to the currently selected layer(s).</p>
+
+<p>To remove custom tags, remove them first from all layers, then right-click anywhere on the preview, select <code class="language-plaintext highlighter-rouge">Remove Tag...</code> and select the tag you wish to remove.</p>
+
+<h2 id="more-options">More Options</h2>
+
+<p>When editing procedures or constraints, you may adjust additional options when clicking on <code class="language-plaintext highlighter-rouge">More options</code>.</p>
+
+<p><strong>Enable for previews</strong></p>
+
+<p>If checked (the default), apply the procedure or constraint in the preview.</p>
+
+<p>Unchecking this can be handy if a procedure takes too long or manipulates the file system (reads or saves files).</p>
+
+<p><strong>Also apply to parent folders</strong> (constraints only)</p>
+
+<p>If checked, a layer will satisfy a constraint if all of its parent groups also satisfy the constraint.
+For example, if checking this option for the “Visible” constraint, a visible layer would be ignored if any of its parent layer groups are not visible.</p>
+
+<p>This option is unchecked by default and is only checked for the “Visible” constraint that is displayed when running this plug-in for the first time.</p>
+
+    </section>
+  </body>
+</html>

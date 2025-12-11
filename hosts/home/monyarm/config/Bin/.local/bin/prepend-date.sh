@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Notes: Prepend the modification date of a file to its name
+# Usage:
+# prepend-date file1 [file2 ...]
+
+for file in "$@"; do
+  # Get file modification date
+  dt=$(date -r "$file" +%F)
+  # Split file directory and basename
+  file_dir=$(dirname "$file")
+  basename=$(basename "$file")
+  # Enter the directory, rename and return
+  pushd "$file_dir" >/dev/null || exit
+  mv "$basename" "$dt.$basename"
+  popd >/dev/null || exit
+done

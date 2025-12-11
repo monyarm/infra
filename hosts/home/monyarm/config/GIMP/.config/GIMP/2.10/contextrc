@@ -1,0 +1,16 @@
+# GIMP user context
+
+(tool "gimp-crop-tool")
+(paint-info "gimp-paintbrush")
+(foreground (color-rgb 0.97254902124404907 0.65098041296005249 0.66274511814117432))
+(background (color-rgb 0.22745098039215686 0.66666666666666663 0.63529411764705879))
+(brush "2. Hardness 075")
+(dynamics "Dynamics Off")
+(mybrush "Standard")
+(pattern "Warning!")
+(gradient "Standard")
+(palette "Standard")
+(font "Monospace Bold")
+(tool-preset "Core Pointer")
+
+# end of user context

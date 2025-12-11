@@ -1,0 +1,1 @@
+- When creating a derivation for a single script file, `pname` should be the filename, and the `installPhase` should copy the script directly to `$out` (e.g., `cp $src/script.lua $out`).
