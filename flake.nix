@@ -124,8 +124,14 @@
               # shell
               programs.shellcheck.enable = true;
               programs.shellcheck.includes = shellFiles;
+              programs.shellcheck.excludes = [
+                "hosts/home/monyarm/config/ZSH/.p10k.zsh"
+              ];
               programs.shfmt.enable = true;
               programs.shfmt.includes = shellFiles;
+              programs.shfmt.excludes = [
+                "hosts/home/monyarm/config/ZSH/.p10k.zsh"
+              ];
               # py
               programs.mypy.enable = true;
               programs.mypy.directories = {

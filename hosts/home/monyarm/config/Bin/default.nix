@@ -117,8 +117,8 @@ in
       # keep-sorted start
       fehScript
       reconnectScript
-      ydlStrmScript
       ydlStrmBulkScript
+      ydlStrmScript
       # keep-sorted end
     ]
     ++ ydlScripts
