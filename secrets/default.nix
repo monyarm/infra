@@ -1,4 +1,9 @@
-{ dirs, lib, ... }:
+{
+  dirs,
+  lib,
+  config,
+  ...
+}:
 let
   basicSecrets = builtins.attrNames (
     builtins.removeAttrs (builtins.fromJSON (builtins.readFile ./secrets.json)) [ "sops" ]
@@ -12,16 +17,38 @@ in
 
     secrets =
       let
-        binaryKeys = builtins.map (k: "jetbrains/${k}.key") [
-          "clion"
-          "phpstorm"
-          "webstorm"
+        standaloneKeys = [
+          "syncthing/key.pem"
+          "syncthing/cert.pem"
         ];
+        binaryKeys =
+          (builtins.map (k: "jetbrains/${k}.key") [
+            "clion"
+            "phpstorm"
+            "webstorm"
+          ])
+          ++ [
+            "syncthing/key.pem"
+            "syncthing/cert.pem"
+          ];
       in
-      (lib.genAttrs basicSecrets (_: { }))
-      // (lib.genAttrs binaryKeys (name: {
-        format = "binary";
-        sopsFile = ./. + "/${name}";
-      }));
+      lib.recursiveUpdate
+        (
+          (lib.genAttrs basicSecrets (_: { }))
+          // (lib.genAttrs binaryKeys (name: {
+            format = "binary";
+            sopsFile = ./. + "/${name}";
+          }))
+        )
+        {
+          "syncthing/key.pem" = {
+            owner = config.services.syncthing.user;
+            group = config.services.syncthing.user;
+          };
+          "syncthing/cert.pem" = {
+            owner = config.services.syncthing.user;
+            group = config.services.syncthing.user;
+          };
+        };
   };
 }

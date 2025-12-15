@@ -8,7 +8,7 @@
 }:
 let
   format = import ./format.nix { inherit pkgs lib; };
-  constants = import ./constants.nix;
+  constants = import ./constants.nix { inherit lib; };
   helpers = import ./helpers.nix ({ inherit pkgs lib mkOutOfStoreSymlink; } // constants);
   meta = import ./meta.nix {
     inherit pkgs;

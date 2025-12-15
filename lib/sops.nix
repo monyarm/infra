@@ -1,4 +1,4 @@
 { config, ... }:
 {
-  getSecretPath = name: config.sops.secrets.${name}.path;
+  getSecretPath = name: config.sops.secrets."${name}".path;
 }

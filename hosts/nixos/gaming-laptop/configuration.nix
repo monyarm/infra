@@ -10,6 +10,8 @@
     "${dirs.modules}/misc"
     "${dirs.modules}/packages"
     "${dirs.modules}/services"
+    "${dirs.modules}/services/tailscale.nix"
+    "${dirs.modules}/services/syncthing.nix"
     "${dirs.modules}/config/doas.nix"
   ];
 

@@ -1,7 +1,11 @@
 keys:
   - &monyarm age1vdst8x84mcar4e09v9j4q6a3k8ztfuj326ymtkvyse9e5wfxgslssvpluq
 creation_rules:
-  - path_regex: secrets/jetbrains/[^/]+\.key$
+  - path_regex: secrets/[^/]+\.(key|pass|pem|token)$
+    key_groups:
+      - age:
+          - *monyarm
+  - path_regex: secrets/(jetbrains|syncthing)/[^/]+\.(key|pass|pem|token)$
     key_groups:
       - age:
           - *monyarm

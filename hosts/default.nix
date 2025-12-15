@@ -5,7 +5,7 @@ let
   inherit (nixpkgs) lib;
 
   # Import constants early to make dirs available
-  constants = import ../lib/constants.nix;
+  constants = import ../lib/constants.nix { inherit lib; };
   inherit (constants) dirs;
 
   overlays = [
