@@ -22,16 +22,12 @@ in
           "syncthing/key.pem"
           "syncthing/cert.pem"
         ];
-        binaryKeys =
-          (builtins.map (k: "jetbrains/${k}.key") [
+        jetbrainsKeys = builtins.map (k: "jetbrains/${k}.key") [
             "clion"
             "phpstorm"
             "webstorm"
-          ])
-          ++ [
-            "syncthing/key.pem"
-            "syncthing/cert.pem"
           ];
+        binaryKeys = standaloneKeys ++ jetbrainsKeys;
       in
       lib.recursiveUpdate
         (

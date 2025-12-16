@@ -93,6 +93,7 @@ with config.lib.topology;
         tailscale0 = {
           addresses = [ "100.67.143.124/32" ];
           network = "tailscale";
+          icon = ./icons/tailscale.png;
         };
       };
 
@@ -125,6 +126,7 @@ with config.lib.topology;
       interfaces.tailscale0 = {
         addresses = [ "100.82.4.38/32" ];
         network = "tailscale";
+        icon = ./icons/tailscale.png;
       };
     };
 
@@ -137,6 +139,7 @@ with config.lib.topology;
       interfaces.tailscale0 = {
         addresses = [ "100.119.130.60/32" ];
         network = "tailscale";
+        icon = ./icons/tailscale.png;
       };
     };
 
