@@ -1,16 +1,23 @@
 { ... }:
 {
-  imports = [ ./userChrome.nix ];
+  imports = [
+    ./userChrome.nix
+    ./policies.nix
+    ./settings.nix
+    ./bookmarks.nix
+    ./search.nix
+  ];
 
   stylix.targets.firefox = {
     profileNames = [ "default" ];
     firefoxGnomeTheme.enable = true;
-    #colorTheme.enable = true; Disabled until I can figure out how to fully manage my extensions and settings without depending on version in nixpkgs and NUR
+    colorTheme.enable = true;
   };
 
   programs.firefox = {
     enable = true;
     profileVersion = null; # fixes profile on non-NixOS systems
+    languagePacks = [ "en-GB" ];
     profiles = {
       default = {
         id = 0;

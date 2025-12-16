@@ -15,7 +15,7 @@ let
     inherit (pkgs) lib system;
   };
   fetchers = import ./fetchers.nix { inherit pkgs; };
-  sops = import ./sops.nix { inherit config lib; };
+  sops = import ./sops.nix { inherit config lib pkgs; };
 in
 {
   inherit
