@@ -29,10 +29,10 @@
     completionInit = ''
       autoload -Uz compinit promptinit
       compinit
-      promptinit; prompt default
+      promptinit; prompt powerlevel10k
     '';
     initContent = lib.mkMerge [
-      (lib.mkOrder 550 ''
+      (lib.mkOrder 600 ''
         [ -s "$NVM_SOURCE/nvm.sh" ] && . "$NVM_SOURCE/nvm.sh"
         ###-tns-completion-start-###
         if [ -f $HOME/.tnsrc ]; then

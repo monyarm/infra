@@ -1,7 +1,12 @@
 { inputs, ... }:
 
 let
-  inherit (inputs) system-manager nixpkgs home-manager;
+  inherit (inputs)
+    system-manager
+    nixpkgs
+    home-manager
+    nix-topology
+    ;
   inherit (nixpkgs) lib;
 
   # Import constants early to make dirs available
@@ -9,6 +14,7 @@ let
   inherit (constants) dirs;
 
   overlays = [
+    inputs.nix-topology.overlays.default
     inputs.lix-module.overlays.default
     inputs.nh.overlays.default
   ];
@@ -104,6 +110,7 @@ let
           };
           home-manager.sharedModules = homeManagerModules;
         }
+        nix-topology.nixosModules.default
       ];
     };
 

@@ -109,12 +109,19 @@ let
           spawn zenity --info --text "Press L+R to pair Pro Controller"
           expect eof
   '';
+  Extract =
+    (pkgs.fetchgit {
+      url = "https://github.com/xvoland/Extract";
+      hash = "sha256-PMyvZ8xd3gT2Q1lR3EBfouCjFJhJLjMGrEzPtkm5cNk=";
+    })
+    + "/extract.sh";
 in
 
 {
   home.file = binFiles (
     [
       # keep-sorted start
+      Extract
       fehScript
       reconnectScript
       ydlStrmBulkScript

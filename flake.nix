@@ -94,6 +94,7 @@
         {
           topology.modules = [
             ./topology
+            { inherit (inputs.self) nixosConfigurations; }
           ];
           treefmt =
             let
