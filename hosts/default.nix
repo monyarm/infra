@@ -17,6 +17,7 @@ let
     inputs.nix-topology.overlays.default
     inputs.lix-module.overlays.default
     inputs.nh.overlays.default
+    inputs.nur.overlays.default
   ];
 
   pkgsGen =

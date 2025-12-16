@@ -662,6 +662,29 @@
     "nur": {
       "inputs": {
         "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765924577,
+        "narHash": "sha256-MWzHr/YVBJBPMaeh2NKi5vT6JiLavqMKMx4SzUVW/VI=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "5054aae520825f3343af533fb2f4339eb46bb1fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
+    "nur_2": {
+      "inputs": {
+        "flake-parts": [
           "stylix",
           "flake-parts"
         ],
@@ -724,6 +747,7 @@
         "nix-wine": "nix-wine",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
+        "nur": "nur",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "system-manager": "system-manager",
@@ -762,7 +786,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "nur": "nur",
+        "nur": "nur_2",
         "systems": "systems_3",
         "tinted-foot": "tinted-foot",
         "tinted-kitty": "tinted-kitty",

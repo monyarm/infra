@@ -54,6 +54,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
   };
 
   nixConfig = {
@@ -110,6 +115,7 @@
                 "hosts/home/*/config/GIMP/.config/GIMP/*/**"
                 "hosts/home/*/config/JetBrains/*/**"
                 "**/.github/**"
+                "**/*.sops.nix"
 
               ];
               # nix
