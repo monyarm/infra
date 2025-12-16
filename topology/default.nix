@@ -114,6 +114,12 @@ with config.lib.topology;
         icon = ./icons/matter.svg;
         info = "TCP/5580";
       };
+
+      services.syncthing = {
+        name = "Syncthing";
+        icon = ./icons/syncthing.svg;
+        info = "http://192.168.0.4:8384";
+      };
     };
 
     # --- Tailscale Peers ---
