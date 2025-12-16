@@ -2,6 +2,8 @@
   pkgs,
   lib,
   options,
+  isNixOS,
+  isHomeManager,
   ...
 }:
 
@@ -19,12 +21,12 @@ let
 in
 lib.mkMerge [
   # For NixOS
-  (lib.optionalAttrs (options ? environment) {
+  (lib.optionalAttrs isNixOS {
     environment.systemPackages = basePackages;
   })
 
   # For home-manager
-  (lib.optionalAttrs (options ? home) {
+  (lib.optionalAttrs isHomeManager {
     home.packages = basePackages;
   })
 ]

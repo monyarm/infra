@@ -24,6 +24,6 @@ in
     helpers
     meta
     fetchers
-    sops # Inherit the sops attrset
+    sops
     ;
 }

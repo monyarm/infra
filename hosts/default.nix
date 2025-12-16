@@ -55,7 +55,11 @@ let
     in
     home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsGen currentSystem;
-      extraSpecialArgs = { inherit inputs dirs; };
+      extraSpecialArgs = {
+        inherit inputs dirs;
+        isNixOS = false;
+        isHomeManager = true;
+      };
       modules = homeManagerModules ++ [
         ./modules/packages/base.nix
         (userDir + "/default.nix")
@@ -78,6 +82,8 @@ let
       system = currentSystem;
       specialArgs = {
         inherit inputs dirs;
+        isNixOS = true;
+        isHomeManager = false;
       };
       modules = commonModules ++ [
         (hostDir + "/configuration.nix")
@@ -91,7 +97,11 @@ let
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs dirs; };
+          home-manager.extraSpecialArgs = {
+            inherit inputs dirs;
+            isNixOS = false;
+            isHomeManager = true;
+          };
           home-manager.sharedModules = homeManagerModules;
         }
       ];
@@ -109,7 +119,11 @@ let
         (hostDir + "/configuration.nix")
         ../secrets/system.nix
         {
-          _module.args = { inherit dirs; };
+          _module.args = {
+            inherit dirs;
+            isNixOS = true;
+            isHomeManager = false;
+          };
           nixpkgs.hostPlatform = currentSystem;
           nixpkgs.pkgs = pkgsGen currentSystem;
         }

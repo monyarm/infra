@@ -2,17 +2,22 @@
   config,
   lib,
   modulesPath,
+  inputs,
   ...
 }:
 
 {
   imports = [
+    inputs.nixos-hardware.nixosModules.lenovo-legion-y530-15ich # Not the exact model (y520-15kbn), but close enough
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot.initrd.availableKernelModules = [
     "xhci_pci"
-    "sdhci_pci"
+    "ahci"
+    "nvme"
+    "usb_storage"
+    "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];

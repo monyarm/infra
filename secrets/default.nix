@@ -2,6 +2,7 @@
   dirs,
   lib,
   config,
+  isNixOS,
   ...
 }:
 let
@@ -40,15 +41,17 @@ in
             sopsFile = ./. + "/${name}";
           }))
         )
-        {
-          "syncthing/key.pem" = {
-            owner = config.services.syncthing.user;
-            group = config.services.syncthing.user;
-          };
-          "syncthing/cert.pem" = {
-            owner = config.services.syncthing.user;
-            group = config.services.syncthing.user;
-          };
-        };
+        (
+          lib.optionalAttrs isNixOS {
+            "syncthing/key.pem" = {
+              owner = config.services.syncthing.user;
+              group = config.services.syncthing.user;
+            };
+            "syncthing/cert.pem" = {
+              owner = config.services.syncthing.user;
+              group = config.services.syncthing.user;
+            };
+          }
+        );
   };
 }
