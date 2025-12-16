@@ -1,25 +1,66 @@
 { config, ... }:
 with config.lib.topology;
+let
+  # Helper to create a tailscale interface
+  mkTailscaleInterface = address: {
+    addresses = [ "${address}/32" ];
+    network = "tailscale";
+    icon = ./icons/tailscale.png;
+  };
+
+  # Helper to create a service definition
+  mkService =
+    {
+      name,
+      icon,
+      port,
+      path ? "",
+    }:
+    {
+      inherit name icon;
+      info = "0.0.0.0:${toString port}${path}";
+    };
+
+  # Syncthing service definition (reused across devices)
+  syncthingService = mkService {
+    name = "Syncthing";
+    icon = ./icons/syncthing.svg;
+    port = 8384;
+  };
+
+  # List of tailscale peers for generating connections
+  tailscalePeers = [
+    "motorola-phone"
+    "monyarm"
+    "simeon-laptop"
+    "gaming-laptop"
+  ];
+
+  # Common network style
+  mkNetworkStyle =
+    {
+      primaryColor,
+      pattern ? "solid",
+    }:
+    {
+      inherit primaryColor pattern;
+      secondaryColor = null;
+    };
+in
 {
   ## 1. Define Networks
   networks = {
     home = {
       name = "Home Network";
       cidrv4 = "192.168.0.0/24";
-      # ✅ CORRECTED: Using required style attributes with hex colors.
-      style = {
-        primaryColor = "#70a5eb"; # Blue from predefinedStyles
-        secondaryColor = null; # Null for transparent/unused background
-        pattern = "solid";
-      };
+      style = mkNetworkStyle { primaryColor = "#70a5eb"; };
     };
     tailscale = {
       name = "Tailnet (Overlay VPN)";
       cidrv4 = "100.64.0.0/10";
-      style = {
-        primaryColor = "#9378de"; # Purple from predefinedStyles
-        secondaryColor = null;
-        pattern = "dashed"; # Using 'dashed' for the VPN overlay network
+      style = mkNetworkStyle {
+        primaryColor = "#9378de";
+        pattern = "dashed";
       };
     };
   };
@@ -41,11 +82,7 @@ with config.lib.topology;
       interfaces."*" = {
         network = "tailscale";
 
-        physicalConnections = [
-          (mkConnection "motorola-phone" "tailscale0")
-          (mkConnection "monyarm" "tailscale0")
-          (mkConnection "simeon-laptop" "tailscale0")
-        ];
+        physicalConnections = map (peer: mkConnection peer "tailscale0") tailscalePeers;
       };
       hardware.image = ./images/Tailscale.png;
     };
@@ -66,7 +103,10 @@ with config.lib.topology;
 
       connections = {
         eth1 = mkConnection "monyarm" "enp4s0";
-        wifi = mkConnection "finlux-tv" "wifi";
+        wifi = [
+          (mkConnection "finlux-tv" "wifi")
+          (mkConnection "gaming-laptop" "wlp3s0")
+        ];
       };
 
       interfaces = {
@@ -81,7 +121,9 @@ with config.lib.topology;
     monyarm = {
       name = "Home Desktop";
       deviceType = "device";
+      icon = "devices.desktop";
       hardware.info = "Linux Desktop";
+      deviceIcon = ./icons/gentoo.svg;
 
       interfaces = {
         enp4s0 = {
@@ -90,35 +132,33 @@ with config.lib.topology;
           type = "ethernet";
         };
 
-        tailscale0 = {
-          addresses = [ "100.67.143.124/32" ];
-          network = "tailscale";
-          icon = ./icons/tailscale.png;
-        };
+        tailscale0 = mkTailscaleInterface "100.67.143.124";
       };
 
-      services.home-assistant = {
+      services.home-assistant = mkService {
         name = "Home Assistant";
         icon = "services.home-assistant";
-        info = "http://192.168.0.4:8123";
+        port = 8123;
       };
 
-      services.jellyfin = {
+      services.jellyfin = mkService {
         name = "Jellyfin";
         icon = "services.jellyfin";
-        info = "http://192.168.0.4:8096";
+        port = 8096;
       };
 
-      services.matter = {
+      services.matter = mkService {
         name = "Matter Server";
         icon = ./icons/matter.svg;
-        info = "TCP/5580";
+        port = 5580;
       };
 
-      services.syncthing = {
-        name = "Syncthing";
-        icon = ./icons/syncthing.svg;
-        info = "http://192.168.0.4:8384";
+      services.syncthing = syncthingService;
+
+      services.lighttpd = mkService {
+        name = "Lighttpd";
+        icon = ./icons/lighttpd.png;
+        port = 80;
       };
     };
 
@@ -128,25 +168,44 @@ with config.lib.topology;
       icon = "devices.desktop";
       deviceType = "device";
       hardware.info = "Android Device";
+      deviceIcon = ./icons/android.svg;
 
-      interfaces.tailscale0 = {
-        addresses = [ "100.82.4.38/32" ];
-        network = "tailscale";
-        icon = ./icons/tailscale.png;
-      };
+      interfaces.tailscale0 = mkTailscaleInterface "100.82.4.38";
+
+      services.syncthing = syncthingService;
     };
 
     simeon-laptop = {
-      name = "simeon-armenchev-laptop-001";
+      name = "simeon-laptop";
       icon = "devices.laptop";
-      deviceType = "device";
+      deviceType = "nixos";
       hardware.info = "Linux Laptop";
 
-      interfaces.tailscale0 = {
-        addresses = [ "100.119.130.60/32" ];
-        network = "tailscale";
-        icon = ./icons/tailscale.png;
+      interfaces.tailscale0 = mkTailscaleInterface "100.119.130.60";
+
+      services.syncthing = syncthingService;
+    };
+
+    gaming-laptop = {
+      name = "Gaming Laptop";
+      icon = "devices.laptop";
+      hardware.info = "Linux Gaming Laptop";
+
+      interfaces = {
+        wlp3s0 = {
+          network = "home";
+          type = "wifi";
+        };
+
+        enp4s0 = {
+          network = "home";
+          type = "ethernet";
+        };
+
+        tailscale0 = mkTailscaleInterface "100.XX.XX.XX"; # TODO: Add actual IP
       };
+
+      services.syncthing = syncthingService;
     };
 
     # --- Other Devices ---
