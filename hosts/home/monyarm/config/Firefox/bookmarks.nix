@@ -5,13 +5,11 @@
 }:
 let
   # Helper functions
-  mkToolbar = name: url: {
+  mkBookmark = name: url: {
     inherit name url;
-    toolbar = true;
   };
-  mkToolbarFolder = name: bookmarks: {
+  mkFolder = name: bookmarks: {
     inherit name bookmarks;
-    toolbar = true;
   };
 
   # URL builders
@@ -24,48 +22,36 @@ let
 
   # Bookmark collections
   cthulhuBookmarks = [
-    {
-      name = "Downloads - Yog-Sothoth";
-      url = yogSothoth "files";
-    }
-    {
-      name = "[YSDC] Into The Deep";
-      url = yogSothoth "wiki/index.php/Main_Page";
-    }
+    (mkBookmark "Downloads - Yog-Sothoth" (yogSothoth "files"))
+    (mkBookmark "[YSDC] Into The Deep" (yogSothoth "wiki/index.php/Main_Page"))
     (seesaaWiki 1)
     (seesaaWiki 2)
   ];
 
   miniatureBookmarks = [
-    {
-      name = "Miniatures | Miniset.net - Miniatures Collectors Guide";
-      url = "https://miniset.net/persons/juan-diaz/sculpts";
-    }
-    {
-      name = "Kingdom Death Minis Recasts from China on Aliexpress";
-      url = "https://pandahelper.com/kingdom-death-minis-recasts-from-china/";
-    }
-    {
-      name = "Gormiti Series III by Giochi Preziosi ~ Rubberfever";
-      url = "http://www.rubberfever.com/?section=collections&voice=gormiti3";
-    }
-    {
-      name = "MinifiguresXD: Gormiti";
-      url = "http://minifigures.blogspot.com/2008/04/gormiti.html";
-    }
+    (mkBookmark "Miniatures | Miniset.net - Miniatures Collectors Guide" "https://miniset.net/persons/juan-diaz/sculpts")
+    (mkBookmark "Kingdom Death Minis Recasts from China on Aliexpress" "https://pandahelper.com/kingdom-death-minis-recasts-from-china/")
+    (mkBookmark "Gormiti Series III by Giochi Preziosi ~ Rubberfever" "http://www.rubberfever.com/?section=collections&voice=gormiti3")
+    (mkBookmark "MinifiguresXD: Gormiti" "http://minifigures.blogspot.com/2008/04/gormiti.html")
   ];
 in
 {
   programs.firefox.profiles.default.bookmarks = {
     force = true;
     settings = [
-      (mkToolbar "Superpower" "https://powerlisting.fandom.com/wiki/Special:Random/main")
-      (mkToolbar "Sentai Collectibles – GrnRngr.com" "https://www.grnrngr.com/sentai/collectibles")
-      (mkToolbarFolder "Call of Cthulhu" cthulhuBookmarks)
-      (mkToolbar "Random Card" (scryfall "random"))
-      (mkToolbar "Random Commander" (scryfall "random?q=is:commander"))
-      (mkToolbarFolder "Tabletop Minatures" miniatureBookmarks)
-    ]
-    ++ (importSopsNix ./bookmarks-private.sops.nix);
+      {
+        name = "Bookmarks Toolbar";
+        toolbar = true;
+        bookmarks = [
+          (mkBookmark "Superpower" "https://powerlisting.fandom.com/wiki/Special:Random/main")
+          (mkBookmark "Random Card" (scryfall "random"))
+          (mkBookmark "Random Commander" (scryfall "random?q=is:commander"))
+          (mkBookmark "Sentai Collectibles – GrnRngr.com" "https://www.grnrngr.com/sentai/collectibles")
+          (mkFolder "Call of Cthulhu" cthulhuBookmarks)
+          (mkFolder "Tabletop Minatures" miniatureBookmarks)
+        ]
+        ++ (importSopsNix ./bookmarks-private.sops.nix);
+      }
+    ];
   };
 }

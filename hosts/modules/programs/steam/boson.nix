@@ -18,13 +18,14 @@ stdenv.mkDerivation rec {
   passthru.updateScript = nix-update-script { };
 
   outputs = [
-    "out"
     "steamcompattool"
+    "out"
   ];
 
   dontBuild = true;
 
   installPhase = ''
+    touch $out # Dummy output
     mkdir $steamcompattool
     ln -s $src/* $steamcompattool
     rm $steamcompattool/compatibilitytool.vdf

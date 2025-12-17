@@ -1,7 +1,7 @@
 keys:
   - &monyarm age1vdst8x84mcar4e09v9j4q6a3k8ztfuj326ymtkvyse9e5wfxgslssvpluq
 creation_rules:
-  - path_regex: .*\.nix.sops$
+  - path_regex: .*\.sops.nix$
     key_groups:
       - age:
           - *monyarm

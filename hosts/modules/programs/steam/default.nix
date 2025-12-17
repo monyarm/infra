@@ -5,10 +5,9 @@ in
 {
   programs.steam = {
     enable = true;
-    protontricks = true;
+    protontricks.enable = true;
     extraCompatPackages = with pkgs; [
       proton-ge-bin
-      nur.repos.forkprince.boxtron-bin
       boson-bin
     ];
   };

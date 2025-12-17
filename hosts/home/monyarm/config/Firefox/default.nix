@@ -11,13 +11,12 @@
   stylix.targets.firefox = {
     profileNames = [ "default" ];
     firefoxGnomeTheme.enable = true;
-    colorTheme.enable = true;
+    # colorTheme.enable = true;
   };
 
   programs.firefox = {
     enable = true;
     profileVersion = null; # fixes profile on non-NixOS systems
-    languagePacks = [ "en-GB" ];
     profiles = {
       default = {
         id = 0;
