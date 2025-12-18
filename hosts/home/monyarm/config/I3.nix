@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }:
 
@@ -17,7 +18,7 @@ in
           "Noto Sans Regular"
           # keep-sorted end
         ];
-        size = 9.0;
+        size = lib.mkForce 9.0;
       };
       floating.modifier = mod;
 

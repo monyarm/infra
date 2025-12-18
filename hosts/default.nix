@@ -35,6 +35,8 @@ let
     inputs.niri.homeModules.stylix
     inputs.sops-nix.homeManagerModules.sops
     ./modules/lib.nix
+    "${dirs.secrets}"
+    "${dirs.secrets}/home.nix"
   ];
 
   commonModules = [
@@ -66,10 +68,12 @@ let
         inherit inputs dirs;
         isNixOS = false;
         isHomeManager = true;
+        isHomeManagerInNixOS = true;
       };
       modules = homeManagerModules ++ [
         ./modules/packages/base.nix
-        (userDir + "/default.nix")
+        ./filter.nix
+        (userDir)
       ];
     };
 
@@ -84,6 +88,8 @@ let
           hostDir + "/hardware"
         else
           hostDir + "/hardware.nix";
+
+      homeUsers = lib.genAttrs (getDirNames (builtins.readDir ./home)) (userName: ./home/${userName});
     in
     lib.nixosSystem {
       system = currentSystem;
@@ -91,6 +97,7 @@ let
         inherit inputs dirs;
         isNixOS = true;
         isHomeManager = false;
+        isHomeManagerInNixOS = true;
       };
       modules = commonModules ++ [
         (hostDir + "/configuration.nix")
@@ -102,14 +109,19 @@ let
         }
         home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {
-            inherit inputs dirs;
-            isNixOS = false;
-            isHomeManager = true;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = {
+              inherit inputs dirs;
+              isNixOS = false;
+              isHomeManager = true;
+              isHomeManagerInNixOS = true;
+            };
+            sharedModules = homeManagerModules;
+            users = homeUsers;
+            backupFileExtension = "hmBackup";
           };
-          home-manager.sharedModules = homeManagerModules;
         }
         nix-topology.nixosModules.default
       ];
@@ -131,6 +143,7 @@ let
             inherit dirs;
             isNixOS = true;
             isHomeManager = false;
+            isHomeManagerInNixOS = true;
           };
           nixpkgs.hostPlatform = currentSystem;
           nixpkgs.pkgs = pkgsGen currentSystem;

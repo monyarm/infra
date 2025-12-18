@@ -1,12 +1,16 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 let
-  # Generate Oh-My-Zsh plugins with defer
   OMZP = lib.map (name: "ohmyzsh/ohmyzsh path:plugins/${name} kind:defer");
 in
 {
+  home.packages = with pkgs; [
+    fzf
+  ];
+
   programs.zsh.antidote = {
     enable = true;
     plugins = [
+      "Aloxaf/fzf-tab"
       # git-related
       "getantidote/use-omz"
       "ohmyzsh/ohmyzsh path:lib"
@@ -33,7 +37,6 @@ in
       "zsh-users/zsh-history-substring-search kind:defer"
       "mfaerevaag/wd kind:defer"
       "romkatv/powerlevel10k"
-      "Aloxaf/fzf-tab kind:defer"
 
       # Completions
       "zsh-users/zsh-completions"
@@ -48,9 +51,9 @@ in
       "vagrant"
     ]
     ++ [
-      "lukechilds/zsh-better-npm-completion kind:defer"
-      "akoenig/gulp.plugin.zsh kind:defer"
-      "zsh-users/zsh-autosuggestions kind:defer"
+      "lukechilds/zsh-better-npm-completion"
+      "akoenig/gulp.plugin.zsh"
+      "zsh-users/zsh-autosuggestions"
     ];
     useFriendlyNames = false;
   };

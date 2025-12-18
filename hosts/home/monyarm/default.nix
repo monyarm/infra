@@ -27,10 +27,5 @@ rec {
         ) (builtins.readDir configDir)
       );
     in
-    configImports
-    ++ [
-      ./filter.nix
-      "${dirs.secrets}"
-      "${dirs.secrets}/home.nix"
-    ];
+    configImports;
 }

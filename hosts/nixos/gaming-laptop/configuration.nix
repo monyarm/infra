@@ -13,6 +13,7 @@
     "${dirs.modules}/services/tailscale.nix"
     "${dirs.modules}/services/syncthing.nix"
     "${dirs.modules}/programs/steam"
+    "${dirs.modules}/programs/shell.nix"
     "${dirs.modules}/config/doas.nix"
   ];
 
