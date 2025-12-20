@@ -5,6 +5,7 @@ in
 {
   home.packages = with pkgs; [
     fzf
+    powerline
   ];
 
   programs.zsh.antidote = {
