@@ -32,6 +32,13 @@
     "pref.downloads.disable_button.edit_actions" = false;
     "pref.privacy.disable_button.view_passwords" = false;
     "widget.use-xdg-desktop-portal.file-picker" = 0;
+    "services.sync.engine.passwords" = true;
+    "services.sync.engine.prefs" = false;
+    "services.sync.engine.addons" = false;
+    "services.sync.engine.bookmarks" = false;
+    "services.sync.engine.history" = true;
+    "services.sync.engine.tabs" = false;
+    "services.sync.engine.addresses" = true;
   };
 
 }

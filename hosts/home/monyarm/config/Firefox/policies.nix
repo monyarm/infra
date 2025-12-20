@@ -33,6 +33,7 @@ in
       Fingerprinting = true;
     };
     DisablePocket = true;
+    SyncServiceURL = "https://sync.services.mozilla.com/";
     DisableFirefoxAccounts = false;
     DisableAccounts = false;
     DisableFirefoxScreenshots = true;
