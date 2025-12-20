@@ -18,6 +18,7 @@ let
     inputs.lix-module.overlays.default
     inputs.nh.overlays.default
     inputs.nur.overlays.default
+    inputs.niri.overlays.niri
   ];
 
   pkgsGen =
@@ -36,7 +37,6 @@ let
     inputs.sops-nix.homeManagerModules.sops
     ./modules/lib.nix
     "${dirs.secrets}"
-    "${dirs.secrets}/home.nix"
   ];
 
   commonModules = [
@@ -102,7 +102,6 @@ let
       modules = commonModules ++ [
         (hostDir + "/configuration.nix")
         (if builtins.pathExists hardwarePath then hardwarePath else { })
-        ./modules/packages/base.nix
         {
           networking.hostName = hostName;
           nixpkgs.pkgs = pkgsGen currentSystem;

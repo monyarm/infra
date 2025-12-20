@@ -3,7 +3,6 @@
   lib,
   system,
   mkOutOfStoreSymlink,
-  config,
   ...
 }:
 let
@@ -15,7 +14,6 @@ let
     inherit (pkgs) lib system;
   };
   fetchers = import ./fetchers.nix { inherit pkgs; };
-  sops = import ./sops.nix { inherit config lib pkgs; };
 in
 {
   inherit
@@ -24,6 +22,5 @@ in
     helpers
     meta
     fetchers
-    sops
     ;
 }

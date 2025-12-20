@@ -31,6 +31,5 @@ in
   // customLib.format
   // customLib.helpers
   // customLib.constants
-  // customLib.fetchers
-  // customLib.sops;
+  // customLib.fetchers;
 }

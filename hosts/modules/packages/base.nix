@@ -1,31 +1,34 @@
 {
   pkgs,
-  lib,
-  isNixOS,
-  isHomeManager,
   ...
 }:
-
 let
-  basePackages = with pkgs; [
-    # keep-sorted start
-    dconf2nix
-    nh
-    nix
-    nix-output-monitor
-    #nix-relatex
-    nixfmt
-    # keep-sorted end
-  ];
+  basePackages =
+    with pkgs;
+    (builtins.concatLists (
+      builtins.attrValues {
+        cli = [
+          # keep-sorted start
+          bat
+          curl
+          diskus
+          eza
+          git
+          gnupg
+          htop
+          jq
+          ripgrep
+          tree
+          wget
+          # keep-sorted end
+        ];
+        dev = [
+          direnv
+          yarn
+        ];
+      }
+    ));
 in
-lib.mkMerge [
-  # For NixOS
-  (lib.optionalAttrs isNixOS {
-    environment.systemPackages = basePackages;
-  })
-
-  # For home-manager
-  (lib.optionalAttrs isHomeManager {
-    home.packages = basePackages;
-  })
-]
+{
+  environment.systemPackages = basePackages;
+}

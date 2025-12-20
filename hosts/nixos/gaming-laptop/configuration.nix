@@ -20,4 +20,16 @@
   networking.networkmanager.enable = true;
   system.stateVersion = "24.11";
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+    };
+  };
+
 }

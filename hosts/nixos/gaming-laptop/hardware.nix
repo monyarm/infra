@@ -40,6 +40,7 @@
   fileSystems."/home/monyarm" = {
     device = "/dev/disk/by-uuid/57646ffc-1f74-4084-a5ed-02b9380aae1c";
     fsType = "ext4";
+    neededForBoot = true;
   };
 
   swapDevices = [

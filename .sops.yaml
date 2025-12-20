@@ -1,11 +1,14 @@
 keys:
   - &monyarm age1vdst8x84mcar4e09v9j4q6a3k8ztfuj326ymtkvyse9e5wfxgslssvpluq
+  - &gaming-laptop age1dgjyyel6vjd8m2ee284m5huy5zm6rqdmgun9uz39n0ftxh3pfu5sue2nad
 creation_rules:
   - path_regex: .*\.sops.nix$
     key_groups:
       - age:
           - *monyarm
-  - path_regex: secrets/.+\.(yaml|json|env|ini|key|pass|pem|token)$
+          - *gaming-laptop
+  - path_regex: secrets\/.+\.(yaml|json|env|ini|key|pass|pem|token)$
     key_groups:
       - age:
           - *monyarm
+          - *gaming-laptop

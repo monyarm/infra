@@ -22,4 +22,8 @@ _:
 
   system.stateVersion = "24.11";
 
+  services.userborn.enable = true;
+  virtualisation.virtualbox.guest.enable = false;
+  services.tcsd.enable = false;
+
 }

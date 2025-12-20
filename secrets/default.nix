@@ -1,8 +1,9 @@
 {
-  dirs,
   lib,
   config,
   isNixOS,
+  isHomeManagerInNixOS,
+  dirs,
   ...
 }:
 let
@@ -14,7 +15,11 @@ in
   sops = {
     defaultSopsFile = ./secrets.json;
     defaultSopsFormat = "json";
-    age.keyFile = "${dirs.HOME}/.config/sops/age/keys.txt";
+    age.keyFile =
+      if (isNixOS || isHomeManagerInNixOS) then
+        "/var/lib/sops-nix/keys.txt"
+      else
+        "${dirs.HOME}/.config/sops/age/keys.txt";
 
     secrets =
       let
@@ -23,10 +28,10 @@ in
           "syncthing/cert.pem"
         ];
         jetbrainsKeys = builtins.map (k: "jetbrains/${k}.key") [
-            "clion"
-            "phpstorm"
-            "webstorm"
-          ];
+          "clion"
+          "phpstorm"
+          "webstorm"
+        ];
         binaryKeys = standaloneKeys ++ jetbrainsKeys;
       in
       lib.recursiveUpdate

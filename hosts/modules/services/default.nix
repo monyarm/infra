@@ -1,6 +1,17 @@
-_: {
-  services.xserver.enable = true;
-  services.displayManager.sddm.enable = false;
+{ pkgs, ... }:
+{
+  services.xserver = {
+    enable = true;
+    autorun = false;
+    displayManager.startx = {
+      enable = true; # dummy display manager, does nothing
+      generateScript = false;
+    };
+  };
+  services.getty = {
+    autologinUser = "monyarm";
+    autologinOnce = true;
+  };
   programs.niri.enable = true;
 
   # Configure keymap in X11
@@ -18,6 +29,14 @@ _: {
     enable = true;
     openDefaultPorts = true;
   };
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  environment.systemPackages = with pkgs; [
+    blueman
+    bluez
+    pavucontrol
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

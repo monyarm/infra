@@ -12,6 +12,7 @@ action-history_BACKUP_*
 action-history_BASE_*
 action-history_LOCAL_*
 action-history_REMOTE_*
+GIMP/shared/action-history
 tool-options/.goutputstream-*
 *.lock
 !flake.lock
@@ -20,4 +21,6 @@ fus-sessions/
 plugins/availables.xml
 plugins/availables.xml.etag
 config/*.key
+**/*.tmp.nix
 # keep-sorted end
+.aider*
