@@ -543,7 +543,6 @@ rec {
     videoFile: timestamps: cropOpts:
     let
       videoFileName = builtins.baseNameOf (builtins.unsafeDiscardStringContext videoFile);
-      name = "${videoFileName}-frames";
       cropFilter =
         if
           lib.isAttrs cropOpts && (cropOpts ? width || cropOpts ? height || cropOpts ? x || cropOpts ? y)
@@ -557,21 +556,34 @@ rec {
           "-vf \"crop=${w}:${h}:${x}:${y}\""
         else
           "";
+      # Extract each frame as a separate derivation
+      extractSingleFrame =
+        timestamp:
+        let
+          sanitizedTimestamp = lib.replaceStrings [ ":" "." ] [ "_" "_" ] timestamp;
+        in
+        pkgs.runCommand "${videoFileName}-${sanitizedTimestamp}.png"
+          {
+            buildInputs = [ pkgs.ffmpeg-headless ];
+          }
+          ''
+            echo "Extracting frame at ${timestamp} of ${videoFile}"
+            ffmpeg -i ${videoFile} -ss ${timestamp} -frames:v 1 ${cropFilter} $out
+          '';
+
+      frames = map extractSingleFrame timestamps;
     in
-    pkgs.runCommand name
-      {
-        buildInputs = [ pkgs.ffmpeg-headless ];
-      }
-      ''
-        mkdir -p $out
-        idx=0
-        ${lib.concatStringsSep "\n" (
-          lib.map (timestamp: ''
-            ffmpeg -ss ${timestamp} -i ${videoFile} -frames:v 1 ${cropFilter} $out/frame_$(printf "%03d" $idx).png
-            idx=$((idx+1))
-          '') timestamps
-        )}
-      '';
+    if lib.length frames == 1 then
+      # Single frame, return it directly
+      lib.head frames
+    else
+      # Multiple frames, create a directory with named symlinks
+      pkgs.linkFarm "${videoFileName}-frames" (
+        map (frame: {
+          inherit (frame) name;
+          path = frame;
+        }) frames
+      );
 
   extractFrames = videoFile: timestamps: extractFrames' videoFile timestamps { };
 
