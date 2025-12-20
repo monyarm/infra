@@ -250,4 +250,54 @@ with image;
     hash = "sha256-WxnFVYtM2go+nTgizl0uBL/gzRUsNgEiSPfVzra4wJw=";
   };
 
+  hellBros =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2018/02/18/09/13/52/67334146_p0.png";
+      sha256 = "sha256-Q/FLDbfQR8sUDVT5f5qqVwBV2drwv4r3ANkX5l1pZJE=";
+    }
+    |> crop16x9North;
+
+  vram = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2025/01/19/10/01/18/126358621_p0.jpg";
+    sha256 = "sha256-UlzJaoQNHeUl1sY2JvkmAdf8fmWsiylW4ofCIQ2fkwA=";
+  };
+
+  gavvCaking = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2024/12/07/23/52/20/124987698_p1.jpg";
+    sha256 = "sha256-puqFOpl2tw3cJ47/GG4uvWMVJb/kcLuuWYlVa/SjOyY=";
+  };
+
+  zeztzLeaning = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2025/07/15/12/01/43/132718341_p0.jpg";
+    sha256 = "sha256-/P+GwhXOL5fCpeoN/czv8slYIc3HohXZEctfeUsZQVQ=";
+  };
+
+  gavvOverMaster = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2025/04/26/11/05/53/129710416_p1.jpg";
+    sha256 = "sha256-6daWsoNUgFLt0TPyKK3M63bOiuwjx99n9L2h1cLHBQ4=";
+  };
+
+  valen = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2024/10/05/10/34/25/123047043_p0.jpg";
+    sha256 = "sha256-2uAN4nvW87NCtnEraKaii9lIr547YQWD3yeQdMhWGTI=";
+  };
+
+  liselle = pkgs.fetchurl {
+    name = "liselle.jpg";
+    url = "https://pbs.twimg.com/media/GpdBqW4bEAMdieF?format=jpg&name=4096x4096";
+    hash = "sha256-v6xRQ8VEUafkoaFux82LvM246dZJ6Cd7nS5m+TsBnjg=";
+  };
+
+  evolX = pkgs.fetchurl {
+    name = "evol-x.jpg";
+    url = "https://pbs.twimg.com/media/GhFuyIMa8AAtJQ5?format=jpg&name=large";
+    hash = "sha256-FwJtzvnRngsNne72aWeDEvnklOsbCHokuqdFjhFwbnc=";
+  };
+
+  cakingArmy = pkgs.fetchurl {
+    name = "caking-army.jpg";
+    url = "https://pbs.twimg.com/media/Geb1pUgaUAAToDM?format=jpg&name=4096x4096";
+    hash = "sha256-TbO0YoW6dy1VuvtaQM6+G4T5MDDw6ifGPYfzcT7xXyQ=";
+  };
+
 }
