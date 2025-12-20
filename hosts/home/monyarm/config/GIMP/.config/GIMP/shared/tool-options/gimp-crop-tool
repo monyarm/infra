@@ -7,7 +7,7 @@
 (overridden-fixed-aspect yes)
 (overridden-fixed-size yes)
 (foreground
-    (color "R'G'B'A u8" 4 "\261\20\57\377" 0))
+    (color "R'G'B'A u8" 4 "\361\345\347\377" 0))
 (background
     (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
 (pattern "Warning!")

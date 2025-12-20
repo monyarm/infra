@@ -8,10 +8,9 @@
 @import url("file:///usr/share/gimp/3.0/themes/Default/gimp-dark.css");
 @import url("file:///etc/gimp/3.0/gimp.css");
 
-* {
-  -gtk-icon-style: symbolic;
-}
+* { -gtk-icon-style: symbolic; }
 
 /* prefer-dark-theme */
+
 
 /* end of theme.css */
