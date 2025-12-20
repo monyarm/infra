@@ -30,6 +30,18 @@ let
       };
     };
 
+  # Import autoImport once to pass to all configurations
+  # Use x86_64-linux pkgs as it's just for helper functions
+  helpers = import ../lib/helpers.nix (
+    {
+      pkgs = pkgsGen "x86_64-linux";
+      inherit lib;
+      mkOutOfStoreSymlink = _: { };
+    }
+    // constants
+  );
+  inherit (helpers) autoImport;
+
   homeManagerModules = [
     inputs.stylix.homeModules.stylix
     inputs.niri.homeModules.niri
@@ -65,15 +77,16 @@ let
     home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsGen currentSystem;
       extraSpecialArgs = {
-        inherit inputs dirs;
+        inherit inputs dirs autoImport;
         isNixOS = false;
         isHomeManager = true;
-        isHomeManagerInNixOS = true;
+        isHomeManagerInNixOS = false;
       };
       modules = homeManagerModules ++ [
-        ./modules/packages/base.nix
-        ./filter.nix
-        (userDir)
+        ./modules/packages/nix.nix
+        ./modules/filter.nix
+        userDir
+        "${dirs.secrets}/home.nix"
       ];
     };
 
@@ -94,7 +107,7 @@ let
     lib.nixosSystem {
       system = currentSystem;
       specialArgs = {
-        inherit inputs dirs;
+        inherit inputs dirs autoImport;
         isNixOS = true;
         isHomeManager = false;
         isHomeManagerInNixOS = true;
@@ -139,7 +152,7 @@ let
         ../secrets/system.nix
         {
           _module.args = {
-            inherit dirs;
+            inherit dirs autoImport;
             isNixOS = true;
             isHomeManager = false;
             isHomeManagerInNixOS = true;
