@@ -20,7 +20,7 @@ let
   swwwCommand = "swww img --transition-type=none --resize=fit";
   swwwScript = pkgs.writeText "swww-random" ''
     while true; do
-            find "${dirs.wallpapers}" -maxdepth 1 -type f \
+            find "${dirs.wallpapers}" -maxdepth 1 \( -type f -o -type l \) \
             | while read -r img; do
                     echo "$(</dev/urandom tr -dc a-zA-Z0-9 | head -c 8):$img"
             done \

@@ -18,18 +18,7 @@ in
 {
   _module.args = {
     inherit inputs mkOutOfStoreSymlink;
-    inherit (customLib)
-      format
-      helpers
-      constants
-      meta
-      fetchers
-      sops
-      ;
     shouldFullUpdate = customLib.meta.deviceType != "android" && (builtins.getEnv "FULLUPDATE") != "";
   }
-  // customLib.format
-  // customLib.helpers
-  // customLib.constants
-  // customLib.fetchers;
+  // customLib;
 }

@@ -11,7 +11,7 @@ url="$1"
 
 # Get the directory where this script is located
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-nix_root="$(cd "$script_dir/.." && pwd)"
+nix_root="$(cd "$script_dir/../.." && pwd)"
 
 cd "$nix_root"
 

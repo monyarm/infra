@@ -35,7 +35,7 @@ in
 
       # 3. Install or re-install the Cargo packages you DO want
       for pkg in ${toString desiredCargoPackages}; do
-        ${dirs.lib}/cargo_program_manager.sh "$pkg"
+        ${dirs.scripts}/package-managers/cargo_program_manager.sh "$pkg"
       done
     ''
   );

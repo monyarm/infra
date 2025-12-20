@@ -8,7 +8,10 @@
 let
   format = import ./format.nix { inherit pkgs lib; };
   constants = import ./constants.nix { inherit lib; };
-  helpers = import ./helpers.nix ({ inherit pkgs lib mkOutOfStoreSymlink; } // constants);
+  strings = import ./strings.nix ({ inherit pkgs lib; } // constants);
+  imports = import ./imports.nix { inherit pkgs lib; };
+  files = import ./files.nix { inherit pkgs lib mkOutOfStoreSymlink; };
+  media = import ./media.nix { inherit pkgs lib; };
   meta = import ./meta.nix {
     inherit pkgs;
     inherit (pkgs) lib system;
@@ -19,8 +22,19 @@ in
   inherit
     format
     constants
-    helpers
+    strings
+    imports
+    files
+    media
     meta
     fetchers
     ;
 }
+// format
+// constants
+// strings
+// imports
+// files
+// media
+// meta
+// fetchers

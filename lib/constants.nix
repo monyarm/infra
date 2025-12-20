@@ -14,6 +14,7 @@ rec {
     hosts = "${repo}/hosts";
     lib = "${repo}/lib";
     modules = "${hosts}/modules";
+    scripts = "${repo}/scripts";
     secrets = "${repo}/secrets";
     wallpapers = "${HOME}/Pictures/wallpapers";
     webdav = "${xdg.config}/webdav";

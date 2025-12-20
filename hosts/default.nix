@@ -30,17 +30,15 @@ let
       };
     };
 
-  # Import autoImport once to pass to all configurations
+  # Import lib to get autoImport and other helpers
   # Use x86_64-linux pkgs as it's just for helper functions
-  helpers = import ../lib/helpers.nix (
-    {
-      pkgs = pkgsGen "x86_64-linux";
-      inherit lib;
-      mkOutOfStoreSymlink = _: { };
-    }
-    // constants
-  );
-  inherit (helpers) autoImport;
+  myLib = import ../lib/default.nix {
+    pkgs = pkgsGen "x86_64-linux";
+    system = "x86_64-linux";
+    inherit lib;
+    mkOutOfStoreSymlink = _: { };
+  };
+  inherit (myLib) autoImport;
 
   homeManagerModules = [
     inputs.stylix.homeModules.stylix

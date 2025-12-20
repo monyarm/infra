@@ -44,7 +44,7 @@ in
 
       # 3. Install or re-install the global NPM packages you DO want
       for pkg in ${toString desiredNPMGlobalPackages}; do
-        ${dirs.lib}/npm_program_manager.sh "$pkg"
+        ${dirs.scripts}/package-managers/npm_program_manager.sh "$pkg"
       done
     ''
   );
