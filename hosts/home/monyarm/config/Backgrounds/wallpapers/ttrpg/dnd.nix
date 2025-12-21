@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, fetchSteamCards, ... }:
 let
   dnd50thZip = pkgs.fetchzip {
     url = "https://media.dndbeyond.com/compendium-images/marketing/50th-anniversary-desktop-wallpapers.zip";
@@ -198,5 +198,9 @@ in
   starter = pkgs.fetchurl {
     url = "https://images.ctfassets.net/swt2dsco9mfe/1sM6XUZXHZOP7l9vfJU7PN/d026f03125c3fb337d58de7d23cc16e2/1920x1080-starter.jpg";
     hash = "sha256-Ay9MabgUZsjx+MUnVy91A1YM4f4gXcvdswwmOmbmRsA=";
+  };
+  baldursGate3 = fetchSteamCards {
+    appId = 1086940;
+    hash = "sha256-3YDOYoyVRe1yGebGIx3mqj418nobsZ9mrntIvRk7L8s=";
   };
 }

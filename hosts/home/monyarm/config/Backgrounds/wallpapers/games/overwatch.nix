@@ -130,4 +130,10 @@ in
     url = "https://cdnb.artstation.com/p/assets/images/images/044/963/791/large/will-murai-untitled-1.jpg";
     sha256 = "sha256-O1WBhjnYAvmrIf2L2V9QpyzNNlKjWls7yD09dgGcHuY=";
   };
+
+  leSserafimGroup = pkgs.fetchurl {
+    url = "https://pbs.twimg.com/media/F9tDGrZbsAAn7sL?format=jpg&name=4096x4096";
+    hash = "sha256-aSjs05scBX2EF6SCZChZPlgwSD5jHWkbzlcdxuOwMTc=";
+    name = "overwatch-lesserafim.jpg";
+  };
 }

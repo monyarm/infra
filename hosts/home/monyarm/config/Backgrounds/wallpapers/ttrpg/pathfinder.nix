@@ -1,5 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, fetchSteamCards, ... }:
 {
+  # Steam trading cards
+  pathfinderWrathOfTheRighteous = fetchSteamCards {
+    appId = 1184370;
+    hash = "sha256-KLFl5Ov7Ej5yahE3YZ59am6bXcK5paW02UlZQpqdvxo=";
+  };
+  pathfinderAdventures = fetchSteamCards {
+    appId = 480640;
+    hash = "sha256-t1XKNc80eGZdCzJXMgvodLyU1dTIlI2LsFAl7FRqo+s=";
+  };
+  pathfinderKingmaker = fetchSteamCards {
+    appId = 640820;
+    hash = "sha256-GHAYR195sd902/K2X2ZIUnuNHQmjqsxlfmGoQ1cCmrs=";
+  };
+
+  # Manual wallpapers
   pathfinderWrath01 = pkgs.fetchurl {
     url = "https://wrath.owlcat.games/storage/images/fa6d6fee6012b6daf8220d856ab739a7.jpg";
     sha256 = "0f7x0r8kfm6lkvylly1kdlx2p5pvfjpzw3h09x4xa32ckgbwzjzl";

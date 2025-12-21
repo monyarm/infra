@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  fetchSteamCards,
+  ...
+}:
 let
   halfLifeBaseUrl = "https://cdn.fastly.steamstatic.com/half-life.com/images";
 
@@ -44,3 +49,17 @@ in
   "0ajvr1bcz9609yvhdxjzz60p9k385m4kyxcv5m3mjfp0yhqcidk5"
   "1imqpmzcwr1pkjqvmnvbvw7ghs7yxlwdymi0lq1h8lsrsl8k22vr"
 ])
+// {
+  portal2 = fetchSteamCards {
+    appId = 620;
+    cardNames = [
+      "destruction"
+      "finale"
+      "glados"
+      "intro"
+      "theLab"
+      "mannequin"
+    ];
+    hash = "sha256-c9Rtd86DdhwHUu2dBCeVG5hqFzvCx91LpplAymxvOxE=";
+  };
+}
