@@ -23,6 +23,8 @@ let
             | while read -r img; do
                     for d in $(swww query | awk '{print $2}' | sed s/://); do # see swww-query(1)
                             [ -z "$img" ] && if read -r img; then true; else break 2; fi
+                            rm -f "/tmp/current-wallpaper_$d"
+                            ln -s "$img" "/tmp/current-wallpaper_$d"
                             ${swwwCommand} --outputs "$d" "$img"
                             unset -v img # Each image should only be used once per loop
                     done
@@ -34,12 +36,12 @@ let
   allWallpapers = builtins.attrValues (autoImport {
     path = ./wallpapers;
     args = {
-        inherit
-          pkgs
-          lib
-          ;
-      }
-      // customLib;
+      inherit
+        pkgs
+        lib
+        ;
+    }
+    // customLib;
     mode = "merge";
     recursive = true;
   });

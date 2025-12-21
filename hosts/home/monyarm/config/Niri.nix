@@ -67,6 +67,7 @@ lib.mkMerge [
             "swww-daemon"
             "xwayland-satellite"
             "~/.local/bin/swww-random"
+            "wl-paste --watch cliphist store"
             # keep-sorted end
           ]
           ++ lib.optional (!isHomeManagerInNixOS) (
@@ -75,7 +76,6 @@ lib.mkMerge [
         );
       prefer-no-csd = true;
       window-rules = [
-
         {
           matches = [
             { is-floating = true; }
@@ -289,7 +289,7 @@ lib.mkMerge [
 
             "Mod+V" = {
               repeat = false;
-              action = spawn "cliphist" "list" "|" "rofi" "-dmenu" "|" "cliphist" "decode" "|" "wl-copy";
+              action = spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy";
             };
 
             # TODO: Install grimshot or find a way to get it working without sway (gentoo package requires sway)
@@ -297,9 +297,20 @@ lib.mkMerge [
             #"Mod+Shift+S" = { repeat = false; action = spawn "wayfreeze" "--after-freeze-cmd" "grimshot --notify --cursor copy area; killall wayfreeze";};
             #"Mod+Shift+D" = { repeat = false; action = spawn "sh" "-c" "grim -g '$(slurp)' - | tesseract - - -l jpn | wl-copy"; };
 
-            "Mod+Ctrl+Q" = {
+            "Mod+Shift+Q" = {
               repeat = false;
-              action = spawn "sh" "-c" "pgrep swaylock || swaylock --image ${config.stylix.image}";
+              action =
+                spawn "sh" "-c"
+                  "${pkgs.writeScript "lockscreen" ''
+                    if pgrep swaylock; then
+                      exit 0
+                    fi
+                    cmd=(swaylock --image /tmp/current-wallpaper);
+                    for d in $(swww query | awk '{print $2}' | sed s/://); do
+                      cmd+=(--image "$d":/tmp/current-wallpaper_"$d");
+                    done
+                    "''${cmd[@]}"
+                  ''}";
             };
 
             "Mod+Q" = {
