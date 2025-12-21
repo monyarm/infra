@@ -12,6 +12,10 @@ let
   # Import constants early to make dirs available
   constants = import ../lib/constants.nix { inherit lib; };
   inherit (constants) dirs;
+  inherit ((import ../lib/imports.nix {
+      inherit lib;
+      pkgs = pkgsGen "x86_64-linux";
+    })) autoImport;
 
   overlays = [
     inputs.nix-topology.overlays.default
@@ -29,16 +33,6 @@ let
         allowUnfree = true;
       };
     };
-
-  # Import lib to get autoImport and other helpers
-  # Use x86_64-linux pkgs as it's just for helper functions
-  myLib = import ../lib/default.nix {
-    pkgs = pkgsGen "x86_64-linux";
-    system = "x86_64-linux";
-    inherit lib;
-    mkOutOfStoreSymlink = _: { };
-  };
-  inherit (myLib) autoImport;
 
   homeManagerModules = [
     inputs.stylix.homeModules.stylix
@@ -123,7 +117,7 @@ let
             useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = {
-              inherit inputs dirs;
+              inherit inputs dirs autoImport;
               isNixOS = false;
               isHomeManager = true;
               isHomeManagerInNixOS = true;

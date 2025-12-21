@@ -1,9 +1,12 @@
 {
   lib,
   mkOutOfStoreSymlink,
+  config,
   ...
 }:
 rec {
+  getSecretPath = name: config.sops.secrets."${name}".path;
+
   binFile =
     content:
     let

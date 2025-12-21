@@ -382,4 +382,27 @@ rec {
       );
 
   extractFrames = videoFile: timestamps: extractFrames' videoFile timestamps { };
+
+  # toWebp:
+  #   Converts a video file to an animated WebP file using ffmpeg.
+  #   Type: toWebp -> src -> Derivation
+  toWebp =
+    src:
+    let
+      fullFileName = lib.getName src;
+      fileNameParts = lib.splitString "." fullFileName;
+      baseName =
+        if lib.length fileNameParts > 1 then
+          lib.concatStringsSep "." (lib.init fileNameParts)
+        else
+          fullFileName;
+      name = "${baseName}.webp";
+    in
+    pkgs.runCommand name
+      {
+        buildInputs = [ pkgs.ffmpeg-headless ];
+      }
+      ''
+        ffmpeg -i ${src} -vcodec libwebp -lossless 0 -compression_level 6 -q:v 50 -loop 0 -preset picture -an -vsync 0 $out
+      '';
 }

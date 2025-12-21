@@ -2,15 +2,10 @@
   binFile,
   pkgs,
   lib,
-  image,
   dirs,
-  linkContents,
-  fetchVideo,
-  fetchPixiv,
-  extractFrames,
-  extractFrames',
-  fetchSteamStoreAsset,
+  customLib,
   autoImport,
+  linkContents,
   ...
 }:
 let
@@ -39,18 +34,12 @@ let
   allWallpapers = builtins.attrValues (autoImport {
     path = ./wallpapers;
     args = {
-      inherit
-        pkgs
-        lib
-        image
-        fetchVideo
-        fetchPixiv
-        extractFrames
-        extractFrames'
-        fetchSteamStoreAsset
-        autoImport
-        ;
-    };
+        inherit
+          pkgs
+          lib
+          ;
+      }
+      // customLib;
     mode = "merge";
     recursive = true;
   });

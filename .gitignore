@@ -24,3 +24,4 @@ config/*.key
 **/*.tmp.nix
 # keep-sorted end
 .aider*
+input
