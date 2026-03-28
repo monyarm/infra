@@ -1,6 +1,5 @@
 services:
   matter:
-    container_name: matter
     image: "ghcr.io/matter-js/python-matter-server:stable"
     restart: unless-stopped
     network_mode: host
@@ -10,14 +9,25 @@ services:
       - /mnt/Media/MatterData:/data
       - /run/dbus:/run/dbus:ro
   homeassistant:
-    container_name: homeassistant
-    image: "ghcr.io/home-assistant/home-assistant:stable"
+    image: "ghcr.io/home-assistant/home-assistant:latest"
+    restart: unless-stopped
     volumes:
       - /mnt/Media/HAConfig:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
-    restart: unless-stopped
     privileged: true
     network_mode: host
     environment:
       TZ: Europe/Sofia
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    restart: unless-stopped
+    ports:
+      - 13378:80
+    volumes:
+      - /mnt/Media/AudioBooks:/audiobooks
+      - /mnt/Media/Podcasts:/podcasts
+      - /mnt/Media/ABConfig:/config
+      - /mnt/Media/ABMetadata:/metadata
+    environment:
+      - TZ=Europe/Sofia

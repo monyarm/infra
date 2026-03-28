@@ -1,4 +1,10 @@
-{ pkgs, fetchSteamCards, ... }:
+{
+  pkgs,
+  fetchSteamCards,
+  image,
+  ...
+}:
+with image;
 {
   # Steam trading cards
   pathfinderWrathOfTheRighteous = fetchSteamCards {
@@ -20,10 +26,12 @@
     sha256 = "0f7x0r8kfm6lkvylly1kdlx2p5pvfjpzw3h09x4xa32ckgbwzjzl";
   };
 
-  pathfinderWrath02 = pkgs.fetchurl {
-    url = "https://wrath.owlcat.games/storage/images/ee761534698aa2ec52ce6bb41d95e7f0.jpg";
-    sha256 = "1aw0fkgn1wq0rd4g74am6gwx74d10h8wk3jinmaxw9mdj7f3iflg";
-  };
+  pathfinderWrath02 =
+    pkgs.fetchurl {
+      url = "https://wrath.owlcat.games/storage/images/ee761534698aa2ec52ce6bb41d95e7f0.jpg";
+      sha256 = "1aw0fkgn1wq0rd4g74am6gwx74d10h8wk3jinmaxw9mdj7f3iflg";
+    }
+    |> crop16x9;
 
   pathfinderWrath03 = pkgs.fetchurl {
     url = "https://wrath.owlcat.games/storage/images/bd0ccb47974c9dc32a6e1e49a69b2f0e.jpg";

@@ -25,7 +25,7 @@ if [[ -z $appId ]]; then
   exit 1
 fi
 
-fetcher_expr="(with import ./lib/fetchers.nix { pkgs = import <nixpkgs> { }; }; fetchSteamCards) "
+fetcher_expr="(with import ./lib/fetchers.nix { pkgs = import <nixpkgs> { }; dirs = null; importSopsString = null; }; fetchSteamCards) "
 cmd=(nix-prefetch "$fetcher_expr" --appId "$appId" --sha256 "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
 if [[ -n $cardNames ]]; then
   cmd+=(--cardNames --expr "$cardNames")

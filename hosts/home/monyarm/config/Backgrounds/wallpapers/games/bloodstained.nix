@@ -19,4 +19,8 @@
     appId = 838310;
     hash = "sha256-zNnJPXe8HdTES0JbsHg4b8ynHeAu63HkYP+jzYt4Xdo=";
   };
+  bloodstainedCurseOfTheMoon2 = fetchSteamCards {
+    appId = 1257360;
+    hash = "sha256-bbN96EM7eNrmCqqYhXzHeC05TXskxrXfpSr200V4B5A=";
+  };
 }

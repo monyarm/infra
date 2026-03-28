@@ -7,12 +7,16 @@ let
   };
 in
 {
+  reaper = pkgs.fetchurl {
+    url = "https://cdna.artstation.com/p/assets/images/images/006/941/434/large/josh-burns-bb-overwatch-reaper-web.jpg";
+    sha256 = "1l6rr7mfn5s69fxh41x8mkrgjg5mcc0nmjxympz4rpjzz4kl86p9";
+  };
   hanzoRule63 =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/002/864/329/large/liang-xing-hanzo13.jpg";
       sha256 = "sha256-JJoriad6ZNEWhZyDD9mPuE06SiwK4vKRH6ODxgr9nXQ=";
     }
-    |> grow16x9North;
+    |> crop16x9North;
 
   dva15 =
     pkgs.fetchurl {
@@ -36,7 +40,6 @@ in
     |> crop16x9North;
 
   bunnyGirlEast = bunnyGirl |> crop16x9East;
-
   bunnyGirlWest = bunnyGirl |> crop16x9West;
 
   ana = pkgs.fetchurl {

@@ -33,7 +33,7 @@
 (image-resize-fill-type white)
 (image-resize-layer-set all)
 (layer-new-name "watermark")
-(layer-add-mask-type alpha)
+(layer-add-mask-type selection)
 (selection-grow-radius 5)
 (selection-shrink-radius 20)
 (fill-options

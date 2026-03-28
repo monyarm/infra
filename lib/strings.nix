@@ -35,7 +35,7 @@ rec {
         text = """${text}"""
         result = []
         for char in text:
-            if ord(char) > 127:
+            if ord(char) > 127 or char in ' %&+/=?#<> ':
                 for byte in char.encode('${charset}'):
                     result.append(f'%{byte:02x}')
             else:

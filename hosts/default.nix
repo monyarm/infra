@@ -12,10 +12,15 @@ let
   # Import constants early to make dirs available
   constants = import ../lib/constants.nix { inherit lib; };
   inherit (constants) dirs;
-  inherit ((import ../lib/imports.nix {
-      inherit lib;
-      pkgs = pkgsGen "x86_64-linux";
-    })) autoImport;
+  inherit
+    (
+      (import ../lib/imports.nix {
+        inherit lib;
+        pkgs = pkgsGen "x86_64-linux";
+      })
+    )
+    autoImport
+    ;
 
   overlays = [
     inputs.nix-topology.overlays.default
@@ -23,6 +28,7 @@ let
     inputs.nh.overlays.default
     inputs.nur.overlays.default
     inputs.niri.overlays.niri
+    inputs.steam-fetcher.overlay
   ];
 
   pkgsGen =
@@ -57,7 +63,7 @@ let
 
   buildConfigurations =
     dirSet: builder:
-    lib.foldl' (acc: name: acc // { "${name}" = builder name; }) { } (getDirNames dirSet);
+    lib.mergeAttrsList (lib.map (name: { "${name}" = builder name; }) (getDirNames dirSet));
 
   buildHomeConfig =
     userName:

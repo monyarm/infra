@@ -24,7 +24,7 @@ let
     inherit pkgs;
     inherit (pkgs) lib system;
   };
-  fetchers = import ./fetchers.nix { inherit pkgs; };
+  fetchers = import ./fetchers.nix ({ inherit pkgs; } // constants // strings // imp);
   all = {
     inherit
       format

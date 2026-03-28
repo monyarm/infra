@@ -12,6 +12,15 @@ rec {
       "--decrypt"
       (toString file)
     ];
+  importSopsString =
+    file:
+    builtins.exec [
+      (pkgs.writeShellScript "sops-decrypt-string" ''
+        #!/usr/bin/env bash
+        set -e
+        echo "\"$(${pkgs.sops}/bin/sops --decrypt "${(toString file)}")\""
+      '')
+    ];
 
   # Unified helper to import all files/directories in a given path
   # Automatically handles:
@@ -84,5 +93,5 @@ rec {
       # Flatten the list if recursive mode is enabled (since subdirectories return lists/attrsets)
       flattened = if recursive then lib.flatten filtered else filtered;
     in
-    if mode == "list" then flattened else lib.foldl' (acc: val: acc // val) { } flattened;
+    if mode == "list" then flattened else lib.mergeAttrsList flattened;
 }

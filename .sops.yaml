@@ -7,7 +7,7 @@ creation_rules:
       - age:
           - *monyarm
           - *gaming-laptop
-  - path_regex: secrets\/.+\.(yaml|json|env|ini|key|pass|pem|token)$
+  - path_regex: secrets\/.+\.(yaml|json|env|ini|key|pass|pem|token|cookie)$
     key_groups:
       - age:
           - *monyarm

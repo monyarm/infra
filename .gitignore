@@ -22,6 +22,7 @@ plugins/availables.xml
 plugins/availables.xml.etag
 config/*.key
 **/*.tmp.nix
-# keep-sorted end
 .aider*
-input
+input.txt
+wallpaper-count.txt*
+# keep-sorted end

@@ -88,8 +88,8 @@
     (monitor 1))
 (session-info "toplevel"
     (factory-entry "gimp-toolbox-color-dialog")
-    (position 20 282)
-    (monitor 1))
+    (position 597 281)
+    (monitor 0))
 (session-info "toplevel"
     (factory-entry "gimp-file-export-dialog")
     (position 20 20)
@@ -111,12 +111,13 @@
 (session-info "toplevel"
     (factory-entry "gimp-curves-tool-dialog")
     (position 20 20)
-    (size 460 603)
+    (size 502 603)
     (monitor 0))
 (session-info "toplevel"
     (factory-entry "gimp-levels-tool-dialog")
-    (position 1320 256)
-    (size 492 601))
+    (position 20 20)
+    (size 596 601)
+    (monitor 0))
 (session-info "toplevel"
     (factory-entry "gimp-module-dialog")
     (position 0 531)

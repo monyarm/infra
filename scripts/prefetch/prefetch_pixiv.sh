@@ -15,4 +15,4 @@ nix_root="$(cd "$script_dir/../.." && pwd)"
 
 cd "$nix_root"
 
-nix-prefetch "(import ./lib/fetchers.nix { pkgs = import <nixpkgs> {}; }).fetchPixiv { url = \"$url\"; sha256 = \"\"; }"
+nix-prefetch "(import ./lib/fetchers.nix { pkgs = import <nixpkgs> {}; dirs = null; importSopsString = null; urlEncode = null; }).fetchPixiv { url = \"$url\"; sha256 = \"\"; }"

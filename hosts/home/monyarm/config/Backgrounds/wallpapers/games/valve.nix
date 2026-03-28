@@ -2,6 +2,7 @@
   pkgs,
   lib,
   fetchSteamCards,
+  toWebp,
   ...
 }:
 let
@@ -62,4 +63,10 @@ in
     ];
     hash = "sha256-c9Rtd86DdhwHUu2dBCeVG5hqFzvCx91LpplAymxvOxE=";
   };
+  steamMeowMall =
+    pkgs.fetchurl {
+      url = "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/2855140/e2a8428a48f49312a3fe5c45206b998af76910e8.mp4";
+      hash = "sha256-UNzwN5Sm+oz3uXqqfsSS2VhROt63nYME9sDJZF3hd6Y=";
+    }
+    |> toWebp;
 }

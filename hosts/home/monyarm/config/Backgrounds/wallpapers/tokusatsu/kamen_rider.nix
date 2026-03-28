@@ -8,6 +8,89 @@
 }:
 with image;
 {
+  kivaAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdna.artstation.com/p/assets/images/images/020/480/086/large/anthony-ray-kamen-rider-kiva-resize.jpg";
+      sha256 = "sha256-rQfkmsuIwa8174AgizDorfskNb+7f/NiqKQ+MJUNlSI=";
+    }
+    |> crop16x9North;
+
+  ryukiAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdna.artstation.com/p/assets/images/images/020/333/856/large/anthony-ray-ryuki-resize.jpg";
+      sha256 = "sha256-CQUuoOTizmOAlMVauoQ6QGQ75HVW+FZHsKrmzGortS8=";
+    }
+    |> crop16x9North;
+
+  momotarosAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/020/341/871/large/anthony-ray-dynamic-duo-1.jpg";
+      sha256 = "sha256-gQxPCd9vQX9g5D/TW9P2Zv49mTPWIOvWod/KBh1TYuo=";
+    }
+    |> crop16x9North;
+
+  izuZeroTwo =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/037/794/011/large/citemer-liu-22xiao.jpg";
+      sha256 = "sha256-QenBpX1Xjyi0PVdWA/oO8w3bPm0NK6d6tGkLk6Jxa3U=";
+    }
+    |> growEdge16x9West;
+
+  kivaEmperorMash =
+    pkgs.fetchurl {
+      url = "https://cdna.artstation.com/p/assets/images/images/015/736/552/large/mash-pool-kiva7s.jpg";
+      sha256 = "sha256-52FgMDyAbP0vpof4NMA810iQCfeQeC0SbwiF08Taq5Y=";
+    }
+    |> crop16x9;
+
+  kabutoAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/020/340/073/large/anthony-ray-kabuto-resize.jpg";
+      sha256 = "sha256-ISQDGm3NofIOr0t9ye2lZa8g+FpJmngBnnYjS+4OQe0=";
+    }
+    |> crop16x9North;
+
+  hibikiAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/020/339/953/large/anthony-ray-hibiki.jpg";
+      sha256 = "sha256-7FPNPJMowwQMP8eMhUbespJwBsvY/AJvgJUnJDVqQrk=";
+    }
+    |> crop16x9North;
+
+  bladeAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/020/339/987/large/anthony-ray-blade-resize.jpg";
+      sha256 = "sha256-VIlO2jMuzVCNGj1kskZhVI1elJkJ1Sb+2lMer4NqoUc=";
+    }
+    |> crop16x9North;
+
+  faizAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/020/333/899/large/anthony-ray-faiz-resize.jpg";
+      sha256 = "sha256-sF+aZZKxcyoVVTezZId3P9nW+DQwR5BEy3uzYfRbuB0=";
+    }
+    |> crop16x9North;
+
+  agitoAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/020/333/719/large/anthony-ray-agito-resize.jpg";
+      sha256 = "sha256-OF8HMTyTmAborW4llIeNsqRKHylcC2h7tT7/lfdMOvs=";
+    }
+    |> crop16x9North;
+
+  kuugaAnthonyRay =
+    pkgs.fetchurl {
+      url = "https://cdnb.artstation.com/p/assets/images/images/020/333/383/large/anthony-ray-kuuga-resize-2.jpg";
+      sha256 = "sha256-u8BTII1rlC7MSd9Hb/bHFIM4pV9NsGL6rV3U8n0he8Y=";
+    }
+    |> crop16x9North;
+
+  dreadBothGender =
+    pkgs.fetchurl {
+      url = "https://cdna.artstation.com/p/assets/images/images/070/649/400/large/samcy-.jpg";
+      sha256 = "sha256-OjJeAssDnu0X6yjYa/Ko3ixGKNHJx6PcuJbn+owI2E4=";
+    }
+    |> crop16x9North;
   fuutoPIOpening =
     extractFrames
       (fetchVideo {
@@ -298,6 +381,149 @@ with image;
     name = "caking-army.jpg";
     url = "https://pbs.twimg.com/media/Geb1pUgaUAAToDM?format=jpg&name=4096x4096";
     hash = "sha256-TbO0YoW6dy1VuvtaQM6+G4T5MDDw6ifGPYfzcT7xXyQ=";
+  };
+  tojima = pkgs.fetchurl {
+    name = "tojima.jpg";
+    url = "https://pbs.twimg.com/media/G26QOMPawAASFNA?format=jpg&name=large";
+    sha256 = "sha256-Pnm+nSOFIBCbdeV1dB9YyEtRSqfIP8tkKLeHAaatTM4=";
+  };
+
+  ichigoNigo =
+    fetchPixiv {
+      url = "https://pbs.twimg.com/media/GOPkHnBbAAAG1PH?format=jpg&name=4096x4096";
+      sha256 = "sha256-9392QaxK0xrukomO+w0UDH8dOvNedzqXHciMYinUwpg=";
+    }
+    |> grow16x9;
+
+  ouja =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2023/02/16/03/30/22/105426309_p0.jpg";
+      sha256 = "sha256-kLmz2FDIIwOqrWQT2aiZYIIU1vVmXeGajixdjMGIpnA=";
+    }
+    |> crop16x9North;
+
+  oujaAllSurvive =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2023/01/03/18/14/19/104200987_p1.png";
+      sha256 = "sha256-5pCXuwKX+4b16LCEKXZdWYiVpJ63V8Gc0LSfpEy4uqE=";
+    }
+    |> crop16x9North;
+
+  faizRiders =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2018/11/07/15/44/20/71545055_p1.jpg";
+      sha256 = "sha256-whiYXXRf/seWc3Cdut7D/0wwoltSrEfcRRoZLRk60aE=";
+    }
+    |> crop16x9;
+
+  kivaFatherSon =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2022/10/23/13/30/58/102164512_p0.jpg";
+      sha256 = "sha256-T4OPCFqACEb10u/5e7kNheysAZfxdPGHsuBC6Pcs+4c=";
+    }
+    |> crop16x9;
+
+  cobraEvol =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2018/05/20/00/00/08/68825414_p0.png";
+      sha256 = "sha256-OLVoxIvohX5drA+lJMgMzsUTczsjRjjGuxjOwNi7N7Y=";
+    }
+    |> crop16x9South;
+
+  overQuartzer =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2019/07/27/23/12/53/75940616_p0.png";
+      sha256 = "sha256-LL8LO/D9B3fcHt9HnjSwnb6ztOrUkQ3YStHfrmr5CPc=";
+    }
+    |> crop16x9West;
+
+  ridersSubway =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2024/09/01/00/00/19/122018484_p0.png";
+      sha256 = "sha256-ntjAH5NPcSkPkLMHO5hEvHUTtNE94pzeO+FIcbaGFTg=";
+    }
+    |> crop16x9North;
+
+  geatsIX = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2024/01/29/00/00/13/115570781_p0.png";
+    sha256 = "sha256-DxlPcbcFoVvbzAFL/+2tEbiviv9nnWZ5Z+Nk9cOjHO4=";
+  };
+
+  shinDoubleRiders = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2023/03/17/00/00/20/106278060_p0.png";
+    sha256 = "sha256-Sfjv3ySelSa7AyX3oFp10XMutqp83Q+3zQvegCTxsaY=";
+  };
+
+  evil = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2022/01/10/00/00/18/95420328_p0.png";
+    sha256 = "sha256-NGlUHgOV8/DkjuaB/1phoax3qXZh+LZcqo5nzbQPNnk=";
+  };
+
+  wMotorcycle =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2021/12/31/00/03/56/95145658_p1.png";
+      sha256 = "sha256-g6MfuDUZQZHXdXZ8pLORuI4stXE/GzhgmxdGy79kzC8=";
+    }
+    |> crop16x9North;
+
+  saberCrimson = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2021/12/31/00/03/56/95145658_p7.png";
+    sha256 = "sha256-4DdTzItyZkkcn7y9gilX2IABbCmfaIV3iOeNk+78/6I=";
+  };
+
+  reviceForms = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2021/09/26/00/00/13/93015946_p0.png";
+    sha256 = "sha256-hjQKwnSUkWpfuaX5AKMqK6frqb+nqPeioZzxpMK+DSQ=";
+  };
+
+  reviceRiders = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2021/10/24/00/00/11/93638730_p0.png";
+    sha256 = "sha256-d2rUAelLCXlhwQP851+Yo3SQMyVshJygk6GEliwcwDI=";
+  };
+
+  arkVsArk =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2020/11/29/00/00/19/85968331_p0.png";
+      sha256 = "sha256-JW7oD9R+y/1fjHXUkn/2xzhd63J5r5MGTC5zKNXH4iY=";
+    }
+    |> crop16x9North;
+
+  zeroOneTrio =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2019/09/01/00/00/52/76559252_p0.png";
+      sha256 = "sha256-qukN+aKD9FtokYTQfyACFTpbfpeJ4g2LoGXel+XZniY=";
+    }
+    |> crop16x9West;
+
+  demushu =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2014/04/13/13/35/57/42866119_p0.jpg";
+      sha256 = "sha256-72wOifxCMpHoJ62hPn1+l90JKeu5KsOqbDnQ+ry9ABQ=";
+    }
+    |> crop16x9North;
+
+  redyue =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2014/09/07/08/39/44/45831983_p0.jpg";
+      sha256 = "sha256-oGLFwMpECWQkEGAc/i+f1Vmg79ApbiBtEfChi3g4KhQ=";
+    }
+    |> crop16x9North;
+
+  aguilera = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2022/05/26/10/39/49/98609964_p0.jpg";
+    sha256 = "sha256-NrtSC0vQDNQRlQ9vZTd+vbc/ita0tQIgaUczX/Z7+PE=";
+  };
+
+  kivala =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2021/12/05/21/44/32/94590299_p0.jpg";
+      sha256 = "sha256-B0ddDPn5LVIN5YEYQ+LJtEJQKHjxJkF+uZPBLdnSCpc=";
+    }
+    |> crop16x9South;
+
+  fourzeNadeshiko = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2013/06/27/22/09/20/36676888_p0.jpg";
+    sha256 = "sha256-R6QcJPnR1d2UuO2QKcZeQtGF6gyKkktFiJNGiRNZcek=";
   };
 
 }

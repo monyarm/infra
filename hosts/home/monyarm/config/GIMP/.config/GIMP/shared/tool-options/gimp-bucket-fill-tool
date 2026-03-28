@@ -1,9 +1,9 @@
 # GIMP gimp-bucket-fill-tool options
 
 (foreground
-    (color "R'G'B'A u8" 4 "\361\345\347\377" 0))
+    (color "R'G'B'A u8" 4 "\367\365\370\377" 0))
 (background
-    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
+    (color "R'G'B'A u8" 4 "\377\377\377\377" 0))
 (pattern "Warning!")
 (brush-size 51)
 (brush-hardness 0.5)

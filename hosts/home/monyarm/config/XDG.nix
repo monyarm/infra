@@ -6,11 +6,11 @@ let
     image = [ "geeqie.desktop" ];
     audio = [ "mpv.desktop" ];
     video = [ "mpv.desktop" ];
-    directory = [ "nemo.desktop" ];
+    directory = [ "spacefm.desktop" ];
     office = [ "libreoffice.desktop" ];
     pdf = [ "org.pwmt.zathura.desktop" ];
     terminal = [ "ghostty.desktop" ];
-    archive = [ "org.kde.ark.desktop" ];
+    archive = [ "spacefm.desktop" ];
     web = [ "firefox.desktop" ];
 
     #single

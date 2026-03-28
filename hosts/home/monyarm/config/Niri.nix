@@ -65,9 +65,9 @@ lib.mkMerge [
             "gentoo-pipewire-launcher"
             "quickshell"
             "swww-daemon"
+            "wl-paste --watch cliphist store"
             "xwayland-satellite"
             "~/.local/bin/swww-random"
-            "wl-paste --watch cliphist store"
             # keep-sorted end
           ]
           ++ lib.optional (!isHomeManagerInNixOS) (
@@ -142,6 +142,9 @@ lib.mkMerge [
             {
               app-id = "Minecraft\\* 1\\.[0-9]{2}\\.[0-9]";
               title = "Minecraft:? ((Forge|NeoForge|Fabric|Quilt)\\*? )?((1\\.[0-9]{2}\\.[0-9])|(Loading\\.\\.\\.))";
+            }
+            {
+              title = "[A-Za-z0-9 _\\-\\*\\+]* – Mod Organizer v[0-9].[0-9]*(.[0-9]*)?(.*rc[0-9]*)? .*";
             }
             {
               app-id =

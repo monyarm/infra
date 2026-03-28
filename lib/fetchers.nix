@@ -1,5 +1,12 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  dirs,
+  importSopsString,
+  urlEncode,
+  ...
+}:
 let
+  userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0";
   getFileNameFromUrl =
     url:
     let
@@ -16,6 +23,51 @@ let
       "video";
 in
 {
+  fetchzipSelective =
+    {
+      keepFiles,
+      flatten ? false,
+      ...
+    }@args:
+    pkgs.fetchzip (
+      removeAttrs args [
+        "keepFiles"
+        "flatten"
+      ]
+      // {
+        postFetch = ''
+          STAGING=$(mktemp -d)
+
+          # 1. Extract specified files/dirs to staging
+          ${pkgs.lib.concatMapStringsSep "\n" (file: ''
+            mkdir -p "$STAGING/$(dirname "${file}")"
+            cp -r "$out/${file}" "$STAGING/${file}"
+          '') keepFiles}
+
+          rm -rf $out/*
+
+          if [ "${pkgs.lib.boolToString flatten}" = "true" ]; then
+            # 2. Deep Flatten: Find EVERY file in staging and move to $out root
+            find "$STAGING" -type f -exec cp -p {} $out/ \;
+          else
+            # 2. Preserve structure
+            cp -pr "$STAGING"/. "$out/"
+          fi
+
+          rm -rf "$STAGING"
+        '';
+      }
+    );
+  fetchChaosium =
+    {
+      game,
+      name,
+      hash ? "",
+    }:
+    pkgs.fetchurl {
+      url = "https://www.chaosium.com/content/Backgrounds/${urlEncode game}%20Background%20-%20${urlEncode name}.jpg";
+      inherit hash;
+    };
   fetchProtonGE =
     version: hash:
     let
@@ -49,6 +101,7 @@ in
           --no-write-auto-subs \
           --no-write-info-json \
           --no-write-comments \
+          --user-agent "${userAgent}" \
           -o "$out" \
           "${url}"
       '';
@@ -73,8 +126,47 @@ in
       curlOptsList = [
         "--header"
         "Referer: https://www.pixiv.net/"
+        "--user-agent"
+        userAgent
       ];
     };
+  fetchMyNintendo =
+    {
+      url,
+      sha256,
+      name ? null,
+      cookie ? (importSopsString "${dirs.secrets}/mynintendo.cookie"),
+    }:
+    let
+      outName =
+        if name == null then
+          (builtins.replaceStrings [ "/" ":" ] [ "-" "-" ] (getFileNameFromUrl url))
+        else
+          name;
+    in
+    pkgs.runCommand outName
+      {
+        outputHashMode = "recursive";
+        outputHashAlgo = "sha256";
+        outputHash = sha256;
+        buildInputs = [ pkgs.curl ];
+        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+      }
+      ''
+        set -e
+        mkdir $out
+
+        FINAL_URL=$(curl -s -L -o /dev/null -w '%{url_effective}' \
+          --user-agent "${userAgent}" \
+          --cookie "${cookie}" \
+          "${url}")
+
+        CLEAN_NAME=$(basename "''${FINAL_URL%%\?*}")
+
+        sleep 2
+
+        curl -A "${userAgent}" --cookie "${cookie}" -o "$out/$CLEAN_NAME" -L "''${FINAL_URL}"
+      '';
 
   # fetchSteamCards:
   #   Fetches Steam trading card images for a given app ID.

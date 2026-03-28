@@ -4,12 +4,13 @@
 (aspect-numerator 16)
 (desired-fixed-size-height 6)
 (desired-fixed-size-width 4)
+(fixed-rule-active yes)
 (overridden-fixed-aspect yes)
 (overridden-fixed-size yes)
 (foreground
-    (color "R'G'B'A u8" 4 "\361\345\347\377" 0))
+    (color "R'G'B'A u8" 4 "\367\365\370\377" 0))
 (background
-    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
+    (color "R'G'B'A u8" 4 "\377\377\377\377" 0))
 (pattern "Warning!")
 (fill-type foreground)
 (delete-pixels yes)

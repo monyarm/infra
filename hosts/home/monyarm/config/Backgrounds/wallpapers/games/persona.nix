@@ -1,8 +1,23 @@
-{ pkgs, fetchSteamCards, ... }:
+{
+  pkgs,
+  fetchSteamCards,
+  fetchPixiv,
+  ...
+}:
 {
   persona5ThePhantomX01 = pkgs.fetchurl {
     url = "https://persona5x.com/assets/images/common/fankit/wallpaper/wallpaper01.jpg";
     sha256 = "09d8qc6fqvh4kg9n4034pyg9hp4sc2k0fkixf29ifjwdb85lv3gz";
+  };
+
+  jokerArsene = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2018/04/08/01/07/15/68128232_p0.jpg";
+    sha256 = "sha256-gOeoqBIdWsHDR4+uuhknSjsHNLCx/4toteuXIHDgXx4=";
+  };
+
+  p5GunShopGirls = fetchPixiv {
+    url = "https://i.pximg.net/img-original/img/2018/07/13/05/24/15/69663340_p0.jpg";
+    sha256 = "sha256-9Ch1lrH+TIDCBWVSZfxdhYl52WdBJdGnUjxTr8LWKuc=";
   };
 
   persona5ThePhantomX02 = pkgs.fetchurl {
@@ -49,5 +64,10 @@
   persona4ArenaUltimax = fetchSteamCards {
     appId = 1602010;
     hash = "sha256-AZkkPpZrmvJHHbO9t/KkA+m6edEQ/F7/aLgjMEYRRa8=";
+  };
+
+  royal = pkgs.fetchurl {
+    url = "https://www.playstation.com/content/dam/global_pdc/en/games/wallpapers/persona-5-royal/playstation-wallpapers-persona-5-royal-desktop-wallpaper-01-ps4-27mar20-en-us.jpg";
+    sha256 = "sha256-EWRTS4IFZj5kTg5A2smkJrv+9gdaIVCasW2hhDAILyo=";
   };
 }

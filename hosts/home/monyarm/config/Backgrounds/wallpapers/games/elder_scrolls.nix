@@ -23,4 +23,9 @@
     appId = 306130;
     hash = "sha256-6LqWVtHn2U+Q0lhciO6ifVztfiNUGsc/Q9UN8Ttq9uQ=";
   };
+
+  heroWillRise = pkgs.fetchurl {
+    url = "https://shared.fastly.steamstatic.com/community_assets/images/items/2623190/dba06f4b7ec45fe108fb5f49423aa1725e412fcb.jpg";
+    sha256 = "sha256-gro+IanS9dU+rjaQkFFN/Rb0uPSBjNiHYdgJ/Ku1PFY=";
+  };
 }

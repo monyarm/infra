@@ -1,15 +1,15 @@
 # GIMP gimp-clone-tool options
 
 (foreground
-    (color "R'G'B'A u8" 4 "\361\345\347\377" 0))
+    (color "R'G'B'A u8" 4 "\367\365\370\377" 0))
 (background
-    (color "R'G'B'A u8" 4 "\265\50\350\377" 0))
-(brush "2. Hardness 075")
+    (color "R'G'B'A u8" 4 "\377\377\377\377" 0))
+(brush "Clipboard Mask")
 (dynamics "Pressure Size")
 (pattern "Warning!")
 (palette "Standard")
-(brush-size 4)
-(brush-hardness 0.75)
+(brush-size 99)
+(brush-spacing 0.20000000000000001)
 (use-jitter yes)
 (use-smoothing yes)
 (smoothing-quality 18)

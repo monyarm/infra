@@ -106,6 +106,32 @@ rec {
         in
         acc // growFunc // growFuncPrime // gravityFuncs
       ) { } (lib.attrNames aspectRatios);
+
+      # Generate growEdge functions for each aspect ratio and gravity combination
+      generateGrowEdgeFunctions = lib.foldl' (
+        acc: aspectRatio:
+        let
+          normalizedName = aspectRatios.${aspectRatio};
+          # Generate growEdgeAspectRatio function (e.g., growEdge16x9)
+          growEdgeFunc = {
+            "growEdge${normalizedName}" = image.growEdge { inherit aspectRatio; };
+          };
+          # Generate growEdgeAspectRatioGravity functions (e.g., growEdge16x9South)
+          gravityFuncs = lib.foldl' (
+            innerAcc: gravity:
+            let
+              capitalizedGravity =
+                lib.toUpper (lib.substring 0 1 gravity) + lib.substring 1 (lib.stringLength gravity) gravity;
+              funcName = "growEdge${normalizedName}${capitalizedGravity}";
+            in
+            innerAcc
+            // {
+              ${funcName} = image.growEdge { inherit aspectRatio gravity; };
+            }
+          ) { } gravities;
+        in
+        acc // growEdgeFunc // gravityFuncs
+      ) { } (lib.attrNames aspectRatios);
     in
     rec {
       # transform:
@@ -136,7 +162,7 @@ rec {
             buildInputs = [ pkgs.imagemagick ];
           }
           ''
-            magick ${src} ${args} -format ${finalExtension} +repage $out
+            magick "${src}" ${args} -format ${finalExtension} +repage "$out"
           '';
 
       # crop:
@@ -151,6 +177,139 @@ rec {
         transform {
           args = "-gravity ${gravity} -crop \"${aspectRatio}\"";
           nameSuffix = "cropped-${aspectRatio}-${gravity}";
+        } src;
+
+      # growEdge:
+      #   Expands an image to a specified aspect ratio by extending edge pixels (blur effect).
+      #   Type: growEdge -> { aspectRatio, ?gravity } -> src -> Derivation
+      growEdge =
+        {
+          aspectRatio,
+          gravity ? "center",
+        }:
+        src:
+        let
+          # Parse aspect ratio "W:H" into separate parts
+          parts = lib.splitString ":" aspectRatio;
+          aspectW = lib.toInt (lib.elemAt parts 0);
+          aspectH = lib.toInt (lib.elemAt parts 1);
+
+          # Get source image dimensions
+          dims = getImageDimensions src;
+          srcWidth = dims.width;
+          srcHeight = dims.height;
+
+          # Calculate source and target ratios
+          srcRatio = srcWidth / srcHeight;
+          targetRatio = aspectW / aspectH;
+
+          # Calculate what dimensions would be needed to grow to aspect ratio
+          targetWidth =
+            if srcRatio < targetRatio then builtins.ceil (srcHeight * aspectW / aspectH) else srcWidth;
+
+          targetHeight =
+            if srcRatio < targetRatio then srcHeight else builtins.ceil (srcWidth * aspectH / aspectW);
+
+          targetArea = targetWidth * targetHeight;
+
+          # Define standard resolutions for common aspect ratios
+          standardResolutions = {
+            "16:9" = [
+              {
+                w = 1280;
+                h = 720;
+              }
+              {
+                w = 1920;
+                h = 1080;
+              }
+              {
+                w = 2560;
+                h = 1440;
+              }
+              {
+                w = 3840;
+                h = 2160;
+              }
+              {
+                w = 7680;
+                h = 4320;
+              }
+            ];
+            "4:3" = [
+              {
+                w = 1024;
+                h = 768;
+              }
+              {
+                w = 1280;
+                h = 960;
+              }
+              {
+                w = 1600;
+                h = 1200;
+              }
+              {
+                w = 2048;
+                h = 1536;
+              }
+            ];
+            "21:9" = [
+              {
+                w = 2560;
+                h = 1080;
+              }
+              {
+                w = 3440;
+                h = 1440;
+              }
+              {
+                w = 5120;
+                h = 2160;
+              }
+            ];
+          };
+
+          resolutions = standardResolutions.${aspectRatio} or [ ];
+
+          # Find closest standard resolution by area difference
+          findClosest =
+            resolutions:
+            if resolutions == [ ] then
+              {
+                w = targetWidth;
+                h = targetHeight;
+              }
+            else
+              let
+                calcDiff =
+                  res:
+                  let
+                    resArea = res.w * res.h;
+                  in
+                  if resArea > targetArea then resArea - targetArea else targetArea - resArea;
+
+                withDiffs = map (res: {
+                  inherit res;
+                  diff = calcDiff res;
+                }) resolutions;
+                sorted = lib.sort (a: b: a.diff < b.diff) withDiffs;
+                closest = (lib.head sorted).res;
+              in
+              closest;
+
+          finalDims = findClosest resolutions;
+          finalWidth = finalDims.w;
+          finalHeight = finalDims.h;
+        in
+        transform {
+          args = lib.concatStringsSep " " [
+            "-resize \"${toString finalWidth}x${toString finalHeight}\""
+            "-virtual-pixel edge"
+            "-gravity ${gravity}"
+            "-extent \"${toString finalWidth}x${toString finalHeight}\""
+          ];
+          nameSuffix = "grown-edge-${aspectRatio}-${gravity}";
         } src;
 
       # grow:
@@ -330,7 +489,8 @@ rec {
         } src;
     }
     // generateCropFunctions
-    // generateGrowFunctions;
+    // generateGrowFunctions
+    // generateGrowEdgeFunctions;
 
   # extractFrames':
   #   Extracts frames from a video file at specified timestamps with optional cropping.
@@ -389,7 +549,11 @@ rec {
   toWebp =
     src:
     let
-      fullFileName = lib.getName src;
+      fullFileName =
+        if lib.isDerivation src then
+          lib.getName src
+        else
+          builtins.baseNameOf (builtins.unsafeDiscardStringContext src);
       fileNameParts = lib.splitString "." fullFileName;
       baseName =
         if lib.length fileNameParts > 1 then
@@ -403,6 +567,6 @@ rec {
         buildInputs = [ pkgs.ffmpeg-headless ];
       }
       ''
-        ffmpeg -i ${src} -vcodec libwebp -lossless 0 -compression_level 6 -q:v 50 -loop 0 -preset picture -an -vsync 0 $out
+        ffmpeg -i "${src}" -vcodec libwebp -lossless 0 -compression_level 6 -q:v 50 -loop 0 -preset picture -an -vsync 0 $out
       '';
 }

@@ -121,6 +121,7 @@ in
   home.file = binFiles (
     [
       # keep-sorted start
+      (import ./nxm.nix { inherit pkgs; })
       Extract
       fehScript
       reconnectScript
@@ -134,4 +135,5 @@ in
       builtins.attrNames (builtins.readDir ./.local/bin)
     ))
   );
+
 }

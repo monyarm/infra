@@ -12,7 +12,7 @@ let
   };
 in
 {
-  dnd50thDesktop = "${dnd50thZip}/Desktop Wallpaper/D&D_50th_Wallpaper_Desktop-3840x2140.jpg";
+  dnd50thDesktop = "${dnd50thZip}/D&D_50th_Wallpaper_Desktop-3840x2140.jpg";
   dndHolidayHaul = "${dndHolidayHaulZip}/D&D Holiday Wallpaper_1920x1080 1.jpg";
 
   PHB = pkgs.fetchurl {

@@ -45,7 +45,7 @@
         eval "$(direnv hook zsh)"
       '')
       (lib.mkOrder 1000 ''
-        if stat -t /etc/profile.d/java*.sh >/dev/null 2>&1
+        if stat -t /etc/profile.d/java*.sh(N) >/dev/null 2>&1
         then
             source /etc/profile.d/java*.sh
         fi
