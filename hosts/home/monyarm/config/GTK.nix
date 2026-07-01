@@ -1,6 +1,7 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 {
+  gtk.gtk4.theme = config.gtk.theme;
   xdg.configFile."gtk-2.0/gtkfilechooser.ini".text = lib.generators.toINI { } {
     "Filechooser Settings" = {
       LocationMode = "path-bar";

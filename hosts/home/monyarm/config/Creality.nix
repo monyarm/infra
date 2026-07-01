@@ -13,7 +13,7 @@ let
         lib.imap0 (
           _index: filamentType:
           let
-            key = "${finalEncodedMachineName}\Extruders\0\PresetMaterials\${toString (index + 1)}\name";
+            key = "${finalEncodedMachineName}\\Extruders\\0\\PresetMaterials\\${toString (_index + 1)}\\name";
           in
           {
             name = key;

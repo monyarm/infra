@@ -1,10 +1,10 @@
-{ lib, ... }:
+{ lib, dirs, ... }:
 let
   rootless = [
     # taken from my current doas.conf, should be updated to reflect the paths in the nix store when these are added there
     "/usr/bin/dump_caches"
     "/usr/bin/flatpak"
-    "/home/monyarm/local/dvdrip"
+    "${dirs.HOME}/local/dvdrip"
   ];
 in
 {

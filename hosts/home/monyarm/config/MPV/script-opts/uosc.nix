@@ -140,11 +140,11 @@
     top_bar_controls = "right";
 
     # Can be: `no` (hide), `yes` (inherit title from mpv.conf), or a custom template string
-    top_bar_title = "\$\{media-title\}";
+    top_bar_title = "\\$\\{media-title\\}";
 
     # Template string to enable alternative top bar title. If alt title matches main title,
     # it'll be hidden. Tip: use `${media-title}` for main, and `${filename}` for alt title.
-    top_bar_alt_title = "\$\{filename\}";
+    top_bar_alt_title = "\\$\\{filename\\}";
 
     # Can be:
     # `below` => display alt title below the main one

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, dirs, ... }:
 
 let
   inherit (pkgs) lib;
@@ -6,18 +6,21 @@ let
   # Define your global fallbacks here
   defaults = {
     type = "windows";
-    exe = "/mnt/mediaSSD/Bethesda/Tools/MO2/nxmhandler.exe";
-    prefix = "/mnt/mediaSSD/Bethesda/WINEPREFIX";
-    wine = "/home/monyarm/.steam/steam/compatibilitytools.d/GE-Proton10-30/files/bin/wine";
+    exe = "${dirs.MediaSSD}/Bethesda/Tools/MO2/nxmhandler.exe";
+    prefix = "${dirs.MediaSSD}/Bethesda/WINEPREFIX";
+    wine = "${dirs.HOME}/.steam/steam/compatibilitytools.d/GE-Proton10-30/files/bin/wine";
     dotnet = "";
   };
 
   gameManagers = rec {
-    stardewvalley = "/mnt/mediaSSD/SteamLibrary/steamapps/common/Stardew Valley/Stardrop/Stardrop.sh";
+    stardewvalley = "${dirs.SteamLibrarySSD}/steamapps/common/Stardew Valley/Stardrop/Internal";
+
+    r2modman = "${dirs.MediaSSD}/Games/r2modman.AppImage";
+    tcgcardshopsimulator = r2modman;
 
     fallout76 = {
       type = "windows";
-      exe = "/mnt/mediaSSD/Bethesda/Tools/76/Fo76ini.exe";
+      exe = "${dirs.MediaSSD}/Bethesda/Tools/76/Fo76ini.exe";
     };
   };
 
@@ -68,7 +71,7 @@ let
     lib.concatStringsSep "\n" (branches ++ [ fallbackBranch ]);
 
 in
-pkgs.writeShellScriptBin "nxm" ''
+pkgs.writeShellScript "nxm" ''
   # Extract Game ID from nxm://{game_id}/...
   URL="$1"
   GAME_ID=$(echo "$URL" | cut -d/ -f3)

@@ -26,8 +26,8 @@
   };
 
   services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
+    # enable = true;
+    # openDefaultPorts = true;
   };
 
   hardware.bluetooth.enable = true;

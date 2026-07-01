@@ -13,6 +13,8 @@ let
     archive = [ "spacefm.desktop" ];
     web = [ "firefox.desktop" ];
 
+    unity = [ "unityhub.desktop" ];
+
     #single
     discord = [ "discord.desktop" ];
     discord-694795560288256021 = [ "discord-694795560288256021.desktop" ]; # required by EdoPro
@@ -132,6 +134,12 @@ let
       # keep-sorted start
       "x-scheme-handler/nxm"
       "x-scheme-handler/nxm-protocol"
+      # keep-sorted end
+    ];
+    unity = [
+      # keep-sorted start
+      "x-scheme-handler/com.unity3d.kharma"
+      "x-scheme-handler/unityhub"
       # keep-sorted end
     ];
   };

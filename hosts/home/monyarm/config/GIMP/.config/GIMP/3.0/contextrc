@@ -1,18 +1,18 @@
 # GIMP user context
 
-(tool "gimp-text-tool")
+(tool "gimp-crop-tool")
 (paint-info "gimp-paintbrush")
 (foreground
     (color "R'G'B'A u8" 4 "\367\365\370\377" 0))
 (background
     (color "R'G'B'A u8" 4 "\377\377\377\377" 0))
-(brush "Clipboard Mask")
+(brush "2. Hardness 100")
 (dynamics "Pressure Size")
 (mybrush "Standard")
 (pattern "Warning!")
 (gradient "Standard")
 (palette "Standard")
-(font "Coolvetica Regular")
+(font "Monospace")
 (tool-preset "Core Pointer")
 
 # end of user context

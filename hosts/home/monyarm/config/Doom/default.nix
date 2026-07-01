@@ -13,9 +13,9 @@ let
         "/usr/local/share/games/doom"
         "/usr/share/doom"
         "/usr/share/games/doom"
-        "/mnt/Games/WAD/*"
-        "/mnt/mediaSSD/SteamLibrary/steamapps/common/Ultimate Doom/base"
-        "/mnt/mediaSSD/SteamLibrary/steamapps/common/Doom 2/base"
+        "${dirs.Games}/WAD/*"
+        "${dirs.SteamLibrarySSD}/steamapps/common/Ultimate Doom/base"
+        "${dirs.SteamLibrarySSD}/steamapps/common/Doom 2/base"
       ];
     };
 
@@ -31,7 +31,7 @@ let
         "/usr/share/doom"
         "/usr/share/games/doom"
         "$DOOMWADDIR"
-        "/mnt/Games/WAD"
+        "${dirs.Games}/WAD"
       ];
     };
 
@@ -52,7 +52,7 @@ let
         "/usr/share/games/doom/soundfonts"
         "/usr/share/games/doom/fm_banks"
         "/usr/share/soundfonts"
-        "/mnt/Games/WAD"
+        "${dirs.Games}/WAD"
       ];
     };
 

@@ -1,6 +1,7 @@
 {
   lib,
   binFile,
+  dirs,
   ...
 }:
 
@@ -13,7 +14,7 @@ with lib;
     absdir = "$HOME/.cache/yay/abs";
     editor = "";
     editorflags = "";
-    makepkgbin = "/home/monyarm/.local/bin/custpkg";
+    makepkgbin = "${dirs.HOME}/.local/bin/custpkg";
     makepkgconf = "";
     pacmanbin = "pacman";
     pacmanconf = "/etc/pacman.conf";

@@ -10,6 +10,8 @@ rec {
     # keep-sorted start
     Games = "/mnt/Media/Games";
     HM = "${hosts}/home/monyarm";
+    MediaSSD = "/mnt/mediaSSD";
+    SteamLibrarySSD = "${dirs.MediaSSD}/SteamLibrary";
     hmConfig = "${HM}/config";
     hosts = "${repo}/hosts";
     lib = "${repo}/lib";

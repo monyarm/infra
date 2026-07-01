@@ -178,4 +178,19 @@
     url = "https://images.ctfassets.net/rporu91m20dc/3fo959LDLyIKu06eOaKUIW/79140e72e1bbb7a732c301555ef9c311/IntroWallpaper_1920x1080.jpg";
     sha256 = "0b70qvqyhx8da8v6wnphwjfwhv8zgvb7gin315cdvcyp3xxl6ydq";
   };
+
+  fallout76BurningSprings = pkgs.fetchurl {
+    url = "https://static.wikia.nocookie.net/fallout/images/e/e0/FO76BS_Burning_Springs_keyart.jpg";
+    sha256 = "sha256-tWfVaW6B/JfPAHYSsCPYtH8F+ZwvpQZSx9U+NdK0w9I=";
+  };
+
+  fallout76RipDaringCosmos = pkgs.fetchurl {
+    url = "https://static.wikia.nocookie.net/fallout/images/a/a3/FO76_Season24_keyart_with_logo.jpg";
+    sha256 = "sha256-aYeVaCDgWONxRSq+CFenuM37BIo7Tllf0eiH7raU3n0=";
+  };
+
+  fallout76BloodRust = pkgs.fetchurl {
+    url = "https://static.wikia.nocookie.net/fallout/images/5/57/FO76BS_S23_Blood_x_Rust_keyart_with_logo.jpg";
+    sha256 = "sha256-1hwu52CY7kow2+FU038JN3wp/bAulef34WjJ4/p39xQ=";
+  };
 }

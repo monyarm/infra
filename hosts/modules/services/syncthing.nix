@@ -2,6 +2,7 @@
   getSecretPath,
   dirs,
   lib,
+  config,
   ...
 }:
 let
@@ -24,7 +25,7 @@ let
 in
 {
   services.syncthing = {
-    enable = true;
+    enable = config.networking.hostName != "gaming-laptop";
     openDefaultPorts = true;
     cert = getSecretPath "syncthing/cert.pem";
     key = getSecretPath "syncthing/key.pem";

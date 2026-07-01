@@ -45,11 +45,6 @@ in
       {
         "*" = {
           installation_mode = "allowed";
-          allowed_types = [
-            "theme"
-            "dictionary"
-            "locale"
-          ];
         };
       }
       (mozillaExtensions' [

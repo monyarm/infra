@@ -1,4 +1,10 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  isHomeManager,
+  isHomeManagerInNixOS,
+  ...
+}:
 {
   home.file = {
     "${config.programs.zsh.dotDir}/p10k.zsh".source = ./.p10k.zsh;
@@ -22,7 +28,14 @@
     profileExtra = ''
       if [[ -o login ]]; then
         [[ -f ~/.bashrc ]] && source ~/.bashrc
-        [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]] && exec dbus-run-session $(which niri) --session
+    ''
+    + lib.optionalString isHomeManagerInNixOS ''
+      [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]] && exec $(which niri-session) -l > ~/niri.log 2>&1
+    ''
+    + lib.optionalString (isHomeManager && !isHomeManagerInNixOS) ''
+      [[ -t 0 && $(tty) == /dev/tty1 && ! $DISPLAY ]] && exec dbus-run-session /usr/bin/niri --session > ~/niri.log 2>&1
+    ''
+    + ''
       fi
     '';
   };

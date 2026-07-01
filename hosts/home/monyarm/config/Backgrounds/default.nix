@@ -12,8 +12,10 @@ let
   linkWallpapers = linkContents "Pictures/wallpapers";
 
   sleepAmount = "5s"; # Configurable sleep amount
-  swwwCommand = "swww img --transition-type=none --resize=fit";
-  swwwScript = pkgs.writeText "swww-random" ''
+  awwwCommand = "awww img --transition-type=none --resize=fit";
+  awwwScript = pkgs.writeText "awww-random" ''
+    aww-daemon &
+    until awww query; do sleep 1; done
     while true; do
             find "${dirs.wallpapers}" -maxdepth 1 \( -type f -o -type l \) \
             | while read -r img; do
@@ -21,11 +23,11 @@ let
             done \
             | sort -n | cut -d':' -f2- \
             | while read -r img; do
-                    for d in $(swww query | awk '{print $2}' | sed s/://); do # see swww-query(1)
+                    for d in $(awww query | awk '{print $2}' | sed s/://); do # see awww-query(1)
                             [ -z "$img" ] && if read -r img; then true; else break 2; fi
                             rm -f "/tmp/current-wallpaper_$d"
                             ln -s "$img" "/tmp/current-wallpaper_$d"
-                            ${swwwCommand} --outputs "$d" "$img"
+                            ${awwwCommand} --outputs "$d" "$img"
                             unset -v img # Each image should only be used once per loop
                     done
                     sleep "${sleepAmount}"
@@ -47,5 +49,5 @@ let
   });
 in
 {
-  home.file = (binFile swwwScript) // (linkWallpapers allWallpapers);
+  home.file = (binFile awwwScript) // (linkWallpapers allWallpapers);
 }

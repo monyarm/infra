@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, dirs, ... }:
 {
   home.file.".ComicTagger/settings".text = lib.generators.toINI { } {
     settings = {
@@ -11,7 +11,7 @@
       install_id = "ffb992f59c2f4f0ea65698f59c27b49f";
       last_selected_load_data_style = 0;
       last_selected_save_data_style = 1;
-      last_opened_folder = "/home/monyarm/Ebook/Comic";
+      last_opened_folder = "${dirs.HOME}/Ebook/Comic";
       last_main_window_width = 1740;
       last_main_window_height = 687;
       last_main_window_x = 167;

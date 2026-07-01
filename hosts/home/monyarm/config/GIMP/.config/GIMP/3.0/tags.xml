@@ -1178,127 +1178,127 @@
   <resource identifier="external:${gimp_data_dir}/gradients/Yellow_Orange.ggr//Yellow Orange" checksum="c7f332150f1c1d8cb8100add34b0ef55">
   </resource>
 
-  <resource identifier="internal:gimp-palette-color-history//Colour History" checksum="d8b0ee27da8ec31ec5054a4254f406de">
+  <resource identifier="internal:gimp-palette-color-history//Colour History" checksum="b14c48b014dd3017647a09d7e75edf96">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Bears.gpl//Bears" checksum="bdc0e587ac7929c7fc92b489a1f94837">
+  <resource identifier="external:${gimp_data_dir}/palettes/Bears.gpl//Bears" checksum="c6a5d0bb34e0b94bf15d80e635ce01e8">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Bgold.gpl//Bgold" checksum="50bc8b1c337aeaee102481fb23cb85d7">
+  <resource identifier="external:${gimp_data_dir}/palettes/Bgold.gpl//Bgold" checksum="900aaa5ac9142fbaec1f8726c2623992">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Blues.gpl//Blues" checksum="fd49b0b1085b20c6ea171debc13fd122">
+  <resource identifier="external:${gimp_data_dir}/palettes/Blues.gpl//Blues" checksum="753dbb48c61af4c2b59e129ac1330545">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Borders.gpl//Borders" checksum="0e808535922573bd1a8392e637f878b5">
+  <resource identifier="external:${gimp_data_dir}/palettes/Borders.gpl//Borders" checksum="5019625f0a0dd17577f6a70db93933b4">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Browns_And_Yellows.gpl//Browns And Yellows" checksum="2037a67c96385521aa1df064d1c00b9f">
+  <resource identifier="external:${gimp_data_dir}/palettes/Browns_And_Yellows.gpl//Browns And Yellows" checksum="076abb641218cf3d911f6ba5caf3a941">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Caramel.gpl//Caramel" checksum="b1a80cd1d5208c8acab386f8e30372a5">
+  <resource identifier="external:${gimp_data_dir}/palettes/Caramel.gpl//Caramel" checksum="2a13242d9c61898666e4ceb5ae085493">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Cascade.gpl//Cascade" checksum="03ce963abd7e4e8e7050b421537fbe54">
+  <resource identifier="external:${gimp_data_dir}/palettes/Cascade.gpl//Cascade" checksum="1e748686df8f70a1ca5b5db4e1b074fd">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/China.gpl//China" checksum="a4190ba9796675875d1bfa2708d56798">
+  <resource identifier="external:${gimp_data_dir}/palettes/China.gpl//China" checksum="42262dda2a9dc139fb01c5c6b5286e9a">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Coldfire.gpl//Coldfire" checksum="f936f8adbe901e0a100de9f7389404e8">
+  <resource identifier="external:${gimp_data_dir}/palettes/Coldfire.gpl//Coldfire" checksum="678ad9e28d93413d2d17f8c6a02047f7">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Cool_Colors.gpl//Cool Colors" checksum="d9d4620f641924e1fbe5d55f6a97a2f5">
+  <resource identifier="external:${gimp_data_dir}/palettes/Cool_Colors.gpl//Cool Colors" checksum="866325d5ab9d946e98f57e6f2151bcdc">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Cranes.gpl//Cranes" checksum="e2b6e4809e93f66e24a2bc895e958aef">
+  <resource identifier="external:${gimp_data_dir}/palettes/Cranes.gpl//Cranes" checksum="8d415470ef047550f83a183d3ba4bf7a">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Dark_pastels.gpl//Dark pastels" checksum="ac5a227d93ee8816a171705216f48496">
+  <resource identifier="external:${gimp_data_dir}/palettes/Dark_pastels.gpl//Dark pastels" checksum="3c92f0ebeabe70e8ada33b924661eac2">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Default.gpl//Default" checksum="f345c53a7cb3c86d346d277d3723a9fb">
+  <resource identifier="external:${gimp_data_dir}/palettes/Default.gpl//Default" checksum="cbee84509d4bf5e12f1692ee988088ad">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Ega.gpl//Ega" checksum="f7a1566fae1b7002580792901a74b6c2">
+  <resource identifier="external:${gimp_data_dir}/palettes/Ega.gpl//Ega" checksum="aa40e6e6d31d0c4859c56013ca236331">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Firecode.gpl//Firecode" checksum="f9a8dde2b70260837828e09a8f2be58b">
+  <resource identifier="external:${gimp_data_dir}/palettes/Firecode.gpl//Firecode" checksum="61003ae784c8b36e93fc2d9c9b181298">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Gold.gpl//Gold" checksum="5a4ce943efe8ea21e7b2f9ea4de57c5e">
+  <resource identifier="external:${gimp_data_dir}/palettes/Gold.gpl//Gold" checksum="aa7b86cd24aeb746f68ef7da92b03660">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Grayblue.gpl//Grayblue" checksum="5b2cd51df6b116c0040ac0e2768c0b66">
+  <resource identifier="external:${gimp_data_dir}/palettes/Grayblue.gpl//Grayblue" checksum="1177d6ab2b54ae1decf479800a0c0f9c">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Grays.gpl//Grays" checksum="183d3f0e6934e06f6cdb2e23b0ab69db">
+  <resource identifier="external:${gimp_data_dir}/palettes/Grays.gpl//Grays" checksum="5a2c781b586faf102bea5e5936fc5ab2">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/GrayViolet.gpl//GrayViolet" checksum="b79d1fa9f44b33b6b27542538c0bce9b">
+  <resource identifier="external:${gimp_data_dir}/palettes/GrayViolet.gpl//GrayViolet" checksum="905453c1bb0120bdc3f0ea7653e5ec2e">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Greens.gpl//Greens" checksum="6ee41516a6f721b844d2b29f3db6e8cd">
+  <resource identifier="external:${gimp_data_dir}/palettes/Greens.gpl//Greens" checksum="f099e4d861570a1d979c2d54c95a0080">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Hilite.gpl//Hilite" checksum="49f21a8e9df39ba4bcd5a08b2acbbdc8">
+  <resource identifier="external:${gimp_data_dir}/palettes/Hilite.gpl//Hilite" checksum="e1d3bd41f3bece8ac6b0b15452eec254">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Khaki.gpl//Khaki" checksum="13074b655dced7ca54520c61061844a9">
+  <resource identifier="external:${gimp_data_dir}/palettes/Khaki.gpl//Khaki" checksum="201501b5a4c654b792fc5e9cdd916c8b">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Lights.gpl//Lights" checksum="a9b0685c39d3d9588e9219e0455c7ce2">
+  <resource identifier="external:${gimp_data_dir}/palettes/Lights.gpl//Lights" checksum="c9e5b810c261ee60fe704ce38acc5688">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Muted.gpl//Muted" checksum="a5b48775b4c15fda89a3d1a8fa47e79b">
+  <resource identifier="external:${gimp_data_dir}/palettes/Muted.gpl//Muted" checksum="53f0356cd17a33db67e46b3c8b7c0eca">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Named_Colors.gpl//Named Colors" checksum="7fb92da4738790d68a7b74d17f7948a0">
+  <resource identifier="external:${gimp_data_dir}/palettes/Named_Colors.gpl//Named Colors" checksum="a9b6e78c24c755390ef5695454862604">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/News3.gpl//News3" checksum="7c52d9d63eef1ce46cdfed9c0cdeb4b1">
+  <resource identifier="external:${gimp_data_dir}/palettes/News3.gpl//News3" checksum="32dab77ce2dc6083c0a4ea36842fbdd0">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Op2.gpl//Op2" checksum="17710f782803fd8c8a670d7ab738e3d6">
+  <resource identifier="external:${gimp_data_dir}/palettes/Op2.gpl//Op2" checksum="8478ffbed832a95e26938cca9ce76b63">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Paintjet.gpl//Paintjet" checksum="f7005f719fbbf32215397c78ac5d1959">
+  <resource identifier="external:${gimp_data_dir}/palettes/Paintjet.gpl//Paintjet" checksum="b9161d2ade2425f495edbd43da5d9db7">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Pastels.gpl//Pastels" checksum="1e2764a87b86b4b130e734057ebb1934">
+  <resource identifier="external:${gimp_data_dir}/palettes/Pastels.gpl//Pastels" checksum="085375eb272d7da17074c6f1634ff896">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Plasma.gpl//Plasma" checksum="34a4cf655ce2b051a800088e4a8d98a7">
+  <resource identifier="external:${gimp_data_dir}/palettes/Plasma.gpl//Plasma" checksum="4fe38995a3ef68f25b1cf97e40dd869b">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Reds.gpl//Reds" checksum="cc520aecab966c673c9f98c9088e6e58">
+  <resource identifier="external:${gimp_data_dir}/palettes/Reds.gpl//Reds" checksum="e03693632c4ff577ca1ab86d26ccb65d">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Reds_And_Purples.gpl//Reds And Purples" checksum="078d73e52bfb966dbfe59452cb386652">
+  <resource identifier="external:${gimp_data_dir}/palettes/Reds_And_Purples.gpl//Reds And Purples" checksum="6a413d2f59c02f119b3aea98f6547847">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Royal.gpl//Royal" checksum="05a15116ff93e6702eb8a7845916f497">
+  <resource identifier="external:${gimp_data_dir}/palettes/Royal.gpl//Royal" checksum="edf23f202a2e03d88402f998d7664045">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Tango.gpl//Tango Icon Theme" checksum="18ef2ddcc4ab1d65af7caee4ff9f7889">
+  <resource identifier="external:${gimp_data_dir}/palettes/Tango.gpl//Tango Icon Theme" checksum="2c1d5897a6a803945a40b1470ab473a5">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Topographic.gpl//Topographic" checksum="a1d0a6b9f652b7c156113895bb7e71cb">
+  <resource identifier="external:${gimp_data_dir}/palettes/Topographic.gpl//Topographic" checksum="148ba53b6f3b4a66304073fa86385d95">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Visibone.gpl//Visibone" checksum="2f9b9d1f36c5a10d0a334904836f6756">
+  <resource identifier="external:${gimp_data_dir}/palettes/Visibone.gpl//Visibone" checksum="1f3603ae9cff3503d8229e017a652a92">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Visibone_2.gpl//Visibone 2" checksum="f1a20fa7433d25159a3f5ea73664f0b4">
+  <resource identifier="external:${gimp_data_dir}/palettes/Visibone_2.gpl//Visibone 2" checksum="426d25591ab4b0e6c53b8e9edb2882c7">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Volcano.gpl//Volcano" checksum="54c35f0bc82be205bd163d5942d64a28">
+  <resource identifier="external:${gimp_data_dir}/palettes/Volcano.gpl//Volcano" checksum="5cbd40fec9318d21574ea8715c5543f6">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Warm_Colors.gpl//Warm Colors" checksum="79db15ff7950979d563b19a7bb3a6758">
+  <resource identifier="external:${gimp_data_dir}/palettes/Warm_Colors.gpl//Warm Colors" checksum="34fa91bce5dd4921b2800336b7085392">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Web.gpl//Web" checksum="a7f040feb51596c14280c7052be2e98d">
+  <resource identifier="external:${gimp_data_dir}/palettes/Web.gpl//Web" checksum="d4193ff0e67311d1a54cc6c390e36c77">
   </resource>
 
   <resource identifier="internal:gimp-font-standard-alias: Monospace//Monospace" checksum="(null)">
@@ -1337,34 +1337,34 @@
   <resource identifier="internal:gimp-font-standard-alias: Serif Italic//Serif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comic/acmesa.TTF//A.C.M.E. Secret Agent Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comic/acmesa.TTF//A.C.M.E. Secret Agent Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/agencyfb.ttf//Agency FB Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/agencyfb.ttf//Agency FB Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Baseball/AlternateGotNo3D.ttf//AlternateGotNo3D Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Baseball/AlternateGotNo3D.ttf//AlternateGotNo3D Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/Amienne_0.ttf//Amienne Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/Amienne_0.ttf//Amienne Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/andalemo.ttf//Andale Mono Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Rage/angsai.ttf//Angsana New Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Rage/angsai.ttf//Angsana New Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Vanguard/animeace2_reg_0.ttf//Anime Ace 2.0 BB Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Vanguard/animeace2_reg_0.ttf//Anime Ace 2.0 BB Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comic/animeace2_reg.ttf//Anime Ace 2.0 BB Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comic/animeace2_reg.ttf//Anime Ace 2.0 BB Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/ariblk.ttf//Arial Black Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Dreamblade/arialbd.ttf//Arial Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Dreamblade/arialbd.ttf//Arial Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/arialbd.ttf//Arial Bold" checksum="(null)">
@@ -1376,58 +1376,58 @@
   <resource identifier="external:/usr/share/fonts/corefonts/ariali.ttf//Arial Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALNB_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Rage/ARIALN.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALNI_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALNBI_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Anachronism/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALNB_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - All/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Anachronism/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALNBI_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALNI_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALNBI_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALNB_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - All/ARIALNI_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALNI_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Rage/ARIALN.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Rage/ARIALNI.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALNBI_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALNB_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - All/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/ARIALNI_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Rage/ARIALNI.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/ARIALN_0.TTF//Arial Narrow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - All/ARIALNI_0.TTF//Arial Narrow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Bandai/arial.ttf//Arial Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Dreamblade/arial.ttf//Arial Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Bandai/arial.ttf//Arial Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/arial.ttf//Arial Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Dreamblade/arial.ttf//Arial Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Doomtrooper/arial.ttf//Arial Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Animayhem - All/arial.ttf//Arial Regular" checksum="(null)">
-  </resource>
-
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Doomtrooper/arial.ttf//Arial Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Animayhem - All/arial.ttf//Arial Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/croscorefonts/Arimo-Bold.ttf//Arimo Bold" checksum="(null)">
@@ -1442,7 +1442,7 @@
   <resource identifier="external:/usr/share/fonts/croscorefonts/Arimo-Regular.ttf//Arimo Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/Armada.ttf//Armada Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/Armada.ttf//Armada Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/opendesktop-fonts/odokai-ExtB.ttf//AR PL New Kai ExtB Regular" checksum="(null)">
@@ -1460,16 +1460,16 @@
   <resource identifier="external:/usr/share/fonts/opendesktop-fonts/odosung.ttc//AR PL New Sung Reguler" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Horror/AtticAntique.ttf//Attic Antique Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Horror/AtticAntique.ttf//Attic Antique Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - VS/BadhouseBoldNumbers.ttf//BadhouseBoldNumbers Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - All/BadhouseBoldNumbers_0.ttf//BadhouseBoldNumbers Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - All/BadhouseBoldNumbers_0.ttf//BadhouseBoldNumbers Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - VS/BadhouseBoldNumbers.ttf//BadhouseBoldNumbers Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/Baloo Regular.ttf//Baloo Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/Baloo Regular.ttf//Baloo Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/alee-fonts/Bandal.ttf//Bandal Regular" checksum="(null)">
@@ -1478,55 +1478,55 @@
   <resource identifier="external:/usr/share/fonts/alee-fonts/Bangwool.ttf//Bangwool Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - New/BankGothicMediumBT_0.ttf//BankGothic Md BT Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/BankGothicMediumBT_0.ttf//BankGothic Md BT Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Extra/BankGothicMediumBT_0.ttf//BankGothic Md BT Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - New/BankGothicMediumBT_0.ttf//BankGothic Md BT Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/BankGothic Md BT.ttf//BankGothic Md BT Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/BankGothic Md BT.ttf//BankGothic Md BT Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/BankGothicMediumBT_0.ttf//BankGothic Md BT Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Extra/BankGothicMediumBT_0.ttf//BankGothic Md BT Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/beleren-bold_P1.01.ttf//Beleren Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/beleren-bold_P1.01.ttf//Beleren Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/belerensmallcaps-bold.ttf//Beleren Small Caps Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/belerensmallcaps-bold.ttf//Beleren Small Caps Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/World of Warcraft/BelweStd-Bold.otf//Belwe Std Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Stargate/BelweStd-Bold_0.otf//Belwe Std Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Stargate/BelweStd-Bold_0.otf//Belwe Std Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/World of Warcraft/BelweStd-Bold.otf//Belwe Std Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BRLNSB.TTF//Berlin Sans FB Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BRLNSB.TTF//Berlin Sans FB Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BRLNSDB.TTF//Berlin Sans FB Demi Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BRLNSDB.TTF//Berlin Sans FB Demi Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BRLNSR.TTF//Berlin Sans FB Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BRLNSR.TTF//Berlin Sans FB Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Mausoleum/BernModB.ttf//BernhardMod BT Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Mausoleum/BernModB.ttf//BernhardMod BT Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Mausoleum/BernModT.ttf//BernhardMod BT Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Mausoleum/BernModT.ttf//BernhardMod BT Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Mausoleum/Bernhard Modern BT_0.ttf//BernhardMod BT Roman" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Mausoleum/Bernhard Modern BT_0.ttf//BernhardMod BT Roman" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comicbookguy/BirminghamTitlingBold_0.ttf//BirminghamTitlingBold Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comicbookguy/BirminghamTitlingBold_0.ttf//BirminghamTitlingBold Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comicbookguy/BirminghamTitlingElongated_0.ttf//BirminghamTitlingElongated Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comicbookguy/BirminghamTitlingElongated_0.ttf//BirminghamTitlingElongated Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comicbookguy/BirminghamTitling_0.ttf//BirminghamTitling Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Comicbookguy/BirminghamTitling_0.ttf//BirminghamTitling Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/ttf-bitstream-vera/VeraBd.ttf//Bitstream Vera Sans Bold" checksum="(null)">
@@ -1559,16 +1559,16 @@
   <resource identifier="external:/usr/share/fonts/ttf-bitstream-vera/VeraSe.ttf//Bitstream Vera Serif Roman" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/BLUEHIGH_0.TTF//Blue Highway Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/BLUEHIGH_0.TTF//Blue Highway Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Rage/bodegasanslight.ttf//BodegaSans Light Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Rage/bodegasanslight.ttf//BodegaSans Light Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BowlbyOneSC-Regular.ttf//Bowlby One SC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/BowlbyOneSC-Regular.ttf//Bowlby One SC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/BrushScriptStd.otf//Brush Script Std Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/BrushScriptStd.otf//Brush Script Std Medium" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/urw-fonts/C059-Bold.otf//C059 Bold" checksum="(null)">
@@ -1595,7 +1595,7 @@
   <resource identifier="external:/usr/share/fonts/urw-fonts/C059-Roman.otf//C059 Roman" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Sokrates/Caesar Dressing.ttf//Caesar Dressing Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Sokrates/Caesar Dressing.ttf//Caesar Dressing Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/crosextrafonts-caladea/Caladea-Bold.ttf//Caladea Bold" checksum="(null)">
@@ -1610,22 +1610,22 @@
   <resource identifier="external:/usr/share/fonts/crosextrafonts-caladea/Caladea-Regular.ttf//Caladea Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibrib.ttf//Calibri Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibrib.ttf//Calibri Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibriz.ttf//Calibri Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibriz.ttf//Calibri Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibrii.ttf//Calibri Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibrii.ttf//Calibri Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibril.ttf//Calibri Light" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibril.ttf//Calibri Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibrili.ttf//Calibri Light Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibrili.ttf//Calibri Light Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibri.ttf//Calibri Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/calibri.ttf//Calibri Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/cantarell/Cantarell-VF.otf//Cantarell Bold" checksum="(null)">
@@ -1643,10 +1643,10 @@
   <resource identifier="external:/usr/share/fonts/cantarell/Cantarell-VF.otf//Cantarell Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/CardenioModern-Bold.otf//Cardenio Modern Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/CardenioModern-Bold.otf//Cardenio Modern Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/CardenioModern-Regular.otf//Cardenio Modern Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/CardenioModern-Regular.otf//Cardenio Modern Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/crosextrafonts-carlito/Carlito-Bold.ttf//Carlito Bold" checksum="(null)">
@@ -1661,49 +1661,52 @@
   <resource identifier="external:/usr/share/fonts/crosextrafonts-carlito/Carlito-Regular.ttf//Carlito Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Munchkin/CASLANTR_0.TTF//Caslon Antique Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Munchkin/CASLANTR_0.TTF//Caslon Antique Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Spiderman Panel/CCMeanwhile Bold.ttf//CCMeanwhile-Bold ☞" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Spiderman Panel/CCMeanwhile Bold.ttf//CCMeanwhile-Bold ☞" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Spiderman Panel/CCMeanwhile Italic.ttf//CCMeanwhile-Italic ☞" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Spiderman Panel/CCMeanwhile Italic.ttf//CCMeanwhile-Italic ☞" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Spiderman Panel/CCMeanwhile Regular.ttf//CCMeanwhile-Regular ☞" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Spiderman Panel/CCMeanwhile Regular.ttf//CCMeanwhile-Regular ☞" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/centauri_0.ttf//Centauri Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - TMNT Sewer/CCRumble.ttf//CCRumble ☞" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/UFS/GOTHIC.TTF//Century Gothic Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/centauri_0.ttf//Centauri Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Doctor Who TARDIS/Chantilly-Medium-Regular-AllCaps.ttf//Chantilly Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/UFS/GOTHIC.TTF//Century Gothic Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Doctor Who TARDIS/Chantilly-Medium-Regular.ttf//Chantilly Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Doctor Who TARDIS/Chantilly-Medium-Regular.ttf//Chantilly Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Anachronism/CharisSILB_0.ttf//Charis SIL Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Doctor Who TARDIS/Chantilly-Medium-Regular-AllCaps.ttf//Chantilly Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Anachronism/CharisSILI_0.ttf//Charis SIL Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Anachronism/CharisSILB_0.ttf//Charis SIL Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Anachronism/CharisSILR_0.ttf//Charis SIL Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Anachronism/CharisSILI_0.ttf//Charis SIL Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/7th Sea/Cheltenham_Bold_Condensed_BT_0.ttf//Cheltenhm BdCn BT Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Anachronism/CharisSILR_0.ttf//Charis SIL Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/7th Sea/Cheltenham_ITC_Book_BT_0.ttf//ChelthmITC Bk BT Book" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/7th Sea/Cheltenham_Bold_Condensed_BT_0.ttf//Cheltenhm BdCn BT Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/Christopherhand-Normal_0.ttf//Christopherhand Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/7th Sea/Cheltenham_ITC_Book_BT_0.ttf//ChelthmITC Bk BT Book" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/CLRNDNB_0.TTF//Clarendon BT Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/Christopherhand-Normal_0.ttf//Christopherhand Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/CLRNDNB_0.TTF//Clarendon BT Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/droid/Clockopia.ttf//Clockopia Regular" checksum="(null)">
@@ -1730,16 +1733,16 @@
   <resource identifier="external:/usr/share/fonts/opentype/coolvetica rg it.otf//Coolvetica Regular Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Doomtrooper/COPRGTB_0.TTF//Copperplate Gothic Bold Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Doomtrooper/COPRGTB_0.TTF//Copperplate Gothic Bold Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/UFS/Coprgtl.TTF//Copperplate Gothic Light Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/UFS/Coprgtl.TTF//Copperplate Gothic Light Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/CopperplateTMed_0.ttf//CopperplateTMed Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Hecatomb/CopperplateTMed.ttf//CopperplateTMed Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Hecatomb/CopperplateTMed.ttf//CopperplateTMed Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/CopperplateTMed_0.ttf//CopperplateTMed Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/courbd.ttf//Courier New Bold" checksum="(null)">
@@ -1751,10 +1754,10 @@
   <resource identifier="external:/usr/share/fonts/corefonts/couri.ttf//Courier New Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Anachronism/COUR_0.TTF//Courier New Regular" checksum="(null)">
+  <resource identifier="external:/usr/share/fonts/corefonts/cour.ttf//Courier New Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/usr/share/fonts/corefonts/cour.ttf//Courier New Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Anachronism/COUR_0.TTF//Courier New Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/courier-prime/Courier Prime Bold.ttf//Courier Prime Bold" checksum="(null)">
@@ -1811,28 +1814,28 @@
   <resource identifier="external:/usr/share/fonts/urw-fonts/D050000L.otf//D050000L Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Daedra Bold.otf//Daedra Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Daedra Bold.otf//Daedra Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Daedra Bold Italic.otf//Daedra Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Daedra Bold Italic.otf//Daedra Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Daedra Italic.otf//Daedra Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Daedra Italic.otf//Daedra Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Daedra.otf//Daedra Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Daedra.otf//Daedra Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Outlaws/Daisy-Regular.ttf//Daisy Regular Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Outlaws/Daisy-Regular.ttf//Daisy Regular Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Sagas/DasRoy Small Caps.ttf//DasRoy Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Sagas/DasRoy Small Caps.ttf//DasRoy Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/Dax-Regular.ttf//Dax-Regular Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Star Wars TCG/Dax-Regular.ttf//Dax-Regular Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/dayrom_.ttf//Day Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/dayrom_.ttf//Day Roman Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/dejavu/DejaVuMathTeXGyre.ttf//DejaVu Math TeX Gyre Regular" checksum="(null)">
@@ -1901,70 +1904,70 @@
   <resource identifier="external:/usr/share/fonts/dejavu/DejaVuSerif-Italic.ttf//DejaVu Serif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DFñññY▌▌▌▌▌+▌½-^_0.ttc//DFGMaruGothic-Md Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DFñññY▌▌▌▌▌+▌½-^_0.ttc//DFGMaruGothic-Md Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DF¡=¡+-)«--^W7_0.ttc//DFGTFLeiSho-W7 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DF¡=¡+-)«--^W7_0.ttc//DFGTFLeiSho-W7 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DFñññY▌▌▌▌▌+▌½-^_0.ttc//DFMaruGothic-Md Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DFñññY▌▌▌▌▌+▌½-^_0.ttc//DFMaruGothic-Md Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DFñññY▌▌▌▌▌+▌½-^_0.ttc//DFPMaruGothic-Md Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DFñññY▌▌▌▌▌+▌½-^_0.ttc//DFPMaruGothic-Md Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/华康唐风隶W5.TTF//DFPTanLiW5-B5 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/华康唐风隶W5.TTF//DFPTanLiW5-B5 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/华康唐风隶W5-GB.ttc//DFPTanLiW5-GB Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/华康唐风隶W5-GB.ttc//DFPTanLiW5-GB Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DF¡=¡+-)«--^W7_0.ttc//DFPTFLeiSho-W7 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DF¡=¡+-)«--^W7_0.ttc//DFPTFLeiSho-W7 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/华康唐风隶W5-GB.ttc//DFTanLiW5-GB Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/华康唐风隶W5-GB.ttc//DFTanLiW5-GB Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DF¡=¡+-)«--^W7_0.ttc//DFTFLeiSho-W7 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/DF¡=¡+-)«--^W7_0.ttc//DFTFLeiSho-W7 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/DharmaGothicModified-Heavy.ttf//Dharma Gothic E Heavy" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/DharmaGothicModified-Heavy.ttf//Dharma Gothic E Heavy" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Assassin&apos;s Creed/DIN Next LT Arabic Bold AllCaps.ttf//DIN Next LT Arabic Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Assassin&apos;s Creed/DIN Next LT Arabic Bold AllCaps.ttf//DIN Next LT Arabic Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Assassin&apos;s Creed/DIN Next LT Arabic Medium AllCaps.ttf//DIN Next LT Arabic Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Assassin&apos;s Creed/DIN Next LT Arabic Medium AllCaps.ttf//DIN Next LT Arabic Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Dovahkiin Bold.otf//Dovahkiin Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Dovahkiin Bold.otf//Dovahkiin Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Dovahkiin Bold Italic.otf//Dovahkiin Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Dovahkiin Bold Italic.otf//Dovahkiin Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Dovahkiin Italic.otf//Dovahkiin Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Dovahkiin Italic.otf//Dovahkiin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Dovahkiin.otf//Dovahkiin Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Dovahkiin.otf//Dovahkiin Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/DPoly Eight-Sider.otf//DPoly Eight-Sider Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/DPoly Eight-Sider.otf//DPoly Eight-Sider Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/DPoly Four-Sider.otf//DPoly Four-Sider Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/DPoly Four-Sider.otf//DPoly Four-Sider Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/DPoly Six-Sider.otf//DPoly Six-Sider Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/DPoly Six-Sider.otf//DPoly Six-Sider Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/DPoly Ten-Sider.otf//DPoly Ten-Sider Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/DPoly Ten-Sider.otf//DPoly Ten-Sider Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/DPoly Twelve-Sider.otf//DPoly Twelve-Sider Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/DPoly Twelve-Sider.otf//DPoly Twelve-Sider Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/DPoly Twenty-Sider.otf//DPoly Twenty-Sider Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/DPoly Twenty-Sider.otf//DPoly Twenty-Sider Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/droid/DroidSansArabic.ttf//Droid Sans Arabic Regular" checksum="(null)">
@@ -2015,16 +2018,16 @@
   <resource identifier="external:/usr/share/fonts/farsi-fonts/elham.ttf//Elham Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Equestria Bold.otf//Equestria Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Equestria Bold.otf//Equestria Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Equestria Bold Italic.otf//Equestria Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Equestria Bold Italic.otf//Equestria Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Equestria Italic.otf//Equestria Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Equestria Italic.otf//Equestria Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Equestria.otf//Equestria Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Equestria.otf//Equestria Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/alee-fonts/EunjinNakseo.ttf//Eunjin Nakseo Regular" checksum="(null)">
@@ -2033,58 +2036,58 @@
   <resource identifier="external:/usr/share/fonts/alee-fonts/Eunjin.ttf//Eunjin Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - New/eurostileblackdtc.ttf//Eurostile-Black-DTC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - New/eurostileblackdtc.ttf//Eurostile-Black-DTC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Chaotic/Eurostib.TTF//Eurostile Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Chaotic/Eurostib.TTF//Eurostile Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - All/Eurostib.TTF//Eurostile Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - All/Eurostib.TTF//Eurostile Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Illuminati/eurostile.oblique_0.ttf//EurostileObl-Normal Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - All/eurostile.oblique_0.ttf//EurostileObl-Normal Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - All/eurostile.oblique_0.ttf//EurostileObl-Normal Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Illuminati/eurostile.oblique_0.ttf//EurostileObl-Normal Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Illuminati/eurosti_0.ttf//Eurostile Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Chaotic/eurosti_0.ttf//Eurostile Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - All/eurosti_0.ttf//Eurostile Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Illuminati/eurosti_0.ttf//Eurostile Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Chaotic/eurosti_0.ttf//Eurostile Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - All/eurosti_0.ttf//Eurostile Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout/r_fallouty.ttf//Fallouty Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout/r_fallouty.ttf//Fallouty Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Bold.ttf//FiraCode Nerd Font Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Bold.ttf//FiraCode Nerd Font Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Bold.ttf//FiraCode Nerd Font Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Light.ttf//FiraCode Nerd Font Light" checksum="(null)">
-  </resource>
-
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Light.ttf//FiraCode Nerd Font Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Medium.ttf//FiraCode Nerd Font Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Light.ttf//FiraCode Nerd Font Light" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Medium.ttf//FiraCode Nerd Font Medium" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Medium.ttf//FiraCode Nerd Font Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Bold.ttf//FiraCode Nerd Font Mono Bold" checksum="(null)">
-  </resource>
-
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Bold.ttf//FiraCode Nerd Font Mono Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Light.ttf//FiraCode Nerd Font Mono Light" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Bold.ttf//FiraCode Nerd Font Mono Bold" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Light.ttf//FiraCode Nerd Font Mono Light" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Light.ttf//FiraCode Nerd Font Mono Light" checksum="(null)">
@@ -2093,28 +2096,28 @@
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Medium.ttf//FiraCode Nerd Font Mono Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Medium.ttf//FiraCode Nerd Font Mono Medium" checksum="(null)">
-  </resource>
-
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Regular.ttf//FiraCode Nerd Font Mono Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Medium.ttf//FiraCode Nerd Font Mono Medium" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Regular.ttf//FiraCode Nerd Font Mono Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Retina.ttf//FiraCode Nerd Font Mono Retina" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Regular.ttf//FiraCode Nerd Font Mono Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Retina.ttf//FiraCode Nerd Font Mono Retina" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-Retina.ttf//FiraCode Nerd Font Mono Retina" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-SemiBold.ttf//FiraCode Nerd Font Mono SemiBold" checksum="(null)">
-  </resource>
-
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-SemiBold.ttf//FiraCode Nerd Font Mono SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Bold.ttf//FiraCode Nerd Font Propo Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontMono-SemiBold.ttf//FiraCode Nerd Font Mono SemiBold" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Bold.ttf//FiraCode Nerd Font Propo Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Bold.ttf//FiraCode Nerd Font Propo Bold" checksum="(null)">
@@ -2123,22 +2126,22 @@
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Light.ttf//FiraCode Nerd Font Propo Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Light.ttf//FiraCode Nerd Font Propo Light" checksum="(null)">
-  </resource>
-
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Medium.ttf//FiraCode Nerd Font Propo Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Light.ttf//FiraCode Nerd Font Propo Light" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Medium.ttf//FiraCode Nerd Font Propo Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Regular.ttf//FiraCode Nerd Font Propo Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Medium.ttf//FiraCode Nerd Font Propo Medium" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Regular.ttf//FiraCode Nerd Font Propo Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Regular.ttf//FiraCode Nerd Font Propo Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Retina.ttf//FiraCode Nerd Font Propo Retina" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Retina.ttf//FiraCode Nerd Font Propo Retina" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-Retina.ttf//FiraCode Nerd Font Propo Retina" checksum="(null)">
@@ -2147,34 +2150,34 @@
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-SemiBold.ttf//FiraCode Nerd Font Propo SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-SemiBold.ttf//FiraCode Nerd Font Propo SemiBold" checksum="(null)">
-  </resource>
-
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Regular.ttf//FiraCode Nerd Font Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFontPropo-SemiBold.ttf//FiraCode Nerd Font Propo SemiBold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Regular.ttf//FiraCode Nerd Font Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Retina.ttf//FiraCode Nerd Font Retina" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Regular.ttf//FiraCode Nerd Font Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Retina.ttf//FiraCode Nerd Font Retina" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-Retina.ttf//FiraCode Nerd Font Retina" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-SemiBold.ttf//FiraCode Nerd Font SemiBold" checksum="(null)">
-  </resource>
-
   <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-SemiBold.ttf//FiraCode Nerd Font SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Baseball/FranklinGothic.ttf//Franklin Gothic Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/NerdFonts/FiraCode/FiraCodeNerdFont-SemiBold.ttf//FiraCode Nerd Font SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Animayhem - All/Freeform 721 BT.ttf//Freefrm721 BT Roman" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Baseball/FranklinGothic.ttf//Franklin Gothic Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/7th Sea/Freehand_471_BT_0.ttf//Freehand471 BT Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Animayhem - All/Freeform 721 BT.ttf//Freefrm721 BT Roman" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/7th Sea/Freehand_471_BT_0.ttf//Freehand471 BT Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/freefont/FreeMonoBold.ttf//FreeMono Bold" checksum="(null)">
@@ -2249,16 +2252,16 @@
   <resource identifier="external:/usr/share/fonts/freefont/FreeSerif.ttf//FreeSerif Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/FugazOne-Regular.ttf//Fugaz One Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/FugazOne-Regular.ttf//Fugaz One Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/Futura Light font.ttf//Futura LtCn BT Light" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/Futura Light font.ttf//Futura LtCn BT Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/Futura Medium BT.ttf//Futura Md BT Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/Futura Medium BT.ttf//Futura Md BT Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/Futura Medium Italic BT.ttf//Futura Md BT Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/Futura Medium Italic BT.ttf//Futura Md BT Medium Italic" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Garuda-Bold.ttf//Garuda Bold" checksum="(null)">
@@ -2273,22 +2276,22 @@
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Garuda.ttf//Garuda Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/Geisha Holiday W00 Regular.ttf//GeishaHolidayW00-Regular Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/Geisha Holiday W00 Regular.ttf//GeishaHolidayW00-Regular Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/GenBkBasI_0.ttf//Gentium Book Basic Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/GenBkBasI_0.ttf//Gentium Book Basic Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/GenBkBasI_0.ttf//Gentium Book Basic Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/GenBkBasI_0.ttf//Gentium Book Basic Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/GenBkBasR_0.ttf//Gentium Book Basic Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/GenBkBasR_0.ttf//Gentium Book Basic Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/GenBkBasR_0.ttf//Gentium Book Basic Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/GenBkBasR_0.ttf//Gentium Book Basic Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Echo/GenR102.TTF//Gentium Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Echo/GenR102.TTF//Gentium Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/georgiab.ttf//Georgia Bold" checksum="(null)">
@@ -2303,31 +2306,31 @@
   <resource identifier="external:/usr/share/fonts/corefonts/georgia.ttf//Georgia Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - New/GILC____0.TTF//Gill Sans MT Condensed Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - New/GILC____0.TTF//Gill Sans MT Condensed Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Rage/GIL_____.TTF//Gill Sans MT Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Rage/GIL_____.TTF//Gill Sans MT Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wheel of Time/GISMONDA_0.TTF//Gismonda Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wheel of Time/GISMONDA_0.TTF//Gismonda Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/greatma_0.ttf//G.Machine Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/greatma_0.ttf//G.Machine Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Mainframe Tokens/GothamMedium Italic.otf//GothamMedium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Mainframe Tokens/GothamMedium Italic.otf//GothamMedium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Mainframe Tokens/Gotham Medium Regular.ttf//Gotham Medium Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Mainframe Tokens/Gotham Medium Regular.ttf//Gotham Medium Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Mainframe Tokens/Gotham Pro Black.ttf//Gotham Pro Black" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Gotham Pro Black.ttf//Gotham Pro Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Gotham Pro Black.ttf//Gotham Pro Black" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Mainframe Tokens/Gotham Pro Black.ttf//Gotham Pro Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout/fallout.ttf//Gothic821 Cn BT Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout/fallout.ttf//Gothic821 Cn BT Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/alee-fonts/Guseul.ttf//Guseul Regular" checksum="(null)">
@@ -2345,70 +2348,70 @@
   <resource identifier="external:/usr/share/fonts/hack/Hack-Regular.ttf//Hack Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Counter Sheet/HanleyPro-Sans.ttf//Hanley Pro Sans" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Counter Sheet/HanleyPro-Sans.ttf//Hanley Pro Sans" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Cartoon/Harrowprint_0.ttf//Harrowprint Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Cartoon/Harrowprint_0.ttf//Harrowprint Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Hecatomb/Hecatomb Titling.ttf//Hecatomb Titling Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Hecatomb/Hecatomb Titling.ttf//Hecatomb Titling Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/Hecatomb Titling.ttf//Hecatomb Titling Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/Hecatomb Titling.ttf//Hecatomb Titling Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/HelveticaNowText Black.ttf//Helvetica Now Text Black" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/HelveticaNowText Black.ttf//Helvetica Now Text Black" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/TTF/Helv Normal.ttf//Helv Normal" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/HolyMackerel!_0.ttf//Holy Mackerel! Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/HolyMackerel!_0.ttf//Holy Mackerel! Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/farsi-fonts/homa.ttf//Homa Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Pokemon/Hum521Bd.ttf//Humanst521 BT Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Pokemon/Hum521Bd.ttf//Humanst521 BT Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Pokemon/HUM521BI_0.TTF//Humanst521 BT Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Pokemon/HUM521BI_0.TTF//Humanst521 BT Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Pokemon/Hum521It.ttf//Humanst521 BT Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Pokemon/Hum521It.ttf//Humanst521 BT Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Pokemon/Hum521Rm.ttf//Humanst521 BT Roman" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Pokemon/Hum521Rm.ttf//Humanst521 BT Roman" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/IDroid Bold.otf//IDroid Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/IDroid Bold.otf//IDroid Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/IDroid.otf//IDroid Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/IDroid.otf//IDroid Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/UFS/impact.ttf//Impact Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/UFS/impact.ttf//Impact Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/impact.ttf//Impact Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Arcade/Incised901-NordItalic-AllCaps.ttf//Incised 901 Nord Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Arcade/Incised901-NordItalic-AllCaps.ttf//Incised 901 Nord Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Indiana Bold.otf//Indiana Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Indiana Bold.otf//Indiana Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Indiana Bold Italic.otf//Indiana Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Indiana Bold Italic.otf//Indiana Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Indiana Italic.otf//Indiana Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Indiana Italic.otf//Indiana Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Indiana.otf//Indiana Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Indiana.otf//Indiana Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Invocation/Invocation.ttf//Invocation Calligraphr Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Invocation/Invocation.ttf//Invocation Calligraphr Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/ipaex/ipaexg.ttf//IPAexGothic Regular" checksum="(null)">
@@ -2429,28 +2432,34 @@
   <resource identifier="external:/usr/share/fonts/ja-ipafonts/ipamp.ttf//IPAPMincho Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/ITC Officina Serif W04 AllCaps.ttf//ITCOfficinaSerifW04-Black Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/ITC Officina Serif W04 AllCaps.ttf//ITCOfficinaSerifW04-Black Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Souvenir-Bold.otf//ITC Souvenir Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dungeon Module/Souvenir-Bold.otf//ITC Souvenir Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dungeon Module/Souvenir-Bold.otf//ITC Souvenir Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Souvenir-Bold.otf//ITC Souvenir Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dungeon Module/Souvenir-Demi.otf//ITC Souvenir Demi Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Souvenir-Demi.otf//ITC Souvenir Demi Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Souvenir-Demi.otf//ITC Souvenir Demi Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dungeon Module/Souvenir-Demi.otf//ITC Souvenir Demi Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dungeon Module/Souvenir-Medium.otf//ITC Souvenir Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Souvenir-Medium.otf//ITC Souvenir Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/Souvenir-Medium.otf//ITC Souvenir Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dungeon Module/Souvenir-Medium.otf//ITC Souvenir Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/keyrune.ttf//Keyrune Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - TMNT Pixel/JoganSoft-Bold-AllCaps.ttf//Jogan Soft Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - TMNT Pixel/JoganSoft-Bold.otf//Jogan Soft Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/keyrune.ttf//Keyrune Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Kinnari-Bold.ttf//Kinnari Bold" checksum="(null)">
@@ -2489,10 +2498,10 @@
   <resource identifier="external:/usr/share/fonts/koruri/Koruri-Semibold.ttf//Koruri Semibold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/L5R/L5RTitles_0.ttf//L5RTitles L5RTitles" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - L5R/L5RTitles.ttf//L5RTitles L5RTitles" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - L5R/L5RTitles.ttf//L5RTitles L5RTitles" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/L5R/L5RTitles_0.ttf//L5RTitles L5RTitles" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Laksaman-Bold.ttf//Laksaman Bold" checksum="(null)">
@@ -2543,7 +2552,7 @@
   <resource identifier="external:/usr/share/fonts/liberation-fonts/LiberationSerif-Regular.ttf//Liberation Serif Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - CBG/lightfoot_n.ttf//Lightfoot Narrow Extra-condensed Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - CBG/lightfoot_n.ttf//Lightfoot Narrow Extra-condensed Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/TTF/Lobster-Regular.ttf//Lobster Regular" checksum="(null)">
@@ -2603,100 +2612,100 @@
   <resource identifier="external:/usr/share/fonts/TTF/luxirr.ttf//Luxi Serif Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Stellar Sights/Magic-Fomalhaut.ttf//Magic-Fomalhaut Fomalhaut" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Stellar Sights/Magic-Fomalhaut.ttf//Magic-Fomalhaut Fomalhaut" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/Scrolls.ttf//MagicMedieval Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Vanguard/magmed.ttf//MagicMedieval Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Old/magmed.ttf//MagicMedieval Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/Scrolls.ttf//MagicMedieval Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Vanguard/magmed.ttf//MagicMedieval Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/MagicMedieval.ttf//MagicMedieval Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Nostalgic/magmed.ttf//MagicMedieval Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Seven and a Half/magmed.ttf//MagicMedieval Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/MagicMedieval.ttf//MagicMedieval Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Old/magmed.ttf//MagicMedieval Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Seven and a Half/magmed.ttf//MagicMedieval Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Classicshifted/magmed.ttf//MagicMedieval Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Classicshifted/magmed.ttf//MagicMedieval Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Nostalgic/magmed.ttf//MagicMedieval Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Urban/MagicSymbols2008.ttf//Magic Symbols 2008 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Urban/MagicSymbols2008.ttf//Magic Symbols 2008 Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/local/share/fonts/m/mana.ttf//mana Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/truetype/mana.ttf//Mana Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/truetype/mana.ttf//Mana Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Arcade/Mane-Regular.otf//Mane Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Arcade/Mane-Regular.otf//Mane Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/ManuskriptGotisch_0.ttf//ManuskriptGotisch Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/ManuskriptGotisch_0.ttf//ManuskriptGotisch Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/maryjsc_0.ttf//Mary Jane Small Caps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/maryjsc_0.ttf//Mary Jane Small Caps Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/maryjwi_0.ttf//Mary Jane Windlin Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/maryjwi_0.ttf//Mary Jane Windlin Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/matrixb_0.ttf//Matrix Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Matrix-Bold.otf//Matrix Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Matrix-Bold.otf//Matrix Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/matrixb.ttf//Matrix Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/matrixb_0.ttf//Matrix Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/matrixb_0.ttf//Matrix Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/matrixb.ttf//Matrix Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/matrixb_0.ttf//Matrix Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/MatrixBold.ttf//MatrixBold Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/MatrixBold.ttf//MatrixBold Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/MatrixBoldFractions.otf//MatrixBoldFractions Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/MatrixBoldFractions.otf//MatrixBoldFractions Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/MatrixBoldSmallCaps.otf//MatrixBoldSmallCaps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/matrixbsc.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/matrixbsc_0.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/MatrixBoldSmallCaps.otf//MatrixBoldSmallCaps Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Dreamblade/matrixbsc_0.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/matrixbsc_0.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/matrixbsc_0.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/matrixbsc_0.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/matrixbsc.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Dreamblade/matrixbsc_0.ttf//MatrixBoldSmallCaps Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Music/MatriBoo.ttf//MatrixBook Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/MatriBoo_0.ttf//MatrixBook Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/MatriBoo_0.ttf//MatrixBook Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Music/MatriBoo.ttf//MatrixBook Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/MATRIX.TTF//Matrix Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/MATRIX.TTF//Matrix Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/MATRIX.TTF//Matrix Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/MATRIX.TTF//Matrix Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Medabots Italic.otf//Medabots Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Medabots Italic.otf//Medabots Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Medabots.otf//Medabots Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Medabots.otf//Medabots Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/mikachan-font-ttf/mikachan-PB.ttf//mikachan-PB Regular" checksum="(null)">
@@ -2711,7 +2720,7 @@
   <resource identifier="external:/usr/share/fonts/mikachan-font-ttf/mikachan.ttf//mikachan Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/minbari_0.ttf//Minbari Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/minbari_0.ttf//Minbari Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/misc/9x18B-ISO8859-13.pcf.otb//Misc Fixed Bold" checksum="(null)">
@@ -3716,46 +3725,46 @@
   <resource identifier="external:/usr/share/fonts/misc/nil2.pcf.otb//Misc Nil Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/ModMatrix_0.ttf//ModMatrix Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/ModMatrix_0.ttf//ModMatrix Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/ModMatrix.ttf//ModMatrix Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/ModMatrix.ttf//ModMatrix Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/ModMatrix_0.ttf//ModMatrix Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/ModMatrix_0.ttf//ModMatrix Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/monafont/mona.ttf//Mona Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Animayhem - BS/MORPHEUS.TTF//Morpheus Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Animayhem - BS/MORPHEUS.TTF//Morpheus Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/mplanti1.ttf//MPlantin-Bold Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/mplanti1.ttf//MPlantin-Bold Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/mplantinit.ttf//MPlantin-Italic Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/mplantinit.ttf//MPlantin-Italic Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/mplantin_0.ttf//MPlantin Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/mplantin.ttf//MPlantin Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/mplantin.ttf//MPlantin Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/mplantin_0.ttf//MPlantin Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/local/share/fonts/m/mplantin.ttf//MPlantin Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSANB.TTF//MS Reference Sans Serif Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSANB.TTF//MS Reference Sans Serif Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSANBI.TTF//MS Reference Sans Serif Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSANBI.TTF//MS Reference Sans Serif Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSANI.TTF//MS Reference Sans Serif Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSANI.TTF//MS Reference Sans Serif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSAN.TTF//MS Reference Sans Serif Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/REFSAN.TTF//MS Reference Sans Serif Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/nanum/NanumBarunGothicBold.ttf//NanumBarunGothic Bold" checksum="(null)">
@@ -3809,7 +3818,7 @@
   <resource identifier="external:/usr/share/fonts/nanum/NanumPen.ttf//Nanum Pen Script Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/narn_0.ttf//Narn Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/narn_0.ttf//Narn Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/farsi-fonts/nazlib.ttf//Nazli Bold" checksum="(null)">
@@ -3818,22 +3827,22 @@
   <resource identifier="external:/usr/share/fonts/farsi-fonts/nazli.ttf//Nazli Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout Pip-Boy/NeoSansPro-Italic.OTF//Neo Sans Pro Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout Pip-Boy/NeoSansPro-Italic.OTF//Neo Sans Pro Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout Pip-Boy/NeoSansPro-Regular.OTF//Neo Sans Pro Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout Pip-Boy/NeoSansPro-Regular.OTF//Neo Sans Pro Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Neverwinter Bold.otf//Neverwinter Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Neverwinter Bold.otf//Neverwinter Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Neverwinter Bold Italic.otf//Neverwinter Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Neverwinter Bold Italic.otf//Neverwinter Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Neverwinter Italic.otf//Neverwinter Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Neverwinter Italic.otf//Neverwinter Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Neverwinter.otf//Neverwinter Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Neverwinter.otf//Neverwinter Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/urw-fonts/NimbusMonoPS-Bold.otf//Nimbus Mono PS Bold" checksum="(null)">
@@ -3950,10 +3959,10 @@
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Norasi.ttf//Norasi Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/noto/NotoColorEmoji.ttf//Noto Color Emoji Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/noto/NotoColorEmoji.ttf//Noto Color Emoji Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/noto/NotoColorEmoji.ttf//Noto Color Emoji Regular" checksum="(null)">
+  <resource identifier="external:/home/monyarm/.nix-profile/share/fonts/noto/NotoColorEmoji.ttf//Noto Color Emoji Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/noto-emoji/NotoColorEmoji.ttf//Noto Color Emoji Regular" checksum="(null)">
@@ -5102,7 +5111,7 @@
   <resource identifier="external:/usr/share/fonts/noto/NotoTraditionalNushu-Regular.ttf//Noto Traditional Nushu Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout Pip-Boy/OCRAStd.otf//OCR A Std Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Fallout Pip-Boy/OCRAStd.otf//OCR A Std Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.fonts/o/Olde_Stencil.ttf//Olde Stencil Regular" checksum="(null)">
@@ -5216,19 +5225,19 @@
   <resource identifier="external:/usr/share/fonts/open-sans/OpenSans-SemiBoldItalic.ttf//Open Sans SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Echo/OptimusPrinceps.ttf//OptimusPrinceps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Echo/OptimusPrinceps.ttf//OptimusPrinceps Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Overseer Bold.otf//Overseer Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Overseer Bold.otf//Overseer Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Overseer Bold Italic.otf//Overseer Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Overseer Bold Italic.otf//Overseer Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Overseer Italic.otf//Overseer Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Overseer Italic.otf//Overseer Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Overseer.otf//Overseer Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Overseer.otf//Overseer Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/urw-fonts/P052-Bold.ttf//P052 Bold" checksum="(null)">
@@ -5255,40 +5264,40 @@
   <resource identifier="external:/usr/share/fonts/urw-fonts/P052-Roman.otf//P052 Roman" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/PALAB_0.TTF//Palatino Linotype Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Palatino Linotype.ttf//Palatino Linotype Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Palatino Linotype.ttf//Palatino Linotype Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/PALAB_0.TTF//Palatino Linotype Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/PALAI_0.TTF//Palatino Linotype Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/PALAI_0.TTF//Palatino Linotype Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Bandai/PALAI_0.TTF//Palatino Linotype Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Bandai/PALAI_0.TTF//Palatino Linotype Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/PALA_0.TTF//Palatino Linotype Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Bang/PALA_0.TTF//Palatino Linotype Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Bang/PALA_0.TTF//Palatino Linotype Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - All/PALA_0.TTF//Palatino Linotype Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/VS - All/percexptm_0.ttf//Percolator Expert TM Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/VS - All/percexptm_0.ttf//Percolator Expert TM Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Phyrexian/Phyrexian.ttf//Phyrexian Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Phyrexian/Phyrexian.ttf//Phyrexian Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/powerline-symbols/PowerlineSymbols.otf//PowerlineSymbols Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/OTF/PowerlineSymbols.otf//PowerlineSymbols Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/OTF/PowerlineSymbols.otf//PowerlineSymbols Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Phyrexian/ProgressEngine.otf//ProgressEngine Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Phyrexian/ProgressEngine.otf//ProgressEngine Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Animayhem - BS/pterra_0.ttf//Pterra Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Animayhem - BS/pterra_0.ttf//Pterra Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Purisa-Bold.ttf//Purisa Bold" checksum="(null)">
@@ -5306,10 +5315,10 @@
   <resource identifier="external:/usr/share/fonts/quivira/Quivira.otf//Quivira Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/relay-medium.ttf//Relay-Medium Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/relay-medium.ttf//Relay-Medium Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/Requiem II-Normal_0.ttf//Requiem II Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/Requiem II-Normal_0.ttf//Requiem II Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/roboto/Roboto-Black.ttf//Roboto Black" checksum="(null)">
@@ -5378,7 +5387,7 @@
   <resource identifier="external:/usr/share/fonts/roboto/Roboto-ThinItalic.ttf//Roboto Thin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Breaking News/RouletteCapsOpti.otf//RouletteCapsOpti Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Breaking News/RouletteCapsOpti.otf//RouletteCapsOpti Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/farsi-fonts/royab.ttf//Roya Bold" checksum="(null)">
@@ -5390,13 +5399,13 @@
   <resource identifier="external:/usr/share/fonts/farsi-fonts/roya.ttf//Roya Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Urban/RUFA.ttf//Rufa Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/RUFA_0.ttf//Rufa Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Intense Horizontal/RUFA_0.ttf//Rufa Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Urban/RUFA.ttf//Rufa Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/Saddlebag AllCaps.ttf//Saddlebag Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/Saddlebag AllCaps.ttf//Saddlebag Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Sawasdee-Bold.ttf//Sawasdee Bold" checksum="(null)">
@@ -5411,43 +5420,43 @@
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Sawasdee.ttf//Sawasdee Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/Schnebel Slab Pro Italic.ttf//Schnebel Slab Pro Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/Schnebel Slab Pro Italic.ttf//Schnebel Slab Pro Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/Schnebel Slab Pro Regular.ttf//Schnebel Slab Pro Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Thunder Junction Wanted Poster/Schnebel Slab Pro Regular.ttf//Schnebel Slab Pro Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Karlov Manor Dossier/SecretaryTypewriter.ttf//Secretary Typewriter Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Karlov Manor Dossier/SecretaryTypewriter.ttf//Secretary Typewriter Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - All/serpenti_0.ttf//Serpentine-Bold-Bold Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - All/serpenti_0.ttf//Serpentine-Bold-Bold Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/S017036D_0.TTF//SerpentineDBol Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/S017036D_0.TTF//SerpentineDBol Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Digimon/Serpentine-Light.ttf//Serpentine-Light Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Digimon/Serpentine-Light.ttf//Serpentine-Light Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/SF Quartzite Bold.ttf//SF Quartzite Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/SF Quartzite Bold.ttf//SF Quartzite Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/SF Quartzite Bold.ttf//SF Quartzite Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/SF Quartzite Bold.ttf//SF Quartzite Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/SF Quartzite.ttf//SF Quartzite Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/SF Quartzite.ttf//SF Quartzite Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/SF Quartzite.ttf//SF Quartzite Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Space - Xerent/SF Quartzite.ttf//SF Quartzite Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/shadow_0.ttf//Shadow Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/shadow_0.ttf//Shadow Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Invocation/ShangoGothic.ttf//ShangoGothic ☞" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Invocation/ShangoGothic.ttf//ShangoGothic ☞" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Invocation/ShangoGothic-Bold.ttf//ShangoGothic-Bold ☞" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Invocation/ShangoGothic-Bold.ttf//ShangoGothic-Bold ☞" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/signika/Signika-Bold.ttf//Signika Bold" checksum="(null)">
@@ -5495,7 +5504,7 @@
   <resource identifier="external:/usr/share/fonts/source-han-sans/SourceHanSansJP-Regular.otf//Source Han Sans JP Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Karlov Manor Dossier/SpecialElite-Regular.ttf//Special Elite Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Karlov Manor Dossier/SpecialElite-Regular.ttf//Special Elite Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/urw-fonts/StandardSymbolsPS.ttf//Standard Symbols PS Regular" checksum="(null)">
@@ -5504,10 +5513,10 @@
   <resource identifier="external:/usr/share/fonts/urw-fonts/StandardSymbolsPS.otf//Standard Symbols PS Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Steampips d10.otf//Steampips d10 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Steampips d10.otf//Steampips d10 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Steampips d6.otf//Steampips d6 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Steampips d6.otf//Steampips d6 Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/stix-fonts/STIXTwoMath-Regular.otf//STIX Two Math Regular" checksum="(null)">
@@ -5537,25 +5546,25 @@
   <resource identifier="external:/usr/share/fonts/stix-fonts/STIXTwoText-SemiBoldItalic.otf//STIX Two Text SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Italic.ttf//Stone Serif Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Italic.ttf//Stone Serif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif ITC Medium.ttf//Stone Serif ITC Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif ITC Medium.ttf//Stone Serif ITC Medium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Regular.ttf//Stone Serif Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Regular.ttf//Stone Serif Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Semibold.ttf//StoneSerif-Semibold Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Semibold.ttf//StoneSerif-Semibold Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Sem SC ITC TT.ttf//Stone Serif Sem SC ITC TT Semi" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Stone Serif Sem SC ITC TT.ttf//Stone Serif Sem SC ITC TT Semi" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Rage/STUCCO.TTF//Stucco 555 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Rage/STUCCO.TTF//Stucco 555 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Hecatomb/SYLFAEN_0.TTF//Sylfaen Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Hecatomb/SYLFAEN_0.TTF//Sylfaen Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/symbols-nerd-font/SymbolsNerdFontMono-Regular.ttf//Symbols Nerd Font Mono Regular" checksum="(null)">
@@ -5564,10 +5573,10 @@
   <resource identifier="external:/usr/share/fonts/symbols-nerd-font/SymbolsNerdFont-Regular.ttf//Symbols Nerd Font Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/tahomabd.ttf//Tahoma Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/tahomabd.ttf//Tahoma Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/tahoma.ttf//Tahoma Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Punk Show/tahoma.ttf//Tahoma Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/farsi-fonts/terafikb.ttf//Terafik Bold" checksum="(null)">
@@ -5675,37 +5684,37 @@
   <resource identifier="external:/usr/share/fonts/tex-gyre/texgyretermes-regular.otf//TeX Gyre Termes Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Expedition 33/TheSherloks-Vintage.otf//The Sherloks Vintage" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Expedition 33/TheSherloks-Vintage.otf//The Sherloks Vintage" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/theEVENT.ttf//the#V$NT Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Gatewatch Baseball/theEVENT.ttf//the#V$NT Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBlack.otf//Thirsty Rough Black" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBlack.otf//Thirsty Rough Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBlackShadow.otf//Thirsty Rough Black Shadow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBlackShadow.otf//Thirsty Rough Black Shadow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBold.otf//Thirsty Rough Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBold.otf//Thirsty Rough Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBoldOne.otf//Thirsty Rough Bold One" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBoldOne.otf//Thirsty Rough Bold One" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBoldShadow.otf//Thirsty Rough Bold Shadow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughBoldShadow.otf//Thirsty Rough Bold Shadow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughLight.otf//Thirsty Rough Light" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughLight.otf//Thirsty Rough Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughLightOne.otf//Thirsty Rough Light One" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughLightOne.otf//Thirsty Rough Light One" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughLightShadow.otf//Thirsty Rough Light Shadow" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wingspan/ThirstyRoughLightShadow.otf//Thirsty Rough Light Shadow" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/timesbd.ttf//Times New Roman Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/timesbd.ttf//Times New Roman Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/timesbd.ttf//Times New Roman Bold" checksum="(null)">
@@ -5714,55 +5723,55 @@
   <resource identifier="external:/usr/share/fonts/corefonts/timesbi.ttf//Times New Roman Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/timesbi.ttf//Times New Roman Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/timesbi.ttf//Times New Roman Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Warlord/timesi.ttf//Times New Roman Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wheel of Time/timesi.ttf//Times New Roman Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Dreamblade/timesi.ttf//Times New Roman Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Dreamblade/timesi.ttf//Times New Roman Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wheel of Time/timesi.ttf//Times New Roman Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Warlord/timesi.ttf//Times New Roman Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/timesi.ttf//Times New Roman Italic" checksum="(null)">
-  </resource>
-
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Space/timesi.ttf//Times New Roman Italic" checksum="(null)">
-  </resource>
-
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/timesi.ttf//Times New Roman Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/timesi.ttf//Times New Roman Italic" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/timesi.ttf//Times New Roman Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Wheel of Time/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Space/timesi.ttf//Times New Roman Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/timesi.ttf//Times New Roman Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Wheel of Time/times.ttf//Times New Roman Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Playtest/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/times.ttf//Times New Roman Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Dreamblade/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Space/times.ttf//Times New Roman Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Doomtrooper/times.ttf//Times New Roman Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/times.ttf//Times New Roman Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/UFS/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Dreamblade/times.ttf//Times New Roman Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Doomtrooper/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/UFS/times.ttf//Times New Roman Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Space/times.ttf//Times New Roman Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Playtest/times.ttf//Times New Roman Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Dynamic/times.ttf//Times New Roman Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/croscorefonts/Tinos-Bold.ttf//Tinos Bold" checksum="(null)">
@@ -5828,19 +5837,19 @@
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/TlwgTypo.ttf//Tlwg Typo Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/World of Warcraft/LTe50541.ttf//TradeGothic LT CondEighteen Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Stargate/LTe50541_0.ttf//TradeGothic LT CondEighteen Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Stargate/LTe50541_0.ttf//TradeGothic LT CondEighteen Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/World of Warcraft/LTe50541.ttf//TradeGothic LT CondEighteen Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Expedition 33/TrajanPro-Regular.ttf//Trajan Pro Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Expedition 33/TrajanPro-Regular.ttf//Trajan Pro Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Transdings.otf//Transdings Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Transdings.otf//Transdings Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Scroll/Treamd.ttf//Treasure Map Deadhand Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Scroll/Treamd.ttf//Treasure Map Deadhand Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/trebucbd.ttf//Trebuchet MS Bold" checksum="(null)">
@@ -5852,16 +5861,16 @@
   <resource identifier="external:/usr/share/fonts/corefonts/trebucit.ttf//Trebuchet MS Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/trebuc.ttf//Trebuchet MS Regular" checksum="(null)">
-  </resource>
-
   <resource identifier="external:/usr/share/fonts/corefonts/trebuc.ttf//Trebuchet MS Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Trek Arrowcaps.otf//Trek Arrowcaps Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Evolution/trebuc.ttf//Trebuchet MS Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/opentype/Turtles.otf//Turtles Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Trek Arrowcaps.otf//Trek Arrowcaps Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/opentype/Turtles.otf//Turtles Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/ubuntu-font-family/Ubuntu-B.ttf//Ubuntu Bold" checksum="(null)">
@@ -6002,19 +6011,19 @@
   <resource identifier="external:/usr/share/fonts/urw-fonts/URWGothic-DemiOblique.otf//URW Gothic Demi Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/usenet_0.ttf//Usenet Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Crystal/usenet_0.ttf//Usenet Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/vanilla whale.ttf//Vanilla Whale Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/vanilla whale.ttf//Vanilla Whale Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/VENUSRIS_0.ttf//Venus Rising Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Comic/VENUSRIS_0.ttf//Venus Rising Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Space/VENUSRIS_0.ttf//Venus Rising Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/VENUSRIS_0.ttf//Venus Rising Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Space - Xerent/VENUSRIS_0.ttf//Venus Rising Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Space/VENUSRIS_0.ttf//Venus Rising Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/verdanab.ttf//Verdana Bold" checksum="(null)">
@@ -6029,13 +6038,13 @@
   <resource identifier="external:/usr/share/fonts/corefonts/verdana.ttf//Verdana Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Warlord/Vhati&apos;s Warlord Text_0.ttf//Vhati&apos;s Warlord Text Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Warlord/Vhati&apos;s Warlord Text_0.ttf//Vhati&apos;s Warlord Text Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Warlord/Vhati&apos;s Warlord Title_0.ttf//Vhati&apos;s Warlord Title Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Warlord/Vhati&apos;s Warlord Title_0.ttf//Vhati&apos;s Warlord Title Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/vorlon_0.ttf//Vorlon Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Babylon 5 - Language Promo/vorlon_0.ttf//Vorlon Bold" checksum="(null)">
   </resource>
 
   <resource identifier="external:/home/monyarm/.fonts/v/Vorname.otf//Vorname Regular" checksum="(null)">
@@ -6053,7 +6062,7 @@
   <resource identifier="external:/usr/share/fonts/thaifonts-scalable/Waree.ttf//Waree Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Megaman/Weapon-Get-2_5.ttf//Weapon Get 2 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Magic - Fonts/template specific fonts/Magic - Megaman/Weapon-Get-2_5.ttf//Weapon Get 2 Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/corefonts/webdings.ttf//Webdings Regular" checksum="(null)">
@@ -6074,28 +6083,28 @@
   <resource identifier="external:/usr/share/fonts/wqy-zenhei/wqy-zenhei.ttc//WenQuanYi Zen Hei Sharp Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Bang/western_regular_0.ttf//Western Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Bang/western_regular_0.ttf//Western Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Munchkin/Windlass_0.ttf//Windlass Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Munchkin/Windlass_0.ttf//Windlass Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/YGOLinkNumber.ttf//YGOLinkNumber Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/YGOLinkNumber.ttf//YGOLinkNumber Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! ITC Stone Serif Small Caps Bold.ttf//Yu-Gi-Oh!ITCStoneSerifSmallCaps Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! ITC Stone Serif Small Caps Bold.ttf//Yu-Gi-Oh!ITCStoneSerifSmallCaps Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! Matrix Book.ttf//Yu-Gi-Oh! Matrix Book Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! Matrix Book.ttf//Yu-Gi-Oh! Matrix Book Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! Matrix Regular Small Caps 1.ttf//Yu-Gi-Oh! Matrix Small Caps 1 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! Matrix Regular Small Caps 1.ttf//Yu-Gi-Oh! Matrix Small Caps 1 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! Matrix Regular Small Caps 2.ttf//Yu-Gi-Oh! Matrix Small Caps 2 Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! Matrix Regular Small Caps 2.ttf//Yu-Gi-Oh! Matrix Small Caps 2 Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/3lkbb1innw1qhm30lc5bdb94lzvd3i7d-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! ITC Stone Serif LT Italic.ttf//Yu-Gi-Oh! StoneSerif LT Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/hwrbilvkyj44pjm08bv6fsihv6hf0s7c-home-manager-path/share/fonts/Other - Fonts/Yugioh - Series 10/Yu-Gi-Oh! ITC Stone Serif LT Italic.ttf//Yu-Gi-Oh! StoneSerif LT Italic" checksum="(null)">
   </resource>
 
   <resource identifier="external:/usr/share/fonts/urw-fonts/Z003-MediumItalic.otf//Z003 Medium Italic" checksum="(null)">

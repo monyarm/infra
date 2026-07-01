@@ -121,7 +121,7 @@ in
   home.file = binFiles (
     [
       # keep-sorted start
-      (import ./nxm.nix { inherit pkgs; })
+      (import ./nxm.nix { inherit pkgs dirs; })
       Extract
       fehScript
       reconnectScript

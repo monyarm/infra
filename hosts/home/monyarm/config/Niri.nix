@@ -9,13 +9,15 @@ lib.mkMerge [
   (lib.optionalAttrs isHomeManagerInNixOS {
     home.packages = with pkgs; [
       quickshell
-      swww
+      awww
       xwayland-satellite
       cliphist
       swaylock
       wireplumber
       brightnessctl
       playerctl
+      rofi
+      ghostty
     ];
   })
   {
@@ -42,18 +44,21 @@ lib.mkMerge [
         gaps = 4;
         always-center-single-column = true;
       };
-      environment = {
-        DISPLAY = ":0";
-        # keep-sorted start
-        ELECTRON_OZONE_PLATFORM_HINT = "auto";
-        GDK_BACKEND = "wayland,x11";
-        GNUPGHOME = config.sops.gnupg.home;
-        GTK_USE_PORTAL = "1";
-        MOZ_ENABLE_WAYLAND = "1";
-        MOZ_LEGACY_PROFILES = "1";
-        # keep-sorted end
-      }
-      // config.sops.environment;
+      environment =
+        (lib.optionalAttrs isHomeManagerInNixOS {
+          DISPLAY = ":0";
+        })
+        // (lib.removeAttrs config.sops.environment [ "PATH" ])
+        // {
+          # keep-sorted start
+          ELECTRON_OZONE_PLATFORM_HINT = "auto";
+          GDK_BACKEND = "wayland,x11";
+          GNUPGHOME = config.sops.gnupg.home;
+          GTK_USE_PORTAL = "1";
+          MOZ_ENABLE_WAYLAND = "1";
+          MOZ_LEGACY_PROFILES = "1";
+          # keep-sorted end
+        };
       spawn-at-startup =
         let
           split = list: builtins.map (x: { argv = lib.toList (lib.splitString " " x); }) list;
@@ -64,10 +69,9 @@ lib.mkMerge [
             "/usr/libexec/polkit-mate-authentication-agent-1"
             "gentoo-pipewire-launcher"
             "quickshell"
-            "swww-daemon"
             "wl-paste --watch cliphist store"
             "xwayland-satellite"
-            "~/.local/bin/swww-random"
+            "~/.local/bin/awww-random"
             # keep-sorted end
           ]
           ++ lib.optional (!isHomeManagerInNixOS) (
@@ -86,7 +90,7 @@ lib.mkMerge [
           matches = [
             {
               app-id = "steam";
-              title = "^notificationtoasts_\d+_desktop$";
+              title = "^notificationtoasts_\\d+_desktop$";
             }
           ];
           default-floating-position = {
@@ -115,8 +119,8 @@ lib.mkMerge [
         }
         {
           matches = [
-            { app-id = "^org\.keepassxc\.KeePassXC$"; }
-            { app-id = "^org\.gnome\.World\.Secrets$"; }
+            { app-id = "^org\\.keepassxc\\.KeePassXC$"; }
+            { app-id = "^org\\.gnome\\.World\\.Secrets$"; }
           ];
           block-out-from = "screen-capture";
         }
@@ -309,7 +313,7 @@ lib.mkMerge [
                       exit 0
                     fi
                     cmd=(swaylock --image /tmp/current-wallpaper);
-                    for d in $(swww query | awk '{print $2}' | sed s/://); do
+                    for d in $(awww query | awk '{print $2}' | sed s/://); do
                       cmd+=(--image "$d":/tmp/current-wallpaper_"$d");
                     done
                     "''${cmd[@]}"

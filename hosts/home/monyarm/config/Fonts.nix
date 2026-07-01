@@ -53,7 +53,7 @@ let
           if isArchived then
             ''find . -type f \( -iname "*.ttf" -o -iname "*.otf" \) -exec cp {} $out/share/fonts/${fontFolder}/ \;''
           else
-            ''cp $src $out/share/fonts/${fontFolder}/${filename}.ttf''
+            "cp $src $out/share/fonts/${fontFolder}/${filename}.ttf"
         }
         chmod -R 644 $out/share/fonts/${fontFolder}/*
       '';
@@ -81,7 +81,7 @@ let
 
   mse-fonts-magic =
     mkMseFontPack "mse-fonts-magic" "Full-Magic-Pack"
-      "sha256-atZuIJ2q74LTVz2C5HESQqvl1+6dYt/BNoKnfnlygK0=";
+      "sha256-XUr0CMj5KmprGpHTV+BYUGZHZevSpSHtaaw06NmzL5Q=";
 
   mse-fonts-other =
     mkMseFontPack "mse-fonts-other" "Full-Non-Magic-Pack"

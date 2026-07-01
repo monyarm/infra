@@ -524,7 +524,7 @@ rec {
           }
           ''
             echo "Extracting frame at ${timestamp} of ${videoFile}"
-            ffmpeg -i ${videoFile} -ss ${timestamp} -frames:v 1 ${cropFilter} $out
+            ffmpeg -i ${videoFile} -ss ${timestamp} -update true -frames:v 1 ${cropFilter} $out
           '';
 
       frames = map extractSingleFrame timestamps;

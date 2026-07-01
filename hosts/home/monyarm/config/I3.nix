@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  dirs,
   ...
 }:
 
@@ -315,7 +316,7 @@ in
           notification = false;
         }
         {
-          command = "feh --randomize --bg-fill ~/Pictures/wallpapers/*";
+          command = "feh --randomize --bg-fill ${dirs.wallpapers}/*";
           always = false;
           notification = false;
         }
@@ -330,7 +331,7 @@ in
           notification = false;
         }
         {
-          command = "/home/monyarm/.local/bin/setup_rclone";
+          command = "${dirs.HOME}/.local/bin/setup_rclone";
           always = true;
           notification = false;
         }

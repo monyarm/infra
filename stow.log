@@ -1,0 +1,1284 @@
+fetching git input 'git+file:///home/monyarm/.nix'
+warning: Git tree '/home/monyarm/.nix' is dirty
+Using saved setting for 'extra-substituters = https://nix-community.cachix.org https://nix-on-droid.cachix.org' from ~/.local/share/nix/trusted-settings.json.
+Using saved setting for 'extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE=' from ~/.local/share/nix/trusted-settings.json.
+traversed 986 files
+emitted 405 files for processing
+formatted 1 files (0 changed) in 75ms
+fetching git input 'git+file:///home/monyarm/.nix'
+warning: Git tree '/home/monyarm/.nix' is dirty
+Using saved setting for 'extra-substituters = https://nix-community.cachix.org https://nix-on-droid.cachix.org' from ~/.local/share/nix/trusted-settings.json.
+Using saved setting for 'extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE=' from ~/.local/share/nix/trusted-settings.json.
+fetching git input 'git+file:///home/monyarm/.nix'
+warning: Git tree '/home/monyarm/.nix' is dirty
+Using saved setting for 'extra-substituters = https://nix-community.cachix.org https://nix-on-droid.cachix.org' from ~/.local/share/nix/trusted-settings.json.
+Using saved setting for 'extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE=' from ~/.local/share/nix/trusted-settings.json.
+fetching git input 'git+file:///home/monyarm/.nix'
+warning: Git tree '/home/monyarm/.nix' is dirty
+Using saved setting for 'extra-substituters = https://nix-community.cachix.org https://nix-on-droid.cachix.org' from ~/.local/share/nix/trusted-settings.json.
+Using saved setting for 'extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE=' from ~/.local/share/nix/trusted-settings.json.
+fetching git input 'git+file:///home/monyarm/.nix'
+warning: Git tree '/home/monyarm/.nix' is dirty
+Using saved setting for 'extra-substituters = https://nix-community.cachix.org https://nix-on-droid.cachix.org' from ~/.local/share/nix/trusted-settings.json.
+Using saved setting for 'extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE=' from ~/.local/share/nix/trusted-settings.json.
+error:
+       … from call site
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/default.nix:66:54:
+           65|     dirSet: builder:
+           66|     lib.mergeAttrsList (lib.map (name: { "${name}" = builder name; }) (getDirNames dirSet));
+             |                                                      ^
+           67|
+
+       … while calling 'buildHomeConfig'
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/default.nix:69:5:
+           68|   buildHomeConfig =
+           69|     userName:
+             |     ^
+           70|     let
+
+       … from call site
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/default.nix:75:5:
+           74|     in
+           75|     home-manager.lib.homeManagerConfiguration {
+             |     ^
+           76|       pkgs = pkgsGen currentSystem;
+
+       … while calling 'homeManagerConfiguration'
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/lib/default.nix:6:5:
+            5|   homeManagerConfiguration =
+            6|     {
+             |     ^
+            7|       check ? true,
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/lib/default.nix:14:5:
+           13|     }:
+           14|     import ../modules {
+             |     ^
+           15|       inherit
+
+       … while calling anonymous lambda
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:1:1:
+            1| {
+             | ^
+            2|   configuration,
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:77:1:
+           76| in
+           77| withExtraAttrs rawModule
+             | ^
+           78|
+
+       … while calling 'withExtraAttrs'
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:56:5:
+           55|   withExtraAttrs =
+           56|     rawModule:
+             |     ^
+           57|     let
+
+       … while evaluating module
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:60:5:
+           59|     in
+           60|     module
+             |     ^
+           61|     // {
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:58:16:
+           57|     let
+           58|       module = moduleChecks rawModule;
+             |                ^
+           59|     in
+
+       … while calling 'moduleChecks'
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:40:5:
+           39|   moduleChecks =
+           40|     raw:
+             |     ^
+           41|     showWarnings (
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:41:5:
+           40|     raw:
+           41|     showWarnings (
+             |     ^
+           42|       let
+
+       … while calling 'showWarnings'
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:17:5:
+           16|   showWarnings =
+           17|     res:
+             |     ^
+           18|     let
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:21:5:
+           20|     in
+           21|     lib.foldr f res res.config.warnings;
+             |     ^
+           22|
+
+       … while calling 'foldr'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/lists.nix:138:14:
+          137|   foldr =
+          138|     op: nul: list:
+             |              ^
+          139|     let
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/lists.nix:143:5:
+          142|     in
+          143|     fold' 0;
+             |     ^
+          144|
+
+       … while calling 'fold''
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/lists.nix:141:15:
+          140|       len = length list;
+          141|       fold' = n: if n == len then nul else op (elemAt list n) (fold' (n + 1));
+             |               ^
+          142|     in
+
+       … while evaluating len
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/lists.nix:141:26:
+          140|       len = length list;
+          141|       fold' = n: if n == len then nul else op (elemAt list n) (fold' (n + 1));
+             |                          ^
+          142|     in
+
+       … while calling the 'length' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/lists.nix:140:13:
+          139|     let
+          140|       len = length list;
+             |             ^
+          141|       fold' = n: if n == len then nul else op (elemAt list n) (fold' (n + 1));
+
+       … while evaluating the first argument passed to builtins.length
+
+       … while evaluating an expression to select 'config.warnings' on it
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:21:21:
+           20|     in
+           21|     lib.foldr f res res.config.warnings;
+             |                     ^
+           22|
+
+       … while evaluating res
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:21:21:
+           20|     in
+           21|     lib.foldr f res res.config.warnings;
+             |                     ^
+           22|
+
+       … while evaluating failed
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:46:10:
+           45|       in
+           46|       if failed == [ ] then
+             |          ^
+           47|         raw
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:43:18:
+           42|       let
+           43|         failed = collectFailed raw.config;
+             |                  ^
+           44|         failedStr = lib.concatStringsSep "\n" (map (x: "- ${x}") failed);
+
+       … while calling 'collectFailed'
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:14:19:
+           13|
+           14|   collectFailed = cfg: map (x: x.message) (lib.filter (x: !x.assertion) cfg.assertions);
+             |                   ^
+           15|
+
+       … while calling the 'map' builtin
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:14:24:
+           13|
+           14|   collectFailed = cfg: map (x: x.message) (lib.filter (x: !x.assertion) cfg.assertions);
+             |                        ^
+           15|
+
+       … while evaluating the second argument passed to builtins.map
+
+       … while calling the 'filter' builtin
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:14:44:
+           13|
+           14|   collectFailed = cfg: map (x: x.message) (lib.filter (x: !x.assertion) cfg.assertions);
+             |                                            ^
+           15|
+
+       … while evaluating the second argument passed to builtins.filter
+
+       … while evaluating an expression to select 'assertions' on it
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:14:73:
+           13|
+           14|   collectFailed = cfg: map (x: x.message) (lib.filter (x: !x.assertion) cfg.assertions);
+             |                                                                         ^
+           15|
+
+       … while evaluating cfg
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/default.nix:14:73:
+           13|
+           14|   collectFailed = cfg: map (x: x.message) (lib.filter (x: !x.assertion) cfg.assertions);
+             |                                                                         ^
+           15|
+
+       … while evaluating the attribute 'config'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:402:9:
+          401|         options = checked options;
+          402|         config = checked (removeAttrs config [ "_module" ]);
+             |         ^
+          403|         _module = checked (config._module);
+
+       … while calling the 'seq' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:402:18:
+          401|         options = checked options;
+          402|         config = checked (removeAttrs config [ "_module" ]);
+             |                  ^
+          403|         _module = checked (config._module);
+
+       … while evaluating the attribute 'unmatchedDefns'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:937:7:
+          936|       # Transforms unmatchedDefnsByName into a list of definitions
+          937|       unmatchedDefns =
+             |       ^
+          938|         if configs == [ ] then
+
+       … while calling the 'concatLists' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:943:11:
+          942|         else
+          943|           concatLists (
+             |           ^
+          944|             mapAttrsToList (
+
+       … while evaluating a value of the list passed to builtins.concatLists
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:945:21:
+          944|             mapAttrsToList (
+          945|               name: defs:
+             |                     ^
+          946|               map (
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:946:15:
+          945|               name: defs:
+          946|               map (
+             |               ^
+          947|                 def:
+
+       … while evaluating the second argument passed to builtins.map
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:929:22:
+          928|         # Propagate all unmatched definitions from nested option sets
+          929|         mapAttrs (n: v: v.unmatchedDefns) resultsByName
+             |                      ^
+          930|         # Plus the definitions for the current prefix that don't have a matching option
+
+       … while evaluating the attribute 'unmatchedDefns'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:937:7:
+          936|       # Transforms unmatchedDefnsByName into a list of definitions
+          937|       unmatchedDefns =
+             |       ^
+          938|         if configs == [ ] then
+
+       … while evaluating configs
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:938:12:
+          937|       unmatchedDefns =
+          938|         if configs == [ ] then
+             |            ^
+          939|           # When no config values exist, there can be no unmatched config, so
+
+       … while calling the 'concatLists' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:877:47:
+          876|           loc = prefix ++ [ name ];
+          877|           defns = pushedDownDefinitionsByName.${name} or [ ];
+             |                                               ^
+          878|           defns' = rawDefinitionsByName.${name} or [ ];
+
+       … while evaluating a value of the list passed to builtins.concatLists
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:834:16:
+          833|           mapAttrs (
+          834|             n: value:
+             |                ^
+          835|             map (config: {
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:835:13:
+          834|             n: value:
+          835|             map (config: {
+             |             ^
+          836|               inherit (module) file;
+
+       … while evaluating the second argument passed to builtins.map
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:838:17:
+          837|               inherit config;
+          838|             }) (pushDownProperties value)
+             |                 ^
+          839|           ) module.config
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1366:5:
+         1365|     in
+         1366|     cfg:
+             |     ^
+         1367|     if cfg._type or "" == "merge" then
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1370:7:
+         1369|     else if cfg._type or "" == "if" then
+         1370|       map (mapAttrsIfAttrs (n: v: mkIf cfg.condition v)) (pushDownProperties cfg.content)
+             |       ^
+         1371|     else if cfg._type or "" == "override" then
+
+       … while evaluating the second argument passed to builtins.map
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1370:59:
+         1369|     else if cfg._type or "" == "if" then
+         1370|       map (mapAttrsIfAttrs (n: v: mkIf cfg.condition v)) (pushDownProperties cfg.content)
+             |                                                           ^
+         1371|     else if cfg._type or "" == "override" then
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1366:5:
+         1365|     in
+         1366|     cfg:
+             |     ^
+         1367|     if cfg._type or "" == "merge" then
+
+       … while evaluating an expression to select '_type' on it
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1367:8:
+         1366|     cfg:
+         1367|     if cfg._type or "" == "merge" then
+             |        ^
+         1368|       concatMap pushDownProperties cfg.contents
+
+       … while evaluating cfg
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1367:8:
+         1366|     cfg:
+         1367|     if cfg._type or "" == "merge" then
+             |        ^
+         1368|       concatMap pushDownProperties cfg.contents
+
+       … while evaluating the attribute 'content'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1555:23:
+         1554|     _type = "if";
+         1555|     inherit condition content;
+             |                       ^
+         1556|   };
+
+       … from call site
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:48:15:
+           47| lib.mkIf (meta.deviceType != "android-phone") {
+           48|   programs = (disablePackages unfilteredProgramNames) // {
+             |               ^
+           49|     firefox.package = null;
+
+       … while calling 'disablePackages'
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:28:21:
+           27|   # Helper to disable packages for non-retained programs/services
+           28|   disablePackages = names: disableAttrs names { package = lib.mkForce emptyProgram; };
+             |                     ^
+           29|
+
+       … from call site
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:28:28:
+           27|   # Helper to disable packages for non-retained programs/services
+           28|   disablePackages = names: disableAttrs names { package = lib.mkForce emptyProgram; };
+             |                            ^
+           29|
+
+       … while calling 'disableAttrs'
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:25:25:
+           24|   # Helper to generate disabled attributes for non-retained items
+           25|   disableAttrs = names: config: lib.genAttrs names (name: lib.mkIf (!(isRetained name)) config);
+             |                         ^
+           26|
+
+       … from call site
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:25:33:
+           24|   # Helper to generate disabled attributes for non-retained items
+           25|   disableAttrs = names: config: lib.genAttrs names (name: lib.mkIf (!(isRetained name)) config);
+             |                                 ^
+           26|
+
+       … while calling 'genAttrs'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1343:21:
+         1342|   */
+         1343|   genAttrs = names: f: genAttrs' names (n: nameValuePair n (f n));
+             |                     ^
+         1344|
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1343:24:
+         1342|   */
+         1343|   genAttrs = names: f: genAttrs' names (n: nameValuePair n (f n));
+             |                        ^
+         1344|
+
+       … while calling 'genAttrs''
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1380:19:
+         1379|   */
+         1380|   genAttrs' = xs: f: listToAttrs (map f xs);
+             |                   ^
+         1381|
+
+       … while calling the 'listToAttrs' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1380:22:
+         1379|   */
+         1380|   genAttrs' = xs: f: listToAttrs (map f xs);
+             |                      ^
+         1381|
+
+       … while evaluating the argument passed to builtins.listToAttrs
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1380:35:
+         1379|   */
+         1380|   genAttrs' = xs: f: listToAttrs (map f xs);
+             |                                   ^
+         1381|
+
+       … while evaluating the second argument passed to builtins.map
+
+       … from call site
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:30:28:
+           29|
+           30|   unfilteredProgramNames = getFilteredNames config.programs [
+             |                            ^
+           31|     "octant"
+
+       … while calling 'getFilteredNames'
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:15:29:
+           14|   getFilteredNames =
+           15|     configSet: excludeList: attrName:
+             |                             ^
+           16|     lib.attrNames (
+
+       … while calling the 'attrNames' builtin
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:16:5:
+           15|     configSet: excludeList: attrName:
+           16|     lib.attrNames (
+             |     ^
+           17|       lib.filterAttrs (
+
+       … while evaluating the argument passed to builtins.attrNames
+
+       … from call site
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:17:7:
+           16|     lib.attrNames (
+           17|       lib.filterAttrs (
+             |       ^
+           18|         name: value:
+
+       … while calling 'filterAttrs'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:662:23:
+          661|   */
+          662|   filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+             |                       ^
+          663|
+
+       … while calling the 'removeAttrs' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:662:28:
+          661|   */
+          662|   filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+             |                            ^
+          663|
+
+       … while evaluating the second argument passed to builtins.removeAttrs
+
+       … while calling the 'filter' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:662:45:
+          661|   */
+          662|   filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+             |                                             ^
+          663|
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:662:53:
+          661|   */
+          662|   filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+             |                                                     ^
+          663|
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:662:60:
+          661|   */
+          662|   filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+             |                                                            ^
+          663|
+
+       … while calling anonymous lambda
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:18:15:
+           17|       lib.filterAttrs (
+           18|         name: value:
+             |               ^
+           19|         # Check if the program entry exists and has the attribute we want to override
+
+       … while calling the 'hasAttr' builtin
+         at /nix/store/i8yag9cgf7v70iij0z6i3309k2n3b9xh-source/hosts/modules/filter.nix:20:42:
+           19|         # Check if the program entry exists and has the attribute we want to override
+           20|         (lib.hasAttr name configSet) && (lib.hasAttr attrName value)
+             |                                          ^
+           21|       ) (lib.removeAttrs configSet excludeList)
+
+       … while evaluating the second argument passed to builtins.hasAttr
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:662:74:
+          661|   */
+          662|   filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+             |                                                                          ^
+          663|
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1187:17:
+         1186|         mapAttrs (
+         1187|           name: value:
+             |                 ^
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+
+       … while calling the 'isAttrs' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1188:14:
+         1187|           name: value:
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+             |              ^
+         1189|         );
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:924:37:
+          923|
+          924|       matchedOptions = mapAttrs (n: v: v.matchedOptions) resultsByName;
+             |                                     ^
+          925|
+
+       … while evaluating an expression to select 'matchedOptions' on it
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:924:40:
+          923|
+          924|       matchedOptions = mapAttrs (n: v: v.matchedOptions) resultsByName;
+             |                                        ^
+          925|
+
+       … while evaluating v
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:924:40:
+          923|
+          924|       matchedOptions = mapAttrs (n: v: v.matchedOptions) resultsByName;
+             |                                        ^
+          925|
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:924:40:
+          923|
+          924|       matchedOptions = mapAttrs (n: v: v.matchedOptions) resultsByName;
+             |                                        ^
+          925|
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:873:15:
+          872|       resultsByName = mapAttrs (
+          873|         name: decls:
+             |               ^
+          874|         # We're descending into attribute ‘name’.
+
+       … while calling the 'length' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:885:12:
+          884|         in
+          885|         if length optionDecls == length decls then
+             |            ^
+          886|           let
+
+       … while evaluating the first argument passed to builtins.length
+
+       … while calling the 'filter' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:879:25:
+          878|           defns' = rawDefinitionsByName.${name} or [ ];
+          879|           optionDecls = filter (
+             |                         ^
+          880|             m:
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:880:13:
+          879|           optionDecls = filter (
+          880|             m:
+             |             ^
+          881|             m.options ? _type
+
+       … while evaluating the attribute 'options'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:804:15:
+          803|               pos = unsafeGetAttrPos n subtree;
+          804|               options = option;
+             |               ^
+          805|             }) subtree
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:804:15:
+          803|               pos = unsafeGetAttrPos n subtree;
+          804|               options = option;
+             |               ^
+          805|             }) subtree
+
+       … while calling anonymous lambda
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix:341:14:
+          340|   options.programs = builtins.mapAttrs (
+          341|     browser: name: browserModule browser name (if browser == "chromium" then true else false)
+             |              ^
+          342|   ) supportedBrowsers;
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix:341:20:
+          340|   options.programs = builtins.mapAttrs (
+          341|     browser: name: browserModule browser name (if browser == "chromium" then true else false)
+             |                    ^
+          342|   ) supportedBrowsers;
+
+       … while calling 'browserModule'
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix:26:20:
+           25|   browserModule =
+           26|     browser: name: visible:
+             |                    ^
+           27|     {
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix:78:7:
+           77|     //
+           78|       lib.optionalAttrs (pkgs.stdenv.hostPlatform.isLinux && lib.elem browser plasmaSupportedBrowsers)
+             |       ^
+           79|         {
+
+       … while calling 'optionalAttrs'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1477:25:
+         1476|   */
+         1477|   optionalAttrs = cond: as: if cond then as else { };
+             |                         ^
+         1478|
+
+       … while evaluating cond
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1477:32:
+         1476|   */
+         1477|   optionalAttrs = cond: as: if cond then as else { };
+             |                                ^
+         1478|
+
+       … while evaluating an expression to select 'stdenv.hostPlatform.isLinux' on it
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix:78:26:
+           77|     //
+           78|       lib.optionalAttrs (pkgs.stdenv.hostPlatform.isLinux && lib.elem browser plasmaSupportedBrowsers)
+             |                          ^
+           79|         {
+
+       … while evaluating pkgs
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix:78:26:
+           77|     //
+           78|       lib.optionalAttrs (pkgs.stdenv.hostPlatform.isLinux && lib.elem browser plasmaSupportedBrowsers)
+             |                          ^
+           79|         {
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix:78:26:
+           77|     //
+           78|       lib.optionalAttrs (pkgs.stdenv.hostPlatform.isLinux && lib.elem browser plasmaSupportedBrowsers)
+             |                          ^
+           79|         {
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:724:15:
+          723|       extraArgs = mapAttrs (
+          724|         name: _:
+             |               ^
+          725|         addErrorContext (context name) (
+
+       … while calling the 'addErrorContext' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:725:9:
+          724|         name: _:
+          725|         addErrorContext (context name) (
+             |         ^
+          726|           args.${name} or (addErrorContext
+
+       … while evaluating the module argument `pkgs' in "/nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/chromium.nix":
+
+       … while evaluating fallback for missing attribute 'pkgs'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:726:28:
+          725|         addErrorContext (context name) (
+          726|           args.${name} or (addErrorContext
+             |                            ^
+          727|             "noting that argument `${name}` is not externally provided, so querying `_module.args` instead, requiring `config`"
+
+       … while calling the 'addErrorContext' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:726:28:
+          725|         addErrorContext (context name) (
+          726|           args.${name} or (addErrorContext
+             |                            ^
+          727|             "noting that argument `${name}` is not externally provided, so querying `_module.args` instead, requiring `config`"
+
+       … noting that argument `pkgs` is not externally provided, so querying `_module.args` instead, requiring `config`
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:728:33:
+          727|             "noting that argument `${name}` is not externally provided, so querying `_module.args` instead, requiring `config`"
+          728|             config._module.args.${name}
+             |                                 ^
+          729|           )
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/types.nix:883:18:
+          882|             value = mapAttrs (
+          883|               n: v:
+             |                  ^
+          884|               if lazy then
+
+       … while evaluating the attribute 'optionalValue.value'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1329:5:
+         1328|
+         1329|     optionalValue = if isDefined then { value = mergedValue; } else { };
+             |     ^
+         1330|   };
+
+       … while evaluating an expression to select 'value' on it
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/types.nix:885:33:
+          884|               if lazy then
+          885|                 v.optionalValue.value or elemType.emptyValue.value or v.mergedValue
+             |                                 ^
+          886|               else
+
+       … while evaluating isDefined
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1329:24:
+         1328|
+         1329|     optionalValue = if isDefined then { value = mergedValue; } else { };
+             |                        ^
+         1330|   };
+
+       … while evaluating defsFinal
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1327:17:
+         1326|
+         1327|     isDefined = defsFinal != [ ];
+             |                 ^
+         1328|
+
+       … while evaluating the attribute 'values'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1257:11:
+         1256|         {
+         1257|           values = defsSorted;
+             |           ^
+         1258|           inherit (defsFiltered) highestPrio;
+
+       … while calling the 'any' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1228:14:
+         1227|           # Avoid sorting if we don't have to.
+         1228|           if any (def: def.value._type or "" == "order") defsFiltered.values then
+             |              ^
+         1229|             sortProperties defsFiltered.values
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1228:19:
+         1227|           # Avoid sorting if we don't have to.
+         1228|           if any (def: def.value._type or "" == "order") defsFiltered.values then
+             |                   ^
+         1229|             sortProperties defsFiltered.values
+
+       … while evaluating the attribute 'value._type'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1441:67:
+         1440|       strip =
+         1441|         def: if def.value._type or "" == "override" then def // { value = def.value.content; } else def;
+             |                                                                   ^
+         1442|     in
+
+       … while evaluating an expression to select '_type' on it
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1228:34:
+         1227|           # Avoid sorting if we don't have to.
+         1228|           if any (def: def.value._type or "" == "order") defsFiltered.values then
+             |                                  ^
+         1229|             sortProperties defsFiltered.values
+
+       … while evaluating the attribute 'value.content'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1574:22:
+         1573|     _type = "override";
+         1574|     inherit priority content;
+             |                      ^
+         1575|   };
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/misc/nixpkgs.nix:58:11:
+           57|
+           58|   _pkgs = import pkgsPath (lib.filterAttrs (_n: v: v != null) config.nixpkgs);
+             |           ^
+           59|
+
+       … while evaluating the value passed for the lambda argument
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/pkgs/top-level/impure.nix:12:1:
+           11|
+           12| {
+             | ^
+           13|   # We put legacy `system` into `localSystem`, if `localSystem` was not passed.
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/misc/nixpkgs.nix:58:28:
+           57|
+           58|   _pkgs = import pkgsPath (lib.filterAttrs (_n: v: v != null) config.nixpkgs);
+             |                            ^
+           59|
+
+       (6 duplicate frames omitted)
+
+       … while calling anonymous lambda
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/misc/nixpkgs.nix:58:49:
+           57|
+           58|   _pkgs = import pkgsPath (lib.filterAttrs (_n: v: v != null) config.nixpkgs);
+             |                                                 ^
+           59|
+
+       … while evaluating v
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/misc/nixpkgs.nix:58:52:
+           57|
+           58|   _pkgs = import pkgsPath (lib.filterAttrs (_n: v: v != null) config.nixpkgs);
+             |                                                    ^
+           59|
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:662:74:
+          661|   */
+          662|   filterAttrs = pred: set: removeAttrs set (filter (name: !pred name set.${name}) (attrNames set));
+             |                                                                          ^
+          663|
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1187:17:
+         1186|         mapAttrs (
+         1187|           name: value:
+             |                 ^
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1188:85:
+         1187|           name: value:
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+             |                                                                                     ^
+         1189|         );
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:283:71:
+          282|           # For definitions that have an associated option
+          283|           declaredConfig = mapAttrsRecursiveCond (v: !isOption v) (_: v: v.value) options;
+             |                                                                       ^
+          284|
+
+       … while evaluating the attribute 'value'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1166:7:
+         1165|     // {
+         1166|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1167|       inherit (res.defsFinal') highestPrio;
+
+       … while calling the 'addErrorContext' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1166:15:
+         1165|     // {
+         1166|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |               ^
+         1167|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `nixpkgs.overlays':
+
+       … while evaluating the attribute 'mergedValue'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1263:5:
+         1262|     # Type-check the remaining definitions, and merge them. Or throw if no definitions.
+         1263|     mergedValue =
+             |     ^
+         1264|       if isDefined then
+
+       … while evaluating isDefined
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1264:10:
+         1263|     mergedValue =
+         1264|       if isDefined then
+             |          ^
+         1265|         if type.merge ? v2 then
+
+       … while evaluating defsFinal
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1327:17:
+         1326|
+         1327|     isDefined = defsFinal != [ ];
+             |                 ^
+         1328|
+
+       … while evaluating the attribute 'values'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1257:11:
+         1256|         {
+         1257|           values = defsSorted;
+             |           ^
+         1258|           inherit (defsFiltered) highestPrio;
+
+       … while calling the 'any' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1228:14:
+         1227|           # Avoid sorting if we don't have to.
+         1228|           if any (def: def.value._type or "" == "order") defsFiltered.values then
+             |              ^
+         1229|             sortProperties defsFiltered.values
+
+       … while evaluating the second argument passed to builtins.any
+
+       … while evaluating the attribute 'values'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1444:7:
+         1443|     {
+         1444|       values = map strip (filter (def: getPrio def == highestPrio) defs);
+             |       ^
+         1445|       inherit highestPrio;
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1444:16:
+         1443|     {
+         1444|       values = map strip (filter (def: getPrio def == highestPrio) defs);
+             |                ^
+         1445|       inherit highestPrio;
+
+       … while evaluating the second argument passed to builtins.map
+
+       … while calling the 'filter' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1444:27:
+         1443|     {
+         1444|       values = map strip (filter (def: getPrio def == highestPrio) defs);
+             |                           ^
+         1445|       inherit highestPrio;
+
+       … while evaluating the second argument passed to builtins.filter
+
+       … while calling the 'concatMap' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1208:26:
+         1207|         # Process mkMerge and mkIf properties.
+         1208|         defsNormalized = concatMap (
+             |                          ^
+         1209|           m:
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1209:11:
+         1208|         defsNormalized = concatMap (
+         1209|           m:
+             |           ^
+         1210|           map (
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1210:11:
+         1209|           m:
+         1210|           map (
+             |           ^
+         1211|             value:
+
+       … while evaluating the second argument passed to builtins.map
+
+       … while calling the 'addErrorContext' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1219:14:
+         1218|               }
+         1219|           ) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+             |              ^
+         1220|         ) defs;
+
+       … while evaluating definitions from `/nix/store/fjzxzw27vbb8v2a8mn18cijfndnwd9zf-source/modules/nixos-icons/overlay.nix':
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1219:80:
+         1218|               }
+         1219|           ) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+             |                                                                                ^
+         1220|         ) defs;
+
+       … while calling 'dischargeProperties'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1395:5:
+         1394|   dischargeProperties =
+         1395|     def:
+             |     ^
+         1396|     if def._type or "" == "merge" then
+
+       … while calling the 'isBool' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1399:10:
+         1398|     else if def._type or "" == "if" then
+         1399|       if isBool def.condition then
+             |          ^
+         1400|         if def.condition then dischargeProperties def.content else [ ]
+
+       … while evaluating the attribute 'condition'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1555:13:
+         1554|     _type = "if";
+         1555|     inherit condition content;
+             |             ^
+         1556|   };
+
+       … from call site
+         at /nix/store/fjzxzw27vbb8v2a8mn18cijfndnwd9zf-source/stylix/overlays.nix:31:65:
+           30|       options = attrs.options or { };
+           31|       config.nixpkgs.overlays = lib.mkIf config.stylix.overlays.enable [
+             |                                                                 ^
+           32|         attrs.overlay
+
+       (12 duplicate frames omitted)
+
+       … while evaluating an expression to select 'stylix' on it
+         at /nix/store/fjzxzw27vbb8v2a8mn18cijfndnwd9zf-source/stylix/overlays.nix:9:47:
+            8| {
+            9|   options.stylix.overlays.enable = config.lib.stylix.mkEnableTarget "packages via overlays" true;
+             |                                               ^
+           10|
+
+       … from call site
+         at /nix/store/fjzxzw27vbb8v2a8mn18cijfndnwd9zf-source/stylix/overlays.nix:9:36:
+            8| {
+            9|   options.stylix.overlays.enable = config.lib.stylix.mkEnableTarget "packages via overlays" true;
+             |                                    ^
+           10|
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1187:17:
+         1186|         mapAttrs (
+         1187|           name: value:
+             |                 ^
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1188:85:
+         1187|           name: value:
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+             |                                                                                     ^
+         1189|         );
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:283:71:
+          282|           # For definitions that have an associated option
+          283|           declaredConfig = mapAttrsRecursiveCond (v: !isOption v) (_: v: v.value) options;
+             |                                                                       ^
+          284|
+
+       … while evaluating the attribute 'value'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1166:7:
+         1165|     // {
+         1166|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1167|       inherit (res.defsFinal') highestPrio;
+
+       … while calling the 'addErrorContext' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1166:15:
+         1165|     // {
+         1166|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |               ^
+         1167|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `lib':
+
+       (16 duplicate frames omitted)
+
+       … while evaluating definitions from `/nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/zsh':
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1219:80:
+         1218|               }
+         1219|           ) (addErrorContext "while evaluating definitions from `${m.file}':" (dischargeProperties m.value))
+             |                                                                                ^
+         1220|         ) defs;
+
+       … while calling 'dischargeProperties'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1395:5:
+         1394|   dischargeProperties =
+         1395|     def:
+             |     ^
+         1396|     if def._type or "" == "merge" then
+
+       … while calling the 'isBool' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1399:10:
+         1398|     else if def._type or "" == "if" then
+         1399|       if isBool def.condition then
+             |          ^
+         1400|         if def.condition then dischargeProperties def.content else [ ]
+
+       … while evaluating the attribute 'condition'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1555:13:
+         1554|     _type = "if";
+         1555|     inherit condition content;
+             |             ^
+         1556|   };
+
+       … while evaluating the attribute 'condition'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1555:13:
+         1554|     _type = "if";
+         1555|     inherit condition content;
+             |             ^
+         1556|   };
+
+       … from call site
+         at /nix/store/2z4f1y6jyz8d5rz7ml5iwkgfqkb8fnzq-source/modules/programs/zsh/default.nix:391:14:
+          390|     in
+          391|     mkIf cfg.enable (
+             |              ^
+          392|       lib.mkMerge [
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1187:17:
+         1186|         mapAttrs (
+         1187|           name: value:
+             |                 ^
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+
+       … from call site
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/attrsets.nix:1188:85:
+         1187|           name: value:
+         1188|           if isAttrs value && cond value then recurse (path ++ [ name ]) value else f (path ++ [ name ]) value
+             |                                                                                     ^
+         1189|         );
+
+       … while calling anonymous lambda
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:283:71:
+          282|           # For definitions that have an associated option
+          283|           declaredConfig = mapAttrsRecursiveCond (v: !isOption v) (_: v: v.value) options;
+             |                                                                       ^
+          284|
+
+       … while evaluating the attribute 'value'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1166:7:
+         1165|     // {
+         1166|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1167|       inherit (res.defsFinal') highestPrio;
+
+       … while calling the 'addErrorContext' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1166:15:
+         1165|     // {
+         1166|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |               ^
+         1167|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `programs.zsh.enable':
+
+       … while evaluating the attribute 'mergedValue'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1263:5:
+         1262|     # Type-check the remaining definitions, and merge them. Or throw if no definitions.
+         1263|     mergedValue =
+             |     ^
+         1264|       if isDefined then
+
+       … while evaluating isDefined
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1264:10:
+         1263|     mergedValue =
+         1264|       if isDefined then
+             |          ^
+         1265|         if type.merge ? v2 then
+
+       … while evaluating defsFinal
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1327:17:
+         1326|
+         1327|     isDefined = defsFinal != [ ];
+             |                 ^
+         1328|
+
+       … while evaluating an expression to select 'values' on it
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1260:17:
+         1259|         };
+         1260|     defsFinal = defsFinal'.values;
+             |                 ^
+         1261|
+
+       … while evaluating defsFinal'
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1260:17:
+         1259|         };
+         1260|     defsFinal = defsFinal'.values;
+             |                 ^
+         1261|
+
+       … while calling the 'length' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1241:9:
+         1240|       if
+         1241|         length defs == 1
+             |         ^
+         1242|         && (
+
+       … while evaluating the first argument passed to builtins.length
+
+       … while evaluating defs
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:1133:14:
+         1132|           ]
+         1133|           ++ defs
+             |              ^
+         1134|         else
+
+       … while evaluating an expression to select '"${...}"' on it
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:878:20:
+          877|           defns = pushedDownDefinitionsByName.${name} or [ ];
+          878|           defns' = rawDefinitionsByName.${name} or [ ];
+             |                    ^
+          879|           optionDecls = filter (
+
+       … while evaluating rawDefinitionsByName
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:878:20:
+          877|           defns = pushedDownDefinitionsByName.${name} or [ ];
+          878|           defns' = rawDefinitionsByName.${name} or [ ];
+             |                    ^
+          879|           optionDecls = filter (
+
+       … while calling the 'zipAttrsWith' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:843:30:
+          842|       # extract the definitions for each loc
+          843|       rawDefinitionsByName = zipAttrs (
+             |                              ^
+          844|         map (
+
+       … while evaluating the second argument passed to builtins.zipAttrsWith
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:844:9:
+          843|       rawDefinitionsByName = zipAttrs (
+          844|         map (
+             |         ^
+          845|           module:
+
+       … while evaluating the second argument passed to builtins.map
+
+       … while calling the 'all' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:811:16:
+          810|       checkedConfigs =
+          811|         assert all (
+             |                ^
+          812|           c:
+
+       … while evaluating the second argument passed to builtins.all
+
+       … while evaluating an expression to select '"${...}"' on it
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:877:19:
+          876|           loc = prefix ++ [ name ];
+          877|           defns = pushedDownDefinitionsByName.${name} or [ ];
+             |                   ^
+          878|           defns' = rawDefinitionsByName.${name} or [ ];
+
+       … while evaluating pushedDownDefinitionsByName
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:877:19:
+          876|           loc = prefix ++ [ name ];
+          877|           defns = pushedDownDefinitionsByName.${name} or [ ];
+             |                   ^
+          878|           defns' = rawDefinitionsByName.${name} or [ ];
+
+       … while calling the 'zipAttrsWith' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:830:37:
+          829|       # an attrset 'name' => list of submodules that define ‘name’.
+          830|       pushedDownDefinitionsByName = zipAttrsWith (n: concatLists) (
+             |                                     ^
+          831|         map (
+
+       … while evaluating the second argument passed to builtins.zipAttrsWith
+
+       … while calling the 'map' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:831:9:
+          830|       pushedDownDefinitionsByName = zipAttrsWith (n: concatLists) (
+          831|         map (
+             |         ^
+          832|           module:
+
+       … while evaluating the second argument passed to builtins.map
+
+       … while calling the 'all' builtin
+         at /nix/store/crdl4g58d2blw3m2wlmb5dy765aibvcv-source/lib/modules.nix:811:16:
+          810|       checkedConfigs =
+          811|         assert all (
+             |                ^
+          812|           c:
+
+       … while evaluating the second argument passed to builtins.all
+
+       error: infinite recursion encountered

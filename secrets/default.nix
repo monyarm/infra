@@ -2,6 +2,7 @@
   lib,
   config,
   isNixOS,
+  isHomeManager,
   isHomeManagerInNixOS,
   dirs,
   ...
@@ -54,5 +55,19 @@ in
             };
           }
         );
+  }
+  // lib.optionalAttrs (isHomeManager && !isHomeManagerInNixOS) {
+    environment.PATH = lib.mkForce (
+      let
+        pluginPaths = lib.makeBinPath config.sops.age.plugins;
+        systemPaths = "/usr/bin:/bin:/usr/sbin:/sbin";
+      in
+      lib.concatStringsSep ":" (
+        lib.filter (p: p != "") [
+          pluginPaths
+          systemPaths
+        ]
+      )
+    );
   };
 }

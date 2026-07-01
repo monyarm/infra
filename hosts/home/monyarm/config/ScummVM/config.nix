@@ -184,7 +184,7 @@ let
       gfx_mode = "opengl";
       gui_scale = 100;
       subtitles = false;
-      browser_lastpath = "/mnt/Games/ScummVM/Leisure Suit Larry 1: In the Land of the Lounge Lizards";
+      browser_lastpath = "${dirs.Games}/ScummVM/Leisure Suit Larry 1: In the Land of the Lounge Lizards";
       music_volume = 192;
       opl_driver = "auto";
       aspect_ratio = true;

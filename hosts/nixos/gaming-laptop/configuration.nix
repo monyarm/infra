@@ -12,6 +12,8 @@
     "${dirs.modules}/services"
     "${dirs.modules}/services/tailscale.nix"
     "${dirs.modules}/services/syncthing.nix"
+    "${dirs.modules}/services/waydroid.nix"
+    "${dirs.modules}/programs/android-apps.nix"
     "${dirs.modules}/programs/steam"
     "${dirs.modules}/programs/shell.nix"
     "${dirs.modules}/config/doas.nix"

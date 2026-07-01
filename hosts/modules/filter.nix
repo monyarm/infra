@@ -2,28 +2,14 @@
   pkgs,
   lib,
   meta,
-  options,
+  config,
   ...
 }:
 let
   emptyProgram = pkgs.writeScriptBin "emptyProgram" "echo nothing";
-  retainedNames = [ ];
-  isRetained = name: lib.elem name retainedNames;
 
-  # Helper to get filtered option names with a specific attribute
-  getFilteredNames =
-    optionSet: excludeList: attrName:
-    lib.attrNames (
-      lib.filterAttrs (_name: value: value ? ${attrName}) (lib.removeAttrs optionSet excludeList)
-    );
-
-  # Helper to generate disabled attributes for non-retained items
-  disableAttrs = names: config: lib.genAttrs names (name: lib.mkIf (!(isRetained name)) config);
-
-  # Helper to disable packages for non-retained programs/services
-  disablePackages = names: disableAttrs names { package = lib.mkForce emptyProgram; };
-
-  unfilteredProgramNames = getFilteredNames options.programs [
+  retainedPrograms = [
+    "swww"
     "octant"
     "thefuck"
     "rtx"
@@ -31,21 +17,41 @@ let
     "niri"
     "firefox" # only so I can then set package to null
     "home-manager" # package is readOnly
-  ] "package";
+  ];
 
-  unfilteredServiceNames = getFilteredNames options.services [
+  retainedServices = [
     "keepassx"
     "password-store-sync"
-  ] "package";
+    "barrier"
+  ];
 
-  unfilteredWindowManagerNames = getFilteredNames options.xsession.windowManager [ ] "enable";
+  # We use the CONFIG tree instead of the OPTIONS tree.
+  # This is usually much lazier.
+  genDisables =
+    type: retained:
+    let
+      # We create a mapping of every attribute currently in your config
+      allAttrs = config.${type};
+
+      # We filter the attribute names BEFORE doing anything else
+      # This prevents us from ever touching the deprecated keys
+      safeKeys = lib.filter (name: !(lib.elem name retained)) (lib.attrNames allAttrs);
+    in
+    lib.genAttrs safeKeys (
+      name:
+      # We only apply the override if the attribute actually looks like a
+      # program/service module (has a package field defined).
+      lib.optionalAttrs (lib.hasAttr "package" allAttrs.${name}) {
+        package = lib.mkForce emptyProgram;
+      }
+    );
+
 in
 lib.mkIf (meta.deviceType != "android-phone") {
-  programs = (disablePackages unfilteredProgramNames) // {
+
+  programs = (genDisables "programs" retainedPrograms) // {
     firefox.package = null;
   };
 
-  services = disablePackages unfilteredServiceNames;
-
-  xsession.windowManager = disableAttrs unfilteredWindowManagerNames { enable = lib.mkForce false; };
+  services = genDisables "services" retainedServices;
 }
