@@ -4,7 +4,7 @@ with image;
   sytokunAcademyRWBY =
     pkgs.fetchurl {
       url = "https://cdna.artstation.com/p/assets/images/images/038/695/750/large/sytokun-aaron-kumar-remnant-academy-rwby.jpg";
-      sha256 = "sha256-swfR/rX2XuMX9V+vTFkscODcD1VbikCvETIwHWov/eY=";
+      sha256 = "sha256-PuiOb8kCOmKMeYbxnRHB0HIVPAPmQiYgIkwdL5ZDf1U=";
     }
     |> removeBackground {
       coordinates = [

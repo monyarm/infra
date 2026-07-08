@@ -16,6 +16,8 @@
 
   programs.firefox = {
     enable = true;
+    # Keep legacy location for now; migrate to XDG config path later.
+    configPath = ".mozilla/firefox";
     profileVersion = null; # fixes profile on non-NixOS systems
     profiles = {
       default = {

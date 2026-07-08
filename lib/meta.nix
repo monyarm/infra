@@ -6,12 +6,15 @@
 
 let
   detectGpuScript = pkgs.writeShellScript "detect-gpu-script" ''
+    lspci_cmd="${pkgs.pciutils}/bin/lspci"
+    grep_cmd="${pkgs.gnugrep}/bin/grep"
+
     GPU_TYPE="other"
-    if lspci | grep -i nvidia > /dev/null; then
+    if "$lspci_cmd" | "$grep_cmd" -i nvidia > /dev/null; then
       GPU_TYPE="nvidia"
-    elif lspci | grep -i intel > /dev/null; then
+    elif "$lspci_cmd" | "$grep_cmd" -i intel > /dev/null; then
       GPU_TYPE="intel"
-    elif lspci | grep -i amd > /dev/null; then
+    elif "$lspci_cmd" | "$grep_cmd" -i amd > /dev/null; then
       GPU_TYPE="amd"
     fi
     echo "\"$GPU_TYPE\""

@@ -2,7 +2,6 @@
   config,
   lib,
   mkOutOfStoreSymlink,
-  isHomeManagerInNixOS,
   ...
 }:
 let
@@ -10,28 +9,23 @@ let
     allowUnfree = true;
   };
 in
-lib.mkMerge [
-  {
-    sops.templates."nix.conf".content = ''
-      experimental-features = ${
-        lib.concatStringsSep " " [
-          "nix-command"
-          "flakes"
-          "pipe-operator"
-          "coerce-integers"
-        ]
-      }
-      access-tokens = github.com=${config.sops.placeholder.github_access_token}
-      allow-unsafe-native-code-during-evaluation = true
-      connect-timeout = 25000
-    '';
+{
+  sops.templates."nix.conf".content = ''
+    experimental-features = ${
+      lib.concatStringsSep " " [
+        "nix-command"
+        "flakes"
+        "pipe-operator"
+        "coerce-integers"
+      ]
+    }
+    access-tokens = github.com=${config.sops.placeholder.github_access_token}
+    allow-unsafe-native-code-during-evaluation = true
+    connect-timeout = 25000
+  '';
 
-    xdg.configFile = {
-      "nix/nix.conf".source = mkOutOfStoreSymlink config.sops.templates."nix.conf".path;
-      "nixpkgs/confix.nix".text = builtins.toJSON nixconf;
-    };
-  }
-  (lib.optionalAttrs (!isHomeManagerInNixOS) {
-    nixpkgs.config = nixconf;
-  })
-]
+  xdg.configFile = {
+    "nix/nix.conf".source = mkOutOfStoreSymlink config.sops.templates."nix.conf".path;
+    "nixpkgs/confix.nix".text = builtins.toJSON nixconf;
+  };
+}

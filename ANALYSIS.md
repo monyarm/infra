@@ -4,13 +4,13 @@
 
 ### Aliased but missing from `home.packages` / `environment.systemPackages`
 
-| Alias in        | Alias     | Calls                 | Status                                       |
+| Alias in | Alias | Calls | Status |
 | --------------- | --------- | --------------------- | -------------------------------------------- |
-| `ZSH/alias.nix` | `diff`    | `colordiff`           | **Not installed**                            |
-| `ZSH/alias.nix` | `gitpush` | `git-push-prepost`    | **Not installed** (not a real nixpkg either) |
-| `ZSH/alias.nix` | `ph`      | `phoronix-test-suite` | **Not installed**                            |
-| `ZSH/alias.nix` | `abcde`   | `abcde`               | **Not installed**                            |
-| `ZSH/nognu.nix` | `tree`    | `st` (Smart Tree)     | **Not installed**                            |
+| `ZSH/alias.nix` | `diff` | `colordiff` | **Not installed** |
+| `ZSH/alias.nix` | `gitpush` | `git-push-prepost` | **Not installed** (not a real nixpkg either) |
+| `ZSH/alias.nix` | `ph` | `phoronix-test-suite` | **Not installed** |
+| `ZSH/alias.nix` | `abcde` | `abcde` | **Not installed** |
+| `ZSH/nognu.nix` | `tree` | `st` (Smart Tree) | **Not installed** |
 
 ### Scripts and config files calling uninstalled tools
 
@@ -59,53 +59,53 @@ Additionally:
 
 This whole thing about urlEncode is made up, you made it up, it's not an issue.
 
----
+______________________________________________________________________
 
 ## 2. Constants Not Used Where They Could Be
 
 `lib/constants.nix` defines `dirs.HOME`, `dirs.xdg.config`, `dirs.Documents`, `dirs.Downloads`,
 `dirs.Pictures`, `dirs.Games`, `dirs.MediaSSD`, `dirs.scripts`, `dirs.wallpapers`, etc.
 
-| File                                             | Hardcoded string                                                                               | Should use                              |
+| File | Hardcoded string | Should use |
 | ------------------------------------------------ | ---------------------------------------------------------------------------------------------- | --------------------------------------- |
-| `hosts/home/monyarm/config/Doom/default.nix`     | `${dirs.HOME}/.config/gzdoom` — appears **8 times**                                            | `${dirs.xdg.config}/gzdoom`             |
-| `hosts/home/monyarm/config/RPGMaker/default.nix` | `${dirs.HOME}/Documents/RPG Maker`, `${dirs.HOME}/Documents/Output`, `${dirs.HOME}/Documents/` | `${dirs.Documents}/RPG Maker`, etc.     |
-| `hosts/home/monyarm/config/Creality.nix`         | `${dirs.HOME}/Downloads`                                                                       | `${dirs.Downloads}`                     |
-| `hosts/modules/services/syncthing.nix`           | `${dirs.HOME}/Documents/Obsidian Notes`                                                        | `${dirs.Documents}/Obsidian Notes`      |
-| `hosts/home/monyarm/config/Niri.nix`             | `"~/.local/bin/awww-random"` in spawn-at-startup                                               | `"${dirs.HOME}/.local/bin/awww-random"` |
+| `hosts/home/monyarm/config/Doom/default.nix` | `${dirs.HOME}/.config/gzdoom` — appears **8 times** | `${dirs.xdg.config}/gzdoom` |
+| `hosts/home/monyarm/config/RPGMaker/default.nix` | `${dirs.HOME}/Documents/RPG Maker`, `${dirs.HOME}/Documents/Output`, `${dirs.HOME}/Documents/` | `${dirs.Documents}/RPG Maker`, etc. |
+| `hosts/home/monyarm/config/Creality.nix` | `${dirs.HOME}/Downloads` | `${dirs.Downloads}` |
+| `hosts/modules/services/syncthing.nix` | `${dirs.HOME}/Documents/Obsidian Notes` | `${dirs.Documents}/Obsidian Notes` |
+| `hosts/home/monyarm/config/Niri.nix` | `"~/.local/bin/awww-random"` in spawn-at-startup | `"${dirs.HOME}/.local/bin/awww-random"` |
 
 **Duplicate entry bug:** `hosts/home/monyarm/config/ZSH/paths.nix` contains `"$HOME/.cargo/bin"`
 **twice** in `home.sessionPath` (lines 19 and 26).
 
 **Double-slash bug in `Creality.nix`:** `filePath = "${crealityPrintLocalShare}//tmpProject/..."` — extra slash.
 
----
+______________________________________________________________________
 
 ## 3. Things That Should Become Constants
 
 ### User identity (add to `lib/constants.nix` as a `user` attrset)
 
-| Value                            | Current locations                                                                                                                                                                                                  |
+| Value | Current locations |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `"monyarm"` (username)           | `modules/misc/default.nix`, `modules/programs/shell.nix`, `modules/services/default.nix`, `modules/base/default.nix`, `modules/services/syncthing.nix` (×2 as `monyarm-desktop`, `monyarm-laptop`), `hardware.nix` |
-| `"monyarm@gmail.com"` (email)    | `Git.nix`, `Minecraft.nix`                                                                                                                                                                                         |
-| `"Simeon Armenchev"` (full name) | `Git.nix`                                                                                                                                                                                                          |
+| `"monyarm"` (username) | `modules/misc/default.nix`, `modules/programs/shell.nix`, `modules/services/default.nix`, `modules/base/default.nix`, `modules/services/syncthing.nix` (×2 as `monyarm-desktop`, `monyarm-laptop`), `hardware.nix` |
+| `"monyarm@gmail.com"` (email) | `Git.nix`, `Minecraft.nix` |
+| `"Simeon Armenchev"` (full name) | `Git.nix` |
 
 ### System configuration
 
-| Value                                                                                | Current locations                                                                                                                                |
+| Value | Current locations |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `"24.11"` (NixOS stateVersion)                                                       | `modules/base/default.nix` and `nixos/gaming-laptop/configuration.nix` — these must stay in sync                                                 |
-| `"Europe/Sofia"` (timezone)                                                          | `modules/base/default.nix`                                                                                                                       |
+| `"24.11"` (NixOS stateVersion) | `modules/base/default.nix` and `nixos/gaming-laptop/configuration.nix` — these must stay in sync |
+| `"Europe/Sofia"` (timezone) | `modules/base/default.nix` |
 | `["nix-command" "flakes" "pipe-operator" "coerce-integers"]` (experimental features) | **Duplicated verbatim** in `modules/base/default.nix` (as a Nix list) and `Nix.nix` (as a `lib.concatStringsSep " "` call for the sops template) |
 
 ### Hardware
 
-| Value                                                    | Current location                                                                               |
+| Value | Current location |
 | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Bluetooth MAC `"A4:77:58:76:71:A5"` (headphones/speaker) | `ALSA.nix`                                                                                     |
-| Bluetooth MAC `"E4:17:D8:CE:B3:0B"` (Pro Controller)     | `Bin/default.nix`                                                                              |
-| `"GE-Proton10-30"` (Proton version)                      | `Bin/nxm.nix` — hardcoded in the default Wine path, will silently break when Proton is updated |
+| Bluetooth MAC `"A4:77:58:76:71:A5"` (headphones/speaker) | `ALSA.nix` |
+| Bluetooth MAC `"E4:17:D8:CE:B3:0B"` (Pro Controller) | `Bin/default.nix` |
+| `"GE-Proton10-30"` (Proton version) | `Bin/nxm.nix` — hardcoded in the default Wine path, will silently break when Proton is updated |
 
 ### Bug: Typo in `Nix.nix`
 
@@ -116,7 +116,7 @@ This whole thing about urlEncode is made up, you made it up, it's not an issue.
 `confix.nix` should be `config.nix`. Nixpkgs reads `~/.config/nixpkgs/config.nix`; the current
 typo means `allowUnfree = true` is silently ignored in standalone HM.
 
----
+______________________________________________________________________
 
 ## 4. Within-File Repetition to Refactor
 
@@ -176,7 +176,7 @@ Can be written as:
 lib.mkMerge (lib.map mkGimpConfig ["2.10" "3.0"])
 ```
 
----
+______________________________________________________________________
 
 ## 5. Cross-File Patterns Worth Abstracting
 
@@ -185,8 +185,8 @@ lib.mkMerge (lib.map mkGimpConfig ["2.10" "3.0"])
 `NPM.nix`, `Cargo.nix`, and `Flatpak.nix` share an almost identical macro-structure:
 
 1. A `desired*` package list
-2. `home.activation.<name> = lib.mkIf shouldFullUpdate (lib.hm.dag.entryAfter ["linkGeneration"] ''...'')`
-3. Activation body: export PATH → get installed → for each installed, remove if not in desired → for each desired, run install script
+1. `home.activation.<name> = lib.mkIf shouldFullUpdate (lib.hm.dag.entryAfter ["linkGeneration"] ''...'')`
+1. Activation body: export PATH → get installed → for each installed, remove if not in desired → for each desired, run install script
 
 The only differences per file are the package manager name, the "list installed" command, and
 the install/remove commands. A lib helper `mkPackageManagerActivation` would eliminate ~80 lines
@@ -246,28 +246,28 @@ fetcher for the DaFont CDN and belongs alongside `fetchPixiv`, `fetchMyNintendo`
 etc. in `lib/fetchers.nix`. Similarly, `mkFont` and `mkMseFontPack` are generic derivation builders
 that could live in a `lib/fonts.nix` if fonts are ever sourced from multiple config files.
 
----
+______________________________________________________________________
 
 ## Quick-Fix Summary
 
-| Priority    | Issue                                                                        | File(s)                                                 |
+| Priority | Issue | File(s) |
 | ----------- | ---------------------------------------------------------------------------- | ------------------------------------------------------- |
-| Bug         | `confix.nix` typo (`allowUnfree` silently ignored)                           | `Nix.nix:31`                                            |
-| Bug         | Duplicate `$HOME/.cargo/bin` in sessionPath                                  | `ZSH/paths.nix:19,26`                                   |
-| Bug         | `prefetchSteamCards.sh` and `prefetch_mynintendo.sh` missing `urlEncode` arg | `scripts/prefetch/`                                     |
-| Bug         | `tree = "st"` — probably wrong alias target                                  | `ZSH/nognu.nix:6`                                       |
-| Bug         | Double slash `//tmpProject`                                                  | `Creality.nix`                                          |
-| Missing pkg | `yt-dlp`, `aria2c` — scripts generated but binaries unavailable at runtime   | `Bin/default.nix`                                       |
-| Missing pkg | `colordiff`, `abcde`, `expect`/`unbuffer`                                    | `ZSH/alias.nix`, `inline_progress_manager.sh`           |
-| Missing pkg | `devilspie2`, `transset-df` — config deployed, daemon not installed          | `DevilsPie.nix`                                         |
-| Constant    | `nixExperimentalFeatures` — identical list in 2 files                        | `modules/base/default.nix`, `Nix.nix`                   |
-| Constant    | Username, email, full name, stateVersion, timezone                           | multiple files                                          |
-| Constant    | Bluetooth MACs, Proton version                                               | `ALSA.nix`, `Bin/default.nix`, `Bin/nxm.nix`            |
-| Constant    | `dirs.xdg.config` for `.config/gzdoom` (×8)                                  | `Doom/default.nix`                                      |
-| Constant    | `dirs.Documents`, `dirs.Downloads`                                           | `RPGMaker/default.nix`, `Creality.nix`, `syncthing.nix` |
-| Refactor    | 5× identical `*.AutoExec` entries → `lib.genAttrs`                           | `Doom/default.nix`                                      |
-| Refactor    | 7× individual shader `fetchurl` entries → list                               | `MPV/shaders.nix`                                       |
-| Refactor    | `mkGimpConfig` called twice → `lib.map`                                      | `GIMP/default.nix`                                      |
-| Refactor    | NPM/Cargo/Flatpak manager boilerplate → `mkPackageManagerActivation`         | `NPM.nix`, `Cargo.nix`, `Flatpak.nix`                   |
-| Refactor    | 12× `mkOutOfStoreSymlink "${dirs.hmConfig}/..."` → helper                    | 12 config files                                         |
-| Refactor    | `fetchDafont` → move to `lib/fetchers.nix`                                   | `Fonts.nix`                                             |
+| Bug | `confix.nix` typo (`allowUnfree` silently ignored) | `Nix.nix:31` |
+| Bug | Duplicate `$HOME/.cargo/bin` in sessionPath | `ZSH/paths.nix:19,26` |
+| Bug | `prefetchSteamCards.sh` and `prefetch_mynintendo.sh` missing `urlEncode` arg | `scripts/prefetch/` |
+| Bug | `tree = "st"` — probably wrong alias target | `ZSH/nognu.nix:6` |
+| Bug | Double slash `//tmpProject` | `Creality.nix` |
+| Missing pkg | `yt-dlp`, `aria2c` — scripts generated but binaries unavailable at runtime | `Bin/default.nix` |
+| Missing pkg | `colordiff`, `abcde`, `expect`/`unbuffer` | `ZSH/alias.nix`, `inline_progress_manager.sh` |
+| Missing pkg | `devilspie2`, `transset-df` — config deployed, daemon not installed | `DevilsPie.nix` |
+| Constant | `nixExperimentalFeatures` — identical list in 2 files | `modules/base/default.nix`, `Nix.nix` |
+| Constant | Username, email, full name, stateVersion, timezone | multiple files |
+| Constant | Bluetooth MACs, Proton version | `ALSA.nix`, `Bin/default.nix`, `Bin/nxm.nix` |
+| Constant | `dirs.xdg.config` for `.config/gzdoom` (×8) | `Doom/default.nix` |
+| Constant | `dirs.Documents`, `dirs.Downloads` | `RPGMaker/default.nix`, `Creality.nix`, `syncthing.nix` |
+| Refactor | 5× identical `*.AutoExec` entries → `lib.genAttrs` | `Doom/default.nix` |
+| Refactor | 7× individual shader `fetchurl` entries → list | `MPV/shaders.nix` |
+| Refactor | `mkGimpConfig` called twice → `lib.map` | `GIMP/default.nix` |
+| Refactor | NPM/Cargo/Flatpak manager boilerplate → `mkPackageManagerActivation` | `NPM.nix`, `Cargo.nix`, `Flatpak.nix` |
+| Refactor | 12× `mkOutOfStoreSymlink "${dirs.hmConfig}/..."` → helper | 12 config files |
+| Refactor | `fetchDafont` → move to `lib/fetchers.nix` | `Fonts.nix` |

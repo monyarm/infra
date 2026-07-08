@@ -1,0 +1,5 @@
+{
+  "chat.tools.edits.autoApprove": {
+    "/home/monyarm/.nix/**": true
+  }
+}

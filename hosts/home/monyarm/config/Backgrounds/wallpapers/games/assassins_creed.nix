@@ -36,7 +36,7 @@ with image;
   };
   acBrotherhoodFanKit = fetchzipSelective {
     url = "https://ubiservices.cdn.ubi.com/aaa9f426-4c3f-4804-8775-1995266f7c8c/reward/ACDREWARD32_downloadable.zip";
-    sha256 = "sha256-t64f23P8Jn6OwdfMSHF8FX7Hr/1EAJJZpvC2ABwdIB4=";
+    sha256 = "sha256-FJmQUFUz4d6K9vDsuPJHgDbK7H1eh0aHaA59o5g4ttU=";
     flatten = true;
     keepFiles = [
       "3840x2160/AC_LEGACY_JOURNEY_1B_3840x2160.png"
@@ -87,7 +87,7 @@ with image;
   };
   acOriginsFanKit = fetchzipSelective {
     url = "https://ubiservices.cdn.ubi.com/bfd34091-6af6-4029-873b-ba7e036464fa/reward/ACEREWARD31_downloadable.zip";
-    sha256 = "sha256-awEXKquafeSKmiRgjh7GbHlsWw0Ovpg8IoNTeX5rPEc=";
+    sha256 = "sha256-Olapcw92L1w8VDxvamtdY78hFeMRP1ZF+cqwszhnNg8=";
     stripRoot = false;
     flatten = true;
     keepFiles = [

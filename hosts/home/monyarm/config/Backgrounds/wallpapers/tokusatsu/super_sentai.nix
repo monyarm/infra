@@ -19,7 +19,7 @@ with image;
   zyuRangerGroup =
     pkgs.fetchurl {
       url = "https://cdna.artstation.com/p/assets/images/images/020/638/160/large/anthony-ray-zyuranger-resize.jpg";
-      sha256 = "sha256-JjbUYQZWVJAGUw6Ni93B5sfibvoMk8m2YUM2BhG0k+c=";
+      sha256 = "sha256-e+2MsE9F9gmj5QLrILtPUU/M7wiuyZ/CM2T7wVYr29w=";
     }
     |> grow16x9;
 
@@ -33,21 +33,21 @@ with image;
   kuwagataOhger =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/795/large/samcy-.jpg";
-      sha256 = "sha256-t2FsQNLBN6EtSee3c5VpYtPQ76qIGnHdGpGxXU1UP8I=";
+      sha256 = "sha256-wTYU/KJ9T+IlPke9/IbYmZ7sl+z62/xgr45HwaRtKZs=";
     }
     |> crop16x9;
 
   tomboOhger =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/811/large/samcy-.jpg";
-      sha256 = "sha256-Dy0ahMA1nH8l62tJpOwHxtknWbcJKFF/EE6i6LiNPLg=";
+      sha256 = "sha256-/+Of6knnWz+efmIf8C4E+GRMBzAUJDtMgyWzkxjoSGI=";
     }
     |> crop16x9;
 
   kamakiriOhger =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/831/large/samcy-.jpg";
-      sha256 = "sha256-++7B12aVaXIbmqPSc/41OxL2zoN+ij0nWWdG5MGUzB0=";
+      sha256 = "sha256-+kZA6ZAmHg7S0SY5ZDBFeEKYK3prXOELEoLVCbXPmmQ=";
     }
     |> crop16x9;
 
@@ -61,7 +61,7 @@ with image;
   papillonOhger =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/865/large/samcy-.jpg";
-      sha256 = "sha256-Qi5MbRq19hld5+Tw1jD8n7SCoTcWQZHHEEzRIcAO6Zk=";
+      sha256 = "sha256-F0HlrWB6pODN+7iPtu2rhWtiYI4biKpzdubDonpJMU8=";
     }
     |> crop16x9;
 

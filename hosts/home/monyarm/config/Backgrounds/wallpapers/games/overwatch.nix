@@ -91,7 +91,7 @@ in
   portrait91366 =
     pkgs.fetchurl {
       url = "https://cdna.artstation.com/p/assets/images/images/012/872/356/large/liang-xing-9-13-6.jpg";
-      sha256 = "sha256-+vZ4d0OtZPluRZMwVtrP7n4cS5e3uoSrg6kHF8aC0D8=";
+      sha256 = "sha256-cr1S2d2ufljV6p7/82bqPmaXnkqSiVmo4cSgV+sZIXs=";
     }
     |> grow16x9;
 

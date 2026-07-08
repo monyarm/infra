@@ -77,6 +77,7 @@ in
       (mozillaExtension "brickhunter" "{9f0aa561-40f6-4bf1-bbb3-73e8125430bf}")
       (mozillaExtension "copy-selected-links" "jid1-vs5odTmtIydjMg@jetpack")
       (mozillaExtension "copywebtables" "{292b92dc-b295-45e6-add6-a5ce6911a544}")
+      (mozillaExtension "deck-transfer-for-master-duel" "{6495a28a-ecab-42ab-98fe-f7590225fce5}")
       (mozillaExtension "deviantart-filter" "{a2ce7c11-e47d-42cf-b6db-ede36265cf6c}")
       (mozillaExtension "discogs-enhancer" "{190dbc44-5dee-4ad4-86e9-a38d7a2d1c61}")
       (mozillaExtension "download-with-jdownloader" "{03e07985-30b0-4ae0-8b3e-0c7519b9bdf6}")
