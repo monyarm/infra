@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: prefetchSteamCards --appid <appid> [--cardsList "card1,card2,..."]
+# Usage: prefetchSteamCards --appId <appid> [--cardNames "card1,card2,..."]
 
 set -e
 
@@ -25,9 +25,28 @@ if [[ -z $appId ]]; then
   exit 1
 fi
 
-fetcher_expr="(with import ./lib/fetchers.nix { pkgs = import <nixpkgs> { }; dirs = null; importSopsString = null; }; fetchSteamCards) "
-cmd=(nix-prefetch "$fetcher_expr" --appId "$appId" --sha256 "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
-if [[ -n $cardNames ]]; then
-  cmd+=(--cardNames --expr "$cardNames")
+# 1. Formulate the Nix expression evaluating your fetcher directly
+fetcher_expr="(import ./lib/fetchers.nix { pkgs = import <nixpkgs> { }; dirs = null; importSopsString = null; urlEncode = x: x; }).fetchSteamCards {
+  appId = ${appId};
+  ${cardNames:+cardNames = [ "${cardNames//,/\" \"}" ];}
+  sha256 = \"sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\";
+}"
+
+echo "Evaluating and fetching (this will intentionally fail with a hash mismatch)..."
+
+# 2. Use nix-build instead of nix-prefetch
+# We redirect stderr to capture the hash mismatch printout
+set +e
+output=$(nix-build -E "$fetcher_expr" --no-out-link 2>&1)
+set -e
+
+# 3. Extract the got/specified hashes from the error message
+if echo "$output" | grep -q "hash mismatch"; then
+  echo "---"
+  echo "Successfully fetched! Copy the 'got:' hash below:"
+  echo "$output" | grep -A 3 "hash mismatch"
+else
+  echo "An unexpected error occurred:" >&2
+  echo "$output" >&2
+  exit 1
 fi
-"${cmd[@]}"

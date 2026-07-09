@@ -1,9 +1,17 @@
 { pkgs, image, ... }:
+with image;
 {
   fallout4Wallpaper01 = pkgs.fetchurl {
     url = "https://images.ctfassets.net/rporu91m20dc/5wuLB3sJRmVIbOYtBMyTnB/85c2a987522d265ad7819d324d0f4a4a/FO4_ART_AnniversaryEdition_16x9_GUN_Clean__1_.png";
     sha256 = "1xdrydyxrvqvfg39lqr3d6qg2winzr7dnr3a4bliwyghcl20164q";
   };
+
+  theKings =
+    pkgs.fetchurl {
+      url = "https://art.ngfiles.com/images/7455000/7455737_2937171_deimosart_the-kings.aaf386a78a4dfe02cc12b159d4866c3c.jpg";
+      hash = "sha256-vHXfOPcBEy85ZaEJjMvu1Hhkne14PDKHWeNVBoNrHZE=";
+    }
+    |> crop16x9North;
 
   fallout4Wallpaper02 = pkgs.fetchurl {
     url = "https://images.ctfassets.net/rporu91m20dc/4s51P6NWSWzdDOSlcyrmNd/c29dba12e4be2431090333a4c3e09e48/FO4_SKU_AnniversaryEdition_Web-16x9_STD_Clean.png";
@@ -45,19 +53,19 @@
     sha256 = "1c2rpf972fnvvyqfs4fv1q750q2bf6afkv1q5wzkgaxjpw7kydif";
   };
 
-  falloutNewVegas01 = image.crop16x9South (
+  falloutNewVegas01 =
     pkgs.fetchurl {
       url = "https://images.ctfassets.net/rporu91m20dc/3jyjWTCiRqKQ4S4y8CEMSk/2f0d622f1c981a0aad7849b7fe5335ff/53490_2_17.jpg";
       sha256 = "0pn8xb0w38jsb1id8fkhkgjwgcd42b9cg7f94ph2d7bxp7v3fk7m";
     }
-  );
+    |> crop16x9South;
 
-  falloutNewVegas02 = image.crop16x9South (
+  falloutNewVegas02 =
     pkgs.fetchurl {
       url = "https://images.ctfassets.net/rporu91m20dc/SJ5OfbOPqEGkIACOWWeIu/d8d4d6845e3a5b6f6c66dbafa2094079/53534_2_17.jpg";
       sha256 = "0zf9acjr1x09yyqf238r2p81w50gd1m6mcaqdsc6i2z9s7pjm5zk";
     }
-  );
+    |> crop16x9South;
 
   fallout76SkylineValley = pkgs.fetchurl {
     url = "https://images.ctfassets.net/rporu91m20dc/4iZDzhIk24kD3Lru5ej0Pj/56ddc594a230b472537e983a95ff7d78/F76_P52_Skyline-Valley_Standard_3840x2160.png";
@@ -98,6 +106,22 @@
     url = "https://images.ctfassets.net/rporu91m20dc/52GdzmGzYF0XOR3eBgNcKz/c3cf4bbbc8d53f3044f2bac7ac5d3f97/Fallout76_S13_FullArt_FINAL.png";
     sha256 = "0vk1xfsbv1yazganbrbpq7zwwc679gxgwwfpqw605ydygjrj380a";
   };
+
+  theCourier =
+    pkgs.fetchurl {
+      name = "theCourier.jpg";
+      url = "https://pbs.twimg.com/media/G-dQOtxbYAAvY1Y?format=jpg&name=large";
+      hash = "sha256-e0JGQaX0DaeFpvQIosWK4X1Qyy6mgm2FjuxoKN8A9Ng=";
+    }
+    |> grow16x9;
+
+  lonesomeRoad =
+    pkgs.fetchurl {
+      name = "lonesomeRoad.jpg";
+      url = "https://pbs.twimg.com/media/GrJlrIXXkAA9hq0?format=jpg&name=4096x4096";
+      hash = "sha256-czqoI/+ilgLAbVNTmD+AyOXo4BdiZFSjInadLIZUIck=";
+    }
+    |> crop16x9;
 
   fallout76Patch42FullKeyArt = pkgs.fetchurl {
     url = "https://downloads.ctfassets.net/rporu91m20dc/4Ko95uG4UDCcwMFOtzLEFf/790dc19f060a9823f766e9891a7ef97b/F76_Patch42_FullKeyArt.png";

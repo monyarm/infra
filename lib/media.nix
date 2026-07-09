@@ -487,6 +487,12 @@ rec {
           args = "-background \"${color}\" -layers flatten";
           nameSuffix = "filled-bg";
         } src;
+
+      cutHalf =
+        gravity:
+        transform {
+          args = "-gravity ${gravity} -crop 100%x50%+0+0";
+        };
     }
     // generateCropFunctions
     // generateGrowFunctions

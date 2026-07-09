@@ -96,6 +96,12 @@
     hash = "sha256-IYkDA/ciDj9fRKBT24/T21rdpTSNexKy3vT+5fRbvhY=";
   };
 
+  monica = pkgs.fetchurl {
+    name = "monica.jpg";
+    url = "https://pbs.twimg.com/media/FvHDFVpaUAAbsTj.jpg:orig";
+    hash = "sha256-nCB9/Pn27KVPy7u1LGKN86a4vL3gSUznbBqtvVvTG8g=";
+  };
+
   codeGeassSuzaku = pkgs.fetchurl {
     name = "code-geass-suzaku.jpg";
     url = "https://pbs.twimg.com/media/GGBtXkPa4AAV6Wd?format=jpg&name=large";

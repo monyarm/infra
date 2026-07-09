@@ -6,6 +6,8 @@
   ...
 }:
 let
+  inherit (pkgs) lib;
+
   userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0";
   getFileNameFromUrl =
     url:
@@ -22,7 +24,7 @@ let
     else
       "video";
 in
-{
+rec {
   fetchzipSelective =
     {
       keepFiles,
@@ -119,17 +121,38 @@ in
       url = "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/${toString appid}/${assetid}.${extension}";
     };
 
-  fetchPixiv =
-    { url, sha256 }:
+  fetchWithReferrer =
+    referrer:
+    {
+      url,
+      sha256 ? null,
+      hash ? sha256,
+    }:
     pkgs.fetchurl {
-      inherit sha256 url;
+      inherit hash url;
       curlOptsList = [
         "--header"
-        "Referer: https://www.pixiv.net/"
+        "Referer: ${referrer}"
         "--user-agent"
         userAgent
       ];
     };
+
+  fetchPixiv = fetchWithReferrer "https://www.pixiv.net/";
+  fetchGelbooru =
+    args:
+    fetchWithReferrer "https://gelbooru.com/" (
+      args
+      // {
+        url = builtins.replaceStrings [
+          "https://img.gelbooru.com/"
+          "https://img1.gelbooru.com/"
+          "https://img2.gelbooru.com/"
+          "https://img3.gelbooru.com/"
+        ] (lib.lists.replicate 4 "https://img4.gelbooru.com/") args.url;
+      }
+    );
+
   fetchMyNintendo =
     {
       url,

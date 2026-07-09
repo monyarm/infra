@@ -91,6 +91,14 @@ with image;
       sha256 = "sha256-OjJeAssDnu0X6yjYa/Ko3ixGKNHJx6PcuJbn+owI2E4=";
     }
     |> crop16x9North;
+
+  quartzerRiderGirls =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2019/11/16/09/56/03/77837664_p0.jpg";
+      sha256 = "sha256-HOA13ADhD+Lk+v0/asUpjOrfYOQx/tRVOtCwmzA4+Mo=";
+    }
+    |> crop16x9North;
+
   fuutoPIOpening =
     extractFrames
       (fetchVideo {

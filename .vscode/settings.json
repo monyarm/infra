@@ -1,5 +1,9 @@
 {
   "chat.tools.edits.autoApprove": {
     "/home/monyarm/.nix/**": true
+  },
+  "chat.tools.terminal.autoApprove": {
+    "set": true,
+    "scripts/prefetch/prefetch_pixiv.sh": true
   }
 }

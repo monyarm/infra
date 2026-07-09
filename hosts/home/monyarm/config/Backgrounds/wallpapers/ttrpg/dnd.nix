@@ -1,4 +1,10 @@
-{ pkgs, fetchSteamCards, ... }:
+{
+  pkgs,
+  fetchSteamCards,
+  fetchPixiv,
+  image,
+  ...
+}:
 let
   dnd50thZip = pkgs.fetchzip {
     url = "https://media.dndbeyond.com/compendium-images/marketing/50th-anniversary-desktop-wallpapers.zip";
@@ -11,6 +17,7 @@ let
     stripRoot = false;
   };
 in
+with image;
 {
   dnd50thDesktop = "${dnd50thZip}/D&D_50th_Wallpaper_Desktop-3840x2140.jpg";
   dndHolidayHaul = "${dndHolidayHaulZip}/D&D Holiday Wallpaper_1920x1080 1.jpg";
@@ -203,4 +210,11 @@ in
     appId = 1086940;
     hash = "sha256-3YDOYoyVRe1yGebGIx3mqj418nobsZ9mrntIvRk7L8s=";
   };
+
+  shadowheart =
+    fetchPixiv {
+      url = "https://i.pximg.net/img-original/img/2023/10/05/18/30/43/112293779_p0.jpg";
+      sha256 = "sha256-Ir7QbC7ZJaT70gFyJcmzYp7Bdc12rD4tbpCMU/EPfzc=";
+    }
+    |> crop16x9;
 }
