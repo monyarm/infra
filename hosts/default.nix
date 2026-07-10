@@ -6,6 +6,7 @@ let
     nixpkgs
     home-manager
     nix-topology
+    lix-module
     ;
   inherit (nixpkgs) lib;
 
@@ -24,7 +25,6 @@ let
 
   overlays = [
     inputs.nix-topology.overlays.default
-    inputs.lix-module.overlays.default
     inputs.nh.overlays.default
     inputs.nur.overlays.default
     inputs.niri.overlays.niri
@@ -53,6 +53,12 @@ let
     inputs.sops-nix.nixosModules.sops
     ../secrets
     ./modules/lib.nix
+    {
+      documentation = {
+        enable = false;
+        nixos.enable = false;
+      };
+    }
   ];
 
   getSystemFromMeta = meta: meta.system or "x86_64-linux";
@@ -134,6 +140,7 @@ let
           };
         }
         nix-topology.nixosModules.default
+        lix-module.nixosModules.default
       ];
     };
 

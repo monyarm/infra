@@ -6,5 +6,5 @@
       sha256 = "sha256-RTASfY/WjuPcRRhW3rhSjXxaL71N3zD49R2OsyHEpQY=";
       stripRoot = false;
     }
-  }/S30TH_16x9_WALLPAPER.png";
+  }/PS30TH_16x9_WALLPAPER.png";
 }

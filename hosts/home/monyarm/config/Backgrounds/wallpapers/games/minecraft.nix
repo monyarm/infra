@@ -7,6 +7,7 @@ let
       sha256,
       prefix,
       filePrefix ? prefix,
+      suffix ? "_1920x1080.png",
     }:
     "${
       pkgs.fetchzip {
@@ -18,7 +19,7 @@ let
           "Mozilla"
         ];
       }
-    }/${filePrefix}${paperName}_1920x1080.png";
+    }/${filePrefix}${paperName}${suffix}";
 
   fetchMinecraft =
     args:
@@ -60,43 +61,82 @@ in
     name = "minecraft_pc_bundle";
     sha256 = "sha256-8wFeB59QUiBNLMkEwdAO4FElc88iTvjqd/WNMfvfryY=";
   };
-  mountsOfMayhemDrop = fetchMinecraftWallpapers {
+  mountsOfMayhemDrop = fetchMinecraftBase {
     name = "mounts_of_mayhem_drop";
+    prefix = "wallpapers_";
+    filePrefix = "";
+    paperName = "MCV_HOL25Drop_MoM_DotNet_Wallpaper";
     sha256 = "sha256-2yFqLPZdtagF+S+S0wgbo++GFmBcSXd9DVYtRp0fstk=";
   };
-  theCopperAgeDrop1 = fetchMinecraftWallpapers {
+  theCopperAgeDrop1 = fetchMinecraftBase {
     name = "the_copper_age_drop-1";
+    prefix = "wallpapers_";
+    filePrefix = "";
+    paperName = "Minecraft_Fall_Drop_Campaign_Key_Art_DotNet_Downloadable_Wallpaper";
     sha256 = "sha256-ASlD8k8Wcr2NlWgBRj6RW/riHx3dvhubRuvEC9rB1Zk=";
   };
-  chaseTheSkiesUpdate = fetchMinecraftWallpapers {
+  chaseTheSkiesUpdate = fetchMinecraftBase {
     name = "chase_the_skies_update";
+    prefix = "wallpapers_";
+    filePrefix = "";
+    paperName = "MCV_SummerDrop_Hero_DotNet_Downloadable_Wallpaper";
+    suffix = "_r1920x1080.png";
     sha256 = "sha256-czylpvATUGoPumE3bPjeYsz7TFw4PPD6XIosviRT01M=";
   };
-  springToLifeUpdate = fetchMinecraftWallpapers {
+  springToLifeUpdate = fetchMinecraftBase {
     name = "spring_to_life_update";
+    prefix = "wallpapers_";
+    filePrefix = "";
+    paperName = "MCV_SpringDrop_DotNet_Downloadable_Wallpaper";
     sha256 = "sha256-ByJESmNgUvjOCiVPbGh1IWVltl8gadBCS+ymFH3s7OM=";
   };
-  theGardenAwakensUpdate = fetchMinecraftWallpapers {
+  theGardenAwakensUpdate = fetchMinecraftBase {
     name = "the_garden_awakens_update";
+    prefix = "wallpapers_";
+    filePrefix = "";
+    paperName = "Minecraft_TheGardenAwakens_DotNet";
     sha256 = "sha256-QUA/CHf+NWBoFAbUhKN7FDus6uFKHO/39GVx6IBGc8c=";
   };
-  bundlesOfBravery = fetchMinecraftWallpapers {
+  bundlesOfBravery = fetchMinecraftBase {
     name = "bundles_of_bravery";
+    prefix = "wallpapers_";
+    filePrefix = "";
+    paperName = "MCV_FallDrop_NetDownloadableWallpaper";
     sha256 = "sha256-XHH1JJTtW4dbN31ou+ZJeRIxnaX/+BNQKWtgdluYKZ8=";
   };
   trickyTrialsUpdate2 = fetchMinecraftWallpapers {
     name = "tricky_trials_update2";
+    paperName = "minecraft_trickytrials";
     sha256 = "sha256-eZe4ZYRMLozMNPrB+Zuu3U8Z0++P8RZEP5iantoB3R0=";
   };
   trailsAndTales = fetchMinecraft {
     name = "Trails_and_Tales_.Net";
     paperName = "Trails&Tales_.Net";
+    suffix = "_2058x1440.png";
     sha256 = "sha256-Xe32GmTgOLJkpl1PRKixewUMs1iulBo68SrrxnVe6Bk=";
   };
-  wildUpdate = fetchMinecraftWallpaper {
-    name = "minecraft_wild_update";
-    sha256 = "sha256-7HCg3wSgGBlbSCI2K7ZtvsQ1Vnia+aP/LEO+vaXCI0A=";
-  };
+  wildUpdate =
+    pkgs.runCommand "wallpaper_minecraft_wild_update_1920x1080.png"
+      {
+        nativeBuildInputs = [ pkgs.unzip ];
+        meta = {
+          url = "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/software/wallpaper_minecraft_wild_update.zip";
+          expected_filename = "wallpaper_minecraft_wild_update.zip/wallpaper_minecraft_wild_update_1920x1080.png";
+        };
+      }
+      ''
+        unzip -p ${
+          pkgs.fetchzip {
+            url = "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/software/wallpaper_minecraft_wild_update.zip";
+            sha256 = "sha256-7HCg3wSgGBlbSCI2K7ZtvsQ1Vnia+aP/LEO+vaXCI0A=";
+            stripRoot = false;
+            curlOptsList = [
+              "-A"
+              "Mozilla"
+            ];
+          }
+        }/wallpaper_minecraft_wild_update.zip wallpaper_minecraft_wild_update_1920x1080.png > $out
+      '';
   cavesCliffs1 = fetchMinecraftWallpapers {
     name = "minecraft_caves_cliffs(part1)";
     sha256 = "sha256-ebe48TohAnZ5JYpNk64B6A3lLT9nXyhobyT/wGTXmho=";
@@ -131,6 +171,7 @@ in
   };
   oceanMonument = fetchMinecraftWallpapers {
     name = "minecraft_ocean_monument_";
+    paperName = "minecraft_ocean_monument";
     sha256 = "sha256-6h5NkHP6puS2o86j9IVWFvyI8e9TDAvj1hk+16VbFUA=";
   };
   island = fetchMinecraftWallpapers {
@@ -165,8 +206,11 @@ in
     name = "marketplace_nyc_celebration";
     sha256 = "sha256-pa5hJF0rRdIvhL/+BjpngHVkPgflPGQ5lZ1eJ8zQ6DY=";
   };
-  megaman = fetchMinecraftWallpapers {
+  megaman = fetchMinecraftBase {
     name = "marketplace_megaman";
+    prefix = "wallpapers_";
+    filePrefix = "";
+    paperName = "Minecraft_MegaManX_wallpaper";
     sha256 = "sha256-YxmsoEYzyGHGzPhrSbPOtAUuI6YzFdy6so+Y6E3vv9E=";
   };
   sonicTextures = fetchMinecraftBase {

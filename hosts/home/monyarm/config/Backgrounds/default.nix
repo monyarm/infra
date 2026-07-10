@@ -10,7 +10,6 @@
 }:
 let
   linkWallpapers = linkContents "Pictures/wallpapers";
-
   sleepAmount = "5s"; # Configurable sleep amount
   awwwCommand = "awww img --transition-type=none --resize=fit";
   awwwScript = pkgs.writeText "awww-random" ''
@@ -35,19 +34,28 @@ let
     done
   '';
 
-  allWallpapers = builtins.attrValues (autoImport {
+  # 1. autoImport in "list" mode
+  wallpaperFilePaths = autoImport {
     path = ./wallpapers;
-    args = {
-      inherit
-        pkgs
-        lib
-        ;
-    }
-    // customLib;
-    mode = "merge";
+    mode = "list";
     recursive = true;
-  });
+  };
+
+  # 2. Extract derivations to a flat list
+  allWallpaperDrvs = builtins.concatLists (
+    map (
+      filePath:
+      let
+        fileAttrs = import filePath ({ inherit pkgs lib; } // customLib);
+      in
+      builtins.attrValues fileAttrs
+    ) wallpaperFilePaths
+  );
+
 in
 {
-  home.file = (binFile awwwScript) // (linkWallpapers allWallpapers);
+  # 2. Register them directly to home.file
+  # This creates 1600 small entries in Home Manager instead of 1 giant one.
+  home.file =
+    (binFile awwwScript) // { "Pictures/.context".text = "test"; } // (linkWallpapers allWallpaperDrvs);
 }

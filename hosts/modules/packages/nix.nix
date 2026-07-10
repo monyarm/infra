@@ -9,7 +9,7 @@ let
   nix = with pkgs; [
     # keep-sorted start
     dconf2nix
-    lix
+    hyperfine
     nh
     nix-output-monitor
     nix-prefetch

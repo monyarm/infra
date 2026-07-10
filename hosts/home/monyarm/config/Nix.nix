@@ -19,6 +19,12 @@ in
         "coerce-integers"
       ]
     }
+    deprecated-features = ${
+      lib.concatStringsSep "" [
+        "floating-without-zero"
+        "nul-bytes"
+      ]
+    }
     access-tokens = github.com=${config.sops.placeholder.github_access_token}
     allow-unsafe-native-code-during-evaluation = true
     connect-timeout = 25000

@@ -64,9 +64,9 @@ rec {
       resolveSource =
         source:
         if lib.isDerivation source then
-          "${source}"
+          source
         else if (lib.isString source || builtins.isPath source) && lib.hasPrefix "/" source then
-          mkOutOfStoreSymlink source # Absolute path, not store path
+          mkOutOfStoreSymlink source
         else
           source;
 
@@ -85,22 +85,48 @@ rec {
             else
               throw "Invalid item type for name extraction: ${builtins.typeOf item}";
 
-          src = resolveSource (
-            if lib.isAttrs item && !lib.isDerivation item then lib.elemAt (builtins.attrValues item) 0 else item
-          );
+          # 1. Extract the raw item first (without coercing derivations to strings!)
+          rawSrc =
+            if lib.isAttrs item && !lib.isDerivation item then
+              lib.elemAt (builtins.attrValues item) 0
+            else
+              item;
+
+          # 2. Pass the raw item to resolveSource.
+          # Because we don't force a string here, a derivation stays a derivation!
+          src = resolveSource rawSrc;
         in
         {
           name = "${targetSubfolder}/${name}";
           value = {
             source = src;
-            recursive = true;
+            recursive = !linkContents;
           };
         };
 
       processedList =
         if linkContents then
           lib.flatten (
-            lib.map (path: if lib.pathIsDirectory path then listFilesRecursive path else [ path ]) fileList
+            lib.map (
+              path:
+              let
+                # Convert a derivation object to its string store path explicitly
+                # so that pathIsDirectory can safely evaluate it on your disk.
+                targetPath = if lib.isDerivation path then path.outPath else path;
+              in
+              if lib.pathIsDirectory targetPath then
+                if lib.isDerivation path then
+                  # DERIVATION FOLDERS: Map explicitly using string interpolation.
+                  # This injects the live context directly into each generated file string,
+                  # bypassing listFilesRecursive's context stripping and fixing your stale updates.
+                  map (name: "${path}/${name}") (builtins.attrNames (builtins.readDir targetPath))
+                else
+                  # LOCAL DIRECTORIES: Use your original recursive utility function safely
+                  listFilesRecursive targetPath
+              else
+                # SINGLE FILES (Derivations, paths, or normal strings)
+                [ path ]
+            ) fileList
           )
         else
           fileList;

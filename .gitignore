@@ -25,4 +25,6 @@ config/*.key
 .aider*
 input.txt
 wallpaper-count.txt*
+nix.profile.zstd
+benchmark.txt
 # keep-sorted end

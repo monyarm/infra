@@ -1,18 +1,25 @@
 _:
 
 {
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-      "pipe-operator"
-      "coerce-integers"
-    ];
-    allow-unsafe-native-code-during-evaluation = true;
-    trusted-users = [
-      "root"
-      "monyarm"
-    ];
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operator"
+        "coerce-integers"
+      ];
+      deprecated-features = [
+        "floating-without-zero"
+        "nul-bytes"
+      ];
+      allow-unsafe-native-code-during-evaluation = true;
+      trusted-users = [
+        "root"
+        "monyarm"
+      ];
+      connect-timeout = 25000;
+    };
   };
 
   boot.loader.systemd-boot.enable = true;
