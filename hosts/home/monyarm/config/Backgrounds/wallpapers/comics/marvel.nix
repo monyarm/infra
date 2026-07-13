@@ -1,4 +1,8 @@
-{ pkgs, fetchPixiv, ... }:
+{
+  pkgs,
+  fetchPixiv,
+  ...
+}:
 
 {
   groupShotRivals = pkgs.fetchurl {

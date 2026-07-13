@@ -1,4 +1,8 @@
-{ pkgs, fetchSteamCards, ... }:
+{
+  pkgs,
+  fetchSteamCards,
+  ...
+}:
 
 let
   fetchSonic =

@@ -25,13 +25,15 @@ with image;
 
   donDragoku =
     pkgs.fetchurl {
+      name = "donDragoku.jpg";
       url = "https://cdnb.artstation.com/p/assets/images/images/051/571/467/large/samcy-.jpg";
-      sha256 = "sha256-my6C47X41iBGnbrOBla8u0xgTBkamOtmJW4mKdbJL+w=";
+      sha256 = "sha256-be1aFVpW8b3PZqEuw73JCPeTUUhJvQE0zdX9owZVOpQ=";
     }
     |> crop16x9South;
 
   kuwagataOhger =
     pkgs.fetchurl {
+      name = "kuwagataOhger.jpg";
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/795/large/samcy-.jpg";
       sha256 = "sha256-wTYU/KJ9T+IlPke9/IbYmZ7sl+z62/xgr45HwaRtKZs=";
     }
@@ -39,6 +41,7 @@ with image;
 
   tomboOhger =
     pkgs.fetchurl {
+      name = "tomboOhger.jpg";
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/811/large/samcy-.jpg";
       sha256 = "sha256-/+Of6knnWz+efmIf8C4E+GRMBzAUJDtMgyWzkxjoSGI=";
     }
@@ -46,6 +49,7 @@ with image;
 
   kamakiriOhger =
     pkgs.fetchurl {
+      name = "kamakiriOhger.jpg";
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/831/large/samcy-.jpg";
       sha256 = "sha256-+kZA6ZAmHg7S0SY5ZDBFeEKYK3prXOELEoLVCbXPmmQ=";
     }
@@ -53,13 +57,15 @@ with image;
 
   hachiOhger =
     pkgs.fetchurl {
+      name = "hachiOhger.jpg";
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/843/large/samcy-.jpg";
-      sha256 = "sha256-DWaVviJKdPnxAI/PxXgLhucn+RP29DppsdaZyvvHwCY=";
+      sha256 = "sha256-m7zqEQ4jihKngXRdOh9P/LIMmXrGOnLCbYVqBIE97zY=";
     }
     |> crop16x9;
 
   papillonOhger =
     pkgs.fetchurl {
+      name = "papillonOhger.jpg";
       url = "https://cdnb.artstation.com/p/assets/images/images/061/630/865/large/samcy-.jpg";
       sha256 = "sha256-F0HlrWB6pODN+7iPtu2rhWtiYI4biKpzdubDonpJMU8=";
     }

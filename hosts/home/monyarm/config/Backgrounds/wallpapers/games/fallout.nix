@@ -1,4 +1,8 @@
-{ pkgs, image, ... }:
+{
+  pkgs,
+  image,
+  ...
+}:
 with image;
 {
   fallout4Wallpaper01 = pkgs.fetchurl {
@@ -204,16 +208,19 @@ with image;
   };
 
   fallout76BurningSprings = pkgs.fetchurl {
+    name = "FO76BS_Burning_Springs_keyart.webp";
     url = "https://static.wikia.nocookie.net/fallout/images/e/e0/FO76BS_Burning_Springs_keyart.jpg";
     sha256 = "sha256-tWfVaW6B/JfPAHYSsCPYtH8F+ZwvpQZSx9U+NdK0w9I=";
   };
 
   fallout76RipDaringCosmos = pkgs.fetchurl {
+    name = "FO76_Season24_keyart_with_logo.webp";
     url = "https://static.wikia.nocookie.net/fallout/images/a/a3/FO76_Season24_keyart_with_logo.jpg";
     sha256 = "sha256-aYeVaCDgWONxRSq+CFenuM37BIo7Tllf0eiH7raU3n0=";
   };
 
   fallout76BloodRust = pkgs.fetchurl {
+    name = "FO76BS_S23_Blood_x_Rust_keyart_with_logo.webp";
     url = "https://static.wikia.nocookie.net/fallout/images/5/57/FO76BS_S23_Blood_x_Rust_keyart_with_logo.jpg";
     sha256 = "sha256-1hwu52CY7kow2+FU038JN3wp/bAulef34WjJ4/p39xQ=";
   };

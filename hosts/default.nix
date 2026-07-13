@@ -6,7 +6,6 @@ let
     nixpkgs
     home-manager
     nix-topology
-    lix-module
     ;
   inherit (nixpkgs) lib;
 
@@ -29,6 +28,10 @@ let
     inputs.nur.overlays.default
     inputs.niri.overlays.niri
     inputs.steam-fetcher.overlay
+    (_final: _prev: {
+      drowse = inputs.drowse.lib."x86_64-linux";
+      nix = inputs.determinate-nix.lib."x86_64-linux".nix;
+    })
   ];
 
   pkgsGen =
@@ -140,7 +143,23 @@ let
           };
         }
         nix-topology.nixosModules.default
-        lix-module.nixosModules.default
+        (
+          { pkgs, ... }:
+          {
+            # Temporary fix for home-manager#7166
+            system.activationScripts.home-manager-restart = {
+              text = ''
+                for user in ${builtins.concatStringsSep " " (lib.attrNames homeUsers)}; do
+                  ${pkgs.systemd}/bin/systemctl restart home-manager-$user.service || true
+                done
+              '';
+              deps = [
+                "users"
+                "groups"
+              ];
+            };
+          }
+        )
       ];
     };
 

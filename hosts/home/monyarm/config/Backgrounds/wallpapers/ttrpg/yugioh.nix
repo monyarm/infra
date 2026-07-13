@@ -37,9 +37,10 @@ with image;
         buildInputs = [ pkgs.imagemagick ];
       } "magick -size 3108x1748 canvas:white PNG32:$out";
     in
-    transform {
+    canvas
+    |> transform {
       args = "${left} -geometry +0+0 -composite ${right} -geometry +1868+0 -composite";
       nameSuffix = "stitched";
       extension = "png";
-    } canvas;
+    };
 }

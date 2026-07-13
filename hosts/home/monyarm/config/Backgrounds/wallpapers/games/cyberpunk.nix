@@ -1,4 +1,8 @@
-{ pkgs, toWebp, ... }:
+{
+  pkgs,
+  toWebp,
+  ...
+}:
 {
   blackwall =
     pkgs.fetchurl {

@@ -3,6 +3,7 @@
   fetchSteamCards,
   fetchPixiv,
   image,
+  getFile,
   ...
 }:
 let
@@ -19,8 +20,8 @@ let
 in
 with image;
 {
-  dnd50thDesktop = "${dnd50thZip}/D&D_50th_Wallpaper_Desktop-3840x2140.jpg";
-  dndHolidayHaul = "${dndHolidayHaulZip}/D&D Holiday Wallpaper_1920x1080 1.jpg";
+  dnd50thDesktop = dnd50thZip |> getFile "D&D_50th_Wallpaper_Desktop-3840x2140.jpg";
+  dndHolidayHaul = dndHolidayHaulZip |> getFile "D&D Holiday Wallpaper_1920x1080 1.jpg";
 
   PHB = pkgs.fetchurl {
     url = "https://images.ctfassets.net/swt2dsco9mfe/2pui27Vw8m7PTg7qbn7Iez/5049ae63f58ee50f1e47cd0fe2ce9c72/PHB_1920x1080.jpeg";

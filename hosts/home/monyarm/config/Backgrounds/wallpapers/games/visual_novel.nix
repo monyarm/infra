@@ -1,4 +1,8 @@
-{ pkgs, fetchSteamCards, ... }:
+{
+  pkgs,
+  fetchSteamCards,
+  ...
+}:
 {
   quickie = fetchSteamCards {
     appId = 1517850;

@@ -1,4 +1,8 @@
-{ fetchVideo, extractFrames, ... }:
+{
+  fetchVideo,
+  extractFrames,
+  ...
+}:
 {
   mightyNein =
     extractFrames

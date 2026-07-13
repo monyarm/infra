@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   codeGeassRakshata = pkgs.fetchurl {
     name = "code-geass-rakshata.jpg";

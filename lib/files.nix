@@ -1,7 +1,10 @@
 {
+  pkgs,
   lib,
   mkOutOfStoreSymlink,
   config,
+  sanitizeName,
+  getFileName,
   ...
 }:
 rec {
@@ -65,8 +68,17 @@ rec {
         source:
         if lib.isDerivation source then
           source
-        else if (lib.isString source || builtins.isPath source) && lib.hasPrefix "/" source then
-          mkOutOfStoreSymlink source
+        else if (lib.isString source || builtins.isPath source) then
+          let
+            s = toString source;
+            isStorePath = lib.hasPrefix builtins.storeDir (builtins.unsafeDiscardStringContext s);
+          in
+          if isStorePath then
+            source # already in the store (context intact) — pass through, no wrapper needed
+          else if lib.hasPrefix "/" s then
+            mkOutOfStoreSymlink (builtins.unsafeDiscardStringContext s) # genuine external path, safe to strip
+          else
+            source
         else
           source;
 
@@ -210,13 +222,8 @@ rec {
   listFilesRecursive =
     path:
     let
-      cleanPath =
-        if builtins.isAttrs path && path ? "type" && path.type == "derivation" then
-          builtins.unsafeDiscardStringContext (toString path)
-        else
-          toString path;
-
-      list =
+      # --- 1. Pure Nix Folder Scanner ---
+      scanPure =
         p:
         let
           files = builtins.readDir p;
@@ -225,11 +232,87 @@ rec {
         builtins.concatMap (
           item:
           let
-            newPath = p + "/" + item;
+            newPath = p + /${item};
             isDir = (builtins.getAttr item files) == "directory";
           in
-          if isDir then list newPath else [ newPath ]
+          if isDir then scanPure newPath else [ newPath ]
         ) items;
+
+      # --- 2. Build-Time Manifest Scanner (CA/IFD Fallback) ---
+      scanViaIFD =
+        folderSrc:
+        let
+          safeName = builtins.unsafeDiscardStringContext (baseNameOf (toString folderSrc));
+
+          manifest =
+            pkgs.runCommand "${safeName}-dir-manifest.nix"
+              {
+                preferLocalBuild = true;
+                allowSubstitutes = false;
+                __contentAddressed = true;
+                outputHashAlgo = "sha256";
+                outputHashMode = "flat";
+                src = folderSrc;
+              }
+              ''
+                echo "[" > $out
+                cd "$src"
+                # Find files, sort them, and write them purely as relative strings
+                find . -type f | sort | while read -r file; do
+                  clean_file=$(echo "$file" | sed 's|^\./||')
+                  # Outputting just a raw string like: "subfolder/file.png"
+                  # This contains NO store path references, keeping the CA derivation happy!
+                  echo "  \"$clean_file\"" >> $out
+                done
+                echo "]" >> $out
+              '';
+
+          # Import the list of relative strings
+          relativeFiles = import manifest;
+        in
+        # Reconstruct the absolute paths in pure Nix.
+        # Appending the relative string to the 'folderSrc' variable ensures
+        # that the string context (dependency tracking) is perfectly retained!
+        map (rel: folderSrc + "/${rel}") relativeFiles;
+
+      asPath =
+        p:
+        if builtins.isPath p then
+          p
+        else
+          builtins.storePath (builtins.unsafeDiscardStringContext (toString p));
     in
-    list cleanPath;
+    if builtins.hasContext (toString path) then scanViaIFD path else scanPure (asPath path);
+
+  rename =
+    src: drv:
+    if (toString src) == (toString drv) then
+      src
+    else
+      derivation {
+        name = sanitizeName (getFileName src); # clean original name, e.g. "photo.jpg"
+        inherit (pkgs.stdenv.hostPlatform) system;
+        builder = "${pkgs.bash}/bin/bash";
+        args = [
+          "-c"
+          ''
+            ${pkgs.coreutils}/bin/ln -s "${drv}" "$out"
+            exit 0; # fix for 2176?
+          ''
+        ];
+        preferLocalBuild = true;
+        allowSubstitutes = false;
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      };
+
+  getFile =
+    filePath: folderDrv:
+    let
+      fileName = builtins.baseNameOf filePath;
+    in
+    pkgs.runCommand fileName { } ''
+      cp "${folderDrv}/${filePath}" "$out"
+    '';
 }

@@ -4,7 +4,6 @@ if [[ -z $DBUS_SESSION_BUS_ADDRESS ]]; then
 fi
 
 hostname=$1
-repo_root="$(cd "$(dirname "$0")" && pwd -P)"
 
 export NH_SHOW_ACTIVATION_LOGS=true
 

@@ -2,6 +2,7 @@
   pkgs,
   image,
   toWebp,
+  getFile,
   ...
 }:
 with image;
@@ -27,28 +28,25 @@ with image;
     hash = "sha256-2SVos8wgJSXulXjanedh08ATWr3y11Yk5XcTa5stSEs=";
   };
   coteriesOfNewYork01 =
-    "${
-      pkgs.fetchzip {
-        url = "https://drawdistance.dev/wp-content/uploads/2019/09/Vampire-Wallpaper-Animated.zip";
-        hash = "sha256-Mdx/c5MkwWZtp5m/eSCYmj1Qwd9tXazc9SieRK9zeDI=";
-      }
-    }/Vampire Wallpaper Animated.mp4"
+    pkgs.fetchzip {
+      url = "https://drawdistance.dev/wp-content/uploads/2019/09/Vampire-Wallpaper-Animated.zip";
+      hash = "sha256-Mdx/c5MkwWZtp5m/eSCYmj1Qwd9tXazc9SieRK9zeDI=";
+    }
+    |> getFile "Vampire Wallpaper Animated.mp4"
     |> toWebp;
   coteriesOfNewYork02 =
-    "${
-      pkgs.fetchzip {
-        url = "https://drawdistance.dev/wp-content/uploads/2020/01/Vampire-Traffic-Wallpaper.zip";
-        hash = "sha256-PpNAk3boFtkR8poN/rlTjn3zEFcrovg7imbr1f+Mb28=";
-      }
-    }/Vampire Traffic Wallpaper.mp4"
+    pkgs.fetchzip {
+      url = "https://drawdistance.dev/wp-content/uploads/2020/01/Vampire-Traffic-Wallpaper.zip";
+      hash = "sha256-PpNAk3boFtkR8poN/rlTjn3zEFcrovg7imbr1f+Mb28=";
+    }
+    |> getFile "Vampire Traffic Wallpaper.mp4"
     |> toWebp;
   coteriesOfNewYork03 =
-    "${
-      pkgs.fetchzip {
-        url = "https://drawdistance.dev/wp-content/uploads/2020/01/Vampire-Map-Wallpaper.zip";
-        hash = "sha256-LJcYc0R0hBj/DhvHbGA/cIHz7S6PcGFb6TZFgZPs9Ds=";
-      }
-    }/Vampire Map Wallpaper.mp4"
+    pkgs.fetchzip {
+      url = "https://drawdistance.dev/wp-content/uploads/2020/01/Vampire-Map-Wallpaper.zip";
+      hash = "sha256-LJcYc0R0hBj/DhvHbGA/cIHz7S6PcGFb6TZFgZPs9Ds=";
+    }
+    |> getFile "Vampire Map Wallpaper.mp4"
     |> toWebp;
   coteriesOfNewYork04 = pkgs.fetchurl {
     url = "https://drawdistance.dev/wp-content/uploads/2019/12/Wallpaper_07-1920x1080.jpg";

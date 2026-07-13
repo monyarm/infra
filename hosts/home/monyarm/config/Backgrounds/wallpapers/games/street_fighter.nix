@@ -14,7 +14,7 @@ with image;
   bunnyGroup =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/070/415/761/large/citemer-liu-xiao.jpg";
-      sha256 = "sha256-C6/sjX/KkTpSVzxCPWvy0oSYBBZWcV6/9jJTP3POorg=";
+      sha256 = "sha256-7GXIuge4vq1yQsxObtnDQNlWjAwzcvfRItPlFlmGaZk=";
     }
     |> crop16x9North;
 

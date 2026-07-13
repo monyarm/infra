@@ -5,18 +5,18 @@
   dirs,
   customLib,
   autoImport,
-  linkContents,
+  optimize,
+  optimizeBulk,
   ...
 }:
 let
-  linkWallpapers = linkContents "Pictures/wallpapers";
   sleepAmount = "5s"; # Configurable sleep amount
   awwwCommand = "awww img --transition-type=none --resize=fit";
   awwwScript = pkgs.writeText "awww-random" ''
     aww-daemon &
     until awww query; do sleep 1; done
     while true; do
-            find "${dirs.wallpapers}" -maxdepth 1 \( -type f -o -type l \) \
+            find "${dirs.wallpapers}" -max-depth 1 \( -type f -o -type l \) \
             | while read -r img; do
                     echo "$(</dev/urandom tr -dc a-zA-Z0-9 | head -c 8):$img"
             done \
@@ -34,28 +34,51 @@ let
     done
   '';
 
-  # 1. autoImport in "list" mode
   wallpaperFilePaths = autoImport {
     path = ./wallpapers;
     mode = "list";
     recursive = true;
   };
 
-  # 2. Extract derivations to a flat list
-  allWallpaperDrvs = builtins.concatLists (
-    map (
-      filePath:
-      let
-        fileAttrs = import filePath ({ inherit pkgs lib; } // customLib);
-      in
-      builtins.attrValues fileAttrs
-    ) wallpaperFilePaths
-  );
+  importedWallpapers = map (
+    filePath: import filePath ({ inherit pkgs lib; } // customLib)
+  ) wallpaperFilePaths;
 
+  allWallpaperDrvs = builtins.concatLists (map builtins.attrValues importedWallpapers);
+
+  optimizedWallpapers =
+    let
+      isFileName = drv: (builtins.match ".*\\.[a-zA-Z0-9]+$" drv.name) != null;
+      isFolder = drv: (drv ? passthru && drv.passthru.isFolder or false) || (!isFileName drv);
+    in
+    map (drv: if isFolder drv then optimizeBulk drv else optimize drv) allWallpaperDrvs;
 in
 {
   # 2. Register them directly to home.file
   # This creates 1600 small entries in Home Manager instead of 1 giant one.
   home.file =
-    (binFile awwwScript) // { "Pictures/.context".text = "test"; } // (linkWallpapers allWallpaperDrvs);
+    (binFile awwwScript)
+    // {
+      "Pictures/.context".text = "test";
+    }
+    // {
+      "Pictures/wallpapers".source = pkgs.stdenv.mkDerivation {
+        name = "optimized-wallpaper-pool";
+
+        inherit optimizedWallpapers;
+
+        preferLocalBuild = true;
+        allowSubstitutes = false;
+
+        buildCommand = ''
+          mkdir -p $out
+          for item in $optimizedWallpapers; do
+            # -L follows the symlinks to the actual files inside the store paths
+            # -type f grabs everything, no matter how deep the nesting is
+            # -exec ln -s {} $out/ \; symlinks them into the flat target folder
+            find -L "$item" -type f -exec ln -s {} "$out/" \;
+          done
+        '';
+      };
+    };
 }

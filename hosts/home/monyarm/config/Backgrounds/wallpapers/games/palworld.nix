@@ -1,4 +1,8 @@
-{ fetchVideo, extractFrames, ... }:
+{
+  fetchVideo,
+  extractFrames,
+  ...
+}:
 {
   palWorldTerraria =
     extractFrames

@@ -1,4 +1,8 @@
-{ pkgs, image, ... }:
+{
+  pkgs,
+  image,
+  ...
+}:
 with image;
 let
   bunnyGirl = pkgs.fetchurl {
@@ -14,7 +18,7 @@ in
   hanzoRule63 =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/002/864/329/large/liang-xing-hanzo13.jpg";
-      sha256 = "sha256-JJoriad6ZNEWhZyDD9mPuE06SiwK4vKRH6ODxgr9nXQ=";
+      sha256 = "sha256-PDG2pCV1yQBMH68Q9qwZXqf2GVRAPUsmm6sG5hmsU+E=";
     }
     |> crop16x9North;
 
@@ -70,7 +74,7 @@ in
   cruiserDva =
     pkgs.fetchurl {
       url = "https://cdna.artstation.com/p/assets/images/images/006/579/472/large/liang-xing-cruiser-d-va-1.jpg";
-      sha256 = "sha256-HfhoQglF9gw46pZ4kxz2RZ9iLpaU1wG8YX24cA6aSdo=";
+      sha256 = "sha256-YX8AVIZijoE7/cSVVJt703hUmgEdW9Nftbd93VJpxGE=";
     }
     |> crop16x9North;
 
@@ -84,7 +88,7 @@ in
   officerMercy =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/008/739/857/large/liang-xing-officer-mercy.jpg";
-      sha256 = "sha256-yS+xClRgJZoMleS+YqnkJZh06FO2aTP2vMQWFmWqusY=";
+      sha256 = "sha256-Ul6UEMCd49WHSpOPkj3LYtIp9AD0aNjaWfCAJ7VUUeM=";
     }
     |> crop16x9;
 
@@ -110,7 +114,7 @@ in
   racingMercy =
     pkgs.fetchurl {
       url = "https://cdnb.artstation.com/p/assets/images/images/025/030/499/large/liang-xing-racing-mercy.jpg";
-      sha256 = "sha256-eN2hrfawBPB8gCGsmkXSjoDyjr6CAr8gLovQ2t8dgFI=";
+      sha256 = "sha256-sOJv1I88cc+hAQg9ZjCDyniYGoeUFRO2zU0hopdlJQ8=";
     }
     |> crop16x9South;
 

@@ -1,17 +1,20 @@
-_:
+{inputs,...}:
 
 {
   nix = {
+    program = inputs.determinate-nix.lib."x86_64-linux".nix;
     settings = {
       experimental-features = [
         "nix-command"
         "flakes"
-        "pipe-operator"
-        "coerce-integers"
-      ];
-      deprecated-features = [
-        "floating-without-zero"
-        "nul-bytes"
+        "pipe-operators"
+        "ca-derivations"
+        "dynamic-derivations"
+        "configurable-impure-env"
+        "impure-derivations"
+        "recursive-nix"
+        "lazy-trees"
+        "parallel-eval"
       ];
       allow-unsafe-native-code-during-evaluation = true;
       trusted-users = [
@@ -19,6 +22,7 @@ _:
         "monyarm"
       ];
       connect-timeout = 25000;
+      auto-optimise-store = true;
     };
   };
 

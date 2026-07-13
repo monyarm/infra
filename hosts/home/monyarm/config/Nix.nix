@@ -15,19 +15,20 @@ in
       lib.concatStringsSep " " [
         "nix-command"
         "flakes"
-        "pipe-operator"
-        "coerce-integers"
-      ]
-    }
-    deprecated-features = ${
-      lib.concatStringsSep "" [
-        "floating-without-zero"
-        "nul-bytes"
+        "pipe-operators"
+        "ca-derivations"
+        "dynamic-derivations"
+        "configurable-impure-env"
+        "impure-derivations"
+        "recursive-nix"
+        "lazy-trees"
+        "parallel-eval"
       ]
     }
     access-tokens = github.com=${config.sops.placeholder.github_access_token}
     allow-unsafe-native-code-during-evaluation = true
     connect-timeout = 25000
+    auto-optimise-store = true
   '';
 
   xdg.configFile = {

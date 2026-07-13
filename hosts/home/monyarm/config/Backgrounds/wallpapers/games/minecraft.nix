@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  rename,
+  getFile,
+  ...
+}:
 let
   fetchMinecraftBase =
     {
@@ -9,17 +14,16 @@ let
       filePrefix ? prefix,
       suffix ? "_1920x1080.png",
     }:
-    "${
-      pkgs.fetchzip {
-        url = "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/software/${prefix}${name}.zip";
-        inherit sha256;
-        stripRoot = false;
-        curlOptsList = [
-          "-A"
-          "Mozilla"
-        ];
-      }
-    }/${filePrefix}${paperName}${suffix}";
+    pkgs.fetchzip {
+      url = "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/software/${prefix}${name}.zip";
+      inherit sha256;
+      stripRoot = false;
+      curlOptsList = [
+        "-A"
+        "Mozilla"
+      ];
+    }
+    |> getFile "${filePrefix}${paperName}${suffix}";
 
   fetchMinecraft =
     args:
@@ -75,14 +79,16 @@ in
     paperName = "Minecraft_Fall_Drop_Campaign_Key_Art_DotNet_Downloadable_Wallpaper";
     sha256 = "sha256-ASlD8k8Wcr2NlWgBRj6RW/riHx3dvhubRuvEC9rB1Zk=";
   };
-  chaseTheSkiesUpdate = fetchMinecraftBase {
-    name = "chase_the_skies_update";
-    prefix = "wallpapers_";
-    filePrefix = "";
-    paperName = "MCV_SummerDrop_Hero_DotNet_Downloadable_Wallpaper";
-    suffix = "_r1920x1080.png";
-    sha256 = "sha256-czylpvATUGoPumE3bPjeYsz7TFw4PPD6XIosviRT01M=";
-  };
+  chaseTheSkiesUpdate =
+    fetchMinecraftBase {
+      name = "chase_the_skies_update";
+      prefix = "wallpapers_";
+      filePrefix = "";
+      paperName = "MCV_SummerDrop_Hero_DotNet_Downloadable_Wallpaper";
+      suffix = "_r1920x1080.png";
+      sha256 = "sha256-czylpvATUGoPumE3bPjeYsz7TFw4PPD6XIosviRT01M=";
+    }
+    |> rename "MCV_SummerDrop_Hero_DotNet_Downloadable_Wallpaper_r1920x1080.jpg";
   springToLifeUpdate = fetchMinecraftBase {
     name = "spring_to_life_update";
     prefix = "wallpapers_";
@@ -115,7 +121,7 @@ in
     suffix = "_2058x1440.png";
     sha256 = "sha256-Xe32GmTgOLJkpl1PRKixewUMs1iulBo68SrrxnVe6Bk=";
   };
-  wildUpdate =
+  wildUpdate = # Nested Zip
     pkgs.runCommand "wallpaper_minecraft_wild_update_1920x1080.png"
       {
         nativeBuildInputs = [ pkgs.unzip ];

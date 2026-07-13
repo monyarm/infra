@@ -1,4 +1,8 @@
-{ pkgs, image, ... }:
+{
+  pkgs,
+  image,
+  ...
+}:
 with image;
 {
   komiNajimiBathouse =

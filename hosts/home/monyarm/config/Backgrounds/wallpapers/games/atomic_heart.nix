@@ -1,4 +1,8 @@
-{ image, fetchPixiv, ... }:
+{
+  image,
+  fetchPixiv,
+  ...
+}:
 with image;
 {
   twins = fetchPixiv {

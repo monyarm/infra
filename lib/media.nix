@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  getFileName,
   ...
 }:
 rec {
@@ -17,6 +18,8 @@ rec {
               pkgs.imagemagick
               pkgs.jq
             ];
+            # Explicitly ensure this metadata step stays input-addressed
+            __contentAddressed = false;
           }
           ''
             width=$(magick identify -format "%w" ${src})
@@ -145,13 +148,30 @@ rec {
         }:
         src:
         let
-          fullFileName = lib.getName src;
-          fileNameParts = lib.splitString "." fullFileName;
+          # Extract name safely depending on exact type, bypassing string coercion on drvs
+          rawFileName =
+            if lib.isDerivation src then
+              src.name
+            else if builtins.isPath src || builtins.isString src then
+              builtins.baseNameOf src
+            else
+              throw "transform: Unsupported source type for input '${builtins.typeOf src}'";
+
+          # Extract leading store hashes out if a raw /nix/store/... path string leaked in
+          hasStoreHash = builtins.match "[a-z0-9]{32}-.*" rawFileName != null;
+          cleanFileName =
+            if hasStoreHash then
+              builtins.substring 33 (builtins.stringLength rawFileName) rawFileName
+            else
+              rawFileName;
+
+          fileNameParts = lib.splitString "." cleanFileName;
           baseName =
             if lib.length fileNameParts > 1 then
               lib.concatStringsSep "." (lib.init fileNameParts)
             else
-              fullFileName;
+              cleanFileName;
+
           defaultExtension = if lib.length fileNameParts > 1 then lib.last fileNameParts else "png";
           finalExtension = if extension != null then extension else defaultExtension;
 
@@ -160,6 +180,9 @@ rec {
         pkgs.runCommand name
           {
             buildInputs = [ pkgs.imagemagick ];
+            __contentAddressed = true;
+            outputHashAlgo = "sha256";
+            outputHashMode = "flat";
           }
           ''
             magick "${src}" ${args} -format ${finalExtension} +repage "$out"
@@ -504,7 +527,23 @@ rec {
   extractFrames' =
     videoFile: timestamps: cropOpts:
     let
-      videoFileName = builtins.baseNameOf (builtins.unsafeDiscardStringContext videoFile);
+      # 1. Safely extract the filename without forcing string-coercion hashes
+      rawVideoName =
+        if lib.isDerivation videoFile then
+          videoFile.name
+        else if builtins.isPath videoFile || builtins.isString videoFile then
+          builtins.baseNameOf videoFile
+        else
+          "video";
+
+      # 2. Clean out store hashes if a raw store path leaked in
+      hasStoreHash = builtins.match "[a-z0-9]{32}-.*" rawVideoName != null;
+      videoFileName =
+        if hasStoreHash then
+          builtins.substring 33 (builtins.stringLength rawVideoName) rawVideoName
+        else
+          rawVideoName;
+
       cropFilter =
         if
           lib.isAttrs cropOpts && (cropOpts ? width || cropOpts ? height || cropOpts ? x || cropOpts ? y)
@@ -518,6 +557,7 @@ rec {
           "-vf \"crop=${w}:${h}:${x}:${y}\""
         else
           "";
+
       # Extract each frame as a separate derivation
       extractSingleFrame =
         timestamp:
@@ -527,19 +567,20 @@ rec {
         pkgs.runCommand "${videoFileName}-${sanitizedTimestamp}.png"
           {
             buildInputs = [ pkgs.ffmpeg-headless ];
+            __contentAddressed = true;
+            outputHashAlgo = "sha256";
+            outputHashMode = "flat";
           }
           ''
             echo "Extracting frame at ${timestamp} of ${videoFile}"
-            ffmpeg -i ${videoFile} -ss ${timestamp} -update true -frames:v 1 ${cropFilter} $out
+            ffmpeg -i "${videoFile}" -ss ${timestamp} -update true -frames:v 1 ${cropFilter} $out
           '';
 
       frames = map extractSingleFrame timestamps;
     in
     if lib.length frames == 1 then
-      # Single frame, return it directly
       lib.head frames
     else
-      # Multiple frames, create a directory with named symlinks
       pkgs.linkFarm "${videoFileName}-frames" (
         map (frame: {
           inherit (frame) name;
@@ -555,11 +596,7 @@ rec {
   toWebp =
     src:
     let
-      fullFileName =
-        if lib.isDerivation src then
-          lib.getName src
-        else
-          builtins.baseNameOf (builtins.unsafeDiscardStringContext src);
+      fullFileName = getFileName src;
       fileNameParts = lib.splitString "." fullFileName;
       baseName =
         if lib.length fileNameParts > 1 then
@@ -571,6 +608,9 @@ rec {
     pkgs.runCommand name
       {
         buildInputs = [ pkgs.ffmpeg-headless ];
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "flat";
       }
       ''
         ffmpeg -i "${src}" -vcodec libwebp -lossless 0 -compression_level 6 -q:v 50 -loop 0 -preset picture -an -vsync 0 $out
