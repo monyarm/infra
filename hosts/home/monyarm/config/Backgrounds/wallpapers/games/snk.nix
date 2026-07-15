@@ -2,6 +2,23 @@
 {
   snkHeroinesTagTeamFrenzy = fetchSteamCards {
     appId = 794580;
-    hash = "sha256-KDpdERoG6tDAwkOvmhHQKA8v+PYZbfda6f9GpEdXVDk=";
+    cardNames = [
+      "luon"
+      "nakoruru"
+      "zarina"
+      "terry"
+      "loveHeart"
+      "kukuri"
+      "sylvie"
+      "mian"
+      "mai"
+      "muimui"
+      "leona"
+      "athena"
+      "yuri"
+      "shermie"
+      "kula"
+    ];
+    sha256 = "sha256-EN28YAk6AFBy8MSfxy6R9BxcRFmobLfzRpUcvL85PRw=";
   };
 }

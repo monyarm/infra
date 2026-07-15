@@ -3,6 +3,7 @@
   dirs,
   mkOutOfStoreSymlink,
   config,
+  parallel,
   ...
 }:
 
@@ -28,7 +29,7 @@ let
 
       pathConfigs = lib.listToAttrs (
         lib.filter (x: x != null) (
-          map (
+          parallel (map (
             item:
             let
               path = "${basePath}/${item}";
@@ -40,7 +41,7 @@ let
               }
             else
               null
-          ) configPaths
+          )) configPaths
         )
       );
 
@@ -61,5 +62,5 @@ let
   ];
 in
 {
-  home.file = lib.mkMerge (map mkJetBrainsConfig ides);
+  home.file = lib.mkMerge (parallel (map mkJetBrainsConfig) ides);
 }

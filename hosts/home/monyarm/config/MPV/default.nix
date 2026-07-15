@@ -2,6 +2,7 @@
   lib,
   pkgs,
   linkFiles,
+  parallel,
   ...
 }:
 
@@ -45,10 +46,10 @@ let
     opts:
     lib.concatStringsSep "," (
       lib.flatten (
-        lib.mapAttrsToList (
+        parallel (lib.mapAttrsToList (
           shaderName: shaderOpts:
-          lib.mapAttrsToList (param: value: "${shaderName}/${param}=${toString value}") shaderOpts
-        ) opts
+          parallel (lib.mapAttrsToList (param: value: "${shaderName}/${param}=${toString value}")) shaderOpts
+        )) opts
       )
     );
 

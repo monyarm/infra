@@ -8,11 +8,35 @@ with image;
 {
   hades = fetchSteamCards {
     appId = 1145360;
-    hash = "sha256-oTwcQS2duatvbQflU811bztXXrra2hrwXYsxTik/HaU=";
+    cardNames = [
+      "lordHades"
+      "zeus"
+      "msDusa"
+      "megaera"
+      "thanatos"
+      "poseidon"
+      "artemis"
+      "achilles"
+      "zagreus"
+      "nyx"
+    ];
+    sha256 = "sha256-I2rFzJ4x2uZufxpTmBJwJYBQe1hvpXHj+M0DobnuzKA=";
   };
   hades2 = fetchSteamCards {
     appId = 1145350;
-    hash = "sha256-Do6EVLW+NnkSwhIQxmypwJS32fzvCYBMrBVut9hMEko=";
+    cardNames = [
+      "odysseus"
+      "charon"
+      "schelemeus"
+      "nemesis"
+      "eris"
+      "melino"
+      "selene"
+      "artemis"
+      "hecate"
+      "moros"
+    ];
+    sha256 = "sha256-ihyObhd24wN8/MzTN81Ta2YDPG7BRlRPIgCuBQ419Bo=";
   };
 
   furies =

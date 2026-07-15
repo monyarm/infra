@@ -2,6 +2,7 @@
   config,
   lib,
   mkOutOfStoreSymlink,
+  parallel,
   ...
 }:
 
@@ -17,11 +18,11 @@ let
 
   launcherAccounts = rec {
     accounts = lib.listToAttrs (
-      lib.map
-        (acc: {
+      parallel
+        (map (acc: {
           name = acc.localId;
           value = commonAccountProps // acc;
-        })
+        }))
         [
           {
             accessToken = "";

@@ -25,6 +25,7 @@ fi
 nh os switch \
   "$repo_root" --hostname "$hostname" \
   --impure --accept-flake-config \
+  --no-nom --log-format=bar-with-logs \
   -- --option max-call-depth 1000000 \
   "${target_args[@]}"
 

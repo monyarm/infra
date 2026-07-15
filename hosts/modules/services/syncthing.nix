@@ -3,6 +3,7 @@
   dirs,
   lib,
   config,
+  parallel,
   ...
 }:
 let
@@ -21,7 +22,7 @@ let
     }
   ];
 
-  deviceNames = builtins.map (device: device.name) deviceList;
+  deviceNames = parallel (map (device: device.name)) deviceList;
 in
 {
   services.syncthing = {
@@ -42,13 +43,13 @@ in
         };
       };
       devices = builtins.listToAttrs (
-        builtins.map (
+        parallel (map (
           device:
           lib.nameValuePair device.name {
             inherit (device) id;
             autoAcceptFolders = true;
           }
-        ) deviceList
+        )) deviceList
       );
     };
   };

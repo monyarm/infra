@@ -2,18 +2,62 @@
 {
   danganronpaTriggerHappyHavoc = fetchSteamCards {
     appId = 413410;
-    hash = "sha256-foVy0tkqDn8PNhFzcFNc3oXile3qjrYkA4+QTWwY4xA=";
+    cardNames = [
+      "ultimateHeroes"
+      "ultimateTerror"
+      "ultimateAlienAbduction"
+      "ultimateThrottle"
+      "ultimateIdolConcert"
+      "ultimateHeroines"
+      "ultimateReadingRoom"
+      "ultimateSaunaShowdown"
+      "ultimatePlotTwist"
+    ];
+    sha256 = "sha256-n5Ajfs2C/+qTX1/dy0zi4uC5Mh1/JLkLbBZlKdLsK9w=";
   };
   danganronpa2GoodbyeDespair = fetchSteamCards {
     appId = 413420;
-    hash = "sha256-LHLtQ7c9uZBI4SrEyjRpuQhog+gZqjid2px97/BqH3g=";
+    cardNames = [
+      "ultimateSuspiciousGlare"
+      "ultimateMagicalGirl"
+      "ultimatePensiveStare"
+      "ultimateHopefulGaze"
+      "ultimateConcert"
+      "ultimateFunInTheSun"
+      "ultimateHouseParty"
+      "ultimateLaughRiot"
+      "ultimateBikini"
+    ];
+    sha256 = "sha256-nFgKWQhgqws/QyEawBmWkX47o09W3TuSj1WGXDNTqtk=";
   };
   danganronpaV3KillingHarmony = fetchSteamCards {
     appId = 567640;
-    hash = "sha256-+xR2TvRttqF6OkyOl8j3dTKjZQ6nUs1I+Esd6HLXGVM=";
+    cardNames = [
+      "despair"
+      "selflessDevotion"
+      "lies"
+      "truth"
+      "newWorld"
+      "friendship"
+      "moonlight"
+      "rituals"
+      "training"
+    ];
+    sha256 = "sha256-NO3njnybH+CnkIys4YLzSJniINOo1pk8NK94CxeUVeE=";
   };
   danganronpaSUltimateSummerCamp = fetchSteamCards {
     appId = 1691970;
-    hash = "sha256-y+WmT16MKGHmB/ryEuENmbXLWQFTAWOAl/3hThi2rt8=";
+    cardNames = [
+      "junkoAndKyoko"
+      "akaneAndMonokuma"
+      "nagito"
+      "aoiAndMonomi"
+      "tenkoAndSakura"
+      "rantaroSayakaAndKotoko"
+      "mikanAndRyoma"
+      "k1B0AndKokichi"
+      "ibukiAndMaki"
+    ];
+    sha256 = "sha256-a0vECnrH/uM4VhKzG6nlMR7flrL65EHXNrn1aFerqCc=";
   };
 }

@@ -2,6 +2,13 @@
 {
   rhapsodyAMusicalAdventure = fetchSteamCards {
     appId = 1866430;
-    hash = "sha256-OGYZ8lJmse5BwsR9eBxcVho0DuYaw2ngxgzyMpF7FMU=";
+    cardNames = [
+      "cornet"
+      "marjoly"
+      "ferdinandMarlE"
+      "etoileRosenqueen"
+      "kururu"
+    ];
+    sha256 = "sha256-eyvtrthI8BXgpfN+LjrAdy0LzYUdMcSImAZSmL9cPh8=";
   };
 }

@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  parallel,
   ...
 }:
 rec {
@@ -89,7 +90,7 @@ rec {
           null;
 
       processed = lib.mapAttrsToList processEntry entries;
-      filtered = lib.filter (x: x != null) processed;
+      filtered = parallel (lib.filter (x: x != null)) processed;
       # Flatten the list if recursive mode is enabled (since subdirectories return lists/attrsets)
       flattened = if recursive then lib.flatten filtered else filtered;
     in

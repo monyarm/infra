@@ -4,9 +4,9 @@
   lib,
   dirs,
   customLib,
-  autoImport,
   optimize,
   optimizeBulk,
+  parallel,
   ...
 }:
 let
@@ -34,24 +34,20 @@ let
     done
   '';
 
-  wallpaperFilePaths = autoImport {
-    path = ./wallpapers;
-    mode = "list";
-    recursive = true;
-  };
+  wallpaperFilePaths = lib.filesystem.listFilesRecursive ./wallpapers;
 
-  importedWallpapers = map (
+  importedWallpapers = parallel (map (
     filePath: import filePath ({ inherit pkgs lib; } // customLib)
-  ) wallpaperFilePaths;
+  )) wallpaperFilePaths;
 
-  allWallpaperDrvs = builtins.concatLists (map builtins.attrValues importedWallpapers);
+  allWallpaperDrvs = lib.flatten (parallel (map builtins.attrValues) importedWallpapers);
 
   optimizedWallpapers =
     let
       isFileName = drv: (builtins.match ".*\\.[a-zA-Z0-9]+$" drv.name) != null;
       isFolder = drv: (drv ? passthru && drv.passthru.isFolder or false) || (!isFileName drv);
     in
-    map (drv: if isFolder drv then optimizeBulk drv else optimize drv) allWallpaperDrvs;
+    parallel (map (drv: if isFolder drv then optimizeBulk drv else optimize drv)) allWallpaperDrvs;
 in
 {
   # 2. Register them directly to home.file

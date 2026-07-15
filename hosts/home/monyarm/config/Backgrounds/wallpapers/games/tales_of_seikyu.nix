@@ -2,6 +2,23 @@
 {
   talesOfSeikyu = fetchSteamCards {
     appId = 2340520;
-    hash = "sha256-fMBON9n2FMKgBP19/pi5+mhE15xGZwSwyZV971DFgfM=";
+    cardNames = [
+      "kon"
+      "yuiOda"
+      "yoni"
+      "musashi"
+      "nyotengu"
+      "leon"
+      "mika"
+      "missAma"
+      "shuten"
+      "romanticFlight"
+      "torleone"
+      "hephaestus"
+      "seabert"
+      "sasaki"
+      "anna"
+    ];
+    sha256 = "sha256-5UTLOxTYcU7zYfrd1+9NR19wABOEQ8TFZZ1+A5bkuGw=";
   };
 }

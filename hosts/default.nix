@@ -12,12 +12,17 @@ let
   # Import constants early to make dirs available
   constants = import ../lib/constants.nix { inherit lib; };
   inherit (constants) dirs;
+  misc = import ../lib/misc.nix { inherit lib; };
+  inherit (misc) parallel;
   inherit
     (
-      (import ../lib/imports.nix {
-        inherit lib;
-        pkgs = pkgsGen "x86_64-linux";
-      })
+      (import ../lib/imports.nix (
+        {
+          inherit lib;
+          pkgs = pkgsGen "x86_64-linux";
+        }
+        // misc
+      ))
     )
     autoImport
     ;
@@ -30,7 +35,7 @@ let
     inputs.steam-fetcher.overlay
     (_final: _prev: {
       drowse = inputs.drowse.lib."x86_64-linux";
-      nix = inputs.determinate-nix.lib."x86_64-linux".nix;
+      inherit (inputs.determinate-nix.packages."x86_64-linux") nix;
     })
   ];
 
@@ -72,7 +77,11 @@ let
 
   buildConfigurations =
     dirSet: builder:
-    lib.mergeAttrsList (lib.map (name: { "${name}" = builder name; }) (getDirNames dirSet));
+    lib.mergeAttrsList (
+      parallel (map (name: {
+        "${name}" = builder name;
+      })) (getDirNames dirSet)
+    );
 
   buildHomeConfig =
     userName:

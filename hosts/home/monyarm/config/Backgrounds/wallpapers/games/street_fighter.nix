@@ -8,7 +8,19 @@ with image;
 {
   ultraStreetFighterIV = fetchSteamCards {
     appId = 45760;
-    hash = "sha256-6QbwMGg49XK5Q2vas6Mp3S/GayYjuX69QRYZ+Ozu1+U=";
+    cardNames = [
+      "poison"
+      "hugo"
+      "ryu"
+      "decapre"
+      "cViper"
+      "chunli"
+      "rolento"
+      "elena"
+      "yang"
+      "cody"
+    ];
+    sha256 = "sha256-QjxerMcaCPX0rOallZihMb35osCAQx/b0juVWCqpQWw=";
   };
 
   bunnyGroup =

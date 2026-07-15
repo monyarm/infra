@@ -5,10 +5,9 @@
     cardNames = [
       "alexia"
       "jezera"
-      "clamin"
       "shaya"
       "rowan"
     ];
-    hash = "sha256-DChUq51A2vzdwYkZBEBRDWf0c10hydBkvkztSoY3Orw=";
+    sha256 = "sha256-n3X8Zo4tu/87Ca6xmGvOUbhFBA9RM+jjwHsvKxUGCr8=";
   };
 }

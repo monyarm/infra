@@ -9,15 +9,51 @@ with image;
   # Steam trading cards
   pathfinderWrathOfTheRighteous = fetchSteamCards {
     appId = 1184370;
-    hash = "sha256-KLFl5Ov7Ej5yahE3YZ59am6bXcK5paW02UlZQpqdvxo=";
+    cardNames = [
+      "greybor"
+      "woljif"
+      "lann"
+      "sosiel"
+      "daeran"
+      "camellia"
+      "wenduag"
+      "ember"
+      "arushalae"
+      "nenio"
+      "regill"
+    ];
+    sha256 = "sha256-eZrtLTL051zbWrDULtDwLrpFAxRj/8pwpA/KYwwjDr8=";
   };
   pathfinderAdventures = fetchSteamCards {
     appId = 480640;
-    hash = "sha256-t1XKNc80eGZdCzJXMgvodLyU1dTIlI2LsFAl7FRqo+s=";
+    cardNames = [
+      "spiresOfXinShalast"
+      "sinsOfTheSaviors"
+      "lostCoastInPeril"
+      "theSkinsawMurders"
+      "burntOfferings"
+      "fortressOfTheStoneGiants"
+      "theHookMountainMassacre"
+    ];
+    sha256 = "sha256-1qdJmcC6b/Qks+zLbk2a2TZeZPY73fU7vpdCpOcYEnE=";
   };
   pathfinderKingmaker = fetchSteamCards {
     appId = 640820;
-    hash = "sha256-GHAYR195sd902/K2X2ZIUnuNHQmjqsxlfmGoQ1cCmrs=";
+    cardNames = [
+      "tartuccio"
+      "amiri"
+      "valerie"
+      "ekundayo"
+      "jaethal"
+      "octavia"
+      "regongar"
+      "harrim"
+      "jubilost"
+      "tristian"
+      "linzi"
+      "nokNok"
+    ];
+    sha256 = "sha256-Q32h/Or0kz97bQA2kyE2coBpuKkukCDdry9rQS8e5+E=";
   };
 
   # Manual wallpapers

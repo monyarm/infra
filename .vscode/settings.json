@@ -4,6 +4,7 @@
   },
   "chat.tools.terminal.autoApprove": {
     "set": true,
-    "scripts/prefetch/prefetch_pixiv.sh": true
+    "scripts/prefetch/prefetch_pixiv.sh": true,
+    "timeout": true
   }
 }

@@ -8,11 +8,32 @@ with image;
 {
   warhammer40kGladius = fetchSteamCards {
     appId = 489630;
-    hash = "sha256-sofSPD/1YOhMy9MctXNYvRdXevShhUlQtnPkW+7L6PM=";
+    cardNames = [
+      "necronLord"
+      "spaceMarinesVsNecrons"
+      "gladiusPrime"
+      "lordCommissar"
+      "artefact"
+      "spaceMarineCaptain"
+      "warboss"
+    ];
+    sha256 = "sha256-rYcnQYGXF5gIqwLc20AtuBhpwTcUbwDFwhl+JzrQLyc=";
   };
   rogueTraderCRPG = fetchSteamCards {
     appId = 2186680;
-    hash = "sha256-FntzZUbQ7YsPQHtiaR8gDiRMPsOFYmOn9k70XoJwISI=";
+    cardNames = [
+      "yrliet"
+      "seneschal"
+      "pasqal"
+      "marazhai"
+      "jae"
+      "sisterArgenta"
+      "cassia"
+      "ulfar"
+      "idiraTlass"
+      "vanCalox"
+    ];
+    sha256 = "sha256-buiKNH9cHi7jxI2mP21xNji/X/z/L19yfTpLbNGKWZ4=";
   };
   spaceMarine = pkgs.fetchurl {
     url = "https://assets.warhammer-community.com/sm-desktop.jpg";

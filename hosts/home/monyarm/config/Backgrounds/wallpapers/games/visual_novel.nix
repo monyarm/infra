@@ -6,79 +6,230 @@
 {
   quickie = fetchSteamCards {
     appId = 1517850;
-    hash = "sha256-CW3xVoA2v7VAFetXpWifWv2BdQQGPOG0kNOURBTt0+A=";
+    cardNames = [
+      "maiAhane"
+      "toshikoAhane"
+      "victoriaHolland"
+      "ariaIto"
+      "reikaMatsumoto"
+      "professorBelmont"
+      "satomiTanaka"
+      "saraNakano"
+    ];
+    sha256 = "sha256-qg2MwjRogsEGEz0t1Iovzd3DGsAKjzr09LushmAr6k4=";
   };
   saniYang = fetchSteamCards {
     appId = 3464370;
-    hash = "sha256-wGZeWMmLpWLeImq6gijRhHutXet1pnbIvdNmhdA3iRU=";
+    cardNames = [
+      "clinicSani"
+      "datingNamo"
+      "elegantSani"
+      "alluringKiwi"
+      "cryingKiwi"
+      "maskNamo"
+    ];
+    sha256 = "sha256-xCSeaBxupc6wOc7a5VKLudH9+nbpx6pOioarxhzX4VY=";
   };
   kaijuPrincess = fetchSteamCards {
     appId = 2291680;
-    hash = "sha256-B4NtZPMJp6YeWLbOOHcZfIny01jlRGQEmOSEtpW+fqc=";
+    cardNames = [
+      "amber"
+      "flora"
+      "hana"
+      "daigneux"
+      "aika"
+      "iris"
+      "helena"
+    ];
+    sha256 = "sha256-LzN0QZLsIXQf3XZdAS8LliKkFfLez+SrqnoetIUZCPs=";
   };
   hornyWarp = fetchSteamCards {
     appId = 1539160;
-    hash = "sha256-d9JHMDlaGIQG4c/ZBnTxUVqxYHM22HrXj134UtcTnpg=";
+    cardNames = [
+      "camelia"
+      "bunny"
+      "noelle"
+      "lilyan"
+      "demetra"
+      "kukiAndLou"
+    ];
+    sha256 = "sha256-eh5A7CGxK9sW6odDCd3pWtMAIpTBiNRRPDUZoE+jujM=";
   };
   slimySextet = fetchSteamCards {
     appId = 1189070;
-    hash = "sha256-KLLgExPcfA+4V4yjWrG/ufoiSB5747o9YU08b+G3nQ0=";
+    cardNames = [
+      "mary"
+      "celeste"
+      "adalyn"
+      "quinn"
+      "flare"
+      "yumi"
+    ];
+    sha256 = "sha256-WoAjlAsuXyATzcmcp/A4XUvuJ22xQoKHWmwHBOEgUOU=";
   };
   girlsInGlasses = fetchSteamCards {
     appId = 942990;
-    hash = "sha256-aC8Y0r9q7K5rjiBkdajocJPvjTEYSl3HmnRmRj8jRKg=";
+    cardNames = [
+      "irohaNenegawaSchool"
+      "kanaMebusaki"
+      "kotomiGarei"
+      "irohaNenegawa"
+      "kotomiGareiSchool"
+      "kenTanaka"
+      "kanaMebusakiSchool"
+    ];
+    sha256 = "sha256-FdcWWbXLQCbaJVL6FffNlJ6hYn3jd8CmxSP3OBLBDd0=";
   };
   succubusFarm = fetchSteamCards {
     appId = 1455220;
-    hash = "sha256-ZMlYIWCbpbwNRkf1sEfffElC9TnhglFxnIFIPXU6wm0=";
+    cardNames = [
+      "est"
+      "luna"
+      "rapti"
+      "estAndRapti"
+      "raptiAndLuna"
+    ];
+    sha256 = "sha256-rEUJXZK3Nnb1dC/pWx4aAuhriXZT4EeNpJiD/9yVUao=";
   };
   steamySextet = fetchSteamCards {
     appId = 1154110;
-    hash = "sha256-i8WpyLslkzKdQLIIp0oMgKFQti7G+E+R+ewLqy3oPv8=";
+    cardNames = [
+      "knight"
+      "foxgirl"
+      "demonQueen"
+      "mage"
+      "princess"
+    ];
+    sha256 = "sha256-rTbFyrN32iRg8a4Q+THSFO6EjedAfM41Hv9SlswQvGc=";
   };
   steinsGateMyDarlingsEmbrace = fetchSteamCards {
     appId = 970560;
-    hash = "sha256-l2B0bJHDiMi3qY6PcrGZeTut7aPpY+lzXEJInSjBG7k=";
     cardNames = [
       "mayushii"
       "assistant"
-      "moenyan"
+      "moeNyan"
       "luka"
       "catgirl"
-      "partimeWorker"
+      "partTimeWarrior"
     ];
-  };
+  sha256 = "sha256-azbXR1n67S/LlpExZzfBRRp3/fYZZ1btqKnHqHJ9Mj0=";
+    };
   steinsGate = fetchSteamCards {
     appId = 412830;
-    hash = "sha256-uW6u4y6r4cCVlBGzQzS/SofGZtukxZYmYZc2U3f7Hpg=";
+    cardNames = [
+      "hashidaItaru"
+      "shiinaMayuri"
+      "makiseKurisu"
+      "kiryuMoeka"
+      "farisNyanNyan"
+      "okabeRintaro"
+      "amaneSuzuha"
+      "urushibaraLuka"
+    ];
+    sha256 = "sha256-zTKgS/4xoyDu/CZakKc6AH4sqeq6N0dGREzllJUB/cc=";
   };
   nekopara0 = fetchSteamCards {
     appId = 385800;
-    hash = "sha256-lFtHXPQ1aQi5WN4jCOoZYMAk5G0QmJrPa2UPuF11xIc=";
+    cardNames = [
+      "minadukiFamily"
+      "chocola"
+      "vanilla"
+      "maple"
+      "cinnamon"
+      "shigure"
+      "coconut"
+      "azuki"
+    ];
+    sha256 = "sha256-V8dT34Us2pvXGmJkKipc3JfBJgjUy3+Pf7eZBLBszDQ=";
   };
   nekopara1 = fetchSteamCards {
     appId = 333600;
-    hash = "sha256-LM/wZGWBzb13vLyXrjoGEuaoiK4vZQd45QTORV6i2xc=";
+    cardNames = [
+      "chocola"
+      "vanilla"
+      "maple"
+      "cinnamon"
+      "shigure"
+      "coconut"
+      "azuki"
+      "chocolaVanilla"
+    ];
+    sha256 = "sha256-SP+xcXQNuWLUVolO9gVDtkiba81IR8CnYT2MrzkcqW8=";
   };
   nekopara2 = fetchSteamCards {
     appId = 420110;
-    hash = "sha256-3bjXE8dMcGFWKogkP1PurPtTIpqZb7cE8MiphysUAlY=";
+    cardNames = [
+      "chocola"
+      "vanilla"
+      "maple"
+      "cinnamon"
+      "shigure"
+      "coconut"
+      "milk"
+      "azuki"
+    ];
+    sha256 = "sha256-2el5y0KHZzkf8MbsQUxhFg69h8UBE392fB69jM4m9+c=";
   };
   nekopara3 = fetchSteamCards {
     appId = 602520;
-    hash = "sha256-OchYw1DWHzsYKy60YzyoYELR703Oe9vuJRr/ZMxH8xg=";
+    cardNames = [
+      "chocola"
+      "vanilla"
+      "soleil"
+      "maple"
+      "cinnamon"
+      "shigure"
+      "coconut"
+      "azuki"
+    ];
+    sha256 = "sha256-va3kglbgt+R6BrqW5thn3QzSStQqRJhec8w7NYToQeU=";
   };
   nekopara4 = fetchSteamCards {
     appId = 1406990;
-    hash = "sha256-pi7qeTCCzgveC0x4ConKmq56UaKZqznSs7lL55yJSyo=";
+    cardNames = [
+      "nekoparaVol4Azuki"
+      "nekoparaVol4Chocola"
+      "nekoparaVol4Coconut"
+      "nekoparaVol4Maple"
+      "nekoparaVol4Shigure"
+      "nekoparaVol4Cinnamon"
+      "nekoparaVol4Vanilla"
+      "nekoparaVol4Fraise"
+    ];
+    sha256 = "sha256-MlxqXM8GklMBjU/ERpLQUoS+pyUkYiyA82HDcPEjpUk=";
   };
   nurseLoveAddiction = fetchSteamCards {
     appId = 485040;
-    hash = "sha256-TWESwrU9oXxo6EW91+0RfPXovXboned7ELXAiVsmHFk=";
+    cardNames = [
+      "poster2"
+      "sakuyaItsuki"
+      "poster1"
+      "shootingStar"
+      "natsumatsuri"
+      "asukaNao"
+      "magicCharm"
+      "summer"
+      "pockyGame"
+      "training"
+    ];
+    sha256 = "sha256-1/vrOKRcln4JSBNvQ4SSDq9hO/Utb6tpMMH6OicyjXQ=";
   };
   longLiveTheQueen = fetchSteamCards {
     appId = 251990;
-    hash = "sha256-Bn9zrR2L1VSVGiwZJ50D4fyD3bmeJJUxWwmsCpxco3I=";
+    cardNames = [
+      "drowned"
+      "choked"
+      "runThrough"
+      "shot"
+      "monsters"
+      "poisoned"
+      "bledOut"
+      "blownUp"
+      "bludgeoned"
+      "magicalBlast"
+      "soulDrain"
+    ];
+    sha256 = "sha256-PuKibX3XYYul8xC0r10w0UtxJpwm/coh6R73fBXAnlM=";
   };
 
   the-key-to-home = pkgs.fetchurl {

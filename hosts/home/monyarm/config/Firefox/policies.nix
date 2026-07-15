@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, parallel, ... }:
 let
   mkExtension = id: install_url: {
     "${id}" = {
@@ -11,7 +11,7 @@ let
   mozillaExtension =
     slug: id: mkExtension id "https://addons.mozilla.org/firefox/downloads/latest/${slug}/latest.xpi";
   mozillaExtension' = id: mozillaExtension id id;
-  mozillaExtensions' = ids: lib.mkMerge (map mozillaExtension' ids);
+  mozillaExtensions' = ids: lib.mkMerge (parallel (map mozillaExtension') ids);
   otherWebsiteExtension = mkExtension;
 
   githubExtension =

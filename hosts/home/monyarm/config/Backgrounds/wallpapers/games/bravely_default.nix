@@ -2,6 +2,13 @@
 {
   bravelyDefaultFlyingFairyHD = fetchSteamCards {
     appId = 2833580;
-    hash = "sha256-BUG52hx2OeopD1A2qlEjyRmaGfPFtdMBOFxPNPXPO/w=";
+    cardNames = [
+      "ringabel"
+      "agnS"
+      "edea"
+      "airy"
+      "tiz"
+    ];
+    sha256 = "sha256-+YqOw5pxEa1DS5jXe7fHZPcFOFRYxx1muDlfCBdBgcM=";
   };
 }

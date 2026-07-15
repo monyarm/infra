@@ -1,4 +1,4 @@
-{ lib, dirs, ... }:
+{ dirs, parallel, ... }:
 let
   rootless = [
     # taken from my current doas.conf, should be updated to reflect the paths in the nix store when these are added there
@@ -17,10 +17,10 @@ in
       persist = true;
     }
   ]
-  ++ lib.map (cmd: {
+  ++ parallel (map (cmd: {
     groups = [ ":wheel" ];
     noPass = true;
     runAs = "root";
     inherit cmd;
-  }) rootless;
+  })) rootless;
 }

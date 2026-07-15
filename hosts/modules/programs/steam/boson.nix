@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   installPhase = ''
     touch $out # Dummy output
     mkdir $steamcompattool
-    ln -s $src/* $steamcompattool
+    cp -r $src/* $steamcompattool
     rm $steamcompattool/compatibilitytool.vdf
-    cp $src/compatibilitytool.vdf $steamcompattool
+    cp -r $src/compatibilitytool.vdf $steamcompattool
   '';
 }

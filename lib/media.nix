@@ -2,6 +2,7 @@
   pkgs,
   lib,
   getFileName,
+  parallel,
   ...
 }:
 rec {
@@ -20,6 +21,7 @@ rec {
             ];
             # Explicitly ensure this metadata step stays input-addressed
             __contentAddressed = false;
+            allowSubstitutes = false;
           }
           ''
             width=$(magick identify -format "%w" ${src})
@@ -54,7 +56,7 @@ rec {
       ];
 
       # Generate crop functions for each aspect ratio and gravity combination
-      generateCropFunctions = lib.foldl' (
+      generateCropFunctions = parallel (lib.foldl' (
         acc: aspectRatio:
         let
           normalizedName = aspectRatios.${aspectRatio};
@@ -63,7 +65,7 @@ rec {
             "crop${normalizedName}" = image.crop { inherit aspectRatio; };
           };
           # Generate cropAspectRatioGravity functions (e.g., crop16x9South)
-          gravityFuncs = lib.foldl' (
+          gravityFuncs = parallel (lib.foldl' (
             innerAcc: gravity:
             let
               capitalizedGravity =
@@ -71,13 +73,13 @@ rec {
               funcName = "crop${normalizedName}${capitalizedGravity}";
             in
             innerAcc // { ${funcName} = image.crop { inherit aspectRatio gravity; }; }
-          ) { } gravities;
+          ) { }) gravities;
         in
         acc // cropFunc // gravityFuncs
-      ) { } (lib.attrNames aspectRatios);
+      ) { }) (lib.attrNames aspectRatios);
 
       # Generate grow functions for each aspect ratio and gravity combination
-      generateGrowFunctions = lib.foldl' (
+      generateGrowFunctions = parallel (lib.foldl' (
         acc: aspectRatio:
         let
           normalizedName = aspectRatios.${aspectRatio};
@@ -90,7 +92,7 @@ rec {
             "grow${normalizedName}'" = color: image.grow { inherit aspectRatio color; };
           };
           # Generate growAspectRatioGravity functions (e.g., grow16x9South)
-          gravityFuncs = lib.foldl' (
+          gravityFuncs = parallel (lib.foldl' (
             innerAcc: gravity:
             let
               capitalizedGravity =
@@ -105,13 +107,13 @@ rec {
             // {
               ${funcNamePrime} = color: image.grow { inherit aspectRatio gravity color; };
             }
-          ) { } gravities;
+          ) { }) gravities;
         in
         acc // growFunc // growFuncPrime // gravityFuncs
-      ) { } (lib.attrNames aspectRatios);
+      ) { }) (lib.attrNames aspectRatios);
 
       # Generate growEdge functions for each aspect ratio and gravity combination
-      generateGrowEdgeFunctions = lib.foldl' (
+      generateGrowEdgeFunctions = parallel (lib.foldl' (
         acc: aspectRatio:
         let
           normalizedName = aspectRatios.${aspectRatio};
@@ -120,7 +122,7 @@ rec {
             "growEdge${normalizedName}" = image.growEdge { inherit aspectRatio; };
           };
           # Generate growEdgeAspectRatioGravity functions (e.g., growEdge16x9South)
-          gravityFuncs = lib.foldl' (
+          gravityFuncs = parallel (lib.foldl' (
             innerAcc: gravity:
             let
               capitalizedGravity =
@@ -131,10 +133,10 @@ rec {
             // {
               ${funcName} = image.growEdge { inherit aspectRatio gravity; };
             }
-          ) { } gravities;
+          ) { }) gravities;
         in
         acc // growEdgeFunc // gravityFuncs
-      ) { } (lib.attrNames aspectRatios);
+      ) { }) (lib.attrNames aspectRatios);
     in
     rec {
       # transform:
@@ -181,6 +183,7 @@ rec {
           {
             buildInputs = [ pkgs.imagemagick ];
             __contentAddressed = true;
+            allowSubstitutes = false;
             outputHashAlgo = "sha256";
             outputHashMode = "flat";
           }
@@ -312,10 +315,10 @@ rec {
                   in
                   if resArea > targetArea then resArea - targetArea else targetArea - resArea;
 
-                withDiffs = map (res: {
+                withDiffs = parallel (map (res: {
                   inherit res;
                   diff = calcDiff res;
-                }) resolutions;
+                })) resolutions;
                 sorted = lib.sort (a: b: a.diff < b.diff) withDiffs;
                 closest = (lib.head sorted).res;
               in
@@ -568,6 +571,7 @@ rec {
           {
             buildInputs = [ pkgs.ffmpeg-headless ];
             __contentAddressed = true;
+            allowSubstitutes = false;
             outputHashAlgo = "sha256";
             outputHashMode = "flat";
           }
@@ -576,17 +580,9 @@ rec {
             ffmpeg -i "${videoFile}" -ss ${timestamp} -update true -frames:v 1 ${cropFilter} $out
           '';
 
-      frames = map extractSingleFrame timestamps;
+      frames = parallel (map extractSingleFrame) timestamps;
     in
-    if lib.length frames == 1 then
-      lib.head frames
-    else
-      pkgs.linkFarm "${videoFileName}-frames" (
-        map (frame: {
-          inherit (frame) name;
-          path = frame;
-        }) frames
-      );
+    if lib.length frames == 1 then lib.head frames else frames;
 
   extractFrames = videoFile: timestamps: extractFrames' videoFile timestamps { };
 
@@ -609,6 +605,7 @@ rec {
       {
         buildInputs = [ pkgs.ffmpeg-headless ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }

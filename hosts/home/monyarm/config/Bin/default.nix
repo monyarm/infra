@@ -3,6 +3,7 @@
   pkgs,
   binFiles,
   dirs,
+  parallel,
   ...
 }:
 
@@ -131,7 +132,7 @@ in
     ]
     ++ ydlScripts
     ++ ydlBulkScripts
-    ++ (lib.map (name: "${dirs.hmConfig}/Bin/.local/bin/${name}") (
+    ++ (parallel (map (name: "${dirs.hmConfig}/Bin/.local/bin/${name}")) (
       builtins.attrNames (builtins.readDir ./.local/bin)
     ))
   );

@@ -6,6 +6,6 @@
       "passports"
       "theOrderOfTheEzicStar"
     ];
-    hash = "sha256-wVo/YMkyx3DNBXCb4+V6wbvIBhmPR9+LksdXaPNlo7E=";
+    sha256 = "sha256-sIroWqYOQt/kzq593hXnqHjeTdcNICjHrXkG50MdH9s=";
   };
 }

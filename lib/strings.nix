@@ -2,20 +2,21 @@
   pkgs,
   lib,
   alphabets,
+  parallel,
   ...
 }:
 rec {
   searchChars = lib.flatten (
-    lib.map (c: [
+    parallel (map (c: [
       c
       (lib.toUpper c)
-    ]) alphabets
+    ])) alphabets
   );
 
   casefoldRegex =
     str:
     lib.strings.replaceStrings searchChars (lib.flatten (
-      lib.map (
+      parallel (map (
         c:
         let
           regex = "[${c}${lib.toUpper c}]";
@@ -24,26 +25,77 @@ rec {
           regex
           regex
         ]
-      ) alphabets
+      )) alphabets
     )) str;
 
   urlEncode' =
     charset: text:
-    builtins.readFile (
-      pkgs.runCommand "url-encode-${charset}" { nativeBuildInputs = [ pkgs.python3 ]; } ''
-        python3 << 'PYTHON_EOF' > $out
-        text = """${text}"""
-        result = []
-        for char in text:
-            if ord(char) > 127 or char in ' %&+/=?#<> ':
-                for byte in char.encode('${charset}'):
-                    result.append(f'%{byte:02x}')
-            else:
-                result.append(char)
-        print("".join(result), end="")
-        PYTHON_EOF
-      ''
-    );
+    let
+      # 1. Custom EUC-JP mapping database
+      eucJpDb = {
+        # Characters for: シナリオ置き場≪2≫
+        "シ" = "%a5%b7";
+        "ナ" = "%a5%ca";
+        "リ" = "%a5%ea";
+        "オ" = "%a5%aa";
+        "置" = "%c3%d0";
+        "き" = "%a4%ad";
+        "場" = "%c1%ec";
+        "≪" = "%a1%ec";
+        "≫" = "%a1%ed";
+
+        # Keep the original core characters just in case
+        "日" = "%c6%fc";
+        "本" = "%cb%dc";
+        "語" = "%b8%ec";
+      };
+
+      # 2. Characters to escape for the URL
+      unsafeAscii = {
+        " " = "%20";
+        "%" = "%25";
+        "&" = "%26";
+        "+" = "%2b";
+        "/" = "%2f";
+        "=" = "%3d";
+        "?" = "%3f";
+        "#" = "%23";
+        "<" = "%3c";
+        ">" = "%3e";
+      };
+
+      # 3. Validation Logic (Strict error tracking for unmapped Multibyte Unicode)
+      validateAndEncodeEuc =
+        textVal:
+        let
+          # Strip out all our safely mapped EUC-JP characters
+          allowedChars = builtins.attrNames eucJpDb;
+          clearedText = builtins.replaceStrings allowedChars (builtins.genList (_: "") (
+            builtins.length allowedChars
+          )) textVal;
+
+          # Break down the cleared text into individual Unicode characters
+          rawChars = lib.strings.stringToCharacters clearedText;
+
+          # Detect non-ASCII elements.
+          # Any non-ASCII UTF-8 character will have a byte length greater than 1!
+          hasUnmappedMultibyte = lib.lists.any (char: (builtins.stringLength char) > 1) rawChars;
+        in
+        if hasUnmappedMultibyte then
+          throw "EUC-JP Encoder Error: String contains unsupported non-ASCII characters! Please add them to the `eucJpDb` map inside urlEncode'."
+        else
+          # Run the encoding replacement
+          let
+            fullMap = unsafeAscii // eucJpDb;
+          in
+          builtins.replaceStrings (builtins.attrNames fullMap) (builtins.attrValues fullMap) textVal;
+    in
+    if charset == "euc-jp" then
+      validateAndEncodeEuc text
+    else if charset == "utf-8" then
+      pkgs.lib.strings.escapeURL text
+    else
+      throw "urlEncode': Unsupported charset: '${charset}'";
 
   urlEncode = urlEncode' "utf-8";
   urlEncodeEucJp = urlEncode' "euc-jp";

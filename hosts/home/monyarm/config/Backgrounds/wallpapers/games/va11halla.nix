@@ -2,6 +2,13 @@
 {
   va11halla = fetchSteamCards {
     appId = 447530;
-    hash = "sha256-y/f8SpCMFo2MlKc5o3s4sc6Upg5mKHS2c0Gl9b3b9kI=";
+    cardNames = [
+      "almaArmas"
+      "jillStingray"
+      "danaZane206x"
+      "dorothyHaze"
+      "stellaHoshii"
+    ];
+    sha256 = "sha256-5cfEdg5Xz4+hopTYRp7a0by8kNjl93ivH3Y4v0+3eTk=";
   };
 }

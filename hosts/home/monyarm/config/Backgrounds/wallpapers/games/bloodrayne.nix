@@ -2,10 +2,24 @@
 {
   bloodrayneTerminalCut = fetchSteamCards {
     appId = 1373510;
-    hash = "sha256-UoevVw04vjxOxNdM2HiRPEKftdZTzoD9uSbi8mZZn2Q=";
+    cardNames = [
+      "drBThoryMengele"
+      "jRgenWulf"
+      "rayneTheDhampir"
+      "rayneTheAssassin"
+      "mynce"
+    ];
+    sha256 = "sha256-TmdglrlHpm2leNI9Sm3/TuefGaHOIq3YymV3+vdAjE8=";
   };
   bloodrayne2TerminalCut = fetchSteamCards {
     appId = 1373550;
-    hash = "sha256-VbnerJyPdE3+Z1aQbKKmc5wYDV3eVI0c4+3cOWdyE6c=";
+    cardNames = [
+      "ephemera"
+      "kagan"
+      "battleRayne"
+      "formalRayne"
+      "ferril"
+    ];
+    sha256 = "sha256-KlpXBJeXRkw+IilNjnKggjD7JKDiY3IBftYJ+tpJCNs=";
   };
 }

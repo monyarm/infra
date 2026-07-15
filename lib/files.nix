@@ -5,6 +5,7 @@
   config,
   sanitizeName,
   getFileName,
+  parallel,
   ...
 }:
 rec {
@@ -59,7 +60,7 @@ rec {
       };
     };
 
-  binFiles = list: lib.foldl (acc: value: acc // (binFile value)) { } list;
+  binFiles = list: parallel (lib.foldl (acc: value: acc // (binFile value)) { }) list;
 
   linkImpl =
     targetSubfolder: linkContents: fileList:
@@ -119,7 +120,7 @@ rec {
       processedList =
         if linkContents then
           lib.flatten (
-            lib.map (
+            parallel (map (
               path:
               let
                 # Convert a derivation object to its string store path explicitly
@@ -138,12 +139,12 @@ rec {
               else
                 # SINGLE FILES (Derivations, paths, or normal strings)
                 [ path ]
-            ) fileList
+            )) fileList
           )
         else
           fileList;
     in
-    lib.listToAttrs (lib.map processItem processedList);
+    lib.listToAttrs (parallel (map processItem) processedList);
 
   linkFiles = targetSubfolder: fileList: linkImpl targetSubfolder false fileList;
 
@@ -199,7 +200,7 @@ rec {
       allCollectedEntries = collectEntries sourcePath ""; # Initial call with empty relative path
     in
     lib.listToAttrs (
-      lib.map (
+      parallel (map (
         entry:
         let
           value =
@@ -216,7 +217,7 @@ rec {
           name = finalName;
           inherit value;
         }
-      ) allCollectedEntries
+      )) allCollectedEntries
     );
 
   listFilesRecursive =
@@ -229,14 +230,14 @@ rec {
           files = builtins.readDir p;
           items = builtins.attrNames files;
         in
-        builtins.concatMap (
+        parallel (builtins.concatMap (
           item:
           let
             newPath = p + /${item};
             isDir = (builtins.getAttr item files) == "directory";
           in
           if isDir then scanPure newPath else [ newPath ]
-        ) items;
+        )) items;
 
       # --- 2. Build-Time Manifest Scanner (CA/IFD Fallback) ---
       scanViaIFD =
@@ -273,7 +274,7 @@ rec {
         # Reconstruct the absolute paths in pure Nix.
         # Appending the relative string to the 'folderSrc' variable ensures
         # that the string context (dependency tracking) is perfectly retained!
-        map (rel: folderSrc + "/${rel}") relativeFiles;
+        parallel (map (rel: folderSrc + "/${rel}")) relativeFiles;
 
       asPath =
         p:
@@ -296,7 +297,7 @@ rec {
         args = [
           "-c"
           ''
-            ${pkgs.coreutils}/bin/ln -s "${drv}" "$out"
+            ${pkgs.coreutils}/bin/cp "${drv}" "$out"
             exit 0; # fix for 2176?
           ''
         ];
@@ -312,7 +313,19 @@ rec {
     let
       fileName = builtins.baseNameOf filePath;
     in
-    pkgs.runCommand fileName { } ''
-      cp "${folderDrv}/${filePath}" "$out"
-    '';
+    pkgs.runCommand fileName
+      {
+        preferLocalBuild = true;
+        allowSubstitutes = false;
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        cp "${folderDrv}/${filePath}" "$out"
+      '';
+
+  splitFiles = fileList: _drv: parallel (map (file: getFile file _drv)) fileList;
+  splitFilesBaseName =
+    fileList: splitFiles (parallel (map (file: builtins.baseNameOf file)) fileList);
 }

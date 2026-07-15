@@ -1,10 +1,12 @@
 {
   lib,
+  parallel,
   ...
 }:
 
 let
-  generateNanorc = settings: lib.concatStringsSep "\n" (lib.map (setting: "set ${setting}") settings);
+  generateNanorc =
+    settings: lib.concatStringsSep "\n" (parallel (map (setting: "set ${setting}")) settings);
 in
 {
   home.file.".nanorc".text = generateNanorc [

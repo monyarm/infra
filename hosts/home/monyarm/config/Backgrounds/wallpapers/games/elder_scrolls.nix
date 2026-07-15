@@ -20,12 +20,22 @@
       "troll"
       "wispmother"
     ];
-    hash = "sha256-EFzOmRZYUP+I1yaWqT2P6IPmVJJvghCpeAzn7AovUFM=";
+    sha256 = "sha256-jVEnlxa8BSGnPzaRd3TuR4wHv9SssA9IaXRXlXml/fE=";
   };
 
   eso = fetchSteamCards {
     appId = 306130;
-    hash = "sha256-6LqWVtHn2U+Q0lhciO6ifVztfiNUGsc/Q9UN8Ttq9uQ=";
+    cardNames = [
+      "craglorn"
+      "ayrenn"
+      "molagBal"
+      "eastmarch"
+      "auridon"
+      "jorunn"
+      "emeric"
+      "bangkorai"
+    ];
+    sha256 = "sha256-x02GJTFDaqNdx6tIcft6EwzBSJvK41wBuuTvq5BN1So=";
   };
 
   heroWillRise = pkgs.fetchurl {

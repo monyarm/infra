@@ -2,6 +2,7 @@
   lib,
   dirs,
   shouldFullUpdate,
+  parallel,
   ...
 }:
 
@@ -42,9 +43,9 @@ in
 
       #  4. Install or re-install the Flatpaks you DO want, and update all
       ${lib.concatStringsSep "\n" (
-        lib.map (flatpak: ''
+        parallel (map (flatpak: ''
           ${dirs.scripts}/package-managers/flatpak_program_manager.sh "${flatpak}" || true
-        '') desiredFlatpaks
+        '')) desiredFlatpaks
       )}
 
        # 5. Remove unused Flatpaks

@@ -2,14 +2,39 @@
 {
   shovelKnight = fetchSteamCards {
     appId = 250760;
-    hash = "sha256-qA3NbwdHYk3wuR53MacEikyTLTYas09PWEe2lfwwCtY=";
+    cardNames = [
+      "wanderersOfTheWild"
+      "honoredHeroes"
+      "theBlueBurrower"
+      "welcomeToTheValley"
+      "halfwayToDestiny"
+      "endOfTheOrder"
+      "fantasticFoes"
+      "talkativeTownsfolk"
+    ];
+    sha256 = "sha256-h2wsDDBnZ2NzqhWxQJIHNJsvZQfVmyq9kVZcZV4AC9g=";
   };
   shovelKnightSpecterOfTorment = fetchSteamCards {
     appId = 589510;
-    hash = "sha256-BeQwRjMRor1j6ErY5gbZPQENK9ENlUnHgZ5tWC0cmjI=";
+    cardNames = [
+      "shadowsOfThePast"
+      "friendlyFiends"
+      "reize"
+      "greedyShadows"
+      "specterOfTorment"
+    ];
+    sha256 = "sha256-YJBxVj7UJEg8MaIaiQqEJTuEIA2EdwPcmOVTc4GHIUg=";
   };
   shovelKnightShovelOfHope = fetchSteamCards {
     appId = 589500;
-    hash = "sha256-7hZpk9cn5vJ4Eeo7S3QXHmuFoyEM3L3vj44iWk5xvHY=";
+    cardNames = [
+      "anchorManagement"
+      "hailTheTrouppleKing"
+      "bodySwapTheEnchanter"
+      "shovelingTogether"
+      "campfire"
+      "bodySwapShovelAndShield"
+    ];
+    sha256 = "sha256-lt95A/Pf6fQUO45MYvoAkTKK7XSYwk9/lfRbUoZLDkI=";
   };
 }

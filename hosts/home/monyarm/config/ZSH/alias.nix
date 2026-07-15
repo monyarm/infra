@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, parallel, ... }:
 let
   # Generate cd aliases for going up directories
   cdUpAliases =
@@ -16,8 +16,8 @@ let
     {
       "cd.." = "cd ..";
     }
-    // lib.listToAttrs (map mkDotAlias rangeDot)
-    // lib.listToAttrs (map mkNumAlias rangeNum);
+    // lib.listToAttrs (parallel (map mkDotAlias) rangeDot)
+    // lib.listToAttrs (parallel (map mkNumAlias) rangeNum);
 in
 {
   programs.zsh.shellAliases = lib.mkMerge [

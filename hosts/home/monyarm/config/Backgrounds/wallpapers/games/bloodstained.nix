@@ -24,11 +24,30 @@
 
   bloodstainedCurseOfTheMoon = fetchSteamCards {
     appId = 838310;
-    hash = "sha256-zNnJPXe8HdTES0JbsHg4b8ynHeAu63HkYP+jzYt4Xdo=";
+    cardNames = [
+      "curseOfTheMoon"
+      "gebel"
+      "alfred"
+      "heroes"
+      "zangetsu"
+      "miriam"
+    ];
+    sha256 = "sha256-yNt2qhZzKnrHrmrI+xBuGoO9Gga6B/6qf9p8NHUqR/k=";
   };
 
   bloodstainedCurseOfTheMoon2 = fetchSteamCards {
     appId = 1257360;
-    hash = "sha256-bbN96EM7eNrmCqqYhXzHeC05TXskxrXfpSr200V4B5A=";
+    cardNames = [
+      "gebel"
+      "alfred"
+      "zangetsu"
+      "robert"
+      "dominique"
+      "boss"
+      "coverArt"
+      "hachi"
+      "miriam"
+    ];
+    sha256 = "sha256-GagJh1Z2sJcu5T/kSmZdDW2vTbZkD9z7Dm1FFC7d3uk=";
   };
 }

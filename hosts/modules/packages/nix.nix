@@ -3,6 +3,7 @@
   lib,
   isNixOS,
   isHomeManager,
+  inputs,
   ...
 }:
 let
@@ -10,6 +11,7 @@ let
     # keep-sorted start
     dconf2nix
     hyperfine
+    inputs.determinate-nix.packages."x86_64-linux".nix
     nh
     nix-output-monitor
     nix-prefetch

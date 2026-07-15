@@ -8,7 +8,17 @@ with image;
 {
   hatsuneMikuVR = fetchSteamCards {
     appId = 707300;
-    hash = "sha256-ZIFv75pM6GpXHJc8TFQ8vJ+Nv2/+By+MdO67mPWRpTg=";
+    cardNames = [
+      "kaito"
+      "hatsuneMikuV2"
+      "meiko"
+      "kagamineLen"
+      "hatsuneMikuV4x"
+      "megurineLuka"
+      "kagamineRin"
+      "hatsuneMikuV3"
+    ];
+    sha256 = "sha256-il5wcmSccsQPMrTsoiHLUPqsbs6+e+NWS3RpWIfkAR0=";
   };
 
   racingMiku =

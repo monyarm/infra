@@ -2,6 +2,18 @@
 {
   slayThePrincess = fetchSteamCards {
     appId = 1989270;
-    hash = "sha256-pDXuvDzeqCUWrw0v8d54Te85tZ7jqvgSH4euftYE5fA=";
+    cardNames = [
+      "thePrisoner"
+      "theAdversary"
+      "theRazor"
+      "theStranger"
+      "theWitch"
+      "theDamsel"
+      "theBeast"
+      "theSpectre"
+      "theTower"
+      "theNightmare"
+    ];
+    sha256 = "sha256-zfSEVr9x6rwHhsbJ/BqFz2qtgMdUkqpFzjgeYmHj0zQ=";
   };
 }

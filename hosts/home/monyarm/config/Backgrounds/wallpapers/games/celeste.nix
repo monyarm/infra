@@ -2,6 +2,13 @@
 {
   celeste = fetchSteamCards {
     appId = 504230;
-    hash = "sha256-xnHi8zhmpyQUHYojyHObjBRCrA/J3oexR1txg4w77MQ=";
+    cardNames = [
+      "theo"
+      "badeline"
+      "mrOshiro"
+      "madeline"
+      "granny"
+    ];
+    sha256 = "sha256-GUtdjkUME3d0NGFbTlr7WmxIDPlRhOG7E+3lWri61TQ=";
   };
 }

@@ -3,6 +3,7 @@
   dirs,
   importSopsString,
   urlEncode,
+  splitFiles,
   ...
 }:
 let
@@ -25,41 +26,66 @@ let
       "video";
 in
 rec {
+
+  fetchzipNoSubt =
+    args:
+    (pkgs.fetchzip args).overrideAttrs (_oldAttrs: {
+      allowSubstitutes = false;
+    });
+
   fetchzipSelective =
     {
       keepFiles,
       flatten ? false,
       ...
     }@args:
-    pkgs.fetchzip (
-      removeAttrs args [
+    let
+      # 1. Strip our custom arguments so fetchzip doesn't complain about unexpected inputs
+      fetchzipArgs = removeAttrs args [
         "keepFiles"
         "flatten"
-      ]
-      // {
-        postFetch = ''
-          STAGING=$(mktemp -d)
+      ];
 
-          # 1. Extract specified files/dirs to staging
-          ${pkgs.lib.concatMapStringsSep "\n" (file: ''
+      # 2. Define our custom post-processing shell script
+      selectivePostFetch = ''
+        STAGING=$(mktemp -d)
+
+        # Extract specified files/dirs to staging safely
+        ${pkgs.lib.concatMapStringsSep "\n" (file: ''
+          if [ -e "$out/${file}" ]; then
             mkdir -p "$STAGING/$(dirname "${file}")"
             cp -r "$out/${file}" "$STAGING/${file}"
-          '') keepFiles}
-
-          rm -rf $out/*
-
-          if [ "${pkgs.lib.boolToString flatten}" = "true" ]; then
-            # 2. Deep Flatten: Find EVERY file in staging and move to $out root
-            find "$STAGING" -type f -exec cp -p {} $out/ \;
           else
-            # 2. Preserve structure
-            cp -pr "$STAGING"/. "$out/"
+            echo "Warning: keepFiles entry '${file}' was not found in the fetched archive!"
           fi
+        '') keepFiles}
 
-          rm -rf "$STAGING"
-        '';
-      }
-    );
+        # Clear target directory completely
+        rm -rf $out/*
+
+        if [ "${pkgs.lib.boolToString flatten}" = "true" ]; then
+          # Deep Flatten: Find every file/symlink and copy to the root of $out/
+          find "$STAGING" -type f -o -type l | while IFS= read -r file; do
+            # Optional: warn on collisions
+            filename=$(basename "$file")
+            if [ -e "$out/$filename" ]; then
+              echo "Warning: Flattening collision! Overwriting $out/$filename with $file"
+            fi
+            cp -dp "$file" "$out/"
+          done
+        else
+          # Preserve exact relative structures
+          cp -pr "$STAGING"/. "$out/"
+        fi
+
+        rm -rf "$STAGING"
+      '';
+    in
+    # 3. Use overrideAttrs to APPEND our script to whatever postFetch fetchzip already runs
+    (fetchzipNoSubt fetchzipArgs).overrideAttrs (oldAttrs: {
+      postFetch = (oldAttrs.postFetch or "") + "\n" + selectivePostFetch;
+      stripRoot = false;
+    });
   fetchChaosium =
     {
       game,
@@ -75,7 +101,7 @@ rec {
     let
       name = "GE-Proton${version}";
     in
-    pkgs.fetchzip {
+    fetchzipNoSubt {
       inherit name hash;
       url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${name}/${name}.tar.gz";
     };
@@ -96,16 +122,17 @@ rec {
         SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       }
       ''
-        yt-dlp \
-          ${if audio then "-f bestvideo+bestaudio" else "-f bestvideo"} \
-          --no-playlist \
-          --no-write-subs \
-          --no-write-auto-subs \
-          --no-write-info-json \
-          --no-write-comments \
-          --user-agent "${userAgent}" \
-          -o "$out" \
-          "${url}"
+        ;
+                yt-dlp \
+                  ${if audio then "-f bestvideo+bestaudio" else "-f bestvideo"} \
+                  --no-playlist \
+                  --no-write-subs \
+                  --no-write-auto-subs \
+                  --no-write-info-json \
+                  --no-write-comments \
+                  --user-agent "${userAgent}" \
+                  -o "$out" \
+                  "${url}"
       '';
 
   fetchSteamStoreAsset =
@@ -171,24 +198,26 @@ rec {
       {
         outputHashMode = "recursive";
         outputHashAlgo = "sha256";
+        allowSubstitutes = false;
         outputHash = sha256;
         buildInputs = [ pkgs.curl ];
         SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
       }
       ''
-        set -e
-        mkdir $out
+        ;
+                set -e
+                mkdir $out
 
-        FINAL_URL=$(curl -s -L -o /dev/null -w '%{url_effective}' \
-          --user-agent "${userAgent}" \
-          --cookie "${cookie}" \
-          "${url}")
+                FINAL_URL=$(curl -s -L -o /dev/null -w '%{url_effective}' \
+                  --user-agent "${userAgent}" \
+                  --cookie "${cookie}" \
+                  "${url}")
 
-        CLEAN_NAME=$(basename "''${FINAL_URL%%\?*}")
+                CLEAN_NAME=$(basename "''${FINAL_URL%%\?*}")
 
-        sleep 2
+                sleep 2
 
-        curl -A "${userAgent}" --cookie "${cookie}" -o "$out/$CLEAN_NAME" -L "''${FINAL_URL}"
+                curl -A "${userAgent}" --cookie "${cookie}" -o "$out/$CLEAN_NAME" -L "''${FINAL_URL}"
       '';
 
   # fetchSteamCards:
@@ -220,6 +249,8 @@ rec {
             def __init__(self):
                 super().__init__()
                 self.cards = {}
+                self.game_not_found = False
+                self.in_title = False
                 self.in_trading_cards_section = False
                 self.in_foil_section = False
                 self.current_card_name = None
@@ -228,7 +259,9 @@ rec {
 
             def handle_starttag(self, tag, attrs):
                 attrs_dict = dict(attrs)
-
+                if tag == 'title':
+                    self.in_title = True
+                    return
                 # Detect section headers
                 if tag == 'span':
                     text_content = attrs_dict.get('class', "")
@@ -256,18 +289,24 @@ rec {
                     # These are the full-resolution card images
                     elif self.in_trading_cards_section and 'gallery-src' in classes:
                         href = attrs_dict.get('href', "")
-                        if 'cdn.cloudflare.steamstatic.com/steamcommunity/public/images/items/' in href:
+                        # FIX: Accept both akamai and cloudflare domains by looking at the common path
+                        if '/steamcommunity/public/images/items/' in href:
                             # Store URL temporarily, wait for card name in next div
                             self.current_img_src = href
 
                 # Extract card name from the text div
                 if tag == 'div' and self.in_trading_cards_section and self.current_img_src:
-                    classes = attrs_dict.get('class', "")
-                    if 'text-sm text-center break-words' in classes:
-                        # We're in the div that contains the card name
-                        self.depth = 1
+                  classes = attrs_dict.get('class', "").split()
+                  # FIX: Safer class checking
+                  if 'text-sm' in classes and 'text-center' in classes and 'break-words' in classes:
+                      # We're in the div that contains the card name
+                      self.depth = 1
 
             def handle_data(self, data):
+                if self.in_title:
+                    if "Game not found!" in data:
+                        self.game_not_found = True
+                        return
                 # Capture card name when we're in the right div
                 if self.depth > 0 and self.current_img_src:
                     card_name = data.strip()
@@ -289,6 +328,9 @@ rec {
                         self.depth = 0
 
             def handle_endtag(self, tag):
+                if tag == 'title':
+                    self.in_title = False
+                    return
                 if self.depth > 0:
                     if tag == 'div':
                         self.depth = 0
@@ -300,46 +342,57 @@ rec {
         parser.feed(html)
         print(json.dumps(parser.cards, indent=2))
       '';
+
+      baseDrv =
+        pkgs.runCommand ("steam-cards-" + toString appId + (if cardNames == [ ] then "" else "-subset"))
+          {
+            outputHashMode = "recursive";
+            outputHashAlgo = "sha256";
+            allowSubstitutes = false;
+            outputHash = if sha256 != null then sha256 else hash;
+            buildInputs = [
+              pkgs.curl
+              pkgs.python3
+              pkgs.jq
+            ];
+            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+          }
+          ''
+            set -e
+
+            # Fetch HTML and parse it to get card info
+            CARD_INFO=$(curl -s "https://www.steamcardexchange.net/index.php?gamepage-appid-${toString appId}" | \
+                        python3 ${parseScript})
+
+            ${
+              if cardNames == [ ] then
+                ''
+                  # Use all cards
+                  FILTERED_CARDS="$CARD_INFO"
+                ''
+              else
+                ''
+                  # Filter to requested cards
+                  FILTERED_CARDS=$(echo "$CARD_INFO" | jq 'with_entries(select(.key as $k | $k | IN(${builtins.toJSON cardNames}[])))')
+                ''
+            }
+            # Download each card and always name files by the card name (with .jpg)
+            mkdir -p $out
+            echo "$FILTERED_CARDS" | jq -r 'to_entries[] | "\(.key) \(.value)"' | while read -r name url; do
+              echo "Downloading $name..."
+              # Always save as <cardName>.jpg so callers can reliably split by name
+              safeName="$name.jpg"
+              curl -L -o "$out/$safeName" "$url"
+            done
+          '';
+
+      # Now determine list of files to split. If caller supplied cardNames, use
+      # those; otherwise list every file in the derived output.
+      fileList =
+        if cardNames == [ ] then
+          builtins.attrNames (builtins.readDir baseDrv.outPath)
+        else
+          map (n: "${n}.jpg") cardNames;
     in
-    pkgs.runCommand "steam-cards-${toString appId}${if cardNames == [ ] then "" else "-subset"}"
-      {
-        outputHashMode = "recursive";
-        outputHashAlgo = "sha256";
-        outputHash = if sha256 != null then sha256 else hash;
-        buildInputs = [
-          pkgs.curl
-          pkgs.python3
-          pkgs.jq
-        ];
-        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      }
-      ''
-        set -e
-
-        # Fetch HTML and parse it to get card info
-        CARD_INFO=$(curl -s "https://www.steamcardexchange.net/index.php?gamepage-appid-${toString appId}" | \
-                    python3 ${parseScript})
-
-        ${
-          if cardNames == [ ] then
-            ''
-              # Use all cards
-              FILTERED_CARDS="$CARD_INFO"
-            ''
-          else
-            ''
-              # Filter to requested cards
-              FILTERED_CARDS=$(echo "$CARD_INFO" | jq 'with_entries(select(.key as $k | $k | IN(${builtins.toJSON cardNames}[])))')
-            ''
-        }
-
-        # Download each card
-        mkdir -p $out
-        echo "$FILTERED_CARDS" | jq -r 'to_entries[] | "\(.key) \(.value)"' | while read -r name url; do
-          echo "Downloading $name..."
-          # Extract filename from URL (everything after last /)
-          filename=$(basename "$url")
-          curl -L -o "$out/$filename" "$url"
-        done
-      '';
+    splitFiles fileList baseDrv;
 }

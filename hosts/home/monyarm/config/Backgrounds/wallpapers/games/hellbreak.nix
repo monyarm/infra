@@ -2,6 +2,16 @@
 {
   hellbreak = fetchSteamCards {
     appId = 3043760;
-    hash = "sha256-uX/eOOTVNDT3ZzceKsG3+kVE0Ewd4RtHVq3ow+v+Ca4=";
+    cardNames = [
+      "azrakash"
+      "varkoth"
+      "balzurath"
+      "gholgoroth"
+      "kharvex"
+      "varZul"
+      "malachor"
+      "serathiel"
+    ];
+    sha256 = "sha256-EFaReT70ETRQuVeiCjcpDEaoZQJRimSDeOJ5GWXbhdI=";
   };
 }

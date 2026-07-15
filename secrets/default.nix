@@ -5,6 +5,7 @@
   isHomeManager,
   isHomeManagerInNixOS,
   dirs,
+  parallel,
   ...
 }:
 let
@@ -28,7 +29,7 @@ in
           "syncthing/key.pem"
           "syncthing/cert.pem"
         ];
-        jetbrainsKeys = builtins.map (k: "jetbrains/${k}.key") [
+        jetbrainsKeys = parallel (map (k: "jetbrains/${k}.key")) [
           "clion"
           "phpstorm"
           "webstorm"

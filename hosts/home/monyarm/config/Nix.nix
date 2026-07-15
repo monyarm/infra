@@ -2,6 +2,7 @@
   config,
   lib,
   mkOutOfStoreSymlink,
+  inputs,
   ...
 }:
 let
@@ -21,7 +22,8 @@ in
         "configurable-impure-env"
         "impure-derivations"
         "recursive-nix"
-        "lazy-trees"
+        "git-hashing"
+        "parse-toml-timestamps"
         "parallel-eval"
       ]
     }
@@ -29,10 +31,23 @@ in
     allow-unsafe-native-code-during-evaluation = true
     connect-timeout = 25000
     auto-optimise-store = true
+    lazy-trees = true
+    eval-cores = 0
+
+    keep-outputs = false
+    keep-derivations = false
+
+    min-free = 8192
+
+    keep-going = true
   '';
 
   xdg.configFile = {
     "nix/nix.conf".source = mkOutOfStoreSymlink config.sops.templates."nix.conf".path;
     "nixpkgs/confix.nix".text = builtins.toJSON nixconf;
+  };
+  nix = {
+    enable = true;
+    package = lib.mkForce inputs.determinate-nix.packages."x86_64-linux".nix;
   };
 }

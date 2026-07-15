@@ -10,6 +10,6 @@ export NH_SHOW_ACTIVATION_LOGS=true
 git add .
 nix fmt
 
-hyperfine --warmup 3 "nix build .#nixosConfigurations.$hostname.config.system.build.toplevel \
-  --impure --no-link --no-eval-cache --accept-flake-config \
+hyperfine --warmup 3 "nix eval .#nixosConfigurations.$hostname.config.system.build.toplevel.drvPath \
+  --impure --no-eval-cache --accept-flake-config \
   --option max-call-depth 1000000"

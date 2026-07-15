@@ -28,6 +28,16 @@ in
 
   sonicMania = fetchSteamCards {
     appId = 584400;
-    hash = "sha256-By5YQAI8jD2P6Zz8VuLU8LHI9rHHybEFRkWCEpFb9g8=";
+    cardNames = [
+      "heavyGunner"
+      "sonicTheHedgehog"
+      "milesTailsPrower"
+      "knucklesTheEchidna"
+      "heavyMagician"
+      "heavyShinobi"
+      "heavyRider"
+      "heavyKing"
+    ];
+    sha256 = "sha256-3NNWLsYY2kOlx/X0X1kgqkr2QDCtvPJ7Ss/xN+5xUvE=";
   };
 }

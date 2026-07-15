@@ -1,6 +1,7 @@
 {
   linkFiles,
   pkgs,
+  parallel,
   ...
 }:
 
@@ -12,7 +13,7 @@ let
   };
 in
 {
-  xdg.dataFile = linkFiles "scummvm/extra" [
+  xdg.dataFile = parallel (linkFiles "scummvm/extra") [
     # keep-sorted start
     "${cm32lRomset}/cm32l_control.rom"
     "${cm32lRomset}/cm32l_pcm.rom"

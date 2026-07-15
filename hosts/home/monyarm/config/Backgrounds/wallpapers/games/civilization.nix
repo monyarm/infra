@@ -2,6 +2,16 @@
 {
   civ5 = fetchSteamCards {
     appId = 8930;
-    hash = "sha256-WKSLY8vaO//q2R71w2laW3DOw5t30d1ailvXcXtnFig=";
+    cardNames = [
+      "foreign"
+      "bismarck"
+      "economic"
+      "science"
+      "military"
+      "washington"
+      "catherine"
+      "elizabethI"
+    ];
+    sha256 = "sha256-R8PboKbzMif8AUxWmSCJAqfbiKY6a4z4VHat78DXgso=";
   };
 }

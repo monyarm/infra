@@ -1,5 +1,7 @@
 { lib, ... }:
 {
+  parallel = func: args: builtins.parallel args (func args);
+
   # dispatchExt accepts an attribute set where keys are extensions (e.g., ".zip")
   # and values are the functions handling them. Use "_" for a custom fallback.
   dispatchExt =

@@ -60,20 +60,24 @@
       inputs.flake-parts.follows = "flake-parts";
     };
     determinate-nix = {
-      url = "github:DeterminateSystems/nix-src";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
+      url = "https://flakehub.com/f/DeterminateSystems/nix-src/*";
+      # inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.flake-parts.follows = "flake-parts";
+      # follows omitted to allow use of substituters
     };
   };
 
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
-      "https://nix-on-droid.cachix.org"
+      # "https://nix-on-droid.cachix.org"
+      "https://install.determinate.systems"
+
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE="
+      "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
     ];
   };
 

@@ -3,6 +3,7 @@
   lib,
   config,
   isHomeManagerInNixOS,
+  parallel,
   ...
 }:
 lib.mkMerge [
@@ -61,7 +62,11 @@ lib.mkMerge [
         };
       spawn-at-startup =
         let
-          split = list: builtins.map (x: { argv = lib.toList (lib.splitString " " x); }) list;
+          split =
+            list:
+            parallel (map (x: {
+              argv = lib.toList (lib.splitString " " x);
+            })) list;
         in
         split (
           [

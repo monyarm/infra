@@ -9,19 +9,50 @@ with image;
 {
   duelLinks = fetchSteamCards {
     appId = 601510;
-    hash = "sha256-BC6Wbq8zamlJbDXR2q65UEsatGekRU/1pvbPTjAINfo=";
+    cardNames = [
+      "yamiBakura"
+      "yamiYugi"
+      "joeyWheeler"
+      "yamiMarik"
+      "setoKaiba"
+      "teaGardner"
+    ];
+    sha256 = "sha256-bi47lwhA2328CfdO8ASinyWNyCtfiWpzM6lpjKzYl/o=";
   };
   masterDuel = fetchSteamCards {
     appId = 1449850;
-    hash = "sha256-GFRPqudd0Za+Bzy4TR1jKOFs8zBEnHlVo736gOFy6l8=";
+    cardNames = [
+      "monsterArt1"
+      "monsterArt5"
+      "monsterArt4"
+      "monsterArt3"
+      "monsterArt6"
+      "monsterArt2"
+    ];
+    sha256 = "sha256-y08f0GyeuucXQAvkVAjBVLYie2zBOpq5T0LtkkxEEsI=";
   };
   yugiohEarlyDaysCollection = fetchSteamCards {
     appId = 3013550;
-    hash = "sha256-V3f4XecmvTTUklRAgQiGVf3TMfeAr4Zg3tP4QyyfWmc=";
+    cardNames = [
+      "dungeonDiceMonsters"
+      "theScaredCards"
+      "duelMonsters"
+      "destinyBoardTraveler"
+      "duelMonstersIi"
+    ];
+    sha256 = "sha256-bM8kiW89lEeNBSNQvKo5AoK8HcO+1ABFSmFz/qmIAm4=";
   };
   yugiohLegacyOfTheDuelistLinkEvolution = fetchSteamCards {
     appId = 1150640;
-    hash = "sha256-0Vu7t5EAt7jDWftsNz5G8O9BkNQ+qkIZWd8wsjSt6Kc=";
+    cardNames = [
+      "darkMagician"
+      "elementalHeroNeos"
+      "decodeTalker"
+      "stardustDragon"
+      "oddEyesPendulumDragon"
+      "number39Utopia"
+    ];
+    sha256 = "sha256-LOQTfo6qPOt8em5ub7wuwESZh8fVYyPbdVAhMMs1Sd0=";
   };
   stitchedWallpaper =
     let

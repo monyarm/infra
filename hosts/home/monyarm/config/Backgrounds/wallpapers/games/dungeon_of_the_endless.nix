@@ -2,6 +2,14 @@
 {
   dungeonOfTheEndless = fetchSteamCards {
     appId = 249050;
-    hash = "sha256-yXy7T/S7/z3iaJ1f8YHoGn7zybOOd7mAELFwk978y0M=";
+    cardNames = [
+      "frozenGrounds"
+      "jungleFever"
+      "endlessLaboratory"
+      "necrophageNest"
+      "sewerMaze"
+      "drakkenSanctuary"
+    ];
+    sha256 = "sha256-H+pYE3gGAgwjqKV+DWuzb6rngm9cY1tBBIlKYdCHq+8=";
   };
 }

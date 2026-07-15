@@ -61,7 +61,7 @@ in
       "theLab"
       "mannequin"
     ];
-    hash = "sha256-c9Rtd86DdhwHUu2dBCeVG5hqFzvCx91LpplAymxvOxE=";
+    sha256 = "sha256-ieS7T8d+4UTsc3fG2MSAeghCt7rSLzr0c56cdMxIRQA=";
   };
   steamMeowMall =
     pkgs.fetchurl {

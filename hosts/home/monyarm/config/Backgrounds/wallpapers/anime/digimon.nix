@@ -8,7 +8,24 @@ with image;
 {
   digimonStoryCyberSleuth = fetchSteamCards {
     appId = 1042550;
-    hash = "sha256-ewRZ5aXBDEZOE6QZKR8rojIqd2NJQyJSh/5mQSnVGiE=";
+    cardNames = [
+      "magnamon"
+      "gallantmon"
+      "crusadermon"
+      "kyoko"
+      "alphamon"
+      "keisuke"
+      "chitose"
+      "erika"
+      "ami"
+      "nokia"
+      "takumi"
+      "leopardmon"
+      "arata"
+      "ryuji"
+      "omnimon"
+    ];
+    sha256 = "sha256-hNDB75R949JgxIaNGfy/tq6HwQiSbGZiQ0afb/CuXcQ=";
   };
 
   angeDemon =

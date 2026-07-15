@@ -1,11 +1,11 @@
 { fetchSteamCards, ... }:
 {
   grimFandangoRemastered = fetchSteamCards {
-    appId = 205720;
-    hash = "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo=";
+    appId = 316790;
     cardNames = [
       "grimFandango"
       "onTheWaterfront"
     ];
+    sha256 = "sha256-ynqpabFRGO4wrEtrPTQyOyBh2bK+fi+/9/74QuIvbqo=";
   };
 }

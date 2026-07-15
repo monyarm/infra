@@ -2,10 +2,31 @@
 {
   spongebobTitansOfTheTide = fetchSteamCards {
     appId = 2479650;
-    hash = "sha256-iBwe5B7XeXphhEg96iOSyaKF/2bca//Io7Iqw2QJ3vc=";
+    cardNames = [
+      "kingNeptune"
+      "flyingDutchman"
+      "captainGoldie"
+      "kassandra"
+      "stinger"
+      "olBoomerGhost"
+      "chocolateTom"
+      "grandSlammerGhost"
+    ];
+    sha256 = "sha256-RJBhl25cS9+RpTU5ssOSjJ0S/sPEZmvLT9QZLnFWE0k=";
   };
   spongebobCosmicShake = fetchSteamCards {
     appId = 1282150;
-    hash = "sha256-oxWRA+AGRw+h0FbODgmnaV7zMBOSn6zlvCYyiN1w1sc=";
+    cardNames = [
+      "medievalPearl"
+      "kassandra"
+      "westernKrabs"
+      "karateSandy"
+      "squidward"
+      "halloweenGary"
+      "piratesPrawn"
+      "prehistoricPompom"
+      "gloveWorldGlovy"
+    ];
+    sha256 = "sha256-rl5LfxJ3xOl7yZzsNogZ60iR58GxuyJoSmUguKuw7sA=";
   };
 }

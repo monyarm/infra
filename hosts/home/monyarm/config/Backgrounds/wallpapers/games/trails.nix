@@ -2,6 +2,16 @@
 {
   trailsInTheSkySC = fetchSteamCards {
     appId = 251290;
-    hash = "sha256-BSMktJr/n7uDU+GkRWcM3bkmUlqsjUAanE4FhFKOy5U=";
+    cardNames = [
+      "introducingRenne"
+      "girlsOnlySleepover"
+      "naptime"
+      "firstSignOfWinter"
+      "cleaningDuty"
+      "fantasticParty"
+      "cheers"
+      "gotcha"
+    ];
+    sha256 = "sha256-hXNI+kkZ0P1drPhUxsSp5VfyTRoeYworEx3+XF7Wd34=";
   };
 }

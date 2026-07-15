@@ -2,6 +2,16 @@
 {
   aceAttorneyTrilogy = fetchSteamCards {
     appId = 787480;
-    hash = "sha256-42XM1ycar3gKVi8B3Y8uMgZ1Y79J88VTRwtoOSW5dKE=";
+    cardNames = [
+      "phoenixWright"
+      "pearlFey"
+      "milesEdgeworth"
+      "franziskaVonKarma"
+      "godot"
+      "mayaFey"
+      "emaSkye"
+      "miaFey"
+    ];
+    sha256 = "sha256-qEbuauxJpNSfG1KgDNcJR1DzifLV+QDOjgQmUZamgEs=";
   };
 }

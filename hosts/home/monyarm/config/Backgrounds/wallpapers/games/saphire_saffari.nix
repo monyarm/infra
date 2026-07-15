@@ -2,6 +2,13 @@
 {
   saphireSaffari = fetchSteamCards {
     appId = 1526900;
-    hash = "sha256-vSQZ+Ndva8EFWBDGhSdDY6zXF9tandzwajRqbTIwHpI=";
+    cardNames = [
+      "predatorsAssemble"
+      "sporedMalous"
+      "noEscape"
+      "freshSpores"
+      "cavalcade"
+    ];
+    sha256 = "sha256-2i6iLPnDkC3OT4FVTE0SDnOONaB0NoeGG4mU0ekSj0Q=";
   };
 }

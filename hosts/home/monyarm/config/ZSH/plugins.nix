@@ -1,6 +1,6 @@
-{ pkgs, lib, ... }:
+{ pkgs, parallel, ... }:
 let
-  OMZP = lib.map (name: "ohmyzsh/ohmyzsh path:plugins/${name} kind:defer");
+  OMZP = parallel (map (name: "ohmyzsh/ohmyzsh path:plugins/${name} kind:defer"));
 in
 {
   home.packages = with pkgs; [

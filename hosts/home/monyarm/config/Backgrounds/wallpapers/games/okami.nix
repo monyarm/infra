@@ -2,6 +2,20 @@
 {
   okami = fetchSteamCards {
     appId = 587620;
-    hash = "sha256-IuAfXo8WfN8IBehPXQ6uzCAUe6630fbQeF4aiNY2AfY=";
+    cardNames = [
+      "theSunGodAmaterasu"
+      "yomigami"
+      "yumigami"
+      "gekigami"
+      "itegami"
+      "tachigamiKabegami"
+      "bakugami"
+      "nuregami"
+      "kasugami"
+      "moegami"
+      "kazegami"
+      "sakigamiHasugamiTsutagami"
+    ];
+    sha256 = "sha256-L6xgpbUmKTD6/Ux2s2L/H/XJb4sgj7uFV6KC644qCSw=";
   };
 }

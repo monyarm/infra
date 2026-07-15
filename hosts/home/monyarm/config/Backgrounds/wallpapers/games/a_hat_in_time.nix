@@ -3,6 +3,6 @@
   aHatInTime = fetchSteamCards {
     appId = 253230;
     cardNames = [ "theKidWithTheHat" ];
-    hash = "sha256-JqfcNPCh7o/t0EHyLxN6JjKFUfy9loMILELVnm3ouG8=";
+    sha256 = "sha256-nGo51jSMJjNcaLilGFD9BF7kmee4Bx+Z9Su4Kjcdb4s=";
   };
 }

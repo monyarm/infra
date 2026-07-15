@@ -32,6 +32,16 @@ with image;
     |> crop16x9;
   doomEternal = fetchSteamCards {
     appId = 782330;
-    hash = "sha256-qTQzG71/Y5JNEOsAtX0CP0IUr1EXf1BacHHBsPivJIg=";
+    cardNames = [
+      "argentPower"
+      "goreNest"
+      "marsCore"
+      "soulExtract"
+      "hellgate"
+      "marauder"
+      "towerBabel"
+      "battlefield"
+    ];
+    sha256 = "sha256-sK0xkAKXO5Mu3/WOFO4PvGXCL5hzNhjf5LvXz1m7NE4=";
   };
 }

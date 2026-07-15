@@ -2,6 +2,13 @@
 {
   undertale = fetchSteamCards {
     appId = 391540;
-    hash = "sha256-iW7J2JE5PpCn/DCtQHscTPxdtNAVkwNuc+xEEaH+m9w=";
+    cardNames = [
+      "flowey"
+      "toriel"
+      "sans"
+      "undyne"
+      "papyrus"
+    ];
+    sha256 = "sha256-FFdrw/xefYoWKXYMZwbR5KRUFYeGsRtxwWOTAmBE+7E=";
   };
 }

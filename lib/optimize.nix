@@ -7,6 +7,7 @@
   sanitizeName,
   rename,
   dispatchExt,
+  parallel,
   ...
 }:
 
@@ -25,9 +26,9 @@ let
           origSize=$(${pkgs.coreutils}/bin/stat -L -c%s "${src}")
           optSize=$(${pkgs.coreutils}/bin/stat -L -c%s "${originalDrv}")
           if [ "$optSize" -gt "$origSize" ]; then
-            ${pkgs.coreutils}/bin/ln -s "${src}" "$out"
+            ${pkgs.coreutils}/bin/cp "${src}" "$out"
           else
-            ${pkgs.coreutils}/bin/ln -s "${originalDrv}" "$out"
+            ${pkgs.coreutils}/bin/cp "${originalDrv}" "$out"
           fi
           exit 0; # fix for 2176?
         ''
@@ -47,6 +48,7 @@ rec {
       {
         buildInputs = [ pkgs.pngquant ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
@@ -64,6 +66,7 @@ rec {
       {
         buildInputs = [ pkgs.oxipng ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
@@ -81,6 +84,7 @@ rec {
       {
         buildInputs = [ pkgs.optipng ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
@@ -98,6 +102,7 @@ rec {
       {
         buildInputs = [ pkgs.advancecomp ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
@@ -116,6 +121,7 @@ rec {
       {
         buildInputs = [ pkgs.jpegoptim ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
@@ -132,6 +138,7 @@ rec {
       {
         buildInputs = [ pkgs.mozjpeg ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
@@ -149,6 +156,7 @@ rec {
           pkgs.imagemagick
         ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
@@ -165,52 +173,65 @@ rec {
     ) src;
 
   # --- NATIVE WEBP UTILITIES ---
-  nativeWebP =
+
+  # Base utility to avoid code repetition
+  # TODO: Investigate why some, but not other CA derivations fail on remote builders with file not found?. Could be race condition?
+  buildWebP =
+    { suffix, cwebpArgs }:
     src:
-    guardSize (pkgs.runCommand "${getName src}-optimized.webp"
+    guardSize (pkgs.runCommand "${getName src}-${suffix}.webp"
       {
-        buildInputs = [ pkgs.libwebp ];
+        buildInputs = [
+          pkgs.libwebp
+          pkgs.gnugrep
+        ];
         __contentAddressed = true;
+        allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
       }
       ''
-        if webpmux -info "${src}" | grep -q "animation"; then
+        # Safe raw info output extraction
+        WEBP_INFO=$(webpmux -info "${src}" 2>&1 || true)
+        echo "=== DEBUG INFO FOR ${getName src} ==="
+        echo "$WEBP_INFO"
+        echo "======================================"
+
+        # Check if the output explicitly mentions 'animation' OR has multiple frames
+        IS_ANIMATED=0
+        if echo "$WEBP_INFO" | grep -qi "animation"; then
+          IS_ANIMATED=1
+        elif echo "$WEBP_INFO" | grep -q "Number of frames:"; then
+          FRAMES=$(echo "$WEBP_INFO" | grep "Number of frames:" | awk '{print $NF}')
+          if [ "$FRAMES" -gt 1 ]; then
+            IS_ANIMATED=1
+          fi
+        fi
+
+        if [ "$IS_ANIMATED" -eq 1 ]; then
           echo "Processing animated WebP via metadata stripping..."
-          # webpmux requires distinct physical file paths for input and output
           webpmux -strip icc  "${src}"       -o temp_icc.webp  || cp "${src}" temp_icc.webp
           webpmux -strip exif temp_icc.webp  -o temp_exif.webp || cp temp_icc.webp temp_exif.webp
           webpmux -strip xmp  temp_exif.webp -o "$out"         || cp temp_exif.webp "$out"
-          rm temp_icc.webp temp_exif.webp
+          rm -f temp_icc.webp temp_exif.webp
         else
           echo "Processing static WebP via cwebp..."
-          cwebp -m 6 -q 85 "${src}" -o "$out"
+          cwebp ${cwebpArgs} "${src}" -o "$out"
         fi
       ''
     ) src;
 
-  nativeWebPLossless =
-    src:
-    guardSize (pkgs.runCommand "${getName src}-lossless.webp"
-      {
-        buildInputs = [ pkgs.libwebp ];
-        __contentAddressed = true;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        if webpmux -info "${src}" | grep -q "animation"; then
-          echo "Processing animated WebP via metadata stripping..."
-          webpmux -strip icc  "${src}"       -o temp_icc.webp  || cp "${src}" temp_icc.webp
-          webpmux -strip exif temp_icc.webp  -o temp_exif.webp || cp temp_icc.webp temp_exif.webp
-          webpmux -strip xmp  temp_exif.webp -o "$out"         || cp temp_exif.webp "$out"
-          rm temp_icc.webp temp_exif.webp
-        else
-          echo "Processing static WebP via lossless cwebp..."
-          cwebp -m 6 -lossless "${src}" -o "$out"
-        fi
-      ''
-    ) src;
+  # Lossy optimization (using the base function)
+  nativeWebP = buildWebP {
+    suffix = "optimized";
+    cwebpArgs = "-m 6 -q 85";
+  };
+
+  # Lossless optimization (using the base function)
+  nativeWebPLossless = buildWebP {
+    suffix = "lossless";
+    cwebpArgs = "-m 6 -lossless";
+  };
 
   # --- COMPOSITION PIPELINES BY FORMAT ---
   pngPipelinePrime = src: src |> (oxipng 4) |> optipng |> advpng;
@@ -255,7 +276,7 @@ rec {
     let
       allFiles = listFilesRecursive folderSrc;
 
-      entries = map (filePath: {
+      entries = parallel (map (filePath: {
         name = builtins.unsafeDiscardStringContext (
           lib.strings.removePrefix "${folderSrc}/" (toString filePath)
         );
@@ -265,7 +286,7 @@ rec {
             path = filePath;
           }
         );
-      }) allFiles;
+      })) allFiles;
     in
     pkgs.linkFarm "${getName folderSrc}-optimized-dir" entries;
 

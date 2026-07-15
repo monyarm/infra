@@ -2,6 +2,15 @@
 {
   bioshockInfinite = fetchSteamCards {
     appId = 8870;
-    hash = "sha256-H0v3hKvVtW7ZAeq7Q4eetInJKd7wQL2Ld9sr2uPIqNw=";
+    cardNames = [
+      "fireman"
+      "elizabeth"
+      "motorizedPatriot"
+      "songbird"
+      "boysOfSilence"
+      "handyman"
+      "luteceTwins"
+    ];
+    sha256 = "sha256-Ac8yLzDbAhhqHnOaNoZ/D1MbGp330nvTisepdmWfkWw=";
   };
 }

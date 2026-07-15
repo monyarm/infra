@@ -209,7 +209,20 @@ with image;
   };
   baldursGate3 = fetchSteamCards {
     appId = 1086940;
-    hash = "sha256-3YDOYoyVRe1yGebGIx3mqj418nobsZ9mrntIvRk7L8s=";
+    cardNames = [
+      "minthara"
+      "shadowheart"
+      "wyll"
+      "jaheira"
+      "karlach"
+      "halsin"
+      "gale"
+      "laeZel"
+      "astarion"
+      "minsc"
+      "darkUrge"
+    ];
+    sha256 = "sha256-rAha0FxXqQJT+hg0ZB3KKB8JZOew6gi7flO7auXFB4I=";
   };
 
   shadowheart =

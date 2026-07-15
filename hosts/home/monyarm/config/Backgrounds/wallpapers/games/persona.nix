@@ -33,37 +33,125 @@
 
   persona5RoyalCards = fetchSteamCards {
     appId = 1687950;
-    hash = "sha256-knRE2S5Ae4TyhrBlRRossmXUmTNaZjJvcBoOPEeINrw=";
+    cardNames = [
+      "ryujiSakamoto"
+      "haruOkumura"
+      "goroAkechi"
+      "makotoNijima"
+      "kasumiYoshizawa"
+      "lastSurprise"
+      "morgana"
+      "futabaSakura"
+      "yusukeKitagawa"
+      "annTakamaki"
+      "hero"
+    ];
+    sha256 = "sha256-ImrPA1gj3JAFqjYMToShczksi+YJEtn+MyFacWwZcQU=";
   };
 
   persona4Golden = fetchSteamCards {
     appId = 1113000;
-    hash = "sha256-W9pC2A1FVMuoKWD4LfXXDxtnOvnWf+WOQ/kGBcUZGrA=";
+    cardNames = [
+      "chieSatonaka"
+      "naotoShirogane"
+      "neverMore"
+      "yosukeHanamura"
+      "teddie"
+      "riseKujikawa"
+      "kanjiTatsumi"
+      "yukikoAmagi"
+      "yourAffection"
+      "hero"
+    ];
+    sha256 = "sha256-JkcrN4tgMuFgZtV4m99Wsl7PLPYu96M+/o4hN99enxI=";
   };
 
   persona3Reload = fetchSteamCards {
     appId = 2161700;
-    hash = "sha256-Z6/pCCytvcj2cgonADcI8dRSnMt9MDB4eGtrtZ1trGA=";
+    cardNames = [
+      "junpeiIori"
+      "chidoriYoshino"
+      "takayaSakaki"
+      "koromaru"
+      "fuukaYamagishi"
+      "jinShirato"
+      "yukariTakeba"
+      "shinjiroAragaki"
+      "kenAmada"
+      "mitsuruKirijo"
+      "akihikoSanada"
+      "aigis"
+      "hero"
+    ];
+    sha256 = "sha256-34H5VvOnMbAOanEUjz6WRbsaN9GuKBrzcZD+eNbsMJA=";
   };
 
   persona5Strikers = fetchSteamCards {
     appId = 1382330;
-    hash = "sha256-hiXnYeq6LlfBoZW9d2zah8jk2bzRg7iRvQWv0IJUbgE=";
+    cardNames = [
+      "fox"
+      "panther"
+      "joker"
+      "mona"
+      "noir"
+      "queen"
+      "sophie"
+      "oracle"
+      "skull"
+    ];
+    sha256 = "sha256-tbbTg4eBe269C0PGKa1wOhvzUTo2BXEKumk7In3oLsM=";
   };
 
   persona3Portable = fetchSteamCards {
     appId = 1809700;
-    hash = "sha256-y1EeyuCqVACxDnu0hvQmT5tHYYoAF1lEye3R8ZASOTU=";
+    cardNames = [
+      "junpeiIori"
+      "protagonistM"
+      "koromaru"
+      "fuukaYamagishi"
+      "yukariTakeba"
+      "shinjiroAragaki"
+      "kenAmada"
+      "mitsuruKirijo"
+      "akihikoSanada"
+      "aigis"
+      "protagonistF"
+    ];
+    sha256 = "sha256-Psk3SCjMCBQvno+q8sW4RYH3bJMOq/EodmIAnkgx9SE=";
   };
 
   persona5Tactica = fetchSteamCards {
     appId = 2254740;
-    hash = "sha256-yYzJuhRMUfF2oGUy7xjrS9gc7OJ7TnwCNQbaMMSFi6w=";
+    cardNames = [
+      "shiningGlory"
+      "alluringBeauty"
+      "anElegantRevenge"
+      "nocturnalWings"
+      "aPinnacleView"
+      "veilOfDawn"
+      "skullOfRage"
+      "ministryOfWisdom"
+      "hiddenBookOfWitchcraft"
+      "revolutionInYourHeart"
+      "leaderFightingOppression"
+      "swordOfTheIncognito"
+    ];
+    sha256 = "sha256-ULeZehXtyPIa5kutIdn68JkTcpuSJ5hv336jTR9WK+M=";
   };
 
   persona4ArenaUltimax = fetchSteamCards {
     appId = 1602010;
-    hash = "sha256-AZkkPpZrmvJHHbO9t/KkA+m6edEQ/F7/aLgjMEYRRa8=";
+    cardNames = [
+      "labrys"
+      "chieSatonaka"
+      "teddie"
+      "mitsuruKirijo"
+      "shoMinazuki"
+      "akihikoSanada"
+      "yuNarukami"
+      "aigis"
+    ];
+    sha256 = "sha256-esG5Ikk5h8nmCsFtO1rgnLzg9T/HgePJuAt6RASja8w=";
   };
 
   royal = pkgs.fetchurl {

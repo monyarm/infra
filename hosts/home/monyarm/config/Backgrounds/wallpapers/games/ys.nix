@@ -2,6 +2,14 @@
 {
   ysXProudNordics = fetchSteamCards {
     appId = 3949290;
-    hash = "sha256-+OjMMvIErIPmDyQeFg46wpTQW/BV0ICMKmhJvTsrFmQ=";
+    cardNames = [
+      "lilaMistral"
+      "canuteGamley"
+      "astridZayren"
+      "namelessOldMan"
+      "adolChristin"
+      "karjaBalta"
+    ];
+    sha256 = "sha256-fzCx1ahkrE6WGZzQVaMuqNhJKorQ6eyzk12RTomhRFg=";
   };
 }

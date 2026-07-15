@@ -28,7 +28,7 @@ let
       fi
     '';
 
-  userChromeRepos = builtins.map fetchChromeRepo [
+  userChromeRepos = map fetchChromeRepo [
     {
       url = "https://github.com/CarterSnich/firefox-xtra-compact";
       sha256 = "sha256-6/Yncqb5pb7AgJAYvvtL1b2nXZOThr7aPAUXM7eY/dA=";

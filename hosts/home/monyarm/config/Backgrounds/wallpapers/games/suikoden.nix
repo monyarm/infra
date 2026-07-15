@@ -2,6 +2,18 @@
 {
   suikodenIandII = fetchSteamCards {
     appId = 1932640;
-    hash = "sha256-rEzP+O0pGhchTs7mofDd0Aud+KTCUeSYh5oJTMFSCJE=";
+    cardNames = [
+      "heroIi"
+      "cleo"
+      "pahn"
+      "nanami"
+      "flik"
+      "ted"
+      "jowy"
+      "heroI"
+      "viktor"
+      "gremio"
+    ];
+    sha256 = "sha256-jNsQMFtLUINdsNxWlTjN+/P9EmSw6XcPU1hSYHXdvuI=";
   };
 }
