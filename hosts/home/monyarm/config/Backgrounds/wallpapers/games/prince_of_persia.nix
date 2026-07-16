@@ -2,7 +2,6 @@
   image,
   fetchzipSelective,
   splitFilesBaseName,
-  lib,
   ...
 }:
 with image;

@@ -140,4 +140,19 @@ rec {
         "ca-file" # Safe fallback name so the pipeline doesn't crash on name generation
       else
         baseName;
+
+  getFileNameFromUrl =
+    url:
+    let
+      # Try to get query parameter (e.g., ?v=sFVJVWVDIMg)
+      queryMatch = builtins.match ".*[?&]v=([^&]+).*" url;
+      # Try to get last path segment (e.g., /video.mp4)
+      pathMatch = builtins.match ".*/([^/]+)$" url;
+    in
+    if queryMatch != null then
+      builtins.head queryMatch
+    else if pathMatch != null then
+      builtins.head pathMatch
+    else
+      "video";
 }

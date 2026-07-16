@@ -112,8 +112,8 @@
       "catgirl"
       "partTimeWarrior"
     ];
-  sha256 = "sha256-azbXR1n67S/LlpExZzfBRRp3/fYZZ1btqKnHqHJ9Mj0=";
-    };
+    sha256 = "sha256-azbXR1n67S/LlpExZzfBRRp3/fYZZ1btqKnHqHJ9Mj0=";
+  };
   steinsGate = fetchSteamCards {
     appId = 412830;
     cardNames = [
