@@ -237,7 +237,12 @@ rec {
   };
 
   # --- COMPOSITION PIPELINES BY FORMAT ---
-  pngPipelinePrime = src: src |> (oxipng 4) |> optipng |> advpng;
+  pngPipelinePrime =
+    src:
+    src
+    |> (oxipng 4)
+    |> optipng
+    |> advpng;
   pngPipeline = src: src |> pngquant |> pngPipelinePrime;
 
   jpegPipelinePrime = src: src |> jpegoptim;

@@ -33,6 +33,13 @@ let
     inputs.nur.overlays.default
     inputs.niri.overlays.niri
     inputs.steam-fetcher.overlay
+    (
+      final: prev:
+      import ../packages {
+        pkgs = final;
+        inherit (prev) lib;
+      }
+    )
     (_final: _prev: {
       drowse = inputs.drowse.lib."x86_64-linux";
       inherit (inputs.determinate-nix.packages."x86_64-linux") nix;

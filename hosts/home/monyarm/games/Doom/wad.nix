@@ -19,7 +19,9 @@ let
     ])
     // {
       game = pkgs.uzdoom;
-      args = ["-iwad ${iwad}"]
+      args = [
+        "-iwad ${iwad}"
+      ]
       ++ (lib.optionals (wads != null && wads != [ ]) (map (w: "-file ${w}") wads));
 
     };

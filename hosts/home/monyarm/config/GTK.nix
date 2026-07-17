@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, ... }:
 
 {
   xdg.configFile."gtk-2.0/gtkfilechooser.ini".text = lib.generators.toINI { } {

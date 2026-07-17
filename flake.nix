@@ -107,8 +107,15 @@
             inherit system;
             inherit (inputs.self.lib) overlays;
           };
+          legacyPackages = import ./packages {
+            inherit pkgs;
+            inherit (pkgs) lib;
+          };
         in
         {
+          inherit legacyPackages;
+          packages = pkgs.lib.filterAttrs (_name: pkgs.lib.isDerivation) legacyPackages;
+
           topology.modules = [
             ./topology
             { inherit (inputs.self) nixosConfigurations; }
