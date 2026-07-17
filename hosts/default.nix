@@ -138,7 +138,7 @@ let
         home-manager.nixosModules.home-manager
         {
           home-manager = {
-            useGlobalPkgs = true;
+            useGlobalPkgs = false; # We're already passing pkgs to home-manager, so don't use the global one
             useUserPackages = true;
             extraSpecialArgs = {
               inherit inputs dirs autoImport;

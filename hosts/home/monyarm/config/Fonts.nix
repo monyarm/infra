@@ -81,13 +81,13 @@ let
 
   mse-fonts-magic =
     mkMseFontPack "mse-fonts-magic" "Full-Magic-Pack"
-      "sha256-XUr0CMj5KmprGpHTV+BYUGZHZevSpSHtaaw06NmzL5Q=";
+      "sha256-F/edzMtpmI+6kt4WRQSN2rw1Bk2nw+A+zRChHb8Uu4o=";
 
   mse-fonts-other =
     mkMseFontPack "mse-fonts-other" "Full-Non-Magic-Pack"
-      "sha256-PS3Xz0P6cT6z0uhKf6vmBwkwbNT2+Qi1rtXYJ5l7sIM=";
+      "sha256-U8l7p/6AKzYumRGR7tYlZN9pJ90PwcOy+EB0N4lkF8I=";
 
-  keyrune-font = mkTrueType "https://raw.githubusercontent.com/andrewgioia/Keyrune/master/fonts/keyrune.ttf" "1m0rakixgcb3vlm5va00l0jis15q5i0iwvrnc1gh9170ia39lnfx";
+  keyrune-font = mkTrueType "https://raw.githubusercontent.com/andrewgioia/Keyrune/master/fonts/keyrune.ttf" "sha256-Ao/JhdqQ7NQuBcIjinpfVEb4G0skC9d5oEnMrZb3i2U=";
 
   mana-font = mkTrueType "https://raw.githubusercontent.com/andrewgioia/Mana/master/fonts/mana.ttf" "06cqlrphdvm9hvg5qgrkczfzwb6f7gbvs5j2fdk9hzxgq3vhjf52";
 

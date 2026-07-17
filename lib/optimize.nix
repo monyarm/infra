@@ -197,12 +197,15 @@ rec {
         echo "$WEBP_INFO"
         echo "======================================"
 
-        # Check if the output explicitly mentions 'animation' OR has multiple frames
         IS_ANIMATED=0
-        if echo "$WEBP_INFO" | grep -qi "animation"; then
+
+        # Bash regex matching avoids grep/piping entirely, bypassing "broken pipe" errors
+        if [[ "$WEBP_INFO" =~ [Aa]nimation ]]; then
           IS_ANIMATED=1
-        elif echo "$WEBP_INFO" | grep -q "Number of frames:"; then
-          FRAMES=$(echo "$WEBP_INFO" | grep "Number of frames:" | awk '{print $NF}')
+        # Match 'Number of frames' followed by optional spaces, a colon, and grab the digits
+        elif [[ "$WEBP_INFO" =~ Number[[:space:]]of[[:space:]]frames[[:space:]]*:[[:space:]]*([0-9]+) ]]; then
+          # BASH_REMATCH[1] contains the captured digit group
+          FRAMES=''${BASH_REMATCH[1]}
           if [ "$FRAMES" -gt 1 ]; then
             IS_ANIMATED=1
           fi

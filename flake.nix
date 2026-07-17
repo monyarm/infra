@@ -23,10 +23,10 @@
       url = "github:Nowaaru/nix-mod-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-wine = {
-      url = "path:/home/monyarm/Documents/nix-wine";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nix-wine = {
+    #   url = "path:/home/monyarm/Documents/nix-wine";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +44,10 @@
       url = "github:nix-community/nh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
