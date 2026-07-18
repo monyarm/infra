@@ -19,14 +19,28 @@ in
       "waydroid-container.service"
       "waydroid-bootstrap.service"
     ];
-    requires = [ "waydroid-container.service" ];
+    requires =[
+      "waydroid-container.service"
+      "waydroid-bootstrap.service"
+    ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig.Type = "oneshot";
     script = ''
-      # Wait until the container's active socket is fully responsive
-      until ${pkgs.waydroid}/bin/waydroid status | grep -q "RUNNING"; do
-        sleep 1
-      done
+    timeout=20
+    elapsed=0
+    until ${pkgs.waydroid}/bin/waydroid status | grep -q "RUNNING"; do
+      if [ "$elapsed" -ge "$timeout" ]; then
+        echo "waydroid did not reach RUNNING after ''${timeout}s, giving up" >&2
+        exit 1
+      fi
+      sleep 1
+      elapsed=$((elapsed + 1))
+    done
+
+  ${lib.concatMapStringsSep "\n" (apk: ''
+    ${pkgs.waydroid}/bin/waydroid app install "${apk}" || true
+  '') (lib.attrValues androidApps)}
+'';
 
       # Dynamically loop through your nix list to provision the apps
       ${lib.concatMapStringsSep "\n" (apk: ''
