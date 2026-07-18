@@ -1,6 +1,7 @@
 {
   pkgs ? import <nixpkgs> { },
   lib ? pkgs.lib,
+  sources,
 }:
 
 let
@@ -37,5 +38,8 @@ extendedLib.genAttrs (map dropSuffix packageNames) (
     # The actual path could be name or name + ".nix"
     fileName = if builtins.hasAttr (name + ".nix") dirContents then (name + ".nix") else name;
   in
-  pkgs.callPackage (./. + "/${fileName}") { lib = extendedLib; }
+  pkgs.callPackage (./. + "/${fileName}") {
+    lib = extendedLib;
+    inherit sources;
+  }
 )

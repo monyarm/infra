@@ -1,16 +1,23 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  fetchGitTree,
+  sources,
+  ...
+}:
 let
   fetchChromeRepo =
     {
       url,
-      sha256,
+      rev,
+      hash,
+      ...
     }:
     let
       pname = (pkgs.lib.splitString "/" url) ++ [ "" ];
       pname' = pkgs.lib.last (pkgs.lib.init pname);
-      src = pkgs.fetchgit {
-        url = "${url}";
-        inherit sha256;
+      src = fetchGitTree {
+        inherit url rev hash;
       };
     in
     pkgs.runCommand "${pname'}-chrome" { inherit pname'; } ''
@@ -28,12 +35,7 @@ let
       fi
     '';
 
-  userChromeRepos = map fetchChromeRepo [
-    {
-      url = "https://github.com/CarterSnich/firefox-xtra-compact";
-      sha256 = "sha256-6/Yncqb5pb7AgJAYvvtL1b2nXZOThr7aPAUXM7eY/dA=";
-    }
-  ];
+  userChromeRepos = map fetchChromeRepo (lib.attrValues sources.firefox.userChrome);
 
   concatUserChromes = pkgs.lib.concatStringsSep "\n" (
     map

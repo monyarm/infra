@@ -1,6 +1,9 @@
 # config/MPV/shaders.nix
 {
   pkgs,
+  sources,
+  getFile,
+  fetchGitTree,
   ...
 }:
 
@@ -15,10 +18,8 @@
     recursive = true;
   };
 
-  xdg.configFile."mpv/shaders/mpv360.glsl".source = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/kasper93/mpv360/master/shaders/mpv360.glsl";
-    sha256 = "sha256-BJnldlc1bz98aqojsM0VnVKIuJJcMYVdeE0KKIN//es=";
-  };
+  xdg.configFile."mpv/shaders/mpv360.glsl".source =
+    fetchGitTree sources.mpv.mpv360 |> getFile "shaders/mpv360.glsl";
   xdg.configFile."mpv/shaders/FSRCNNX_x2_16-0-4-1.glsl".source = pkgs.fetchurl {
     url = "https://github.com/igv/FSRCNN-TensorFlow/releases/download/1.1/FSRCNNX_x2_16-0-4-1.glsl";
     sha256 = "sha256-1aJKJx5dmj9/egU7FQxGCkTCWzz393CFfVfMOi4cmWU=";
@@ -37,14 +38,10 @@
     sha256 = "sha256-gn+z1mKsmpG0B16RF/5uHbwcBthZWbpxnNuVTft/uOQ=";
   };
 
-  xdg.configFile."mpv/shaders/ArtCNN_C4F16.glsl".source = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/Artoriuz/ArtCNN/main/GLSL/ArtCNN_C4F16.glsl";
-    sha256 = "sha256-A9Cz0xy4LImKlKRmYwIaPo8CxaIdacXP3wII3kv9RT4=";
-  };
+  xdg.configFile."mpv/shaders/ArtCNN_C4F16.glsl".source =
+    fetchGitTree sources.mpv.ArtCNN |> getFile "GLSL/ArtCNN_C4F16.glsl";
 
-  xdg.configFile."mpv/shaders/ArtCNN_C4F32_DS.glsl".source = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/Artoriuz/ArtCNN/main/GLSL/ArtCNN_C4F32_DS.glsl";
-    sha256 = "sha256-oEycum+7jm25I51hhIOQIIrt+ONI7xFuEhdMgD0iB34=";
-  };
+  xdg.configFile."mpv/shaders/ArtCNN_C4F32_DS.glsl".source =
+    fetchGitTree sources.mpv.ArtCNN |> getFile "GLSL/ArtCNN_C4F32_DS.glsl";
 
 }

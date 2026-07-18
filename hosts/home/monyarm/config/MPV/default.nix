@@ -3,20 +3,17 @@
   pkgs,
   linkFiles,
   parallel,
+  sources,
+  fetchGitTree,
   ...
 }:
 
 let
   uosc = pkgs.buildGoModule rec {
     pname = "uosc";
-    version = "unstable-2025-09-28";
+    version = "unstable-${sources.mpv.uosc.date}";
 
-    src = pkgs.fetchFromGitHub {
-      owner = "tomasklaen";
-      repo = "uosc";
-      rev = "master";
-      hash = "sha256-vSs6X++WIM9NfTvcsJgwiKmTuU0eu3i3cffsdCVSyV4=";
-    };
+    src = fetchGitTree sources.mpv.uosc;
 
     vendorHash = "sha256-u3FOhboDgdr4BswXXZwpDb2rfajbd4R8PGLEz5hRXos=";
     proxyVendor = true;
@@ -35,6 +32,7 @@ let
   };
 
   ulyssescaballes-mpv-config = pkgs.fetchgit {
+    # outdated, but still works; No need to update
     url = "https://github.com/PopeyeURS/ulyssescaballes-mpv.config";
     rev = "9aa683ecfd3753134c1914c5f89d426e01c9f77c";
     sha256 = "sha256-aCwmoHp5afpelobcrNXhrtqDHdp3xzXx9YoyoAQdfa0=";

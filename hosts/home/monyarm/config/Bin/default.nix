@@ -4,6 +4,9 @@
   binFiles,
   dirs,
   parallel,
+  getFile,
+  sources,
+  fetchGitTree,
   ...
 }:
 
@@ -110,12 +113,7 @@ let
           spawn zenity --info --text "Press L+R to pair Pro Controller"
           expect eof
   '';
-  Extract =
-    (pkgs.fetchgit {
-      url = "https://github.com/xvoland/Extract";
-      hash = "sha256-PMyvZ8xd3gT2Q1lR3EBfouCjFJhJLjMGrEzPtkm5cNk=";
-    })
-    + "/extract.sh";
+  Extract = (fetchGitTree sources.xvoland.extract) |> getFile "extract.sh";
 in
 
 {

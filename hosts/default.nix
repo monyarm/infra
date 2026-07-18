@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, sources, ... }:
 
 let
   inherit (inputs)
@@ -38,6 +38,7 @@ let
       import ../packages {
         pkgs = final;
         inherit (prev) lib;
+        inherit sources;
       }
     )
     (_final: _prev: {
@@ -100,7 +101,12 @@ let
     home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsGen currentSystem;
       extraSpecialArgs = {
-        inherit inputs dirs autoImport;
+        inherit
+          inputs
+          dirs
+          autoImport
+          sources
+          ;
         isNixOS = false;
         isHomeManager = true;
         isHomeManagerInNixOS = false;
@@ -130,7 +136,12 @@ let
     lib.nixosSystem {
       system = currentSystem;
       specialArgs = {
-        inherit inputs dirs autoImport;
+        inherit
+          inputs
+          dirs
+          autoImport
+          sources
+          ;
         isNixOS = true;
         isHomeManager = false;
         isHomeManagerInNixOS = true;
@@ -148,7 +159,12 @@ let
             useGlobalPkgs = false; # We're already passing pkgs to home-manager, so don't use the global one
             useUserPackages = true;
             extraSpecialArgs = {
-              inherit inputs dirs autoImport;
+              inherit
+                inputs
+                dirs
+                autoImport
+                sources
+                ;
               isNixOS = false;
               isHomeManager = true;
               isHomeManagerInNixOS = true;
@@ -192,7 +208,7 @@ let
         ../secrets/system.nix
         {
           _module.args = {
-            inherit dirs autoImport;
+            inherit dirs autoImport sources;
             isNixOS = true;
             isHomeManager = false;
             isHomeManagerInNixOS = true;

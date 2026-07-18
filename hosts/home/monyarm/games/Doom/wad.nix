@@ -28,12 +28,15 @@ let
 
   wads = {
     TUCQR6 =
+      let
+        version = "6";
+      in
       fetchzipNoSubst {
-        url = "http://www.doomlegends.com/chexquest/TUCQR6.zip";
+        url = "http://www.doomlegends.com/chexquest/TUCQR${version}.zip";
         sha256 = "sha256-AulxYjl2o/M2zCTe9H5mvMk/2BZ5iigBo9+0iIIpC28=";
         stripRoot = false;
       }
-      |> getFile "TUCQR6.WAD";
+      |> getFile "TUCQR${version}.WAD";
   };
 
 in

@@ -1,4 +1,11 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  sources,
+  fetchGitTree,
+  getFile,
+  ...
+}:
 
 let
   fetchDafont =
@@ -10,66 +17,28 @@ let
       inherit sha256;
     };
 
-  mkFont =
-    fontFolder: url: sha256:
+  mkFont' =
+    fontFolder: src:
     let
-      basename = builtins.baseNameOf url;
-      extensions = [
-        ".ttf"
-        ".otf"
-        ".zip"
-        ".rar"
-        ".7z"
-      ];
-      removedExt = lib.foldl' (acc: ext: lib.removeSuffix ext acc) basename extensions;
-      filename =
-        if removedExt == basename then
-          let
-            findExt = lib.findFirst (ext: lib.hasInfix ext basename) null extensions;
-          in
-          if findExt != null then lib.head (lib.splitString findExt basename) else basename
-        else
-          removedExt;
-      isArchived = lib.any (ext: lib.hasSuffix ext filename) [
-        ".zip"
-        ".rar"
-        ".7z"
-      ];
+      filename = builtins.baseNameOf (lib.getName src);
     in
     pkgs.stdenv.mkDerivation {
       name = "${filename}-font";
-      src =
-        if isArchived then
-          pkgs.fetchzip {
-            inherit url sha256;
-            stripRoot = false;
-          }
-        else
-          pkgs.fetchurl { inherit url sha256; };
-      dontUnpack = !isArchived;
+      inherit src;
+      dontUnpack = true;
       installPhase = ''
         mkdir -p $out/share/fonts/${fontFolder}
-        ${
-          if isArchived then
-            ''find . -type f \( -iname "*.ttf" -o -iname "*.otf" \) -exec cp {} $out/share/fonts/${fontFolder}/ \;''
-          else
-            "cp $src $out/share/fonts/${fontFolder}/${filename}.ttf"
-        }
+        find "$src" -type f \( -iname "*.ttf" -o -iname "*.otf" \) -exec cp {} $out/share/fonts/${fontFolder}/ \;
         chmod -R 644 $out/share/fonts/${fontFolder}/*
       '';
     };
-
-  mkTrueType = mkFont "truetype";
+  mkTrueType' = mkFont' "truetype";
 
   mkMseFontPack =
-    name: repo: sha256:
+    name: repo:
     pkgs.stdenv.mkDerivation {
       inherit name;
-      src = pkgs.fetchFromGitHub {
-        owner = "MagicSetEditorPacks";
-        inherit repo sha256;
-        rev = "main";
-      };
+      src = fetchGitTree sources.fonts.mse."${repo}";
       installPhase = ''
         runHook preInstall
         mkdir -p $out/share/fonts
@@ -79,17 +48,13 @@ let
       '';
     };
 
-  mse-fonts-magic =
-    mkMseFontPack "mse-fonts-magic" "Full-Magic-Pack"
-      "sha256-F/edzMtpmI+6kt4WRQSN2rw1Bk2nw+A+zRChHb8Uu4o=";
+  mse-fonts-magic = mkMseFontPack "mse-fonts-magic" "magic";
 
-  mse-fonts-other =
-    mkMseFontPack "mse-fonts-other" "Full-Non-Magic-Pack"
-      "sha256-U8l7p/6AKzYumRGR7tYlZN9pJ90PwcOy+EB0N4lkF8I=";
+  mse-fonts-other = mkMseFontPack "mse-fonts-other" "other";
 
-  keyrune-font = mkTrueType "https://raw.githubusercontent.com/andrewgioia/Keyrune/master/fonts/keyrune.ttf" "sha256-Ao/JhdqQ7NQuBcIjinpfVEb4G0skC9d5oEnMrZb3i2U=";
+  keyrune-font = mkTrueType' (fetchGitTree sources.fonts.keyrune |> getFile "fonts/keyrune.ttf");
 
-  mana-font = mkTrueType "https://raw.githubusercontent.com/andrewgioia/Mana/master/fonts/mana.ttf" "06cqlrphdvm9hvg5qgrkczfzwb6f7gbvs5j2fdk9hzxgq3vhjf52";
+  mana-font = mkTrueType' (fetchGitTree sources.fonts.mana |> getFile "fonts/mana.ttf");
 
   dafont-pack = pkgs.stdenv.mkDerivation {
     name = "dafont-pack";

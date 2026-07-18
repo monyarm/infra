@@ -1,0 +1,34 @@
+[git]
+xvoland.extract = "https://github.com/xvoland/Extract"
+firefox.userChrome.firefox-xtra-compact = "https://github.com/CarterSnich/firefox-xtra-compact"
+mpv.interactive-video = "https://github.com/mosquito-byte/mpv-interactive-video"
+mpv.zenwarr-config = "https://github.com/zenwarr/mpv-config"
+mpv.coverart = "https://github.com/CogentRedTester/mpv-coverart"
+mpv.lrc = "https://github.com/guidocella/mpv-lrc"
+mpv.scroll-list = "https://github.com/CogentRedTester/mpv-scroll-list"
+mpv.dvd-browser = "https://github.com/CogentRedTester/mpv-dvd-browser"
+mpv.segment-linking = "https://github.com/CogentRedTester/mpv-segment-linking"
+mpv.sponsorblock_minimal = "https://codeberg.org/jouni/mpv_sponsorblock_minimal"
+mpv.mpv360 = "https://github.com/kasper93/mpv360"
+mpv.jgreco-scripts = "https://github.com/jgreco/mpv-scripts"
+mpv.celebi = "https://github.com/po5/celebi"
+mpv.evafast = "https://github.com/po5/evafast"
+mpv.memo = "https://github.com/po5/memo"
+mpv.thumbfast = "https://github.com/po5/thumbfast"
+mpv.trackselect = "https://github.com/po5/trackselect"
+mpv.AN3223-dotfiles = "https://github.com/AN3223/dotfiles"
+mpv.quality-menu = "https://github.com/christoph-heinrich/mpv-quality-menu"
+mpv.uosc = "https://github.com/tomasklaen/uosc"
+mpv.ArtCNN = "https://github.com/Artoriuz/ArtCNN"
+fonts.mse.magic = "https://github.com/MagicSetEditorPacks/Full-Magic-Pack"
+fonts.mse.other = "https://github.com/MagicSetEditorPacks/Full-Non-Magic-Pack"
+fonts.keyrune = "https://github.com/andrewgioia/Keyrune"
+fonts.mana = "https://github.com/andrewgioia/Mana"
+
+[git-tag]
+node-datachannel = "https://github.com/murat-dogan/node-datachannel"
+mpv.mpris = "https://github.com/hoyon/mpv-mpris"
+
+# NPM Support currently broken
+#[npm]
+#node-datachannel-npm = "node-datachannel"

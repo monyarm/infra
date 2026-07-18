@@ -87,6 +87,7 @@
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      _module.args.sources = import ./sources.nix;
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -107,9 +108,11 @@
             inherit system;
             inherit (inputs.self.lib) overlays;
           };
+          sources = import ./sources.nix;
           legacyPackages = import ./packages {
             inherit pkgs;
             inherit (pkgs) lib;
+            inherit sources;
           };
         in
         {

@@ -32,6 +32,88 @@ let
 
     rec {
 
+      fetchGitTree =
+        {
+          url,
+          rev,
+          hash ? null,
+          sha1 ? null,
+          name ? "${lib.sources.urlToName url}-git-${args.date or rev}",
+          ...
+        }@args:
+        let
+          targetHash =
+            if hash != null then
+              hash
+            else if sha1 != null then
+              sha1
+            else
+              throw "fetchGitTree: You must provide either 'hash' or 'sha1'";
+
+          # Filter out our custom arguments
+          cleanArgs = removeAttrs args [
+            "url"
+            "rev"
+            "hash"
+            "sha1"
+            "name"
+            "files"
+          ];
+
+          # Since we don't have stdenv, we build our own basic PATH
+          binPath = pkgs.lib.makeBinPath [
+            pkgs.git
+            pkgs.coreutils
+          ];
+        in
+        derivation (
+          cleanArgs
+          // {
+            inherit name;
+
+            # Explicitly choose the execution platform
+            system = args.system or pkgs.stdenv.hostPlatform.system;
+
+            # Tell Nix we are running an RFC0133 Git-Hashed FOD
+            outputHashMode = "git";
+            outputHashAlgo = "sha1";
+            outputHash = targetHash;
+
+            # Bare-metal derivations require you to explicitly pass the builder executable and its args
+            builder = "${pkgs.bash}/bin/bash";
+            args = [
+              "-e" # Exit on any command failure
+              (pkgs.writeText "fetch-git-tree-builder.sh" ''
+                # Set up our bare-metal environment path
+                export PATH="${binPath}"
+                export GIT_SSL_CAINFO="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+
+                # 1. Initialize cleanly
+                git init -q --template=/var/empty "$out"
+                cd "$out"
+
+                git config advice.detachedHead false
+                git config advice.defaultBranchName false
+
+                # 2. Add remote and fetch quietly
+                git remote add origin "${url}"
+                git -c core.hooksPath=/dev/null fetch --progress --depth 1 origin "${rev}" 2>&1
+
+                # 3. Checkout files
+                git -c core.hooksPath=/dev/null reset --hard  FETCH_HEAD
+
+                # # 4. If submodules exist, fetch them recursively
+                # if [ -f .gitmodules ]; then
+                #   git submodule update --init --recursive
+                # fi
+
+                # 5. Cleanup git metadata
+                rm -rf .git
+              '')
+            ];
+          }
+        );
+
       fetchzipNoSubst =
         args:
         (pkgs.fetchzip args).overrideAttrs (_oldAttrs: {
