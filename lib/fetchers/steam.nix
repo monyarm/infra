@@ -4,7 +4,7 @@
   fetchzipNoSubst,
   ...
 }:
-{
+rec {
   fetchProtonGE =
     version: hash:
     let
@@ -193,4 +193,114 @@
           map (n: "${n}.jpg") cardNames;
     in
     splitFiles fileList baseDrv;
+
+steamCodeScript = pkgs.writeText "steam_code.py" ''
+    import base64
+    import hmac
+    import os
+    import struct
+    import time
+
+    def generate_steam_code(shared_secret_b64, timestamp=None):
+        secret = base64.b64decode(shared_secret_b64)
+        if timestamp is None:
+            timestamp = int(time.time())
+
+        time_buffer = struct.pack(">Q", timestamp // 30)
+        hmac_hash = hmac.new(secret, time_buffer, "sha1").digest()
+
+        start = hmac_hash[19] & 0x0F
+        four_bytes = struct.unpack(">I", hmac_hash[start:start + 4])[0] & 0x7FFFFFFF
+
+        alphabet = "23456789BCDFGHJKMNPQRTVWXY"
+        code = []
+        for _ in range(5):
+            code.append(alphabet[four_bytes % len(alphabet)])
+            four_bytes //= len(alphabet)
+
+        return "".join(code)
+
+    if __name__ == "__main__":
+        secret = os.environ.get("STEAM_SHARED_SECRET")
+        if not secret:
+            raise ValueError("STEAM_SHARED_SECRET environment variable is missing")
+        print(generate_steam_code(secret))
+  '';
+
+  fetchSteam = { 
+    appId, 
+    depotId ? null, 
+    manifestId ? null, 
+    pubfileId ? null,
+    ugcId ? null,
+    sha256,
+    filelist ? null,
+    os ? "linux",
+    osarch ? null,
+    language ? null
+  }@args:
+    pkgs.stdenv.mkDerivation {
+      name = "steam-${toString (args.depotId or args.pubfileId or args.ugcId or "ERROR")}-dl";
+
+      dontUnpack = true;
+      preferLocalBuild = true;
+
+      nativeBuildInputs = [ 
+        pkgs.depotdownloader 
+        pkgs.python3 
+      ];
+
+      APP_ID = toString appId;
+      DEPOT_ID = toString depotId;
+      MANIFEST_ID = toString manifestId;
+      PUBFILE_ID = toString pubfileId;
+      ugcId = toString ugcId;
+
+      passAsFile = ["filelist"];
+
+      buildPhase = ''
+        runHook preBuild
+
+        source /secrets
+        export HOME=$TMPDIR/HOME
+
+        FILELIST_ARG=""
+        if [ -n "$filelistPath" ]; then
+          FILELIST_ARG="-filelist $filelistPath"
+        fi
+
+        if [ -n "$DEPOT_ID" ] && [ -n "$MANIFEST_ID" ]; then
+          ARGS="-depot $DEPOT_ID -manifest $MANIFEST_ID"
+        elif [ -n "$PUBFILE_ID" ]; then
+          ARGS="-pubfile $PUBFILE_ID"
+        else
+          ARGS="-ugc $UGC_ID"  
+        fi
+
+        if [ -n "$os" ]; then
+          ARGS="$ARGS -os $os"
+        fi
+        if [ -n "$osarch" ]; then
+          ARGS="$ARGS -osarch $osarch"
+        fi
+        if [ -n "$language" ]; then
+          ARGS="$ARGS -language $language"
+        fi
+
+        DepotDownloader \
+          -username "$STEAM_USERNAME" \
+          -password "$STEAM_PASSWORD" \
+          -remember-password -no-mobile \
+          -app "$APP_ID" \
+          $FILELIST_ARG \
+          $ARGS \
+          -dir "$out" <<< "$(python3 ${steamCodeScript})"
+
+        runHook postBuild
+      '';
+
+      outputHashMode = "recursive";
+      outputHashAlgo = "sha256";
+      outputHash = sha256; 
+    };
 }

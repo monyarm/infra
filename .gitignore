@@ -27,4 +27,6 @@ input.txt
 wallpaper-count.txt*
 nix.profile.zstd
 benchmark.txt
+.env
+.direnv
 # keep-sorted end

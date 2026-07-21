@@ -7,6 +7,8 @@
   ...
 }:
 let
+  sources = import ../sources.nix { };
+
   format = import ./format.nix ({ inherit pkgs lib; } // strings);
   constants = import ./constants.nix { inherit lib; };
   strings = import ./strings.nix ({ inherit pkgs lib; } // constants // misc);
@@ -28,7 +30,9 @@ let
     inherit pkgs;
     inherit (pkgs) lib system;
   };
-  fetchers = import ./fetchers.nix ({ inherit pkgs; } // constants // strings // imp // files);
+  fetchers = import ./fetchers.nix (
+    { inherit pkgs sources; } // constants // strings // imp // files
+  );
   optimize = import ./optimize.nix (
     {
       inherit pkgs;

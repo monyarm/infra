@@ -5,6 +5,7 @@
   urlEncode,
   splitFiles,
   getFileNameFromUrl,
+  sources,
   ...
 }:
 let
@@ -23,8 +24,9 @@ let
         splitFiles
         getFileNameFromUrl
         userAgent
+        sources
         ;
-      inherit (functions) fetchzipNoSubst;
+      inherit (functions) fetchzipNoSubst fetchGitTree;
     })
   ) { } (builtins.attrNames (builtins.readDir ./fetchers));
 

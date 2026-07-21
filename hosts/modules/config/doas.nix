@@ -1,4 +1,9 @@
-{ dirs, parallel, ... }:
+{
+  dirs,
+  parallel,
+  pkgs,
+  ...
+}:
 let
   rootless = [
     # taken from my current doas.conf, should be updated to reflect the paths in the nix store when these are added there

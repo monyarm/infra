@@ -35764,13 +35764,13 @@
       other = {
         date = "2026-06-11";
         files = [
-          "\"Other - Fonts/Yugioh - Comic/DF\302\241=\302\241+-)\302\253--^W7_0.ttc\""
-          "\"Other - Fonts/Yugioh - Comic/DF\303\261\303\261\303\261Y\342\226\214\342\226\214\342\226\214\342\226\214\342\226\214+\342\226\214\302\275-^_0.ttc\""
-          "\"Other - Fonts/Yugioh - Series 10/\345\215\216\345\272\267\345\224\220\351\243\216\351\232\266W5-GB.ttc\""
-          "\"Other - Fonts/Yugioh - Series 10/\345\215\216\345\272\267\345\224\220\351\243\216\351\232\266W5.TTF\""
-          "\"data/CustomRPG-D&D-Statcards-Big.mse-style/C\303\263pia de darkbrown.png\""
-          "\"data/CustomRPG-D&D-Statcards-Big.mse-style/C\303\263pia de purple.png\""
-          "\"data/pokemon-symbols.mse-symbol-font/\303\227.png\""
+          "\"Other - Fonts/Yugioh - Comic/DF302241=302241+-)302253--^W7_0.ttc\""
+          "\"Other - Fonts/Yugioh - Comic/DF303261303261303261Y342226214342226214342226214342226214342226214+342226214302275-^_0.ttc\""
+          "\"Other - Fonts/Yugioh - Series 10/345215216345272267345224220351243216351232266W5-GB.ttc\""
+          "\"Other - Fonts/Yugioh - Series 10/345215216345272267345224220351243216351232266W5.TTF\""
+          "\"data/CustomRPG-D&D-Statcards-Big.mse-style/C303263pia de darkbrown.png\""
+          "\"data/CustomRPG-D&D-Statcards-Big.mse-style/C303263pia de purple.png\""
+          "\"data/pokemon-symbols.mse-symbol-font/303227.png\""
           ".DS_Store"
           "Other - Fonts/7th Sea/Cheltenham_Bold_Condensed_BT_0.ttf"
           "Other - Fonts/7th Sea/Cheltenham_ITC_Book_BT_0.ttf"
@@ -44642,6 +44642,132 @@
       };
     };
   };
+  itch-dl = {
+    date = "2025-07-14";
+    files = [
+      ".eslintrc.json"
+      ".github/workflows/ci.yml"
+      ".github/workflows/format.yml"
+      ".github/workflows/release.yml"
+      ".gitignore"
+      ".prettierignore"
+      ".prettierrc.json"
+      "CONTRIBUTING.md"
+      "LICENSE"
+      "README.md"
+      "package-lock.json"
+      "package.json"
+      "src/api.ts"
+      "src/cli-progress.d.ts"
+      "src/cli.ts"
+      "src/config.ts"
+      "src/consts.ts"
+      "src/downloader.ts"
+      "src/handlers.ts"
+      "src/index.ts"
+      "src/infobox.ts"
+      "src/keys.ts"
+      "src/utils.ts"
+      "tests/test-config.ts"
+      "tests/test-downloader.ts"
+      "tests/test-handlers.ts"
+      "tests/test-infobox.ts"
+      "tests/test-keys.ts"
+      "tests/test-utils.ts"
+      "tsconfig.json"
+    ];
+    hash = "b116b4a0672a267f7e8a4f53b6e8e7235570fd54";
+    ref = "refs/tags/v0.6.6";
+    rev = "2efbab17d9dcee88b7adf5f4a279df99c48dd418";
+    tag = "v0.6.6";
+    type = "git-tag";
+    url = "https://github.com/Wal33D/itch-dl.git";
+  };
+  itchio-downloader = {
+    date = "2026-03-24";
+    files = [
+      ".github/dependabot.yml"
+      ".github/workflows/ci.yml"
+      ".gitignore"
+      ".npmignore"
+      ".prettierrc"
+      "CHANGELOG.md"
+      "CONTRIBUTING.md"
+      "LICENSE.md"
+      "README.md"
+      "aur/.SRCINFO"
+      "aur/PKGBUILD"
+      "docs/API-Reference.md"
+      "docs/Advanced-Usage.md"
+      "docs/CLI.md"
+      "docs/Debugging.md"
+      "docs/Installation.md"
+      "docs/README.md"
+      "docs/Roadmap.md"
+      "eslint.config.js"
+      "jest.config.js"
+      "package.json"
+      "pnpm-lock.yaml"
+      "src/__tests__/cli.test.ts"
+      "src/__tests__/integration.test.ts"
+      "src/cli.ts"
+      "src/fileUtils/__tests__/createFile.test.ts"
+      "src/fileUtils/__tests__/deleteDirectoryOrFile.test.ts"
+      "src/fileUtils/__tests__/renameFile.test.ts"
+      "src/fileUtils/__tests__/verifyFile.test.ts"
+      "src/fileUtils/__tests__/waitForFile.test.ts"
+      "src/fileUtils/clearDirectory.ts"
+      "src/fileUtils/createDirectory.ts"
+      "src/fileUtils/createFile.ts"
+      "src/fileUtils/createFileReadOnly.ts"
+      "src/fileUtils/deleteDirectoryOrFile.ts"
+      "src/fileUtils/destroy.ts"
+      "src/fileUtils/fileUtilsTypes.ts"
+      "src/fileUtils/makeWritable.ts"
+      "src/fileUtils/readAndParseJsonFiles.ts"
+      "src/fileUtils/readFile.ts"
+      "src/fileUtils/renameFile.ts"
+      "src/fileUtils/resetDirectory.ts"
+      "src/fileUtils/verifyFile.ts"
+      "src/fileUtils/waitForFile.ts"
+      "src/index.ts"
+      "src/itchDownloader/__tests__/cookieCache.test.ts"
+      "src/itchDownloader/__tests__/downloadCollection.test.ts"
+      "src/itchDownloader/__tests__/downloadGame.test.ts"
+      "src/itchDownloader/__tests__/downloadGameDirect.test.ts"
+      "src/itchDownloader/__tests__/downloadGameHtml5.test.ts"
+      "src/itchDownloader/__tests__/downloadJam.test.ts"
+      "src/itchDownloader/__tests__/fetchItchGameProfile.test.ts"
+      "src/itchDownloader/__tests__/httpDownload.test.ts"
+      "src/itchDownloader/__tests__/itchApiClient.test.ts"
+      "src/itchDownloader/__tests__/parseItchGameMetadata.test.ts"
+      "src/itchDownloader/__tests__/parseItchGameUrl.test.ts"
+      "src/itchDownloader/__tests__/resumeDownload.test.ts"
+      "src/itchDownloader/cookieCache.ts"
+      "src/itchDownloader/downloadCollection.ts"
+      "src/itchDownloader/downloadGame.ts"
+      "src/itchDownloader/downloadGameApi.ts"
+      "src/itchDownloader/downloadGameDirect.ts"
+      "src/itchDownloader/downloadGameHtml5.ts"
+      "src/itchDownloader/downloadJam.ts"
+      "src/itchDownloader/fetchItchGameProfile.ts"
+      "src/itchDownloader/httpDownload.ts"
+      "src/itchDownloader/initializeBrowser.ts"
+      "src/itchDownloader/initiateDownload.ts"
+      "src/itchDownloader/itchApiClient.ts"
+      "src/itchDownloader/parseItchGameMetadata.ts"
+      "src/itchDownloader/parseItchGameUrl.ts"
+      "src/itchDownloader/types.ts"
+      "src/types/cli.ts"
+      "tsconfig.json"
+    ];
+    hash = "324e125d2085d46d22b5b506c84dd46575282552";
+    ref = "refs/tags/v1.2.0";
+    rev = "893dfe371abf021c8ade0316dc668917ff0e7f1b";
+    tag = "v1.2.0";
+    type = "git-tag";
+    url = "https://github.com/Wal33D/itchio-downloader.git";
+  };
   mpv = {
     AN3223-dotfiles = {
       date = "2026-04-02";
@@ -45494,6 +45620,37 @@
     tag = "v0.32.3";
     type = "git-tag";
     url = "https://github.com/murat-dogan/node-datachannel.git";
+  };
+  wad = {
+    aoddoom = {
+      game = "themes/aod/aoddoom2.zip";
+      hash = "sha256-6Q/TwELe+dxkEZKHuve7xBqDCkMC/ridV4VtEm0rcu4=";
+      type = "idgames";
+      version = "Sun, 30 Nov 2003 18:50:31 GMT";
+    };
+    paranoic = {
+      game = "levels/doom2/Ports/p-r/paranoic.zip";
+      hash = "sha256-4iOiRU2YGj8cWoeoKUa98nmEjmVN6Triuwz2kgTAO7c=";
+      type = "idgames";
+      version = "Sat, 04 Nov 2017 00:58:47 GMT";
+    };
+    paranoid = {
+      game = "levels/doom2/Ports/p-r/paranoid.zip";
+      hash = "sha256-+sU7YsMb9/ewD4CmeoHLfRYxLcZkEQnIiENgGp2gyWk=";
+      type = "idgames";
+      version = "Thu, 02 Dec 2010 16:51:57 GMT";
+    };
+    simonsdestiny = {
+      files = [
+        "1.4 Changelog.txt"
+        "Castlevania.ipk3"
+        "README.txt"
+      ];
+      hash = "sha256-I0P0qTt5Afs6316Wd6CHYQ4lNqejAE3eNd1Y7KN8YsA=";
+      type = "itch";
+      url = "https://batandy.itch.io/simonsdestiny";
+      version = "2374364:02582b1d9a134355eb4771137c2eac26:2020-06-15T17:02:17Z";
+    };
   };
   xvoland = {
     extract = {

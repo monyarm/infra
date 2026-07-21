@@ -4,7 +4,7 @@
   ...
 }:
 {
-  fetchDosbox =
+  buildDosBox =
     {
       pname,
       version,

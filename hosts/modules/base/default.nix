@@ -80,4 +80,10 @@
     };
   };
 
+  systemd.services.nix-daemon = {
+    serviceConfig = {
+      EnvironmentFile = "-/run/nix-daemon-secrets.env";
+    };
+  };
+
 }

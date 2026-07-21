@@ -29,6 +29,14 @@ fonts.mana = "https://github.com/andrewgioia/Mana"
 node-datachannel = "https://github.com/murat-dogan/node-datachannel"
 mpv.mpris = "https://github.com/hoyon/mpv-mpris"
 
+[itch]
+wad.simonsdestiny = "https://batandy.itch.io/simonsdestiny"
+
+[idgames]
+wad.paranoid = "levels/doom2/Ports/p-r/paranoid.zip"
+wad.paranoic = "levels/doom2/Ports/p-r/paranoic.zip"
+wad.aoddoom = "themes/aod/aoddoom2.zip"
+
 # NPM Support currently broken
 #[npm]
 #node-datachannel-npm = "node-datachannel"

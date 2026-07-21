@@ -115,7 +115,7 @@
             inherit sources;
           };
         in
-        {
+        rec {
           inherit legacyPackages;
           packages = pkgs.lib.filterAttrs (_name: pkgs.lib.isDerivation) legacyPackages;
 
@@ -192,6 +192,18 @@
                 includes = [ "*.qml" ];
               };
             };
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              direnv
+              nix-direnv # Added for optimized environment caching
+              sops
+              jq
+            ];
+
+            shellHook = ''
+              echo "❄️ Optimized Nix shell ready."
+            '';
+          };
         };
     };
 }

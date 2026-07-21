@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 import base64
+import fnmatch
 import hashlib
 import io
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import urllib.request
 import zipfile
 from urllib.parse import urlparse
+import urllib.parse
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
 
@@ -73,11 +76,6 @@ def load_previous_nix(nix_path):
         print(f"Warning: Could not parse old {nix_path} ({e}). Performing full calculation.", file=sys.stderr)
         return {}
 
-
-def download_file(url):
-    req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
-    with urllib.request.urlopen(req) as response:
-        return response.read()
 
 
 def calculate_sri_hash(data):
@@ -332,12 +330,14 @@ def process_git_tag(name, url):
 def make_nix_src_expr(info):
     t = info["type"]
     if t in ["git", "git-tag"]:
-        # Match your environment's custom fetcher convention
         return f'customLib.fetchGitTree {{ url = "{info["url"]}"; rev = "{info["rev"]}"; hash = "{info["hash"]}"; date = "{info["date"]}"; }}'
     elif t == "zip":
         return f'pkgs.fetchzip {{ url = "{info["url"]}"; hash = "{info["hash"]}"; }}'
     elif t == "url":
         return f'pkgs.fetchurl {{ url = "{info["url"]}"; hash = "{info["hash"]}"; }}'
+    elif t == "idgames":
+        game_val = str(info["game"]) if isinstance(info["game"], int) else f'"{info["game"]}"'
+        return f'customLib.fetchIdGames {{ game = {game_val}; version = "{info["version"]}"; hash = "{info["hash"]}"; }}'
     raise ValueError(f"Unsupported parent source type '{t}'")
 
 
@@ -371,7 +371,6 @@ def process_go(name, source_name, results, previous_sources):
         
     print(f"Updating [go] {name} using source {source_name}...")
     
-    # We must construct a clean environment that brings in customLib to evaluate make_nix_src_expr
     src_expr = make_nix_src_expr(results[source_name])
     nix_expr = (
         f"let\n"
@@ -452,6 +451,250 @@ def process_custom(fetcher_name, name, url):
     }
 
 
+def list_itch_uploads(url):
+    api_key = os.environ.get("ITCH_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "ITCH_API_KEY is not set. itch.io's API requires a key for every "
+            "operation, even public games. Get one at https://itch.io/user/settings/api-keys."
+        )
+
+    data_json_url = url.rstrip('/') + '/data.json'
+    game_id = json.loads(download_file(data_json_url))["id"]
+
+    uploads_url = f"https://api.itch.io/games/{game_id}/uploads?api_key={api_key}"
+    uploads = json.loads(download_file(uploads_url))["uploads"]
+    return game_id, uploads
+
+
+def get_itch_metadata(url):
+    try:
+        _, uploads = list_itch_uploads(url)
+    except Exception as e:
+        print(f"  -> Couldn't read itch.io upload metadata ({e}); falling back to a real fetch to check.", file=sys.stderr)
+        return None
+
+    fingerprint = sorted(f"{u.get('id')}:{u.get('md5_hash')}:{u.get('updated_at')}" for u in uploads)
+    return "|".join(fingerprint)
+
+
+def select_itch_upload(uploads, platform, file_match="*"):
+    def matches_platform(u):
+        if u.get("type") != "default":
+            return True
+        return f"p_{platform}" in (u.get("traits") or [])
+
+    candidates = [
+        u for u in uploads
+        if matches_platform(u) and fnmatch.fnmatch(u.get("filename", ""), file_match)
+    ]
+    if not candidates:
+        seen = [(u.get("filename"), u.get("type"), u.get("traits")) for u in uploads]
+        raise ValueError(f"No upload matched platform={platform!r} fileMatch={file_match!r}. Uploads seen: {seen}")
+    return candidates[0]
+
+
+def fetch_itch_asset(name, url, system=None):
+    game_id, uploads = list_itch_uploads(url)
+    upload = select_itch_upload(uploads, system or "linux")
+
+    api_key = os.environ["ITCH_API_KEY"]
+    dl_url = f"https://api.itch.io/uploads/{upload['id']}/download?api_key={api_key}"
+    data = download_file(dl_url)
+    return data, upload["filename"]
+
+
+def replicate_fetchitch_output(data, filename, out_name):
+    for tool in (
+        ("unzip",) if filename.lower().endswith(".zip") else
+        ("tar",) if filename.lower().endswith((".tar.gz", ".tgz", ".tar.xz", ".txz")) else
+        ("7z",) if filename.lower().endswith((".rar", ".7z", ".exe")) else ()
+    ):
+        if not shutil.which(tool):
+            raise RuntimeError(f"'{tool}' is required to extract {filename} the same way fetchItch does, but isn't on PATH.")
+
+    work_dir = tempfile.mkdtemp(prefix="itch-work-")
+    out_dir = os.path.join(work_dir, out_name)
+    os.makedirs(out_dir, exist_ok=True)
+    src_dir = os.path.join(work_dir, "src")
+    os.makedirs(src_dir, exist_ok=True)
+    src_path = os.path.join(src_dir, filename)
+    with open(src_path, "wb") as f:
+        f.write(data)
+
+    lower = filename.lower()
+    if lower.endswith(".zip"):
+        subprocess.run(["unzip", "-q", src_path, "-d", out_dir], check=True)
+    elif lower.endswith((".tar.gz", ".tgz")):
+        subprocess.run(["tar", "-xzf", src_path, "-C", out_dir], check=True)
+    elif lower.endswith((".tar.xz", ".txz")):
+        subprocess.run(["tar", "-xJf", src_path, "-C", out_dir], check=True)
+    elif lower.endswith((".rar", ".7z", ".exe")):
+        subprocess.run(["7z", "x", src_path, f"-o{out_dir}"], check=True)
+    else:
+        shutil.copy(src_path, os.path.join(out_dir, filename))
+
+    return work_dir, out_dir
+
+
+def list_extracted_files(base_dir):
+    files = []
+    for root, _, filenames in os.walk(base_dir):
+        for fn in filenames:
+            files.append(os.path.relpath(os.path.join(root, fn), base_dir))
+    return sorted(files)
+
+
+def nar_sha256(path):
+    res = subprocess.run(["nix-hash", "--type", "sha256", "--base32", path], capture_output=True, text=True, check=True)
+    base32_hash = res.stdout.strip()
+    res2 = subprocess.run(["nix", "hash", "to-sri", "--type", "sha256", base32_hash], capture_output=True, text=True, check=True)
+    return res2.stdout.strip()
+
+
+def add_dir_to_nix_store(path):
+    res = subprocess.run(["nix-store", "--add-fixed", "--recursive", "sha256", path], capture_output=True, text=True, check=True)
+    return res.stdout.strip()
+
+
+def process_itch(name, url, previous_sources, system=None):
+    old = previous_sources.get(name)
+
+    print(f"Checking [itch] {name} from {url}...")
+    version = get_itch_metadata(url)
+
+    if version is not None and old and old.get("url") == url and old.get("version") == version:
+        print(f"  -> {name} unchanged (upload metadata matches); reusing cached hash, no download needed.")
+        return old
+
+    data, filename = fetch_itch_asset(name, url, system)
+
+    if version is None:
+        version = filename 
+        if old and old.get("url") == url and old.get("version") == version:
+            print(f"  -> {name} unchanged (filename matches); reusing cached hash.")
+            return old
+
+    print(f"  -> Rebuilding {name}'s output the way fetchItch does, to hash and seed the store...")
+    game_slug = os.path.basename(url.rstrip('/'))
+
+    work_dir, out_dir = replicate_fetchitch_output(data, filename, game_slug)
+    try:
+        files = list_extracted_files(out_dir)
+        h = nar_sha256(out_dir)
+        store_path = add_dir_to_nix_store(out_dir)
+        print(f"  -> Seeded {store_path}; `nix build` will reuse it instead of re-fetching and re-extracting.")
+    finally:
+        shutil.rmtree(work_dir, ignore_errors=True)
+
+    result = {
+        "type": "itch",
+        "url": url,
+        "hash": h,
+        "version": version,
+        "files": files,
+    }
+    if system:
+        result["platform"] = system
+    return result
+
+def download_file(url):
+    """Downloads a file using urllib, falling back to system curl if blocked by TLS fingerprinting."""
+    try:
+        headers = {'User-Agent': USER_AGENT}
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req) as response:
+            return response.read()
+    except urllib.error.HTTPError as e:
+        if e.code == 403:
+            # Fallback to system curl to bypass Python socket TLS/JA3 fingerprint rejections
+            cmd = ["curl", "-sL", "-A", USER_AGENT, url]
+            res = subprocess.run(cmd, capture_output=True, check=True)
+            return res.stdout
+        raise
+
+def get_idgames_mirror_version(filepath):
+    """
+    Queries an open idgames mirror directly, completely bypassing Doomworld's Cloudflare.
+    """
+    clean_path = filepath.lstrip('/')
+
+
+    mirrors = [
+      "ftp.fu-berlin.de/pc/games/idgames",
+      "youfailit.net/pub/idgames",
+      "ftpmirror.infania.net/pub/idgames",
+      "mirror.braindrainlan.nu/pub/idgames",
+      "files.xvertigox.com/idgames",
+      "lethe.chinstrap.org/idgames",
+      "mirrors.lug.mtu.edu/idgames",
+      "gamers.org/pub/idgames"
+    ];
+    
+    for mirror in mirrors:
+        url = f"https://{mirror}/{clean_path}"
+        try:
+            req = urllib.request.Request(url, method='HEAD', headers={'User-Agent': 'curl/7.88.1'})
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                last_modified = resp.headers.get('Last-Modified')
+                if last_modified:
+                    return last_modified
+        except Exception:
+            continue
+            
+    raise RuntimeError(f"Could not reach mirrors for {filepath}")
+
+def process_idgames(name, game, previous_sources):
+    old = previous_sources.get(name)
+
+    print(f"Checking [idgames] {name} for {game}...")
+
+    # Normalize to int if possible to align with lib.isInt evaluations in Nix
+    if str(game).isdigit():
+        game = int(game)
+        
+    is_id = isinstance(game, int)
+    
+    if is_id:
+        raise "Due to the API using cloudflare, it is currently possible to support idgames by id"
+
+    version = get_idgames_mirror_version(game)
+
+    # Compare current metadata against cached sources, avoid Nix builds if unchanged
+    if version and old and str(old.get("game")) == str(game) and old.get("version") == version:
+        print(f"  -> {name} unchanged (release date matches); reusing cached hash.")
+        return old
+
+    print(f"  -> Fetching hash for {name} via Nix build...")
+
+    game_val = str(game) if is_id else f'"{game}"'
+
+    nix_expr = (
+        f"let\n"
+        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  customLib = import ./lib {{\n"
+        f"    inherit pkgs;\n"
+        f"    inherit (pkgs) lib system;\n"
+        f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    config = {{}};\n"
+        f"  }};\n"
+        f"in\n"
+        f"  customLib.fetchIdGames {{\n"
+        f'    game = {game_val};\n'
+        f'    version = "{version}";\n'
+        f'    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";\n'
+        f"  }}"
+    )
+
+    h = extract_hash_from_nix_build(nix_expr, f"fetchIdGames ({name})")
+
+    return {
+        "type": "idgames",
+        "game": game,
+        "version": version,
+        "hash": h
+    }
+
 def to_nix_val(val, indent_level=0):
     indent = "  " * indent_level
     if isinstance(val, str):
@@ -496,7 +739,8 @@ def main():
     results = dict(previous_sources) if append_mode else {}
     has_errors = False
 
-    priority_sections = ["url", "zip", "git", "git-tag"]
+    # Insert idgames into the designated priority fetching queue
+    priority_sections = ["url", "zip", "git", "git-tag", "idgames"]
     custom_sections = [s for s in sources_data.keys() if s not in priority_sections and s not in ["go", "npm"]]
     ordered_sections = priority_sections + custom_sections + ["go", "npm"]
     
@@ -515,10 +759,15 @@ def main():
                     results[name] = process_git_tag(name, target)
                 elif section == "git":
                     results[name] = process_git(name, target)
+                elif section == "idgames":
+                    results[name] = process_idgames(name, target, previous_sources)
                 elif section == "go":
                     results[name] = process_go(name, target, results, previous_sources)
                 elif section == "npm":
                     results[name] = process_npm(name, target, results, previous_sources)
+                elif section.startswith("itch"):
+                    system = section.split('-', 1)[1] if '-' in section else None
+                    results[name] = process_itch(name, target, previous_sources, system)
                 else:
                     results[name] = process_custom(section, name, target)
             except Exception as e:
