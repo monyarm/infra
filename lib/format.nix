@@ -130,4 +130,36 @@ rec {
     v: if lib.isString v then "'${v}'" else lib.generators.mkValueStringDefault { } v
   );
 
+  /**
+    Converts a Nix attribute set to Valve's plain-text KeyValues format, e.g.
+    Steam's appmanifest_<id>.acf files: `"Key"` + two tabs + `"Value"` for
+    leaves, brace-delimited nested blocks for sections. This is NOT the same
+    format as shortcuts.vdf, which is a separate binary encoding.
+  */
+  toKeyValues =
+    attrs:
+    let
+      indentFor = depth: lib.concatStrings (lib.replicate depth "\t");
+
+      generateLines =
+        depth: attrs:
+        let
+          indent = indentFor depth;
+        in
+        lib.concatStringsSep "\n" (
+          lib.mapAttrsToList (
+            name: value:
+            if lib.isAttrs value then
+              lib.concatStringsSep "\n" [
+                "${indent}\"${name}\""
+                "${indent}{"
+                (generateLines (depth + 1) value)
+                "${indent}}"
+              ]
+            else
+              "${indent}\"${name}\"\t\t\"${toString value}\""
+          ) attrs
+        );
+    in
+    generateLines 0 attrs + "\n";
 }

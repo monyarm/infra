@@ -2,35 +2,72 @@
   pkgs,
   lib,
   getFileName,
+  removeExtension,
   parallel,
   ...
 }:
 rec {
-  # getImageDimensions:
-  #   Gets the width and height of an image using ImageMagick.
-  #   Type: getImageDimensions -> src -> { width, height }
-  getImageDimensions =
-    src:
-    let
-      dimensionsJson =
-        pkgs.runCommand "image-dimensions.json"
-          {
-            buildInputs = [
-              pkgs.imagemagick
-              pkgs.jq
-            ];
-            # Explicitly ensure this metadata step stays input-addressed
-            __contentAddressed = false;
-            allowSubstitutes = false;
-          }
-          ''
-            width=$(magick identify -format "%w" ${src})
-            height=$(magick identify -format "%h" ${src})
-            jq -n --arg w "$width" --arg h "$height" '{width: ($w | tonumber), height: ($h | tonumber)}' > $out
-          '';
-      dimensions = builtins.fromJSON (builtins.readFile dimensionsJson);
-    in
-    dimensions;
+  standardResolutions = {
+    "16:9" = [
+      {
+        w = 1280;
+        h = 720;
+      }
+      {
+        w = 1920;
+        h = 1080;
+      }
+      {
+        w = 2560;
+        h = 1440;
+      }
+      {
+        w = 3840;
+        h = 2160;
+      }
+      {
+        w = 7680;
+        h = 4320;
+      }
+    ];
+    "4:3" = [
+      {
+        w = 1024;
+        h = 768;
+      }
+      {
+        w = 1280;
+        h = 960;
+      }
+      {
+        w = 1600;
+        h = 1200;
+      }
+      {
+        w = 2048;
+        h = 1536;
+      }
+    ];
+    "21:9" = [
+      {
+        w = 2560;
+        h = 1080;
+      }
+      {
+        w = 3440;
+        h = 1440;
+      }
+      {
+        w = 5120;
+        h = 2160;
+      }
+    ];
+  };
+
+  capitalize =
+    s: lib.toUpper (lib.substring 0 1 s) + lib.substring 1 (lib.stringLength s) s;
+
+  foldAttrs = f: list: lib.foldl' (acc: x: acc // f x) { } list;
 
   image =
     let
@@ -56,138 +93,85 @@ rec {
       ];
 
       # Generate crop functions for each aspect ratio and gravity combination
-      generateCropFunctions = parallel (lib.foldl' (
-        acc: aspectRatio:
+      generateCropFunctions = foldAttrs (
+        aspectRatio:
         let
           normalizedName = aspectRatios.${aspectRatio};
-          # Generate cropAspectRatio function (e.g., crop16x9)
-          cropFunc = {
-            "crop${normalizedName}" = image.crop { inherit aspectRatio; };
-          };
-          # Generate cropAspectRatioGravity functions (e.g., crop16x9South)
-          gravityFuncs = parallel (lib.foldl' (
-            innerAcc: gravity:
-            let
-              capitalizedGravity =
-                lib.toUpper (lib.substring 0 1 gravity) + lib.substring 1 (lib.stringLength gravity) gravity;
-              funcName = "crop${normalizedName}${capitalizedGravity}";
-            in
-            innerAcc // { ${funcName} = image.crop { inherit aspectRatio gravity; }; }
-          ) { }) gravities;
         in
-        acc // cropFunc // gravityFuncs
-      ) { }) (lib.attrNames aspectRatios);
+        { "crop${normalizedName}" = image.crop { inherit aspectRatio; }; }
+        // foldAttrs (gravity: {
+          "crop${normalizedName}${capitalize gravity}" = image.crop { inherit aspectRatio gravity; };
+        }) gravities
+      ) (lib.attrNames aspectRatios);
 
       # Generate grow functions for each aspect ratio and gravity combination
-      generateGrowFunctions = parallel (lib.foldl' (
-        acc: aspectRatio:
+      generateGrowFunctions = foldAttrs (
+        aspectRatio:
         let
           normalizedName = aspectRatios.${aspectRatio};
-          # Generate growAspectRatio function (e.g., grow16x9)
-          growFunc = {
-            "grow${normalizedName}" = image.grow { inherit aspectRatio; };
-          };
-          # Generate growAspectRatio' function with color parameter (e.g., grow16x9')
-          growFuncPrime = {
-            "grow${normalizedName}'" = color: image.grow { inherit aspectRatio color; };
-          };
-          # Generate growAspectRatioGravity functions (e.g., grow16x9South)
-          gravityFuncs = parallel (lib.foldl' (
-            innerAcc: gravity:
-            let
-              capitalizedGravity =
-                lib.toUpper (lib.substring 0 1 gravity) + lib.substring 1 (lib.stringLength gravity) gravity;
-              funcName = "grow${normalizedName}${capitalizedGravity}";
-              funcNamePrime = "grow${normalizedName}${capitalizedGravity}'";
-            in
-            innerAcc
-            // {
-              ${funcName} = image.grow { inherit aspectRatio gravity; };
-            }
-            // {
-              ${funcNamePrime} = color: image.grow { inherit aspectRatio gravity color; };
-            }
-          ) { }) gravities;
         in
-        acc // growFunc // growFuncPrime // gravityFuncs
-      ) { }) (lib.attrNames aspectRatios);
+        {
+          "grow${normalizedName}" = image.grow { inherit aspectRatio; };
+          "grow${normalizedName}'" = color: image.grow { inherit aspectRatio color; };
+        }
+        // foldAttrs (gravity: {
+          "grow${normalizedName}${capitalize gravity}" = image.grow { inherit aspectRatio gravity; };
+          "grow${normalizedName}${capitalize gravity}'" =
+            color: image.grow { inherit aspectRatio gravity color; };
+        }) gravities
+      ) (lib.attrNames aspectRatios);
 
       # Generate growEdge functions for each aspect ratio and gravity combination
-      generateGrowEdgeFunctions = parallel (lib.foldl' (
-        acc: aspectRatio:
+      generateGrowEdgeFunctions = foldAttrs (
+        aspectRatio:
         let
           normalizedName = aspectRatios.${aspectRatio};
-          # Generate growEdgeAspectRatio function (e.g., growEdge16x9)
-          growEdgeFunc = {
-            "growEdge${normalizedName}" = image.growEdge { inherit aspectRatio; };
-          };
-          # Generate growEdgeAspectRatioGravity functions (e.g., growEdge16x9South)
-          gravityFuncs = parallel (lib.foldl' (
-            innerAcc: gravity:
-            let
-              capitalizedGravity =
-                lib.toUpper (lib.substring 0 1 gravity) + lib.substring 1 (lib.stringLength gravity) gravity;
-              funcName = "growEdge${normalizedName}${capitalizedGravity}";
-            in
-            innerAcc
-            // {
-              ${funcName} = image.growEdge { inherit aspectRatio gravity; };
-            }
-          ) { }) gravities;
         in
-        acc // growEdgeFunc // gravityFuncs
-      ) { }) (lib.attrNames aspectRatios);
+        { "growEdge${normalizedName}" = image.growEdge { inherit aspectRatio; }; }
+        // foldAttrs (gravity: {
+          "growEdge${normalizedName}${capitalize gravity}" = image.growEdge { inherit aspectRatio gravity; };
+        }) gravities
+      ) (lib.attrNames aspectRatios);
     in
     rec {
       # transform:
       #   Apply arbitrary ImageMagick transformations to an image.
-      #   Type: transform -> { args, ?nameSuffix, ?extension } -> src -> Derivation
+      #   Type: transform -> { args, ?nameSuffix, ?extension, ?preScript, ?extraAttrs } -> src -> Derivation
       transform =
         {
           args,
           nameSuffix ? "transformed",
           extension ? null,
+          preScript ? "",
+          extraAttrs ? { },
         }:
         src:
         let
-          # Extract name safely depending on exact type, bypassing string coercion on drvs
-          rawFileName =
-            if lib.isDerivation src then
-              src.name
-            else if builtins.isPath src || builtins.isString src then
-              builtins.baseNameOf src
-            else
-              throw "transform: Unsupported source type for input '${builtins.typeOf src}'";
-
-          # Extract leading store hashes out if a raw /nix/store/... path string leaked in
-          hasStoreHash = builtins.match "[a-z0-9]{32}-.*" rawFileName != null;
-          cleanFileName =
-            if hasStoreHash then
-              builtins.substring 33 (builtins.stringLength rawFileName) rawFileName
-            else
-              rawFileName;
+          cleanFileName = getFileName src;
+          baseName = removeExtension cleanFileName;
 
           fileNameParts = lib.splitString "." cleanFileName;
-          baseName =
-            if lib.length fileNameParts > 1 then
-              lib.concatStringsSep "." (lib.init fileNameParts)
-            else
-              cleanFileName;
-
           defaultExtension = if lib.length fileNameParts > 1 then lib.last fileNameParts else "png";
           finalExtension = if extension != null then extension else defaultExtension;
 
           name = "${baseName}-${nameSuffix}.${finalExtension}";
         in
         pkgs.runCommand name
-          {
-            buildInputs = [ pkgs.imagemagick ];
-            __contentAddressed = true;
-            allowSubstitutes = false;
-            outputHashAlgo = "sha256";
-            outputHashMode = "flat";
-          }
+          (
+            {
+              buildInputs = [
+                pkgs.imagemagick
+                pkgs.jq
+              ];
+              __contentAddressed = true;
+              allowSubstitutes = false;
+              outputHashAlgo = "sha256";
+              outputHashMode = "flat";
+            }
+            // extraAttrs
+          )
           ''
+            ${preScript}
             magick "${src}" ${args} -format ${finalExtension} +repage "$out"
           '';
 
@@ -205,6 +189,53 @@ rec {
           nameSuffix = "cropped-${aspectRatio}-${gravity}";
         } src;
 
+      # Shared by grow/growEdge. Dimension detection and target-size math run
+      # inside this same derivation (via preScript) instead of a separate
+      # IFD build, so there's no eval-time readFile/fromJSON round-trip.
+      # Type: growTransform -> { aspectRatio, gravity, nameSuffix, extraArgs } -> src -> Derivation
+      growTransform =
+        {
+          aspectRatio,
+          gravity,
+          nameSuffix,
+          extraArgs,
+        }:
+        src:
+        let
+          parts = lib.splitString ":" aspectRatio;
+          aspectW = lib.toInt (lib.elemAt parts 0);
+          aspectH = lib.toInt (lib.elemAt parts 1);
+          resolutions = standardResolutions.${aspectRatio} or [ ];
+        in
+        transform {
+          args = ''-resize "$finalWidth"x"$finalHeight" ${extraArgs} -gravity ${gravity} -extent "$finalWidth"x"$finalHeight"'';
+          nameSuffix = "${nameSuffix}-${aspectRatio}-${gravity}";
+          extraAttrs = {
+            RESOLUTIONS_JSON = builtins.toJSON resolutions;
+          };
+          preScript = ''
+            srcWidth=$(magick identify -format "%w" "${src}")
+            srcHeight=$(magick identify -format "%h" "${src}")
+
+            if (( srcWidth * ${toString aspectH} < srcHeight * ${toString aspectW} )); then
+              targetWidth=$(( (srcHeight * ${toString aspectW} + ${toString aspectH} - 1) / ${toString aspectH} ))
+              targetHeight=$srcHeight
+            else
+              targetWidth=$srcWidth
+              targetHeight=$(( (srcWidth * ${toString aspectH} + ${toString aspectW} - 1) / ${toString aspectW} ))
+            fi
+            targetArea=$(( targetWidth * targetHeight ))
+
+            finalDims=$(printf '%s' "$RESOLUTIONS_JSON" | jq -c \
+              --argjson ta "$targetArea" --argjson tw "$targetWidth" --argjson th "$targetHeight" \
+              'if length == 0 then {w: $tw, h: $th}
+               else (map({w, h, diff: ((.w * .h - $ta) | if . < 0 then -. else . end)}) | sort_by(.diff) | .[0] | {w, h})
+               end')
+            finalWidth=$(printf '%s' "$finalDims" | jq -r .w)
+            finalHeight=$(printf '%s' "$finalDims" | jq -r .h)
+          '';
+        } src;
+
       # growEdge:
       #   Expands an image to a specified aspect ratio by extending edge pixels (blur effect).
       #   Type: growEdge -> { aspectRatio, ?gravity } -> src -> Derivation
@@ -214,128 +245,10 @@ rec {
           gravity ? "center",
         }:
         src:
-        let
-          # Parse aspect ratio "W:H" into separate parts
-          parts = lib.splitString ":" aspectRatio;
-          aspectW = lib.toInt (lib.elemAt parts 0);
-          aspectH = lib.toInt (lib.elemAt parts 1);
-
-          # Get source image dimensions
-          dims = getImageDimensions src;
-          srcWidth = dims.width;
-          srcHeight = dims.height;
-
-          # Calculate source and target ratios
-          srcRatio = srcWidth / srcHeight;
-          targetRatio = aspectW / aspectH;
-
-          # Calculate what dimensions would be needed to grow to aspect ratio
-          targetWidth =
-            if srcRatio < targetRatio then builtins.ceil (srcHeight * aspectW / aspectH) else srcWidth;
-
-          targetHeight =
-            if srcRatio < targetRatio then srcHeight else builtins.ceil (srcWidth * aspectH / aspectW);
-
-          targetArea = targetWidth * targetHeight;
-
-          # Define standard resolutions for common aspect ratios
-          standardResolutions = {
-            "16:9" = [
-              {
-                w = 1280;
-                h = 720;
-              }
-              {
-                w = 1920;
-                h = 1080;
-              }
-              {
-                w = 2560;
-                h = 1440;
-              }
-              {
-                w = 3840;
-                h = 2160;
-              }
-              {
-                w = 7680;
-                h = 4320;
-              }
-            ];
-            "4:3" = [
-              {
-                w = 1024;
-                h = 768;
-              }
-              {
-                w = 1280;
-                h = 960;
-              }
-              {
-                w = 1600;
-                h = 1200;
-              }
-              {
-                w = 2048;
-                h = 1536;
-              }
-            ];
-            "21:9" = [
-              {
-                w = 2560;
-                h = 1080;
-              }
-              {
-                w = 3440;
-                h = 1440;
-              }
-              {
-                w = 5120;
-                h = 2160;
-              }
-            ];
-          };
-
-          resolutions = standardResolutions.${aspectRatio} or [ ];
-
-          # Find closest standard resolution by area difference
-          findClosest =
-            resolutions:
-            if resolutions == [ ] then
-              {
-                w = targetWidth;
-                h = targetHeight;
-              }
-            else
-              let
-                calcDiff =
-                  res:
-                  let
-                    resArea = res.w * res.h;
-                  in
-                  if resArea > targetArea then resArea - targetArea else targetArea - resArea;
-
-                withDiffs = parallel (map (res: {
-                  inherit res;
-                  diff = calcDiff res;
-                })) resolutions;
-                sorted = lib.sort (a: b: a.diff < b.diff) withDiffs;
-                closest = (lib.head sorted).res;
-              in
-              closest;
-
-          finalDims = findClosest resolutions;
-          finalWidth = finalDims.w;
-          finalHeight = finalDims.h;
-        in
-        transform {
-          args = lib.concatStringsSep " " [
-            "-resize \"${toString finalWidth}x${toString finalHeight}\""
-            "-virtual-pixel edge"
-            "-gravity ${gravity}"
-            "-extent \"${toString finalWidth}x${toString finalHeight}\""
-          ];
-          nameSuffix = "grown-edge-${aspectRatio}-${gravity}";
+        growTransform {
+          inherit aspectRatio gravity;
+          nameSuffix = "grown-edge";
+          extraArgs = "-virtual-pixel edge";
         } src;
 
       # grow:
@@ -348,128 +261,10 @@ rec {
           color ? null,
         }:
         src:
-        let
-          # Parse aspect ratio "W:H" into separate parts
-          parts = lib.splitString ":" aspectRatio;
-          aspectW = lib.toInt (lib.elemAt parts 0);
-          aspectH = lib.toInt (lib.elemAt parts 1);
-
-          # Get source image dimensions
-          dims = getImageDimensions src;
-          srcWidth = dims.width;
-          srcHeight = dims.height;
-
-          # Calculate source and target ratios
-          srcRatio = srcWidth / srcHeight;
-          targetRatio = aspectW / aspectH;
-
-          # Calculate what dimensions would be needed to grow to aspect ratio
-          targetWidth =
-            if srcRatio < targetRatio then builtins.ceil (srcHeight * aspectW / aspectH) else srcWidth;
-
-          targetHeight =
-            if srcRatio < targetRatio then srcHeight else builtins.ceil (srcWidth * aspectH / aspectW);
-
-          targetArea = targetWidth * targetHeight;
-
-          # Define standard resolutions for common aspect ratios
-          standardResolutions = {
-            "16:9" = [
-              {
-                w = 1280;
-                h = 720;
-              }
-              {
-                w = 1920;
-                h = 1080;
-              }
-              {
-                w = 2560;
-                h = 1440;
-              }
-              {
-                w = 3840;
-                h = 2160;
-              }
-              {
-                w = 7680;
-                h = 4320;
-              }
-            ];
-            "4:3" = [
-              {
-                w = 1024;
-                h = 768;
-              }
-              {
-                w = 1280;
-                h = 960;
-              }
-              {
-                w = 1600;
-                h = 1200;
-              }
-              {
-                w = 2048;
-                h = 1536;
-              }
-            ];
-            "21:9" = [
-              {
-                w = 2560;
-                h = 1080;
-              }
-              {
-                w = 3440;
-                h = 1440;
-              }
-              {
-                w = 5120;
-                h = 2160;
-              }
-            ];
-          };
-
-          resolutions = standardResolutions.${aspectRatio} or [ ];
-
-          # Find closest standard resolution by area difference
-          findClosest =
-            resolutions:
-            if resolutions == [ ] then
-              {
-                w = targetWidth;
-                h = targetHeight;
-              }
-            else
-              let
-                calcDiff =
-                  res:
-                  let
-                    resArea = res.w * res.h;
-                  in
-                  if resArea > targetArea then resArea - targetArea else targetArea - resArea;
-
-                withDiffs = map (res: {
-                  inherit res;
-                  diff = calcDiff res;
-                }) resolutions;
-                sorted = lib.sort (a: b: a.diff < b.diff) withDiffs;
-                closest = (lib.head sorted).res;
-              in
-              closest;
-
-          finalDims = findClosest resolutions;
-          finalWidth = finalDims.w;
-          finalHeight = finalDims.h;
-        in
-        transform {
-          args = lib.concatStringsSep " " [
-            "-resize \"${toString finalWidth}x${toString finalHeight}\""
-            "-background ${if color != null then "'${color}'" else "\"%[pixel:p{0,0}]\""}"
-            "-gravity ${gravity}"
-            "-extent \"${toString finalWidth}x${toString finalHeight}\""
-          ];
-          nameSuffix = "grown-${aspectRatio}-${gravity}";
+        growTransform {
+          inherit aspectRatio gravity;
+          nameSuffix = "grown";
+          extraArgs = "-background ${if color != null then "'${color}'" else "\"%[pixel:p{0,0}]\""}";
         } src;
 
       # removeBackground:
@@ -530,22 +325,7 @@ rec {
   extractFrames' =
     videoFile: timestamps: cropOpts:
     let
-      # 1. Safely extract the filename without forcing string-coercion hashes
-      rawVideoName =
-        if lib.isDerivation videoFile then
-          videoFile.name
-        else if builtins.isPath videoFile || builtins.isString videoFile then
-          builtins.baseNameOf videoFile
-        else
-          "video";
-
-      # 2. Clean out store hashes if a raw store path leaked in
-      hasStoreHash = builtins.match "[a-z0-9]{32}-.*" rawVideoName != null;
-      videoFileName =
-        if hasStoreHash then
-          builtins.substring 33 (builtins.stringLength rawVideoName) rawVideoName
-        else
-          rawVideoName;
+      videoFileName = getFileName videoFile;
 
       cropFilter =
         if

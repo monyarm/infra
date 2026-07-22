@@ -1,4 +1,10 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  fetchToolOutput,
+  extractArchiveSnippet,
+  ...
+}:
 let
 
   systemToItchPlatform =
@@ -76,65 +82,35 @@ in
     let
       cleanUrl = lib.removeSuffix "/" url;
       pname = builtins.baseNameOf cleanUrl;
+      name = if version != null then "${pname}-${version}" else pname;
     in
-    pkgs.stdenv.mkDerivation (
-      {
-        outputHashAlgo = "sha256";
-        outputHash = hash;
-        outputHashMode = "recursive";
+    fetchToolOutput {
+      inherit name;
+      outputHash = hash;
+      outputHashMode = "recursive";
+      nativeBuildInputs = [
+        pkgs.python3
+        pkgs.cacert
+      ];
+      useSecrets = true;
+      script = ''
+        export HOME=$TMPDIR
 
-        nativeBuildInputs = [
-          pkgs.python3
-          pkgs.cacert
-          pkgs.unzip
-          pkgs.gnutar
-          pkgs.p7zip
-        ];
+        if [ -z "''${ITCH_API_KEY:-}" ]; then
+          echo "Error: ITCH_API_KEY is not set in the environment."
+          echo "itch.io's API requires a key for every operation, even public games."
+          echo "Get one at https://itch.io/user/settings/api-keys and run e.g.:"
+          exit 1
+        fi
 
-        dontUnpack = true;
-        preferLocalBuild = true;
+        mkdir -p $TMPDIR/download
+        DOWNLOADED_FILE=$(python3 ${fetchItchUploadScript} "$TMPDIR/download" "${url}" "${platform}" "${fileMatch}")
 
-        buildPhase = ''
-          export HOME=$TMPDIR
-          source /secrets
-
-          if [ -z "$ITCH_API_KEY" ]; then
-            echo "Error: ITCH_API_KEY is not set in the environment."
-            echo "itch.io's API requires a key for every operation, even public games."
-            echo "Get one at https://itch.io/user/settings/api-keys and run e.g.:"
-            exit 1
-          fi
-
-          mkdir -p $TMPDIR/download
-          DOWNLOADED_FILE=$(python3 ${fetchItchUploadScript} "$TMPDIR/download" "${url}" "${platform}" "${fileMatch}")
-        '';
-
-        installPhase = ''
-          mkdir -p $out
-
-          echo "Extracting specified target: $DOWNLOADED_FILE"
-
-          case "$DOWNLOADED_FILE" in
-            *.zip)
-              unzip -q "$DOWNLOADED_FILE" -d $out
-              ;;
-            *.tar.gz|*.tgz)
-              tar -xzf "$DOWNLOADED_FILE" -C $out
-              ;;
-            *.tar.xz|*.txz)
-              tar -xJf "$DOWNLOADED_FILE" -C $out
-              ;;
-            *.rar|*.7z|*.exe)
-              7z x "$DOWNLOADED_FILE" -o$out
-              ;;
-            *)
-              echo "Raw binary, copy target directly to package layout root."
-              cp "$DOWNLOADED_FILE" "$out/$(basename "$DOWNLOADED_FILE")"
-              ;;
-          esac
-        '';
-
-      }
-      // (if version != null then { inherit version pname; } else { name = pname; })
-    );
+        mkdir -p "$out"
+        ${extractArchiveSnippet {
+          file = "$DOWNLOADED_FILE";
+          outDir = "$out";
+        }}
+      '';
+    };
 }

@@ -15,18 +15,18 @@ in
   };
   cthulhu = fetchCallOfCthulhu {
     name = "Cthulhu";
-    hash = "sha256-xBVEWvpAiqFIkCcXIQD3eoiAfBckaEFcBkdzXaGk3tY=";
+    sha256 = "sha256-xBVEWvpAiqFIkCcXIQD3eoiAfBckaEFcBkdzXaGk3tY=";
   };
   investigation = fetchCallOfCthulhu {
     name = "Investigation";
-    hash = "sha256-ssNQRyVcmaOpVfywQqNEjDkrs3U9WqTgidftEFiubec=";
+    sha256 = "sha256-ssNQRyVcmaOpVfywQqNEjDkrs3U9WqTgidftEFiubec=";
   };
   cultists = fetchCallOfCthulhu {
     name = "Cultists";
-    hash = "sha256-tvGEXgyWmz69hA7WjvoGovreIca8yP6D09Q1rjpJf8w=";
+    sha256 = "sha256-tvGEXgyWmz69hA7WjvoGovreIca8yP6D09Q1rjpJf8w=";
   };
   idol = fetchCallOfCthulhu {
     name = "Idol";
-    hash = "sha256-QN1np+kAbCUCj6Yz4PfREZVf2ROHKmMvC5l5IlgMusc=";
+    sha256 = "sha256-QN1np+kAbCUCj6Yz4PfREZVf2ROHKmMvC5l5IlgMusc=";
   };
 }

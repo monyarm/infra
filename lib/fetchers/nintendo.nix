@@ -3,6 +3,7 @@
   getFileNameFromUrl,
   userAgent,
   lib,
+  fetchHtmlThenCurl,
   ...
 }:
 {
@@ -19,30 +20,25 @@
         else
           name;
     in
-    pkgs.runCommand outName
-      {
-        outputHashMode = "recursive";
-        outputHashAlgo = "sha256";
+    fetchHtmlThenCurl {
+      name = outName;
+      outputHash = sha256;
+      outputHashMode = "recursive";
+      nativeBuildInputs = [ pkgs.curl ];
+      useSecrets = true;
+      extraAttrs = {
         preferLocalBuild = true;
-        outputHash = sha256;
-        buildInputs = [ pkgs.curl ];
-        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
         impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [ "NINTENDO_COOKIE" ];
-      }
-      ''
-        set -e
-        mkdir $out
-        source /secrets
-
+      };
+      resolve = ''
         FINAL_URL=$(curl -s -L -o /dev/null -w '%{url_effective}' \
           --user-agent "${userAgent}" \
           --cookie "$NINTENDO_COOKIE" \
           "${url}")
 
-        CLEAN_NAME=$(basename "''${FINAL_URL%%\?*}")
-
         sleep 2
-
-        curl -A "${userAgent}" --cookie "$NINTENDO_COOKIE" -o "$out/$CLEAN_NAME" -L "''${FINAL_URL}"
+        RESOLVED_URL="$FINAL_URL"
       '';
+      curlOpts = ''-A "${userAgent}" --cookie "$NINTENDO_COOKIE"'';
+    };
 }

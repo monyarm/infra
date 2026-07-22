@@ -26,13 +26,145 @@ let
         userAgent
         sources
         ;
-      inherit (functions) fetchzipNoSubst fetchGitTree;
+      inherit (functions)
+        fetchzipNoSubst
+        fetchGitTree
+        secretsPrelude
+        extractArchiveSnippet
+        fetchToolOutput
+        fetchHtmlThenCurl
+        downloadNamedUrls
+        ;
     })
   ) { } (builtins.attrNames (builtins.readDir ./fetchers));
 
   functions =
 
     rec {
+
+      secretsPrelude = useSecrets: if useSecrets then "source /secrets" else "";
+
+      # file/outDir are raw (unquoted) shell expressions, e.g.
+      # `file = "$DOWNLOADED_FILE"; outDir = "$out";` — this snippet quotes them.
+      extractArchiveSnippet =
+        { file, outDir }:
+        ''
+          filetype=$(${pkgs.file}/bin/file -b --mime-type "${file}")
+          echo "Detected mime type: $filetype"
+          case "$filetype" in
+            application/zip)
+              ${pkgs.unzip}/bin/unzip -q "${file}" -d "${outDir}"
+              ;;
+            application/gzip | application/x-gzip)
+              ${pkgs.gnutar}/bin/tar -xzf "${file}" -C "${outDir}"
+              ;;
+            application/x-xz)
+              ${pkgs.gnutar}/bin/tar -xJf "${file}" -C "${outDir}"
+              ;;
+            application/x-rar | application/x-7z-compressed | application/x-dosexec)
+              ${pkgs.p7zip}/bin/7z x "${file}" -o"${outDir}"
+              ;;
+            *)
+              echo "Raw file, copying directly."
+              ${pkgs.coreutils}/bin/cp "${file}" "${outDir}/$(${pkgs.coreutils}/bin/basename "${file}")"
+              ;;
+          esac
+        '';
+
+      fetchToolOutput =
+        {
+          name,
+          outputHash,
+          outputHashMode ? "recursive",
+          nativeBuildInputs ? [ ],
+          useSecrets ? false,
+          extraAttrs ? { },
+          script,
+        }:
+        pkgs.runCommand name
+          (
+            {
+              inherit
+                outputHash
+                outputHashMode
+                nativeBuildInputs
+                ;
+              outputHashAlgo = "sha256";
+            }
+            // extraAttrs
+          )
+          ''
+            ${secretsPrelude useSecrets}
+            ${script}
+          '';
+
+      # `resolve` must set $RESOLVED_URL for this function to curl itself, or
+      # set $DOWNLOADED_FILE directly if it already fetched the file (e.g. a
+      # mirror-fallback loop that has to curl each candidate to test it).
+      fetchHtmlThenCurl =
+        {
+          name,
+          outputHash,
+          outputHashMode ? "flat",
+          nativeBuildInputs ? [ pkgs.curl ],
+          useSecrets ? false,
+          extraAttrs ? { },
+          resolve,
+          curlOpts ? "",
+          extract ? false,
+        }:
+        pkgs.runCommand name
+          (
+            {
+              inherit
+                outputHash
+                outputHashMode
+                nativeBuildInputs
+                ;
+              outputHashAlgo = "sha256";
+              SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+            }
+            // extraAttrs
+          )
+          ''
+            set -e
+            ${secretsPrelude useSecrets}
+            ${resolve}
+            if [ -z "''${DOWNLOADED_FILE:-}" ]; then
+              DOWNLOADED_FILE="$TMPDIR/downloaded"
+              curl -fL ${curlOpts} "$RESOLVED_URL" -o "$DOWNLOADED_FILE"
+            fi
+            ${
+              if extract then
+                ''
+                  mkdir -p "$out"
+                  ${extractArchiveSnippet {
+                    file = "$DOWNLOADED_FILE";
+                    outDir = "$out";
+                  }}
+                ''
+              else if outputHashMode == "recursive" then
+                ''
+                  mkdir -p "$out"
+                  OUT_NAME=$(basename "''${RESOLVED_URL%%\?*}")
+                  cp "$DOWNLOADED_FILE" "$out/$OUT_NAME"
+                ''
+              else
+                ''
+                  cp "$DOWNLOADED_FILE" "$out"
+                ''
+            }
+          '';
+
+      # Per-file failures are non-fatal (some assets may not exist).
+      downloadNamedUrls =
+        files: outDirExpr:
+        lib.concatStringsSep "\n" (
+          lib.mapAttrsToList (
+            fname: url:
+            ''curl -fsSL "${url}" -o "${outDirExpr}/${fname}" || echo "Warning: ${fname} not available" >&2''
+          ) files
+        );
 
       fetchGitTree =
         {
@@ -179,11 +311,11 @@ let
         {
           game,
           name,
-          hash ? "",
+          sha256,
         }:
         pkgs.fetchurl {
           url = "https://www.chaosium.com/content/Backgrounds/${urlEncode game}%20Background%20-%20${urlEncode name}.jpg";
-          inherit hash;
+          inherit sha256;
         };
       fetchVideo =
         {
@@ -192,37 +324,33 @@ let
           name ? getFileNameFromUrl url,
           audio ? false,
         }:
-        pkgs.runCommand name
-          {
-            outputHashMode = "flat";
-            outputHashAlgo = "sha256";
-            outputHash = sha256;
-            nativeBuildInputs = [ pkgs.yt-dlp ];
+        fetchToolOutput {
+          inherit name;
+          outputHash = sha256;
+          outputHashMode = "flat";
+          nativeBuildInputs = [ pkgs.yt-dlp ];
+          extraAttrs = {
             SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-          }
-          ''
-            ;
-                    yt-dlp \
-                      ${if audio then "-f bestvideo+bestaudio" else "-f bestvideo"} \
-                      --no-playlist \
-                      --no-write-subs \
-                      --no-write-auto-subs \
-                      --no-write-info-json \
-                      --no-write-comments \
-                      --user-agent "${userAgent}" \
-                      -o "$out" \
-                      "${url}"
+          };
+          script = ''
+            yt-dlp \
+              ${if audio then "-f bestvideo+bestaudio" else "-f bestvideo"} \
+              --no-playlist \
+              --no-write-subs \
+              --no-write-auto-subs \
+              --no-write-info-json \
+              --no-write-comments \
+              --user-agent "${userAgent}" \
+              -o "$out" \
+              "${url}"
           '';
+        };
 
       fetchWithReferrer =
         referrer:
-        {
-          url,
-          sha256 ? null,
-          hash ? sha256,
-        }:
+        { url, sha256 }:
         pkgs.fetchurl {
-          inherit hash url;
+          inherit sha256 url;
           curlOptsList = [
             "--header"
             "Referer: ${referrer}"
@@ -232,64 +360,23 @@ let
         };
 
       fetchModDB =
-        {
-          id,
-          sha256 ? null,
-          hash ? sha256,
-        }:
-        pkgs.runCommand "moddb-${toString id}"
-          {
-            outputHashAlgo = "sha256";
-            outputHash = hash;
-            outputHashMode = "recursive";
-
-            # Native dependencies
-            nativeBuildInputs = [
-              pkgs.curl
-              pkgs.gnused
-              pkgs.gnugrep
-              pkgs.unzip
-              pkgs.gnutar
-              pkgs.p7zip
-              pkgs.file
-            ];
-            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-          }
-          ''
-            OUTDIR=$TMPDIR/out
-            mkdir -p "$OUTDIR"
-            DOWNLOADED_FILE="$OUTDIR/download"
-
-            resolved_url=$(curl --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" "https://www.moddb.com/downloads/start/${toString id}/all" \
+        { id, sha256 }:
+        fetchHtmlThenCurl {
+          name = "moddb-${toString id}";
+          outputHash = sha256;
+          outputHashMode = "recursive";
+          nativeBuildInputs = [
+            pkgs.curl
+            pkgs.gnused
+          ];
+          extract = true;
+          resolve = ''
+            resolved_path=$(curl --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" "https://www.moddb.com/downloads/start/${toString id}/all" \
             | sed -n 's/.*href="\/\([^"]*\)".*/\1/p' | head -1)
-            curl --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" -L -C - "https://www.moddb.com/$resolved_url" -o "$DOWNLOADED_FILE"
-
-            mkdir -p $out
-            echo "Extracting specified target: $DOWNLOADED_FILE"
-
-            filetype=$(file -b --mime-type "$DOWNLOADED_FILE")
-            echo "Detected mime type: $filetype"
-
-            case "$filetype" in
-              application/zip)
-                unzip -q "$DOWNLOADED_FILE" -d $out
-                ;;
-              application/gzip|application/x-gzip)
-                tar -xzf "$DOWNLOADED_FILE" -C $out
-                ;;
-              application/x-xz)
-                tar -xJf "$DOWNLOADED_FILE" -C $out
-                ;;
-              application/x-rar|application/x-7z-compressed|application/x-dosexec)
-                7z x "$DOWNLOADED_FILE" -o"$out"
-                ;;
-              *)
-                echo "Raw binary, copy target directly to package layout root."
-                origname=$(basename "$resolved_url")
-                cp "$DOWNLOADED_FILE" "$out/''${origname:-download}"
-                ;;
-            esac
+            RESOLVED_URL="https://www.moddb.com/$resolved_path"
           '';
+          curlOpts = ''--header "Referer: https://www.moddb.com/" --user-agent "${userAgent}"'';
+        };
       fetchPixiv = fetchWithReferrer "https://www.pixiv.net/";
       fetchGelbooru =
         args:
@@ -305,33 +392,22 @@ let
           }
         );
       fetchSteamGrid =
-        {
-          id,
-          hash ? "",
-          sha256 ? "",
-        }:
-
-        pkgs.runCommand "steamgriddb-${toString id}"
-          {
-            # Fixed-output derivation parameters to allow network access
-            outputHashAlgo = if hash != "" then null else "sha256";
-            outputHash = if hash != "" then hash else sha256;
-
-            # Native dependencies
-            nativeBuildInputs = [
-              pkgs.curl
-              pkgs.gnused
-              pkgs.gnugrep
-            ];
-          }
-          ''
+        { id, sha256 }:
+        fetchHtmlThenCurl {
+          name = "steamgriddb-${toString id}";
+          outputHash = sha256;
+          outputHashMode = "flat";
+          nativeBuildInputs = [
+            pkgs.curl
+            pkgs.gnused
+            pkgs.gnugrep
+          ];
+          resolve = ''
             referrer="https://www.steamgriddb.com/grid/${toString id}"
             echo "Fetching page metadata from: $referrer"
 
-            # 1. Fetch the HTML page
             curl -s -H "User-Agent: ${userAgent}" "$referrer" > page.html
 
-            # 2. Parse the download URL from the asset-download block
             img_url=$(grep -A 1 'class="asset-download"' page.html | sed -n 's|.*href="\([^"]*\)".*|\1|p' | head -n 1)
 
             if [ -z "$img_url" ]; then
@@ -340,10 +416,10 @@ let
             fi
 
             echo "Found direct image link: $img_url"
-
-            # 3. Download the actual image directly to $out
-            curl -L -H "User-Agent: ${userAgent}" -H "Referer: $referrer" "$img_url" -o "$out"
+            RESOLVED_URL="$img_url"
           '';
+          curlOpts = ''-H "User-Agent: ${userAgent}" -H "Referer: $referrer"'';
+        };
     };
 in
 functions // subdirImports

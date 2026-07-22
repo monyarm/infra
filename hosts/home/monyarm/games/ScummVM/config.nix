@@ -527,5 +527,5 @@ let
   // (mkMissionSupernova 2);
 in
 {
-  xdg.configFile."scummvm/scummvm.ini".text = generators.toINI { } scummvmConfig;
+  games.scummvm.config = scummvmConfig;
 }

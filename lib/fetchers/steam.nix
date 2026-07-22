@@ -1,7 +1,10 @@
 {
   pkgs,
+  lib,
   splitFiles,
   fetchzipNoSubst,
+  fetchToolOutput,
+  downloadNamedUrls,
   ...
 }:
 rec {
@@ -32,8 +35,7 @@ rec {
     {
       appId,
       cardNames ? [ ],
-      sha256 ? null,
-      hash ? sha256,
+      sha256,
     }:
     let
       # Parse the HTML to extract card information
@@ -147,7 +149,7 @@ rec {
             outputHashMode = "recursive";
             outputHashAlgo = "sha256";
             allowSubstitutes = false;
-            outputHash = if sha256 != null then sha256 else hash;
+            outputHash = sha256;
             buildInputs = [
               pkgs.curl
               pkgs.python3
@@ -240,30 +242,26 @@ rec {
       osarch ? null,
       language ? null,
     }@args:
-    pkgs.stdenv.mkDerivation {
+    fetchToolOutput {
       name = "steam-${toString (args.depotId or args.pubfileId or args.ugcId or "ERROR")}-dl";
-
-      dontUnpack = true;
-      preferLocalBuild = true;
-
+      outputHash = sha256;
+      outputHashMode = "recursive";
       nativeBuildInputs = [
         pkgs.depotdownloader
         pkgs.python3
       ];
-      inherit os osarch language;
-      APP_ID = toString appId;
-      DEPOT_ID = toString depotId;
-      MANIFEST_ID = toString manifestId;
-      PUBFILE_ID = toString pubfileId;
-      ugcId = toString ugcId;
-
-      inherit filelist;
-      passAsFile = [ "filelist" ];
-
-      buildPhase = ''
-        runHook preBuild
-
-        source /secrets
+      useSecrets = true;
+      extraAttrs = {
+        inherit os osarch language;
+        APP_ID = toString appId;
+        DEPOT_ID = toString depotId;
+        MANIFEST_ID = toString manifestId;
+        PUBFILE_ID = toString pubfileId;
+        UGC_ID = toString ugcId;
+        inherit filelist;
+        passAsFile = [ "filelist" ];
+      };
+      script = ''
         export HOME=$TMPDIR/HOME
 
         FILELIST_ARG=""
@@ -276,7 +274,7 @@ rec {
         elif [ -n "$PUBFILE_ID" ]; then
           ARGS="-pubfile $PUBFILE_ID"
         else
-          ARGS="-ugc $UGC_ID"  
+          ARGS="-ugc $UGC_ID"
         fi
 
         if [ -n "$os" ]; then
@@ -297,12 +295,45 @@ rec {
           $FILELIST_ARG \
           $ARGS \
           -dir "$out" <<< "$(python3 ${steamCodeScript})"
-
-        runHook postBuild
       '';
-
-      outputHashMode = "recursive";
-      outputHashAlgo = "sha256";
-      outputHash = sha256;
     };
+
+  # Local filenames reuse each CDN url's own extension rather than a
+  # separately hardcoded one, so the two can't drift out of sync. `icon` has
+  # no stable fixed-name CDN url (it needs an app-specific hash from the
+  # Steam Web API), so it's intentionally not fetched here.
+  fetchSteamCdnImages =
+    { appId, sha256 }:
+    let
+      cdnBase = "https://cdn.cloudflare.steamstatic.com/steam/apps/${toString appId}";
+      imageUrls = {
+        hero = "${cdnBase}/library_hero.jpg";
+        grid = "${cdnBase}/library_600x900_2x.jpg";
+        wide = "${cdnBase}/header.jpg";
+        logo = "${cdnBase}/logo.png";
+      };
+      extOf = url: lib.last (lib.splitString "." url);
+      urlsByFileName = lib.mapAttrs' (
+        type: url: lib.nameValuePair "${type}.${extOf url}" url
+      ) imageUrls;
+      fileNames = lib.mapAttrsToList (type: url: "${type}.${extOf url}") imageUrls;
+      typeNames = lib.attrNames imageUrls;
+
+      baseDrv =
+        pkgs.runCommand "steam-cdn-images-${toString appId}"
+          {
+            outputHashMode = "recursive";
+            outputHashAlgo = "sha256";
+            outputHash = sha256;
+            nativeBuildInputs = [ pkgs.curl ];
+            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+          }
+          ''
+            mkdir -p $out
+            ${downloadNamedUrls urlsByFileName "$out"}
+          '';
+
+      splitDrvs = splitFiles fileNames baseDrv;
+    in
+    lib.listToAttrs (lib.zipListsWith lib.nameValuePair typeNames splitDrvs);
 }

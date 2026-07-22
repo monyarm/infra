@@ -7,7 +7,7 @@
   fetchSteam,
   wadFilter,
   mkDoom,
-  patchIps,
+  patchFile,
   ...
 }:
 let
@@ -23,7 +23,7 @@ let
     |> getFile "DOOM64.WAD";
   Doom64CE = fetchModDB {
     id = 285205;
-    hash = "sha256-D8hf6WQ3+CLAFIDqPu/uPgww1EfnZ2U0ZFXL7OoCkb0=";
+    sha256 = "sha256-D8hf6WQ3+CLAFIDqPu/uPgww1EfnZ2U0ZFXL7OoCkb0=";
   };
   Doom64CEWads =
     Doom64CE
@@ -52,7 +52,7 @@ let
     in
     {
       num = numStr;
-      mapWad = patchIps (getFile "patcher/LOST${numStr}.bps" Doom64CE) (getFile "_MAP.WAD" mapOut);
+      mapWad = patchFile (getFile "patcher/LOST${numStr}.bps" Doom64CE) (getFile "_MAP.WAD" mapOut);
       sLump = getFile "SECTORS" mapOut;
       iLump = getFile "LINEDEFS" mapOut;
       lLump = getFile "LIGHTS" mapOut;
@@ -78,10 +78,12 @@ let
       '';
 in
 {
+  games.doom.wads.doom64 = Doom64;
+
   programs.steam.games = {
     Doom64 = mkDoom {
       name = "Doom64";
-      iwad = Doom64;
+      game = Doom64;
       wad = Doom64CEWads ++ [ doom64LostLevelsPk3 ];
     };
   };

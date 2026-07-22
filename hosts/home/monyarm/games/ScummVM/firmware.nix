@@ -1,7 +1,5 @@
 {
-  linkFiles,
   pkgs,
-  parallel,
   ...
 }:
 
@@ -13,10 +11,8 @@ let
   };
 in
 {
-  xdg.dataFile = parallel (linkFiles "scummvm/extra") [
-    # keep-sorted start
-    "${cm32lRomset}/cm32l_control.rom"
-    "${cm32lRomset}/cm32l_pcm.rom"
-    # keep-sorted end
-  ];
+  games.scummvm.firmware = {
+    cm32lControl = "${cm32lRomset}/cm32l_control.rom";
+    cm32lPcm = "${cm32lRomset}/cm32l_pcm.rom";
+  };
 }

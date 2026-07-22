@@ -6,6 +6,7 @@
   sanitizeName,
   getFileName,
   parallel,
+  dispatchExt,
   ...
 }:
 rec {
@@ -329,28 +330,34 @@ rec {
   splitFilesBaseName =
     fileList: splitFiles (parallel (map (file: builtins.baseNameOf file)) fileList);
 
-  patchIps =
-    patch: file:
+  patchFile =
     let
-      patchExt = lib.toLower (lib.last (lib.splitString "." (lib.getName patch)));
+      flipsHandler =
+        p: f:
+        pkgs.runCommand (lib.getName f) { nativeBuildInputs = [ pkgs.flips ]; } ''
+          flips --apply "${p}" "${f}" "$out"
+        '';
+      xdeltaHandler =
+        p: f:
+        pkgs.runCommand (lib.getName f) { nativeBuildInputs = [ pkgs.xdelta ]; } ''
+          xdelta3 -d -s "${f}" "${p}" "$out"
+        '';
+      patchHandler =
+        p: f:
+        pkgs.runCommand (lib.getName f) { nativeBuildInputs = [ pkgs.gnupatch ]; } ''
+          patch "${f}" -i "${p}" -o "$out"
+        '';
     in
-    pkgs.runCommand (lib.getName file)
-      {
-        nativeBuildInputs = [
-          pkgs.flips # handles .ips and .bps
-          pkgs.xdelta # handles .xdelta / .vcdiff
-        ];
-      }
-      (
-        if patchExt == "ips" || patchExt == "bps" then
-          ''
-            flips --apply "${patch}" "${file}" "$out"
-          ''
-        else if patchExt == "xdelta" || patchExt == "vcdiff" then
-          ''
-            xdelta3 -d -s "${file}" "${patch}" "$out"
-          ''
-        else
-          throw "patchIps: unsupported patch format '.${patchExt}' (supported: ips, bps, xdelta, vcdiff)"
-      );
+    patch: file:
+    dispatchExt {
+      ".ips" = flipsHandler;
+      ".bps" = flipsHandler;
+      ".xdelta" = xdeltaHandler;
+      ".vcdiff" = xdeltaHandler;
+      ".diff" = patchHandler;
+      ".patch" = patchHandler;
+      "_" =
+        p: _f:
+        throw "patchFile: unsupported patch format for '${p.name or (toString p)}' (supported: ips, bps, xdelta, vcdiff, diff, patch)";
+    } patch file;
 }
