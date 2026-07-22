@@ -1,11 +1,13 @@
 {
   pkgs,
   lib,
-  getFile,fetchIdGames,
+  getFile,
+  fetchIdGames,
   fetchzipNoSubst,
   fetchItch,
   fetchSteam,
   sources,
+  autoImport,
   ...
 }:
 let
@@ -13,31 +15,38 @@ let
   mkDoom =
     {
       iwad,
-      wads ? [ ],
+      wad ? [ ],
       ...
     }@args:
     (lib.removeAttrs args [
       "iwad"
-      "wads"
+      "wad"
     ])
     // {
       game = pkgs.uzdoom;
       args = [
-        "-iwad ${iwad}"
+        "-iwad"
+        "${iwad}"
+        "-file"
       ]
-      ++ (lib.optionals (wads != null && wads != [ ])  (["-file"] ++ (map (x: "${x}") wads)));
+      ++ (lib.optionals (wad != null && wad != [ ]) (map (x: "${x}") wad))
+      ++ [ "${wads.lights}" ];
 
     };
-    
-    DOOM_I_II = fetchSteam {
-      filelist = ["regex:(.*\.(wad|WAD))"];
-      appId = 2280;
-      depotId = 2281;
-      manifestId = 557527948370603647;
-      sha256 = "sha256-wHjpjgYPoUyBcC5E53AwrgvvW4hls09MVSDuLHl/5YY=";
-    };
+
+  wadFilter = [ "regex:(.*\.(wad|WAD))" ];
+
+  DOOM_I_II = fetchSteam {
+    filelist = wadFilter;
+    appId = 2280;
+    depotId = 2281;
+    manifestId = 557527948370603647;
+    sha256 = "sha256-KIX9HRzQyQ6YawMVYGVk43z88bi55JUy3HNKNTMA2y4=";
+  };
 
   wads = {
+    lights = pkgs.uzdoom |> getFile "share/games/uzdoom/lights.pk3";
+
     TUCQR6 =
       let
         version = "6";
@@ -61,40 +70,77 @@ let
       |> getFile "cqstrifeR${version}.wad";
 
     simonsdestiny = fetchItch sources.wad.simonsdestiny |> getFile "Castlevania.ipk3";
-    paranoid =
-      fetchIdGames sources.wad.paranoid
-      |> getFile "Paranoid.pk3";
-    paranoic =
-      fetchIdGames sources.wad.paranoic
-      |> getFile "paranoic.pk3";
-  
-    freedoom1 = pkgs.freedoom
-      |> getFile "share/games/doom/freedoom1.wad";
-    freedoom2 = pkgs.freedoom
-      |> getFile "share/games/doom/freedoom2.wad";
+    paranoid = fetchIdGames sources.wad.paranoid |> getFile "Paranoid.pk3";
+    paranoic = fetchIdGames sources.wad.paranoic |> getFile "paranoic.pk3";
 
-    aoddoom =
-      fetchIdGames sources.wad.aoddoom
-      |> getFile "aoddoom2.wad";
-    aoddoom_deh =
-      fetchIdGames sources.wad.aoddoom
-      |> getFile "aoddoom2.deh";
+    freedoom1 = pkgs.freedoom |> getFile "share/games/doom/freedoom1.wad";
+    freedoom2 = pkgs.freedoom |> getFile "share/games/doom/freedoom2.wad";
 
-    DOOM = DOOM_I_II  |> getFile "base/DOOM.WAD";
+    aoddoom = fetchIdGames sources.wad.aoddoom |> getFile "aoddoom2.wad";
+    aoddoom_deh = fetchIdGames sources.wad.aoddoom |> getFile "aoddoom2.deh";
+
+    DOOM = DOOM_I_II |> getFile "rerelease/doom.wad";
+    DOOM_2 = DOOM_I_II |> getFile "rerelease/doom2.wad";
+    NERVE = DOOM_I_II |> getFile "rerelease/nerve.wad";
+    MASTER_LEVELS = DOOM_I_II |> getFile "rerelease/masterlevels.wad";
+    SIGIL_I = DOOM_I_II |> getFile "rerelease/sigil.wad";
+    SIGIL_II = DOOM_I_II |> getFile "rerelease/sigil2.wad";
+    PLUTONIA = DOOM_I_II |> getFile "rerelease/plutonia.wad";
+    ID1 = DOOM_I_II |> getFile "rerelease/id1.wad";
+    TNT = DOOM_I_II |> getFile "rerelease/tnt.wad";
   };
 
 in
 {
+  _module.args = { inherit mkDoom wadFilter; };
+  imports = autoImport ./wad;
   programs.steam.games = with wads; {
-    # DOOM = mkDoom {
-    #   name = "Doom";
-    #   iwad = DOOM;
-    # };
+    DOOM = mkDoom {
+      name = "The Ultimate Doom";
+      iwad = DOOM;
+    };
+    DOOM_2 = mkDoom {
+      name = "Doom II: Hell on Earth";
+      iwad = DOOM_2;
+    };
+    NERVE = mkDoom {
+      name = "No Rest for the Living";
+      iwad = DOOM_2;
+      wad = [ NERVE ];
+    };
+    MASTER_LEVELS = mkDoom {
+      name = "Master Levels for Doom II";
+      iwad = DOOM_2;
+      wad = [ MASTER_LEVELS ];
+    };
+    SIGIL_I = mkDoom {
+      name = "Sigil";
+      iwad = DOOM;
+      wad = [ SIGIL_I ];
+    };
+    SIGIL_II = mkDoom {
+      name = "Sigil 2";
+      iwad = DOOM;
+      wad = [ SIGIL_II ];
+    };
+    PLUTONIA = mkDoom {
+      name = "The Plutonia Experiment";
+      iwad = PLUTONIA;
+    };
+    TNT = mkDoom {
+      name = "TNT: Evilution";
+      iwad = TNT;
+    };
+    ID1 = mkDoom {
+      name = "Legacy of Rust";
+      iwad = DOOM_2;
+      wad = [ ID1 ];
+    };
 
     TUCQ = mkDoom {
       name = "The Ultimate Chex Quest";
       iwad = TUCQR6;
-      wads = [ cqstrife ];
+      wad = [ cqstrife ];
     };
     simonsdestiny = mkDoom {
       name = "Castlevania: Simon's Destiny";
@@ -115,7 +161,7 @@ in
     aoddoom = mkDoom {
       name = "Army of Darkness Doom";
       iwad = aoddoom;
-      wads = [aoddoom_deh];
+      wad = [ aoddoom_deh ];
     };
   };
 }

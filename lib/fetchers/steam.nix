@@ -194,7 +194,7 @@ rec {
     in
     splitFiles fileList baseDrv;
 
-steamCodeScript = pkgs.writeText "steam_code.py" ''
+  steamCodeScript = pkgs.writeText "steam_code.py" ''
     import base64
     import hmac
     import os
@@ -227,36 +227,38 @@ steamCodeScript = pkgs.writeText "steam_code.py" ''
         print(generate_steam_code(secret))
   '';
 
-  fetchSteam = { 
-    appId, 
-    depotId ? null, 
-    manifestId ? null, 
-    pubfileId ? null,
-    ugcId ? null,
-    sha256,
-    filelist ? null,
-    os ? "linux",
-    osarch ? null,
-    language ? null
-  }@args:
+  fetchSteam =
+    {
+      appId,
+      depotId ? null,
+      manifestId ? null,
+      pubfileId ? null,
+      ugcId ? null,
+      sha256,
+      filelist ? null,
+      os ? "linux",
+      osarch ? null,
+      language ? null,
+    }@args:
     pkgs.stdenv.mkDerivation {
       name = "steam-${toString (args.depotId or args.pubfileId or args.ugcId or "ERROR")}-dl";
 
       dontUnpack = true;
       preferLocalBuild = true;
 
-      nativeBuildInputs = [ 
-        pkgs.depotdownloader 
-        pkgs.python3 
+      nativeBuildInputs = [
+        pkgs.depotdownloader
+        pkgs.python3
       ];
-
+      inherit os osarch language;
       APP_ID = toString appId;
       DEPOT_ID = toString depotId;
       MANIFEST_ID = toString manifestId;
       PUBFILE_ID = toString pubfileId;
       ugcId = toString ugcId;
 
-      passAsFile = ["filelist"];
+      inherit filelist;
+      passAsFile = [ "filelist" ];
 
       buildPhase = ''
         runHook preBuild
@@ -301,6 +303,6 @@ steamCodeScript = pkgs.writeText "steam_code.py" ''
 
       outputHashMode = "recursive";
       outputHashAlgo = "sha256";
-      outputHash = sha256; 
+      outputHash = sha256;
     };
 }

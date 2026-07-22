@@ -1,7 +1,6 @@
 {
   dirs,
   parallel,
-  pkgs,
   ...
 }:
 let

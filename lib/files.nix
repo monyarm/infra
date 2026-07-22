@@ -328,4 +328,29 @@ rec {
   splitFiles = fileList: _drv: parallel (map (file: getFile file _drv)) fileList;
   splitFilesBaseName =
     fileList: splitFiles (parallel (map (file: builtins.baseNameOf file)) fileList);
+
+  patchIps =
+    patch: file:
+    let
+      patchExt = lib.toLower (lib.last (lib.splitString "." (lib.getName patch)));
+    in
+    pkgs.runCommand (lib.getName file)
+      {
+        nativeBuildInputs = [
+          pkgs.flips # handles .ips and .bps
+          pkgs.xdelta # handles .xdelta / .vcdiff
+        ];
+      }
+      (
+        if patchExt == "ips" || patchExt == "bps" then
+          ''
+            flips --apply "${patch}" "${file}" "$out"
+          ''
+        else if patchExt == "xdelta" || patchExt == "vcdiff" then
+          ''
+            xdelta3 -d -s "${file}" "${patch}" "$out"
+          ''
+        else
+          throw "patchIps: unsupported patch format '.${patchExt}' (supported: ips, bps, xdelta, vcdiff)"
+      );
 }

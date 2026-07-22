@@ -30,19 +30,19 @@
         impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [ "NINTENDO_COOKIE" ];
       }
       ''
-                set -e
-                mkdir $out
-                source /secrets
+        set -e
+        mkdir $out
+        source /secrets
 
-                FINAL_URL=$(curl -s -L -o /dev/null -w '%{url_effective}' \
-                  --user-agent "${userAgent}" \
-                  --cookie "$NINTENDO_COOKIE" \
-                  "${url}")
+        FINAL_URL=$(curl -s -L -o /dev/null -w '%{url_effective}' \
+          --user-agent "${userAgent}" \
+          --cookie "$NINTENDO_COOKIE" \
+          "${url}")
 
-                CLEAN_NAME=$(basename "''${FINAL_URL%%\?*}")
+        CLEAN_NAME=$(basename "''${FINAL_URL%%\?*}")
 
-                sleep 2
+        sleep 2
 
-                curl -A "${userAgent}" --cookie "$NINTENDO_COOKIE" -o "$out/$CLEAN_NAME" -L "''${FINAL_URL}"
+        curl -A "${userAgent}" --cookie "$NINTENDO_COOKIE" -o "$out/$CLEAN_NAME" -L "''${FINAL_URL}"
       '';
 }

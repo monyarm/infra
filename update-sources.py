@@ -10,10 +10,10 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import urllib.parse
 import urllib.request
 import zipfile
 from urllib.parse import urlparse
-import urllib.parse
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
 
@@ -629,7 +629,7 @@ def get_idgames_mirror_version(filepath):
       "lethe.chinstrap.org/idgames",
       "mirrors.lug.mtu.edu/idgames",
       "gamers.org/pub/idgames"
-    ];
+    ]
     
     for mirror in mirrors:
         url = f"https://{mirror}/{clean_path}"

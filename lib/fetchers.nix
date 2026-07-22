@@ -231,6 +231,65 @@ let
           ];
         };
 
+      fetchModDB =
+        {
+          id,
+          sha256 ? null,
+          hash ? sha256,
+        }:
+        pkgs.runCommand "moddb-${toString id}"
+          {
+            outputHashAlgo = "sha256";
+            outputHash = hash;
+            outputHashMode = "recursive";
+
+            # Native dependencies
+            nativeBuildInputs = [
+              pkgs.curl
+              pkgs.gnused
+              pkgs.gnugrep
+              pkgs.unzip
+              pkgs.gnutar
+              pkgs.p7zip
+              pkgs.file
+            ];
+            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+          }
+          ''
+            OUTDIR=$TMPDIR/out
+            mkdir -p "$OUTDIR"
+            DOWNLOADED_FILE="$OUTDIR/download"
+
+            resolved_url=$(curl --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" "https://www.moddb.com/downloads/start/${toString id}/all" \
+            | sed -n 's/.*href="\/\([^"]*\)".*/\1/p' | head -1)
+            curl --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" -L -C - "https://www.moddb.com/$resolved_url" -o "$DOWNLOADED_FILE"
+
+            mkdir -p $out
+            echo "Extracting specified target: $DOWNLOADED_FILE"
+
+            filetype=$(file -b --mime-type "$DOWNLOADED_FILE")
+            echo "Detected mime type: $filetype"
+
+            case "$filetype" in
+              application/zip)
+                unzip -q "$DOWNLOADED_FILE" -d $out
+                ;;
+              application/gzip|application/x-gzip)
+                tar -xzf "$DOWNLOADED_FILE" -C $out
+                ;;
+              application/x-xz)
+                tar -xJf "$DOWNLOADED_FILE" -C $out
+                ;;
+              application/x-rar|application/x-7z-compressed|application/x-dosexec)
+                7z x "$DOWNLOADED_FILE" -o"$out"
+                ;;
+              *)
+                echo "Raw binary, copy target directly to package layout root."
+                origname=$(basename "$resolved_url")
+                cp "$DOWNLOADED_FILE" "$out/''${origname:-download}"
+                ;;
+            esac
+          '';
       fetchPixiv = fetchWithReferrer "https://www.pixiv.net/";
       fetchGelbooru =
         args:
