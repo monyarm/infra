@@ -598,20 +598,170 @@ def process_itch(name, url, previous_sources, system=None):
         result["platform"] = system
     return result
 
-def download_file(url):
-    """Downloads a file using urllib, falling back to system curl if blocked by TLS fingerprinting."""
+def http_get(url, headers=None):
+    """Downloads a url using urllib, falling back to system curl if blocked by TLS fingerprinting."""
+    all_headers = {'User-Agent': USER_AGENT, **(headers or {})}
     try:
-        headers = {'User-Agent': USER_AGENT}
-        req = urllib.request.Request(url, headers=headers)
+        req = urllib.request.Request(url, headers=all_headers)
         with urllib.request.urlopen(req) as response:
             return response.read()
     except urllib.error.HTTPError as e:
         if e.code == 403:
             # Fallback to system curl to bypass Python socket TLS/JA3 fingerprint rejections
-            cmd = ["curl", "-sL", "-A", USER_AGENT, url]
+            cmd = ["curl", "-sL"]
+            for k, v in all_headers.items():
+                cmd += ["-H", f"{k}: {v}"]
+            cmd.append(url)
             res = subprocess.run(cmd, capture_output=True, check=True)
             return res.stdout
         raise
+
+
+def download_file(url):
+    return http_get(url)
+
+
+def nix_build_expr(fetch_call, extra_args):
+    args_str = "".join(f'    {k} = {v};\n' for k, v in extra_args.items())
+    # `hash` is a separate let-binding (rather than an argument to fetch_call)
+    # purely so extract_hash_from_nix_build's `hash = "..."` regex can find a
+    # placeholder to detect the hash type; our fetchers all take `sha256`, not
+    # `hash`, as their actual argument name.
+    return (
+        f"let\n"
+        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  customLib = import ./lib {{\n"
+        f"    inherit pkgs;\n"
+        f"    inherit (pkgs) lib system;\n"
+        f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    config = {{}};\n"
+        f"  }};\n"
+        f'  hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";\n'
+        f"in\n"
+        f"  customLib.{fetch_call} {{\n"
+        f"{args_str}"
+        f"    sha256 = hash;\n"
+        f"  }}"
+    )
+
+
+def process_nexus(name, target, previous_sources):
+    old = previous_sources.get(name)
+    game, mod_id = target.split('/', 1)
+
+    print(f"Checking [nexus] {name} ({target})...")
+    api_key = os.environ.get("NEXUS_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "NEXUS_API_KEY is not set. Get a Premium API key at "
+            "https://next.nexusmods.com/settings/api-keys (unattended downloads require Premium)."
+        )
+
+    files = json.loads(http_get(
+        f"https://api.nexusmods.com/v1/games/{game}/mods/{mod_id}/files.json?category=main,update",
+        headers={"apikey": api_key},
+    ))["files"]
+    if not files:
+        raise ValueError(f"No files found for nexus mod {target}")
+
+    latest = max(files, key=lambda f: f["uploaded_timestamp"])
+    file_id = latest["file_id"]
+    version = f"{file_id}:{latest['uploaded_timestamp']}"
+
+    if old and old.get("game") == game and str(old.get("modId")) == str(mod_id) and old.get("version") == version:
+        print(f"  -> {name} unchanged (latest file matches); reusing cached hash.")
+        return old
+
+    print(f"  -> Fetching hash for {name} via Nix build...")
+    nix_expr = nix_build_expr("fetchNexus", {
+        "game": f'"{game}"',
+        "modId": mod_id,
+        "fileId": file_id,
+    })
+    h = extract_hash_from_nix_build(nix_expr, f"fetchNexus ({name})")
+
+    return {
+        "type": "nexus",
+        "game": game,
+        "modId": mod_id,
+        "fileId": file_id,
+        "version": version,
+        "hash": h,
+    }
+
+
+def process_curseforge(name, mod_id, previous_sources):
+    old = previous_sources.get(name)
+
+    print(f"Checking [curseforge] {name} (mod {mod_id})...")
+    api_key = os.environ.get("CURSEFORGE_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "CURSEFORGE_API_KEY is not set. Apply for a key at "
+            "https://support.curseforge.com/support/solutions/articles/9000208346."
+        )
+
+    files = json.loads(http_get(
+        f"https://api.curseforge.com/v1/mods/{mod_id}/files",
+        headers={"x-api-key": api_key},
+    ))["data"]
+    if not files:
+        raise ValueError(f"No files found for curseforge mod {mod_id}")
+
+    latest = max(files, key=lambda f: f["fileDate"])
+    file_id = latest["id"]
+    version = f"{file_id}:{latest['fileDate']}"
+
+    if old and str(old.get("modId")) == str(mod_id) and old.get("version") == version:
+        print(f"  -> {name} unchanged (latest file matches); reusing cached hash.")
+        return old
+
+    print(f"  -> Fetching hash for {name} via Nix build...")
+    nix_expr = nix_build_expr("fetchCurseForge", {
+        "modId": mod_id,
+        "fileId": file_id,
+    })
+    h = extract_hash_from_nix_build(nix_expr, f"fetchCurseForge ({name})")
+
+    return {
+        "type": "curseforge",
+        "modId": mod_id,
+        "fileId": file_id,
+        "version": version,
+        "hash": h,
+    }
+
+
+def process_modrinth(name, project, previous_sources):
+    old = previous_sources.get(name)
+
+    print(f"Checking [modrinth] {name} (project {project})...")
+    versions = json.loads(http_get(f"https://api.modrinth.com/v2/project/{project}/version"))
+    if not versions:
+        raise ValueError(f"No versions found for modrinth project {project}")
+
+    latest = max(versions, key=lambda v: v["date_published"])
+    version_id = latest["id"]
+    version = f"{version_id}:{latest['date_published']}"
+
+    if old and old.get("project") == project and old.get("version") == version:
+        print(f"  -> {name} unchanged (latest version matches); reusing cached hash.")
+        return old
+
+    print(f"  -> Fetching hash for {name} via Nix build...")
+    nix_expr = nix_build_expr("fetchModrinth", {
+        "project": f'"{project}"',
+        "versionId": f'"{version_id}"',
+    })
+    h = extract_hash_from_nix_build(nix_expr, f"fetchModrinth ({name})")
+
+    return {
+        "type": "modrinth",
+        "project": project,
+        "versionId": version_id,
+        "version": version,
+        "hash": h,
+    }
 
 def get_idgames_mirror_version(filepath):
     """
@@ -768,6 +918,12 @@ def main():
                 elif section.startswith("itch"):
                     system = section.split('-', 1)[1] if '-' in section else None
                     results[name] = process_itch(name, target, previous_sources, system)
+                elif section == "nexus":
+                    results[name] = process_nexus(name, target, previous_sources)
+                elif section == "curseforge":
+                    results[name] = process_curseforge(name, target, previous_sources)
+                elif section == "modrinth":
+                    results[name] = process_modrinth(name, target, previous_sources)
                 else:
                     results[name] = process_custom(section, name, target)
             except Exception as e:
