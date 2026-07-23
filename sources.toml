@@ -24,18 +24,36 @@ fonts.mse.magic = "https://github.com/MagicSetEditorPacks/Full-Magic-Pack"
 fonts.mse.other = "https://github.com/MagicSetEditorPacks/Full-Non-Magic-Pack"
 fonts.keyrune = "https://github.com/andrewgioia/Keyrune"
 fonts.mana = "https://github.com/andrewgioia/Mana"
+wad.lastermaul = "https://github.com/GeorgePieVG/Lastermaul"
 
 [git-tag]
 node-datachannel = "https://github.com/murat-dogan/node-datachannel"
 mpv.mpris = "https://github.com/hoyon/mpv-mpris"
+wad.blasphemer = "https://github.com/Blasphemer/blasphemer"
 
 [itch]
 wad.simonsdestiny = "https://batandy.itch.io/simonsdestiny"
+wad.goldensouls = "https://batandy.itch.io/goldensouls"
+wad.goldensouls2 = "https://batandy.itch.io/goldensouls2"
+wad.goldensouls3 = "https://batandy.itch.io/goldensouls3"
+wad.gzpt = "https://batandy.itch.io/gz-pt"
+wad.simpsons3doom = "https://dar-88.itch.io/simpsons-bart-saves-springfield-zdoom-recreation"
+wad.bikinibottommassacre = "https://deluxe-dalmatian.itch.io/bikini-bottom-massacre"
+
+[itch-windows]
+wad.venturous = "https://pixelsforarms.itch.io/venturous"
+wad.square = "https://bigbrikgames.itch.io/square"
 
 [idgames]
 wad.paranoid = "levels/doom2/Ports/p-r/paranoid.zip"
 wad.paranoic = "levels/doom2/Ports/p-r/paranoic.zip"
 wad.aoddoom = "themes/aod/aoddoom2.zip"
+wad.actiondoom2 = "levels/doom2/Ports/a-c/action2.zip"
+wad.piratedoom = "levels/doom2/Ports/p-r/pirates.zip"
+wad.batmandoom = "themes/batman/batman.zip"
+wad.inquisitor = "levels/doom2/Ports/g-i/inqstr.zip"
+wad.inquisitor2 = "levels/doom2/Ports/g-i/inqstr2.zip"
+wad.inquisitor3 = "levels/doom2/Ports/g-i/inqstr3e.zip"
 
 # NPM Support currently broken
 #[npm]

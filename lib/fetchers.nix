@@ -49,24 +49,42 @@ let
       extractArchiveSnippet =
         { file, outDir }:
         ''
-          filetype=$(${pkgs.file}/bin/file -b --mime-type "${file}")
-          echo "Detected mime type: $filetype"
-          case "$filetype" in
-            application/zip)
-              ${pkgs.unzip}/bin/unzip -q "${file}" -d "${outDir}"
-              ;;
-            application/gzip | application/x-gzip)
-              ${pkgs.gnutar}/bin/tar -xzf "${file}" -C "${outDir}"
-              ;;
-            application/x-xz)
-              ${pkgs.gnutar}/bin/tar -xJf "${file}" -C "${outDir}"
-              ;;
-            application/x-rar | application/x-7z-compressed | application/x-dosexec)
-              ${pkgs.p7zip}/bin/7z x "${file}" -o"${outDir}"
+          # .pk3/.ipk3/.pk7/.ipk7 are zip-format containers that GZDoom loads
+          # as a single opaque file (via -file or as an iwad); they must be
+          # kept intact rather than unzipped, even though they mime-sniff as
+          # application/zip.
+          case "${file}" in
+            *.[pP][kK]3 | *.[iI][pP][kK]3 | *.[pP][kK]7 | *.[iI][pP][kK]7)
+              echo "Detected a pk3/pk7 container, keeping it as a single file."
+              ${pkgs.coreutils}/bin/cp "${file}" "${outDir}/$(${pkgs.coreutils}/bin/basename "${file}")"
               ;;
             *)
-              echo "Raw file, copying directly."
-              ${pkgs.coreutils}/bin/cp "${file}" "${outDir}/$(${pkgs.coreutils}/bin/basename "${file}")"
+              filetype=$(${pkgs.file}/bin/file -b --mime-type "${file}")
+              echo "Detected mime type: $filetype"
+              case "$filetype" in
+                application/zip)
+                  ${pkgs.unzip}/bin/unzip -q "${file}" -d "${outDir}"
+                  ;;
+                application/gzip | application/x-gzip)
+                  ${pkgs.gnutar}/bin/tar -xzf "${file}" -C "${outDir}"
+                  ;;
+                application/x-xz)
+                  ${pkgs.gnutar}/bin/tar -xJf "${file}" -C "${outDir}"
+                  ;;
+                application/x-rar)
+                  # p7zip's bundled rar codec fails on some real-world RAR
+                  # files ("Can not open the file as archive"); unrar handles
+                  # them correctly.
+                  ${pkgs.unrar}/bin/unrar x -o+ "${file}" "${outDir}/"
+                  ;;
+                application/x-7z-compressed | application/x-dosexec)
+                  ${pkgs.p7zip}/bin/7z x "${file}" -o"${outDir}"
+                  ;;
+                *)
+                  echo "Raw file, copying directly."
+                  ${pkgs.coreutils}/bin/cp "${file}" "${outDir}/$(${pkgs.coreutils}/bin/basename "${file}")"
+                  ;;
+              esac
               ;;
           esac
         '';
@@ -370,12 +388,15 @@ let
             pkgs.gnused
           ];
           extract = true;
+          # moddb sits behind Cloudflare, whose bot-management flags nixpkgs'
+          # curl (its TLS 1.3 ClientHello fingerprint) and returns 403;
+          # capping at TLS 1.2 sidesteps that fingerprinting.
           resolve = ''
-            resolved_path=$(curl --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" "https://www.moddb.com/downloads/start/${toString id}/all" \
+            resolved_path=$(curl --tls-max 1.2 --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" "https://www.moddb.com/downloads/start/${toString id}/all" \
             | sed -n 's/.*href="\/\([^"]*\)".*/\1/p' | head -1)
             RESOLVED_URL="https://www.moddb.com/$resolved_path"
           '';
-          curlOpts = ''--header "Referer: https://www.moddb.com/" --user-agent "${userAgent}"'';
+          curlOpts = ''--tls-max 1.2 --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}"'';
         };
       fetchPixiv = fetchWithReferrer "https://www.pixiv.net/";
       fetchGelbooru =

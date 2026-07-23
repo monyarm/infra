@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   fetchModDB,
@@ -80,10 +81,10 @@ in
 {
   games.doom.wads.doom64 = Doom64;
 
-  programs.steam.games = {
+  programs.steam.games = with config.games.doom.wads; {
     Doom64 = mkDoom {
       name = "Doom64";
-      game = Doom64;
+      iwad = doom64;
       wad = Doom64CEWads ++ [ doom64LostLevelsPk3 ];
     };
   };

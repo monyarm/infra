@@ -482,7 +482,14 @@ def select_itch_upload(uploads, platform, file_match="*"):
     def matches_platform(u):
         if u.get("type") != "default":
             return True
-        return f"p_{platform}" in (u.get("traits") or [])
+        traits = u.get("traits") or []
+        platform_traits = {"p_windows", "p_linux", "p_osx"}
+        # An upload with no OS trait at all isn't platform-restricted (itch
+        # just didn't tag it), so treat it as matching every platform rather
+        # than excluding it outright.
+        if not platform_traits.intersection(traits):
+            return True
+        return f"p_{platform}" in traits
 
     candidates = [
         u for u in uploads
