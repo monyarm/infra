@@ -76,6 +76,23 @@ let
   coerceArgs =
     val: if lib.isList val then lib.concatStringsSep " " (lib.filter (x: x != "") val) else val;
 
+  # Shared launcher+game+args resolution used by both shortcuts.vdf's
+  # LaunchOptions and the real-Steam-game localconfig.vdf patch below.
+  gameFinalArgs =
+    g:
+    if g.launcher != null then
+      let
+        parts = [
+          g.launcher.args
+          "\"${resolvePath g.game}\""
+          g.args
+        ];
+        nonEmpty = lib.filter (x: x != "" && x != "\"\"") parts;
+      in
+      lib.concatStringsSep " " nonEmpty
+    else
+      g.args;
+
   imgExt = p: lib.last (lib.splitString "." (getFileName p));
 
   # Clean Submodule definition as a configuration set.
@@ -242,20 +259,7 @@ let
     let
       hasLauncher = g.launcher != null;
       resolvedGame = resolvePath g.game;
-
-      finalArgs =
-        if hasLauncher then
-          let
-            parts = [
-              g.launcher.args
-              "\"${resolvedGame}\""
-              g.args
-            ];
-            nonEmpty = lib.filter (x: x != "" && x != "\"\"") parts;
-          in
-          lib.concatStringsSep " " nonEmpty
-        else
-          g.args;
+      finalArgs = gameFinalArgs g;
 
       baseData = {
         inherit (g) appId;
@@ -365,22 +369,7 @@ let
   gameToShortcutEntry =
     g:
     let
-      hasLauncher = g.launcher != null;
-      resolvedGame = resolvePath g.game;
-
-      finalArgs =
-        if hasLauncher then
-          let
-            parts = [
-              g.launcher.args
-              "\"${resolvedGame}\""
-              g.args
-            ];
-            nonEmpty = lib.filter (x: x != "" && x != "\"\"") parts;
-          in
-          lib.concatStringsSep " " nonEmpty
-        else
-          g.args;
+      finalArgs = gameFinalArgs g;
 
       tagsAttrs = lib.listToAttrs (lib.imap0 (i: t: lib.nameValuePair (toString i) t) g.tags);
     in
@@ -441,6 +430,92 @@ let
         SizeOnDisk = "0";
       };
     };
+
+  # --- Real Steam games: LaunchOptions in localconfig.vdf ---
+  # Unlike shortcuts.vdf (fully synthetic, safe to regenerate wholesale) and
+  # the acf stub above (a placeholder we fully own), localconfig.vdf is
+  # Steam's single per-account config file: it also holds every other
+  # game's LaunchOptions, UI state, and cloud-sync settings. So instead of
+  # generating this file, localconfigPatcherScript below only ever patches
+  # the LaunchOptions leaf for our managed apps into whatever is already
+  # there, using the well-established `vdf` library (nixpkgs
+  # python3Packages.vdf) to parse/dump Valve's real KeyValues format rather
+  # than round-tripping through the write-only toKeyValues helper above.
+  #
+  # Games that configure neither a launcher nor extra args are left alone,
+  # so we never clobber LaunchOptions the user set by hand in the Steam UI
+  # for an otherwise-untouched game.
+  steamLaunchGamesList = lib.filter (g: g.launcher != null || g.args != "") acfGamesList;
+
+  steamLaunchOptions = g: "echo %command%; \"${g.resolvedTargetExe}\" ${gameFinalArgs g}";
+
+  localconfigPatchData = builtins.toJSON (
+    lib.listToAttrs (
+      map (g: lib.nameValuePair (toString g.appId) (steamLaunchOptions g)) steamLaunchGamesList
+    )
+  );
+
+  python3WithVdf = pkgs.python3.withPackages (ps: [ ps.vdf ]);
+
+  localconfigPatchFile = pkgs.writeText "localconfig-launchoptions-patch.json" localconfigPatchData;
+
+  # Runs at activation time (not build time), since it needs to read/modify
+  # the live, mutable localconfig.vdf under $HOME — a Nix build sandbox has
+  # no access to that. Key lookups are case-insensitive because Steam has
+  # been observed writing this file with inconsistent key casing across
+  # client versions; matching whatever casing is already there (instead of
+  # always assuming "UserLocalConfigStore"/"LaunchOptions") avoids creating
+  # duplicate, conflicting branches alongside Steam's own.
+  localconfigPatcherScript = pkgs.writeText "patch-localconfig-vdf.py" ''
+    import json
+    import sys
+
+    import vdf
+
+
+    def get_or_create(d, key):
+        for existing_key in d:
+            if isinstance(existing_key, str) and existing_key.lower() == key.lower():
+                if not isinstance(d[existing_key], dict):
+                    d[existing_key] = {}
+                return d[existing_key]
+        d[key] = {}
+        return d[key]
+
+
+    def main():
+        target_path, patch_path = sys.argv[1], sys.argv[2]
+
+        with open(patch_path, encoding="utf-8") as fh:
+            patch = json.load(fh)
+
+        try:
+            with open(target_path, encoding="utf-8") as fh:
+                data = vdf.load(fh)
+        except FileNotFoundError:
+            data = {}
+
+        root = get_or_create(data, "UserLocalConfigStore")
+        software = get_or_create(root, "Software")
+        valve = get_or_create(software, "Valve")
+        steam = get_or_create(valve, "Steam")
+        apps = get_or_create(steam, "apps")
+
+        for appid, launch_options in patch.items():
+            app_entry = get_or_create(apps, appid)
+            key = next(
+                (k for k in app_entry if isinstance(k, str) and k.lower() == "launchoptions"),
+                "LaunchOptions",
+            )
+            app_entry[key] = launch_options
+
+        with open(target_path, "w", encoding="utf-8") as fh:
+            vdf.dump(data, fh, pretty=True)
+
+
+    if __name__ == "__main__":
+        main()
+  '';
 
   # --- Non-Steam-shortcut grid artwork (real userdata/config/grid path) ---
   # Steam only ever discovers this artwork by these exact filenames, keyed
@@ -521,12 +596,24 @@ in
       # shortcuts.vdf is actively rewritten by Steam itself at runtime
       # (manually-added shortcuts, LastPlayTime, tag edits), so it's copied
       # into place by activation rather than a read-only home.file symlink.
-      activation = lib.mkIf (cfg.userId != null) {
-        writeShortcutsVdf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${steamConfigDir}/grid"
-          $DRY_RUN_CMD cp $VERBOSE_ARG -f ${shortcutsVdfDrv} "${steamConfigDir}/shortcuts.vdf"
-        '';
-      };
+      # localconfig.vdf is patched in place for the same reason (see
+      # localconfigPatcherScript above), but only when there's at least one
+      # game to patch, so we never rewrite the account's entire config file
+      # for no reason.
+      activation = lib.mkMerge [
+        (lib.mkIf (cfg.userId != null) {
+          writeShortcutsVdf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${steamConfigDir}/grid"
+            $DRY_RUN_CMD cp $VERBOSE_ARG -f ${shortcutsVdfDrv} "${steamConfigDir}/shortcuts.vdf"
+          '';
+        })
+        (lib.mkIf (cfg.userId != null && steamLaunchGamesList != [ ]) {
+          patchLocalconfigLaunchOptions = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${steamConfigDir}"
+            $DRY_RUN_CMD ${python3WithVdf}/bin/python3 ${localconfigPatcherScript} "${steamConfigDir}/localconfig.vdf" ${localconfigPatchFile}
+          '';
+        })
+      ];
 
       # Collect all launchers and games into a single list of derivations.
       # When a launcher is set, `game` is just content passed to it (a
