@@ -4,7 +4,9 @@
   splitFiles,
   fetchzipNoSubst,
   fetchToolOutput,
+  fetchHtmlThenCurl,
   downloadNamedUrls,
+  userAgent,
   ...
 }:
 rec {
@@ -336,4 +338,34 @@ rec {
       splitDrvs = splitFiles fileNames baseDrv;
     in
     lib.listToAttrs (lib.zipListsWith lib.nameValuePair typeNames splitDrvs);
+
+  fetchSteamGrid =
+    { id, sha256 }:
+    fetchHtmlThenCurl {
+      name = "steamgriddb-${toString id}";
+      outputHash = sha256;
+      outputHashMode = "flat";
+      nativeBuildInputs = [
+        pkgs.curl
+        pkgs.gnused
+        pkgs.gnugrep
+      ];
+      resolve = ''
+        referrer="https://www.steamgriddb.com/grid/${toString id}"
+        echo "Fetching page metadata from: $referrer"
+
+        curl -s -H "User-Agent: ${userAgent}" "$referrer" > page.html
+
+        img_url=$(grep -A 1 'class="asset-download"' page.html | sed -n 's|.*href="\([^"]*\)".*|\1|p' | head -n 1)
+
+        if [ -z "$img_url" ]; then
+          echo "Error: Could not extract download URL from SteamGridDB page."
+          exit 1
+        fi
+
+        echo "Found direct image link: $img_url"
+        RESOLVED_URL="$img_url"
+      '';
+      curlOpts = ''-H "User-Agent: ${userAgent}" -H "Referer: $referrer"'';
+    };
 }

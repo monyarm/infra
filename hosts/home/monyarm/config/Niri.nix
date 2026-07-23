@@ -13,12 +13,14 @@ lib.mkMerge [
       awww
       xwayland-satellite
       cliphist
+      wl-clipboard
       swaylock
       wireplumber
       brightnessctl
       playerctl
       rofi
       ghostty
+      xterm
     ];
   })
   {
@@ -69,16 +71,20 @@ lib.mkMerge [
             })) list;
         in
         split (
-          [
+          (lib.optionals isHomeManagerInNixOS [
             # keep-sorted start
-            "/usr/libexec/polkit-mate-authentication-agent-1"
-            "gentoo-pipewire-launcher"
             "quickshell"
             "wl-paste --watch cliphist store"
             "xwayland-satellite"
             "~/.local/bin/awww-random"
             # keep-sorted end
-          ]
+          ])
+          ++ (lib.optionals (!isHomeManagerInNixOS) [
+            # keep-sorted start
+            "/usr/libexec/polkit-mate-authentication-agent-1"
+            "gentoo-pipewire-launcher"
+            # keep-sorted end
+          ])
           ++ lib.optional (!isHomeManagerInNixOS) (
             builtins.head config.systemd.user.services.sops-nix.Service.ExecStart
           )

@@ -1,4 +1,9 @@
-{ lib, parallel, ... }:
+{
+  lib,
+  pkgs,
+  parallel,
+  ...
+}:
 let
   # Generate cd aliases for going up directories
   cdUpAliases =
@@ -20,6 +25,12 @@ let
     // lib.listToAttrs (parallel (map mkNumAlias) rangeNum);
 in
 {
+  home.packages = with pkgs; [
+    colordiff
+    abcde
+    phoronix-test-suite
+  ];
+
   programs.zsh.shellAliases = lib.mkMerge [
     {
       c = "clear";
@@ -56,8 +67,6 @@ in
 
       ## Resume wget by default
       wget = "wget -c";
-
-      gitpush = "git-push-prepost";
 
       dummy = "truncate -s 0";
       esync = "emaint -a sync";

@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   dirs,
   shouldFullUpdate,
   ...
@@ -15,6 +16,10 @@ let
   ];
 in
 {
+  # npm_program_manager.sh runs through inline_progress_manager.sh, which
+  # calls `unbuffer` (from expect) to preserve inline progress output.
+  home.packages = [ pkgs.expect ];
+
   home.file.".npmrc".text = "prefix=~/.npm-global";
 
   home.activation.npmGlobalManagement = lib.mkIf shouldFullUpdate (

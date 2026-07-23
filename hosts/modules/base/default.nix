@@ -1,4 +1,11 @@
-{ inputs, ... }:
+{
+  inputs,
+  nixSettings,
+  user,
+  stateVersion,
+  timeZone,
+  ...
+}:
 
 {
   nix = {
@@ -19,45 +26,18 @@
           "ca-derivations"
         ];
 
-        sshUser = "monyarm";
+        sshUser = user.name;
         sshKey = "/etc/ssh/ssh_host_ed25519_key";
 
       }
     ];
 
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        "pipe-operators"
-        "ca-derivations"
-        "dynamic-derivations"
-        "configurable-impure-env"
-        "impure-derivations"
-        "recursive-nix"
-        "git-hashing"
-        "parse-toml-timestamps"
-        "parallel-eval"
-      ];
-      allow-unsafe-native-code-during-evaluation = true;
+    settings = nixSettings.common // {
       trusted-users = [
         "root"
-        "monyarm"
+        user.name
       ];
-      connect-timeout = 25000;
-      auto-optimise-store = true;
-      lazy-trees = true;
-      eval-cores = 0;
-
-      keep-outputs = false;
-      keep-derivations = false;
-
-      min-free = 8192;
-
-      keep-going = true;
-
       builders-use-substitutes = true;
-
       max-jobs = 8;
     };
   };
@@ -65,9 +45,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  time.timeZone = "Europe/Sofia";
+  time.timeZone = timeZone;
 
-  system.stateVersion = "24.11";
+  system.stateVersion = stateVersion;
 
   services.userborn.enable = true;
   virtualisation.virtualbox.guest.enable = false;

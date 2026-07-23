@@ -3,6 +3,6 @@
     sudo = "doas";
     ls = "eza --colour always --icons -a --group-directories-first";
     cat = "bat --paging=never";
-    tree = "st";
+    tree = "eza --tree --icons";
   };
 }

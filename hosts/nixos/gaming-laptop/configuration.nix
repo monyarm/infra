@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ dirs, ... }:
+{ dirs, stateVersion, ... }:
 
 {
   imports = [
@@ -21,7 +21,7 @@
   ];
 
   networking.networkmanager.enable = true;
-  system.stateVersion = "24.11";
+  system.stateVersion = stateVersion;
 
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.kernelParams = [ "nvidia-drm.modeset=1" ];

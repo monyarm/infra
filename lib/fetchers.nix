@@ -34,6 +34,7 @@ let
         fetchToolOutput
         fetchHtmlThenCurl
         downloadNamedUrls
+        fetchWithReferrer
         ;
     })
   ) { } (builtins.attrNames (builtins.readDir ./fetchers));
@@ -325,45 +326,6 @@ let
           postFetch = (oldAttrs.postFetch or "") + "\n" + selectivePostFetch;
           stripRoot = false;
         });
-      fetchChaosium =
-        {
-          game,
-          name,
-          sha256,
-        }:
-        pkgs.fetchurl {
-          url = "https://www.chaosium.com/content/Backgrounds/${urlEncode game}%20Background%20-%20${urlEncode name}.jpg";
-          inherit sha256;
-        };
-      fetchVideo =
-        {
-          url,
-          sha256,
-          name ? getFileNameFromUrl url,
-          audio ? false,
-        }:
-        fetchToolOutput {
-          inherit name;
-          outputHash = sha256;
-          outputHashMode = "flat";
-          nativeBuildInputs = [ pkgs.yt-dlp ];
-          extraAttrs = {
-            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-          };
-          script = ''
-            yt-dlp \
-              ${if audio then "-f bestvideo+bestaudio" else "-f bestvideo"} \
-              --no-playlist \
-              --no-write-subs \
-              --no-write-auto-subs \
-              --no-write-info-json \
-              --no-write-comments \
-              --user-agent "${userAgent}" \
-              -o "$out" \
-              "${url}"
-          '';
-        };
-
       fetchWithReferrer =
         referrer:
         { url, sha256 }:
@@ -377,70 +339,6 @@ let
           ];
         };
 
-      fetchModDB =
-        { id, sha256 }:
-        fetchHtmlThenCurl {
-          name = "moddb-${toString id}";
-          outputHash = sha256;
-          outputHashMode = "recursive";
-          nativeBuildInputs = [
-            pkgs.curl
-            pkgs.gnused
-          ];
-          extract = true;
-          # moddb sits behind Cloudflare, whose bot-management flags nixpkgs'
-          # curl (its TLS 1.3 ClientHello fingerprint) and returns 403;
-          # capping at TLS 1.2 sidesteps that fingerprinting.
-          resolve = ''
-            resolved_path=$(curl --tls-max 1.2 --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}" "https://www.moddb.com/downloads/start/${toString id}/all" \
-            | sed -n 's/.*href="\/\([^"]*\)".*/\1/p' | head -1)
-            RESOLVED_URL="https://www.moddb.com/$resolved_path"
-          '';
-          curlOpts = ''--tls-max 1.2 --header "Referer: https://www.moddb.com/" --user-agent "${userAgent}"'';
-        };
-      fetchPixiv = fetchWithReferrer "https://www.pixiv.net/";
-      fetchGelbooru =
-        args:
-        fetchWithReferrer "https://gelbooru.com/" (
-          args
-          // {
-            url = builtins.replaceStrings [
-              "https://img.gelbooru.com/"
-              "https://img1.gelbooru.com/"
-              "https://img2.gelbooru.com/"
-              "https://img3.gelbooru.com/"
-            ] (lib.lists.replicate 4 "https://img4.gelbooru.com/") args.url;
-          }
-        );
-      fetchSteamGrid =
-        { id, sha256 }:
-        fetchHtmlThenCurl {
-          name = "steamgriddb-${toString id}";
-          outputHash = sha256;
-          outputHashMode = "flat";
-          nativeBuildInputs = [
-            pkgs.curl
-            pkgs.gnused
-            pkgs.gnugrep
-          ];
-          resolve = ''
-            referrer="https://www.steamgriddb.com/grid/${toString id}"
-            echo "Fetching page metadata from: $referrer"
-
-            curl -s -H "User-Agent: ${userAgent}" "$referrer" > page.html
-
-            img_url=$(grep -A 1 'class="asset-download"' page.html | sed -n 's|.*href="\([^"]*\)".*|\1|p' | head -n 1)
-
-            if [ -z "$img_url" ]; then
-              echo "Error: Could not extract download URL from SteamGridDB page."
-              exit 1
-            fi
-
-            echo "Found direct image link: $img_url"
-            RESOLVED_URL="$img_url"
-          '';
-          curlOpts = ''-H "User-Agent: ${userAgent}" -H "Referer: $referrer"'';
-        };
     };
 in
 functions // subdirImports

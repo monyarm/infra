@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   dirs,
   shouldFullUpdate,
   ...
@@ -18,6 +19,10 @@ let
   ];
 in
 {
+  # cargo_program_manager.sh runs through inline_progress_manager.sh, which
+  # calls `unbuffer` (from expect) to preserve inline progress output.
+  home.packages = [ pkgs.expect ];
+
   home.activation.cargoManagement = lib.mkIf shouldFullUpdate (
     lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       export PATH=${builtins.getEnv "PATH"};

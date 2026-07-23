@@ -1,6 +1,21 @@
 { lib, ... }:
 rec {
   alphabets = builtins.stringToCharacters "abcdefghijklmnopqrstuvwxyz";
+
+  user = {
+    name = "monyarm";
+    email = "monyarm@gmail.com";
+    fullName = "Simeon Armenchev";
+  };
+
+  stateVersion = "24.11";
+  timeZone = "Europe/Sofia";
+
+  bluetoothMacs = {
+    headphones = "A4:77:58:76:71:A5";
+    proController = "E4:17:D8:CE:B3:0B";
+  };
+
   dirs = rec {
     HOME = builtins.getEnv "HOME";
     repo = "${HOME}/.nix";

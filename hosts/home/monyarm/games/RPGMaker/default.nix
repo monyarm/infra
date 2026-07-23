@@ -8,15 +8,15 @@
       checkerboardRed = 255;
       drawingTool = 0;
       editMode = 0;
-      location = "${dirs.HOME}/Documents/RPG Maker";
+      location = "${dirs.Documents}/RPG Maker";
       mapImagesLocation = "";
       mapScreenGrid = false;
       mapScreenGridHeight = 13;
       mapScreenGridWidth = 17;
       mvTools = "";
       objectSelector = "dropdown";
-      outputLocation = "${dirs.HOME}/Documents/Output";
-      projectFileUrl = "file:///${dirs.HOME}/Documents/RPG Maker/Project1/Game.rpgproject";
+      outputLocation = "${dirs.Documents}/Output";
+      projectFileUrl = "file:///${dirs.Documents}/RPG Maker/Project1/Game.rpgproject";
       themeName = "dark";
       tileScale = 1.5;
       uploadOperation = 1;
@@ -32,7 +32,7 @@
   xdg.configFile."EasyRPG/EasyRPG Editor.conf".text = lib.generators.toINI { } {
     General = {
       current_project = "test";
-      default_dir = "${dirs.HOME}/Documents/";
+      default_dir = "${dirs.Documents}/";
       rtp_path = "/usr/share/easyrpg/rtp/";
     };
   };

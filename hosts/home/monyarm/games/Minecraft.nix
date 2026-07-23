@@ -3,6 +3,7 @@
   lib,
   mkOutOfStoreSymlink,
   parallel,
+  user,
   ...
 }:
 
@@ -32,7 +33,7 @@ let
               name = "monyarm1";
             };
             remoteId = "620af47b9e45475981c1fe438c666474";
-            username = "monyarm@gmail.com";
+            username = user.email;
           }
         ]
     );

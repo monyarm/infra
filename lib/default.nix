@@ -11,6 +11,7 @@ let
 
   format = import ./format.nix ({ inherit pkgs lib; } // strings);
   constants = import ./constants.nix { inherit lib; };
+  nixSettings = import ./nixSettings.nix { inherit lib; };
   strings = import ./strings.nix ({ inherit pkgs lib; } // constants // misc);
   imp = import ./imports.nix ({ inherit pkgs lib; } // misc);
   files = import ./files.nix (
@@ -52,6 +53,7 @@ let
     inherit
       format
       constants
+      nixSettings
       strings
       imp
       files
@@ -64,6 +66,7 @@ let
   }
   // format
   // constants
+  // nixSettings
   // strings
   // imp
   // files

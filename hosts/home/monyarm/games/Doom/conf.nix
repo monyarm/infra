@@ -83,7 +83,7 @@ let
           Path = [
             "."
             "$DOOMWADDIR"
-            "${dirs.HOME}/.config/${engine}"
+            "${dirs.xdg.config}/${engine}"
             "/usr/local/share/doom"
             "/usr/local/share/games/doom"
             "/usr/share/doom"
@@ -99,7 +99,7 @@ let
         # as-is. Layout is the same as for IWADSearch.Directories
         "FileSearch.Directories" = {
           Path = [
-            "${dirs.HOME}/.config/${engine}"
+            "${dirs.xdg.config}/${engine}"
             "/usr/share/${engine}"
             "/usr/local/share/doom"
             "/usr/local/share/games/doom"
@@ -114,8 +114,8 @@ let
         # the menu. Layout is the same as for IWADSearch.Directories
         "SoundfontSearch.Directories" = {
           Path = [
-            "${dirs.HOME}/.config/${engine}/soundfonts"
-            "${dirs.HOME}/.config/${engine}/fm_banks"
+            "${dirs.xdg.config}/${engine}/soundfonts"
+            "${dirs.xdg.config}/${engine}/fm_banks"
             "/usr/share/${engine}/soundfonts"
             "/usr/share/${engine}/fm_banks"
             "/usr/local/share/doom/soundfonts"
@@ -135,7 +135,7 @@ let
         # Each file should be on its own line, preceded by Path=
       }
       // lib.genAttrs (map (game: "${game}.AutoExec") autoExecGames) (_: {
-        Path = "${dirs.HOME}/.config/${engine}/autoexec.cfg";
+        Path = "${dirs.xdg.config}/${engine}/autoexec.cfg";
       })
       // {
         # WAD files to always load. These are loaded after the IWAD but before

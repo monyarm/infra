@@ -10,8 +10,10 @@ let
   };
 in
 {
-  xdg.configFile = lib.mkMerge [
-    (mkGimpConfig "2.10")
-    (mkGimpConfig "3.0")
-  ];
+  xdg.configFile = lib.mkMerge (
+    lib.map mkGimpConfig [
+      "2.10"
+      "3.0"
+    ]
+  );
 }

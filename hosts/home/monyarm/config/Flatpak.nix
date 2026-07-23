@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   dirs,
   shouldFullUpdate,
   parallel,
@@ -19,6 +20,10 @@ let
   ];
 in
 {
+  # flatpak_program_manager.sh runs through inline_progress_manager.sh, which
+  # calls `unbuffer` (from expect) to preserve inline progress output.
+  home.packages = [ pkgs.expect ];
+
   home.activation.flatpakManagement = lib.mkIf shouldFullUpdate (
     lib.hm.dag.entryAfter [ "linkGeneration" ] ''
        # Set PATH for flatpak_program_manager.sh

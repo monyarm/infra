@@ -34,11 +34,11 @@ in
   xdg.configFile."Creality/Creality Print.conf".text = lib.generators.toINI { } {
     General = {
       AutoCheckForUpdates = true;
-      dialogLastPath = "${dirs.HOME}/Downloads";
+      dialogLastPath = "${dirs.Downloads}";
     };
 
     AutoSave_Path = {
-      filePath = "${crealityPrintLocalShare}//tmpProject/default.cxprj";
+      filePath = "${crealityPrintLocalShare}/tmpProject/default.cxprj";
     };
 
     Creality3DrecentFiles = {

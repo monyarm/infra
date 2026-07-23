@@ -23,7 +23,6 @@
     "$ANDROID_HOME/tools"
     "$ANDROID_HOME/platform-tools"
     "$HOME/.local/bin"
-    "$HOME/.cargo/bin"
     "$HOME/.dotnet/tools"
     "/opt/bin"
     "/nix/var/nix/profiles/per-user/${config.home.username}/profile/bin"

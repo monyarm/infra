@@ -7,23 +7,13 @@
   getFile,
   sources,
   fetchGitTree,
+  bluetoothMacs,
   ...
 }:
 
 with lib;
 
 let
-  sleepAmount = "5s";
-  fehScript = pkgs.writeText "feh-script" ''
-    #!/bin/bash
-    export DISPLAY=:0
-    for i in $(seq 1 19); do # Loop 19 times for sleep
-      feh --randomize --bg-fill ${dirs.wallpapers}/*
-      sleep ${sleepAmount}
-    done
-    feh --randomize --bg-fill ${dirs.wallpapers}/*
-  '';
-
   commonYdlArgs = "-i -N 8 --external-downloader aria2c";
   commonVideoArgs = "--sub-lang \"all\" --embed-subs --embed-chapters --merge-output-format mkv -o %(title)s.%(ext)s";
   kodiPluginUrl = "plugin://plugin.video.sendtokodi?";
@@ -78,7 +68,7 @@ let
     rm -rf \[Private\ video\].strm
   '';
 
-  address = "E4:17:D8:CE:B3:0B";
+  address = bluetoothMacs.proController;
   reconnectScript = pkgs.writeText "reconnect" ''
     '
           #!/usr/bin/expect
@@ -117,12 +107,17 @@ let
 in
 
 {
+  home.packages = with pkgs; [
+    yt-dlp
+    aria2
+    expect
+  ];
+
   home.file = binFiles (
     [
       # keep-sorted start
       (import ./nxm.nix { inherit pkgs dirs; })
       Extract
-      fehScript
       reconnectScript
       ydlStrmBulkScript
       ydlStrmScript

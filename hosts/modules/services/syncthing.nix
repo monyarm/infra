@@ -4,16 +4,17 @@
   lib,
   config,
   parallel,
+  user,
   ...
 }:
 let
   deviceList = [
     {
-      name = "monyarm-desktop";
+      name = "${user.name}-desktop";
       id = "QDUULK4-IFXZ5MO-LQSHOZJ-Q4E67K6-PLIWXKS-ZUDRI56-Y7LPXQZ-Z7FIBQZ";
     }
     {
-      name = "monyarm-laptop";
+      name = "${user.name}-laptop";
       id = "R2HYOB7-P63AREZ-GHTLY4F-553JZQS-ZOCILFB-4H4SH3P-5CZ6MY6-QAWM6QH";
     }
     {
@@ -39,7 +40,7 @@ in
           versioning.type = "staggered";
           type = "sendreceive";
           ignorePatterns = [ "**/node_modules" ];
-          path = "${dirs.HOME}/Documents/Obsidian Notes";
+          path = "${dirs.Documents}/Obsidian Notes";
         };
       };
       devices = builtins.listToAttrs (

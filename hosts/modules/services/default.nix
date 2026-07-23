@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
   services.xserver = {
     enable = true;
@@ -9,7 +9,7 @@
     };
   };
   services.getty = {
-    autologinUser = "monyarm";
+    autologinUser = user.name;
     autologinOnce = true;
   };
   programs.niri.enable = true;

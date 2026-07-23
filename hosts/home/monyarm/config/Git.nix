@@ -1,4 +1,4 @@
-_: {
+{ user, ... }: {
   programs.git = {
     enable = true;
     signing = {
@@ -6,8 +6,8 @@ _: {
     };
     settings = {
       user = {
-        name = "Simeon Armenchev";
-        email = "monyarm@gmail.com";
+        name = user.fullName;
+        inherit (user) email;
       };
       filter.lfs = {
         clean = "git-lfs clean -- %f";

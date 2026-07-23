@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 let
   makeTransparentFile = windowClass: transparency: {
     text = ''
@@ -23,6 +23,11 @@ let
     ) { } names;
 in
 {
+  # This config's `.ds` rules call devilspie2/transset-df, but neither is
+  # installed — devilspie2 itself isn't declared anywhere either, so this
+  # whole setup looks unused. Left commented rather than installed.
+  # home.packages = with pkgs; [ devilspie2 transset-df ];
+
   home.file = {
     ".devilspie/gedit_transparent.ds" = makeTransparentFile' "Org.gnome.gedit";
     ".devilspie/thunar_transparent.ds" = makeTransparentFile' "Thunar";
