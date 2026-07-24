@@ -1,0 +1,299 @@
+{ pkgs, ... }:
+let
+  script = pkgs.writers.writePython3Bin "scummvm-library-scan" { flakeIgnore = [ "E501" "W503" ]; } ''
+    import argparse
+    import difflib
+    import json
+    import os
+    import re
+    import subprocess
+    import sys
+    import tempfile
+    import urllib.parse
+    import urllib.request
+    from pathlib import Path
+
+    SOPS = "${pkgs.sops}/bin/sops"
+    LGOGDOWNLOADER = "${pkgs.lgogdownloader}/bin/lgogdownloader"
+    LEGENDARY = "${pkgs.legendary-gl}/bin/legendary"
+    SCUMMVM = "${pkgs.scummvm}/bin/scummvm"
+
+    # Stripped before fuzzy-matching so editions/remasters/trademark cruft
+    # (e.g. "Beneath a Steel Sky (GOG Deluxe Edition)") don't tank the ratio
+    # against ScummVM's terser titles (e.g. "Beneath a Steel Sky").
+    NOISE_RE = re.compile(
+        r"[™®©:]"
+        r"|\((?:gog|steam|deluxe|goty|remaster\w*|special|"
+        r"anniversary|definitive|enhanced|complete|hd)[^)]*\)"
+        r"|\b(?:remastered|deluxe edition|special edition|"
+        r"definitive edition|goty edition|complete edition)\b",
+        re.IGNORECASE,
+    )
+
+
+    def normalize(title):
+        cleaned = NOISE_RE.sub("", title)
+        cleaned = re.sub(r"[^\w\s]", " ", cleaned)
+        return re.sub(r"\s+", " ", cleaned).strip().lower()
+
+
+    # Below this length a "substring" match is meaningless noise (nearly
+    # every title contains some single-letter ScummVM game like "glk:o").
+    MIN_CONTAINMENT_LEN = 6
+
+
+    # A ScummVM library with thousands of titles makes a naive O(owned x
+    # scummvm) full ratio() comparison far too slow (each SequenceMatcher
+    # comparison rebuilds its internal index from scratch). Instead: block
+    # candidates by shared significant words (like a cheap inverted index),
+    # then only run the real fuzzy comparison -- reusing one SequenceMatcher
+    # with set_seq2 fixed, as difflib.get_close_matches itself does -- on
+    # that small candidate set.
+    def significant_words(norm):
+        return [w for w in norm.split() if len(w) >= MIN_CONTAINMENT_LEN]
+
+
+    def build_index(games):
+        entries = []
+        word_index = {}
+        for gid, name in games:
+            norm_name = normalize(name)
+            if not norm_name:
+                continue
+            i = len(entries)
+            entries.append((gid, name, norm_name))
+            for w in significant_words(norm_name):
+                word_index.setdefault(w, set()).add(i)
+        return entries, word_index
+
+
+    def fuzzy_matches(title, index, threshold):
+        entries, word_index = index
+        norm_title = normalize(title)
+        if not norm_title:
+            return []
+
+        candidate_idx = set()
+        for w in significant_words(norm_title):
+            candidate_idx |= word_index.get(w, set())
+        if not candidate_idx:
+            return []
+
+        matcher = difflib.SequenceMatcher()
+        matcher.set_seq2(norm_title)
+        scored = []
+        for i in candidate_idx:
+            gid, name, norm_name = entries[i]
+            matcher.set_seq1(norm_name)
+            if matcher.real_quick_ratio() < threshold:
+                continue
+            if matcher.quick_ratio() < threshold:
+                continue
+            ratio = matcher.ratio()
+            if norm_name in norm_title or norm_title in norm_name:
+                ratio = max(ratio, 0.85)
+            if ratio >= threshold:
+                scored.append((ratio, gid, name))
+        scored.sort(reverse=True)
+        return scored[:3]
+
+
+    def get_secret(secrets_file, key):
+        out = subprocess.run(
+            [SOPS, "-d", secrets_file],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout
+        return json.loads(out).get(key)
+
+
+    def gog_titles(secrets_file):
+        auth = get_secret(secrets_file, "GOG_AUTH")
+        if not auth:
+            print(
+                "Warning: GOG_AUTH not found in secrets, skipping GOG.",
+                file=sys.stderr,
+            )
+            return []
+        with tempfile.TemporaryDirectory() as home:
+            cfg = Path(home) / ".config" / "lgogdownloader"
+            cfg.mkdir(parents=True)
+            (cfg / "cookies.txt").write_text(auth["cookies"])
+            (cfg / "galaxy_tokens.json").write_text(
+                json.dumps(auth["galaxy_tokens"])
+            )
+            env = {**os.environ, "HOME": home}
+            res = subprocess.run(
+                [LGOGDOWNLOADER, "--list=json"],
+                env=env,
+                capture_output=True,
+                text=True,
+            )
+            try:
+                data = json.loads(res.stdout)
+            except json.JSONDecodeError:
+                print(
+                    "Warning: failed to parse GOG library listing.",
+                    file=sys.stderr,
+                )
+                return []
+            return [g["title"] for g in data]
+
+
+    def epic_titles(secrets_file):
+        raw = get_secret(secrets_file, "EPIC_LEGENDARY_AUTH")
+        if not raw:
+            print(
+                "Warning: EPIC_LEGENDARY_AUTH not found in secrets, "
+                "skipping Epic.",
+                file=sys.stderr,
+            )
+            return []
+        with tempfile.TemporaryDirectory() as home:
+            cfg = Path(home) / ".config" / "legendary"
+            cfg.mkdir(parents=True)
+            text = raw if isinstance(raw, str) else json.dumps(raw)
+            (cfg / "user.json").write_text(text)
+            env = {**os.environ, "HOME": home}
+            res = subprocess.run(
+                [LEGENDARY, "list", "--json"],
+                env=env,
+                capture_output=True,
+                text=True,
+            )
+            try:
+                data = json.loads(res.stdout)
+            except json.JSONDecodeError:
+                print(
+                    "Warning: failed to parse Epic library listing.",
+                    file=sys.stderr,
+                )
+                return []
+            return [g["app_title"] for g in data]
+
+
+    def steam_installed_titles():
+        steamapps = Path.home() / ".steam" / "steam" / "steamapps"
+        vdf = steamapps / "libraryfolders.vdf"
+        if not vdf.exists():
+            return []
+        paths = re.findall(r'"path"\s*"([^"]+)"', vdf.read_text())
+        titles = []
+        for p in paths:
+            acf_dir = Path(p) / "steamapps"
+            for acf in acf_dir.glob("appmanifest_*.acf"):
+                text = acf.read_text(errors="ignore")
+                m = re.search(r'"name"\s*"([^"]+)"', text)
+                if m:
+                    titles.append(m.group(1))
+        return titles
+
+
+    def local_steamid64():
+        loginusers = (
+            Path.home() / ".steam" / "steam" / "config" / "loginusers.vdf"
+        )
+        if not loginusers.exists():
+            return None
+        m = re.search(r'"(\d{17})"', loginusers.read_text())
+        return m.group(1) if m else None
+
+
+    def steam_titles(secrets_file):
+        # The full owned library (not just what's installed here) needs the
+        # Steam Web API, since it isn't available locally the way installed
+        # games' appmanifest_*.acf files are.
+        api_key = get_secret(secrets_file, "STEAM_API_KEY")
+        steamid = local_steamid64()
+        if not api_key or not steamid:
+            print(
+                "Warning: STEAM_API_KEY or local SteamID64 not found, "
+                "falling back to locally installed Steam games only.",
+                file=sys.stderr,
+            )
+            return steam_installed_titles()
+
+        params = urllib.parse.urlencode(
+            {
+                "key": api_key,
+                "steamid": steamid,
+                "format": "json",
+                "include_appinfo": 1,
+                "include_played_free_games": 1,
+            }
+        )
+        url = (
+            "https://api.steampowered.com/IPlayerService/"
+            f"GetOwnedGames/v1/?{params}"
+        )
+        try:
+            with urllib.request.urlopen(url) as resp:
+                data = json.loads(resp.read())
+        except Exception as e:
+            print(
+                f"Warning: Steam Web API request failed ({e}); "
+                "falling back to locally installed Steam games only.",
+                file=sys.stderr,
+            )
+            return steam_installed_titles()
+
+        games = data.get("response", {}).get("games", [])
+        return [g["name"] for g in games if "name" in g]
+
+
+    def scummvm_games():
+        res = subprocess.run(
+            [SCUMMVM, "--list-games"], capture_output=True, text=True
+        )
+        games = []
+        for line in res.stdout.splitlines():
+            line = line.strip()
+            if (
+                not line
+                or set(line) <= {"-"}
+                or line.lower().startswith("game id")
+            ):
+                continue
+            parts = line.split(None, 1)
+            if len(parts) == 2:
+                games.append((parts[0], parts[1].strip()))
+        return games
+
+
+    def main():
+        ap = argparse.ArgumentParser(
+            description=(
+                "Cross-reference owned GOG/Steam/Epic games against "
+                "ScummVM-supported titles."
+            )
+        )
+        ap.add_argument("--secrets-file", default="secrets/env.json")
+        ap.add_argument("--threshold", type=float, default=0.7)
+        args = ap.parse_args()
+
+        index = build_index(scummvm_games())
+
+        sources = {
+            "GOG": gog_titles(args.secrets_file),
+            "Epic": epic_titles(args.secrets_file),
+            "Steam": steam_titles(args.secrets_file),
+        }
+
+        for source, titles in sources.items():
+            print(f"\n=== {source} ({len(titles)} owned) ===")
+            for title in sorted(set(titles)):
+                matches = fuzzy_matches(title, index, args.threshold)
+                if matches:
+                    shown = ", ".join(
+                        f"{name} [{gid}] ({ratio:.2f})"
+                        for ratio, gid, name in matches
+                    )
+                    print(f"  {title}  ->  {shown}")
+
+
+    if __name__ == "__main__":
+        main()
+  '';
+in
+script

@@ -19,9 +19,6 @@
         pkgs.legendary-gl
         pkgs.cacert
       ];
-      extraAttrs = {
-        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      };
       script = ''
         export HOME=$TMPDIR/HOME
         mkdir -p "$HOME/.config/legendary"

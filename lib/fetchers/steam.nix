@@ -265,6 +265,20 @@ rec {
       };
       script = ''
         export HOME=$TMPDIR/HOME
+        mkdir -p "$HOME/.local/share"
+
+        # DepotDownloader (via .NET IsolatedStorage) persists its logged-in
+        # session under $HOME/.local/share/IsolatedStorage; every fixed-output
+        # build otherwise gets a throwaway $HOME, so each one looks like a new
+        # device to Steam and can require a fresh 2FA/mobile-confirm challenge.
+        # /steam-session is an optional extra-sandbox-paths mount (like
+        # /secrets) pointing at a persistent host directory; symlinking straight
+        # into it (rather than copying in/out) means a refreshed session is
+        # written back automatically, even if the build fails partway through.
+        if [ -d /steam-session ]; then
+          mkdir -p /steam-session/IsolatedStorage
+          ln -s /steam-session/IsolatedStorage "$HOME/.local/share/IsolatedStorage"
+        fi
 
         FILELIST_ARG=""
         if [ -n "$filelistPath" ]; then
@@ -289,6 +303,7 @@ rec {
           ARGS="$ARGS -language $language"
         fi
 
+        set +e
         DepotDownloader \
           -username "$STEAM_USERNAME" \
           -password "$STEAM_PASSWORD" \
@@ -297,6 +312,10 @@ rec {
           $FILELIST_ARG \
           $ARGS \
           -dir "$out" <<< "$(python3 ${steamCodeScript})"
+        DD_STATUS=$?
+        set -e
+
+        exit $DD_STATUS
       '';
     };
 

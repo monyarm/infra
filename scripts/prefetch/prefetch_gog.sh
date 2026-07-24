@@ -2,11 +2,14 @@
 set -euo pipefail
 
 # Usage: prefetch_gog.sh --game <gamename> --fileId <id> [--output-file <file>]
-# Requires GOG_REFRESH_TOKEN to be available to the build sandbox via /secrets.
-# Obtain it once by visiting (in a real browser, logged into GOG):
-#   https://auth.gog.com/auth?client_id=46899977096215655&redirect_uri=https%3A%2F%2Fembed.gog.com%2Fon_login_success%3Forigin%3Dclient&response_type=code
-# then exchanging the resulting ?code= for a refresh_token via:
-#   curl "https://auth.gog.com/token?client_id=46899977096215655&client_secret=9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9&grant_type=authorization_code&code=<CODE>&redirect_uri=https%3A%2F%2Fembed.gog.com%2Fon_login_success%3Forigin%3Dclient"
+# Requires GOG_AUTH to be available to the build sandbox via /secrets: a single
+# JSON blob combining lgogdownloader's cookies.txt (website session) and
+# galaxy_tokens.json (Galaxy API token), both required by --download-file.
+# Obtain them once via 'lgogdownloader --login' on a machine with a browser,
+# then combine the two resulting files into one blob:
+#   jq -n --rawfile cookies ~/.config/lgogdownloader/cookies.txt \
+#         --slurpfile tokens ~/.config/lgogdownloader/galaxy_tokens.json \
+#         '{cookies: $cookies, galaxy_tokens: $tokens[0]}'
 
 outFile=""
 while [[ $# -gt 0 ]]; do

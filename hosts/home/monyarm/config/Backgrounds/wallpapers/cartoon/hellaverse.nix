@@ -71,7 +71,7 @@ in
   stolas01 =
     fetchGelbooru {
       url = "https://img4.gelbooru.com/images/c3/3c/c33c532af73d84aa7d6d29fc03a00752.png";
-      hash = "sha256-aOUiS+/ef8TqfRazXnG7uV6AIxk6WQiHIqFt3jXbze4=";
+      sha256 = "sha256-aOUiS+/ef8TqfRazXnG7uV6AIxk6WQiHIqFt3jXbze4=";
     }
     |> crop16x9West;
 
@@ -79,7 +79,7 @@ in
   stolas02 =
     fetchGelbooru {
       url = "https://img4.gelbooru.com/images/af/8c/af8c7db9d2e9ea54f26c9fd5ad86aee4.jpg";
-      hash = "sha256-PrVdNi5djCn4jzBFb110sXACDcobE2/KdbpI0vn/fQM=";
+      sha256 = "sha256-PrVdNi5djCn4jzBFb110sXACDcobE2/KdbpI0vn/fQM=";
     }
     |> crop16x9West;
 }

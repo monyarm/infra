@@ -39,10 +39,18 @@ wad.goldensouls3 = "https://batandy.itch.io/goldensouls3"
 wad.gzpt = "https://batandy.itch.io/gz-pt"
 wad.simpsons3doom = "https://dar-88.itch.io/simpsons-bart-saves-springfield-zdoom-recreation"
 wad.bikinibottommassacre = "https://deluxe-dalmatian.itch.io/bikini-bottom-massacre"
+scummvm.abovethewaves = "https://cheeseness.itch.io/above-the-waves"
+scummvm.heroinesquest = "https://radiant.itch.io/heroines-quest"
+scummvm.indianarodent = "https://radiant.itch.io/indiana-rodent"
+scummvm.shoaly = "https://captaind.itch.io/shoaly-you-cant-be-serious-deluxe-version"
 
 [itch-windows]
 wad.venturous = "https://pixelsforarms.itch.io/venturous"
 wad.square = "https://bigbrikgames.itch.io/square"
+scummvm.cosmosquest3 = "https://cosmosquest.itch.io/cosmos-quest-iii"
+scummvm.cosmosquest4 = "https://cosmosquest.itch.io/cosmos-quest-iv"
+scummvm.adateinthepark = "https://shaun9991.itch.io/a-date-in-the-park"
+scummvm.leewardep1 = "https://esterasbros.itch.io/leeward-episode-1"
 
 [idgames]
 wad.paranoid = "levels/doom2/Ports/p-r/paranoid.zip"

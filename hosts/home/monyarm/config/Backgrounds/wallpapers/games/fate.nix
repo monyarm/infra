@@ -48,7 +48,7 @@ with image;
   # astolfo06 is a mirror for https://x.com/tatsunoue3229/status/886920922128461824 because the account has been deleted
   astolfo06 = fetchGelbooru {
     url = "https://img4.gelbooru.com/images/d7/2a/d72a8ff8d13ca0fdb0631e1b3f995c20.jpg";
-    hash = "sha256-yhQPA+Zpsk6PISkb5IJkdLUjj/WfuiVTdCB3hqZs7FM=";
+    sha256 = "sha256-yhQPA+Zpsk6PISkb5IJkdLUjj/WfuiVTdCB3hqZs7FM=";
   };
 
   astolfo07 = fetchPixiv {

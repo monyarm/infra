@@ -2,7 +2,6 @@
   pkgs,
   getFileNameFromUrl,
   userAgent,
-  lib,
   fetchHtmlThenCurl,
   ...
 }:
@@ -26,10 +25,6 @@
       outputHashMode = "recursive";
       nativeBuildInputs = [ pkgs.curl ];
       useSecrets = true;
-      extraAttrs = {
-        preferLocalBuild = true;
-        impureEnvVars = lib.fetchers.proxyImpureEnvVars ++ [ "NINTENDO_COOKIE" ];
-      };
       resolve = ''
         FINAL_URL=$(curl -s -L -o /dev/null -w '%{url_effective}' \
           --user-agent "${userAgent}" \

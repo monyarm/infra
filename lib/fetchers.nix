@@ -81,6 +81,12 @@ let
                 application/x-7z-compressed | application/x-dosexec)
                   ${pkgs.p7zip}/bin/7z x "${file}" -o"${outDir}"
                   ;;
+                application/x-iso9660-image)
+                  # 7z reads ISO9660 filesystems directly; some CD-era GOG
+                  # installers bundle the real resource files this way
+                  # (e.g. Return of the Phantom's RotP.iso).
+                  ${pkgs.p7zip}/bin/7z x "${file}" -o"${outDir}"
+                  ;;
                 *)
                   echo "Raw file, copying directly."
                   ${pkgs.coreutils}/bin/cp "${file}" "${outDir}/$(${pkgs.coreutils}/bin/basename "${file}")"
@@ -109,6 +115,12 @@ let
                 nativeBuildInputs
                 ;
               outputHashAlgo = "sha256";
+              SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+              # Secrets are read from /secrets (see secretsPrelude below),
+              # which is only mapped into the sandbox on the local machine
+              # (see .envrc's extra-sandbox-paths); a remote builder would
+              # fail with a missing-file error, so keep these local.
+              preferLocalBuild = useSecrets;
             }
             // extraAttrs
           )
@@ -142,6 +154,7 @@ let
                 ;
               outputHashAlgo = "sha256";
               SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+              preferLocalBuild = useSecrets;
             }
             // extraAttrs
           )

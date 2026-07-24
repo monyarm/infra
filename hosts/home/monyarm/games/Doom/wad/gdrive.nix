@@ -20,6 +20,12 @@
         sha256 = "sha256-9updoVZfYTZ/2XBp62lD3GjlOTC9h7CcVQr4IR1TbME=";
       }
       |> getFile "action.pk3";
+
+    hdoom = fetchGDrive {
+      fileId = "197tg35i1tOaFPwg37NY57eFgRQf_6HDJ";
+      sha256 = "sha256-gYDzxPwiMZ1T1Kn5jlnQ9Ay6CHLk4JLYVZbNhdAlMq8=";
+      name = "HDoom.pk3";
+    };
   };
 
   programs.steam.games = with config.games.doom.wads; {
@@ -35,6 +41,11 @@
       name = "Action Doom: Rampage Edition";
       iwad = doom2;
       wad = [ actionDoomRampageEdition ];
+    };
+    HDoom = mkDoom {
+      name = "HDoom";
+      iwad = doom2;
+      wad = [ hdoom ];
     };
   };
 }

@@ -18,9 +18,6 @@
       outputHash = sha256;
       outputHashMode = "flat";
       nativeBuildInputs = [ pkgs.yt-dlp ];
-      extraAttrs = {
-        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      };
       script = ''
         yt-dlp \
           ${if audio then "-f bestvideo+bestaudio" else "-f bestvideo"} \

@@ -20,9 +20,6 @@
         pkgs.megatools
         pkgs.cacert
       ];
-      extraAttrs = {
-        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      };
       script = ''
         mkdir -p "$TMPDIR/download"
         megadl --no-progress --path "$TMPDIR/download" "${url}"

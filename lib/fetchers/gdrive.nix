@@ -23,9 +23,6 @@
         pkgs.gdown
         pkgs.cacert
       ];
-      extraAttrs = {
-        SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-      };
       script =
         if extract then
           ''

@@ -50,6 +50,12 @@ in
       name = "Doom II: Hell on Earth";
       iwad = doom2;
       wad = [ betray ];
+      # A separate, standalone Steam app from the unified "DOOM + DOOM II"
+      # bundle (appId 2280) used above for WAD extraction; owners of the
+      # original get this real app patched with LaunchOptions instead of a
+      # synthetic non-Steam shortcut.
+      steamAppId = 2300;
+      steamCdnImagesHash = "sha256-uQwly0rSgAcVIRB0PZkaEl6j1ocfqX1RWK8beI+IIT4=";
     };
     NERVE = mkDoom {
       name = "No Rest for the Living";

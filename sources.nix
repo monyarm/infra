@@ -45621,6 +45621,309 @@
     type = "git-tag";
     url = "https://github.com/murat-dogan/node-datachannel.git";
   };
+  scummvm = {
+    abovethewaves = {
+      files = [
+        "AboveTheWaves/AboveTheWaves.png"
+        "AboveTheWaves/AboveTheWavesFullScreen.sh"
+        "AboveTheWaves/AboveTheWavesWindowed.sh"
+        "AboveTheWaves/README"
+        "AboveTheWaves/bin/shaders/color.frag"
+        "AboveTheWaves/bin/shaders/color.vert"
+        "AboveTheWaves/bin/shaders/fixScaleSprite.frag"
+        "AboveTheWaves/bin/shaders/fixScaleSprite.vert"
+        "AboveTheWaves/bin/shaders/scale.frag"
+        "AboveTheWaves/bin/shaders/scale.vert"
+        "AboveTheWaves/bin/shaders/scale_noaa.frag"
+        "AboveTheWaves/bin/shaders/texture.frag"
+        "AboveTheWaves/bin/shaders/texture.vert"
+        "AboveTheWaves/bin/shaders/yuv.frag"
+        "AboveTheWaves/bin/shaders/yuv.vert"
+        "AboveTheWaves/bin/sludge-engine"
+        "AboveTheWaves/data/atw.slg"
+        "AboveTheWaves/lib64/libGLU.so.1"
+        "AboveTheWaves/lib64/libGLee.so.5"
+        "AboveTheWaves/lib64/libSDL-1.2.so.0"
+        "AboveTheWaves/lib64/libalure.so.1"
+        "AboveTheWaves/lib64/libgcc_s.so.1"
+        "AboveTheWaves/lib64/libogg.so.0"
+        "AboveTheWaves/lib64/libopenal.so.1"
+        "AboveTheWaves/lib64/libpng16.so.16"
+        "AboveTheWaves/lib64/libstdc++.so.6"
+        "AboveTheWaves/lib64/libvorbis.so.0"
+        "AboveTheWaves/lib64/libvpx.so.1"
+        "AboveTheWaves/lib64/libz.so.1"
+        "AboveTheWaves/sludge/doc/AUTHORS"
+        "AboveTheWaves/sludge/doc/INSTALL"
+        "AboveTheWaves/sludge/doc/README"
+        "AboveTheWaves/sludge/source_changes/main.cpp.diff"
+      ];
+      hash = "sha256-Kgc8jruer5oPzNpC9jRDUwCfiPfLz/HfPH41DE2/HY4=";
+      type = "itch";
+      url = "https://cheeseness.itch.io/above-the-waves";
+      version = "5905442:e5692adf2a62a9e2a8af8b126506fe03:2022-06-02T09:31:06Z|96975:None:2015-09-01T16:46:39Z|96976:None:2015-09-01T16:46:39Z";
+    };
+    adateinthepark = {
+      files = [
+        "A Date in the Park/A Date in the Park.exe"
+        "A Date in the Park/Readme.txt"
+        "A Date in the Park/acsetup.cfg"
+        "A Date in the Park/ags_shell.dll"
+        "A Date in the Park/agsteam.dll"
+        "A Date in the Park/audio.vox"
+        "A Date in the Park/msvcp140.dll"
+        "A Date in the Park/steam_api.dll"
+        "A Date in the Park/vcruntime140.dll"
+        "A Date in the Park/winsetup.exe"
+      ];
+      hash = "sha256-x7x9FPiNfV9086hEaSNtadY4Z5J3NC2gmy9Lcjxxtwo=";
+      platform = "windows";
+      type = "itch";
+      url = "https://shaun9991.itch.io/a-date-in-the-park";
+      version = "1363929:517b284b02fb49012c04a444c6fea5dc:2019-04-09T15:30:22Z";
+    };
+    cosmosquest3 = {
+      files = [
+        "CQ3.001"
+        "CQ3.002"
+        "CQ3.003"
+        "CQ3.004"
+        "CQ3.005"
+        "CQ3.006"
+        "CQ3.007"
+        "CQ3.008"
+        "CQ3.009"
+        "CQ3.010"
+        "CQ3.011"
+        "CQ3.012"
+        "CQ3.013"
+        "CQ3.014"
+        "CQ3.015"
+        "CQ3.016"
+        "CQ3.017"
+        "CQ3.018"
+        "CQ3.019"
+        "CQ3.020"
+        "CQ3.021"
+        "CQ3.022"
+        "CQ3.023"
+        "CQ3.024"
+        "CQ3.exe"
+        "acsetup.cfg"
+        "agssave.001"
+        "music.vox"
+        "winsetup.exe"
+      ];
+      hash = "sha256-Q98CzD58tO8ojQXYwqkAaP8PCnebTVBTLHAZXqPHv2k=";
+      platform = "windows";
+      type = "itch";
+      url = "https://cosmosquest.itch.io/cosmos-quest-iii";
+      version = "740687:3d369f34af6d117cea721de60d40cb5c:2018-01-23T23:56:54Z";
+    };
+    cosmosquest4 = {
+      files = [
+        "CQ4.001"
+        "CQ4.002"
+        "CQ4.003"
+        "CQ4.004"
+        "CQ4.005"
+        "CQ4.006"
+        "CQ4.007"
+        "CQ4.008"
+        "CQ4.009"
+        "CQ4.010"
+        "CQ4.011"
+        "CQ4.012"
+        "CQ4.013"
+        "CQ4.014"
+        "CQ4.015"
+        "CQ4.016"
+        "CQ4.017"
+        "CQ4.018"
+        "CQ4.019"
+        "CQ4.020"
+        "CQ4.021"
+        "CQ4.022"
+        "CQ4.023"
+        "CQ4.024"
+        "CQ4.exe"
+        "acsetup.cfg"
+        "audio.vox"
+        "winsetup.exe"
+      ];
+      hash = "sha256-ScxVF7p61zCwS9aR8NtpWhe1AC3Hu+eSxQVSmY2JGLQ=";
+      platform = "windows";
+      type = "itch";
+      url = "https://cosmosquest.itch.io/cosmos-quest-iv";
+      version = "740692:17f273029687f88dc98ca5abae661f04:2018-01-24T00:07:28Z";
+    };
+    heroinesquest = {
+      files = [
+        "HQ-box-packaging.png"
+        "HQ-cd-slip-cover.png"
+        "HQ-dvd-case.png"
+        "HQ-dvd-label.png"
+        "HQ-poster.png"
+        "HQguide.pdf"
+        "Heroine's Quest manual English.pdf"
+        "Heroine's Quest manual Hungarian.pdf"
+        "Heroine's Quest manual Spanish.pdf"
+        "Heroine'sQuest"
+        "data/French.tra"
+        "data/Heroine's Quest.ags"
+        "data/Hungarian.tra"
+        "data/Italian.tra"
+        "data/Portuguese.tra"
+        "data/Russian.tra"
+        "data/Spanish.tra"
+        "data/acsetup.cfg"
+        "data/ags32"
+        "data/ags64"
+        "data/audio.vox"
+        "data/lib32/libSDL2-2.0.so.0"
+        "data/lib32/libagsgalaxy.so"
+        "data/lib32/libagsteam.so"
+        "data/lib32/libogg.so.0"
+        "data/lib32/libtheora.so.0"
+        "data/lib32/libvorbis.so.0"
+        "data/lib32/libvorbisfile.so.3"
+        "data/lib64/libSDL2-2.0.so.0"
+        "data/lib64/libagsgalaxy.so"
+        "data/lib64/libagsteam.so"
+        "data/lib64/libogg.so.0"
+        "data/lib64/libtheora.so.0"
+        "data/lib64/libvorbis.so.0"
+        "data/lib64/libvorbisfile.so.3"
+        "data/licenses/ags-copyright"
+        "data/licenses/libSDL2-2.0-copyright"
+        "data/licenses/libogg0-copyright"
+        "data/licenses/libtheora0-copyright"
+        "data/licenses/libvorbis0a-copyright"
+        "data/speech.vox"
+        "history.txt"
+      ];
+      hash = "sha256-bwctTv98cQs/kwYUAaKUnsaZVfsjAACyLkv756ocvAA=";
+      type = "itch";
+      url = "https://radiant.itch.io/heroines-quest";
+      version = "15063596:eeba5ce01d6b7073948d5ca3824df604:2025-09-27T07:36:02Z|9739615:4bab30e715647b8e874983d8c1523f76:2024-02-17T07:59:03Z|9739621:d364c7c2e2c0e85605ef6a9338ff0145:2024-02-17T08:02:37Z";
+    };
+    indianarodent = {
+      files = [
+        "Game.sh"
+        "Indiana Rodent.exe"
+        "acsetup.cfg"
+        "ags32"
+        "ags64"
+        "audio.vox"
+        "lib32/alleg-alsadigi.so"
+        "lib32/alleg-alsamidi.so"
+        "lib32/alleg-dga2.so"
+        "lib32/alleg-sdl2digi.so"
+        "lib32/libSDL2-2.0.so.0"
+        "lib32/libagsteam.so"
+        "lib32/libaldmb.so.1"
+        "lib32/liballeg.so.4.4"
+        "lib32/libdumb.so.1"
+        "lib32/libfreetype.so.6"
+        "lib32/libogg.so.0"
+        "lib32/libsteam_api.so"
+        "lib32/libtheora.so.0"
+        "lib32/libtheoradec.so.1"
+        "lib32/libvorbis.so.0"
+        "lib32/libvorbisfile.so.3"
+        "lib32/modules.lst"
+        "lib64/alleg-alsadigi.so"
+        "lib64/alleg-alsamidi.so"
+        "lib64/alleg-dga2.so"
+        "lib64/alleg-sdl2digi.so"
+        "lib64/libSDL2-2.0.so.0"
+        "lib64/libagsjoy.so"
+        "lib64/libagsteam.so"
+        "lib64/libaldmb.so.1"
+        "lib64/liballeg.so.4.4"
+        "lib64/libdumb.so.1"
+        "lib64/libfreetype.so.6"
+        "lib64/libogg.so.0"
+        "lib64/libsteam_api.so"
+        "lib64/libtheora.so.0"
+        "lib64/libtheoradec.so.1"
+        "lib64/libvorbis.so.0"
+        "lib64/libvorbisfile.so.3"
+        "lib64/modules.lst"
+        "licenses/ags-copyright"
+        "licenses/liballegro4.4-copyright"
+      ];
+      hash = "sha256-JLv2TX5LOZKMdaZmgJm7ITP6OT5TjKjWiThVFWz4WWc=";
+      type = "itch";
+      url = "https://radiant.itch.io/indiana-rodent";
+      version = "16892126:205e0cf3c7da89b6aa3b3b9b77761098:2026-03-22T12:45:44Z|1871301:49f64cfedefa611d41c060425105e3c0:2020-01-01T19:38:28Z|1871302:96956685655b1c8436052920e1f10103:2026-03-22T12:45:44Z";
+    };
+    leewardep1 = {
+      files = [
+        "Leeward Episode 1/English.tra"
+        "Leeward Episode 1/LeeWard Episode 1 Manual.pdf"
+        "Leeward Episode 1/LeeWard.exe"
+        "Leeward Episode 1/Spanish.tra"
+        "Leeward Episode 1/USER.ico"
+        "Leeward Episode 1/Wallpapers/LW1.png"
+        "Leeward Episode 1/Wallpapers/LW2.png"
+        "Leeward Episode 1/Wallpapers/LW3.png"
+        "Leeward Episode 1/Wallpapers/LW4.png"
+        "Leeward Episode 1/Wallpapers/LW5.png"
+        "Leeward Episode 1/acsetup.cfg"
+        "Leeward Episode 1/audio.vox"
+        "Leeward Episode 1/warnings.log"
+        "Leeward Episode 1/winsetup.exe"
+      ];
+      hash = "sha256-19E47HO8miXmYBkYeDeFmrd3ZUp1WnbI+nsWvjrV1N4=";
+      platform = "windows";
+      type = "itch";
+      url = "https://esterasbros.itch.io/leeward-episode-1";
+      version = "Leeward Episode 1.rar";
+    };
+    shoaly = {
+      files = [
+        "Linux/SYCBS"
+        "Linux/data/SYCBS.ags"
+        "Linux/data/acsetup.cfg"
+        "Linux/data/ags32"
+        "Linux/data/ags64"
+        "Linux/data/audio.vox"
+        "Linux/data/lib32/alleg-alsadigi.so"
+        "Linux/data/lib32/alleg-alsamidi.so"
+        "Linux/data/lib32/alleg-sdl2digi.so"
+        "Linux/data/lib32/libaldmb.so.1"
+        "Linux/data/lib32/liballeg.so.4.4"
+        "Linux/data/lib32/libdumb.so.1"
+        "Linux/data/lib32/libogg.so.0"
+        "Linux/data/lib32/libtheora.so.0"
+        "Linux/data/lib32/libvorbis.so.0"
+        "Linux/data/lib32/libvorbisfile.so.3"
+        "Linux/data/lib32/modules.lst"
+        "Linux/data/lib64/alleg-alsadigi.so"
+        "Linux/data/lib64/alleg-alsamidi.so"
+        "Linux/data/lib64/alleg-sdl2digi.so"
+        "Linux/data/lib64/libaldmb.so.1"
+        "Linux/data/lib64/liballeg.so.4.4"
+        "Linux/data/lib64/libdumb.so.1"
+        "Linux/data/lib64/libogg.so.0"
+        "Linux/data/lib64/libtheora.so.0"
+        "Linux/data/lib64/libvorbis.so.0"
+        "Linux/data/lib64/libvorbisfile.so.3"
+        "Linux/data/lib64/modules.lst"
+        "Linux/data/licenses/ags-copyright"
+        "Linux/data/licenses/liballegro4.4-copyright"
+        "Linux/data/licenses/libdumb1-copyright"
+        "Linux/data/licenses/libogg0-copyright"
+        "Linux/data/licenses/libtheora0-copyright"
+        "Linux/data/licenses/libvorbis0a-copyright"
+      ];
+      hash = "sha256-kQlhR/nAnrGtsfgKwFaL+5PXYfLY8A4HZ/CssoApOyU=";
+      type = "itch";
+      url = "https://captaind.itch.io/shoaly-you-cant-be-serious-deluxe-version";
+      version = "4053698:fcd73bce7a86e1c4bb573a5b326cbafe:2021-06-21T15:38:32Z|4055085:d042f9967b61fcd8734075e9ecd5d5e3:2021-06-21T18:40:16Z";
+    };
+  };
   wad = {
     actiondoom2 = {
       game = "levels/doom2/Ports/a-c/action2.zip";

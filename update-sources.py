@@ -515,7 +515,11 @@ def replicate_fetchitch_output(data, filename, out_name):
     for tool in (
         ("unzip",) if filename.lower().endswith(".zip") else
         ("tar",) if filename.lower().endswith((".tar.gz", ".tgz", ".tar.xz", ".txz")) else
-        ("7z",) if filename.lower().endswith((".rar", ".7z", ".exe")) else ()
+        # unrar handles some real-world RAR files that p7zip's bundled rar
+        # codec fails on ("Can not open the file as archive"), matching
+        # extractArchiveSnippet's mime-based dispatch in lib/fetchers.nix.
+        ("unrar",) if filename.lower().endswith(".rar") else
+        ("7z",) if filename.lower().endswith((".7z", ".exe")) else ()
     ):
         if not shutil.which(tool):
             raise RuntimeError(f"'{tool}' is required to extract {filename} the same way fetchItch does, but isn't on PATH.")
@@ -536,7 +540,9 @@ def replicate_fetchitch_output(data, filename, out_name):
         subprocess.run(["tar", "-xzf", src_path, "-C", out_dir], check=True)
     elif lower.endswith((".tar.xz", ".txz")):
         subprocess.run(["tar", "-xJf", src_path, "-C", out_dir], check=True)
-    elif lower.endswith((".rar", ".7z", ".exe")):
+    elif lower.endswith(".rar"):
+        subprocess.run(["unrar", "x", "-o+", src_path, f"{out_dir}/"], check=True)
+    elif lower.endswith((".7z", ".exe")):
         subprocess.run(["7z", "x", src_path, f"-o{out_dir}"], check=True)
     else:
         shutil.copy(src_path, os.path.join(out_dir, filename))
