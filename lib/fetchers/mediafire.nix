@@ -9,7 +9,12 @@
   fetchMediafire =
     {
       url,
-      sha256,
+      # `hash` matches sources.nix's field name (as update-sources.py
+      # writes it), so a `sources.wad.<x>` attrset can be passed straight
+      # through, same as fetchIdGames/fetchGitTree already allow; `sha256`
+      # stays supported for existing call sites passing a literal directly.
+      hash ? null,
+      sha256 ? null,
       # Mediafire urls look like .../file/<id>/<filename>/file; prefer the
       # actual filename segment over the trailing literal "file".
       name ?
@@ -21,15 +26,22 @@
       # should be unpacked, rather than a single file (e.g. a .pk3) to keep
       # intact as-is.
       extract ? false,
+      # sources.nix's recorded archive member list, when this source is a
+      # pk3/archive -- attached as passthru so optimize/optimize' can
+      # transparently extract/optimize/repack it without a caller needing
+      # to pass this same sourceEntry again explicitly.
+      archiveContent ? null,
+      ...
     }:
     fetchHtmlThenCurl {
       inherit name extract;
-      outputHash = sha256;
+      outputHash = if hash != null then hash else sha256;
       outputHashMode = if extract then "recursive" else "flat";
       nativeBuildInputs = [
         pkgs.curl
         pkgs.gnugrep
       ];
+      extraAttrs.passthru.archiveContent = archiveContent;
       resolve = ''
         page=$(curl -sL --user-agent "${userAgent}" "${url}")
         # The CDN download link is easier to find as a plain URL pattern than

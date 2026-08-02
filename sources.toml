@@ -25,6 +25,8 @@ fonts.mse.other = "https://github.com/MagicSetEditorPacks/Full-Non-Magic-Pack"
 fonts.keyrune = "https://github.com/andrewgioia/Keyrune"
 fonts.mana = "https://github.com/andrewgioia/Mana"
 wad.lastermaul = "https://github.com/GeorgePieVG/Lastermaul"
+tools.wadptr = "https://github.com/fragglet/wadptr"
+tools.scummvmTools = "https://github.com/scummvm/scummvm-tools"
 
 [git-tag]
 node-datachannel = "https://github.com/murat-dogan/node-datachannel"
@@ -51,6 +53,24 @@ scummvm.cosmosquest3 = "https://cosmosquest.itch.io/cosmos-quest-iii"
 scummvm.cosmosquest4 = "https://cosmosquest.itch.io/cosmos-quest-iv"
 scummvm.adateinthepark = "https://shaun9991.itch.io/a-date-in-the-park"
 scummvm.leewardep1 = "https://esterasbros.itch.io/leeward-episode-1"
+
+[gdrive]
+wad.legendofdoombase = "120nPbFJY9y0qMF_CSXA3XvutdEp_Gcja;name=LegendOfDoom.pk3"
+wad.actiondoomrampageedition = "115GyqVk6QzG9AeA219AtWlVXul9jiLN7;extract"
+wad.hdoom = "197tg35i1tOaFPwg37NY57eFgRQf_6HDJ;name=HDoom.pk3"
+
+[mediafire]
+wad.seriousSamRetroEncounter = "http://www.mediafire.com/file/3tgp183p48vb06z/SS_RETRO_ENCOUNTER_2018_hotfix.pk3"
+wad.splatterhouse3D = "http://www.mediafire.com/file/zr6zklcj337p1q5/splat3dmus.zip/file;extract"
+
+[moddb]
+wad.jazzJackrabbitDoom = "287573"
+wad.zombiesAteMyNeighboursTC = "307303"
+wad.legendOfDoomAddon = "243444"
+wad.metroidDreadnought = "182831"
+wad.spramsMetroidDoom = "170103"
+wad.hocusPocusDoom = "189681"
+wad.doom64CE = "285205"
 
 [idgames]
 wad.paranoid = "levels/doom2/Ports/p-r/paranoid.zip"

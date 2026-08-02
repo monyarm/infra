@@ -17,6 +17,73 @@ from urllib.parse import urlparse
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
 
+# .pk3/.ipk3 are GZDoom containers that are just zip files under the hood;
+# listing what's inside them (in addition to the outer archive's own file
+# list) lets the Nix side extract/optimize/repack their members without
+# needing IFD -- the member names just need to be a static fact in
+# sources.nix, known before any of that building happens.
+PK3_EXTENSIONS = (".pk3", ".ipk3")
+
+
+def zip_member_path(info):
+    """Zip member paths as some tools (typically Windows-authored) store
+    them can use literal backslashes as separators; Python's zipfile module
+    returns that raw stored name unmodified, but unzip(1) -- what actually
+    extracts these at build time -- converts them to real subdirectories.
+    Recorded paths need to match that real on-disk layout, not the raw
+    stored name, or getFile's cp lookups miss."""
+    return info.filename.replace("\\", "/")
+
+
+def scan_archive_contents_bytes(data):
+    """Given a pk3/ipk3's raw bytes, return its sorted internal file list, or None if it's not a readable zip."""
+    try:
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            return sorted(
+                zip_member_path(info) for info in z.infolist()
+                if not info.filename.endswith('/') and not info.is_dir()
+            )
+    except zipfile.BadZipFile:
+        return None
+
+
+def scan_archive_contents_from_zip(z):
+    """Given an already-open outer zipfile.ZipFile, list the contents of any pk3/ipk3 members found inside it.
+
+    Keyed by basename, not the full path within the outer archive: the Nix
+    side (getFile + optimizePk3) always looks a pk3 up by basename (getFile
+    extracts baseNameOf filePath for both naming and .originalName), so a
+    full-path key here would just never match for any pk3 sitting in a
+    subfolder.
+    """
+    result = {}
+    for info in z.infolist():
+        if info.filename.endswith('/') or info.is_dir():
+            continue
+        if info.filename.lower().endswith(PK3_EXTENSIONS):
+            contents = scan_archive_contents_bytes(z.read(info.filename))
+            if contents is not None:
+                result[os.path.basename(zip_member_path(info))] = contents
+    return result
+
+
+def scan_archive_contents_from_dir(root_dir):
+    """Walk an already-extracted directory tree, listing the contents of any pk3/ipk3 files found inside it.
+
+    Keyed by basename -- see scan_archive_contents_from_zip's docstring.
+    """
+    result = {}
+    for root, _, filenames in os.walk(root_dir):
+        for fn in filenames:
+            if not fn.lower().endswith(PK3_EXTENSIONS):
+                continue
+            full_path = os.path.join(root, fn)
+            with open(full_path, "rb") as f:
+                contents = scan_archive_contents_bytes(f.read())
+            if contents is not None:
+                result[fn] = contents
+    return result
+
 
 def parse_toml(content):
     data = {}
@@ -65,7 +132,14 @@ def load_previous_nix(nix_path):
         def flatten(d, prefix=""):
             for k, v in d.items():
                 key = f"{prefix}.{k}" if prefix else k
-                if isinstance(v, dict) and "type" not in v:
+                # archiveContent is keyed by literal filenames (which may contain
+                # dots, e.g. "Paranoid.pk3"), not a namespace grouping like the
+                # rest of this tree -- treat it as an opaque leaf so those dots
+                # don't get mistaken for flatten's own path separator and
+                # split back apart into nested attrs on the next run.
+                if k == "archiveContent":
+                    flat[key] = v
+                elif isinstance(v, dict) and "type" not in v:
                     flatten(v, key)
                 else:
                     flat[key] = v
@@ -104,15 +178,19 @@ def process_zip(name, url):
         files = []
         for info in z.infolist():
             if not info.filename.endswith('/') and not info.is_dir():
-                files.append(info.filename)
-                
+                files.append(zip_member_path(info))
+        archive_content = scan_archive_contents_from_zip(z)
+
     files.sort()
-    return {
+    result = {
         "type": "zip",
         "url": url,
         "hash": h,
         "files": files
     }
+    if archive_content:
+        result["archiveContent"] = archive_content
+    return result
 
 
 def parse_git_url(url):
@@ -451,6 +529,186 @@ def process_custom(fetcher_name, name, url):
     }
 
 
+def get_gdrive_version_hint(file_id):
+    """Best-effort cheap version check via a HEAD request. Returns None when
+    unavailable (large files land behind Google's "can't scan for viruses"
+    confirmation page instead of serving Content-Length/ETag directly) --
+    the caller should always re-verify in that case rather than cache."""
+    url = f"https://drive.google.com/uc?id={file_id}&export=download"
+    try:
+        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            length = resp.headers.get("Content-Length")
+            etag = resp.headers.get("ETag")
+            if length or etag:
+                return f"{length}:{etag}"
+    except Exception:
+        pass
+    return None
+
+
+def process_gdrive(name, raw, previous_sources):
+    old = previous_sources.get(name)
+    file_id, extra = parse_source_spec(raw)
+    extract = bool(extra.get("extract"))
+    out_name = extra.get("name")
+
+    print(f"Checking [gdrive] {name} (fileId {file_id})...")
+    version = get_gdrive_version_hint(file_id)
+
+    if version is not None and old and old.get("fileId") == file_id and old.get("version") == version:
+        print(f"  -> {name} unchanged (Content-Length/ETag matches); reusing cached hash.")
+        return old
+
+    print(f"  -> Fetching hash for {name} via Nix build...")
+    fetch_args = {"fileId": f'"{file_id}"'}
+    if extract:
+        fetch_args["extract"] = "true"
+    if out_name:
+        fetch_args["name"] = f'"{out_name}"'
+    nix_expr = nix_build_expr("fetchGDrive", fetch_args)
+    h = extract_hash_from_nix_build(nix_expr, f"fetchGDrive ({name})")
+
+    print(f"  -> Realizing {name}'s output to record its file list...")
+    store_path = realize_build_output("fetchGDrive", fetch_args, h)
+    files, archive_content = scan_realized_output(store_path, out_name or file_id)
+
+    result = {"type": "gdrive", "fileId": file_id, "hash": h}
+    if extract:
+        result["extract"] = True
+    if out_name:
+        result["name"] = out_name
+    if version is not None:
+        result["version"] = version
+    if files:
+        result["files"] = files
+    if archive_content:
+        result["archiveContent"] = archive_content
+    return result
+
+
+def mediafire_default_name(url):
+    """Mirrors fetchMediafire's own `name ?` default (lib/fetchers/mediafire.nix):
+    prefer the filename segment of a .../file/<id>/<filename>/file URL, else
+    fall back to the URL's last path segment."""
+    m = re.match(r".*/file/[^/]+/([^/]+)/file/?$", url)
+    if m:
+        return m.group(1)
+    m2 = re.match(r".*/([^/]+)$", url.split("?")[0].split("#")[0])
+    return m2.group(1) if m2 else url
+
+
+def process_mediafire(name, raw, previous_sources):
+    old = previous_sources.get(name)
+    url, extra = parse_source_spec(raw)
+    extract = bool(extra.get("extract"))
+
+    print(f"Checking [mediafire] {name} from {url}...")
+
+    # Mediafire quickkeys (the id segment in /file/<quickkey>/...) are
+    # permalinks to one specific uploaded file version -- if the author
+    # replaces the file, mediafire assigns a new quickkey/URL rather than
+    # mutating this one. Unchanged URL therefore means unchanged content,
+    # no HTTP call needed at all to confirm it.
+    if old and old.get("url") == url:
+        print(f"  -> {name} unchanged (mediafire quickkey is a permalink); reusing cached hash.")
+        return old
+
+    print(f"  -> Fetching hash for {name} via Nix build...")
+    fetch_args = {"url": f'"{url}"'}
+    if extract:
+        fetch_args["extract"] = "true"
+    nix_expr = nix_build_expr("fetchMediafire", fetch_args)
+    h = extract_hash_from_nix_build(nix_expr, f"fetchMediafire ({name})")
+
+    print(f"  -> Realizing {name}'s output to record its file list...")
+    store_path = realize_build_output("fetchMediafire", fetch_args, h)
+    files, archive_content = scan_realized_output(store_path, mediafire_default_name(url))
+
+    result = {"type": "mediafire", "url": url, "hash": h}
+    if extract:
+        result["extract"] = True
+    if files:
+        result["files"] = files
+    if archive_content:
+        result["archiveContent"] = archive_content
+    return result
+
+
+def resolve_moddb_url(mod_id):
+    """Cheaply resolves ModDB's download-start page to the final CDN path,
+    without downloading the file body -- mirrors fetchModDB's own curl
+    invocation (same --tls-max 1.2 workaround for Cloudflare's bot-management
+    fingerprinting the mod.nix comment describes) so it hits the same code
+    path moddb.com actually allows through.
+
+    Returns just the URL path (e.g. "/dl/2026/04/07/foo.rar"), not the full
+    URL -- the CDN load-balances across hostnames (fmt4/fmt5/...) and signs
+    each redirect with a fresh, per-request token/expiry query string, both
+    of which change on every resolve even for the exact same file. Only the
+    path (which embeds the upload date and filename) is a stable signal."""
+    headers = ["--tls-max", "1.2", "--header", "Referer: https://www.moddb.com/", "--user-agent", USER_AGENT]
+    start_url = f"https://www.moddb.com/downloads/start/{mod_id}/all"
+    page = subprocess.run(["curl", "-s", *headers, start_url], capture_output=True, text=True, check=True).stdout
+    m = re.search(r'href="(/downloads/mirror/[^"]*)"', page)
+    if not m:
+        return None
+    mirror_url = "https://www.moddb.com" + m.group(1)
+    head = subprocess.run(["curl", "-sI", *headers, mirror_url], capture_output=True, text=True, check=True).stdout
+    loc = re.search(r"(?im)^location:\s*(\S+)", head)
+    if not loc:
+        return None
+    return urllib.parse.urlparse(loc.group(1).strip()).path
+
+
+def process_moddb(name, raw, previous_sources):
+    old = previous_sources.get(name)
+    mod_id = raw
+
+    print(f"Checking [moddb] {name} (download {mod_id})...")
+
+    # ModDB ids are nominally pinned, but an author can silently replace the
+    # file behind an existing id (no new id gets minted, unlike itch's
+    # versioned uploads) -- the resolved CDN URL embeds an upload date
+    # (.../dl/2026/04/07/...), so it changes when that happens even though
+    # the id and mirror-page URL don't. That's a cheap (two small requests,
+    # no file download) and much more reliable signal than re-downloading
+    # the whole file (sometimes 100+ MiB) on every run just to hash-compare.
+    resolved_url = None
+    try:
+        resolved_url = resolve_moddb_url(mod_id)
+    except Exception as e:
+        print(f"  -> Couldn't resolve moddb's current download URL ({e}).")
+
+    if old and old.get("id") == mod_id:
+        if resolved_url is not None and resolved_url == old.get("resolvedUrl"):
+            print(f"  -> {name} unchanged (resolved download URL matches); reusing cached hash.")
+            return old
+        if resolved_url is None:
+            print(f"  -> Couldn't confirm moddb's current download URL; reusing cached hash without re-verifying.")
+            return old
+        print(f"  -> {name}'s resolved download URL changed; re-verifying via a real fetch.")
+        print(f"     old: {old.get('resolvedUrl')!r}")
+        print(f"     new: {resolved_url!r}")
+
+    print(f"  -> Fetching hash for {name} via Nix build...")
+    nix_expr = nix_build_expr("fetchModDB", {"id": mod_id})
+    h = extract_hash_from_nix_build(nix_expr, f"fetchModDB ({name})")
+
+    print(f"  -> Realizing {name}'s output to record its file list...")
+    store_path = realize_build_output("fetchModDB", {"id": mod_id}, h)
+    files, archive_content = scan_realized_output(store_path)
+
+    result = {"type": "moddb", "id": mod_id, "hash": h}
+    if resolved_url is not None:
+        result["resolvedUrl"] = resolved_url
+    if files:
+        result["files"] = files
+    if archive_content:
+        result["archiveContent"] = archive_content
+    return result
+
+
 def list_itch_uploads(url):
     api_key = os.environ.get("ITCH_API_KEY")
     if not api_key:
@@ -478,12 +736,27 @@ def get_itch_metadata(url):
     return "|".join(fingerprint)
 
 
+# Filename substrings (case-insensitive) that mean "not the actual game,"
+# regardless of how the developer tagged it -- platform traits are often set
+# carelessly (e.g. every upload checked "Windows" including a press kit).
+ITCH_UPLOAD_BLACKLIST = ["presskit", "press kit"]
+
+
 def select_itch_upload(uploads, platform, file_match="*"):
-    def matches_platform(u):
+    platform_traits = {"p_windows", "p_linux", "p_osx"}
+
+    def is_blacklisted(u):
+        name = (u.get("filename") or "").lower()
+        return any(term in name for term in ITCH_UPLOAD_BLACKLIST)
+
+    def is_tagged_for_platform(u):
+        traits = u.get("traits") or []
+        return u.get("type") == "default" and f"p_{platform}" in traits
+
+    def matches_platform_loose(u):
         if u.get("type") != "default":
             return True
         traits = u.get("traits") or []
-        platform_traits = {"p_windows", "p_linux", "p_osx"}
         # An upload with no OS trait at all isn't platform-restricted (itch
         # just didn't tag it), so treat it as matching every platform rather
         # than excluding it outright.
@@ -491,9 +764,17 @@ def select_itch_upload(uploads, platform, file_match="*"):
             return True
         return f"p_{platform}" in traits
 
-    candidates = [
+    named = [
         u for u in uploads
-        if matches_platform(u) and fnmatch.fnmatch(u.get("filename", ""), file_match)
+        if fnmatch.fnmatch(u.get("filename", ""), file_match) and not is_blacklisted(u)
+    ]
+    # Prefer an upload actually tagged for this platform over the loose
+    # "untagged, so it matches everything" fallback -- otherwise an
+    # unrelated untagged upload (e.g. a press kit) can outrank the real
+    # build just by sorting first (verified: exactly what happened to
+    # wad.venturous when its itch page grew a press-kit upload).
+    candidates = [u for u in named if is_tagged_for_platform(u)] or [
+        u for u in named if matches_platform_loose(u)
     ]
     if not candidates:
         seen = [(u.get("filename"), u.get("type"), u.get("traits")) for u in uploads]
@@ -594,6 +875,7 @@ def process_itch(name, url, previous_sources, system=None):
     work_dir, out_dir = replicate_fetchitch_output(data, filename, game_slug)
     try:
         files = list_extracted_files(out_dir)
+        archive_content = scan_archive_contents_from_dir(out_dir)
         h = nar_sha256(out_dir)
         store_path = add_dir_to_nix_store(out_dir)
         print(f"  -> Seeded {store_path}; `nix build` will reuse it instead of re-fetching and re-extracting.")
@@ -607,6 +889,8 @@ def process_itch(name, url, previous_sources, system=None):
         "version": version,
         "files": files,
     }
+    if archive_content:
+        result["archiveContent"] = archive_content
     if system:
         result["platform"] = system
     return result
@@ -656,6 +940,72 @@ def nix_build_expr(fetch_call, extra_args):
         f"    sha256 = hash;\n"
         f"  }}"
     )
+
+
+def realize_build_output(fetch_call, extra_args, real_hash):
+    """Given the same fetch_call/extra_args shape nix_build_expr takes, plus
+    an already-known-good hash, actually builds it (not just hashes it) so
+    its real content can be inspected. --builders '' forces a local build:
+    the remote builder has shown flaky failures on real game-sized outputs
+    during manual testing, unrelated to the derivation's own correctness."""
+    args_str = "".join(f'    {k} = {v};\n' for k, v in extra_args.items())
+    nix_expr = (
+        f"let\n"
+        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  customLib = import ./lib {{\n"
+        f"    inherit pkgs;\n"
+        f"    inherit (pkgs) lib system;\n"
+        f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    config = {{}};\n"
+        f"  }};\n"
+        f"in\n"
+        f"  customLib.{fetch_call} {{\n"
+        f"{args_str}"
+        f'    sha256 = "{real_hash}";\n'
+        f"  }}"
+    )
+    res = subprocess.run(
+        ["nix", "build", "--impure", "--builders", "", "--no-link", "--print-out-paths", "--expr", nix_expr],
+        capture_output=True, text=True, check=True,
+    )
+    return res.stdout.strip().splitlines()[-1]
+
+
+def scan_realized_output(store_path, single_file_name=None):
+    """Lists files/archiveContent for a realized build output -- a directory
+    for extract=true fetches, or a single file (itself possibly a pk3/ipk3)
+    for a raw fetch. single_file_name is the fetcher's declared logical
+    name (e.g. "LegendOfDoom.pk3"), used to key archiveContent in the single-
+    file case -- NOT the realized store path's basename, which is prefixed
+    with its content hash (/nix/store/<hash>-LegendOfDoom.pk3) and would
+    never match the plain name Nix-side code (pk3.name) looks up by."""
+    if os.path.isdir(store_path):
+        return list_extracted_files(store_path), scan_archive_contents_from_dir(store_path)
+
+    archive_content = {}
+    name = single_file_name or os.path.basename(store_path)
+    if name.lower().endswith(PK3_EXTENSIONS):
+        with open(store_path, "rb") as f:
+            contents = scan_archive_contents_bytes(f.read())
+        if contents is not None:
+            archive_content[name] = contents
+    return [], archive_content
+
+
+def parse_source_spec(raw):
+    """'primary;key=value;flag' -> (primary, {"key": "value", "flag": True})
+    -- a minimal extension to this file's plain key="value" TOML shape for
+    sources (gdrive, mostly) that need an extra parameter or two (a custom
+    output name, whether to extract) alongside their main identifier."""
+    parts = raw.split(";")
+    extra = {}
+    for p in parts[1:]:
+        if "=" in p:
+            k, v = p.split("=", 1)
+            extra[k.strip()] = v.strip()
+        else:
+            extra[p.strip()] = True
+    return parts[0], extra
 
 
 def process_nexus(name, target, previous_sources):
@@ -776,25 +1126,29 @@ def process_modrinth(name, project, previous_sources):
         "hash": h,
     }
 
+# Same mirror list lib/fetchers/idgames.nix's fetchIdGames tries, in the
+# same order; kept here too since get_idgames_mirror_version/
+# download_idgames_archive need real HTTP access during `update-sources.py`
+# runs, independent of the Nix build.
+IDGAMES_MIRRORS = [
+  "ftp.fu-berlin.de/pc/games/idgames",
+  "youfailit.net/pub/idgames",
+  "ftpmirror.infania.net/pub/idgames",
+  "mirror.braindrainlan.nu/pub/idgames",
+  "files.xvertigox.com/idgames",
+  "lethe.chinstrap.org/idgames",
+  "mirrors.lug.mtu.edu/idgames",
+  "gamers.org/pub/idgames"
+]
+
+
 def get_idgames_mirror_version(filepath):
     """
     Queries an open idgames mirror directly, completely bypassing Doomworld's Cloudflare.
     """
     clean_path = filepath.lstrip('/')
 
-
-    mirrors = [
-      "ftp.fu-berlin.de/pc/games/idgames",
-      "youfailit.net/pub/idgames",
-      "ftpmirror.infania.net/pub/idgames",
-      "mirror.braindrainlan.nu/pub/idgames",
-      "files.xvertigox.com/idgames",
-      "lethe.chinstrap.org/idgames",
-      "mirrors.lug.mtu.edu/idgames",
-      "gamers.org/pub/idgames"
-    ]
-    
-    for mirror in mirrors:
+    for mirror in IDGAMES_MIRRORS:
         url = f"https://{mirror}/{clean_path}"
         try:
             req = urllib.request.Request(url, method='HEAD', headers={'User-Agent': 'curl/7.88.1'})
@@ -804,8 +1158,23 @@ def get_idgames_mirror_version(filepath):
                     return last_modified
         except Exception:
             continue
-            
+
     raise RuntimeError(f"Could not reach mirrors for {filepath}")
+
+
+def download_idgames_archive(filepath):
+    """Downloads the real idgames zip (same mirror list/order as fetchIdGames) so its
+    file list and any pk3/ipk3 members' contents can be recorded in sources.nix."""
+    clean_path = filepath.lstrip('/')
+    last_err = None
+    for mirror in IDGAMES_MIRRORS:
+        url = f"https://{mirror}/{clean_path}"
+        try:
+            return download_file(url)
+        except Exception as e:
+            last_err = e
+            continue
+    raise RuntimeError(f"Could not download {filepath} from any idgames mirror: {last_err}")
 
 def process_idgames(name, game, previous_sources):
     old = previous_sources.get(name)
@@ -851,17 +1220,52 @@ def process_idgames(name, game, previous_sources):
 
     h = extract_hash_from_nix_build(nix_expr, f"fetchIdGames ({name})")
 
-    return {
+    print(f"  -> Downloading {name}'s archive to record its file list...")
+    files = []
+    archive_content = {}
+    try:
+        data = download_idgames_archive(game)
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            files = sorted(
+                zip_member_path(info) for info in z.infolist()
+                if not info.filename.endswith('/') and not info.is_dir()
+            )
+            archive_content = scan_archive_contents_from_zip(z)
+    except Exception as e:
+        print(f"  -> Warning: couldn't list {name}'s archive contents ({e}); sources.nix entry will have no 'files'.", file=sys.stderr)
+
+    result = {
         "type": "idgames",
         "game": game,
         "version": version,
-        "hash": h
+        "hash": h,
     }
+    if files:
+        result["files"] = files
+    if archive_content:
+        result["archiveContent"] = archive_content
+    return result
+
+NIX_BARE_IDENTIFIER_RE = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_'-]*$")
+
+
+def to_nix_attr_name(k):
+    """Most keys in this file (source names, field names) are valid bare Nix
+    identifiers and are left unquoted to keep the diff/output readable; but
+    archiveContent introduces literal filenames as keys (e.g. "Paranoid.pk3"),
+    which need quoting since '.' isn't valid in a bare identifier."""
+    if NIX_BARE_IDENTIFIER_RE.match(k):
+        return k
+    escaped = k.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
 
 def to_nix_val(val, indent_level=0):
     indent = "  " * indent_level
+    if isinstance(val, bool):
+        return "true" if val else "false"
     if isinstance(val, str):
-        escaped = val.replace("\\\\", "\\\\\\\\").replace("\"", "\\\"")
+        escaped = val.replace("\\", "\\\\").replace('"', '\\"')
         return f'"{escaped}"'
     elif isinstance(val, list):
         if not val:
@@ -875,7 +1279,7 @@ def to_nix_val(val, indent_level=0):
             return "{ }"
         lines = []
         for k in sorted(val.keys()):
-            lines.append(f"{indent}  {k} = {to_nix_val(val[k], indent_level + 1)};")
+            lines.append(f"{indent}  {to_nix_attr_name(k)} = {to_nix_val(val[k], indent_level + 1)};")
         return "{\n" + "\n".join(lines) + f"\n{indent}}}"
     return str(val)
 
@@ -937,6 +1341,12 @@ def main():
                     results[name] = process_curseforge(name, target, previous_sources)
                 elif section == "modrinth":
                     results[name] = process_modrinth(name, target, previous_sources)
+                elif section == "gdrive":
+                    results[name] = process_gdrive(name, target, previous_sources)
+                elif section == "mediafire":
+                    results[name] = process_mediafire(name, target, previous_sources)
+                elif section == "moddb":
+                    results[name] = process_moddb(name, target, previous_sources)
                 else:
                     results[name] = process_custom(section, name, target)
             except Exception as e:

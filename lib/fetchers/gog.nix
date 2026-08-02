@@ -3,8 +3,31 @@
   lib,
   fetchToolOutput,
   extractArchiveSnippet,
+  removeFiles,
   ...
 }:
+let
+  # GOG installer/Galaxy chrome, never touched at runtime -- every game
+  # here plays through ScummVM's native engine, never GOG's own bundled
+  # DOSBOX/. Verified against a real install (TeenAgent): __support/
+  # holds the dosbox*.conf files (kept, in case something downstream
+  # ever wants them), a manual, and a gamepad-mapper GUI (not kept).
+  # The conf filename embeds the game name (dosboxTeenagent.conf etc.),
+  # hence the glob. app/ itself stays (some games use it as their real
+  # data root), just not the Galaxy chrome inside it.
+  gogCruft = [
+    "scummvm"
+    "DOSBOX"
+    "dosbox"
+    "app/DOSBOX"
+    "app/Cloud_Saves"
+    "tmp"
+    "__redist"
+    "__support/!dosbox*.conf"
+    "commonappdata"
+    "app/webcache.zip"
+  ];
+in
 {
   fetchGOG =
     {
@@ -21,7 +44,7 @@
       fileIds = if lib.isList fileId then fileId else [ fileId ];
       downloadFileArg = lib.concatMapStringsSep "," (id: "${game}/${toString id}") fileIds;
     in
-    fetchToolOutput {
+    (fetchToolOutput {
       inherit name;
       outputHash = sha256;
       outputHashMode = "recursive";
@@ -90,5 +113,6 @@
           rm -f "$iso"
         done
       '';
-    };
+    })
+    |> removeFiles gogCruft;
 }

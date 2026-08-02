@@ -1,11 +1,12 @@
 {
   config,
+  lib,
   getFile,
   fetchzipNoSubst,
   mkDoom,
   ...
 }:
-{
+lib.mkIf config.games.doom.enable {
   games.doom.wads = {
     tucq =
       let

@@ -11,6 +11,11 @@
       game,
       hash,
       version ? null,
+      # sources.nix's recorded archive member list, when this source is a
+      # pk3/archive -- attached as passthru so optimize/optimize' can
+      # transparently extract/optimize/repack it without a caller needing
+      # to pass this same sourceEntry again explicitly.
+      archiveContent ? null,
       ...
     }:
     let
@@ -56,6 +61,7 @@
         pkgs.jq
       ];
       extract = true;
+      extraAttrs.passthru.archiveContent = archiveContent;
       resolve = ''
         ${resolveFilePath}
 

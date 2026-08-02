@@ -19,7 +19,7 @@ in
 
   xdg.configFile = {
     "nix/nix.conf".source = mkOutOfStoreSymlink config.sops.templates."nix.conf".path;
-    "nixpkgs/config.nix".text = builtins.toJSON nixconf;
+    "nixpkgs/config.nix".text = lib.generators.toPretty { } nixconf;
   };
   nix = {
     enable = true;

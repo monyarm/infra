@@ -1,4 +1,4 @@
-{ fetchSteam, pkgs, ... }:
+{ config, lib, fetchSteam, pkgs, compressScummvmGame, ... }:
 let
   mkLslGame =
     version: args:
@@ -81,11 +81,17 @@ let
   # ScummVM's twine engine needs every .HQR file in one flat directory, but
   # the remaster's classic-mode text (TEXT.HQR) lives in a separate
   # CommonClassic/ folder from the rest of the classic resources in Common/.
-  littleBigAdventure = pkgs.runCommand "lba-classic-merged" { } ''
-    mkdir -p $out
-    cp -rs ${littleBigAdventureDl}/Common/* $out/
-    cp -s ${littleBigAdventureDl}/CommonClassic/TEXT.HQR $out/
-  '';
+  littleBigAdventure = pkgs.runCommand "lba-classic-merged"
+    {
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "recursive";
+    }
+    ''
+      mkdir -p $out
+      cp -rs ${littleBigAdventureDl}/Common/* $out/
+      cp -s ${littleBigAdventureDl}/CommonClassic/TEXT.HQR $out/
+    '';
 
   littleBigAdventure2 = fetchSteam {
     appId = 398000;
@@ -127,13 +133,15 @@ let
     sha256 = "sha256-4rFadkJHhrc8nolpyXhtS+bgBLXeW/ck2nCaubLPIK0=";
   };
 
-  curseOfMonkeyIsland = fetchSteam {
-    appId = 730820;
-    depotId = 730824;
-    manifestId = 6035470325928818097;
-    os = "windows";
-    sha256 = "sha256-GKq8jju2Gb2U6Sc8qcSc/6fpDA+PbogFcJwXSlhzOyw=";
-  };
+  curseOfMonkeyIsland =
+    fetchSteam {
+      appId = 730820;
+      depotId = 730824;
+      manifestId = 6035470325928818097;
+      os = "windows";
+      sha256 = "sha256-GKq8jju2Gb2U6Sc8qcSc/6fpDA+PbogFcJwXSlhzOyw=";
+    }
+    |> compressScummvmGame { engineid = "scumm"; };
 
   lastExpressDl = fetchSteam {
     appId = 252710;
@@ -146,28 +154,39 @@ let
   # This Gold Edition repackages the original 1997 CD data as one zip per
   # resource category (BG/DATA/LNK/NIS/SBE/SEQ/SND/TGA) instead of shipping
   # it already unpacked; ScummVM needs it all merged into one directory.
-  lastExpress = pkgs.runCommand "tle-merged" { nativeBuildInputs = [ pkgs.unzip ]; } ''
-    mkdir -p $out
-    for category in NIS SBE SEQ LNK SND TGA BG DATA; do
-      unzip -oq ${lastExpressDl}/roms/$category.zip -d $out
-    done
-  '';
+  lastExpress = pkgs.runCommand "tle-merged"
+    {
+      nativeBuildInputs = [ pkgs.unzip ];
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "recursive";
+    }
+    ''
+      mkdir -p $out
+      for category in NIS SBE SEQ LNK SND TGA BG DATA; do
+        unzip -oq ${lastExpressDl}/roms/$category.zip -d $out
+      done
+    '';
 
-  fateOfAtlantis = fetchSteam {
-    appId = 6010;
-    depotId = 6011;
-    manifestId = 8584153416851488924;
-    os = "windows";
-    sha256 = "sha256-9l5+6zJ4ofhXw+PJBwHXITDimkPwE4xG5mhrNV8Bz0w=";
-  };
+  fateOfAtlantis =
+    fetchSteam {
+      appId = 6010;
+      depotId = 6011;
+      manifestId = 8584153416851488924;
+      os = "windows";
+      sha256 = "sha256-9l5+6zJ4ofhXw+PJBwHXITDimkPwE4xG5mhrNV8Bz0w=";
+    }
+    |> compressScummvmGame { engineid = "scumm"; };
 
-  maniacMansionDl = fetchSteam {
-    appId = 529890;
-    depotId = 529891;
-    manifestId = 4552517924922056300;
-    os = "windows";
-    sha256 = "sha256-QiFxLk+J4Q0gf74Ue95/DJyCz7ifMLnyA3C0zF5TiAE=";
-  };
+  maniacMansionDl =
+    fetchSteam {
+      appId = 529890;
+      depotId = 529891;
+      manifestId = 4552517924922056300;
+      os = "windows";
+      sha256 = "sha256-QiFxLk+J4Q0gf74Ue95/DJyCz7ifMLnyA3C0zF5TiAE=";
+    }
+    |> compressScummvmGame { engineid = "scumm"; };
 
   lsl1 = fetchSteam {
     appId = 763970;
@@ -217,15 +236,17 @@ let
     sha256 = "sha256-IPYjPf8gCNBvA1CPsa4O7DtezmwHjtK5QfSITve/dGY=";
   };
 
-  lastCrusade = fetchSteam {
-    appId = 32310;
-    depotId = 32311;
-    manifestId = 1410091949724710807;
-    os = "windows";
-    sha256 = "sha256-NakBoDPFdoF//h54rVOY2tiGI7ucKypKnKAkvyOI1BE=";
-  };
+  lastCrusade =
+    fetchSteam {
+      appId = 32310;
+      depotId = 32311;
+      manifestId = 1410091949724710807;
+      os = "windows";
+      sha256 = "sha256-NakBoDPFdoF//h54rVOY2tiGI7ucKypKnKAkvyOI1BE=";
+    }
+    |> compressScummvmGame { engineid = "scumm"; };
 in
-{
+lib.mkIf config.games.scummvm.enable {
   games.scummvm.games.alphaPolaris = {
     gameid = "alphapolaris";
     engineid = "wintermute";

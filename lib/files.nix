@@ -302,7 +302,11 @@ rec {
             exit 0; # fix for 2176?
           ''
         ];
-        preferLocalBuild = true;
+        # Not preferLocalBuild: this runs at the end of every optimize
+        # pipeline (src |> pipelineMap |> rename src), same reasoning as
+        # guardSize -- the actual optimization work is already free to run
+        # remotely, so pinning just this trailing cp local would drag it
+        # back for no reason.
         allowSubstitutes = false;
         __contentAddressed = true;
         outputHashAlgo = "sha256";
@@ -316,11 +320,29 @@ rec {
     in
     pkgs.runCommand fileName
       {
-        preferLocalBuild = true;
+        # Not preferLocalBuild: getFile is called constantly throughout the
+        # optimize/fetch chains (pk3 member extraction, etc.) -- same
+        # back-and-forth reasoning as guardSize/rename.
         allowSubstitutes = false;
         __contentAddressed = true;
         outputHashAlgo = "sha256";
         outputHashMode = "recursive";
+        # Nix silently sanitizes derivation names (e.g. spaces -> hyphens),
+        # so `.name` on the result can differ from the real on-disk
+        # filename -- callers that need the exact original (matching e.g. a
+        # sources.nix-recorded key) should use `.originalName` instead.
+        passthru.originalName = fileName;
+        # The full path this file had inside folderDrv (e.g. an archive
+        # member's "MODELS/BloodSpot/greenpool.png"), not just its basename
+        # -- dispatchExt's "$"-prefixed exact-path keys match against this.
+        passthru.fullPath = filePath;
+        # If folderDrv itself carries a recorded archive member list (e.g.
+        # a gdrive/moddb/mediafire/itch fetch of a folder containing this
+        # pk3), and this file is one of the pk3s/archives it lists, forward
+        # that file's own member list so optimize/optimize' can recognize
+        # and handle it as an archive transparently too, without needing
+        # this same lookup done again at every call site.
+        passthru.archiveContent = folderDrv.archiveContent.${fileName} or null;
       }
       ''
         cp "${folderDrv}/${filePath}" "$out"
@@ -330,21 +352,137 @@ rec {
   splitFilesBaseName =
     fileList: splitFiles (parallel (map (file: builtins.baseNameOf file)) fileList);
 
+  # Like getFile, but keeps a whole subset of folderDrv as one folder.
+  # Entries can be files, directories (cp -a recurses), or shell glob
+  # patterns (e.g. "app/DATA00[0-4].LAB"); matches land under their shared
+  # dirname. IFS is cleared before expanding so spaces in real filenames
+  # (unlike glob metachars) don't get word-split into separate arguments.
+  getFiles =
+    paths: folderDrv:
+    pkgs.runCommand "${sanitizeName folderDrv.name}-subset"
+      {
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p "$out"
+        ${lib.concatMapStringsSep "\n" (p: ''
+          pattern=${lib.escapeShellArg p}
+          destDir="$out/$(dirname -- "$pattern")"
+          mkdir -p "$destDir"
+          (
+            IFS=
+            set -- "${folderDrv}"/$pattern
+            cp -a -- "$@" "$destDir/"
+          )
+        '') paths}
+      '';
+
+  # Inverse of getFiles: keeps everything except the listed files/
+  # directories (missing entries are fine, rm -rf doesn't care). An entry
+  # can also be "dir/!keep" to empty out dir/ while keeping just "keep"
+  # inside it. A separate step from whatever fetched folderDrv, so tweaking
+  # the list doesn't require re-running a slow/networked fetch.
+  removeFiles =
+    paths: folderDrv:
+    pkgs.runCommand "${sanitizeName folderDrv.name}-pruned"
+      {
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        work="$TMPDIR/work"
+        mkdir -p "$work"
+        cp -a "${folderDrv}/." "$work/"
+        chmod -R u+w "$work"
+        ${lib.concatMapStringsSep "\n" (
+          p:
+          if lib.hasInfix "!" p then
+            let
+              parts = lib.splitString "!" p;
+              dir = lib.removeSuffix "/" (lib.head parts);
+              keep = lib.last parts;
+            in
+            ''find "$work/${dir}" -mindepth 1 ! -name ${lib.escapeShellArg keep} -delete 2>/dev/null || true''
+          else
+            ''rm -rf -- "$work/${p}"''
+        ) paths}
+        cd /
+        mv "$work" "$out"
+      '';
+
+  # Packs a folder's contents into a single archive named "<name>.<extension>".
+  # `format` picks the archiver/compression scheme; `extension` (defaults to
+  # `format`) is just the output filename's suffix, for formats like pk7/ipk3
+  # that are really a well-known format under a different name.
+  packArchive =
+    {
+      format,
+      extension ? format,
+    }:
+    name: folderDrv:
+    let
+      byFormat = {
+        "7z" = {
+          buildInputs = [ pkgs.p7zip ];
+          script = ''
+            # A symlink-farm folder (e.g. linkFarm output) has its entries
+            # archived as the link target string rather than its contents
+            # unless dereferenced into real copies first.
+            cp -rL "${folderDrv}" ./repack-real
+            cd repack-real
+            7z a -bd "$out" . >/dev/null
+          '';
+        };
+        # Explicit -tzip, unlike "7z" above -- for repacking as a genuine
+        # zip-format container (e.g. keeping a .pk3 a real .pk3), as opposed
+        # to "7z"'s reliance on extension auto-detection falling back to
+        # native 7z format for unrecognized extensions like .pk7/.ipk7.
+        "zip" = {
+          buildInputs = [ pkgs.p7zip ];
+          script = ''
+            cp -rL "${folderDrv}" ./repack-real
+            cd repack-real
+            7z a -tzip -bd "$out" . >/dev/null
+          '';
+        };
+      };
+      chosen = byFormat.${format} or (throw "packArchive: unsupported format '${format}'");
+    in
+    pkgs.runCommand "${name}.${extension}"
+      {
+        buildInputs = chosen.buildInputs;
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "flat";
+      }
+      chosen.script;
+
   patchFile =
     let
+      caAttrs = {
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "flat";
+      };
       flipsHandler =
         p: f:
-        pkgs.runCommand (lib.getName f) { nativeBuildInputs = [ pkgs.flips ]; } ''
+        pkgs.runCommand (lib.getName f) ({ nativeBuildInputs = [ pkgs.flips ]; } // caAttrs) ''
           flips --apply "${p}" "${f}" "$out"
         '';
       xdeltaHandler =
         p: f:
-        pkgs.runCommand (lib.getName f) { nativeBuildInputs = [ pkgs.xdelta ]; } ''
+        pkgs.runCommand (lib.getName f) ({ nativeBuildInputs = [ pkgs.xdelta ]; } // caAttrs) ''
           xdelta3 -d -s "${f}" "${p}" "$out"
         '';
       patchHandler =
         p: f:
-        pkgs.runCommand (lib.getName f) { nativeBuildInputs = [ pkgs.gnupatch ]; } ''
+        pkgs.runCommand (lib.getName f) ({ nativeBuildInputs = [ pkgs.gnupatch ]; } // caAttrs) ''
           patch "${f}" -i "${p}" -o "$out"
         '';
     in

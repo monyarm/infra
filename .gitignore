@@ -3,7 +3,6 @@ node_modules
 .ruff_cache
 nohup.out
 result
-package-lock.json
 __pycache__
 *.pyc
 *.pyo

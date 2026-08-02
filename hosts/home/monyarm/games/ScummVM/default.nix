@@ -103,6 +103,16 @@ let
 in
 {
   options.games.scummvm = {
+    enable = mkOption {
+      type = types.bool;
+      default = true;
+      description = ''
+        Whether to fetch, optimize, and register ScummVM games at all.
+        Disable to skip the whole (expensive, image-optimization-heavy)
+        ScummVM build graph entirely, e.g. while setting up additional
+        remote builders.
+      '';
+    };
     config = mkOption {
       type = types.attrsOf types.anything;
       default = { };

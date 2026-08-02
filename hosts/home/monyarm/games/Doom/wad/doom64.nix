@@ -3,12 +3,13 @@
   pkgs,
   lib,
   fetchModDB,
-  splitFiles,
   getFile,
   fetchSteam,
   wadFilter,
   mkDoom,
   patchFile,
+  optimizePk3,
+  sources,
   ...
 }:
 let
@@ -22,28 +23,20 @@ let
       sha256 = "sha256-58/x6rIDE+GX17QN22I7l5P6XdB9aLy5dNUl5n+jxC8=";
     }
     |> getFile "DOOM64.WAD";
-  Doom64CE = fetchModDB {
-    id = 285205;
-    sha256 = "sha256-D8hf6WQ3+CLAFIDqPu/uPgww1EfnZ2U0ZFXL7OoCkb0=";
-  };
-  Doom64CEWads =
-    Doom64CE
-    |> splitFiles [
-      "DOOM64.CE.ipk3"
-      "DOOM64.CE.Addon.BGM.Extended.pk3"
-      "DOOM64.CE.Addon.GFX.Brightmaps.pk3"
-      "DOOM64.CE.Addon.GFX.Decals.pk3"
-      "DOOM64.CE.Addon.GFX.Extra.pk3"
-      "DOOM64.CE.Addon.GFX.Parallax.pk3"
-      "DOOM64.CE.Addon.GFX.PBR.pk3"
-      "DOOM64.CE.Addon.SFX.HQ.pk3"
-    ];
+  Doom64CE = fetchModDB sources.wad.doom64CE;
 
   wadExtractMap =
     wad: entryName:
-    pkgs.runCommand "wad-map-${lib.toLower entryName}" { nativeBuildInputs = [ pkgs.python3 ]; } ''
-      python3 ${../wadextract.py} M "${wad}" "${entryName}" "$out"
-    '';
+    pkgs.runCommand "wad-map-${lib.toLower entryName}"
+      {
+        nativeBuildInputs = [ pkgs.python3 ];
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        python3 ${../wadextract.py} M "${wad}" "${entryName}" "$out"
+      '';
 
   lostLevels = lib.imap1 (
     c: mapNum:
@@ -61,7 +54,21 @@ let
   ) (lib.range 34 40);
 
   doom64LostLevelsPk3 =
-    pkgs.runCommand "DOOM64.CE.Maps.LostLevels.pk3" { nativeBuildInputs = [ pkgs.zip ]; }
+    pkgs.runCommand "DOOM64.CE.Maps.LostLevels.pk3"
+      {
+        nativeBuildInputs = [ pkgs.zip ];
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "flat";
+        # Built entirely from lostLevels above, so the member list is
+        # already known here -- no external scan needed for optimizePk3.
+        passthru.archiveContent = lib.concatMap (lvl: [
+          "MAPS/LOST${lvl.num}.WAD"
+          "FILTER/game-doom/S_LOST${lvl.num}"
+          "FILTER/game-doom/I_LOST${lvl.num}"
+          "FILTER/game-doom/L_LOST${lvl.num}"
+        ]) lostLevels;
+      }
       ''
         mkdir -p ce/MAPS ce/FILTER/game-doom
 
@@ -78,14 +85,35 @@ let
         cp DOOM64.CE.Maps.LostLevels.pk3 "$out"
       '';
 in
-{
-  games.doom.wads.doom64 = Doom64;
+lib.mkIf config.games.doom.enable {
+  games.doom.wads = {
+    doom64 = Doom64;
+    doom64CEMain = Doom64CE |> getFile "DOOM64.CE.ipk3" |> optimizePk3;
+    doom64CEBgmExtended = Doom64CE |> getFile "DOOM64.CE.Addon.BGM.Extended.pk3" |> optimizePk3;
+    doom64CEBrightmaps = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Brightmaps.pk3" |> optimizePk3;
+    doom64CEDecals = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Decals.pk3" |> optimizePk3;
+    doom64CEExtra = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Extra.pk3" |> optimizePk3;
+    doom64CEParallax = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Parallax.pk3" |> optimizePk3;
+    doom64CEPbr = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.PBR.pk3" |> optimizePk3;
+    doom64CESfxHq = Doom64CE |> getFile "DOOM64.CE.Addon.SFX.HQ.pk3" |> optimizePk3;
+    doom64LostLevels = doom64LostLevelsPk3 |> optimizePk3;
+  };
 
   programs.steam.games = with config.games.doom.wads; {
     Doom64 = mkDoom {
       name = "Doom64";
       iwad = doom64;
-      wad = Doom64CEWads ++ [ doom64LostLevelsPk3 ];
+      wad = [
+        doom64CEMain
+        doom64CEBgmExtended
+        doom64CEBrightmaps
+        doom64CEDecals
+        doom64CEExtra
+        doom64CEParallax
+        doom64CEPbr
+        doom64CESfxHq
+        doom64LostLevels
+      ];
     };
   };
 }

@@ -4,6 +4,7 @@
   importSopsString,
   urlEncode,
   splitFiles,
+  removeFiles,
   getFileNameFromUrl,
   sources,
   ...
@@ -22,6 +23,7 @@ let
         importSopsString
         urlEncode
         splitFiles
+        removeFiles
         getFileNameFromUrl
         userAgent
         sources
@@ -72,10 +74,11 @@ let
                 application/x-xz)
                   ${pkgs.gnutar}/bin/tar -xJf "${file}" -C "${outDir}"
                   ;;
-                application/x-rar)
-                  # p7zip's bundled rar codec fails on some real-world RAR
-                  # files ("Can not open the file as archive"); unrar handles
-                  # them correctly.
+                application/x-rar | application/vnd.rar)
+                  # libmagic reports RAR5 archives as application/vnd.rar and
+                  # RAR4 as application/x-rar; p7zip's bundled rar codec also
+                  # fails on some real-world RAR files ("Can not open the
+                  # file as archive"), so unrar handles both.
                   ${pkgs.unrar}/bin/unrar x -o+ "${file}" "${outDir}/"
                   ;;
                 application/x-7z-compressed | application/x-dosexec)
@@ -239,6 +242,13 @@ let
 
             # Explicitly choose the execution platform
             system = args.system or pkgs.stdenv.hostPlatform.system;
+
+            # Network fetch, not compute -- keep it off remote builders
+            # entirely (unlike every other fetcher here, this one didn't
+            # have this set, which let it drift onto nixbuild.net and hit a
+            # git-hashed-FOD store-path mismatch their build fleet computes
+            # differently for).
+            preferLocalBuild = true;
 
             # Tell Nix we are running an RFC0133 Git-Hashed FOD
             outputHashMode = "git";

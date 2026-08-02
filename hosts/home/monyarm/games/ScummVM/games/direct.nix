@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 let
   draci = pkgs.fetchzip {
     url = "http://www.ucw.cz/draci-historie/binary/dh-en-2012.zip";
@@ -28,7 +28,7 @@ let
     hash = "sha256-yKnQ0UjstfO32T0s41+0dAeKyg4oIPsripSFJtkIx8I=";
   };
 in
-{
+lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {
     draci = {
       engineid = "draci";

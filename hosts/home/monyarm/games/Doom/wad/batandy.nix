@@ -1,19 +1,33 @@
 {
   config,
+  lib,
   getFile,
+  optimizePk3,
   fetchItch,
   mkDoom,
   findWad,
   sources,
   ...
 }:
-{
+lib.mkIf config.games.doom.enable {
   games.doom.wads = {
-    simonsdestiny = fetchItch sources.wad.simonsdestiny |> getFile "Castlevania.ipk3";
-    goldenSoulsRemastered = fetchItch sources.wad.goldensouls |> getFile (findWad sources.wad.goldensouls.files);
-    goldenSouls2 = fetchItch sources.wad.goldensouls2 |> getFile (findWad sources.wad.goldensouls2.files);
-    goldenSouls3 = fetchItch sources.wad.goldensouls3 |> getFile (findWad sources.wad.goldensouls3.files);
-    gzpt = fetchItch sources.wad.gzpt |> getFile "GZPT.ipk3";
+    simonsdestiny =
+      fetchItch sources.wad.simonsdestiny
+      |> getFile "Castlevania.ipk3"
+      |> optimizePk3;
+    goldenSoulsRemastered =
+      fetchItch sources.wad.goldensouls
+      |> getFile (findWad sources.wad.goldensouls.files)
+      |> optimizePk3;
+    goldenSouls2 =
+      fetchItch sources.wad.goldensouls2
+      |> getFile (findWad sources.wad.goldensouls2.files)
+      |> optimizePk3;
+    goldenSouls3 =
+      fetchItch sources.wad.goldensouls3
+      |> getFile (findWad sources.wad.goldensouls3.files)
+      |> optimizePk3;
+    gzpt = fetchItch sources.wad.gzpt |> getFile "GZPT.ipk3" |> optimizePk3;
   };
 
   programs.steam.games = with config.games.doom.wads; {

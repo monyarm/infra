@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   getFile,
   fetchGitTree,
@@ -33,6 +34,9 @@ let
       # only runs on $out during fixupPhase, which is too late for these.
       preBuild = "patchShebangs .";
       installPhase = "cp ${wad} $out";
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
     };
 
   blasphemer = mkDeutexWad {
@@ -49,7 +53,7 @@ let
     extraNativeBuildInputs = [ pkgs.git ];
   };
 in
-{
+lib.mkIf config.games.doom.enable {
   games.doom.wads = {
     freedoom1 = pkgs.freedoom |> getFile "share/games/doom/freedoom1.wad";
     freedoom2 = pkgs.freedoom |> getFile "share/games/doom/freedoom2.wad";

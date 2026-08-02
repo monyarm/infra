@@ -4,6 +4,7 @@
   config,
   getFile,
   autoImport,
+  optimize,
   ...
 }:
 let
@@ -19,14 +20,14 @@ let
       "iwad"
     ])
     // {
-      game = iwad;
+      game = optimize iwad;
       launcher = {
         package = pkgs.uzdoom;
         args = [ "-iwad" ];
       };
       args = [ "-file" ]
-      ++ (lib.optionals (wad != null && wad != [ ]) (map (x: "${x}") wad))
-      ++ [ "${config.games.doom.wads.lights}" ];
+      ++ (lib.optionals (wad != null && wad != [ ]) (map (x: "${optimize x}") wad))
+      ++ [ "${optimize config.games.doom.wads.lights}" ];
     };
 
   wadFilter = [ "regex:(.*\.(wad|WAD))" ];
@@ -54,11 +55,23 @@ in
     '';
   };
 
+  options.games.doom.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = true;
+    description = ''
+      Whether to fetch, optimize, and register Doom WADs/PK3s at all. Disable
+      to skip the whole (expensive, image-optimization-heavy) Doom build
+      graph entirely, e.g. while setting up additional remote builders.
+    '';
+  };
+
   imports = autoImport ./wad;
 
   config = {
     _module.args = { inherit mkDoom wadFilter findWad; };
 
-    games.doom.wads.lights = pkgs.uzdoom |> getFile "share/games/uzdoom/lights.pk3";
+    games.doom.wads.lights = lib.mkIf config.games.doom.enable (
+      pkgs.uzdoom |> getFile "share/games/uzdoom/lights.pk3"
+    );
   };
 }

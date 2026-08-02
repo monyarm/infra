@@ -40,11 +40,26 @@ let
     game_id = get_json(url.rstrip("/") + "/data.json")["id"]
     uploads = get_json(f"https://api.itch.io/games/{game_id}/uploads?api_key={api_key}")["uploads"]
 
-    def matches_platform(u):
+    # Filename substrings (case-insensitive) that mean "not the actual
+    # game," regardless of how the developer tagged it -- platform traits
+    # are often set carelessly (e.g. every upload checked "Windows"
+    # including a press kit).
+    upload_blacklist = ["presskit", "press kit"]
+
+    def is_blacklisted(u):
+        name = (u.get("filename") or "").lower()
+        return any(term in name for term in upload_blacklist)
+
+    platform_traits = {"p_windows", "p_linux", "p_osx"}
+
+    def is_tagged_for_platform(u):
+        traits = u.get("traits") or []
+        return u.get("type") == "default" and f"p_{platform}" in traits
+
+    def matches_platform_loose(u):
         if u.get("type") != "default":
             return True
         traits = u.get("traits") or []
-        platform_traits = {"p_windows", "p_linux", "p_osx"}
         # An upload with no OS trait at all isn't platform-restricted (itch
         # just didn't tag it), so treat it as matching every platform rather
         # than excluding it outright.
@@ -52,9 +67,16 @@ let
             return True
         return f"p_{platform}" in traits
 
-    candidates = [
+    named = [
         u for u in uploads
-        if matches_platform(u) and fnmatch.fnmatch(u.get("filename", ""), file_match)
+        if fnmatch.fnmatch(u.get("filename", ""), file_match) and not is_blacklisted(u)
+    ]
+    # Prefer an upload actually tagged for this platform over the loose
+    # "untagged, so it matches everything" fallback -- otherwise an
+    # unrelated untagged upload (e.g. a press kit) can outrank the real
+    # build just by sorting first.
+    candidates = [u for u in named if is_tagged_for_platform(u)] or [
+        u for u in named if matches_platform_loose(u)
     ]
     if not candidates:
         print(f"No upload matched platform={platform!r} fileMatch={file_match!r}.", file=sys.stderr)
@@ -83,6 +105,11 @@ in
       platform ? systemToItchPlatform pkgs.stdenv.hostPlatform.system,
       fileMatch ? "*", # Allows targeting a specific file string if multiple match the OS
       version ? null,
+      # sources.nix's recorded archive member list, when this source is a
+      # pk3/archive -- attached as passthru so optimize/optimize' can
+      # transparently extract/optimize/repack it without a caller needing
+      # to pass this same sourceEntry again explicitly.
+      archiveContent ? null,
       ...
     }:
 
@@ -100,6 +127,7 @@ in
         pkgs.cacert
       ];
       useSecrets = true;
+      extraAttrs.passthru.archiveContent = archiveContent;
       script = ''
         export HOME=$TMPDIR
 

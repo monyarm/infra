@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   getFile,
   fetchSteam,
@@ -24,7 +25,7 @@ let
     stripRoot = false;
   };
 in
-{
+lib.mkIf config.games.doom.enable {
   games.doom.wads = {
     doom = DOOM_I_II |> getFile "rerelease/doom.wad";
     doom2 = DOOM_I_II |> getFile "rerelease/doom2.wad";

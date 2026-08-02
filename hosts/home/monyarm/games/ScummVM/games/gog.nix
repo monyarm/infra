@@ -1,112 +1,182 @@
-{ fetchGOG, ... }:
-let
-  teenagent = fetchGOG {
-    game = "teenagent";
-    fileId = "en1installer0";
-    sha256 = "sha256-RzEDcLdSp2gKvWeHAJWdRhPRyzQObrSaX+Bdb9VmU2E=";
-  };
-
-  ultima4 = fetchGOG {
-    game = "ultima_iv_quest_of_the_avatar";
-    fileId = "en1installer0";
-    sha256 = "sha256-dW2BmATKhtLXTIjJE2aIDpd5wRQ3teICzYsxStCttvo=";
-  };
-
-  dragonsphere = fetchGOG {
-    game = "dragonsphere";
-    fileId = "en1installer0";
-    sha256 = "sha256-vaB3evCzpUuzo5Y1qLcxa2iwTdxplqfEgCdX3PlJqLk=";
-  };
-
-  martianDreams = fetchGOG {
-    game = "ultima_worlds_of_adventure_2_martian_dreams";
-    fileId = "en1installer0";
-    sha256 = "sha256-3YdzHQX0TXvVNXawhd2qoFAbFx+xFI7DAyO6W6jG/DU=";
-  };
-
-  bladeRunner = fetchGOG {
-    game = "blade_runner";
-    fileId = [
-      "en1installer0"
-      "en1installer1"
-    ];
-    sha256 = "sha256-ZZUz4TGdl5DB8vDd0eDgzMdXaHbWJ3BpKhGrULj/6+0=";
-  };
-
-  grimFandango = fetchGOG {
-    game = "grim_fandango_remastered";
-    fileId = [
-      "en1installer0"
-      "en1installer1"
-    ];
-    sha256 = "sha256-37LX6R7vyYIqIfOZQAh9QCrVNqhI29MGiB1rFouhDsk=";
-  };
-
-  bladeRunnerEE = fetchGOG {
-    game = "blade_runner_enhanced_edition_base";
-    fileId = [
-      "en1installer0"
-      "en1installer1"
-      "en1installer2"
-    ];
-    sha256 = "sha256-5Hl8ejvD7pbVD+CA+1D4Rivq7jsi4BeGs/nN8IsMVsk=";
-  };
-
-  conquestsOfCamelot = fetchGOG {
-    game = "conquests_of_camelot";
-    fileId = "en1installer0";
-    sha256 = "sha256-A9Y7GkZKcZLnINWNVEaTHIt+R4/wp+Zbk7lVyvPDY44=";
-  };
-
-  conquestsOfTheLongbow = fetchGOG {
-    game = "conquests_of_the_longbow";
-    fileId = "en1installer0";
-    sha256 = "sha256-fObJ1tJNMqcsR52VSWJGSCSWZrp1e9LqwZ3QIHmaf1g=";
-  };
-
-  returnOfThePhantom = fetchGOG {
-    game = "return_of_the_phantom";
-    fileId = "en1installer0";
-    sha256 = "sha256-z6vW43W2VjxW4JfPenUuByF4BaCEh9zc5RhH/5BTfjw=";
-  };
-
-  daggerOfAmonRa = fetchGOG {
-    game = "the_dagger_of_amon_ra";
-    fileId = "en1installer0";
-    sha256 = "sha256-7oQX9WKFIjjc1pmI5ag+FJHCBkzsDj15cN2iWbCB2Oc=";
-  };
-
-  torinsPassage = fetchGOG {
-    game = "torins_passage";
-    fileId = "en1installer0";
-    sha256 = "sha256-snp6YKb8+zjhgyEJk8j9Oo+VwAxuIPrqvHPNzAt6+Ss=";
-  };
-
-  beneathASteelSky = fetchGOG {
-    game = "beneath_a_steel_sky";
-    fileId = "en1installer0";
-    sha256 = "sha256-CEjidQErxanbXpIiq6SxzCnKwlZEdL5+cCaha84ZfaU=";
-  };
-
-  flightOfTheAmazonQueen = fetchGOG {
-    game = "flight_of_the_amazon_queen";
-    fileId = "en1installer0";
-    sha256 = "sha256-Egml84/1hn9zHXFNPJOb5bpZ3qTJCJLS+1PBYF8P6rQ=";
-  };
-
-  lureOfTheTemptress = fetchGOG {
-    game = "lure_of_the_temptress";
-    fileId = "en1installer0";
-    sha256 = "sha256-OWbjC0aXIP43ri37W5t8+5DEg56Y9F/+lhpia61LZE4=";
-  };
-
-  savageEmpire = fetchGOG {
-    game = "worlds_of_ultima_the_savage_empire";
-    fileId = "en1installer0";
-    sha256 = "sha256-4ICpc69t8OCA1jEgEtfzguJNyXj8o5BsVXbOAS4OmJ0=";
-  };
-in
 {
+  config,
+  lib,
+  fetchGOG,
+  compressScummvmGame,
+  getFiles,
+  ...
+}:
+let
+  teenagent =
+    fetchGOG {
+      game = "teenagent";
+      fileId = "en1installer0";
+      sha256 = "sha256-RzEDcLdSp2gKvWeHAJWdRhPRyzQObrSaX+Bdb9VmU2E=";
+    }
+    |> compressScummvmGame { engineid = "teenagent"; };
+
+  ultima4 =
+    fetchGOG {
+      game = "ultima_iv_quest_of_the_avatar";
+      fileId = "en1installer0";
+      sha256 = "sha256-dW2BmATKhtLXTIjJE2aIDpd5wRQ3teICzYsxStCttvo=";
+    }
+    |> compressScummvmGame { engineid = "ultima"; };
+
+  dragonsphere =
+    fetchGOG {
+      game = "dragonsphere";
+      fileId = "en1installer0";
+      sha256 = "sha256-vaB3evCzpUuzo5Y1qLcxa2iwTdxplqfEgCdX3PlJqLk=";
+    }
+    |> compressScummvmGame { engineid = "mads"; };
+
+  martianDreams =
+    fetchGOG {
+      game = "ultima_worlds_of_adventure_2_martian_dreams";
+      fileId = "en1installer0";
+      sha256 = "sha256-3YdzHQX0TXvVNXawhd2qoFAbFx+xFI7DAyO6W6jG/DU=";
+    }
+    |> compressScummvmGame { engineid = "ultima"; };
+
+  bladeRunner =
+    fetchGOG {
+      game = "blade_runner";
+      fileId = [
+        "en1installer0"
+        "en1installer1"
+      ];
+      sha256 = "sha256-ZZUz4TGdl5DB8vDd0eDgzMdXaHbWJ3BpKhGrULj/6+0=";
+    }
+    |> compressScummvmGame { engineid = "bladerunner"; };
+
+  grimFandango =
+    fetchGOG {
+      game = "grim_fandango_remastered";
+      fileId = [
+        "en1installer0"
+        "en1installer1"
+      ];
+      sha256 = "sha256-37LX6R7vyYIqIfOZQAh9QCrVNqhI29MGiB1rFouhDsk=";
+    }
+    # Allow-list built by reading engines/grim/resource.cpp (ResourceLoader
+    # ctor's static LAB list, gated on isRemastered()) and localize.cpp --
+    # this is the exact and complete set of files ScummVM's grim engine ever
+    # opens for this release. Everything else in app/ (GrimFandango.exe,
+    # SDL2.dll, Lua.dll, chore.dll, compiled x86 shaders, FontsHD/MoviesHD,
+    # DATA006/007.LAB, MATERIALS*.LAB, IMAGESPATCH001.LAB, GOG/Galaxy
+    # chrome) belongs to the native remaster engine only.
+    |> getFiles [
+      "app/CREDITS.LAB"
+      "app/DATA00[0-4].LAB"
+      "app/MOVIE0[0-4].LAB"
+      "app/VOX000[0-4].LAB"
+      "app/YEAR[0-5]MUS.LAB"
+      "app/commentary.lab"
+      "app/IMAGES.LAB"
+      "app/grim.??.tab"
+      "app/en_gagl088.lip"
+    ]
+    |> compressScummvmGame { engineid = "grim"; };
+
+  bladeRunnerEE =
+    fetchGOG {
+      game = "blade_runner_enhanced_edition_base";
+      fileId = [
+        "en1installer0"
+        "en1installer1"
+        "en1installer2"
+      ];
+      sha256 = "sha256-5Hl8ejvD7pbVD+CA+1D4Rivq7jsi4BeGs/nN8IsMVsk=";
+    }
+    |> compressScummvmGame { engineid = "bladerunner"; };
+
+  # SCI0/SCI01/SCI1.1 (pre-SCI32) games -- compress_sci is safe for these.
+  conquestsOfCamelot =
+    fetchGOG {
+      game = "conquests_of_camelot";
+      fileId = "en1installer0";
+      sha256 = "sha256-A9Y7GkZKcZLnINWNVEaTHIt+R4/wp+Zbk7lVyvPDY44=";
+    }
+    |> compressScummvmGame {
+      engineid = "sci";
+      sciSupported = true;
+    };
+
+  conquestsOfTheLongbow =
+    fetchGOG {
+      game = "conquests_of_the_longbow";
+      fileId = "en1installer0";
+      sha256 = "sha256-fObJ1tJNMqcsR52VSWJGSCSWZrp1e9LqwZ3QIHmaf1g=";
+    }
+    |> compressScummvmGame {
+      engineid = "sci";
+      sciSupported = true;
+    };
+
+  returnOfThePhantom =
+    fetchGOG {
+      game = "return_of_the_phantom";
+      fileId = "en1installer0";
+      sha256 = "sha256-z6vW43W2VjxW4JfPenUuByF4BaCEh9zc5RhH/5BTfjw=";
+    }
+    |> compressScummvmGame { engineid = "mads"; };
+
+  daggerOfAmonRa =
+    fetchGOG {
+      game = "the_dagger_of_amon_ra";
+      fileId = "en1installer0";
+      sha256 = "sha256-7oQX9WKFIjjc1pmI5ag+FJHCBkzsDj15cN2iWbCB2Oc=";
+    }
+    |> compressScummvmGame {
+      engineid = "sci";
+      sciSupported = true;
+    };
+
+  torinsPassage =
+    fetchGOG {
+      game = "torins_passage";
+      fileId = "en1installer0";
+      sha256 = "sha256-snp6YKb8+zjhgyEJk8j9Oo+VwAxuIPrqvHPNzAt6+Ss=";
+    }
+    |> compressScummvmGame {
+      engineid = "sci";
+      sciSupported = true;
+    };
+
+  beneathASteelSky =
+    fetchGOG {
+      game = "beneath_a_steel_sky";
+      fileId = "en1installer0";
+      sha256 = "sha256-CEjidQErxanbXpIiq6SxzCnKwlZEdL5+cCaha84ZfaU=";
+    }
+    |> compressScummvmGame { engineid = "sky"; };
+
+  flightOfTheAmazonQueen =
+    fetchGOG {
+      game = "flight_of_the_amazon_queen";
+      fileId = "en1installer0";
+      sha256 = "sha256-Egml84/1hn9zHXFNPJOb5bpZ3qTJCJLS+1PBYF8P6rQ=";
+    }
+    |> compressScummvmGame { engineid = "queen"; };
+
+  lureOfTheTemptress =
+    fetchGOG {
+      game = "lure_of_the_temptress";
+      fileId = "en1installer0";
+      sha256 = "sha256-OWbjC0aXIP43ri37W5t8+5DEg56Y9F/+lhpia61LZE4=";
+    }
+    |> compressScummvmGame { engineid = "lure"; };
+
+  savageEmpire =
+    fetchGOG {
+      game = "worlds_of_ultima_the_savage_empire";
+      fileId = "en1installer0";
+      sha256 = "sha256-4ICpc69t8OCA1jEgEtfzguJNyXj8o5BsVXbOAS4OmJ0=";
+    }
+    |> compressScummvmGame { engineid = "ultima"; };
+in
+lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {
     teenagent = {
       engineid = "teenagent";

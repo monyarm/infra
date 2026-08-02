@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 let
   # msadams.com itself only offers multi-platform bundles (Windows/Palm/
   # TI-calculator); this ifarchive zip is the actual per-game .dat bundle
@@ -28,7 +28,7 @@ let
     description = "Marvel Adventure #${toString version}";
   };
 in
-{
+lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {
     adventureland = mkAdventureInternationalGame {
       categoryId = "adventureland_1";

@@ -141,6 +141,12 @@ rec {
       else
         baseName;
 
+  # Derivation-name-safe stem for a src: strip the store-path hash prefix
+  # (getFileName), drop the extension, then strip anything Nix would reject
+  # in a derivation name (sanitizeName) -- shared by lib/optimize/ and
+  # lib/compressRom/ for naming every intermediate build step.
+  getName = src: sanitizeName (removeExtension (getFileName src));
+
   getFileNameFromUrl =
     url:
     let

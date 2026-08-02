@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   fetchItch,
   sources,
   ...
@@ -23,7 +25,7 @@ let
     hash = "sha256-4FNl0TNeZLeHyQj/3+HRur/uB9qrX2ClYNy9aR9Bggg=";
   };
 in
-{
+lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {
     aboveTheWaves = {
       gameid = "atw";

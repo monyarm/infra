@@ -34,7 +34,30 @@ let
   fetchers = import ./fetchers.nix (
     { inherit pkgs sources; } // constants // strings // imp // files
   );
-  optimize = import ./optimize.nix (
+  optimize = import ./optimize (
+    {
+      inherit pkgs;
+      inherit (pkgs) lib;
+    }
+    // files
+    // imp
+    // strings
+    // format
+    // misc
+  );
+  scummvmOptimize = import ./scummvm-optimize.nix (
+    {
+      inherit pkgs;
+      inherit (pkgs) lib;
+    }
+    // files
+    // imp
+    // strings
+    // format
+    // misc
+    // optimize
+  );
+  compressRom = import ./compressRom (
     {
       inherit pkgs;
       inherit (pkgs) lib;
@@ -61,6 +84,8 @@ let
       meta
       fetchers
       optimize
+      scummvmOptimize
+      compressRom
       misc
       ;
   }
@@ -74,6 +99,8 @@ let
   // meta
   // fetchers
   // optimize
+  // scummvmOptimize
+  // compressRom
   // misc;
 in
 {

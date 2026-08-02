@@ -30,6 +30,19 @@
         sshKey = "/etc/ssh/ssh_host_ed25519_key";
 
       }
+
+      { hostName = "eu.nixbuild.net";
+      system = "x86_64-linux";
+      maxJobs = 100;
+      speedFactor = 1;
+      supportedFeatures = [
+          "nixos-test"
+          "big-parallel"
+          "ca-derivations"
+        ];
+        sshUser = user.name;
+        sshKey = "/etc/ssh/ssh_host_ed25519_key";
+    }
     ];
 
     settings = nixSettings.common // {
@@ -38,7 +51,7 @@
         user.name
       ];
       builders-use-substitutes = true;
-      max-jobs = 8;
+      max-jobs = 8 - 2;
     };
   };
 
@@ -58,7 +71,24 @@
       hostNames = [ "monyarm" ];
       publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKY6U2A27whIn6CbkikaNxgctvktDypSwpiRsnso6zF2XzJqDMxvPCPcl6nR0qxXc9rQEaJf1WZdSt5nwdiHvEq7RAqnopB/MdZpB/2ACJ8UYbd8AoSgCqTKa3QFOx6AlYEn4AL0NwBawRTlfIsqUE6ufk0DkghaEREh5DkB9QcyomZxUo5NYXy7u0UB4McMCiadDVu35sIs1oN2T8hBoZS8KVGJI8uWpyoeLAkSxegk/wommQ49rMTkca+1h7q9qHlBtYnhDyClPFlXLln8Gr+l8pS+2gEGDgfCxekulYa4yuoHgXNLhuZqHKNmw1QK+N9JRYKWGBLEF1k1OFJ2dx monyarm@gmail.com";
     };
+
+  nixbuild = {
+    hostNames = [ "eu.nixbuild.net" ];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
   };
+  };
+
+  # Without IdentitiesOnly, ssh offers every key in the agent before this
+  # one -- nixbuild.net's server hits its max-auth-tries limit and drops
+  # the connection as "Permission denied" before ever trying the right key.
+  programs.ssh.extraConfig = ''
+    Host eu.nixbuild.net
+      PubkeyAcceptedKeyTypes ssh-ed25519
+      IdentitiesOnly yes
+      IdentityFile /etc/ssh/ssh_host_ed25519_key
+      ServerAliveInterval 60
+      IPQoS throughput
+  '';
 
   systemd.services.nix-daemon = {
     serviceConfig = {

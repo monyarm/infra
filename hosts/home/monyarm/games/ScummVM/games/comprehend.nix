@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 let
   mkGlkCommonGame = args: {
     engineid = "glk";
@@ -40,7 +40,7 @@ let
     hash = "sha256-tolVRu6aeIaBj2u8vSMw2tkoDUBa0C7dbFvz4pByInA=";
   };
 in
-{
+lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {
     transylvania = mkGlkCommonGame {
       gameid = "transylvania";
