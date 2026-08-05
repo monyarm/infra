@@ -1,19 +1,14 @@
 {
   pkgs,
   lib,
-  listFilesRecursive,
-  getFileName,
-  removeExtension,
-  sanitizeName,
   getName,
   rename,
-  dispatchExt,
+  dispatchExtSorted,
   resolveExt,
-  parallel,
-  parallelZipListsWith,
-  splitFiles,
+  resolveExtSorted,
+  sortDispatchKeys,
   packArchive,
-  removeFiles,
+  nixWasmRustPath ? null,
   ...
 }:
 
@@ -26,68 +21,121 @@ let
     jpeg = [ "jpg" ];
     wad = [ "iwad" ];
     deh = [ "bex" ];
-    # Each gzdoomLumpPrefixes name is registered twice: plain (real
-    # ".decorate"-style dot extensions on loose files, e.g. "mymod.decorate")
-    # and "*"-suffixed (resolveExt's basename-PREFIX match, e.g. "decorate*"
-    # also matches the bare lump "DECORATE" and the dot-suffixed lump
-    # variant "DECORATE.ChexMonsters") -- these are genuinely different
-    # matches, not redundant, so both forms are needed for full coverage.
-    decorate = (lib.concatMap (p: [ p "${p}*" ]) gzdoomLumpPrefixes) ++ [
-      "chexmonsters" "doommonsters" "fluids" "green" "greenfluids"
-      "greenmeat" "hereticmonsters" "hexenmonsters" "meat" "supergore"
-      "vns" "dec"
-      # script formats
-      "acs" "zs" "zc"
+    # Plain (mymod.decorate) and "*"-suffixed (matches bare DECORATE and
+    # DECORATE.ChexMonsters) -- both needed, not redundant.
+    decorate =
+      (lib.concatMap (p: [
+        p
+        "${p}*"
+      ]) gzdoomLumpPrefixes)
+      ++ [
+        "chexmonsters"
+        "doommonsters"
+        "fluids"
+        "green"
+        "greenfluids"
+        "greenmeat"
+        "hereticmonsters"
+        "hexenmonsters"
+        "meat"
+        "supergore"
+        "vns"
+        "dec"
+        # script formats
+        "acs"
+        "zs"
+        "zc"
+      ];
+    glsl = [
+      "fp"
+      "vp"
+      "frag"
+      "gl"
+      "ps"
+      "pso"
     ];
-    glsl = [ "fp" "vp" "frag" "gl" "ps" "pso" ];
-    obj = [ "mtl" ]; # Wavefront material files -- same plain-text numeric-field format as obj itself.
-    c = [ "h" "cc" "cpp" "hpp" ];
-    # bin/ir: GDCC toolchain build artifacts, passthrough only (see c.nix).
-    # pk3/ipk3/pk7/ipk7 deliberately NOT listed here anymore: a pk3/ipk3
-    # with a real archiveContent passthru is caught by optimizeWith's own
-    # archive branch before dispatchExt ever runs; one without (not yet
-    # backfilled in sources.nix) or a pk7/ipk7 (our own already-optimized
-    # output, never carries archiveContent) still falls through to the
-    # generic "_" fallback below either way -- same trace-passthrough
-    # behavior, just via the catch-all instead of a named alias entry.
+    obj = [ "mtl" ]; # same text format as obj
+    c = [
+      "h"
+      "cc"
+      "cpp"
+      "hpp"
+    ];
+    # bin/ir: GDCC build artifacts, passthrough only.
     _ = [
-      "unknown" "txt" "md2" "md3" "lmp" "lump" "raw" "o" "bin" "ir" "dat" "fon2"
-      # extensionless FON2 lumps, verified via magic bytes in LegendOfDoom.pk3
-      "$bigfont" "$smallfnt" "$zeldfnt2"
+      "unknown"
+      "txt"
+      "md2"
+      "md3"
+      "lmp"
+      "lump"
+      "raw"
+      "o"
+      "bin"
+      "ir"
+      "dat"
+      "fon2"
+      # extensionless FON2 lumps
+      "$bigfont"
+      "$smallfnt"
+      "$zeldfnt2"
       "$thumbs.db"
-      # SPC700 dump, tracker modules, raw PLAYPAL/COLORMAP, GZDoom IVF+VP8
-      # video -- all verified by magic bytes in UJJD.pk3/GoldenSouls2
-      "spc" "it" "s3m" "xm" "psm" "pal" "cmp" "ivf"
-      # PCX image, verified via Castlevania's *.pcx -- rare enough (<20
-      # files total) that it's not worth a dedicated re-encoder yet
-      "pcx"
-    ]; # not optimizable or already handled elsewhere, handle through passthrough.
+      # SPC700, tracker modules, raw PLAYPAL/COLORMAP, GZDoom IVF+VP8
+      "spc"
+      "it"
+      "s3m"
+      "xm"
+      "psm"
+      "pal"
+      "cmp"
+      "ivf"
+      "pcx" # rare, not worth a re-encoder
+    ];
   };
 
   gzdoomLumpPrefixes = [
-    "decorate" "decaldef" "declold" "sndinfo" "mapinfo" "gldefs"
-    "animdefs" "cvarinfo" "language" "loadacs" "menudef" "gameinfo"
-    "iwadinfo" "keyconf" "sbarinfo" "voxeldef" "trnslate" "fontdefs"
+    "decorate"
+    "decaldef"
+    "declold"
+    "sndinfo"
+    "mapinfo"
+    "gldefs"
+    "animdefs"
+    "cvarinfo"
+    "language"
+    "loadacs"
+    "menudef"
+    "gameinfo"
+    "iwadinfo"
+    "keyconf"
+    "sbarinfo"
+    "voxeldef"
+    "trnslate"
+    "fontdefs"
     "lockdefs"
-    "modeldef" "textcolo" "sndseq" "terrain" "dec_" "textures"
-    "zscript" "zmapinfo"
+    "modeldef"
+    "textcolo"
+    "sndseq"
+    "terrain"
+    "dec_"
+    "textures"
+    "zscript"
+    "zmapinfo"
   ];
 
-  # Bundled dev/build tooling and stray artifacts inside archives, never
-  # engine content -- unambiguous across every real occurrence found in a
-  # pk3-wide audit (e.g. "_build.bat"/"_build.sh", "7za.dll", "vnsc.exe",
-  # "CREDITS.md", ".gitignore"/".gitattributes", "SurvivorSystemBACKUP.zip",
-  # "mintty.exe.stackdump"). Deliberately excludes extensions that could
-  # plausibly be real, unrelated content in some other mod (tmp, qc, c, h,
-  # unknown).
-  #
-  # Scope: only ever consulted inside extractOptimizeRepack below (pk3/ipk3
-  # extraction, and optimizePk3's pk7/ipk7 conversion) -- NOT applied to
-  # folderWalkOptimize's plain directory walk (e.g. wallpapers), which
-  # keeps every file it finds. Archives bundle third-party build tooling
-  # that genuinely never belongs in the repacked output; an arbitrary
-  # folder on disk has no such convention to lean on.
-  droppedArchiveExtensions = [ "bat" "sh" "exe" "dll" "md" "gitignore" "gitattributes" "zip" "stackdump" ];
+  # Bundled dev/build tooling, never engine content -- extractOptimizeRepack
+  # only, not folderWalkOptimize (arbitrary folders keep everything).
+  droppedArchiveExtensions = [
+    "bat"
+    "sh"
+    "exe"
+    "dll"
+    "md"
+    "gitignore"
+    "gitattributes"
+    "zip"
+    "stackdump"
+  ];
 
   # ==========================================================================
 
@@ -110,102 +158,139 @@ let
           exit 0; # fix for 2176?
         ''
       ];
-      # Not preferLocalBuild: this runs after every stage in a chain like
-      # oxipng |> optipng |> advpng, and each of those stages is already
-      # free to run remotely -- pinning just this trivial compare-and-pick
-      # step local would drag each stage's output back to the local
-      # machine and force a re-upload to a builder for the next stage,
-      # every single time.
+      # Not preferLocalBuild -- keep the compare-and-pick step remote too,
+      # or every chained stage's output gets dragged home and re-uploaded.
       allowSubstitutes = false;
       __contentAddressed = true;
       outputHashAlgo = "sha256";
       outputHashMode = "recursive";
     };
 
-  textFns = import ./text.nix {
-    inherit pkgs lib guardSize getName;
+  # Per-handler guardSize: last line of a handler's script, not a wrapping
+  # derivation. Handlers must use `cmd ... || rm -f candidate` (never bare
+  # `|| true`) so a crash can't leave a truncated candidate for this to miss.
+  guardSizeTail = candidate: src: ''
+    if [ -s "${candidate}" ] && [ "$(${pkgs.coreutils}/bin/stat -L -c%s "${candidate}")" -le "$(${pkgs.coreutils}/bin/stat -L -c%s "${src}")" ]; then
+      ${pkgs.coreutils}/bin/cp "${candidate}" "$out"
+    else
+      ${pkgs.coreutils}/bin/cp "${src}" "$out"
+    fi
+  '';
+
+  # Shared by mp3/ogg/wma/wav: lossless metadata strip via ffmpeg stream
+  # copy. -fflags +bitexact also drops ffmpeg's own encoder tag.
+  ffmpegStripMetadata =
+    ext: src:
+    pkgs.runCommand "${getName src}-stripped.${ext}"
+      {
+        nativeBuildInputs = [ pkgs.ffmpeg-headless ];
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "flat";
+      }
+      ''
+        ffmpeg -y -i "${src}" -map_metadata -1 -fflags +bitexact -c copy tmp.${ext} || rm -f tmp.${ext}
+        ${guardSizeTail "tmp.${ext}" src}
+      '';
+
+  # Shared by png.nix's lossless chain and ico.nix's per-frame loop -- same
+  # tools/flags, run against different filenames.
+  pngLosslessFlags = {
+    oxipng = level: "-o${toString level} --strip all --alpha";
+    optipng = "-o7 -quiet";
+    advpng = "-z -4";
   };
 
-  commonArgs = {
+  textFns = import ./text.nix {
     inherit
       pkgs
       lib
       guardSize
       getName
       ;
+  };
+
+  optimizeFolderDynamic = import ./dynamic.nix { inherit pkgs lib getName nixWasmRustPath; };
+
+  commonArgs = {
+    inherit
+      pkgs
+      lib
+      guardSize
+      guardSizeTail
+      ffmpegStripMetadata
+      pngLosslessFlags
+      getName
+      ;
   }
   // textFns;
 
-  # Handler discovery/alias resolution/prime-normal dispatch is shared with
-  # lib/compressRom/ via lib/mkFormatDispatch.nix -- listAware = false since
-  # every file here (and text.nix, excluded below) still takes a single
-  # `src`, not a srcs list. (bulk.nix no longer exists -- folder/archive
-  # handling folded directly into optimizeWith below.)
-  dispatch = import ../mkFormatDispatch.nix {
-    inherit lib resolveExt;
-  } {
-    handlersDir = ./.;
-    excludeNames = [ "default.nix" "text.nix" ];
-    inherit commonArgs aliases;
-    listAware = false;
-  };
+  # Shared with lib/compressRom/ via lib/mkFormatDispatch.nix.
+  # listAware = false: every handler here takes a single src, not a list.
+  dispatch =
+    import ../mkFormatDispatch.nix
+      {
+        inherit lib resolveExtSorted sortDispatchKeys;
+      }
+      {
+        handlersDir = ./.;
+        excludeNames = [
+          "default.nix"
+          "text.nix"
+          "dynamic.nix"
+          "dynamic-inner.nix"
+          "overlays.nix"
+        ];
+        inherit commonArgs aliases;
+        listAware = false;
+      };
 
-  # A folder-shaped src has no real filename extension to dispatch on --
-  # same heuristic the wallpapers caller used to hand-check before calling
-  # optimizeBulk instead of optimize (an explicit `passthru.isFolder`
-  # marker, or "doesn't look like it has a file extension"), now built
-  # directly into optimizeWith so callers don't need to check this
-  # themselves.
+  # Precompute once; primeOverride is {} for every call except
+  # optimizePk3's wav override.
+  dispatchMapNormal = dispatch.mkDispatchMap false { };
+  dispatchMapPrime = dispatch.mkDispatchMap true { };
+
+  # Precompute the sort too -- resolveExt/dispatchExt re-sort every call
+  # otherwise (confirmed via trace-function-calls).
+  dispatchMapNormalSorted = sortDispatchKeys dispatchMapNormal;
+  dispatchMapPrimeSorted = sortDispatchKeys dispatchMapPrime;
+
+  cached =
+    normalV: primeV: computeFn: prime: primeOverride:
+    if primeOverride == { } then (if prime then primeV else normalV) else computeFn prime primeOverride;
+  cachedDispatchMap = cached dispatchMapNormal dispatchMapPrime dispatch.mkDispatchMap;
+  cachedSortedKeys =
+    cached dispatchMapNormalSorted dispatchMapPrimeSorted (
+      prime: primeOverride: sortDispatchKeys (dispatch.mkDispatchMap prime primeOverride)
+    );
+
+  # No real filename extension -> folder-shaped.
   isFolderShaped =
     src:
     (src ? passthru && src.passthru.isFolder or false)
     || (builtins.match ".*\\.[a-zA-Z0-9]+$" (src.name or "")) == null;
 
-  # extOf/isUnhandledExt: does dispatchExt have any entry for this name
-  # (real handler or passthrough alias)? Key existence doesn't depend on
-  # prime, so `false {}` is fine here regardless of the actual call's prime.
+  # Key existence doesn't depend on prime, so `false {}` is fine here.
   hasExtension = name: (builtins.match ".*\\.[a-zA-Z0-9]+$" (baseNameOf name)) != null;
   extOf = name: "." + lib.toLower (lib.last (lib.splitString "." (baseNameOf name)));
   isUnhandledExt =
-    name: hasExtension name && resolveExt (dispatch.mkDispatchMap false { }) { name = baseNameOf name; } == null;
-
-  # Warns once per distinct unhandled extension in `names`, then returns
-  # `x` -- extractOptimizeRepack/folderWalkOptimize call this on their full
-  # member list before recursing per-file with knownFile = true, which
-  # silences the "_" handler's own warning below.
-  warnUnhandledOnce =
-    names: x:
-    let
-      exts = lib.unique (map extOf (builtins.filter isUnhandledExt names));
-      forced = lib.foldl' (
-        acc: ext: builtins.trace ''optimize: no optimizer for extension "${ext}"'' acc
-      ) null exts;
-    in
-    builtins.seq forced x;
+    name:
+    hasExtension name
+    && resolveExtSorted dispatchMapNormalSorted dispatchMapNormal { name = baseNameOf name; } == null;
 
   # --- DISPATCH ENGINE ---
 
-  # `prime` (opt-in, via optimize') means the more aggressive/lossy variant
-  # where a format has one (e.g. png's pngquant, jpeg's mozjpeg re-encode,
-  # webp's lossy cwebp); `normal` (the plain-optimize default, prime = false)
-  # always means the lossless/safe one. primeOverride forces specific
-  # extensions to a fixed prime-ness regardless of the outer `prime`, e.g.
-  # { wav = true; } for wav's "prime" handler (FLAC content behind the
-  # original .wav name, see wav.nix) -- opt-in per call site (see
-  # optimizePk3 below), empty by default so plain optimize/optimize' always
-  # mean exactly what their name says, for every extension including wav.
+  # `prime`: lossy/aggressive variant where a format has one (pngquant,
+  # mozjpeg, lossy cwebp). primeOverride pins specific extensions
+  # regardless of outer `prime`, e.g. { wav = true; } (see wav.nix).
   optimizeWith =
     {
       prime ? false,
       primeOverride ? { },
-      # Set by extractOptimizeRepack/folderWalkOptimize's own recursion:
-      # a single already-extracted archive member or already-walked file,
-      # never a directory or a fresh fetcher output, so the archive/folder
-      # auto-detection below would only be able to get it wrong -- e.g. a
-      # bare extensionless lump name like "ANIMDEFS" (a completely normal
-      # GZDoom lump, real pk3s ship plenty of these) matches
-      # isFolderShaped's "no recognizable extension" heuristic and would
-      # otherwise crash trying to IFD-walk a plain file as a directory.
+      # Set for an already-extracted/walked file, never a directory --
+      # skips the folder-shaped auto-detect below, which would misfire on
+      # an extensionless lump name like "ANIMDEFS".
       knownFile ? false,
     }:
     src:
@@ -215,20 +300,17 @@ let
       extractOptimizeRepack {
         inherit prime primeOverride;
         outFormat = "zip";
-        # Keeps whatever extension the archive already had (.pk3 stays
-        # .pk3, .ipk3 stays .ipk3, ...) -- unlike optimizePk3, which always
-        # converts to .pk7/.ipk7.
+        # Keeps the archive's own extension, unlike optimizePk3 (always .pk7/.ipk7).
         outExt = lib.last (lib.splitString "." (src.originalName or src.name));
       } src
     else if !knownFile && isFolderShaped src then
       folderWalkOptimize { inherit prime primeOverride; } src
     else
       let
-        pipelineMap = dispatchExt (
-          (dispatch.mkDispatchMap prime primeOverride)
+        pipelineMap = dispatchExtSorted (cachedSortedKeys prime primeOverride) (
+          (cachedDispatchMap prime primeOverride)
           // {
-            # Batch callers already warned once per extension and pass
-            # knownFile = true; only a direct top-level call reaches this.
+            # Only a direct call reaches this; batch callers pass knownFile = true.
             "_" =
               src:
               if knownFile then
@@ -246,131 +328,83 @@ let
       in
       src |> pipelineMap |> rename src;
 
-  # Extracts a zip-format archive (pk3/ipk3/zip/...), optimizes each kept
-  # member by recursing through optimizeWith with the given prime/
-  # primeOverride, and repacks under outFormat/outExt. Shared by
-  # optimizeWith's own generic archive branch above (repacks to the SAME
-  # extension the archive already had, following the outer call's
-  # prime-ness) and optimizePk3 below (always repacks to .pk7/.ipk7, with
-  # its own fixed wav override regardless of outer prime-ness).
+  # Extracts a zip archive, optimizes each member, repacks under
+  # outFormat/outExt. guard (default true): keep smaller of repacked vs
+  # original. optimizePk3 passes guard = false -- LZMA beats deflate, no
+  # guarantee needed.
   extractOptimizeRepack =
     {
       prime,
       primeOverride,
       outFormat,
       outExt,
-      # optimizePk3's pk3->pk7 skips this -- LZMA essentially always beats
-      # deflate, so it's not worth guarding.
       guard ? true,
     }:
     src:
     let
       fileName = src.originalName or src.name;
-      # Usually already the specific member list -- getFile's own
-      # archiveContent passthru already does the by-filename lookup
-      # (folderDrv.archiveContent.${fileName}) before this ever sees it. But
-      # a call site that pipes a fetcher's output straight into optimizePk3
-      # with no getFile step in between (single-file pk3 downloads, e.g.
-      # gdrive.nix's legendOfDoomBase) still has the raw sources.nix shape
-      # attached (nested one level under the archive's own filename), so
-      # unwrap that here too if we see it.
+      # Unwraps the raw sources.nix shape when a fetcher's output skips
+      # getFile (e.g. gdrive.nix). Only used for the null check below --
+      # never iterated per-member (that's optimizeFolderDynamic's job now).
       rawArchiveContent = src.archiveContent or null;
       members =
         if builtins.isAttrs rawArchiveContent then
           rawArchiveContent.${fileName} or null
         else
           rawArchiveContent;
-      isDropped = m: lib.any (ext: lib.hasSuffix ".${ext}" (lib.toLower m)) droppedArchiveExtensions;
-      keptMembers = builtins.filter (m: !(isDropped m)) members;
-      droppedMembers = builtins.filter isDropped members;
     in
     if members == null then
       builtins.trace "optimize: no known archiveContent for '${fileName}' (sources.nix not backfilled yet); passing through unoptimized" src
     else
       let
-        extracted = pkgs.runCommand "${getName src}-extracted"
-          {
-            buildInputs = [ pkgs.unzip ];
-            __contentAddressed = true;
-            allowSubstitutes = false;
-            outputHashAlgo = "sha256";
-            outputHashMode = "recursive";
-          }
-          ''
-            mkdir -p "$out"
-            # -o: some pk3s have duplicate zip entries for the same path;
-            # without it unzip prompts interactively and the build hangs/fails.
-            # unzip exits 1 on warnings-only conditions too, and one such
-            # warning ("appears to use backslashes as path separators", on
-            # Windows-authored zips) is harmless -- unzip already converts
-            # them to real subdirectories correctly (verified against a real
-            # LegendOfDoom.pk3 extraction). Other exit-1 warnings (e.g. CRC
-            # errors) are real problems, so only swallow exit 1 when every
-            # warning line it printed is that specific known-benign one.
-            set +e
-            unzipLog=$(unzip -q -o "${src}" -d "$out" 2>&1)
-            status=$?
-            set -e
-            printf '%s\n' "$unzipLog" >&2
-            if [ "$status" -ne 0 ] && { [ "$status" -ne 1 ] || printf '%s\n' "$unzipLog" | grep -qv 'appears to use backslashes as path separators'; }; then
-              exit "$status"
-            fi
-          '';
-        pruned = if droppedMembers == [ ] then extracted else extracted |> removeFiles droppedMembers;
-        splitDrvs = pruned |> splitFiles keptMembers;
-        # zipListsWith pairs each kept member's archive-relative path
-        # (keptMembers) with its matching extracted derivation (splitDrvs,
-        # same order, from splitFiles), producing one linkFarm entry per file.
-        optimizedEntries = parallelZipListsWith (memberPath: drv: {
-          name = memberPath;
-          path = optimizeWith { inherit prime primeOverride; knownFile = true; } drv;
-        }) keptMembers splitDrvs;
+        extracted =
+          pkgs.runCommand "${getName src}-extracted"
+            {
+              buildInputs = [ pkgs.unzip ];
+              __contentAddressed = true;
+              allowSubstitutes = false;
+              outputHashAlgo = "sha256";
+              outputHashMode = "recursive";
+            }
+            ''
+              mkdir -p "$out"
+              # -o: dupe zip entries otherwise prompt and hang the build.
+              # Swallow exit 1 only for the harmless backslash-path-sep
+              # warning; other exit-1s (e.g. CRC errors) are real.
+              set +e
+              unzipLog=$(unzip -q -o "${src}" -d "$out" 2>&1)
+              status=$?
+              set -e
+              printf '%s\n' "$unzipLog" >&2
+              if [ "$status" -ne 0 ] && { [ "$status" -ne 1 ] || printf '%s\n' "$unzipLog" | grep -qv 'appears to use backslashes as path separators'; }; then
+                exit "$status"
+              fi
+            '';
+        optimizedDir = optimizeFolderDynamic {
+          inherit prime primeOverride;
+          droppedExtensions = droppedArchiveExtensions;
+        } extracted;
         repacked =
-          pkgs.linkFarm "${getName src}-repack-src" optimizedEntries
-          |> packArchive { format = outFormat; extension = outExt; } (getName src);
+          optimizedDir
+          |> packArchive {
+            format = outFormat;
+            extension = outExt;
+          } (getName src);
       in
-      warnUnhandledOnce keptMembers (if guard then guardSize repacked src else repacked);
+      if guard then guardSize repacked src else repacked;
 
-  # IFD-walks a folder (no static archiveContent -- e.g. wallpapers, an
-  # already-unpacked directory), optimizing each file found by recursing
-  # through optimizeWith with the given prime/primeOverride.
+  # For folders with no static archiveContent (e.g. wallpapers).
   folderWalkOptimize =
     { prime, primeOverride }:
-    folderSrc:
-    let
-      allFiles = listFilesRecursive folderSrc;
-      entries = parallel (map (filePath: {
-        name = builtins.unsafeDiscardStringContext (
-          lib.strings.removePrefix "${folderSrc}/" (toString filePath)
-        );
-        path =
-          builtins.path {
-            name = sanitizeName (getFileName filePath);
-            path = filePath;
-          }
-          |> optimizeWith { inherit prime primeOverride; knownFile = true; };
-      })) allFiles;
-    in
-    warnUnhandledOnce (map getFileName allFiles) (
-      pkgs.linkFarm "${getName folderSrc}-optimized-dir" entries
-    );
+    folderSrc: optimizeFolderDynamic { inherit prime primeOverride; } folderSrc;
 
   # --- PUBLIC API ---
 
-  # optimize (the default) is always lossless where a format has a
-  # lossless/lossy choice; optimize' opts into the lossy/aggressive variant
-  # instead (see the `prime` doc comment above optimizeWith).
   optimize = optimizeWith { prime = false; };
   optimize' = optimizeWith { prime = true; };
 
-  # Doom-specific opt-in: real lossless treatment for every member except
-  # wav, which gets the FLAC-content-under-.wav-name swap regardless (see
-  # wav.nix) -- plain optimize/optimize' on an archive (above) follow the
-  # outer call's prime-ness uniformly instead, with no such override. Also
-  # unlike plain optimize on an archive (which keeps the same extension),
-  # this always repacks to .pk7/.ipk7. No longer takes a sourceEntry
-  # argument -- that data now flows automatically via the archiveContent
-  # passthru every relevant fetcher/getFile call already attaches.
+  # Doom pk3 opt-in: lossless except wav (always FLAC-under-.wav-name, see
+  # wav.nix), always repacks to .pk7/.ipk7.
   optimizePk3 =
     pk3:
     let
@@ -383,7 +417,9 @@ let
     else
       extractOptimizeRepack {
         prime = false;
-        primeOverride = { wav = true; };
+        primeOverride = {
+          wav = true;
+        };
         outFormat = "7z";
         guard = false;
         inherit outExt;
@@ -395,5 +431,11 @@ in
     optimize
     optimize'
     optimizePk3
+    # For dynamic-inner.nix: needs primeOverride + knownFile, and the
+    # build-time unhandled-extension trace.
+    optimizeWith
+    optimizeFolderDynamic
+    isUnhandledExt
+    extOf
     ;
 }

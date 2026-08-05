@@ -1,12 +1,20 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
-  mkGlkCommonGame = args: {
-    engineid = "glk";
-    speak = false;
-    speak_input = false;
-    guioptions = "sndNoSubs sndNoMusic";
-    filename = "G0";
-  } // args;
+  mkGlkCommonGame =
+    args:
+    {
+      engineid = "glk";
+      speak = false;
+      speak_input = false;
+      guioptions = "sndNoSubs sndNoMusic";
+      filename = "G0";
+    }
+    // args;
 
   transylvania = pkgs.fetchzip {
     url = "http://graphicsmagician.com/polarware/download/adventures/TransylvaniaPC.zip";

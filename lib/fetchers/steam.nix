@@ -334,9 +334,7 @@ rec {
         logo = "${cdnBase}/logo.png";
       };
       extOf = url: lib.last (lib.splitString "." url);
-      urlsByFileName = lib.mapAttrs' (
-        type: url: lib.nameValuePair "${type}.${extOf url}" url
-      ) imageUrls;
+      urlsByFileName = lib.mapAttrs' (type: url: lib.nameValuePair "${type}.${extOf url}" url) imageUrls;
       fileNames = lib.mapAttrsToList (type: url: "${type}.${extOf url}") imageUrls;
       typeNames = lib.attrNames imageUrls;
 

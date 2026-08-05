@@ -2,12 +2,22 @@
   pkgs ? import <nixpkgs> { },
   lib ? pkgs.lib,
   sources,
+  # Overridable so lib/optimize/dynamic.nix's isolated inner evaluation
+  # (whose store copy of packages/ doesn't have lib/ as a real sibling) can
+  # supply this via a NIX_PATH-resolved value instead. Every other caller
+  # keeps today's behavior unchanged.
+  libPath ? ../lib,
+  # lib/wasm.nix's Cargo path dependency source -- see flake.nix's
+  # nix-wasm-rust input. Optional/lazy like lib/default.nix's own default:
+  # nothing here forces it unless a packages/*.nix file actually calls
+  # something wasm-backed (format.toKeyValues/toSexpr, wasm.crc32).
+  nixWasmRustPath ? null,
 }:
 
 let
   # Import our custom library and extend the passed lib
-  customLib = import ../lib {
-    inherit pkgs lib;
+  customLib = import libPath {
+    inherit pkgs lib nixWasmRustPath;
     inherit (pkgs) system;
     mkOutOfStoreSymlink = _x: { };
     config = { };

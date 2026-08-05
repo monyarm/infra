@@ -13,6 +13,10 @@ let
       "git-hashing"
       "parse-toml-timestamps"
       "parallel-eval"
+      # lib/wasm.nix's builtins.wasm calls -- Determinate-specific, not
+      # upstream Nix yet, hence still needing an explicit flag at all
+      # (unlike the other features above, which are further along).
+      "wasm-builtin"
     ];
     allow-unsafe-native-code-during-evaluation = true;
     connect-timeout = 25000;
@@ -38,7 +42,8 @@ let
   # contexts (like a sops template) that need the literal file text rather
   # than the `nix.settings` module option.
   renderConf =
-    settings: lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k} = ${mkValueString v}") settings);
+    settings:
+    lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k} = ${mkValueString v}") settings);
 in
 {
   inherit common renderConf;

@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   got = pkgs.fetchzip {
     url = "https://www.adeptsoftware.com/got/gotfree.zip";

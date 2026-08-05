@@ -1,4 +1,9 @@
-{ pkgs, stagedNames, mkPatchBundleHandler, ... }:
+{
+  pkgs,
+  stagedNames,
+  mkPatchBundleHandler,
+  ...
+}:
 # romconv.sh's LZMA block (bin/md/gb/gbc/gba/nds/n64/ngc/z64), dispatched
 # both as a bare src (plain rom, no patches) and as a named-parts attrset
 # `{ rom; ips ? null; bps ? null; ups ? null; }`, bundling whichever

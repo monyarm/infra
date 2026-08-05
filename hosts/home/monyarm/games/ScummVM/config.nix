@@ -148,8 +148,7 @@ let
     guioptions = "sndNoMIDI gameOption1 gameOption2 gameOption4 gameOption5";
     description = "Hi-Res Adventure #1: Mystery House";
     ntsc = true;
-  })
-  ;
+  });
 in
 {
   games.scummvm.config = scummvmConfig;

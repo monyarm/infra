@@ -1,4 +1,11 @@
-{ config, lib, fetchSteam, pkgs, compressScummvmGame, ... }:
+{
+  config,
+  lib,
+  fetchSteam,
+  pkgs,
+  compressScummvmGame,
+  ...
+}:
 let
   mkLslGame =
     version: args:
@@ -81,17 +88,18 @@ let
   # ScummVM's twine engine needs every .HQR file in one flat directory, but
   # the remaster's classic-mode text (TEXT.HQR) lives in a separate
   # CommonClassic/ folder from the rest of the classic resources in Common/.
-  littleBigAdventure = pkgs.runCommand "lba-classic-merged"
-    {
-      __contentAddressed = true;
-      outputHashAlgo = "sha256";
-      outputHashMode = "recursive";
-    }
-    ''
-      mkdir -p $out
-      cp -rs ${littleBigAdventureDl}/Common/* $out/
-      cp -s ${littleBigAdventureDl}/CommonClassic/TEXT.HQR $out/
-    '';
+  littleBigAdventure =
+    pkgs.runCommand "lba-classic-merged"
+      {
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p $out
+        cp -rs ${littleBigAdventureDl}/Common/* $out/
+        cp -s ${littleBigAdventureDl}/CommonClassic/TEXT.HQR $out/
+      '';
 
   littleBigAdventure2 = fetchSteam {
     appId = 398000;
@@ -154,19 +162,20 @@ let
   # This Gold Edition repackages the original 1997 CD data as one zip per
   # resource category (BG/DATA/LNK/NIS/SBE/SEQ/SND/TGA) instead of shipping
   # it already unpacked; ScummVM needs it all merged into one directory.
-  lastExpress = pkgs.runCommand "tle-merged"
-    {
-      nativeBuildInputs = [ pkgs.unzip ];
-      __contentAddressed = true;
-      outputHashAlgo = "sha256";
-      outputHashMode = "recursive";
-    }
-    ''
-      mkdir -p $out
-      for category in NIS SBE SEQ LNK SND TGA BG DATA; do
-        unzip -oq ${lastExpressDl}/roms/$category.zip -d $out
-      done
-    '';
+  lastExpress =
+    pkgs.runCommand "tle-merged"
+      {
+        nativeBuildInputs = [ pkgs.unzip ];
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p $out
+        for category in NIS SBE SEQ LNK SND TGA BG DATA; do
+          unzip -oq ${lastExpressDl}/roms/$category.zip -d $out
+        done
+      '';
 
   fateOfAtlantis =
     fetchSteam {

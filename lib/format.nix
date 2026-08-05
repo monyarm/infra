@@ -1,69 +1,8 @@
-{ pkgs, lib, ... }:
-let
-
-  json-sexpr-src = pkgs.fetchFromGitHub {
-    owner = "ihalseide";
-    repo = "json-sexpr";
-    rev = "master";
-    sha256 = "sha256-zAxJAgvewkkjNrqsmmh7fyqclLpJ+tNcRl56p8TarsE=";
-  };
-
-  json-sexpr-lib = pkgs.python3.pkgs.buildPythonPackage rec {
-    pname = "json-sexpr-lib";
-    version = "0.1.0";
-    src = json-sexpr-src;
-    buildInputs = [
-      pkgs.python3Packages.setuptools
-      pkgs.python3Packages.pyparsing
-    ];
-    preBuild = ''
-      cat > setup.py << EOF
-      from setuptools import setup
-
-      setup(
-          name = "sexpr",
-          requires = ["pyparsing"],
-          version = "${version}",
-          py_modules=["sexpr"],
-      )
-      EOF
-    '';
-    build-system = with pkgs.python3Packages; [ setuptools ];
-    pyproject = true;
-    doCheck = false;
-  };
-
-  json-sexpr-script = pkgs.python3Packages.buildPythonPackage rec {
-    pname = "json-sexpr-script";
-    version = "0.1.0";
-    src = json-sexpr-src;
-    propagatedBuildInputs = [
-      json-sexpr-lib
-      pkgs.python3Packages.pyparsing
-    ];
-    preBuild = ''
-      cat > setup.py << EOF
-      from setuptools import setup
-
-      setup(
-          name = "json-sexpr-script",
-          version = "${version}",
-          py_modules=["json_sexpr"],
-          scripts=["json_sexpr.py"],
-      )
-      EOF
-    '';
-
-    postInstall = ''
-      # Rename the installed script to remove the .py extension
-      mv $out/bin/json_sexpr.py $out/bin/json-sexpr
-    '';
-    build-system = with pkgs.python3Packages; [ setuptools ];
-    pyproject = true;
-    # The script itself doesn't have tests, but its dependency json-sexpr-lib does not have tests either.
-    doCheck = false;
-  };
-in
+{
+  lib,
+  wasm,
+  ...
+}:
 rec {
   /**
     A generic function to convert a nested attribute set to an rc-style file.
@@ -95,21 +34,10 @@ rec {
     lib.concatStringsSep "\n" (generateLines [ ] attrs);
 
   /**
-    Converts a Nix attribute set to an S-expression string using json-sexpr.
+    Converts a Nix value to an S-expression string, matching
+    ihalseide/json-sexpr's `to_s` format exactly (see lib/wasm/serialize).
   */
-  toSexpr =
-    attrs:
-    let
-      jsonFile = pkgs.writeText "input.json" (builtins.toJSON attrs);
-    in
-    builtins.readFile (
-      pkgs.runCommand "json-to-sexpr-output" {
-        buildInputs = [
-          json-sexpr-lib
-          pkgs.python3Packages.pyparsing
-        ];
-      } "${pkgs.python3}/bin/python ${json-sexpr-script}/bin/json-sexpr ${jsonFile} -s > $out"
-    );
+  inherit (wasm) toSexpr;
 
   toLisp = toSexpr;
 
@@ -136,30 +64,5 @@ rec {
     leaves, brace-delimited nested blocks for sections. This is NOT the same
     format as shortcuts.vdf, which is a separate binary encoding.
   */
-  toKeyValues =
-    attrs:
-    let
-      indentFor = depth: lib.concatStrings (lib.replicate depth "\t");
-
-      generateLines =
-        depth: attrs:
-        let
-          indent = indentFor depth;
-        in
-        lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (
-            name: value:
-            if lib.isAttrs value then
-              lib.concatStringsSep "\n" [
-                "${indent}\"${name}\""
-                "${indent}{"
-                (generateLines (depth + 1) value)
-                "${indent}}"
-              ]
-            else
-              "${indent}\"${name}\"\t\t\"${toString value}\""
-          ) attrs
-        );
-    in
-    generateLines 0 attrs + "\n";
+  inherit (wasm) toKeyValues;
 }

@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   draci = pkgs.fetchzip {
     url = "http://www.ucw.cz/draci-historie/binary/dh-en-2012.zip";

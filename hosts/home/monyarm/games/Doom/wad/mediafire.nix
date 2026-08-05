@@ -10,14 +10,10 @@
 }:
 lib.mkIf config.games.doom.enable {
   games.doom.wads = {
-    seriousSamRetroEncounter =
-      fetchMediafire sources.wad.seriousSamRetroEncounter
-      |> optimizePk3;
+    seriousSamRetroEncounter = fetchMediafire sources.wad.seriousSamRetroEncounter |> optimizePk3;
 
     splatterhouse3D =
-      fetchMediafire sources.wad.splatterhouse3D
-      |> getFile "splat3dmus.pk3"
-      |> optimizePk3;
+      fetchMediafire sources.wad.splatterhouse3D |> getFile "splat3dmus.pk3" |> optimizePk3;
   };
 
   programs.steam.games = with config.games.doom.wads; {

@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   # msadams.com itself only offers multi-platform bundles (Windows/Palm/
   # TI-calculator); this ifarchive zip is the actual per-game .dat bundle
@@ -10,23 +15,30 @@ let
     hash = "sha256-e/uvJ5HAK1XubldExzo11/lfOhJG8EKQWIsEAGJLaw8=";
   };
 
-  mkAdventureInternationalGame = args: {
-    engineid = "glk";
-    guioptions = "sndNoSubs sndNoMusic";
-    path = "${adamsGames}";
-  } // args;
+  mkAdventureInternationalGame =
+    args:
+    {
+      engineid = "glk";
+      guioptions = "sndNoSubs sndNoMusic";
+      path = "${adamsGames}";
+    }
+    // args;
 
-  mkSavageIslandGame = version: mkAdventureInternationalGame {
-    gameid = "savageisland${toString version}";
-    filename = "adv${toString (10 + version - 1)}.dat";
-    description = "Savage Island, Part ${toString version}";
-  };
+  mkSavageIslandGame =
+    version:
+    mkAdventureInternationalGame {
+      gameid = "savageisland${toString version}";
+      filename = "adv${toString (10 + version - 1)}.dat";
+      description = "Savage Island, Part ${toString version}";
+    };
 
-  mkMarvelAdventureGame = version: mkAdventureInternationalGame {
-    gameid = "marveladventure${if version == 1 then "" else toString version}";
-    filename = "quest${toString version}.dat";
-    description = "Marvel Adventure #${toString version}";
-  };
+  mkMarvelAdventureGame =
+    version:
+    mkAdventureInternationalGame {
+      gameid = "marveladventure${if version == 1 then "" else toString version}";
+      filename = "quest${toString version}.dat";
+      description = "Marvel Adventure #${toString version}";
+    };
 in
 lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {

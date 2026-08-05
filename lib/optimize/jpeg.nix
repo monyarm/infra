@@ -1,8 +1,13 @@
-{ pkgs, guardSize, getName, ... }:
+{
+  pkgs,
+  guardSizeTail,
+  getName,
+  ...
+}:
 let
   jpegoptim =
     src:
-    guardSize (pkgs.runCommand "${getName src}-jpegoptim.jpg"
+    pkgs.runCommand "${getName src}-jpegoptim.jpg"
       {
         buildInputs = [ pkgs.jpegoptim ];
         __contentAddressed = true;
@@ -12,14 +17,13 @@ let
       }
       ''
         cp "${src}" tmp.jpg
-        jpegoptim --strip-all --all-normal tmp.jpg
-        mv tmp.jpg "$out"
-      ''
-    ) src;
+        jpegoptim --strip-all --all-normal tmp.jpg || rm -f tmp.jpg
+        ${guardSizeTail "tmp.jpg" src}
+      '';
 
   mozjpeg =
     src:
-    guardSize (pkgs.runCommand "${getName src}-mozjpeg.jpg"
+    pkgs.runCommand "${getName src}-mozjpeg.jpg"
       {
         buildInputs = [ pkgs.mozjpeg ];
         __contentAddressed = true;
@@ -28,9 +32,9 @@ let
         outputHashMode = "flat";
       }
       ''
-        cjpeg -quality 85 -optimize "${src}" > "$out"
-      ''
-    ) src;
+        cjpeg -quality 85 -optimize "${src}" > tmp.jpg || rm -f tmp.jpg
+        ${guardSizeTail "tmp.jpg" src}
+      '';
 in
 {
   normal = src: src |> jpegoptim;

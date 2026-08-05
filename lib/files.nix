@@ -453,15 +453,13 @@ rec {
       };
       chosen = byFormat.${format} or (throw "packArchive: unsupported format '${format}'");
     in
-    pkgs.runCommand "${name}.${extension}"
-      {
-        buildInputs = chosen.buildInputs;
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      chosen.script;
+    pkgs.runCommand "${name}.${extension}" {
+      inherit (chosen) buildInputs;
+      __contentAddressed = true;
+      allowSubstitutes = false;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    } chosen.script;
 
   patchFile =
     let

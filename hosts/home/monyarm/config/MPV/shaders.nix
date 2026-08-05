@@ -45,8 +45,7 @@ in
       recursive = true;
     };
 
-    "mpv/shaders/mpv360.glsl".source =
-      fetchGitTree sources.mpv.mpv360 |> getFile "shaders/mpv360.glsl";
+    "mpv/shaders/mpv360.glsl".source = fetchGitTree sources.mpv.mpv360 |> getFile "shaders/mpv360.glsl";
 
     "mpv/shaders/ArtCNN_C4F16.glsl".source =
       fetchGitTree sources.mpv.ArtCNN |> getFile "GLSL/ArtCNN_C4F16.glsl";

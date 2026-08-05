@@ -1,4 +1,11 @@
-{ pkgs, lib, getName, stagedNames, mkPatchBundleHandler, ... }:
+{
+  pkgs,
+  lib,
+  getName,
+  stagedNames,
+  mkPatchBundleHandler,
+  ...
+}:
 # romconv.sh's .vb block, bumped from the script's default compression
 # level to genuinely maximum (-19 --ultra) -- "best possible compression"
 # means actually maxing it out, not what the script happened to use.
@@ -13,7 +20,12 @@ extra: x:
 let
   isAttrsShape = builtins.isAttrs x && !(lib.isDerivation x);
   hasPatches =
-    isAttrsShape && lib.any (k: (x.${k} or null) != null) [ "ips" "bps" "ups" ];
+    isAttrsShape
+    && lib.any (k: (x.${k} or null) != null) [
+      "ips"
+      "bps"
+      "ups"
+    ];
 in
 if !hasPatches then
   let
@@ -33,7 +45,10 @@ if !hasPatches then
 else
   mkPatchBundleHandler {
     outExt = "vb.tar.zst";
-    nativeBuildInputs = [ pkgs.zstd pkgs.gnutar ];
+    nativeBuildInputs = [
+      pkgs.zstd
+      pkgs.gnutar
+    ];
     compressCmd = allFiles: ''tar cf - -- ${stagedNames allFiles} | zstd -19 --ultra -o "$out"'';
     # zstd has no true "store" mode, but a low effort level is still a
     # meaningfully different, cheaper retry in the same spirit as 7z's

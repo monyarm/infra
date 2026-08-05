@@ -57,16 +57,20 @@
       url = "github:nix-community/steam-fetcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    drowse = {
-      url = "github:figsoda/drowse";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-    };
+    # Own pin, not `follows` -- avoids invalidating already-optimized files
+    # on unrelated nixpkgs bumps. Bump manually.
+    optimize-nixpkgs.url = "github:nixos/nixpkgs/1d4e0f865d68258aada31e68e6d79c8c463f3b34";
     determinate-nix = {
       url = "https://flakehub.com/f/DeterminateSystems/nix-src/*";
       # inputs.nixpkgs.follows = "nixpkgs";
       # inputs.flake-parts.follows = "flake-parts";
       # follows omitted to allow use of substituters
+    };
+    # Value FFI type + nix_wasm_init_v1 for builtins.wasm plugins. Source
+    # only (flake = false); lib/wasm.nix vendors it as a Cargo dependency.
+    nix-wasm-rust = {
+      url = "github:DeterminateSystems/nix-wasm-rust";
+      flake = false;
     };
   };
 
@@ -82,6 +86,9 @@
       "nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE="
       "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
     ];
+    # Can't import lib/nixSettings.nix -- nixConfig requires strict
+    # literals. Needs --accept-flake-config.
+    extra-experimental-features = [ "wasm-builtin" ];
   };
 
   outputs =
@@ -114,10 +121,22 @@
             inherit (pkgs) lib;
             inherit sources;
           };
+          # Name-based, not value-based: isDerivation forces full
+          # construction, cost ~8.6% of an eval. Add non-derivation
+          # packages/*.nix names here; build fails loudly if you forget.
+          nonDerivationPackageNames = [ ];
         in
         rec {
           inherit legacyPackages;
-          packages = pkgs.lib.filterAttrs (_name: pkgs.lib.isDerivation) legacyPackages;
+          packages = pkgs.lib.filterAttrs (
+            name: _: !(builtins.elem name nonDerivationPackageNames)
+          ) legacyPackages;
+
+          # Checks the filtered `packages`, not `legacyPackages` -- only
+          # forced by `nix flake check`, not every eval.
+          checks.legacyPackagesAreDerivations =
+            assert pkgs.lib.all pkgs.lib.isDerivation (pkgs.lib.attrValues packages);
+            pkgs.runCommand "check-legacyPackages-are-derivations" { } "touch $out";
 
           topology.modules = [
             ./topology

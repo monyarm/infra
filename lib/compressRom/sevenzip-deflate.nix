@@ -1,4 +1,9 @@
-{ pkgs, stagedNames, mkPatchBundleHandler, ... }:
+{
+  pkgs,
+  stagedNames,
+  mkPatchBundleHandler,
+  ...
+}:
 # romconv.sh's Deflate block (sfc/smc/nes/fds), dispatched both as a bare
 # src (plain rom, no patches) and as a named-parts attrset `{ rom; ips ?
 # null; bps ? null; ups ? null; }`, bundling whichever patches are present

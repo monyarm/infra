@@ -17,12 +17,12 @@
         if versionId != null then
           ''.[] | select(.id == "${versionId}")''
         else
-          ''sort_by(.date_published) | last'';
+          "sort_by(.date_published) | last";
       selectFileJq =
         if filename != null then
           ''((.files[] | select(.filename == "${filename}")) // .files[0])''
         else
-          ''((.files[] | select(.primary)) // .files[0])'';
+          "((.files[] | select(.primary)) // .files[0])";
     in
     fetchHtmlThenCurl {
       inherit name;

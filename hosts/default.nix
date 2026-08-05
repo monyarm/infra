@@ -39,10 +39,10 @@ let
         pkgs = final;
         inherit (prev) lib;
         inherit sources;
+        nixWasmRustPath = inputs.nix-wasm-rust;
       }
     )
     (_final: _prev: {
-      drowse = inputs.drowse.lib."x86_64-linux";
       inherit (inputs.determinate-nix.packages."x86_64-linux") nix;
     })
   ];
@@ -169,7 +169,9 @@ let
               isHomeManager = true;
               isHomeManagerInNixOS = true;
             };
-            sharedModules = homeManagerModules;
+            sharedModules = homeManagerModules ++ [
+              { nixpkgs.overlays = overlays; }
+            ];
             users = homeUsers;
             backupFileExtension = "hmBackup";
           };

@@ -64,8 +64,7 @@ rec {
     ];
   };
 
-  capitalize =
-    s: lib.toUpper (lib.substring 0 1 s) + lib.substring 1 (lib.stringLength s) s;
+  capitalize = s: lib.toUpper (lib.substring 0 1 s) + lib.substring 1 (lib.stringLength s) s;
 
   foldAttrs = f: list: lib.foldl' (acc: x: acc // f x) { } list;
 
@@ -98,7 +97,9 @@ rec {
         let
           normalizedName = aspectRatios.${aspectRatio};
         in
-        { "crop${normalizedName}" = image.crop { inherit aspectRatio; }; }
+        {
+          "crop${normalizedName}" = image.crop { inherit aspectRatio; };
+        }
         // foldAttrs (gravity: {
           "crop${normalizedName}${capitalize gravity}" = image.crop { inherit aspectRatio gravity; };
         }) gravities
@@ -127,7 +128,9 @@ rec {
         let
           normalizedName = aspectRatios.${aspectRatio};
         in
-        { "growEdge${normalizedName}" = image.growEdge { inherit aspectRatio; }; }
+        {
+          "growEdge${normalizedName}" = image.growEdge { inherit aspectRatio; };
+        }
         // foldAttrs (gravity: {
           "growEdge${normalizedName}${capitalize gravity}" = image.growEdge { inherit aspectRatio gravity; };
         }) gravities

@@ -1,6 +1,11 @@
-{ pkgs, guardSize, getName, ... }:
+{
+  pkgs,
+  guardSizeTail,
+  getName,
+  ...
+}:
 src:
-guardSize (pkgs.runCommand "${getName src}-optimized.wad"
+pkgs.runCommand "${getName src}-optimized.wad"
   {
     buildInputs = [ pkgs.wadptr ];
     __contentAddressed = true;
@@ -12,6 +17,6 @@ guardSize (pkgs.runCommand "${getName src}-optimized.wad"
     # wadptr stops parsing flags at the first non-flag argument, so
     # -o must come before the input filename or it's silently treated
     # as part of the (single-file) input list instead.
-    wadptr -c -o "$out" "${src}"
+    wadptr -c -o tmp.wad "${src}" || rm -f tmp.wad
+    ${guardSizeTail "tmp.wad" src}
   ''
-) src

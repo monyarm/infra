@@ -1,4 +1,12 @@
-{ pkgs, lib, getName, fileNameOf, stageFiles, guardCompress, ... }:
+{
+  pkgs,
+  lib,
+  getName,
+  fileNameOf,
+  stageFiles,
+  guardCompress,
+  ...
+}:
 # CHD family: dispatched both as a bare src (lone .iso/.img, or .cso --
 # decompressed first -- via createdvd, no forced hunk size, matching
 # chdconv.sh's original behavior) and as a named-parts attrset (`{ cue;
@@ -18,20 +26,34 @@ let
   # need staging under their real names.
   norm =
     if !isAttrsShape then
-      { indexFile = null; primary = x; siblings = [ x ]; }
+      {
+        indexFile = null;
+        primary = x;
+        siblings = [ x ];
+      }
     else if x ? cue then
-      { indexFile = x.cue; primary = x.cue; siblings = [ x.cue ] ++ x.bin; }
+      {
+        indexFile = x.cue;
+        primary = x.cue;
+        siblings = [ x.cue ] ++ x.bin;
+      }
     else if x ? gdi then
-      { indexFile = x.gdi; primary = x.gdi; siblings = [ x.gdi ] ++ x.tracks; }
+      {
+        indexFile = x.gdi;
+        primary = x.gdi;
+        siblings = [ x.gdi ] ++ x.tracks;
+      }
     else
       let
         solePrimary = x.iso or x.img or x.cso;
       in
-      { indexFile = null; primary = solePrimary; siblings = [ solePrimary ]; };
+      {
+        indexFile = null;
+        primary = solePrimary;
+        siblings = [ solePrimary ];
+      };
 
-  csoFile = lib.findFirst (
-    s: lib.hasSuffix ".cso" (lib.toLower (fileNameOf s))
-  ) null norm.siblings;
+  csoFile = lib.findFirst (s: lib.hasSuffix ".cso" (lib.toLower (fileNameOf s))) null norm.siblings;
 
   outName = "${getName norm.primary}.chd";
   parentArg = lib.optionalString (extra != null) ''-op "${extra}"'';
@@ -50,7 +72,10 @@ let
 in
 pkgs.runCommand outName
   {
-    nativeBuildInputs = [ pkgs.mame-tools pkgs.maxcso ];
+    nativeBuildInputs = [
+      pkgs.mame-tools
+      pkgs.maxcso
+    ];
     __contentAddressed = true;
     allowSubstitutes = false;
     outputHashAlgo = "sha256";

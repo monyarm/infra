@@ -33,17 +33,17 @@ gawk -v regex="$marker_regex" '
   }
   offset += nbytes
 }
-' "$infile" > "$ranges"
+' "$infile" >"$ranges"
 
-: > "$outfile"
+: >"$outfile"
 pos=0
 while read -r start len; do
   safe_len=$((start - pos))
   if [ "$safe_len" -gt 0 ]; then
-    tail -c +"$((pos + 1))" "$infile" | head -c "$safe_len" | "$@" >> "$outfile" || [ "$?" = 1 ]
+    tail -c +"$((pos + 1))" "$infile" | head -c "$safe_len" | "$@" >>"$outfile" || [ "$?" = 1 ]
   fi
-  tail -c +"$((start + 1))" "$infile" | head -c "$len" >> "$outfile"
+  tail -c +"$((start + 1))" "$infile" | head -c "$len" >>"$outfile"
   pos=$((start + len))
-done < "$ranges"
+done <"$ranges"
 
-tail -c +"$((pos + 1))" "$infile" | "$@" >> "$outfile" || [ "$?" = 1 ]
+tail -c +"$((pos + 1))" "$infile" | "$@" >>"$outfile" || [ "$?" = 1 ]

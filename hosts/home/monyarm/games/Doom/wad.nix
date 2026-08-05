@@ -25,7 +25,9 @@ let
         package = pkgs.uzdoom;
         args = [ "-iwad" ];
       };
-      args = [ "-file" ]
+      args = [
+        "-file"
+      ]
       ++ (lib.optionals (wad != null && wad != [ ]) (map (x: "${optimize x}") wad))
       ++ [ "${optimize config.games.doom.wads.lights}" ];
     };
@@ -38,12 +40,15 @@ let
   # of a file list (as recorded in sources.nix) by extension instead.
   findWad =
     files:
-    lib.findFirst (f: lib.any (ext: lib.hasSuffix ext f) [
-      ".pk3"
-      ".ipk3"
-      ".wad"
-      ".iwad"
-    ]) (throw "no wad/pk3-like file found in ${toString files}") files;
+    lib.findFirst (
+      f:
+      lib.any (ext: lib.hasSuffix ext f) [
+        ".pk3"
+        ".ipk3"
+        ".wad"
+        ".iwad"
+      ]
+    ) (throw "no wad/pk3-like file found in ${toString files}") files;
 
 in
 {

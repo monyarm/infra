@@ -5,7 +5,7 @@
   config,
   dirs,
   customLib,
-  optimize',
+  optimizeFolderDynamic,
   parallel,
   ...
 }:
@@ -42,8 +42,45 @@ let
 
   allWallpaperDrvs = lib.flatten (parallel (map builtins.attrValues) importedWallpapers);
 
-  # Wallpapers use optimize' (lossy); games use plain optimize (lossless).
-  optimizedWallpapers = parallel (map optimize') allWallpaperDrvs;
+  # Flatten every raw wallpaper file into one pool folder *before*
+  # optimizing -- same flattening the final merge step used to do to
+  # *optimized* outputs, just moved earlier. Lets the whole ~1600-wallpaper
+  # set go through optimizeFolderDynamic as a single build-time dynamic
+  # derivation instead of ~1600 individual eval-time `optimize'` calls, each
+  # separately paying the full dispatchExt/resolveExt/rename machinery --
+  # confirmed via eval-profiler flamegraph to be ~20% of the entire eval on
+  # its own (by far the largest single chunk of repo code in the profile).
+  rawWallpaperPool =
+    pkgs.runCommand "raw-wallpaper-pool"
+      {
+        inherit allWallpaperDrvs;
+        __contentAddressed = true;
+        # Not preferLocalBuild: the raw wallpaper fetches are already free
+        # to run remotely -- pinning this flatten-into-one-folder step local
+        # would drag every one of them back just to symlink them together,
+        # same reasoning the old post-optimize merge step (now gone,
+        # optimizeFolderDynamic's own output already is the merged folder)
+        # used to have.
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p $out
+        for item in $allWallpaperDrvs; do
+          # -L follows the symlinks to the actual files inside the store paths
+          # -type f grabs everything, no matter how deep the nesting is
+          # -exec ln -s {} $out/ \; symlinks them into the flat target folder
+          find -L "$item" -type f -exec ln -s {} "$out/" \;
+        done
+      '';
+
+  # Wallpapers use prime = true (lossy); games use plain optimize
+  # (lossless).
+  optimizedWallpaperPool = optimizeFolderDynamic {
+    prime = true;
+    primeOverride = { };
+  } rawWallpaperPool;
 in
 {
   options.wallpapers.enable = lib.mkOption {
@@ -57,36 +94,16 @@ in
   };
 
   config = lib.mkIf config.wallpapers.enable {
-    # 2. Register them directly to home.file
-    # This creates 1600 small entries in Home Manager instead of 1 giant one.
+    # Register them directly to home.file, one entry -- optimizedWallpaperPool
+    # is already the flat merged folder (optimizeFolderDynamic's own output),
+    # no separate post-optimize merge derivation needed anymore.
     home.file =
       (binFile awwwScript)
       // {
         "Pictures/.context".text = "test";
       }
       // {
-        "Pictures/wallpapers".source = pkgs.stdenv.mkDerivation {
-          name = "optimized-wallpaper-pool";
-
-          inherit optimizedWallpapers;
-
-          # Not preferLocalBuild: optimizedWallpapers is the output of
-          # running optimize' over every wallpaper, all already free to run
-          # remotely -- pinning this final merge step local
-          # would drag every one of those outputs back just to symlink them
-          # together, same back-and-forth guardSize had.
-          allowSubstitutes = false;
-
-          buildCommand = ''
-            mkdir -p $out
-            for item in $optimizedWallpapers; do
-              # -L follows the symlinks to the actual files inside the store paths
-              # -type f grabs everything, no matter how deep the nesting is
-              # -exec ln -s {} $out/ \; symlinks them into the flat target folder
-              find -L "$item" -type f -exec ln -s {} "$out/" \;
-            done
-          '';
-        };
+        "Pictures/wallpapers".source = optimizedWallpaperPool;
       };
   };
 }

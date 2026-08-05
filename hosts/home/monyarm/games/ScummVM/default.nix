@@ -145,7 +145,8 @@ in
     ./config.nix
     ./firmware.nix
     # keep-sorted end
-  ] ++ autoImport ./games;
+  ]
+  ++ autoImport ./games;
 
   config = {
     _module.args = { inherit mkScummVMGame; };
@@ -179,8 +180,7 @@ in
     xdg.dataFile =
       (parallel (linkFiles "scummvm/extra") (lib.attrValues config.games.scummvm.firmware))
       // {
-        "scummvm/saves".source =
-          mkOutOfStoreSymlink "${dirs.hmConfig}/ScummVM/.local/share/scummvm/saves";
+        "scummvm/saves".source = mkOutOfStoreSymlink "${dirs.hmConfig}/ScummVM/.local/share/scummvm/saves";
       };
   };
 }

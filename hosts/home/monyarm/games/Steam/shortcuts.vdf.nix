@@ -6,6 +6,7 @@
   getFileName,
   fetchSteamCdnImages,
   toKeyValues,
+  wasm,
   ...
 }:
 
@@ -13,53 +14,13 @@ let
   cfg = config.programs.steam;
   username = config.home.username or "user";
 
-  # --- PURE NIX CRC32 IMPLEMENTATION ---
-  makeCrcTable =
-    let
-      # Emulate logical shift right by 1
-      shiftRight1 = x: builtins.div x 2;
-
-      crcTableHelper =
-        index: crc: i:
-        if i == 8 then
-          crc
-        else
-          let
-            lowBit = builtins.bitAnd crc 1;
-            nextCrc = shiftRight1 crc;
-          in
-          crcTableHelper index (if lowBit == 1 then builtins.bitXor nextCrc 3988292384 else nextCrc) (i + 1);
-
-      genTable = i: if i == 256 then [ ] else [ (crcTableHelper i i 0) ] ++ (genTable (i + 1));
-    in
-    genTable 0;
-
-  crcTable = makeCrcTable;
-
-  crc32 =
-    str:
-    let
-      # Emulate logical shift right by 8
-      shiftRight8 = x: builtins.div x 256;
-
-      bytes = map (c: lib.strings.charToInt c) (lib.stringToCharacters str);
-      foldFn =
-        byte: currentCrc:
-        let
-          tblIndex = builtins.bitAnd (builtins.bitXor currentCrc byte) 255;
-          tblValue = builtins.elemAt crcTable tblIndex;
-        in
-        builtins.bitXor (shiftRight8 currentCrc) tblValue;
-    in
-    builtins.bitXor (builtins.foldl' (crc: byte: foldFn byte crc) 4294967295 bytes) 4294967295;
-
   generateSteamAppId =
     exe: name:
     let
       # Discard the store path context so Nix allows us to convert the string characters into integers
       safeExe = builtins.unsafeDiscardStringContext exe;
       quotedTarget = "\"${safeExe}\"";
-      crcVal = crc32 (quotedTarget + name);
+      crcVal = wasm.crc32 (quotedTarget + name);
     in
     builtins.bitOr crcVal 2147483648;
 
@@ -423,7 +384,7 @@ let
       AppState = {
         appid = g.appId;
         Universe = "1";
-        name = g.name;
+        inherit (g) name;
         StateFlags = "4";
         installdir = builtins.replaceStrings [ " " ] [ "_" ] g.name;
         LastUpdated = "0";

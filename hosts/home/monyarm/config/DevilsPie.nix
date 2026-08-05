@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 let
   makeTransparentFile = windowClass: transparency: {
     text = ''

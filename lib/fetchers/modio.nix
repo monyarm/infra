@@ -10,7 +10,9 @@
       modId,
       fileId ? null,
       sha256,
-      name ? "modio-${toString game}-${toString modId}${if fileId != null then "-${toString fileId}" else ""}",
+      name ? "modio-${toString game}-${toString modId}${
+        if fileId != null then "-${toString fileId}" else ""
+      }",
     }:
     fetchHtmlThenCurl {
       inherit name;

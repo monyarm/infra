@@ -9,7 +9,8 @@
       sha256,
       name ? "gamebanana-${toString fileId}",
     }:
-    fetchHtmlThenCurl { #Using this fetcher to allow for extracting if it's an archive
+    fetchHtmlThenCurl {
+      # Using this fetcher to allow for extracting if it's an archive
       inherit name;
       outputHash = sha256;
       outputHashMode = "recursive";

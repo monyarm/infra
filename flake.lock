@@ -89,30 +89,6 @@
         "url": "https://flakehub.com/f/DeterminateSystems/nix-src/%2A"
       }
     },
-    "drowse": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "haumea": "haumea",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1783288440,
-        "narHash": "sha256-qGhFfXgRdX2I4xljuLU3Afiqx5QT2fPbp2yrkWWbs90=",
-        "owner": "figsoda",
-        "repo": "drowse",
-        "rev": "77f98462c9bc14108c21a22f7be95d99a0a458bf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "figsoda",
-        "repo": "drowse",
-        "type": "github"
-      }
-    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -342,28 +318,6 @@
         "type": "github"
       }
     },
-    "haumea": {
-      "inputs": {
-        "nixpkgs": [
-          "drowse",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1685133229,
-        "narHash": "sha256-FePm/Gi9PBSNwiDFq3N+DWdfxFq0UKsVVTJS3cQPn94=",
-        "owner": "nix-community",
-        "repo": "haumea",
-        "rev": "34dd58385092a23018748b50f9b23de6266dffc2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "ref": "v0.2.2",
-        "repo": "haumea",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -518,6 +472,22 @@
       "original": {
         "owner": "oddlama",
         "repo": "nix-topology",
+        "type": "github"
+      }
+    },
+    "nix-wasm-rust": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782917748,
+        "narHash": "sha256-YtTpAFH9dni7zvwOeWIU1KP7LKOwY69t3qEkK7XtVN4=",
+        "owner": "DeterminateSystems",
+        "repo": "nix-wasm-rust",
+        "rev": "c000d3992a7a9450c647c7bf7c3b6436790270e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DeterminateSystems",
+        "repo": "nix-wasm-rust",
         "type": "github"
       }
     },
@@ -715,6 +685,22 @@
         "type": "github"
       }
     },
+    "optimize-nixpkgs": {
+      "locked": {
+        "lastModified": 1782767157,
+        "narHash": "sha256-db/8NgfehQlPNt8rMY0J1gvwzTaURU/foM7y/AQimIM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1d4e0f865d68258aada31e68e6d79c8c463f3b34",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1d4e0f865d68258aada31e68e6d79c8c463f3b34",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks-nix": {
       "inputs": {
         "flake-compat": [
@@ -746,16 +732,17 @@
     "root": {
       "inputs": {
         "determinate-nix": "determinate-nix",
-        "drowse": "drowse",
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "nh": "nh",
         "niri": "niri",
         "nix-mod-manager": "nix-mod-manager",
         "nix-topology": "nix-topology",
+        "nix-wasm-rust": "nix-wasm-rust",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "nur": "nur",
+        "optimize-nixpkgs": "optimize-nixpkgs",
         "sops-nix": "sops-nix",
         "steam-fetcher": "steam-fetcher",
         "stylix": "stylix",

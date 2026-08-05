@@ -1,4 +1,9 @@
-{ pkgs, lib, getName, ... }:
+{
+  pkgs,
+  lib,
+  getName,
+  ...
+}:
 let
   # Runs `cmd` (a plain stdin-to-stdout shell filter, no filename args) over
   # src -- directly if protectAfter is unset, or via protect-byte-ranges.sh
@@ -41,16 +46,23 @@ in
 {
   # Drops empty (or whitespace-only) lines.
   removeBlankLines =
-    { protectAfter ? null }:
+    {
+      protectAfter ? null,
+    }:
     src:
-    applyFilter "noblank" [ pkgs.gnused ] ''${pkgs.gnused}/bin/sed "/^[[:space:]]*$/d"'' protectAfter src;
+    applyFilter "noblank" [
+      pkgs.gnused
+    ] ''${pkgs.gnused}/bin/sed "/^[[:space:]]*$/d"'' protectAfter src;
 
   # Drops a whole line whose first non-whitespace bytes are one of
   # `prefixes`. Only matches at the start of a line -- never mid-line,
   # since some formats reuse the same character as real data mid-line
   # (e.g. DeHackEd's "ID # = 64" directive).
   removeLineComments =
-    { prefixes, protectAfter ? null }:
+    {
+      prefixes,
+      protectAfter ? null,
+    }:
     src:
     let
       pattern = "^[[:space:]]*(" + lib.concatMapStringsSep "|" lib.escapeRegex prefixes + ")";
@@ -63,12 +75,19 @@ in
   # "*/"; }), matched anywhere -- including mid-line and across newlines --
   # like real block comments.
   removeBlockComments =
-    { pairs, protectAfter ? null }:
+    {
+      pairs,
+      protectAfter ? null,
+    }:
     src:
     let
       pairsStr = lib.concatMapStringsSep "\n" (p: "${p.start}\t${p.end}") pairs;
     in
-    applyFilter "noblockcomment" [
-      pkgs.gawk
-    ] "${pkgs.gawk}/bin/gawk -v pairs=${lib.escapeShellArg pairsStr} -f ${./block-comments.awk}" protectAfter src;
+    applyFilter "noblockcomment"
+      [
+        pkgs.gawk
+      ]
+      "${pkgs.gawk}/bin/gawk -v pairs=${lib.escapeShellArg pairsStr} -f ${./block-comments.awk}"
+      protectAfter
+      src;
 }

@@ -17,10 +17,7 @@ let
 in
 lib.mkIf config.games.doom.enable {
   games.doom.wads = {
-    jazzJackrabbitDoom =
-      fetchModDB sources.wad.jazzJackrabbitDoom
-      |> getFile "UJJD.pk3"
-      |> optimizePk3;
+    jazzJackrabbitDoom = fetchModDB sources.wad.jazzJackrabbitDoom |> getFile "UJJD.pk3" |> optimizePk3;
 
     zombiesAteMyNeighboursTC =
       fetchModDB sources.wad.zombiesAteMyNeighboursTC
@@ -30,27 +27,17 @@ lib.mkIf config.games.doom.enable {
     # The base wad lives in gdrive.nix; this is just the moddb addon
     # (avoiding the sibling LoDMusicLoops.pk3).
     legendOfDoomAddon =
-      fetchModDB sources.wad.legendOfDoomAddon
-      |> getFile "fdssounds.pk3"
-      |> optimizePk3;
+      fetchModDB sources.wad.legendOfDoomAddon |> getFile "fdssounds.pk3" |> optimizePk3;
 
-    metroidDreadnoughtMain =
-      metroidDreadnought
-      |> getFile "MDO 1.5c 8-8-19.pk3"
-      |> optimizePk3;
+    metroidDreadnoughtMain = metroidDreadnought |> getFile "MDO 1.5c 8-8-19.pk3" |> optimizePk3;
     metroidDreadnoughtLevels =
-      metroidDreadnought
-      |> getFile "MetroidDreadnought-levels-v1.1.pk3"
-      |> optimizePk3;
+      metroidDreadnought |> getFile "MetroidDreadnought-levels-v1.1.pk3" |> optimizePk3;
 
     spramsMetroidDoomWad = spramsMetroidDoom |> getFile "Met.wad";
     spramsMetroidDoomMaps = spramsMetroidDoom |> getFile "Met_maps_fancy.wad";
     spramsMetroidDoomDeh = spramsMetroidDoom |> getFile "metroid.deh";
 
-    hocusPocusDoom =
-      fetchModDB sources.wad.hocusPocusDoom
-      |> getFile "HOCUS.pk3"
-      |> optimizePk3;
+    hocusPocusDoom = fetchModDB sources.wad.hocusPocusDoom |> getFile "HOCUS.pk3" |> optimizePk3;
   };
 
   programs.steam.games = with config.games.doom.wads; {

@@ -10,13 +10,10 @@
 }:
 lib.mkIf config.games.doom.enable {
   games.doom.wads = {
-    legendOfDoomBase =
-      fetchGDrive sources.wad.legendofdoombase |> optimizePk3;
+    legendOfDoomBase = fetchGDrive sources.wad.legendofdoombase |> optimizePk3;
 
     actionDoomRampageEdition =
-      fetchGDrive sources.wad.actiondoomrampageedition
-      |> getFile "action.pk3"
-      |> optimizePk3;
+      fetchGDrive sources.wad.actiondoomrampageedition |> getFile "action.pk3" |> optimizePk3;
 
     hdoom = fetchGDrive sources.wad.hdoom |> optimizePk3;
   };

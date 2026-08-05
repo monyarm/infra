@@ -100,6 +100,18 @@ rec {
   urlEncode = urlEncode' "utf-8";
   urlEncodeEucJp = urlEncode' "euc-jp";
 
+  # safeCharsSet as an attrset (`?` lookup) instead of a list scanned via
+  # builtins.elem -- ~2.5x faster per call, measured via NIX_SHOW_STATS
+  # deltas against an identity-function baseline at 30000 calls (~89us/call
+  # -> ~35us/call). Worth it since this is called once per archive member's
+  # derivation name across every pk3's optimize chain.
+  safeCharsSet = builtins.listToAttrs (
+    map (c: {
+      name = c;
+      value = true;
+    }) (lib.stringToCharacters "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.")
+  );
+
   sanitizeName =
     name:
     let
@@ -107,9 +119,8 @@ rec {
       noSpaces = lib.replaceStrings [ " " ] [ "_" ] name;
       # Filter out any other character that isn't alphanumeric, -, _, or .
       # Nix built-in validation is picky, so keeping it to a safe subset is best.
-      safeChars = lib.stringToCharacters "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.";
       chars = lib.stringToCharacters noSpaces;
-      filteredChars = builtins.filter (c: builtins.elem c safeChars) chars;
+      filteredChars = builtins.filter (c: safeCharsSet ? ${c}) chars;
     in
     builtins.concatStringsSep "" filteredChars;
 

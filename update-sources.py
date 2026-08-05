@@ -685,7 +685,7 @@ def process_moddb(name, raw, previous_sources):
             print(f"  -> {name} unchanged (resolved download URL matches); reusing cached hash.")
             return old
         if resolved_url is None:
-            print(f"  -> Couldn't confirm moddb's current download URL; reusing cached hash without re-verifying.")
+            print("  -> Couldn't confirm moddb's current download URL; reusing cached hash without re-verifying.")
             return old
         print(f"  -> {name}'s resolved download URL changed; re-verifying via a real fetch.")
         print(f"     old: {old.get('resolvedUrl')!r}")
