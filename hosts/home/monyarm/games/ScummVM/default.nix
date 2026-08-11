@@ -105,7 +105,9 @@ in
   options.games.scummvm = {
     enable = mkOption {
       type = types.bool;
-      default = true;
+      # LIGHT=1 (see hosts/modules/lib.nix's shouldFullUpdate for the same
+      # impure-env-var convention) skips this for a quick deploy.
+      default = (builtins.getEnv "LIGHT") == "";
       description = ''
         Whether to fetch, optimize, and register ScummVM games at all.
         Disable to skip the whole (expensive, image-optimization-heavy)

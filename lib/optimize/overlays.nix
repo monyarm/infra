@@ -12,6 +12,11 @@
   # Determinate Nix, not pkgs.nix -- required for dynamic.nix's `nix
   # derivation add` JSON schema (differs from stock nix 2.31.5's).
   determinateNix,
+  # packages/minijson.nix's drowse.instantiate step. Only the outer
+  # (hosts/modules/lib.nix) call site needs this -- dynamic-inner.nix's own
+  # sandbox never builds minijson itself, it receives an already-built
+  # minijsonPath the same way it already does for wadptr/rpatool.
+  drowseSrc,
 }:
 [
   (
@@ -19,7 +24,7 @@
     import packagesPath {
       pkgs = final;
       inherit (prev) lib;
-      inherit sources libPath;
+      inherit sources libPath drowseSrc;
     }
   )
   (_final: _prev: { nix = determinateNix; })

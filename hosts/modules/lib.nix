@@ -16,11 +16,12 @@ let
   # shared with lib/optimize/dynamic.nix's inner reconstruction -- see that
   # file's comment for why it's just the local packages overlay.
   optimizePkgs = import inputs.optimize-nixpkgs {
-    system = pkgs.system;
+    inherit (pkgs) system;
     config.allowUnfree = true;
     overlays = import ../../lib/optimize/overlays.nix {
       inherit sources;
       determinateNix = inputs.determinate-nix.packages.${pkgs.system}.nix;
+      drowseSrc = inputs.drowse;
     };
   };
   customLib = import ../../lib {

@@ -383,8 +383,11 @@ rec {
   # Inverse of getFiles: keeps everything except the listed files/
   # directories (missing entries are fine, rm -rf doesn't care). An entry
   # can also be "dir/!keep" to empty out dir/ while keeping just "keep"
-  # inside it. A separate step from whatever fetched folderDrv, so tweaking
-  # the list doesn't require re-running a slow/networked fetch.
+  # inside it, or a bare basename glob like "*.dll" to recursively delete
+  # every matching file anywhere in the tree (no "/" allowed in these --
+  # a glob with a directory component would need real semantics this
+  # doesn't implement). A separate step from whatever fetched folderDrv, so
+  # tweaking the list doesn't require re-running a slow/networked fetch.
   removeFiles =
     paths: folderDrv:
     pkgs.runCommand "${sanitizeName folderDrv.name}-pruned"
@@ -408,6 +411,8 @@ rec {
               keep = lib.last parts;
             in
             ''find "$work/${dir}" -mindepth 1 ! -name ${lib.escapeShellArg keep} -delete 2>/dev/null || true''
+          else if lib.hasInfix "*" p && !(lib.hasInfix "/" p) then
+            ''find "$work" -iname ${lib.escapeShellArg p} -delete 2>/dev/null || true''
           else
             ''rm -rf -- "$work/${p}"''
         ) paths}
@@ -448,6 +453,14 @@ rec {
             cp -rL "${folderDrv}" ./repack-real
             cd repack-real
             7z a -tzip -bd "$out" . >/dev/null
+          '';
+        };
+        "rpa" = {
+          buildInputs = [ pkgs.rpatool ];
+          script = ''
+            cp -rL "${folderDrv}" ./repack-real
+            cd repack-real
+            rpatool -c "$out" -- $(find . -type f)
           '';
         };
       };

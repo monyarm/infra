@@ -31,19 +31,19 @@
 
       }
 
-      {
-        hostName = "eu.nixbuild.net";
-        system = "x86_64-linux";
-        maxJobs = 100;
-        speedFactor = 1;
-        supportedFeatures = [
-          "nixos-test"
-          "big-parallel"
-          "ca-derivations"
-        ];
-        sshUser = user.name;
-        sshKey = "/etc/ssh/ssh_host_ed25519_key";
-      }
+      # {
+      #   hostName = "eu.nixbuild.net";
+      #   system = "x86_64-linux";
+      #   maxJobs = 24;
+      #   speedFactor = 1;
+      #   supportedFeatures = [
+      #     "nixos-test"
+      #     "big-parallel"
+      #     "ca-derivations"
+      #   ];
+      #   sshUser = user.name;
+      #   sshKey = "/etc/ssh/ssh_host_ed25519_key";
+      # }
     ];
 
     settings = nixSettings.common // {
@@ -58,6 +58,14 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Default (100000) is a system-wide aggregate, not per-sandbox -- a single
+  # large archive going through lib/optimize/dynamic-inner.nix's per-file
+  # recursive-nix sandbox (one dynamic bind-mount per file, several per file
+  # in practice) can approach it alone. Exceeding it surfaces as a generic,
+  # textually-identical-to-real-disk-full "No space left on device" on the
+  # next bind-mount, which is genuinely misleading to debug.
+  boot.kernel.sysctl."fs.mount-max" = 1000000;
 
   time.timeZone = timeZone;
 

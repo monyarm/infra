@@ -2,7 +2,6 @@
   config,
   lib,
   getFile,
-  optimizePk3,
   fetchIdGames,
   mkDoom,
   sources,
@@ -10,8 +9,8 @@
 }:
 lib.mkIf config.games.doom.enable {
   games.doom.wads = {
-    paranoid = fetchIdGames sources.wad.paranoid |> getFile "Paranoid.pk3" |> optimizePk3;
-    paranoiac = fetchIdGames sources.wad.paranoic |> getFile "paranoic.pk3" |> optimizePk3;
+    paranoid = fetchIdGames sources.wad.paranoid |> getFile "Paranoid.pk3";
+    paranoiac = fetchIdGames sources.wad.paranoic |> getFile "paranoic.pk3";
     aoddoom = fetchIdGames sources.wad.aoddoom |> getFile "aoddoom2.wad";
     aoddoomDeh = fetchIdGames sources.wad.aoddoom |> getFile "aoddoom2.deh";
 
@@ -21,7 +20,7 @@ lib.mkIf config.games.doom.enable {
     batmanDeh = fetchIdGames sources.wad.batmandoom |> getFile "batman.deh";
     inquisitor = fetchIdGames sources.wad.inquisitor |> getFile "inqstr.wad";
     inquisitor2 = fetchIdGames sources.wad.inquisitor2 |> getFile "inqstr2e.wad";
-    inquisitor3Res = fetchIdGames sources.wad.inquisitor3 |> getFile "inq3resE.pk3" |> optimizePk3;
+    inquisitor3Res = fetchIdGames sources.wad.inquisitor3 |> getFile "inq3resE.pk3";
     inquisitor3Wad = fetchIdGames sources.wad.inquisitor3 |> getFile "inqstr3e.wad";
   };
 

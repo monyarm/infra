@@ -8,7 +8,6 @@
   wadFilter,
   mkDoom,
   patchFile,
-  optimizePk3,
   sources,
   ...
 }:
@@ -61,7 +60,7 @@ let
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
         # Built entirely from lostLevels above, so the member list is
-        # already known here -- no external scan needed for optimizePk3.
+        # already known here -- no external scan needed for optimize.
         passthru.archiveContent = lib.concatMap (lvl: [
           "MAPS/LOST${lvl.num}.WAD"
           "FILTER/game-doom/S_LOST${lvl.num}"
@@ -88,15 +87,15 @@ in
 lib.mkIf config.games.doom.enable {
   games.doom.wads = {
     doom64 = Doom64;
-    doom64CEMain = Doom64CE |> getFile "DOOM64.CE.ipk3" |> optimizePk3;
-    doom64CEBgmExtended = Doom64CE |> getFile "DOOM64.CE.Addon.BGM.Extended.pk3" |> optimizePk3;
-    doom64CEBrightmaps = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Brightmaps.pk3" |> optimizePk3;
-    doom64CEDecals = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Decals.pk3" |> optimizePk3;
-    doom64CEExtra = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Extra.pk3" |> optimizePk3;
-    doom64CEParallax = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Parallax.pk3" |> optimizePk3;
-    doom64CEPbr = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.PBR.pk3" |> optimizePk3;
-    doom64CESfxHq = Doom64CE |> getFile "DOOM64.CE.Addon.SFX.HQ.pk3" |> optimizePk3;
-    doom64LostLevels = doom64LostLevelsPk3 |> optimizePk3;
+    doom64CEMain = Doom64CE |> getFile "DOOM64.CE.ipk3";
+    doom64CEBgmExtended = Doom64CE |> getFile "DOOM64.CE.Addon.BGM.Extended.pk3";
+    doom64CEBrightmaps = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Brightmaps.pk3";
+    doom64CEDecals = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Decals.pk3";
+    doom64CEExtra = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Extra.pk3";
+    doom64CEParallax = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.Parallax.pk3";
+    doom64CEPbr = Doom64CE |> getFile "DOOM64.CE.Addon.GFX.PBR.pk3";
+    doom64CESfxHq = Doom64CE |> getFile "DOOM64.CE.Addon.SFX.HQ.pk3";
+    doom64LostLevels = doom64LostLevelsPk3;
   };
 
   programs.steam.games = with config.games.doom.wads; {

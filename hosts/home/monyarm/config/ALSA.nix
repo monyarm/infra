@@ -1,5 +1,4 @@
-_:
-{
+_: {
   # bluealsa isn't installed/enabled anywhere in this repo (it's a system
   # daemon, out of home-manager's reach) and every host now launches
   # gentoo-pipewire-launcher / wireplumber, which handle Bluetooth audio

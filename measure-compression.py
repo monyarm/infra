@@ -79,15 +79,18 @@ def format_pct(savings):
 # Module args that stand between a fetched game and its final registered
 # derivation; forcing each to a passthrough gives the pre-optimization
 # baseline. removeFiles/getFiles cover installer-cruft pruning (e.g. GOG's
-# gogCruft, Grim Fandango's FontsHD/MoviesHD trim); optimize'/optimizePk3
-# cover WAD/PK3 recompression; compressScummvmGame covers per-engine audio.
+# gogCruft, Grim Fandango's FontsHD/MoviesHD trim); optimize/optimize' cover
+# WAD/PK3 recompression (optimizePk3 was a separate, pk3-specific module arg
+# -- removed when hosts/home/monyarm/games/Doom/wad's registration lines
+# were unified to plain `optimize`, same as every other file type; there's
+# nothing left to mock there anymore); compressScummvmGame covers
+# per-engine audio.
 MOCK_ARGS_NIX = """
 {
   getFiles = lib.mkForce (paths: folderDrv: folderDrv);
   removeFiles = lib.mkForce (paths: folderDrv: folderDrv);
   optimize = lib.mkForce (src: src);
   optimize' = lib.mkForce (src: src);
-  optimizePk3 = lib.mkForce (pk3: pk3);
   compressScummvmGame = lib.mkForce (opts: gameDrv: gameDrv);
 }
 """
@@ -100,17 +103,42 @@ let
   mocked = real.extendModules {
     modules = [ { _module.args = {mock_args}; } ];
   };
-  pkgs = real.pkgs;
-  # Doom WAD/PK3 registry entries (games.doom.wads.*) aren't uniformly
-  # compressed at registration -- pk3-sourced ones already went through
-  # optimizePk3 (correctly mocked above), but plain .wad lumps only get
-  # optimize' applied later, at mkDoom consumption time. Reaching for a
-  # standalone real customLib here (not the module-threaded one) lets the
-  # "real" leg apply that same final step directly on the registry value;
-  # optimize' is a pk7/ipk7 no-op, so this is safe to layer on top of an
-  # already-optimizePk3'd entry too.
+  # Not real.pkgs: that forces it through home-manager's own _module.args
+  # resolution (fragile -- the same mechanism behind a real infinite-
+  # recursion bug elsewhere in this repo), and isn't even guaranteed to
+  # match the base pkgs, since other home-manager modules can layer their
+  # own nixpkgs.overlays/config on top. Mirrors hosts/default.nix's own
+  # pkgsGen construction directly instead.
+  pkgs = import flake.inputs.nixpkgs {
+    system = builtins.currentSystem;
+    overlays = flake.lib.overlays;
+    config.allowUnfree = true;
+  };
+  sources = import ./sources.nix;
+  # optimize's own tool invocations (oxipng/ffmpeg/wadptr/minijson/...) are
+  # pinned to a *separate* nixpkgs revision (flake.nix's optimize-nixpkgs
+  # input) so they don't get invalidated by unrelated nixpkgs bumps --
+  # skipping this and just passing `pkgs` below silently rebuilds every
+  # tool under the wrong pin, missing every cache hit real usage already
+  # has. Mirrors hosts/modules/lib.nix's own optimizePkgs construction.
+  optimizePkgs = import flake.inputs.optimize-nixpkgs {
+    inherit (pkgs) system;
+    config.allowUnfree = true;
+    overlays = import ./lib/optimize/overlays.nix {
+      inherit sources;
+      determinateNix = flake.inputs.determinate-nix.packages.${pkgs.system}.nix;
+      drowseSrc = flake.inputs.drowse;
+    };
+  };
+  # Doom WAD/PK3 registry entries (games.doom.wads.*) are never compressed
+  # at registration -- every entry (wad or pk3 alike) only gets optimize
+  # applied later, at mkDoom consumption time (hosts/home/monyarm/games/
+  # Doom/wad/default.nix's args/game construction), never stored back onto
+  # the registry value itself. Reaching for a standalone real customLib
+  # here (not the module-threaded one) lets the "real" leg apply that same
+  # final step directly on the registry value instead.
   customLib = import ./lib {
-    inherit pkgs lib;
+    inherit pkgs lib optimizePkgs;
     system = pkgs.stdenv.hostPlatform.system;
     mkOutOfStoreSymlink = p: p;
     config = null;
@@ -198,7 +226,19 @@ def _ensure_terminated(proc):
 
 def nix_eval_json(body, max_jobs, cores):
     expr = CONFIG_EXPR.replace("{body}", body)
-    cmd = ["nix", "eval", "--impure", "--json", "--max-jobs", str(max_jobs), "--cores", str(cores), "--expr", expr]
+    cmd = [
+        "nix",
+        "eval",
+        "--impure",
+        "-L",
+        "--json",
+        "--max-jobs",
+        str(max_jobs),
+        "--cores",
+        str(cores),
+        "--expr",
+        expr,
+    ]
 
     if not sys.stderr.isatty():
         # Not an interactive terminal ourselves (e.g. output redirected to a
@@ -292,7 +332,7 @@ def measure_all(targets, max_jobs, cores):
     builtins.listToAttrs (map (n: {{
       name = n;
       value = {{
-        real = getSize (customLib.optimize' real.config.games.doom.wads.${{n}});
+        real = getSize (customLib.optimize real.config.games.doom.wads.${{n}});
         mock = getSize mocked.config.games.doom.wads.${{n}};
       }};
     }}) names);""")

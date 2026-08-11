@@ -121,8 +121,17 @@ rec {
       # Nix built-in validation is picky, so keeping it to a safe subset is best.
       chars = lib.stringToCharacters noSpaces;
       filteredChars = builtins.filter (c: safeCharsSet ? ${c}) chars;
+      filtered = builtins.concatStringsSep "" filteredChars;
     in
-    builtins.concatStringsSep "" filteredChars;
+    # Some sources (e.g. itch's multi-upload names, which concatenate every
+    # upload's id+hash+timestamp) are already 150+ chars on their own; this
+    # gets re-derived (via getName) at every pipeline stage and each stage
+    # appends its own suffix ("-pruned", "-optimize-instantiate.drv", ...),
+    # so an uncapped name can blow past Nix's 211-char derivation name limit
+    # several stages in. Truncating here is safe -- these are all
+    # __contentAddressed derivations, so the name is cosmetic, not part of
+    # the store path's identity.
+    lib.substring 0 100 filtered;
 
   removeExtension =
     filename:
@@ -132,14 +141,19 @@ rec {
     # Fallback case if the file has no dot extension at all, or if it is a bare hash
     if (builtins.length parts) > 1 then builtins.concatStringsSep "." (lib.init parts) else filename;
 
+  # Strips a leading store-path hash ("<32 chars>-") if present, e.g. from a
+  # derivation's .name or a bare path's own baseNameOf -- both carry one.
+  stripStoreHash =
+    name:
+    if builtins.match "[a-z0-9]{32}-.*" name != null then
+      builtins.substring 33 (builtins.stringLength name) name
+    else
+      name;
+
   getFileName =
     src:
     if lib.isDerivation src then
-      let
-        rawName = src.name;
-        hasHash = builtins.match "[a-z0-9]{32}-.*" rawName != null;
-      in
-      if hasHash then builtins.substring 33 (builtins.stringLength rawName) rawName else rawName
+      stripStoreHash src.name
     else
       let
         strSrc = builtins.unsafeDiscardStringContext (toString src);
@@ -150,7 +164,7 @@ rec {
       if isCaPlaceholder then
         "ca-file" # Safe fallback name so the pipeline doesn't crash on name generation
       else
-        baseName;
+        stripStoreHash baseName;
 
   # Derivation-name-safe stem for a src: strip the store-path hash prefix
   # (getFileName), drop the extension, then strip anything Nix would reject

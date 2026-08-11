@@ -4,7 +4,6 @@
   getName,
   rename,
   dispatchExtSorted,
-  resolveExt,
   resolveExtSorted,
   sortDispatchKeys,
   packArchive,
@@ -17,50 +16,12 @@ let
   # EDIT HERE: aliases and prime-selection overrides.
   # ==========================================================================
 
+  # jpeg/wad/deh/decorate/glsl/obj/c all self-register their own aliases
+  # via their handler files' own `extensions = [...]`, since each list is
+  # that format's own domain knowledge -- see lib/mkFormatDispatch.nix's
+  # declaredAliases. Only the generic passthrough bucket lives here, since
+  # it isn't owned by any single handler.
   aliases = {
-    jpeg = [ "jpg" ];
-    wad = [ "iwad" ];
-    deh = [ "bex" ];
-    # Plain (mymod.decorate) and "*"-suffixed (matches bare DECORATE and
-    # DECORATE.ChexMonsters) -- both needed, not redundant.
-    decorate =
-      (lib.concatMap (p: [
-        p
-        "${p}*"
-      ]) gzdoomLumpPrefixes)
-      ++ [
-        "chexmonsters"
-        "doommonsters"
-        "fluids"
-        "green"
-        "greenfluids"
-        "greenmeat"
-        "hereticmonsters"
-        "hexenmonsters"
-        "meat"
-        "supergore"
-        "vns"
-        "dec"
-        # script formats
-        "acs"
-        "zs"
-        "zc"
-      ];
-    glsl = [
-      "fp"
-      "vp"
-      "frag"
-      "gl"
-      "ps"
-      "pso"
-    ];
-    obj = [ "mtl" ]; # same text format as obj
-    c = [
-      "h"
-      "cc"
-      "cpp"
-      "hpp"
-    ];
     # bin/ir: GDCC build artifacts, passthrough only.
     _ = [
       "unknown"
@@ -86,56 +47,19 @@ let
       "s3m"
       "xm"
       "psm"
+      "mptm"
       "pal"
       "cmp"
       "ivf"
       "pcx" # rare, not worth a re-encoder
+      "kvx" # Build-engine voxel, no lossless re-encoder available
+      "bmp"
+      "tmp"
+      "op2"
+      "qc" # MilkShape/Quake3 MD3 build script, never loaded by GZDoom
+      "dbs" # Doom Builder's own per-map editor settings, never loaded by GZDoom
     ];
   };
-
-  gzdoomLumpPrefixes = [
-    "decorate"
-    "decaldef"
-    "declold"
-    "sndinfo"
-    "mapinfo"
-    "gldefs"
-    "animdefs"
-    "cvarinfo"
-    "language"
-    "loadacs"
-    "menudef"
-    "gameinfo"
-    "iwadinfo"
-    "keyconf"
-    "sbarinfo"
-    "voxeldef"
-    "trnslate"
-    "fontdefs"
-    "lockdefs"
-    "modeldef"
-    "textcolo"
-    "sndseq"
-    "terrain"
-    "dec_"
-    "textures"
-    "zscript"
-    "zmapinfo"
-  ];
-
-  # Bundled dev/build tooling, never engine content -- extractOptimizeRepack
-  # only, not folderWalkOptimize (arbitrary folders keep everything).
-  droppedArchiveExtensions = [
-    "bat"
-    "sh"
-    "exe"
-    "dll"
-    "md"
-    "gitignore"
-    "gitattributes"
-    "zip"
-    "stackdump"
-  ];
 
   # ==========================================================================
 
@@ -211,7 +135,14 @@ let
       ;
   };
 
-  optimizeFolderDynamic = import ./dynamic.nix { inherit pkgs lib getName nixWasmRustPath; };
+  optimizeFolderDynamic = import ./dynamic.nix {
+    inherit
+      pkgs
+      lib
+      getName
+      nixWasmRustPath
+      ;
+  };
 
   commonArgs = {
     inherit
@@ -222,6 +153,8 @@ let
       ffmpegStripMetadata
       pngLosslessFlags
       getName
+      packArchive
+      optimizeFolderDynamic
       ;
   }
   // textFns;
@@ -234,14 +167,7 @@ let
         inherit lib resolveExtSorted sortDispatchKeys;
       }
       {
-        handlersDir = ./.;
-        excludeNames = [
-          "default.nix"
-          "text.nix"
-          "dynamic.nix"
-          "dynamic-inner.nix"
-          "overlays.nix"
-        ];
+        handlersDir = ./handlers;
         inherit commonArgs aliases;
         listAware = false;
       };
@@ -260,10 +186,9 @@ let
     normalV: primeV: computeFn: prime: primeOverride:
     if primeOverride == { } then (if prime then primeV else normalV) else computeFn prime primeOverride;
   cachedDispatchMap = cached dispatchMapNormal dispatchMapPrime dispatch.mkDispatchMap;
-  cachedSortedKeys =
-    cached dispatchMapNormalSorted dispatchMapPrimeSorted (
-      prime: primeOverride: sortDispatchKeys (dispatch.mkDispatchMap prime primeOverride)
-    );
+  cachedSortedKeys = cached dispatchMapNormalSorted dispatchMapPrimeSorted (
+    prime: primeOverride: sortDispatchKeys (dispatch.mkDispatchMap prime primeOverride)
+  );
 
   # No real filename extension -> folder-shaped.
   isFolderShaped =
@@ -296,13 +221,10 @@ let
     src:
     if builtins.isList src then
       map (optimizeWith { inherit prime primeOverride knownFile; }) src
-    else if !knownFile && (src.archiveContent or null) != null then
-      extractOptimizeRepack {
-        inherit prime primeOverride;
-        outFormat = "zip";
-        # Keeps the archive's own extension, unlike optimizePk3 (always .pk7/.ipk7).
-        outExt = lib.last (lib.splitString "." (src.originalName or src.name));
-      } src
+    else if dispatch.handlers.archive.changesExtension src then
+      # A real extension change can't survive the final `rename` below --
+      # see archive.nix's own comment.
+      dispatch.handlers.archive.process prime src
     else if !knownFile && isFolderShaped src then
       folderWalkOptimize { inherit prime primeOverride; } src
     else
@@ -328,71 +250,6 @@ let
       in
       src |> pipelineMap |> rename src;
 
-  # Extracts a zip archive, optimizes each member, repacks under
-  # outFormat/outExt. guard (default true): keep smaller of repacked vs
-  # original. optimizePk3 passes guard = false -- LZMA beats deflate, no
-  # guarantee needed.
-  extractOptimizeRepack =
-    {
-      prime,
-      primeOverride,
-      outFormat,
-      outExt,
-      guard ? true,
-    }:
-    src:
-    let
-      fileName = src.originalName or src.name;
-      # Unwraps the raw sources.nix shape when a fetcher's output skips
-      # getFile (e.g. gdrive.nix). Only used for the null check below --
-      # never iterated per-member (that's optimizeFolderDynamic's job now).
-      rawArchiveContent = src.archiveContent or null;
-      members =
-        if builtins.isAttrs rawArchiveContent then
-          rawArchiveContent.${fileName} or null
-        else
-          rawArchiveContent;
-    in
-    if members == null then
-      builtins.trace "optimize: no known archiveContent for '${fileName}' (sources.nix not backfilled yet); passing through unoptimized" src
-    else
-      let
-        extracted =
-          pkgs.runCommand "${getName src}-extracted"
-            {
-              buildInputs = [ pkgs.unzip ];
-              __contentAddressed = true;
-              allowSubstitutes = false;
-              outputHashAlgo = "sha256";
-              outputHashMode = "recursive";
-            }
-            ''
-              mkdir -p "$out"
-              # -o: dupe zip entries otherwise prompt and hang the build.
-              # Swallow exit 1 only for the harmless backslash-path-sep
-              # warning; other exit-1s (e.g. CRC errors) are real.
-              set +e
-              unzipLog=$(unzip -q -o "${src}" -d "$out" 2>&1)
-              status=$?
-              set -e
-              printf '%s\n' "$unzipLog" >&2
-              if [ "$status" -ne 0 ] && { [ "$status" -ne 1 ] || printf '%s\n' "$unzipLog" | grep -qv 'appears to use backslashes as path separators'; }; then
-                exit "$status"
-              fi
-            '';
-        optimizedDir = optimizeFolderDynamic {
-          inherit prime primeOverride;
-          droppedExtensions = droppedArchiveExtensions;
-        } extracted;
-        repacked =
-          optimizedDir
-          |> packArchive {
-            format = outFormat;
-            extension = outExt;
-          } (getName src);
-      in
-      if guard then guardSize repacked src else repacked;
-
   # For folders with no static archiveContent (e.g. wallpapers).
   folderWalkOptimize =
     { prime, primeOverride }:
@@ -402,35 +259,12 @@ let
 
   optimize = optimizeWith { prime = false; };
   optimize' = optimizeWith { prime = true; };
-
-  # Doom pk3 opt-in: lossless except wav (always FLAC-under-.wav-name, see
-  # wav.nix), always repacks to .pk7/.ipk7.
-  optimizePk3 =
-    pk3:
-    let
-      fileName = pk3.originalName or pk3.name;
-      lowerName = lib.toLower fileName;
-      outExt = if lib.hasSuffix ".ipk3" lowerName then "ipk7" else "pk7";
-    in
-    if !(lib.hasSuffix ".pk3" lowerName || lib.hasSuffix ".ipk3" lowerName) then
-      builtins.trace "optimizePk3: '${fileName}' isn't a .pk3/.ipk3, passing through unchanged" pk3
-    else
-      extractOptimizeRepack {
-        prime = false;
-        primeOverride = {
-          wav = true;
-        };
-        outFormat = "7z";
-        guard = false;
-        inherit outExt;
-      } pk3;
 in
 {
   inherit
     guardSize
     optimize
     optimize'
-    optimizePk3
     # For dynamic-inner.nix: needs primeOverride + knownFile, and the
     # build-time unhandled-extension trace.
     optimizeWith

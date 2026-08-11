@@ -28,8 +28,9 @@ let
       args = [
         "-file"
       ]
-      ++ (lib.optionals (wad != null && wad != [ ]) (map (x: "${optimize x}") wad))
-      ++ [ "${optimize config.games.doom.wads.lights}" ];
+      ++ map (x: "${optimize x}") (
+        (if wad == null then [ ] else wad) ++ [ config.games.doom.wads.lights ]
+      );
     };
 
   wadFilter = [ "regex:(.*\.(wad|WAD))" ];
@@ -62,7 +63,9 @@ in
 
   options.games.doom.enable = lib.mkOption {
     type = lib.types.bool;
-    default = true;
+    # LIGHT=1 (see hosts/modules/lib.nix's shouldFullUpdate for the same
+    # impure-env-var convention) skips this for a quick deploy.
+    default = (builtins.getEnv "LIGHT") == "";
     description = ''
       Whether to fetch, optimize, and register Doom WADs/PK3s at all. Disable
       to skip the whole (expensive, image-optimization-heavy) Doom build
@@ -70,7 +73,7 @@ in
     '';
   };
 
-  imports = autoImport ./wad;
+  imports = autoImport ./.;
 
   config = {
     _module.args = { inherit mkDoom wadFilter findWad; };

@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, bytes, ... }:
 let
   common = {
     experimental-features = [
@@ -25,7 +25,8 @@ let
     eval-cores = 0;
     keep-outputs = false;
     keep-derivations = false;
-    min-free = 8192;
+    min-free = bytes.fromGiB 3;
+    max-free = bytes.fromGiB 10;
     keep-going = true;
   };
 

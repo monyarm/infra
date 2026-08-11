@@ -15,6 +15,7 @@ let
     nh
     nix-output-monitor
     nix-prefetch
+    nix-rom
     #nix-relatex
     nixfmt
     nurl

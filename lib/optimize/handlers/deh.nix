@@ -9,9 +9,13 @@
 # Blank lines are left alone: no BEX equivalent of a Text-block-safe
 # removeBlankLines call here, since it isn't worth a second pass over the
 # same protected-range bookkeeping for what's a much smaller win.
-src:
-src
-|> removeLineComments {
-  prefixes = [ "#" ];
-  protectAfter = "^Text[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]*$";
+{
+  handler =
+    src:
+    src
+    |> removeLineComments {
+      prefixes = [ "#" ];
+      protectAfter = "^Text[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]*$";
+    };
+  extensions = [ "bex" ];
 }

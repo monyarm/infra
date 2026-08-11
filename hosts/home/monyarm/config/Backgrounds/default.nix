@@ -85,7 +85,9 @@ in
 {
   options.wallpapers.enable = lib.mkOption {
     type = lib.types.bool;
-    default = true;
+    # LIGHT=1 (see hosts/modules/lib.nix's shouldFullUpdate for the same
+    # impure-env-var convention) skips this for a quick deploy.
+    default = (builtins.getEnv "LIGHT") == "";
     description = ''
       Whether to fetch and optimize wallpapers at all. Disable to skip the
       whole (expensive, image-optimization-heavy) wallpaper build graph

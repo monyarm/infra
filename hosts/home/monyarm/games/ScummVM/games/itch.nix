@@ -3,27 +3,45 @@
   lib,
   fetchItch,
   sources,
+  compressScummvmGame,
+  getFiles,
   ...
 }:
 let
-  aboveTheWaves = fetchItch sources.scummvm.abovethewaves;
-  heroinesQuest = fetchItch sources.scummvm.heroinesquest;
-  indianaRodent = fetchItch sources.scummvm.indianarodent;
-  shoaly = fetchItch sources.scummvm.shoaly;
-  cosmosQuest3 = fetchItch sources.scummvm.cosmosquest3;
-  cosmosQuest4 = fetchItch sources.scummvm.cosmosquest4;
-  aDateInThePark = fetchItch sources.scummvm.adateinthepark;
-  leewardEp1 = fetchItch sources.scummvm.leewardep1;
+  # Each itch archive ships other platforms'/other-purpose siblings alongside
+  # the folder ScummVM actually reads; narrow to that folder before
+  # compressScummvmGame walks the tree, instead of after.
+  aboveTheWaves =
+    fetchItch sources.scummvm.abovethewaves
+    |> getFiles [ "AboveTheWaves/data" ]
+    |> compressScummvmGame "sludge";
+  heroinesQuest =
+    fetchItch sources.scummvm.heroinesquest |> getFiles [ "data" ] |> compressScummvmGame "ags";
+  indianaRodent = fetchItch sources.scummvm.indianarodent |> compressScummvmGame "ags";
+  shoaly = fetchItch sources.scummvm.shoaly |> getFiles [ "Linux/data" ] |> compressScummvmGame "ags";
+  cosmosQuest3 = fetchItch sources.scummvm.cosmosquest3 |> compressScummvmGame "ags";
+  cosmosQuest4 = fetchItch sources.scummvm.cosmosquest4 |> compressScummvmGame "ags";
+  aDateInThePark =
+    fetchItch sources.scummvm.adateinthepark
+    |> getFiles [ "A Date in the Park" ]
+    |> compressScummvmGame "ags";
+  leewardEp1 =
+    fetchItch sources.scummvm.leewardep1
+    |> getFiles [ "Leeward Episode 1" ]
+    |> compressScummvmGame "ags";
   # itch's only non-demo upload is a plain "Suli FH*.rar" alongside a
   # "DEMO - ..." one with the same "default" upload type/traits, so the
   # sources.toml/update-sources.py pipeline (which has no fileMatch concept)
   # can't disambiguate them; fetch this one directly instead.
-  suliFallenHarmony = fetchItch {
-    url = "https://coutalgames.itch.io/suli-fallen-harmony";
-    fileMatch = "Suli FH*.rar";
-    platform = "windows";
-    hash = "sha256-4FNl0TNeZLeHyQj/3+HRur/uB9qrX2ClYNy9aR9Bggg=";
-  };
+  suliFallenHarmony =
+    fetchItch {
+      url = "https://coutalgames.itch.io/suli-fallen-harmony";
+      fileMatch = "Suli FH*.rar";
+      platform = "windows";
+      hash = "sha256-4FNl0TNeZLeHyQj/3+HRur/uB9qrX2ClYNy9aR9Bggg=";
+    }
+    |> getFiles [ "Suli FH1.4" ]
+    |> compressScummvmGame "ags";
 in
 lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {

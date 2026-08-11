@@ -39,4 +39,5 @@ in
 {
   normal = src: src |> jpegoptim;
   prime = src: src |> mozjpeg;
+  extensions = [ "jpg" ];
 }

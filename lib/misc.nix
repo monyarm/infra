@@ -24,13 +24,31 @@ rec {
       lib.attrsToList (removeAttrs extMap [ "_" ])
     );
 
+  # Strips a leading store-path hash ("<32 chars>-") if present. Duplicated
+  # from (not shared with) lib/strings.nix's own stripStoreHash: strings.nix
+  # itself depends on this file for `parallel`, so the reverse dependency
+  # would be circular.
+  stripStoreHash =
+    name:
+    if builtins.match "[a-z0-9]{32}-.*" name != null then
+      builtins.substring 33 (builtins.stringLength name) name
+    else
+      name;
+
   # dispatchExt's matching logic, minus the call -- returns the handler (or
   # "_" fallback, or null). Takes the pre-sorted list separately from
   # extMap (needed whole for "_" lookup) instead of re-sorting every call.
   resolveExtSorted =
     matchableList: extMap: src:
     let
-      rawFileName = src.name or (builtins.baseNameOf (toString src));
+      # A "known file" src (dynamic-inner.nix's per-archive-member dispatch)
+      # is a bare builtins.path value with no .name attribute, so this falls
+      # back to baseNameOf (toString src) -- which, unlike a derivation's
+      # .name, always carries a leading store hash. Left unstripped, that
+      # hash silently breaks every "name*" prefix-matched alias (e.g.
+      # decorate's own comment: "matches bare DECORATE and
+      # DECORATE.ChexMonsters"), since the hash sits before the real name.
+      rawFileName = stripStoreHash (src.name or (builtins.baseNameOf (toString src)));
       fileName = lib.toLower rawFileName;
       fullPath = lib.toLower (src.fullPath or rawFileName);
 
@@ -62,7 +80,7 @@ rec {
       handler src
     else
       throw "dispatchExt: No matching handler found for extension in file '${
-        lib.toLower (src.name or (builtins.baseNameOf (toString src)))
+        lib.toLower (stripStoreHash (src.name or (builtins.baseNameOf (toString src))))
       }'";
 
   # dispatchExt accepts an attribute set where keys are extensions (e.g., ".zip")

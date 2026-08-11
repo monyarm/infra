@@ -1,5 +1,5 @@
 {
-  pkgs ? import <nixpkgs> { },
+  pkgs,
   lib ? pkgs.lib,
   sources,
   # Overridable so lib/optimize/dynamic.nix's isolated inner evaluation
@@ -12,6 +12,9 @@
   # nothing here forces it unless a packages/*.nix file actually calls
   # something wasm-backed (format.toKeyValues/toSexpr, wasm.crc32).
   nixWasmRustPath ? null,
+  # packages/minijson.nix's drowse.instantiate step -- see flake.nix's
+  # drowse input. Optional/lazy like nixWasmRustPath above.
+  drowseSrc ? null,
 }:
 
 let
@@ -51,7 +54,7 @@ extendedLib.genAttrs (map dropSuffix packageNames) (
   pkgs.callPackage (./. + "/${fileName}") (
     {
       lib = extendedLib;
-      inherit sources;
+      inherit sources drowseSrc;
     }
     // customLib
   )

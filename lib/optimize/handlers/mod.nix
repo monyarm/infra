@@ -16,6 +16,6 @@ pkgs.runCommand "${getName src}-stripped.mod"
     outputHashMode = "flat";
   }
   ''
-    python3 ${./modstrip.py} "${src}" tmp.mod || rm -f tmp.mod
+    python3 ${../py/modstrip.py} "${src}" tmp.mod || rm -f tmp.mod
     ${guardSizeTail "tmp.mod" src}
   ''

@@ -4,6 +4,7 @@
   fetchSteam,
   pkgs,
   compressScummvmGame,
+  getFiles,
   ...
 }:
 let
@@ -34,60 +35,73 @@ let
     }
     // args;
 
-  alphaPolaris = fetchSteam {
-    appId = 405780;
-    depotId = 405781;
-    manifestId = 131643505400606065;
-    # The depot duplicates every file under a "1280x768/" subfolder plus the
-    # root; restrict to the root copy of the two .dcp packages ScummVM's
-    # wintermute engine actually needs, skipping the .exe/.dll launcher files.
-    filelist = [
-      "regex:^(data\\.dcp|english speech pack\\.dcp)$"
-    ];
-    sha256 = "sha256-6fjR0okaN5u9bk87K+dyyuYAgoOEJCQk+Y7aHHXropQ=";
-  };
+  alphaPolaris =
+    fetchSteam {
+      appId = 405780;
+      depotId = 405781;
+      manifestId = 131643505400606065;
+      # The depot duplicates every file under a "1280x768/" subfolder plus the
+      # root; restrict to the root copy of the two .dcp packages ScummVM's
+      # wintermute engine actually needs, skipping the .exe/.dll launcher files.
+      filelist = [
+        "regex:^(data\\.dcp|english speech pack\\.dcp)$"
+      ];
+      sha256 = "sha256-XyGU+ydnRduM5MJRJq2rAFbFZO74u5/zljk/MgHTQqM=";
+    }
+    |> compressScummvmGame "wintermute";
 
-  artOfMurder1 = fetchSteam {
-    appId = 809000;
-    depotId = 809002;
-    manifestId = 5682759667480301174;
-    sha256 = "sha256-Bj1eoqRReC4JSXcsB46P5X/layg0GQfHLHdWgdp3h6s=";
-  };
+  artOfMurder1 =
+    fetchSteam {
+      appId = 809000;
+      depotId = 809002;
+      manifestId = 5682759667480301174;
+      sha256 = "sha256-XjdTjPMG9Mp7/wVCsQU3S+re07UAiPrqKXOogC8sYVY=";
+    }
+    |> compressScummvmGame "wintermute";
 
-  ashinaRedWitch = fetchSteam {
-    appId = 1259140;
-    depotId = 1259141;
-    manifestId = 7304502370705097563;
-    sha256 = "sha256-Jglx2yY8fhsUcGFiAhRnAtWN1GWcJED3oKzkMtZU5KA=";
-  };
+  ashinaRedWitch =
+    fetchSteam {
+      appId = 1259140;
+      depotId = 1259141;
+      manifestId = 7304502370705097563;
+      sha256 = "sha256-CDzSfJadKWhUpZeYcB+EzmfwO9nGawnwW/h0tFTiDDw=";
+    }
+    |> compressScummvmGame "ags";
 
-  barrowHillDarkPath = fetchSteam {
-    appId = 520990;
-    depotId = 520991;
-    manifestId = 7732106364668340045;
-    os = "windows";
-    sha256 = "sha256-7/jYqFtPTWQdpQZtVi1oHnd9MQDlkUeRTxK/wf0SPF8=";
-  };
+  barrowHillDarkPath =
+    fetchSteam {
+      appId = 520990;
+      depotId = 520991;
+      manifestId = 7732106364668340045;
+      os = "windows";
+      sha256 = "sha256-MALn6trj1yp8VmoRR3w8sRziYpdOPlpezF6QEXkNYWg=";
+    }
+    |> compressScummvmGame "wintermute";
 
-  kingOfDragonPass = fetchSteam {
-    appId = 352220;
-    depotId = 352221;
-    manifestId = 4517013077217297009;
-    os = "windows";
-    sha256 = "sha256-DU2Ypw5l8JXbt/S54kUQ2+lJYFYKyt+qQHA5H13jxIM=";
-  };
+  kingOfDragonPass =
+    fetchSteam {
+      appId = 352220;
+      depotId = 352221;
+      manifestId = 4517013077217297009;
+      os = "windows";
+      sha256 = "sha256-jlJ0vfKJTapiiTcWhMqT1uPcMBAet0wBYZtEt+Zw/WA=";
+    }
+    |> compressScummvmGame "mtropolis";
 
   littleBigAdventureDl = fetchSteam {
     appId = 397330;
     depotId = 397338;
     manifestId = 606382556722002081;
     os = "windows";
-    sha256 = "sha256-DL67wAk+lt6OwuzHR08fgeEyBwwbL+dTFL82Do0MLU4=";
+    sha256 = "sha256-UOeE+ua13AuZSZiLED5PyTfXzOfSWzUdSoahCAlpYs8=";
   };
 
   # ScummVM's twine engine needs every .HQR file in one flat directory, but
   # the remaster's classic-mode text (TEXT.HQR) lives in a separate
   # CommonClassic/ folder from the rest of the classic resources in Common/.
+  # Merge (and thus narrow away every other sibling in the depot -- HD
+  # assets, the remaster's own engine binaries) before compressScummvmGame
+  # walks the tree, instead of after.
   littleBigAdventure =
     pkgs.runCommand "lba-classic-merged"
       {
@@ -97,66 +111,81 @@ let
       }
       ''
         mkdir -p $out
-        cp -rs ${littleBigAdventureDl}/Common/* $out/
-        cp -s ${littleBigAdventureDl}/CommonClassic/TEXT.HQR $out/
-      '';
+        cp -r ${littleBigAdventureDl}/Common/* $out/
+        cp ${littleBigAdventureDl}/CommonClassic/TEXT.HQR $out/
+      ''
+    |> compressScummvmGame "twine";
 
-  littleBigAdventure2 = fetchSteam {
-    appId = 398000;
-    depotId = 398008;
-    manifestId = 6898977048178414927;
-    os = "windows";
-    sha256 = "sha256-zrCi6LfG9pylvcIgORKG9yHbWZ9O5Q+RWHqhf2U3ekQ=";
-  };
+  littleBigAdventure2 =
+    fetchSteam {
+      appId = 398000;
+      depotId = 398008;
+      manifestId = 6898977048178414927;
+      os = "windows";
+      sha256 = "sha256-69Abh4aNEJvglt9mcgXePZNQtoxhOgNV2FXIRv5t/6Q=";
+    }
+    |> compressScummvmGame "twine";
 
-  myBigSisterRemastered = fetchSteam {
-    appId = 2118540;
-    depotId = 2118541;
-    manifestId = 4556488665416661391;
-    os = "windows";
-    sha256 = "sha256-2rmsV5yuPz9N9GtKaGGjq8QEmpxGeWUMhKTQa8lx4Ik=";
-  };
+  myBigSisterRemastered =
+    fetchSteam {
+      appId = 2118540;
+      depotId = 2118541;
+      manifestId = 4556488665416661391;
+      os = "windows";
+      sha256 = "sha256-LlQakl+s3nnWe+ouZhTfJuVs1/w3LnRCaopXQnZLS0M=";
+    }
+    |> compressScummvmGame "ags";
 
-  reversion1 = fetchSteam {
-    appId = 270570;
-    depotId = 270572;
-    manifestId = 842084957891672528;
-    os = "windows";
-    sha256 = "sha256-isPuANgN7LJxPFa7zw1DKMhbeMcwLScpklbguVUsjM0=";
-  };
+  reversion1 =
+    fetchSteam {
+      appId = 270570;
+      depotId = 270572;
+      manifestId = 842084957891672528;
+      os = "windows";
+      sha256 = "sha256-bWaNV7el0vzlX6uzgm9n8JnQSEwNvZ99jN/QvsSI7qA=";
+    }
+    |> compressScummvmGame "wintermute";
 
-  reversion2 = fetchSteam {
-    appId = 281060;
-    depotId = 281061;
-    manifestId = 5690544705524244198;
-    os = "windows";
-    sha256 = "sha256-YHND/jPF2FnQzN+74EJQIWoF+NrMeNTaV3DoERElOog=";
-  };
+  reversion2 =
+    fetchSteam {
+      appId = 281060;
+      depotId = 281061;
+      manifestId = 5690544705524244198;
+      os = "windows";
+      sha256 = "sha256-s6vMvU8Jcu3tOkFkg2SeDEsCg3gWSopspKTbXv61TUs=";
+    }
+    |> compressScummvmGame "wintermute";
 
-  reversion3 = fetchSteam {
-    appId = 281080;
-    depotId = 281082;
-    manifestId = 6387913456714868142;
-    os = "windows";
-    sha256 = "sha256-4rFadkJHhrc8nolpyXhtS+bgBLXeW/ck2nCaubLPIK0=";
-  };
+  reversion3 =
+    fetchSteam {
+      appId = 281080;
+      depotId = 281082;
+      manifestId = 6387913456714868142;
+      os = "windows";
+      sha256 = "sha256-jbtX2t3cCS3e6BsLUhDsz2culKqu2+DDgL6Ccbc1eRs=";
+    }
+    |> compressScummvmGame "wintermute";
 
+  # This depot ships both the ScummVM-ready folder and a bunch of unrelated
+  # siblings (DOSBox layer, redistributables); narrow before
+  # compressScummvmGame walks the tree, instead of after.
   curseOfMonkeyIsland =
     fetchSteam {
       appId = 730820;
       depotId = 730824;
       manifestId = 6035470325928818097;
       os = "windows";
-      sha256 = "sha256-GKq8jju2Gb2U6Sc8qcSc/6fpDA+PbogFcJwXSlhzOyw=";
+      sha256 = "sha256-w1TLqJnXd1P16iXOnQNYAN11ebitYsl2bkUodFC7Xf0=";
     }
-    |> compressScummvmGame { engineid = "scumm"; };
+    |> getFiles [ "ScummVM/monkey3" ]
+    |> compressScummvmGame "scumm";
 
   lastExpressDl = fetchSteam {
     appId = 252710;
     depotId = 252712;
     manifestId = 136184711608217470;
     os = "windows";
-    sha256 = "sha256-6B8maDiRr7uAiTICjxndvGM5IyWvJe1xAM94NQIlEKE=";
+    sha256 = "sha256-A8DMdL4FR9hJjJWhBUggXrx2AKLUFunF5ISPUAb6oTg=";
   };
 
   # This Gold Edition repackages the original 1997 CD data as one zip per
@@ -183,67 +212,93 @@ let
       depotId = 6011;
       manifestId = 8584153416851488924;
       os = "windows";
-      sha256 = "sha256-9l5+6zJ4ofhXw+PJBwHXITDimkPwE4xG5mhrNV8Bz0w=";
+      sha256 = "sha256-dRLdjsOwqEHLyX6a1OSh90ud4U3Ji8Ff6cxK0FbZEpk=";
     }
-    |> compressScummvmGame { engineid = "scumm"; };
+    |> getFiles [ "ATLANTIS" ]
+    |> compressScummvmGame "scumm";
 
+  # Both maniacMansionV1 and V2 read out of this one depot's ScummVM/
+  # subfolder (original + enhanced), so narrow to just that instead of the
+  # whole depot before compressing -- one compressed copy still covers both
+  # games below.
   maniacMansionDl =
     fetchSteam {
       appId = 529890;
       depotId = 529891;
       manifestId = 4552517924922056300;
       os = "windows";
-      sha256 = "sha256-QiFxLk+J4Q0gf74Ue95/DJyCz7ifMLnyA3C0zF5TiAE=";
+      sha256 = "sha256-CRMGTYDrYUpwI/0SgwcYBy3LMYpdnt6htOiPr5xFo7I=";
     }
-    |> compressScummvmGame { engineid = "scumm"; };
+    |> getFiles [
+      "ScummVM/original"
+      "ScummVM/enhanced"
+    ]
+    |> compressScummvmGame "scumm";
 
-  lsl1 = fetchSteam {
-    appId = 763970;
-    depotId = 763971;
-    manifestId = 6067288779454216216;
-    os = "windows";
-    sha256 = "sha256-DgxTdWwJBdoIAN0+6HYEEAmPnNOxQ+vUHBJIFGcKztk=";
-  };
+  lsl1 =
+    fetchSteam {
+      appId = 763970;
+      depotId = 763971;
+      manifestId = 6067288779454216216;
+      os = "windows";
+      sha256 = "sha256-MxUuW5kQ+lW97tBDQDuHUQe4inrndEn0jdPHy7+4iJE=";
+    }
+    |> compressScummvmGame "agi";
 
-  lsl2 = fetchSteam {
-    appId = 765840;
-    depotId = 765841;
-    manifestId = 8306539708319125167;
-    os = "windows";
-    sha256 = "sha256-EEZivBnySwsAwNtg5RDBxMaNHivcjTlhxI/RfF82zHU=";
-  };
+  lsl2 =
+    fetchSteam {
+      appId = 765840;
+      depotId = 765841;
+      manifestId = 8306539708319125167;
+      os = "windows";
+      sha256 = "sha256-55h5ymBJleE00RoHq+hhEiX4CPV1xT6lryXBii3YFFg=";
+    }
+    |> compressScummvmGame "sci";
 
-  lsl3 = fetchSteam {
-    appId = 765850;
-    depotId = 765851;
-    manifestId = 7288709448665407579;
-    os = "windows";
-    sha256 = "sha256-yGo6Cct8zc7vzs0kiot6nbA+qdhMWnlLNB2wJE9c6/4=";
-  };
+  lsl3 =
+    fetchSteam {
+      appId = 765850;
+      depotId = 765851;
+      manifestId = 7288709448665407579;
+      os = "windows";
+      sha256 = "sha256-8YasS/tg0FnTYlsE/dsRdx0U2UOD3xkhKAOIgGcP1P8=";
+    }
+    |> compressScummvmGame "sci";
 
-  lsl5 = fetchSteam {
-    appId = 765860;
-    depotId = 765861;
-    manifestId = 7170853141795138447;
-    os = "windows";
-    sha256 = "sha256-f0JNQI/RzPZ9iR3br0TTWnPtEQc8VQtBU91I4du9Vss=";
-  };
+  lsl5 =
+    fetchSteam {
+      appId = 765860;
+      depotId = 765861;
+      manifestId = 7170853141795138447;
+      os = "windows";
+      sha256 = "sha256-7odJV6PHvJH/KkiaSIttF1347XvyW7fG6JFvhyoBmWo=";
+    }
+    |> compressScummvmGame "sci";
 
-  lsl6 = fetchSteam {
-    appId = 765910;
-    depotId = 765911;
-    manifestId = 6538076485632756933;
-    os = "windows";
-    sha256 = "sha256-HjsVhqxHV6Wd80CEHLpiMdNou9ytZM26X7vZa6OS/6o=";
-  };
+  lsl6 =
+    fetchSteam {
+      appId = 765910;
+      depotId = 765911;
+      manifestId = 6538076485632756933;
+      os = "windows";
+      sha256 = "sha256-zu/gEB4g6qPw5JdegKCTYo8+gUUh68C/1zhE/6A/rNg=";
+    }
+    |> compressScummvmGame {
+      engineid = "sci";
+      sciSupported = true; # SCI1.1 CD, pre-SCI32 -- compress_sci is safe here.
+    };
 
-  lsl7 = fetchSteam {
-    appId = 765890;
-    depotId = 765891;
-    manifestId = 8709297254560218806;
-    os = "windows";
-    sha256 = "sha256-IPYjPf8gCNBvA1CPsa4O7DtezmwHjtK5QfSITve/dGY=";
-  };
+  # SCI32 -- compress_sci is explicitly NOT compatible (upstream), so this
+  # never sets sciSupported.
+  lsl7 =
+    fetchSteam {
+      appId = 765890;
+      depotId = 765891;
+      manifestId = 8709297254560218806;
+      os = "windows";
+      sha256 = "sha256-7EhzrLJyYLJedQ9duqDXE81495TAG2x2Tt5RBIPF/DY=";
+    }
+    |> compressScummvmGame "sci";
 
   lastCrusade =
     fetchSteam {
@@ -251,9 +306,10 @@ let
       depotId = 32311;
       manifestId = 1410091949724710807;
       os = "windows";
-      sha256 = "sha256-NakBoDPFdoF//h54rVOY2tiGI7ucKypKnKAkvyOI1BE=";
+      sha256 = "sha256-M+1TMlSW0xVxDFQbFzEXXGqRJ4bBg4+1OVKjQVACnR4=";
     }
-    |> compressScummvmGame { engineid = "scumm"; };
+    |> getFiles [ "INDY3" ]
+    |> compressScummvmGame "scumm";
 in
 lib.mkIf config.games.scummvm.enable {
   games.scummvm.games.alphaPolaris = {

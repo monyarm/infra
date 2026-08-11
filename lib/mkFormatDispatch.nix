@@ -29,15 +29,38 @@ let
         prime = h;
         normal = h;
       }
+    # A handler file may export `handler = ...;` alongside `extensions`
+    # instead of separate `normal`/`prime`, when it doesn't distinguish the
+    # two -- same effect as a bare function, but still able to also declare
+    # `extensions` (a bare function can't, since `extensions` needs an
+    # attrset to live on).
+    else if h ? handler then
+      h
+      // {
+        prime = h.handler;
+        normal = h.handler;
+      }
     else
       h;
 
-  handlers = lib.listToAttrs (
+  rawHandlers = lib.listToAttrs (
     map (name: {
       inherit name;
-      value = normalizeHandler (import (handlersDir + "/${name}.nix") commonArgs);
+      value = import (handlersDir + "/${name}.nix") commonArgs;
     }) canonicalNames
   );
+  handlers = lib.mapAttrs (_: normalizeHandler) rawHandlers;
+
+  # A handler file may export `extensions = [...]` alongside {normal;
+  # prime;} to self-register its own dispatch keys, instead of the caller
+  # also having to list them in its own `aliases` table.
+  declaredAliases = lib.mapAttrs (
+    _: h: if lib.isAttrs h then (h.extensions or [ ]) else [ ]
+  ) rawHandlers;
+  combinedAliases = lib.zipAttrsWith (_: lib.concatLists) [
+    declaredAliases
+    aliases
+  ];
 
   passthroughHandler = normalizeHandler (if listAware then srcs: srcs else src: src);
   handlersWithPassthrough = handlers // {
@@ -49,7 +72,7 @@ let
       lib.mapAttrsToList (
         handlerName: aliasNames:
         map (aliasName: lib.nameValuePair aliasName handlersWithPassthrough.${handlerName}) aliasNames
-      ) aliases
+      ) combinedAliases
     )
   );
 
@@ -121,7 +144,9 @@ let
       let
         realMap = cachedDispatchMap prime primeOverride;
         sortedKeys = cachedSortedKeys prime primeOverride;
-        dispatchMap = realMap // { "_" = fallback; };
+        dispatchMap = realMap // {
+          "_" = fallback;
+        };
         isNamedParts = builtins.isAttrs x && !(lib.isDerivation x);
         handler =
           if !isNamedParts then

@@ -57,6 +57,12 @@
       url = "github:nix-community/steam-fetcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # packages/minijson.nix's dub-to-nix-at-build-time step -- dynamic
+    # derivations without a committed lockfile.
+    drowse = {
+      url = "github:figsoda/drowse";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Own pin, not `follows` -- avoids invalidating already-optimized files
     # on unrelated nixpkgs bumps. Bump manually.
     optimize-nixpkgs.url = "github:nixos/nixpkgs/1d4e0f865d68258aada31e68e6d79c8c463f3b34";
@@ -72,6 +78,11 @@
       url = "github:DeterminateSystems/nix-wasm-rust";
       flake = false;
     };
+
+    rom = {
+      url = "github:manic-systems/rom";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -86,9 +97,6 @@
       "nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE="
       "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
     ];
-    # Can't import lib/nixSettings.nix -- nixConfig requires strict
-    # literals. Needs --accept-flake-config.
-    extra-experimental-features = [ "wasm-builtin" ];
   };
 
   outputs =
@@ -114,12 +122,14 @@
           pkgs = import inputs.nixpkgs {
             inherit system;
             inherit (inputs.self.lib) overlays;
+            config.allowUnfree = true;
           };
           sources = import ./sources.nix;
           legacyPackages = import ./packages {
             inherit pkgs;
             inherit (pkgs) lib;
             inherit sources;
+            drowseSrc = inputs.drowse;
           };
           # Name-based, not value-based: isDerivation forces full
           # construction, cost ~8.6% of an eval. Add non-derivation

@@ -104,6 +104,14 @@ in
       hash,
       platform ? systemToItchPlatform pkgs.stdenv.hostPlatform.system,
       fileMatch ? "*", # Allows targeting a specific file string if multiple match the OS
+      # update-sources.py's own staleness fingerprint -- a "|"-joined
+      # id:md5:timestamp triple *per upload on the game's page* (not just the
+      # one actually selected/fetched below), so it catches changes to
+      # uploads this platform doesn't even use. Recorded in sources.nix for
+      # that script's own before/after comparison; irrelevant here; fixed-
+      # output derivations are already keyed by `hash`, not `name`, so
+      # folding it into `name` bought nothing and could run past Nix's
+      # 211-char derivation-name limit for games with several uploads.
       version ? null,
       # sources.nix's recorded archive member list, when this source is a
       # pk3/archive -- attached as passthru so optimize/optimize' can
@@ -115,8 +123,7 @@ in
 
     let
       cleanUrl = lib.removeSuffix "/" url;
-      pname = builtins.baseNameOf cleanUrl;
-      name = if version != null then "${pname}-${version}" else pname;
+      name = builtins.baseNameOf cleanUrl;
     in
     fetchToolOutput {
       inherit name;

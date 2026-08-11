@@ -7,6 +7,8 @@
   ...
 }:
 let
+  baseCruft = import ../cruft.nix;
+
   # GOG installer/Galaxy chrome, never touched at runtime -- every game
   # here plays through ScummVM's native engine, never GOG's own bundled
   # DOSBOX/. Verified against a real install (TeenAgent): __support/
@@ -15,8 +17,9 @@ let
   # The conf filename embeds the game name (dosboxTeenagent.conf etc.),
   # hence the glob. app/ itself stays (some games use it as their real
   # data root), just not the Galaxy chrome inside it.
-  gogCruft = [
+  gogCruft = baseCruft ++ [
     "scummvm"
+    "ScummVM"
     "DOSBOX"
     "dosbox"
     "app/DOSBOX"
@@ -25,7 +28,12 @@ let
     "__redist"
     "__support/!dosbox*.conf"
     "commonappdata"
-    "app/webcache.zip"
+    "webcache.zip" # installer cache, verified vs TeenAgent
+    "goggame-*.info" # Galaxy metadata, not game data
+    "goggame-*.hashdb"
+    "goggame-*.ico"
+    "goggame-*.script" # Galaxy (un)install script
+    "goggame-galaxyFileList.ini" # Galaxy file manifest
   ];
 in
 {

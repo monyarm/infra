@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  compressScummvmGame,
   ...
 }:
 let
@@ -9,11 +10,13 @@ let
   # TI-calculator); this ifarchive zip is the actual per-game .dat bundle
   # ScummVM's glk engine expects, and is the one source shared by every
   # Adventure International/Marvel game below.
-  adamsGames = pkgs.fetchzip {
-    url = "https://www.ifarchive.org/if-archive/scott-adams/games/scottfree/AdamsGames.zip";
-    stripRoot = false;
-    hash = "sha256-e/uvJ5HAK1XubldExzo11/lfOhJG8EKQWIsEAGJLaw8=";
-  };
+  adamsGames =
+    pkgs.fetchzip {
+      url = "https://www.ifarchive.org/if-archive/scott-adams/games/scottfree/AdamsGames.zip";
+      stripRoot = false;
+      hash = "sha256-e/uvJ5HAK1XubldExzo11/lfOhJG8EKQWIsEAGJLaw8=";
+    }
+    |> compressScummvmGame "glk";
 
   mkAdventureInternationalGame =
     args:

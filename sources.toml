@@ -27,11 +27,16 @@ fonts.mana = "https://github.com/andrewgioia/Mana"
 wad.lastermaul = "https://github.com/GeorgePieVG/Lastermaul"
 tools.wadptr = "https://github.com/fragglet/wadptr"
 tools.scummvmTools = "https://github.com/scummvm/scummvm-tools"
+tools.rpatool = "https://github.com/Shizmob/rpatool"
+# despacer has no tags upstream -- pinned by the exact commit minijson's
+# dub.sdl submodule reference points at.
+tools.minijson-despacer = "https://github.com/aminya/despacer#6e501899eeb7686b1b04de40f02f9792a4e3e8b9"
 
 [git-tag]
 node-datachannel = "https://github.com/murat-dogan/node-datachannel"
 mpv.mpris = "https://github.com/hoyon/mpv-mpris"
 wad.blasphemer = "https://github.com/Blasphemer/blasphemer"
+tools.minijson = "https://github.com/aminya/minijson"
 
 [itch]
 wad.simonsdestiny = "https://batandy.itch.io/simonsdestiny"

@@ -303,11 +303,12 @@ rec {
           ARGS="$ARGS -language $language"
         fi
 
-        set +e
+        set +e  # Random loginid to allow multiple concurrent builds without clashing on the same Steam account
         DepotDownloader \
           -username "$STEAM_USERNAME" \
           -password "$STEAM_PASSWORD" \
           -remember-password -no-mobile \
+          -loginid "$RANDOM" \
           -app "$APP_ID" \
           $FILELIST_ARG \
           $ARGS \

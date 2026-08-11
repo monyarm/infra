@@ -13,7 +13,7 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-RzEDcLdSp2gKvWeHAJWdRhPRyzQObrSaX+Bdb9VmU2E=";
     }
-    |> compressScummvmGame { engineid = "teenagent"; };
+    |> compressScummvmGame "teenagent";
 
   ultima4 =
     fetchGOG {
@@ -21,15 +21,20 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-dW2BmATKhtLXTIjJE2aIDpd5wRQ3teICzYsxStCttvo=";
     }
-    |> compressScummvmGame { engineid = "ultima"; };
+    |> compressScummvmGame "ultima";
 
+  # GOG's installer folder for these has siblings ScummVM never reads
+  # (DOSBox, other-language subdirs, installer chrome); narrow to the
+  # subdir the game's `path` actually uses before compressScummvmGame walks
+  # the tree, instead of after.
   dragonsphere =
     fetchGOG {
       game = "dragonsphere";
       fileId = "en1installer0";
       sha256 = "sha256-vaB3evCzpUuzo5Y1qLcxa2iwTdxplqfEgCdX3PlJqLk=";
     }
-    |> compressScummvmGame { engineid = "mads"; };
+    |> getFiles [ "DRAGON" ]
+    |> compressScummvmGame "mads";
 
   martianDreams =
     fetchGOG {
@@ -37,7 +42,8 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-3YdzHQX0TXvVNXawhd2qoFAbFx+xFI7DAyO6W6jG/DU=";
     }
-    |> compressScummvmGame { engineid = "ultima"; };
+    |> getFiles [ "MARTIAN" ]
+    |> compressScummvmGame "ultima";
 
   bladeRunner =
     fetchGOG {
@@ -48,7 +54,7 @@ let
       ];
       sha256 = "sha256-ZZUz4TGdl5DB8vDd0eDgzMdXaHbWJ3BpKhGrULj/6+0=";
     }
-    |> compressScummvmGame { engineid = "bladerunner"; };
+    |> compressScummvmGame "bladerunner";
 
   grimFandango =
     fetchGOG {
@@ -77,19 +83,7 @@ let
       "app/grim.??.tab"
       "app/en_gagl088.lip"
     ]
-    |> compressScummvmGame { engineid = "grim"; };
-
-  bladeRunnerEE =
-    fetchGOG {
-      game = "blade_runner_enhanced_edition_base";
-      fileId = [
-        "en1installer0"
-        "en1installer1"
-        "en1installer2"
-      ];
-      sha256 = "sha256-5Hl8ejvD7pbVD+CA+1D4Rivq7jsi4BeGs/nN8IsMVsk=";
-    }
-    |> compressScummvmGame { engineid = "bladerunner"; };
+    |> compressScummvmGame "grim";
 
   # SCI0/SCI01/SCI1.1 (pre-SCI32) games -- compress_sci is safe for these.
   conquestsOfCamelot =
@@ -120,7 +114,8 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-z6vW43W2VjxW4JfPenUuByF4BaCEh9zc5RhH/5BTfjw=";
     }
-    |> compressScummvmGame { engineid = "mads"; };
+    |> getFiles [ "RotP/RESOURCE" ]
+    |> compressScummvmGame "mads";
 
   daggerOfAmonRa =
     fetchGOG {
@@ -150,7 +145,7 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-CEjidQErxanbXpIiq6SxzCnKwlZEdL5+cCaha84ZfaU=";
     }
-    |> compressScummvmGame { engineid = "sky"; };
+    |> compressScummvmGame "sky";
 
   flightOfTheAmazonQueen =
     fetchGOG {
@@ -158,7 +153,7 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-Egml84/1hn9zHXFNPJOb5bpZ3qTJCJLS+1PBYF8P6rQ=";
     }
-    |> compressScummvmGame { engineid = "queen"; };
+    |> compressScummvmGame "queen";
 
   lureOfTheTemptress =
     fetchGOG {
@@ -166,7 +161,7 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-OWbjC0aXIP43ri37W5t8+5DEg56Y9F/+lhpia61LZE4=";
     }
-    |> compressScummvmGame { engineid = "lure"; };
+    |> compressScummvmGame "lure";
 
   savageEmpire =
     fetchGOG {
@@ -174,7 +169,8 @@ let
       fileId = "en1installer0";
       sha256 = "sha256-4ICpc69t8OCA1jEgEtfzguJNyXj8o5BsVXbOAS4OmJ0=";
     }
-    |> compressScummvmGame { engineid = "ultima"; };
+    |> getFiles [ "SAVAGE" ]
+    |> compressScummvmGame "ultima";
 in
 lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {
@@ -217,13 +213,6 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "grim";
       description = "Grim Fandango Remastered";
       path = "${grimFandango}/app";
-    };
-
-    bladeRunnerEE = {
-      gameid = "bladerunner-ee";
-      engineid = "bladerunner";
-      description = "Blade Runner - Enhanced Edition";
-      path = "${bladeRunnerEE}";
     };
 
     conquestsOfCamelot = {

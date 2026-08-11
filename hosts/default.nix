@@ -40,10 +40,12 @@ let
         inherit (prev) lib;
         inherit sources;
         nixWasmRustPath = inputs.nix-wasm-rust;
+        drowseSrc = inputs.drowse;
       }
     )
     (_final: _prev: {
       inherit (inputs.determinate-nix.packages."x86_64-linux") nix;
+      nix-rom = inputs.rom.packages."x86_64-linux".default;
     })
   ];
 
@@ -156,7 +158,12 @@ let
         home-manager.nixosModules.home-manager
         {
           home-manager = {
-            useGlobalPkgs = false; # We're already passing pkgs to home-manager, so don't use the global one
+            # Reuses the NixOS-level `nixpkgs.pkgs = pkgsGen currentSystem;`
+            # above instead of home-manager building its own separate pkgs --
+            # avoids evaluating/building nixpkgs twice, and avoids the two
+            # pkgs instances' config (overlays, allowUnfree) silently
+            # drifting apart.
+            useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = {
               inherit
@@ -169,9 +176,7 @@ let
               isHomeManager = true;
               isHomeManagerInNixOS = true;
             };
-            sharedModules = homeManagerModules ++ [
-              { nixpkgs.overlays = overlays; }
-            ];
+            sharedModules = homeManagerModules;
             users = homeUsers;
             backupFileExtension = "hmBackup";
           };

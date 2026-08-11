@@ -3,6 +3,6 @@
 {
   imports = [
     ./conf.nix
-    ./wad.nix
+    ./wad
   ];
 }

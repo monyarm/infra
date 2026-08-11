@@ -2,36 +2,47 @@
   pkgs,
   config,
   lib,
+  compressScummvmGame,
   ...
 }:
 let
-  draci = pkgs.fetchzip {
-    url = "http://www.ucw.cz/draci-historie/binary/dh-en-2012.zip";
-    stripRoot = false;
-    hash = "sha256-h1dIiMk/11dt5A0YwZkYBIWENBvD81fYdTs8/xatzNI=";
-  };
+  draci =
+    pkgs.fetchzip {
+      url = "http://www.ucw.cz/draci-historie/binary/dh-en-2012.zip";
+      stripRoot = false;
+      hash = "sha256-h1dIiMk/11dt5A0YwZkYBIWENBvD81fYdTs8/xatzNI=";
+    }
+    |> compressScummvmGame "draci";
 
-  hugo1 = pkgs.fetchzip {
-    url = "https://archive.org/download/hugos_house_of_horrors_12s/hugo1.zip";
-    stripRoot = false;
-    hash = "sha256-9t1ipZf91FO8cjZYe7WNOz/SCGp1m53/yK/iaLJd0vY=";
-  };
+  hugo1 =
+    pkgs.fetchzip {
+      url = "https://archive.org/download/hugos_house_of_horrors_12s/hugo1.zip";
+      stripRoot = false;
+      hash = "sha256-9t1ipZf91FO8cjZYe7WNOz/SCGp1m53/yK/iaLJd0vY=";
+    }
+    |> compressScummvmGame "hugo";
 
-  msn1 = pkgs.fetchzip {
-    url = "https://familie-dingel.de/simplicity/msn/msn.zip";
-    hash = "sha256-kqKv3Bt0y8C0NDIDWlj2JX2bU+kUXAN+4vYAY+5GSSo=";
-  };
+  msn1 =
+    pkgs.fetchzip {
+      url = "https://familie-dingel.de/simplicity/msn/msn.zip";
+      hash = "sha256-kqKv3Bt0y8C0NDIDWlj2JX2bU+kUXAN+4vYAY+5GSSo=";
+    }
+    |> compressScummvmGame "supernova";
 
-  msn2 = pkgs.fetchzip {
-    url = "https://familie-dingel.de/simplicity/msn/ms2.zip";
-    hash = "sha256-+TDzndnUc5JAMWCbjZMMNpVediDajEP1LbC2JXuk/JI=";
-  };
+  msn2 =
+    pkgs.fetchzip {
+      url = "https://familie-dingel.de/simplicity/msn/ms2.zip";
+      hash = "sha256-+TDzndnUc5JAMWCbjZMMNpVediDajEP1LbC2JXuk/JI=";
+    }
+    |> compressScummvmGame "supernova";
 
-  softporn = pkgs.fetchzip {
-    url = "https://www.ifarchive.org/if-archive/games/zcode/softporn.zip";
-    stripRoot = false;
-    hash = "sha256-yKnQ0UjstfO32T0s41+0dAeKyg4oIPsripSFJtkIx8I=";
-  };
+  softporn =
+    pkgs.fetchzip {
+      url = "https://www.ifarchive.org/if-archive/games/zcode/softporn.zip";
+      stripRoot = false;
+      hash = "sha256-yKnQ0UjstfO32T0s41+0dAeKyg4oIPsripSFJtkIx8I=";
+    }
+    |> compressScummvmGame "glk";
 in
 lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {

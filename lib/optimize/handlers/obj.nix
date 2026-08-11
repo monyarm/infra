@@ -18,7 +18,7 @@ let
         outputHashMode = "flat";
       }
       ''
-        node ${./objmin.js} "${src}" > tmp.obj || rm -f tmp.obj
+        node ${../js/objmin.js} "${src}" > tmp.obj || rm -f tmp.obj
         ${guardSizeTail "tmp.obj" src}
       '';
 
@@ -37,11 +37,12 @@ let
         outputHashMode = "flat";
       }
       ''
-        gawk -f ${./obj-lossless.awk} "${src}" > tmp.obj || rm -f tmp.obj
+        gawk -f ${../awk/obj-lossless.awk} "${src}" > tmp.obj || rm -f tmp.obj
         ${guardSizeTail "tmp.obj" src}
       '';
 in
 {
   normal = lossless;
   prime = lossy;
+  extensions = [ "mtl" ]; # same text format as obj
 }

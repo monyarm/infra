@@ -45925,6 +45925,154 @@
     };
   };
   tools = {
+    minijson = {
+      date = "2025-07-02";
+      files = [
+        ".eslintrc.json"
+        ".gitattributes"
+        ".github/workflows/CI.yml"
+        ".gitignore"
+        ".gitmodules"
+        ".npmrc"
+        ".nvmrc"
+        ".prettierignore"
+        ".vscode/settings.json"
+        "LICENSE.txt"
+        "Readme.md"
+        "benchmark/benchmark.d"
+        "benchmark/js-benchmark.mjs"
+        "benchmark/native-benchmark.mjs"
+        "benchmark/native-benchmark.ps1"
+        "despacer"
+        "dub.sdl"
+        "dub.selections.json"
+        "package.json"
+        "pnpm-lock.yaml"
+        "pnpm-workspace.yaml"
+        "src/browser/app.ts"
+        "src/browser/index.html"
+        "src/browser/tsconfig.json"
+        "src/native/cli.d"
+        "src/native/lib.d"
+        "src/native/libc.d"
+        "src/node/build.js"
+        "src/node/cli.ts"
+        "src/node/lib.ts"
+        "src/node/tsconfig.json"
+        "src/wasm/wasm.d"
+        "test/fixtures.mjs"
+        "test/fixtures/standard/0.10.0.json"
+        "test/fixtures/standard/0.11.0.json"
+        "test/fixtures/standard/0.12.0.json"
+        "test/fixtures/standard/0.13.0.json"
+        "test/fixtures/standard/0.14.0.json"
+        "test/fixtures/standard/0.15.0.json"
+        "test/fixtures/standard/0.16.0.json"
+        "test/fixtures/standard/0.17.0.json"
+        "test/fixtures/standard/0.18.0.json"
+        "test/fixtures/standard/0.19.0.json"
+        "test/fixtures/standard/0.20.0.json"
+        "test/fixtures/standard/0.21.0.json"
+        "test/fixtures/standard/0.22.0.json"
+        "test/fixtures/standard/0.23.0.json"
+        "test/fixtures/standard/0.24.0.json"
+        "test/fixtures/standard/0.25.0.json"
+        "test/fixtures/standard/0.26.0.json"
+        "test/fixtures/standard/0.4.2.json"
+        "test/fixtures/standard/0.5.0.json"
+        "test/fixtures/standard/0.5.1.json"
+        "test/fixtures/standard/0.6.0.json"
+        "test/fixtures/standard/0.7.0.json"
+        "test/fixtures/standard/0.7.2.json"
+        "test/fixtures/standard/0.8.0.json"
+        "test/fixtures/standard/0.9.0.json"
+        "test/fixtures/standard/1.0.0.json"
+        "test/fixtures/standard/1.json"
+        "test/fixtures/standard/asyncresource.json"
+        "test/fixtures/standard/counter.json"
+        "test/fixtures/standard/counterstore.json"
+        "test/fixtures/standard/cssanimations.json"
+        "test/fixtures/standard/escaped_quote.json"
+        "test/fixtures/standard/forms.json"
+        "test/fixtures/standard/routing.json"
+        "test/fixtures/standard/scoreboard.json"
+        "test/fixtures/standard/simpletodos.json"
+        "test/fixtures/standard/simpletodoshyperscript.json"
+        "test/fixtures/standard/styledjsx.json"
+        "test/fixtures/standard/suspensetabs.json"
+        "test/fixtures/standard/todos.json"
+        "test/fixtures/with-comment/array_comment.json"
+        "test/fixtures/with-comment/comment.json"
+        "test/helper.mjs"
+        "test/index-test.mjs"
+        "test/reporter.mjs"
+        "tsconfig.json"
+      ];
+      hash = "sha1-LHDqRIaWgSZ+R+lL+YHlclp3yuU=";
+      ref = "refs/tags/v1.1.4";
+      rev = "a2116b9bfc3b2c5703507118268b8dfd2db1a9ce";
+      tag = "v1.1.4";
+      type = "git-tag";
+      url = "https://github.com/aminya/minijson.git";
+    };
+    minijson-despacer = {
+      date = "2024-09-06";
+      files = [
+        ".github/workflows/CI.yml"
+        ".github/workflows/ubuntu22.yml"
+        ".github/workflows/vs.yml"
+        ".gitignore"
+        "CMakeLists.txt"
+        "LICENSE"
+        "Makefile"
+        "README.md"
+        "benchmarks/clock_gettime.h"
+        "benchmarks/despacebenchmark.c"
+        "bindings/d/generate.sh"
+        "bindings/d/src/despacer/despacer.d"
+        "bindings/d/src/despacer/libc/despacer_AVX2.d"
+        "bindings/d/src/despacer/libc/despacer_AVX2.dpp"
+        "bindings/d/src/despacer/libc/despacer_SSE4_1.d"
+        "bindings/d/src/despacer/libc/despacer_SSE4_1.dpp"
+        "bindings/d/src/despacer/libc/despacer_SSE4_2.d"
+        "bindings/d/src/despacer/libc/despacer_SSE4_2.dpp"
+        "bindings/d/src/despacer/libc/despacer_SSSE3.d"
+        "bindings/d/src/despacer/libc/despacer_SSSE3.dpp"
+        "bindings/d/src/despacer/libc/despacer_generic.d"
+        "bindings/d/src/despacer/libc/despacer_generic.dpp"
+        "bindings/d/src/despacer/simd_check.d"
+        "dub.sdl"
+        "include/despacer.h"
+        "include/despacer_AVX2.h"
+        "include/despacer_AVX512.h"
+        "include/despacer_SSE4_1.h"
+        "include/despacer_SSE4_2.h"
+        "include/despacer_SSSE3.h"
+        "include/despacer_generic.h"
+        "scripts/counts.py"
+        "scripts/mask.py"
+        "scripts/twosmallmask.py"
+        "src/despacer.c"
+        "src/despacer_tables.h"
+        "tests/unit.c"
+      ];
+      hash = "bcbfaaeb5916280f889e5acabe48afeacc287e59";
+      rev = "6e501899eeb7686b1b04de40f02f9792a4e3e8b9";
+      type = "git";
+      url = "https://github.com/aminya/despacer";
+    };
+    rpatool = {
+      date = "2022-08-23";
+      files = [
+        "LICENSE"
+        "README.md"
+        "rpatool"
+      ];
+      hash = "8cd791733e9a931c491a299e4614908190401a6f";
+      rev = "74f26d5dfdd645483e02552aa766ca447ad6b191";
+      type = "git";
+      url = "https://github.com/Shizmob/rpatool.git";
+    };
     scummvmTools = {
       date = "2026-07-14";
       files = [

@@ -27,7 +27,8 @@
 let
   format = import ./format.nix ({ inherit pkgs lib wasm; } // strings);
   constants = import ./constants.nix { inherit lib; };
-  nixSettings = import ./nixSettings.nix { inherit lib; };
+  math = import ./math.nix { inherit lib; };
+  nixSettings = import ./nixSettings.nix ({ inherit lib; } // math);
   strings = import ./strings.nix ({ inherit pkgs lib; } // constants // misc);
   imp = import ./imports.nix ({ inherit pkgs lib; } // misc);
   files = import ./files.nix (
@@ -94,6 +95,7 @@ let
     inherit
       format
       constants
+      math
       nixSettings
       strings
       imp
@@ -110,6 +112,7 @@ let
   }
   // format
   // constants
+  // math
   // nixSettings
   // strings
   // imp
