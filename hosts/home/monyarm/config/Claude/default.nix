@@ -1,0 +1,45 @@
+{
+  pkgs,
+  dirs,
+  mkOutOfStoreSymlink,
+  ...
+}:
+{
+  imports = [
+    ./plugins.nix
+    ./mcpServers.nix
+    ./context.nix
+    ./caveman-proxy.nix
+  ];
+
+  programs.claude-code = {
+    enable = true;
+    # package left unset -- resolves to pkgs.claude-code by default
+    settings = {
+      theme = "dark";
+      editorMode = "normal";
+      agentPushNotifEnabled = true;
+      permissions.defaultMode = "plan";
+    };
+  };
+
+  # whole dir symlinked (not per-file) -- new memory files future sessions write land
+  # straight in the git checkout, no module edits needed
+  home.file.".claude/projects/-home-monyarm--nix/memory".source =
+    mkOutOfStoreSymlink "${dirs.hmConfig}/Claude/memory";
+
+  home.file.".caveman-cloud/bin" = {
+    source = "${pkgs.caveman-cli}/libexec/caveman-engine-bin";
+    recursive = true;
+  };
+
+  home.packages = [
+    pkgs.caveman-cli
+    pkgs.codegraph
+    # ponytail + caveman both run node-based lifecycle hooks (SessionStart/
+    # UserPromptSubmit) -- degrade silently without node, but this makes them work
+    pkgs.nodejs
+  ];
+  programs.zsh.shellAliases.claude = "caveman claude --remote-control";
+  home.sessionVariables.CLAUDE_CODE_SUBAGENT_MODEL = "haiku";
+}

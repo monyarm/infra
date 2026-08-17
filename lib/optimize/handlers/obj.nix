@@ -5,6 +5,8 @@
   ...
 }:
 let
+  guardTmpObj = guardSizeTail "tmp.obj";
+
   # Drops comments/blank lines, reparses numbers via parseFloat -- lossy:
   # trims trailing zeros and loses "-0" sign.
   lossy =
@@ -19,7 +21,7 @@ let
       }
       ''
         node ${../js/objmin.js} "${src}" > tmp.obj || rm -f tmp.obj
-        ${guardSizeTail "tmp.obj" src}
+        ${guardTmpObj src}
       '';
 
   # Same comment/blank-line stripping, but trailing zeros are trimmed as
@@ -38,7 +40,7 @@ let
       }
       ''
         gawk -f ${../awk/obj-lossless.awk} "${src}" > tmp.obj || rm -f tmp.obj
-        ${guardSizeTail "tmp.obj" src}
+        ${guardTmpObj src}
       '';
 in
 {

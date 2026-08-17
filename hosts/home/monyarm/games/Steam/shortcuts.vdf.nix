@@ -7,6 +7,7 @@
   fetchSteamCdnImages,
   toKeyValues,
   wasm,
+  niccup,
   ...
 }:
 
@@ -61,13 +62,15 @@ let
   gameSubmodule =
     { name, config, ... }:
     let
-      # Auto-fetched library artwork for games declared with a real Steam
-      # appid. Lazily evaluated: never forces a network fetch unless a game
-      # actually sets both steamAppId and steamCdnImagesHash.
+      # lazy: no network fetch unless game set an appid and a hash.
       cdnImages =
-        if config.steamAppId != null && config.steamCdnImagesHash != null then
+        if
+          (config.steamCdnImagesAppId != null || config.steamAppId != null)
+          && config.steamCdnImagesHash != null
+        then
           fetchSteamCdnImages {
-            appId = config.steamAppId;
+            appId =
+              if config.steamCdnImagesAppId != null then config.steamCdnImagesAppId else config.steamAppId;
             sha256 = config.steamCdnImagesHash;
           }
         else
@@ -133,7 +136,19 @@ let
           description = ''
             Fixed-output hash for fetchSteamCdnImages, obtained via
             scripts/prefetch/prefetchSteamCdnImages.sh. Required alongside
-            steamAppId to auto-populate hero/grid/wide/logo artwork.
+            steamAppId (or steamCdnImagesAppId) to auto-populate
+            hero/grid/wide/logo/icon artwork.
+          '';
+        };
+
+        steamCdnImagesAppId = lib.mkOption {
+          type = lib.types.nullOr lib.types.int;
+          default = null;
+          description = ''
+            Steam appid to source CDN artwork from, when it differs from
+            steamAppId -- e.g. to borrow another app's art for a synthetic
+            shortcut with no real steamAppId, or to pull nicer art from a
+            different release's appid. Defaults to steamAppId.
           '';
         };
 
@@ -150,25 +165,26 @@ let
                 imgType = lib.types.nullOr (lib.types.either lib.types.package lib.types.str);
               in
               {
+                # `or null`: attribute may not exist (steamCdnImagesKnownMissing).
                 hero = lib.mkOption {
                   type = imgType;
-                  default = if cdnImages != null then cdnImages.hero else null;
+                  default = if cdnImages != null then cdnImages.hero or null else null;
                 };
                 grid = lib.mkOption {
                   type = imgType;
-                  default = if cdnImages != null then cdnImages.grid else null;
+                  default = if cdnImages != null then cdnImages.grid or null else null;
                 };
                 wide = lib.mkOption {
                   type = imgType;
-                  default = if cdnImages != null then cdnImages.wide else null;
+                  default = if cdnImages != null then cdnImages.wide or null else null;
                 };
                 icon = lib.mkOption {
                   type = imgType;
-                  default = null;
+                  default = if cdnImages != null then cdnImages.icon or null else null;
                 };
                 logo = lib.mkOption {
                   type = imgType;
-                  default = if cdnImages != null then cdnImages.logo else null;
+                  default = if cdnImages != null then cdnImages.logo or null else null;
                 };
               };
           };
@@ -254,6 +270,11 @@ let
       null
     else
       "* ${g.name} (AppId: ${toString g.appId}) is missing: [ ${lib.concatStringsSep ", " missing} ]";
+
+  # Combined JSON data + dark-mode HTML artwork/categories completeness
+  # report -- see report.nix for the launcher->category grouping and
+  # per-game/category/type accounting.
+  report = import ./report.nix { inherit lib niccup parallel; } gamesList resolvePath;
 
   # Combine all missing reports into a string block
   artworkReportContent =
@@ -542,6 +563,8 @@ in
           )
           {
             ".steam/games/artwork-report.txt".text = artworkReportContent;
+            ".steam/games/games.json".text = report.json;
+            ".steam/games/artwork-report.html".text = report.html;
           }
           gamesList
         )

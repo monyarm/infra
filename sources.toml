@@ -1,3 +1,13 @@
+[github-release]
+# caveman Engine binaries, replaces `caveman setup --install` -- packages/caveman-cli.nix.
+# Resolves to the newest release tagged bin-*, no version hardcoded here.
+claude.engine.caveman-proxy-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-proxy_linux_amd64"
+claude.engine.caveman-engine-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-engine_linux_amd64"
+claude.engine.caveman-mcp-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-mcp_linux_amd64"
+claude.engine.caveman-shrink-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-shrink_linux_amd64"
+claude.engine.caveman-browse-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-browse_linux_amd64"
+claude.engine.cavemem-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/cavemem_linux_amd64"
+
 [git]
 xvoland.extract = "https://github.com/xvoland/Extract"
 firefox.userChrome.firefox-xtra-compact = "https://github.com/CarterSnich/firefox-xtra-compact"
@@ -31,8 +41,28 @@ tools.rpatool = "https://github.com/Shizmob/rpatool"
 # despacer has no tags upstream -- pinned by the exact commit minijson's
 # dub.sdl submodule reference points at.
 tools.minijson-despacer = "https://github.com/aminya/despacer#6e501899eeb7686b1b04de40f02f9792a4e3e8b9"
+# claude-plugins-official has no tags, always-updated marketplace repo -- HEAD pin
+claude.plugins.claude-plugins-official = "https://github.com/anthropics/claude-plugins-official"
+# tags here are junk (latest semver-sorted tag predates the Caveman 2 rewrite) -- HEAD pin
+claude.plugins.caveman = "https://github.com/JuliusBrussee/caveman"
+# No tags upstream (pre-alpha) -- HEAD pin, same as claude.plugins.caveman.
+tools.maxima = "https://github.com/ArmchairDevelopers/Maxima"
+
+[cargo]
+# Generates tools.maxima.cargoLock (+ cargoOutputHashes for its
+# [patch.crates-io] git forks) at update-sources.py time -- see
+# packages/maxima-cli.nix, which has no Cargo.lock upstream to build from.
+tools.maxima = "true"
 
 [git-tag]
+# claude.plugins.caveman doubles as packages/caveman-cli.nix's src (packages/cli/ subdir)
+claude.plugins.ponytail = "https://github.com/DietrichGebert/ponytail"
+claude.plugins.superpowers = "https://github.com/obra/superpowers"
+# plugin lives in plugins/claude/context7 subdir, mcp server is remote (mcp.context7.com)
+claude.plugins.context7 = "https://github.com/upstash/context7"
+# real binary is a platform npm optionalDependency, not this repo -- tag tracking only
+tools.codegraph = "https://github.com/colbymchenry/codegraph"
+tools.mcp-compressor = "https://github.com/atlassian-labs/mcp-compressor"
 node-datachannel = "https://github.com/murat-dogan/node-datachannel"
 mpv.mpris = "https://github.com/hoyon/mpv-mpris"
 wad.blasphemer = "https://github.com/Blasphemer/blasphemer"

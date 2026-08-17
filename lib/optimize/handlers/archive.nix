@@ -2,10 +2,11 @@
 # based auto-detect, same approach gameoptimizer's src/tasks/archive.sh
 # takes); rpa needs its own tool (rpatool). Repacks via lib/files.nix's
 # packArchive, in the archive's own format/extension -- except pk3/ipk3,
-# forced to pk7/ipk7 (7z/LZMA beats zip/deflate), which also needs
-# optimizeWith's wav override and skips the size guard. `formats` below is
-# the single source of truth for all of this, keyed by canonical format
-# name; `extensions` and the ext->format lookup both derive from it.
+# forced to pk7/ipk7 (7z/LZMA beats zip/deflate), which also tags its
+# extracted contents as doom context (see `doom`/passthru.isDoom below) and
+# skips the size guard. `formats` below is the single source of truth for
+# all of this, keyed by canonical format name; `extensions` and the
+# ext->format lookup both derive from it.
 {
   pkgs,
   lib,
@@ -13,6 +14,7 @@
   guardSize,
   optimizeFolderDynamic,
   packArchive,
+  derefSymlinks,
   ...
 }:
 let
@@ -100,8 +102,7 @@ let
   repackRpa = repackVia "rpa";
 
   # Every field but exts/extract/repack is optional: outExt defaults to
-  # identity (keep the matched extension), primeOverride to {}, guard to
-  # true.
+  # identity (keep the matched extension), doom to false, guard to true.
   formats = {
     zip = {
       exts = [
@@ -130,10 +131,13 @@ let
       ];
       extract = sevenZipExtract;
       repack = repack7z;
-      outExt = ext: lib.replaceStrings [ "k3" ] [ "k7" ] ext;
-      primeOverride = {
-        wav = true;
-      };
+      # toLower first -- formatFor's own lookup is already
+      # case-insensitive; without this, an uppercase .PK3/.IPK3 matches
+      # formatFor fine but silently fails to compare as a real extension
+      # change here (replaceStrings is case-sensitive), so changesExtension
+      # would wrongly say "no repack needed" for it.
+      outExt = ext: lib.replaceStrings [ "k3" ] [ "k7" ] (lib.toLower ext);
+      doom = true;
       guard = false;
     };
     rpa = {
@@ -167,21 +171,28 @@ let
     src:
     let
       f = formatFor src;
+      ext = extOf src;
     in
-    f != null && (f.outExt or (e: e)) (extOf src) != extOf src;
+    f != null && (f.outExt or (e: e)) ext != ext;
 
   process =
     prime: src:
     let
       f = formatFor src;
       ext = (f.outExt or (e: e)) (extOf src);
-      extracted = pkgs.runCommand "${getName src}-extracted" f.extract.env (f.extract.script src);
+      extracted = pkgs.runCommand "${getName src}-extracted" (
+        f.extract.env // { passthru.isDoom = f.doom or false; }
+      ) (f.extract.script src);
       optimizedDir = optimizeFolderDynamic {
         inherit prime;
-        primeOverride = f.primeOverride or { };
         droppedExtensions = droppedArchiveExtensions;
       } extracted;
-      repacked = f.repack ext optimizedDir src;
+      # Its own cached CA step (lib/files.nix's derefSymlinks), not inlined
+      # per-format inside packArchive -- unchanged optimizedDir means this
+      # (and the repack below) gets early cutoff regardless of format, so
+      # this isn't 7z/zip-specific anymore, just part of the pipeline.
+      derefDir = derefSymlinks { name = getName src; } optimizedDir;
+      repacked = f.repack ext derefDir src;
     in
     if f.guard or true then guardSize repacked src else repacked;
 in

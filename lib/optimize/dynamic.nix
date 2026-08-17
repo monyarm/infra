@@ -1,89 +1,81 @@
-# "Folder in, folder out": optimizes every file in a folder at *build*
-# time, not eval time -- eval time doesn't scale with member count.
-# Used by archive.nix (after extraction) and folderWalkOptimize.
+# "Folder in, folder out": optimizes every file in a folder at build time,
+# not eval time -- eval time doesn't scale with member count. Used by
+# archive.nix (after extraction) and folderWalkOptimize.
 #
-# Hard-won constraint, don't regress: this returns a genuine derivation --
-# nothing here builds anything itself; whatever calls optimizeFolderDynamic
-# (transitively, whoever eventually runs `nix build`) is what realizes it.
+# This returns a genuine derivation; nothing here builds anything itself,
+# whoever eventually runs `nix build` realizes it.
 #
-# Mechanism: `instantiateDrv`'s build step does only `nix-instantiate` on
-# dynamic-inner.nix (never a build) against the now-real folderSrc, and
-# copies the resulting .drv into its own $out. Its output is declared
-# outputHashMode = "text" -- the same content-addressing mode real .drv
-# files use (CA, but allowed to embed store-path references as text), which
-# is what lets Nix recognize a `.drv`-suffixed output as an actual
-# derivation rather than an opaque blob. `builtins.outputOf` then chains
-# onto that: "the eventual output of building whatever .drv instantiateDrv
-# produces" -- Nix's own daemon resolves this automatically, as ordinary
-# graph realization, once something actually needs it. No nested nix build/
-# nix-store -r call anywhere in this file. instantiateDrv needs
-# recursive-nix (nix-instantiate touches the store from inside a build);
-# dynamic-derivations is what makes `builtins.outputOf` on a not-yet-built
-# derivation's own output legal at all -- both already enabled ambiently via
-# lib/nixSettings.nix, needed here since this chaining happens in the
-# *outer* evaluation, not inside any sandbox.
+# Mechanism: instantiateDrv's build step only `nix-instantiate`s
+# dynamic-inner.nix against the now-real folderSrc and copies the
+# resulting .drv to $out (outputHashMode = "text", same CA mode real .drv
+# files use, so Nix treats it as an actual derivation). builtins.outputOf
+# then chains onto that .drv's eventual build output, resolved by Nix's
+# own daemon on demand -- no nested nix build/nix-store -r call anywhere
+# here. Needs recursive-nix (nix-instantiate touches the store from
+# inside a build) and dynamic-derivations (legalizes outputOf on a
+# not-yet-built output), both enabled via lib/nixSettings.nix.
 #
-# dynamic-inner.nix does the real per-file work (recursive folder walk,
-# dispatch through optimizeWith, reassembly) in ONE nix-instantiate'd
-# expression rather than one process per file -- pkgs only gets
-# reconstructed once, and every file's result feeds one ordinary runCommand,
-# so the resulting derivation graph is completely normal: Nix's own
-# scheduler parallelizes it across builders exactly like any other build,
-# no hand-rolled derivation JSON needed. `builtins.readDir`ing the folder
-# inside dynamic-inner.nix is fine specifically because that expression is
-# only ever evaluated once instantiateDrv's build script is actually
-# running -- i.e. after the caller decided to realize this derivation, with
-# folderSrc genuinely on disk by then.
+# dynamic-inner.nix does all per-file work (walk, dispatch, reassembly)
+# in ONE nix-instantiate'd expression instead of one process per file, so
+# the resulting derivation graph stays normal and Nix's scheduler
+# parallelizes it like any other build.
 #
-# instantiateDrv's hard inputs are kept to exactly: optimize/ (+ the handful
-# of lib/ files it reaches), the input folder, and the specific CLI tools
-# handlers actually invoke (wadptr, rpatool, minijson) -- nothing else should be able
-# to change its hash. Notably NOT inputs: the rest of lib/ (fetchers.nix,
-# media.nix, ...), sources.nix (46000+ lines, changes constantly for
-# unrelated games), or packages/'s own overlay machinery -- all of those
-# would otherwise force every archive's cached instantiate step to rebuild
-# on a completely unrelated edit. wadptr/rpatool/minijson are pre-built *outside*
-# this derivation (via the ambient optimizePkgs overlay -- see
-# hosts/modules/lib.nix) and passed in as plain store paths, so
-# dynamic-inner.nix's own pkgs reconstruction never needs packages/
-# default.nix (and thus never needs fetchers.nix/sources.nix) at all.
+# instantiateDrv's hard inputs are kept to exactly optimize/ (+ the lib/
+# files it reaches), the input folder, and wadptr/rpatool/minijson --
+# NOT the rest of lib/ (fetchers.nix, sources.nix: 46000+ lines that
+# change constantly for unrelated games) or packages/'s overlay
+# machinery, or every archive's cached instantiate step would rebuild on
+# an unrelated edit. wadptr/rpatool/minijson are pre-built outside this
+# derivation via the ambient optimizePkgs overlay (hosts/modules/lib.nix)
+# and passed in as plain store paths.
 #
 # misc.nix/strings.nix/constants.nix/files.nix are each much bigger than
-# what optimize/ actually uses out of them (files.nix especially -- 500+
-# lines of home-manager linking/secrets helpers optimize/ never touches),
-# and are shared with unrelated parts of the repo, so they still change for
-# reasons that have nothing to do with archive optimization. trim-lib.py
-# (a plain string-scanning tree-shaker, not a real Nix parser -- see its own
-# header) keeps only the bindings those four files export that optimize/'s
-# handlers actually reference, transitively. It's a normal (non-sandboxed)
-# derivation, so it only ever needs to re-run when one of these four files
-# or optimize/ itself changes; being CA, its own early cutoff means even
-# that re-run is free unless the *kept* subset's bytes actually differ.
+# what optimize/ uses (files.nix especially: 500+ lines of home-manager
+# helpers) and are shared with unrelated parts of the repo. trim-lib.py
+# (string-scanning tree-shaker, not a real Nix parser -- see its own
+# header) keeps only the bindings optimize/'s handlers actually reference.
+#
+# strippedTreeDrv also comment-strips the whole optimize/ subtree before
+# it's hashed into optimizeLibPath, so a pure-comment edit anywhere under
+# lib/optimize/ can't force a pointless re-instantiate of an
+# already-optimized archive.
 {
   pkgs,
   lib,
   getName,
+  derefSymlinks,
   nixWasmRustPath ? null,
+  # Already-built lib/wasm/dispatch output dir, threaded down from an outer
+  # dynamic.nix invocation via dynamic-inner.nix (see optimize/default.nix).
+  # When set, skips rebuilding via ../wasm.nix -- not just an optimization:
+  # a nested archive's dynamic.nix runs from the sandboxed/trimmed lib copy,
+  # which doesn't carry ../wasm's crate sources at all.
+  dispatchWasmDir ? null,
   ...
 }:
 {
   prime,
-  primeOverride,
   # Extensions to drop entirely (see droppedArchiveExtensions in
   # archive.nix). Empty by default -- folderWalkOptimize keeps everything.
   droppedExtensions ? [ ],
 }:
 folderSrc:
 let
+  # Set by archive.nix on a pk3-family archive's freshly-extracted contents
+  # -- never set for a plain folder.
+  doom = folderSrc.passthru.isDoom or false;
   trimmedFiles = [
     "misc.nix"
     "strings.nix"
     "constants.nix"
     "files.nix"
   ];
-  # Only what dynamic-inner.nix's own import chain actually reaches: the
-  # whole optimize/ subtree, plus the specific top-level lib/ files it and
-  # optimize/default.nix's own `../mkFormatDispatch` reference need.
+  # dynamic-inner.nix's own import chain: a nested archive found mid-walk
+  # recurses back through optimizeFolderDynamic -> this same dynamic.nix
+  # file (copied verbatim into optimizeLibPath/optimize/). It never reaches
+  # `import ../wasm.nix` on that path -- dynamic-inner.nix always threads
+  # dispatchWasmDir through (see below), so ../wasm.nix + its crate sources
+  # don't need to be in this fileset at all.
   rawLibSource = lib.fileset.toSource {
     root = ../.;
     fileset = lib.fileset.unions (
@@ -94,6 +86,22 @@ let
       ++ map (f: ../. + "/${f}") trimmedFiles
     );
   };
+  # Step 1: Strip comments across the entire lib fileset first
+  strippedSourceDrv =
+    pkgs.runCommand "optimize-lib-stripped"
+      {
+        nativeBuildInputs = [ pkgs.python3 ];
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p "$out"
+        python3 ${./py/trim-lib.py} --strip-tree "${rawLibSource}" "$out"
+      '';
+
+  # Step 2: Run the binding tree-shaker on the already-stripped files
   trimmedFilesDrv =
     pkgs.runCommand "optimize-lib-trimmed"
       {
@@ -108,14 +116,12 @@ let
       }
       ''
         mkdir -p "$out"
-        python3 ${./py/trim-lib.py} "${rawLibSource}" "${rawLibSource}/optimize" "$out" \
+        python3 ${./py/trim-lib.py} "${strippedSourceDrv}" "${strippedSourceDrv}/optimize" "$out" \
           "${lib.concatStringsSep "," trimmedFiles}"
-        # trim-lib.py's own output isn't nixfmt-formatted (it splices raw
-        # source spans together) -- format it here rather than leave it
-        # readable-only by accident, and a formatting failure is also a
-        # cheap syntax-validity signal on what got generated.
         nixfmt "$out"/*.nix
       '';
+
+  # Step 3: Combine stripped tree base with trimmed overrides
   optimizeLibPath =
     pkgs.runCommand "optimize-lib"
       {
@@ -126,29 +132,47 @@ let
       }
       ''
         cp -r --no-preserve=mode "${rawLibSource}" "$out"
+        cp -r --no-preserve=mode "${strippedSourceDrv}"/. "$out"/
         cp ${trimmedFilesDrv}/*.nix "$out"/
       '';
   innerExprPath = ./dynamic-inner.nix;
-  primeOverrideJSON = builtins.toJSON primeOverride;
   primeArg = if prime then "true" else "false";
+  doomArg = if doom then "true" else "false";
   system = pkgs.stdenv.hostPlatform.system;
   shell = "${pkgs.bash}/bin/bash";
   droppedExtsArg = lib.concatStringsSep " " droppedExtensions;
-  # Prebuilt tool store paths dynamic-inner.nix's own pkgs reconstruction
-  # overlays in verbatim (see its header comment) -- one JSON blob instead of
-  # a growing list of --argstr/--arg pairs that have to be added in lockstep
-  # on both sides every time a new tool joins the set. Unlike --argstr,
-  # builtins.toJSON can carry a real `null` for nixWasmRust, so no ""
-  # sentinel is needed for the optional case either.
+  # Built outside the sandbox: the sandbox has no network (substituters =
+  # "" below), so cargo/rustc fetching crate deps has to happen out here.
+  dispatchWasmModule =
+    if dispatchWasmDir != null then
+      dispatchWasmDir
+    else if nixWasmRustPath == null then
+      null
+    else
+      (import ../wasm.nix { inherit pkgs lib nixWasmRustPath; }).buildWasmModule {
+        name = "nix-wasm-plugin-dispatch";
+        crateDir = ../wasm/dispatch;
+      };
+  # One JSON blob instead of a growing --argstr/--arg list that has to be
+  # added in lockstep on both sides per tool. toJSON carries real `null`
+  # for nixWasmRust, no "" sentinel needed.
   toolPathsJSON = builtins.toJSON {
     wadptr = "${pkgs.wadptr}";
     rpatool = "${pkgs.rpatool}";
     minijson = "${pkgs.minijson}";
-    # Determinate Nix, not stock pkgs.nix -- see dynamic-inner.nix's own
-    # comment on why its pkgs reconstruction needs this overlaid too.
+    # Determinate Nix, not stock pkgs.nix -- see dynamic-inner.nix's comment.
     nix = "${pkgs.nix}";
     nixWasmRust = if nixWasmRustPath == null then null else "${nixWasmRustPath}";
+    dispatchWasm = if dispatchWasmModule == null then null else "${dispatchWasmModule}";
   };
+
+  # folderSrc may symlink into another store path (lib/files.nix
+  # getFiles/removeFiles) -- builtins.path in dynamic-inner.nix hashes a
+  # symlink's target text, not its bytes, so per-file hashes there churn on
+  # unrelated upstream changes. Dereference first (lib/files.nix's shared
+  # helper, its own cached CA derivation), so both this and instantiateDrv
+  # get early cutoff.
+  derefFolderSrc = derefSymlinks { } folderSrc;
 
   instantiateDrv = derivation {
     name = "${getName folderSrc}-optimize-instantiate.drv";
@@ -158,15 +182,20 @@ let
       "-c"
       ''
         set -e
-        export PATH="${pkgs.bash}/bin:${pkgs.coreutils}/bin:${pkgs.nix}/bin:$PATH"
-        # substituters/connect-timeout: this sandbox has no network at all,
-        # so every nix invocation otherwise still probes it first.
-        # parallel-eval: dynamic-inner.nix's own per-file map (thousands of
-        # entries for a large archive) uses lib/misc.nix's parallel helper,
-        # same as the rest of this repo already relies on elsewhere.
-        export NIX_CONFIG='extra-experimental-features = nix-command ca-derivations dynamic-derivations recursive-nix pipe-operators parallel-eval
+        export PATH="${pkgs.bash}/bin:${pkgs.coreutils}/bin:${pkgs.nix}/bin:${pkgs.util-linux}/bin:$PATH"
+        # substituters/connect-timeout: sandbox has no network, skip the probe.
+        # parallel-eval: dynamic-inner.nix's per-file map uses misc.nix's parallel helper.
+        # wasm-builtin: batchResolveDispatch's builtins.wasm call needs it enabled here too.
+        export NIX_CONFIG='extra-experimental-features = nix-command ca-derivations dynamic-derivations recursive-nix pipe-operators parallel-eval wasm-builtin
           substituters =
           connect-timeout = 1'
+
+        # Too many concurrent nix-instantiate can freeze the system (nix
+        # sqlite db busy) -- serialize via flock.
+        if [ -d /build-locks ]; then
+          exec 9>/build-locks/dynamic-optimize.lock
+          flock 9
+        fi
 
         drv=$(nix-instantiate --add-root "$TMPDIR/inner-drv" \
           "${innerExprPath}" \
@@ -174,9 +203,9 @@ let
           --argstr optimizeLibPath "${optimizeLibPath}" \
           --argstr toolPathsJSON ${lib.escapeShellArg toolPathsJSON} \
           --argstr targetSystem "${system}" \
-          --argstr folderSrc "${folderSrc}" \
+          --argstr folderSrc "${derefFolderSrc}" \
           --arg prime ${primeArg} \
-          --argstr primeOverrideJSON ${lib.escapeShellArg primeOverrideJSON} \
+          --arg doom ${doomArg} \
           --argstr droppedExtensions ${lib.escapeShellArg droppedExtsArg})
         # --add-root makes stdout the root symlink, not the .drv path.
         cp "$(readlink -f "$drv")" "$out"
@@ -186,15 +215,8 @@ let
     outputHashAlgo = "sha256";
     outputHashMode = "text";
     requiredSystemFeatures = [ "recursive-nix" ];
-    # This step only ever runs nix-instantiate -- cheap evaluation, not
-    # worth substitute-checking or offering to a remote builder. The real
-    # per-file work (the .drv this produces) is a completely separate
-    # derivation graph, dispatched normally.
     preferLocalBuild = true;
     allowSubstitutes = false;
-    # Claims whole cores budget, no second instantiateDrv fits alongside it
-    # -- was freezing the machine when many ran concurrently.
-    cores = 0;
   };
 in
 builtins.outputOf instantiateDrv.outPath "out"

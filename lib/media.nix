@@ -317,6 +317,20 @@ rec {
         transform {
           args = "-gravity ${gravity} -crop 100%x50%+0+0";
         };
+
+      # trimBorder:
+      #   Crops away a solid-color border by trimming edge-color pixels
+      #   (fuzz-tolerant, so near-matching border colors still get cut).
+      #   Type: trimBorder -> { ?fuzz } -> src -> Derivation
+      trimBorder =
+        {
+          fuzz ? 5,
+        }:
+        src:
+        transform {
+          args = "-fuzz ${toString fuzz}% -trim";
+          nameSuffix = "trimmed-border";
+        } src;
     }
     // generateCropFunctions
     // generateGrowFunctions

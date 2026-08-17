@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath // empty' | { read -r f; case \"$f\" in *.nix) nix fmt -- \"$f\" ;; esac; } 2>/dev/null || true"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; case \"$f\" in *.nix) git add -- \"$f\" ;; esac; } 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmdline=$(jq -r '.tool_input.command // empty'); if echo \"$cmdline\" | grep -qE '(^|[; &|])nix (build|eval)([ ]|$)|nix-instantiate'; then running=$(pgrep -x nix 2>/dev/null || true); if [ -n \"$running\" ]; then reason=\"Another nix process appears to already be running (PID(s): $running) - this machine is RAM-constrained, confirm before running another.\"; printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"%s\"}}' \"$reason\"; fi; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

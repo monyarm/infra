@@ -7,4 +7,34 @@
   "*.rtf"
   "*.md" # readmes (not md2/md3 -- Quake models)
   "*.DS_Store" # Finder junk
+  "*.bat" # Windows batch scripts
+  "*.lnk"
+  "__redist"
+  "webcache.zip"
+  "app/webcache.zip"
+  "goggame-*.info" # Galaxy metadata, not game data
+  "goggame-*.hashdb"
+  "goggame-*.ico"
+  "goggame-*.png" # Galaxy icon renders (16x16x32 etc.), not game art
+  "goggame-*.script" # Galaxy (un)install script
+  "goggame-galaxyFileList.ini" # Galaxy file manifest
+  "goglog.ini"
+  ".DepotDownloader"
+  "scummvm" # bundled scummvm, NOT "ScummVM" which also contains lucasarts games in some releases
+  "DOSBOX/!dosbox*.conf" #bundled dosbox
+  "VERSION"
+  "README"
+  "READ.ME"
+  "*.txt" # readmes, changelogs, etc.
+  "*.TXT" # readmes, changelogs, etc.
+  "savegame.___"
+  "winsetup.exe"
+  "winsetup.ini"
+  "setup.exe"
+  "setup.ini"
+  "install.exe"
+  "INSTALL.EXE"
+  "*.conf.bak"
+  "wallpapers"
+  "Wallpapers"
 ]

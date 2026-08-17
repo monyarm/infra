@@ -1,12 +1,4 @@
-# Wraps builtins.wasm (Determinate Nix) for pure value-in/value-out
-# functions worth compiling instead of hand-rolled Nix loops. Targets
-# wasm32-unknown-unknown, not wasip1: no filesystem/OS access needed, and
-# its std ships directly in nixpkgs' rustc.
-{
-  pkgs,
-  nixWasmRustPath,
-  ...
-}:
+{ pkgs, nixWasmRustPath, ... }:
 let
   # crateDir's Cargo.toml has a nix-wasm-rust path dep, populated here from
   # the flake input. Input-addressed, not CA -- fixed source is deterministic.
@@ -49,6 +41,11 @@ let
     name = "nix-wasm-plugin-serialize";
     crateDir = ./wasm/serialize;
   };
+
+  dispatchModule = buildWasmModule {
+    name = "nix-wasm-plugin-dispatch";
+    crateDir = ./wasm/dispatch;
+  };
 in
 {
   inherit buildWasmModule;
@@ -73,4 +70,13 @@ in
       path = "${serializeModule}/nix_wasm_plugin_serialize.wasm";
       function = "to_sexpr";
     } value;
+
+  # See lib/misc.nix's resolveDispatchBatch for the Nix-side entries/files
+  # shape this expects and the semantics it must stay faithful to.
+  resolveDispatchBatch =
+    input:
+    builtins.wasm {
+      path = "${dispatchModule}/nix_wasm_plugin_dispatch.wasm";
+      function = "resolve_dispatch_batch";
+    } input;
 }

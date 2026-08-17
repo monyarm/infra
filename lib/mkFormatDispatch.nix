@@ -79,35 +79,30 @@ let
   resolvedHandlers = handlers // aliasHandlers // { _ = passthroughHandler; };
 
   pickHandler =
-    prime: primeOverride: name: h:
-    if primeOverride.${name} or prime then h.prime else h.normal;
+    prime: _name: h:
+    if prime then h.prime else h.normal;
 
   # "$"/"*"-prefixed alias names pass through as-is, not dot-prefixed (see
   # lib/misc.nix's resolveExtSorted).
   mkDispatchMap =
-    prime: primeOverride:
+    prime:
     lib.mapAttrs' (
       name: h:
       lib.nameValuePair (if lib.hasPrefix "$" name || lib.hasSuffix "*" name then name else ".${name}") (
-        pickHandler prime primeOverride name h
+        pickHandler prime name h
       )
     ) resolvedHandlers;
 
   toList = x: if builtins.isList x then x else [ x ];
 
-  dispatchMapNormal = mkDispatchMap false { };
-  dispatchMapPrime = mkDispatchMap true { };
+  dispatchMapNormal = mkDispatchMap false;
+  dispatchMapPrime = mkDispatchMap true;
   dispatchMapNormalSorted = sortDispatchKeys dispatchMapNormal;
   dispatchMapPrimeSorted = sortDispatchKeys dispatchMapPrime;
 
   # Mirrors optimize/default.nix's cachedDispatchMap/cachedSortedKeys.
-  cached =
-    normalV: primeV: computeFn: prime: primeOverride:
-    if primeOverride == { } then (if prime then primeV else normalV) else computeFn prime primeOverride;
-  cachedDispatchMap = cached dispatchMapNormal dispatchMapPrime mkDispatchMap;
-  cachedSortedKeys = cached dispatchMapNormalSorted dispatchMapPrimeSorted (
-    prime: primeOverride: sortDispatchKeys (mkDispatchMap prime primeOverride)
-  );
+  cachedDispatchMap = prime: if prime then dispatchMapPrime else dispatchMapNormal;
+  cachedSortedKeys = prime: if prime then dispatchMapPrimeSorted else dispatchMapNormalSorted;
 
   # Sibling keys, never format-identifying -- excluded from the dispatch
   # scan below, or `{ cue; bin = [...]; }` wrongly matches "bin" first.
@@ -126,7 +121,6 @@ let
   run =
     {
       prime ? false,
-      primeOverride ? { },
       fallback,
       extra ? null,
     }:
@@ -135,15 +129,14 @@ let
       map (run {
         inherit
           prime
-          primeOverride
           fallback
           extra
           ;
       }) x
     else
       let
-        realMap = cachedDispatchMap prime primeOverride;
-        sortedKeys = cachedSortedKeys prime primeOverride;
+        realMap = cachedDispatchMap prime;
+        sortedKeys = cachedSortedKeys prime;
         dispatchMap = realMap // {
           "_" = fallback;
         };

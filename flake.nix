@@ -63,15 +63,21 @@
       url = "github:figsoda/drowse";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Own pin, not `follows` -- avoids invalidating already-optimized files
-    # on unrelated nixpkgs bumps. Bump manually.
-    optimize-nixpkgs.url = "github:nixos/nixpkgs/1d4e0f865d68258aada31e68e6d79c8c463f3b34";
+    # packages/maxima-cli.nix -- static Rust build (Cargo.lock hand-committed,
+    # see packages/maxima-cli-cargo-lock.nix), no dynamic-derivation codegen.
+    crane.url = "github:ipetkov/crane";
+
     determinate-nix = {
       url = "https://flakehub.com/f/DeterminateSystems/nix-src/*";
       # inputs.nixpkgs.follows = "nixpkgs";
       # inputs.flake-parts.follows = "flake-parts";
       # follows omitted to allow use of substituters
     };
+    # Own pin, not `follows` -- avoids invalidating already-optimized files
+    # on unrelated nixpkgs bumps. Bump manually.
+    optimize-nixpkgs.url = "github:nixos/nixpkgs/1d4e0f865d68258aada31e68e6d79c8c463f3b34";
+    # Separate pin from determinate-nix above -- used for optimizePkgs.
+    determinate-nix-optimize.url = "https://flakehub.com/f/DeterminateSystems/nix-src/=3.21.7";
     # Value FFI type + nix_wasm_init_v1 for builtins.wasm plugins. Source
     # only (flake = false); lib/wasm.nix vendors it as a Cargo dependency.
     nix-wasm-rust = {
@@ -81,6 +87,13 @@
 
     rom = {
       url = "github:manic-systems/rom";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Hiccup-style HTML generation, used by hosts/home/monyarm/games/Steam/report.nix
+    # (and available repo-wide as the `niccup` lib arg -- see hosts/modules/lib.nix).
+    niccup = {
+      url = "github:embedding-shapes/niccup";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -130,11 +143,13 @@
             inherit (pkgs) lib;
             inherit sources;
             drowseSrc = inputs.drowse;
+            craneLib = inputs.crane.mkLib pkgs;
+            niccupLib = inputs.niccup.lib;
           };
           # Name-based, not value-based: isDerivation forces full
           # construction, cost ~8.6% of an eval. Add non-derivation
           # packages/*.nix names here; build fails loudly if you forget.
-          nonDerivationPackageNames = [ ];
+          nonDerivationPackageNames = [ "minijson-dub-lock" ];
         in
         rec {
           inherit legacyPackages;
@@ -167,6 +182,7 @@
                 "hosts/home/*/config/JetBrains/*/**"
                 "**/.github/**"
                 "**/*.sops.nix"
+                ".claude/skills/**"
 
               ];
               # nix

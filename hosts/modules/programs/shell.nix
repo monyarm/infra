@@ -6,5 +6,7 @@
     zsh
     bat
     tree
+    cargo
+    nix-prefetch-git
   ];
 }

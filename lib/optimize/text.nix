@@ -75,24 +75,28 @@ let
         if filter.protectAfter == null then
           ''${filter.cmd} < "${src}" > "$out" || [ "$?" = 1 ]''
         else
-          ''bash ${./sh/protect-byte-ranges.sh} ${lib.escapeShellArg filter.protectAfter} "${src}" "$out" -- ${filter.cmd}'';
+          ''${pkgs.bash}/bin/bash ${./sh/protect-byte-ranges.sh} ${lib.escapeShellArg filter.protectAfter} "${src}" "$out" -- ${filter.cmd}'';
     in
-    pkgs.runCommand "${getName src}-${filter.name}"
-      {
-        nativeBuildInputs =
-          filter.nativeBuildInputs ++ lib.optional (filter.protectAfter != null) pkgs.gawk;
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        if [ -s "${src}" ]; then
-          ${run}
-        else
-          cp "${src}" "$out"
-        fi
-      '';
+    derivation {
+      name = "${getName src}-${filter.name}";
+      system = pkgs.stdenv.hostPlatform.system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH="${pkgs.coreutils}/bin:${pkgs.gawk}/bin:$PATH"
+          if [ -s "${src}" ]; then
+            ${run}
+          else
+            ${pkgs.coreutils}/bin/cp "${src}" "$out"
+          fi
+        ''
+      ];
+      __contentAddressed = true;
+      allowSubstitutes = false;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 
   # Chains several filters as one piped shell pipeline in ONE derivation --
   # same fallback semantics as applyFilter (empty/missing src ->
@@ -106,24 +110,28 @@ let
     if lib.any (f: f.protectAfter != null) filters then
       throw "pipeFilters: protectAfter filters can't be piped together, only used with applyFilter individually"
     else
-      pkgs.runCommand "${getName src}-${lib.concatMapStringsSep "-" (f: f.name) filters}"
-        {
-          nativeBuildInputs = lib.concatMap (f: f.nativeBuildInputs) filters;
-          __contentAddressed = true;
-          allowSubstitutes = false;
-          outputHashAlgo = "sha256";
-          outputHashMode = "flat";
-        }
-        ''
-          if [ -s "${src}" ]; then
-            # Grouped: `cmd1 | cmd2 < in > out` attaches BOTH redirects to
-            # cmd2 alone (cmd1 gets no stdin at all and hangs) -- wrapping
-            # the whole pipe applies < to its first stage and > to its last.
-            { ${lib.concatMapStringsSep " | " (f: f.cmd) filters} ; } < "${src}" > "$out" || [ "$?" = 1 ]
-          else
-            cp "${src}" "$out"
-          fi
-        '';
+      derivation {
+        name = "${getName src}-${lib.concatMapStringsSep "-" (f: f.name) filters}";
+        system = pkgs.stdenv.hostPlatform.system;
+        builder = "${pkgs.bash}/bin/bash";
+        args = [
+          "-c"
+          ''
+            if [ -s "${src}" ]; then
+              # Grouped: `cmd1 | cmd2 < in > out` attaches BOTH redirects to
+              # cmd2 alone (cmd1 gets no stdin at all and hangs) -- wrapping
+              # the whole pipe applies < to its first stage and > to its last.
+              { ${lib.concatMapStringsSep " | " (f: f.cmd) filters} ; } < "${src}" > "$out" || [ "$?" = 1 ]
+            else
+              ${pkgs.coreutils}/bin/cp "${src}" "$out"
+            fi
+          ''
+        ];
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "flat";
+      };
 in
 {
   removeBlankLines = args: src: applyFilter (blankLinesFilter args) src;

@@ -41,6 +41,7 @@ let
         inherit sources;
         nixWasmRustPath = inputs.nix-wasm-rust;
         drowseSrc = inputs.drowse;
+        craneLib = inputs.crane.mkLib final;
       }
     )
     (_final: _prev: {

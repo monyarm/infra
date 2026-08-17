@@ -34,11 +34,24 @@ build_expr() {
   local hashVal="$1"
   cat <<EOF
 (import ./lib/fetchers.nix {
-  pkgs = import <nixpkgs> {};
+  pkgs = import <nixpkgs> {
+    config.allowUnfree = true;
+    overlays = [
+      (
+        final: prev:
+        import ./packages {
+          pkgs = final;
+          inherit (prev) lib;
+          sources = null;
+        }
+      )
+    ];
+  };
   dirs = null;
   importSopsString = null;
   urlEncode = x: x;
   splitFiles = (fileList: _drv: map (_: _drv) fileList);
+  removeFiles = null;
   getFileNameFromUrl = _u: "download";
   sources = null;
 }).fetchSteamCdnImages {

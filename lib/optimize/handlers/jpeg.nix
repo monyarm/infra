@@ -5,6 +5,8 @@
   ...
 }:
 let
+  guardTmpJpg = guardSizeTail "tmp.jpg";
+
   jpegoptim =
     src:
     pkgs.runCommand "${getName src}-jpegoptim.jpg"
@@ -18,7 +20,7 @@ let
       ''
         cp "${src}" tmp.jpg
         jpegoptim --strip-all --all-normal tmp.jpg || rm -f tmp.jpg
-        ${guardSizeTail "tmp.jpg" src}
+        ${guardTmpJpg src}
       '';
 
   mozjpeg =
@@ -33,7 +35,7 @@ let
       }
       ''
         cjpeg -quality 85 -optimize "${src}" > tmp.jpg || rm -f tmp.jpg
-        ${guardSizeTail "tmp.jpg" src}
+        ${guardTmpJpg src}
       '';
 in
 {

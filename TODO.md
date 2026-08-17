@@ -1,5 +1,66 @@
 # TODO
 
+## Fix `<nixpkgs>` system registry pin
+
+`nix registry list` shows `system flake:nixpkgs path:/nix/store/2gi66ywhbj66ssbz5bhgibzafa15m7zy-source`
+overriding the `global` entries -- resolves to a stale 24.11-era nixpkgs
+(confirmed missing `lib.sources.urlToName`, which real/current nixpkgs has).
+Any ad-hoc `nix eval`/`nix build --expr` using `<nixpkgs>` (not this flake's
+own pinned input) silently gets that old tree. Worked around in
+`update-sources.py` via `nixpkgs_import_expr()` (resolves through
+`builtins.getFlake "git+file://..."` instead), but the stale system pin
+itself is still there and will bite anything else that reaches for
+`<nixpkgs>` on this machine.
+
+## Dynamic derivations for npm/pnpm/cargo/go dep-hash pinning
+
+Every `npmDepsHash`/`pnpmDeps.hash`/`cargoHash`/`vendorHash` in this repo
+(e.g. `packages/caveman-cli.nix`'s `pnpmDeps.hash`) is a plain hand-pinned
+FOD hash today -- same as any nixpkgs package, refreshed by rebuilding with
+`lib.fakeHash` and copying the mismatch. Worth revisiting with the same
+`recursive-nix`/`dynamic-derivations`/`builtins.outputOf` mechanism
+`lib/optimize/dynamic.nix` already uses: an outer derivation actually runs
+the real fetch (`pnpm install`/`npm install`/`cargo fetch`/etc, needs real
+network -- unlike `dynamic.nix`'s offline inner step), measures the
+resulting store hash itself, `nix-instantiate`s a `fetchPnpmDeps {... hash = <measured>;}`-shaped expression, and chains onto it via
+`builtins.outputOf` -- self-resolving on every build, no manual
+fakeHash-and-paste step whenever a HEAD-pinned source moves.
+
+Not started: this is genuinely new infrastructure, not a copy of the
+existing pattern -- `dynamic.nix`'s outer step gets to skip network/trust
+concerns entirely because wadptr/rpatool/minijson are pre-built ambient
+inputs, not fetched inside it. This one fundamentally can't.
+
+## Convert media handlers (png.nix et al) from mkDerivation to primitive derivation
+
+`lib/optimize/handlers/png.nix` (and the other media handlers: webp/jpeg/
+gif/ico/tga/mp3/ogg/wma/wav/flac/swf/obj -- anything using `pkgs.runCommand`)
+still goes through nixpkgs' full `stdenv.mkDerivation` construction machinery
+per stage (`assertValidity`/`mapAttrs`/`optionalAttrs`/etc), confirmed via
+eval-profiler flamegraph as real, non-trivial eval-time overhead (~11-15% of
+a real archive's eval, e.g. `assertValidity`/`elemAt`/`mapAttrs` frames in
+`make-derivation.nix`). `guardSize`/`passthroughCopy`/`dynamic-inner.nix`'s
+own final assembly step already proved the primitive-`derivation {}` pattern
+works and is much cheaper to construct (see this session's dispatch-batching
+work).
+
+**Don't just convert the recipes wholesale** -- that changes every stage's
+derivation hash, forcing every already-optimized archive's PNGs/media to
+rebuild from scratch (real, expensive recompression work across every
+archive in the registry, unlike the cheap copy-only conversions already
+done). Converting is only worth doing once there's a way to **seed the new
+primitive derivations' outputs with the existing mkDerivation-based
+outputs' already-computed content** -- the *shape* of the derivation
+changes (primitive vs stdenv-based), but the actual build-phase *logic*
+(same oxipng/optipng/advpng invocations, same flags) stays identical, so
+the output bytes should be byte-identical too. If the output can be
+seeded/pre-populated under the new derivation's own computed hash (these
+are all `__contentAddressed` already), Nix would recognize it as already
+built and skip re-running oxipng/etc entirely, rather than needing a real
+rebuild. Needs figuring out the actual seeding mechanism (e.g. building
+under the old recipe once, then `nix-store --add`/registering that output
+under the new CA derivation's hash) before doing the conversion for real.
+
 ## DONE: optimize pipeline moved to build-time dynamic derivations
 
 Archive/pk3 optimize (`extractOptimizeRepack`) no longer fans out per-member
@@ -282,4 +343,36 @@ whether it's nix-direnv's own cache-invalidation (`use flake .`, which
 should in principle only watch `flake.nix`/`flake.lock` by default) actually
 watching more than that here, or whether it's flake-parts' `imports = [ ./hosts ]` forcing evaluation (and thus git-tree-dependence) of the entire
 module tree even when only the small fixed `devShells.default` is requested.
-Needs to be pinned down before a fix can be scoped correctly.
+
+## Disc ripping: fetcher variants, drive system-features, DAT-identified dynamic derivations
+
+Route physical disc ripping through the same build-lock machinery
+(`/build-locks/cdrom.lock`, alongside `dynamic-optimize.lock` -- see
+`lib/optimize/dynamic.nix`) -- only one disc can be read at a time
+regardless of which rip strategy handles it.
+
+- Gate ripping derivations on drive presence via Nix's own
+  `buildMachines.*.supportedFeatures` / `requiredSystemFeatures` mechanism
+  (already used for `kvm`/`big-parallel`/etc, see
+  `hosts/modules/base/default.nix:21`), not a bespoke `mkOption` boolean --
+  a `"disk-drive"` feature declared on hosts that physically have one, so
+  Nix's own scheduler routes/refuses ripping derivations correctly instead
+  of failing at build time against a missing device.
+- `redumper` needs its own, stricter feature (e.g. `"redumper-drive"`) --
+  it's picky about which drive models support the raw C2/subchannel reads
+  it needs, so "has *a* disk drive" isn't sufficient for redumper jobs
+  specifically.
+- Fetchers are per-rip-strategy variants, same shape as the existing
+  `lib/fetchers/*.nix` (fetchGog/fetchSteam/fetchItch/...): PC software
+  copies the disc's contents straight to `$out`; PS2 does whatever the
+  existing `~/local/dvdrip` workflow already does (see
+  `hosts/modules/config/doas.nix:11`'s passwordless-doas grant to it -- not
+  the `dvd::rip` GUI package); PS1 and other formats needing accurate
+  dumping go through `redumper`.
+- Idea: identify the ripped disc via a DAT file (redump.org-style hash ->
+  title database) at *build* time (the disc's identity isn't knowable at
+  eval time, only after it's actually read) and rename the resulting
+  derivation accordingly -- same build-time-dynamic-derivation shape as
+  `lib/optimize/dynamic.nix`'s `instantiateDrv`/`builtins.outputOf`
+  pattern, applied to naming instead of per-file optimization.
+  Needs to be pinned down before a fix can be scoped correctly.

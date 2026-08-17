@@ -1,0 +1,9 @@
+______________________________________________________________________
+
+## name: feedback-investigate-dont-reassure description: "When the user reports an observed symptom (e.g. unexpected rebuilds), find the actual mechanism before asserting nothing changed" metadata: node_type: memory type: feedback originSessionId: 28aa8097-62b7-4573-a0a5-4153288368f7
+
+Don't reflexively reassure ("no, X isn't affected") when the user reports something they're directly observing happen. Go find the actual causal mechanism first, even if it takes several angles of investigation, and lead with the concrete finding once found.
+
+**Why:** In a session investigating unexpected dynamic-derivation rebuilds in ~/.nix, repeated "I checked and nothing we changed affects that" responses (based on correct-but-incomplete static analysis) frustrated the user, who was certain something changed because they'd personally just finished a full build minutes earlier. The real mechanism turned out to be `deploy.sh` running a whole-repo `nix fmt` (nixfmt+deadnix+statix) before building, while the earlier successful build (`measure-compression.py`) never formats anything — so files edited-but-not-yet-formatted the day before would get reformatted for the first time during deploy, changing bytes that feed `optimize-lib-trimmed`'s hash. This was only found by reading `deploy.sh` directly, not by repeatedly re-checking the same file-scope argument.
+
+**How to apply:** When a user reports a concrete symptom they observed firsthand, treat "nothing changed" as a hypothesis to disprove, not a conclusion to defend. Look at the actual entry points/scripts involved (e.g. `deploy.sh`, hooks, wrapper scripts) before re-asserting prior analysis. If genuinely stuck after real investigation, say so plainly and propose a concrete empirical test rather than repeating the same reassurance.

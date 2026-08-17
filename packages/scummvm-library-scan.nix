@@ -25,6 +25,7 @@ let
         LGOGDOWNLOADER = "${pkgs.lgogdownloader}/bin/lgogdownloader"
         LEGENDARY = "${pkgs.legendary-gl}/bin/legendary"
         SCUMMVM = "${pkgs.scummvm}/bin/scummvm"
+        MAXIMA_CLI = "${pkgs.maxima-cli}/bin/maxima-cli"
 
         # Stripped before fuzzy-matching so editions/remasters/trademark cruft
         # (e.g. "Beneath a Steel Sky (GOG Deluxe Edition)") don't tank the ratio
@@ -181,6 +182,55 @@ let
                 return [g["app_title"] for g in data]
 
 
+        # maxima-cli logs every line through a custom log::Log impl (see
+        # maxima-lib/src/util/log.rs) that ANSI-colorizes and prefixes every
+        # message with "LEVEL - [module::path] - " before the actual text --
+        # confirmed against source at the pinned commit, not assumed. Strip
+        # both before matching the list_games format string itself:
+        # "{slug:<35} - {name:<35} - {offer_id:<25} - Installed: {bool}".
+        MAXIMA_ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
+        MAXIMA_LOG_PREFIX_RE = re.compile(r"^\S+ - \[[^\]]+\] - ", re.MULTILINE)
+        # Rust's `:<N` pads only when content is shorter than N -- long
+        # titles/slugs get no padding, so field boundaries can't be told
+        # apart by counting spaces. Slugs/offer IDs never contain " - ", so
+        # anchor slug at the start and offer_id+Installed at the end; greedy
+        # `.+` for name then finds the true rightmost separator even when
+        # the title itself contains " - " (e.g. "S.T.A.L.K.E.R. - Shadow of
+        # Chernobyl").
+        MAXIMA_GAME_LINE_RE = re.compile(
+            r"^\S+\s+-\s+(.+)\s+-\s+\S+\s*-\s*Installed:\s*\w+\s*$",
+            re.MULTILINE,
+        )
+
+
+        def maxima_titles(secrets_file):
+            auth = get_secret(secrets_file, "MAXIMA_AUTH")
+            if not auth:
+                print(
+                    "Warning: MAXIMA_AUTH not found in secrets, skipping Maxima.",
+                    file=sys.stderr,
+                )
+                return []
+            with tempfile.TemporaryDirectory() as home:
+                maxima_dir = Path(home) / ".local" / "share" / "maxima"
+                maxima_dir.mkdir(parents=True)
+                (maxima_dir / "auth.toml").write_text(auth)
+                env = {**os.environ, "HOME": home}
+                res = subprocess.run(
+                    [MAXIMA_CLI, "list-games"],
+                    env=env,
+                    capture_output=True,
+                    text=True,
+                )
+                clean = MAXIMA_LOG_PREFIX_RE.sub(
+                    "", MAXIMA_ANSI_RE.sub("", res.stdout)
+                )
+                return [
+                    m.group(1).strip()
+                    for m in MAXIMA_GAME_LINE_RE.finditer(clean)
+                ]
+
+
         def steam_installed_titles():
             steamapps = Path.home() / ".steam" / "steam" / "steamapps"
             vdf = steamapps / "libraryfolders.vdf"
@@ -286,6 +336,7 @@ let
                 "GOG": gog_titles(args.secrets_file),
                 "Epic": epic_titles(args.secrets_file),
                 "Steam": steam_titles(args.secrets_file),
+                "Maxima": maxima_titles(args.secrets_file),
             }
 
             for source, titles in sources.items():

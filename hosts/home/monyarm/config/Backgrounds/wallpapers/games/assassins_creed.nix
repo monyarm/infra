@@ -125,9 +125,9 @@ with image;
     let
 
       keepFiles = [
-        "Logo Wallpaper/Horizontal/ACMirage_LogoWall.jpg"
-        "Mid-Res/Basim/ACMirage_MR_Basim_Wallpaper.jpg"
-        "Mid-Res/Roshan/ACMirage_MR_Roshan_Wallpaper.jpg"
+        "Fan Kit/Logo Wallpaper/Horizontal/ACMirage_LogoWall.jpg"
+        "Fan Kit/Mid-Res/Basim/ACMirage_MR_Basim_Wallpaper.jpg"
+        "Fan Kit/Mid-Res/Roshan/ACMirage_MR_Roshan_Wallpaper.jpg"
       ];
     in
     fetchzipSelective {

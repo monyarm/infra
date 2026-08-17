@@ -17,6 +17,10 @@
   # sandbox never builds minijson itself, it receives an already-built
   # minijsonPath the same way it already does for wadptr/rpatool.
   drowseSrc,
+  # packages/maxima-cli.nix's craneLib.buildPackage -- without this the
+  # self-referential `packages` overlay below builds maxima-cli with
+  # craneLib = null (packages/default.nix's default) and crashes.
+  craneLib,
 }:
 [
   (
@@ -24,7 +28,12 @@
     import packagesPath {
       pkgs = final;
       inherit (prev) lib;
-      inherit sources libPath drowseSrc;
+      inherit
+        sources
+        libPath
+        drowseSrc
+        craneLib
+        ;
     }
   )
   (_final: _prev: { nix = determinateNix; })

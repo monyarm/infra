@@ -27,10 +27,17 @@ fetcher_expr="(with import ./lib/fetchers.nix {
     pkgs = import <nixpkgs> { };
     lib = import <nixpkgs/lib>;
   }).dirs;
-  importSopsString = (import ./lib/imports.nix {
+  getFileNameFromUrl = (import ./lib/strings.nix {
     pkgs = import <nixpkgs> { };
     lib = import <nixpkgs/lib>;
-  }).importSopsString;
+    alphabets = null;
+    parallel = null;
+  }).getFileNameFromUrl;
+  importSopsString = null;
+  urlEncode = null;
+  sources = null;
+  splitFiles = null;
+  removeFiles = null;
 }; fetchMyNintendo)"
 cmd=(nix-prefetch "$fetcher_expr" --url "$url" --sha256 "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
 "${cmd[@]}"

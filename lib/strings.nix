@@ -100,28 +100,17 @@ rec {
   urlEncode = urlEncode' "utf-8";
   urlEncodeEucJp = urlEncode' "euc-jp";
 
-  # safeCharsSet as an attrset (`?` lookup) instead of a list scanned via
-  # builtins.elem -- ~2.5x faster per call, measured via NIX_SHOW_STATS
-  # deltas against an identity-function baseline at 30000 calls (~89us/call
-  # -> ~35us/call). Worth it since this is called once per archive member's
-  # derivation name across every pk3's optimize chain.
-  safeCharsSet = builtins.listToAttrs (
-    map (c: {
-      name = c;
-      value = true;
-    }) (lib.stringToCharacters "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.")
-  );
-
   sanitizeName =
     name:
     let
       # Replace spaces with underscores
       noSpaces = lib.replaceStrings [ " " ] [ "_" ] name;
       # Filter out any other character that isn't alphanumeric, -, _, or .
-      # Nix built-in validation is picky, so keeping it to a safe subset is best.
-      chars = lib.stringToCharacters noSpaces;
-      filteredChars = builtins.filter (c: safeCharsSet ? ${c}) chars;
-      filtered = builtins.concatStringsSep "" filteredChars;
+      # Not stringToCharacters + filter: one call per char, biggest per-file
+      # cost (trace-function-calls). split = single regex call.
+      filtered = builtins.concatStringsSep "" (
+        builtins.filter builtins.isString (builtins.split "[^a-zA-Z0-9_.-]+" noSpaces)
+      );
     in
     # Some sources (e.g. itch's multi-upload names, which concatenate every
     # upload's id+hash+timestamp) are already 150+ chars on their own; this

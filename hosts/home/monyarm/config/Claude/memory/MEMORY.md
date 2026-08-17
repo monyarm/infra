@@ -1,0 +1,17 @@
+- [Minimal abstractions](feedback_minimal_abstractions.md) — prefers reusing existing minimal patterns/helpers over new generic wrappers.
+- [Verify formats before implementing](feedback_verify_formats_before_implementing.md) — research real-world formats/conventions before writing serializers; validate against independent parsers.
+- [Commit style](feedback_commit_style.md) — succinct commit messages (title-only or 1-2 sentences), `--no-gpg-sign` for Claude commits in ~/.nix.
+- [Background task pattern](feedback_background_task_pattern.md) — use Bash's run_in_background, not nohup+logfile+poll-loop wrappers.
+- [Wait when told](feedback_wait_when_told.md) — "do X, tell me Y, wait" means stop entirely, not keep working on other phases.
+- [No tail/timeout on commands](feedback_no_tail_short_logs.md) — don't pipe moderate output through tail or wrap builds in timeout, both hide progress.
+- [Don't run "give me a command to paste"](feedback_dont_run_requested_paste_commands.md) — hand it over as text, don't execute/dry-run it yourself.
+- [git add new .nix files immediately](feedback_git_add_new_nix_files.md) — untracked files are invisible to `builtins.getFlake`, causing confusing "attribute missing" errors.
+- [No shell history snooping](feedback_no_shell_history_snooping.md) — don't grep ~/.zsh_history etc. to recover lost context; ask the user directly.
+- [Answer before implementing](feedback_answer_before_implementing.md) — "assuming X, do Y" requests: verify/answer X first, don't jump straight to building Y.
+- [No du/ls/find on whole /nix/store or /](feedback_no_du_whole_nix_store.md) — never walk the whole store or filesystem root; resolve exact paths via nix instead.
+- [Investigate, don't reassure](feedback_investigate_dont_reassure.md) — find the real mechanism behind a reported symptom before asserting nothing changed.
+- [Generic shared tooling](feedback_generic_shared_tooling.md) — never hardcode single-consumer logic into shared scripts (update-sources.py etc); check for native support before hand-rolling.
+- [No IFD](feedback_no_ifd.md) — don't builtins.readFile a derivation's output at eval time; do the check at build time instead.
+- [Verify against pinned version](feedback_verify_against_pinned_version.md) — fetch a dependency's docs/source at the exact locked commit, not master/latest.
+- [Use codegraph, not subagents](feedback_use_codegraph_not_subagents.md) — for file/symbol lookups in this repo, call codegraph_explore directly instead of dispatching Explore/general-purpose agents.
+- [packages/ has two overlay sites](project_packages_two_overlay_sites.md) — hosts/default.nix and lib/optimize/overlays.nix both re-import packages/default.nix separately from flake.nix; new callPackage args (craneLib etc.) must be threaded into all of them.

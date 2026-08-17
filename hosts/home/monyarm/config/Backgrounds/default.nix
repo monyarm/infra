@@ -5,8 +5,8 @@
   config,
   dirs,
   customLib,
-  optimizeFolderDynamic,
   parallel,
+  optimize',
   ...
 }:
 let
@@ -42,45 +42,30 @@ let
 
   allWallpaperDrvs = lib.flatten (parallel (map builtins.attrValues) importedWallpapers);
 
-  # Flatten every raw wallpaper file into one pool folder *before*
-  # optimizing -- same flattening the final merge step used to do to
-  # *optimized* outputs, just moved earlier. Lets the whole ~1600-wallpaper
-  # set go through optimizeFolderDynamic as a single build-time dynamic
-  # derivation instead of ~1600 individual eval-time `optimize'` calls, each
-  # separately paying the full dispatchExt/resolveExt/rename machinery --
-  # confirmed via eval-profiler flamegraph to be ~20% of the entire eval on
-  # its own (by far the largest single chunk of repo code in the profile).
-  rawWallpaperPool =
-    pkgs.runCommand "raw-wallpaper-pool"
+  optimizedWallpapers = parallel (map optimize') allWallpaperDrvs;
+
+  wallpaperPool =
+    pkgs.runCommand "wallpaper-pool"
       {
-        inherit allWallpaperDrvs;
+        wallpapersListFile = pkgs.writeText "wallpaper-paths" (
+          builtins.concatStringsSep "\n" optimizedWallpapers
+        );
+
         __contentAddressed = true;
-        # Not preferLocalBuild: the raw wallpaper fetches are already free
-        # to run remotely -- pinning this flatten-into-one-folder step local
-        # would drag every one of them back just to symlink them together,
-        # same reasoning the old post-optimize merge step (now gone,
-        # optimizeFolderDynamic's own output already is the merged folder)
-        # used to have.
         allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "recursive";
       }
       ''
         mkdir -p $out
-        for item in $allWallpaperDrvs; do
-          # -L follows the symlinks to the actual files inside the store paths
-          # -type f grabs everything, no matter how deep the nesting is
-          # -exec ln -s {} $out/ \; symlinks them into the flat target folder
-          find -L "$item" -type f -exec ln -s {} "$out/" \;
-        done
+        cores=$(( NIX_BUILD_CORES > 0 && NIX_BUILD_CORES < 8 ? NIX_BUILD_CORES : 8 ))
+        ${pkgs.findutils}/bin/xargs -a "$wallpapersListFile" -d '\n' -n1 -P"$cores" ${pkgs.bash}/bin/bash -c '
+          dir="$1"
+          [ -z "$dir" ] && exit 0
+          ${pkgs.findutils}/bin/find -L "$dir" -type f -exec ln -sf -t "$out/" {} +
+        ' _
       '';
 
-  # Wallpapers use prime = true (lossy); games use plain optimize
-  # (lossless).
-  optimizedWallpaperPool = optimizeFolderDynamic {
-    prime = true;
-    primeOverride = { };
-  } rawWallpaperPool;
 in
 {
   options.wallpapers.enable = lib.mkOption {
@@ -105,7 +90,7 @@ in
         "Pictures/.context".text = "test";
       }
       // {
-        "Pictures/wallpapers".source = optimizedWallpaperPool;
+        "Pictures/wallpapers".source = wallpaperPool;
       };
   };
 }

@@ -5,7 +5,6 @@
   fetchzipNoSubst,
   fetchToolOutput,
   fetchHtmlThenCurl,
-  downloadNamedUrls,
   userAgent,
   ...
 }:
@@ -320,24 +319,84 @@ rec {
       '';
     };
 
-  # Local filenames reuse each CDN url's own extension rather than a
-  # separately hardcoded one, so the two can't drift out of sync. `icon` has
-  # no stable fixed-name CDN url (it needs an app-specific hash from the
-  # Steam Web API), so it's intentionally not fetched here.
+  # some app just missing this asset type in steam's own data, not a fetch
+  # bug -- skip instead of failing whole bundle.
+  steamCdnImagesKnownMissing = {
+    "405780" = [
+      "hero"
+      "logo"
+    ]; # Alpha Polaris: no library_hero, no logo
+    "6010" = [
+      "hero"
+      "logo"
+    ]; # Fate of Atlantis: no library_hero, no logo
+    "32310" = [
+      "hero"
+      "logo"
+    ]; # Indiana Jones and the Last Crusade: no library_hero, no logo
+    "529890" = [
+      "hero"
+      "logo"
+    ]; # Maniac Mansion: same
+  };
+
   fetchSteamCdnImages =
     { appId, sha256 }:
     let
-      cdnBase = "https://cdn.cloudflare.steamstatic.com/steam/apps/${toString appId}";
-      imageUrls = {
-        hero = "${cdnBase}/library_hero.jpg";
-        grid = "${cdnBase}/library_600x900_2x.jpg";
-        wide = "${cdnBase}/header.jpg";
-        logo = "${cdnBase}/logo.png";
+      missingTypes = steamCdnImagesKnownMissing.${toString appId} or [ ];
+
+      storeApiInputJson = builtins.toJSON {
+        ids = [ { inherit appId; } ];
+        context = {
+          language = "english";
+          country_code = "US";
+        };
+        data_request.include_assets = true;
       };
-      extOf = url: lib.last (lib.splitString "." url);
-      urlsByFileName = lib.mapAttrs' (type: url: lib.nameValuePair "${type}.${extOf url}" url) imageUrls;
-      fileNames = lib.mapAttrsToList (type: url: "${type}.${extOf url}") imageUrls;
-      typeNames = lib.attrNames imageUrls;
+
+      # prefer _2x key, fall back to plain. hero_capsule is a different,
+      # portrait asset (374x448) -- not a library_hero alias, don't use.
+      # community_icon: real icon hash, no steamcmd/appinfo needed for it.
+      # logo.png/logo_2x.png aren't in the assets dict at all, even when
+      # they exist -- emitted as .candidate lines, tried by the shell loop
+      # below (2x then 1x), real fetch failure either way (no HEAD probing).
+      resolveAssetsScript = pkgs.writeText "resolve-steam-cdn-images-${toString appId}.py" ''
+        import json, sys
+
+        item = json.load(sys.stdin)["response"]["store_items"][0]
+        assets = item["assets"]
+        fmt = assets["asset_url_format"]
+        skip = set(${builtins.toJSON missingTypes})
+
+        def asset_url(filename):
+            return "https://shared.cloudflare.steamstatic.com/store_item_assets/" + fmt.replace(
+                "''${FILENAME}", filename
+            )
+
+        def emit(localName, key):
+            for k in (key + "_2x", key):
+                if k in assets:
+                    print(localName, asset_url(assets[k]))
+                    return
+            raise KeyError(key)
+
+        if "wide" not in skip:
+            emit("wide.jpg", "header")
+        if "hero" not in skip:
+            emit("hero.jpg", "library_hero")
+        if "grid" not in skip:
+            emit("grid.jpg", "library_capsule")
+        if "icon" not in skip:
+            icon_url = (
+                "https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/"
+                + "${toString appId}/" + assets["community_icon"] + ".jpg"
+            )
+            print("icon.jpg", icon_url)
+
+        if "logo" not in skip:
+            print("logo.png.candidate", asset_url("logo_2x.png"))
+            print("logo.png.candidate", asset_url("logo.png"))
+      '';
 
       baseDrv =
         pkgs.runCommand "steam-cdn-images-${toString appId}"
@@ -345,17 +404,69 @@ rec {
             outputHashMode = "recursive";
             outputHashAlgo = "sha256";
             outputHash = sha256;
-            nativeBuildInputs = [ pkgs.curl ];
+            nativeBuildInputs = [
+              pkgs.curl
+              pkgs.python3
+            ];
             SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
           }
           ''
             mkdir -p $out
-            ${downloadNamedUrls urlsByFileName "$out"}
+
+            curl -fsSL -G "https://api.steampowered.com/IStoreBrowseService/GetItems/v1/" \
+              --data-urlencode ${lib.escapeShellArg "input_json=${storeApiInputJson}"} \
+              | python3 ${resolveAssetsScript} > $TMPDIR/assets.txt
+
+            grep -v '\.candidate ' $TMPDIR/assets.txt | while read -r fname url; do
+              curl -fsSL "$url" -o "$out/$fname"
+            done
+
+            # logo: real games commonly have no library-logo overlay at all
+            # -- try 2x then 1x for real, fail the build if neither exists
+            # (add the appid to steamCdnImagesKnownMissing above instead).
+            if grep -q '\.candidate ' $TMPDIR/assets.txt; then
+              logo_ok=0
+              while read -r fname url; do
+                if curl -fsSL "$url" -o "$out/''${fname%.candidate}"; then
+                  logo_ok=1
+                  break
+                fi
+              done < <(grep '\.candidate ' $TMPDIR/assets.txt)
+              if [ "$logo_ok" != 1 ]; then
+                echo "logo fetch failed (tried 2x and 1x)" >&2
+                exit 1
+              fi
+            fi
           '';
 
-      splitDrvs = splitFiles fileNames baseDrv;
+      presentAssets = lib.filter (a: !(builtins.elem a.type missingTypes)) [
+        {
+          type = "wide";
+          file = "wide.jpg";
+        }
+        {
+          type = "hero";
+          file = "hero.jpg";
+        }
+        {
+          type = "grid";
+          file = "grid.jpg";
+        }
+        {
+          type = "logo";
+          file = "logo.png";
+        }
+        {
+          type = "icon";
+          file = "icon.jpg";
+        }
+      ];
     in
-    lib.listToAttrs (lib.zipListsWith lib.nameValuePair typeNames splitDrvs);
+    lib.listToAttrs (
+      lib.zipListsWith lib.nameValuePair (map (a: a.type) presentAssets) (
+        splitFiles (map (a: a.file) presentAssets) baseDrv
+      )
+    );
 
   fetchSteamGrid =
     { id, sha256 }:

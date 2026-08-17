@@ -62,11 +62,11 @@ lib.mkIf config.games.doom.enable {
 
   programs.steam.games = with config.games.doom.wads; {
     freedoom1 = mkDoom {
-      name = "Freeomd: Phase 1";
+      name = "Freedoom: Phase 1";
       iwad = freedoom1;
     };
     freedoom2 = mkDoom {
-      name = "Freeomd: Phase 2";
+      name = "Freedoom: Phase 2";
       iwad = freedoom2;
     };
     Blasphemer = mkDoom {

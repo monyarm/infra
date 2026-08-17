@@ -25,15 +25,8 @@ let
     "app/DOSBOX"
     "app/Cloud_Saves"
     "tmp"
-    "__redist"
     "__support/!dosbox*.conf"
     "commonappdata"
-    "webcache.zip" # installer cache, verified vs TeenAgent
-    "goggame-*.info" # Galaxy metadata, not game data
-    "goggame-*.hashdb"
-    "goggame-*.ico"
-    "goggame-*.script" # Galaxy (un)install script
-    "goggame-galaxyFileList.ini" # Galaxy file manifest
   ];
 in
 {

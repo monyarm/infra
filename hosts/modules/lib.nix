@@ -12,22 +12,23 @@ let
     if (config != null && config ? lib.file) then config.lib.file.mkOutOfStoreSymlink else (_x: { });
   # Separately-pinned pkgs for lib/optimize and lib/compressRom's actual
   # tool invocations (oxipng, ffmpeg, wadptr, ...) -- see the
-  # optimize-nixpkgs flake input's own comment in flake.nix. Overlay stack
-  # shared with lib/optimize/dynamic.nix's inner reconstruction -- see that
-  # file's comment for why it's just the local packages overlay.
+  # optimize-nixpkgs flake input's own comment in flake.nix.
   optimizePkgs = import inputs.optimize-nixpkgs {
-    inherit (pkgs) system;
+    system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
     overlays = import ../../lib/optimize/overlays.nix {
       inherit sources;
-      determinateNix = inputs.determinate-nix.packages.${pkgs.system}.nix;
+      determinateNix = inputs.determinate-nix-optimize.packages.${pkgs.stdenv.hostPlatform.system}.nix;
       drowseSrc = inputs.drowse;
+      craneLib = inputs.crane.mkLib pkgs;
     };
   };
   customLib = import ../../lib {
-    inherit (pkgs) system lib;
+    system = pkgs.stdenv.hostPlatform.system;
+    inherit (pkgs) lib;
     inherit pkgs mkOutOfStoreSymlink optimizePkgs;
     nixWasmRustPath = inputs.nix-wasm-rust;
+    niccupLib = inputs.niccup.lib;
     config = if config != null then config else { };
   };
 in

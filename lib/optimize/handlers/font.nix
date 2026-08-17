@@ -6,6 +6,8 @@
 }:
 # fonttools subset, --glyphs='*' keeps every glyph -- strip hints, don't
 # subset. Tested vs DejaVuSans: glyf shrinks, hmtx identical, nothing lost.
+# FFTM: FontForge timestamp table, nonstandard, no subset_glyphs impl --
+# drop explicit, else fonttools warns and drops it anyway.
 let
   fonttools = pkgs.python3.withPackages (ps: [ ps.fonttools ]);
 in
@@ -28,6 +30,7 @@ in
           --notdef-outline \
           --recommended-glyphs \
           --no-hinting \
+          --drop-tables+=FFTM \
           --output-file=tmp.out || rm -f tmp.out
         ${guardSizeTail "tmp.out" src}
       '';

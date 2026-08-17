@@ -204,7 +204,8 @@ let
         for category in NIS SBE SEQ LNK SND TGA BG DATA; do
           unzip -oq ${lastExpressDl}/roms/$category.zip -d $out
         done
-      '';
+      ''
+    |> compressScummvmGame "lastexpress";
 
   fateOfAtlantis =
     fetchSteam {
@@ -319,7 +320,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Alpha Polaris";
     path = "${alphaPolaris}";
     steamAppId = 405780;
-    steamCdnImagesHash = "sha256-IRSIDWQmwCYJyohiba2CqXYGT5kLFZ8xRlx5RvFfqkw=";
+    steamCdnImagesHash = "sha256-I6suEDTQ69BzjKfXOQVWZYSn911fGe8QvB9LBOn3TiU=";
   };
 
   games.scummvm.games.artOfMurder1 = {
@@ -329,7 +330,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Art of Murder 1: FBI Confidential";
     path = "${artOfMurder1}";
     steamAppId = 809000;
-    steamCdnImagesHash = "sha256-T48G5OvVHHQbqNzyjBecKJQczxVq40jxZ+l3lmZLKLY=";
+    steamCdnImagesHash = "sha256-T9d3J4Ol8lHCtV2eXtaOC0EqPB0gpfJLjmK57qjuzLc=";
   };
 
   games.scummvm.games.ashinaRedWitch = {
@@ -339,7 +340,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Ashina: The Red Witch";
     path = "${ashinaRedWitch}";
     steamAppId = 1259140;
-    steamCdnImagesHash = "sha256-3PRvALJknlt/YBFT7hHJ8NwZFLks5+RHHu68Y5SX9QM=";
+    steamCdnImagesHash = "sha256-m30cR3hRlqZhyu+vsAuTQlO3s93CkbhY+laE6HqF4J0=";
   };
 
   games.scummvm.games.barrowHillDarkPath = {
@@ -349,7 +350,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Barrow Hill - The Dark Path";
     path = "${barrowHillDarkPath}";
     steamAppId = 520990;
-    steamCdnImagesHash = "sha256-rvNIPTaRRmAxwrYK/ca+Zgy+eSNTg1OlhPBHyK7qd7w=";
+    steamCdnImagesHash = "sha256-ilh3ZH3xGRQEaeyPI1G04A09vWNUCg5rDCVVGbOOC+0=";
   };
 
   games.scummvm.games.kingOfDragonPass = {
@@ -359,7 +360,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "King of Dragon Pass";
     path = "${kingOfDragonPass}";
     steamAppId = 352220;
-    steamCdnImagesHash = "sha256-9dymPjUrTEebc2f/TNWx7SocejOjhkluvxok2E1d8N4=";
+    steamCdnImagesHash = "sha256-J9ppm7WGN7RXKl7vyi5LK0uVcV34WoytKJlBozIEZAc=";
   };
 
   games.scummvm.games.littleBigAdventure = {
@@ -369,7 +370,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Little Big Adventure";
     path = "${littleBigAdventure}";
     steamAppId = 397330;
-    steamCdnImagesHash = "sha256-w0fLXqpBaTk/4yl9/ijJpR4rOusXHr0kdrOZh74y2i8=";
+    steamCdnImagesHash = "sha256-aB2g6x8IshbxBNBLJhoYLh5s1oHrbGorvGShbwM4rlI=";
   };
 
   games.scummvm.games.littleBigAdventure2 = {
@@ -379,7 +380,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Little Big Adventure 2";
     path = "${littleBigAdventure2}/Common";
     steamAppId = 398000;
-    steamCdnImagesHash = "sha256-39CNaSyoM8mgh9KcI8CVSxhUGXDhYUEGNBXlcUZRBO0=";
+    steamCdnImagesHash = "sha256-UQ1ikxV7sZ/FPS82rrjc0UETo+8lTA1cdhTx798OirM=";
   };
 
   games.scummvm.games.myBigSisterRemastered = {
@@ -389,7 +390,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "My Big Sister: Remastered";
     path = "${myBigSisterRemastered}";
     steamAppId = 2118540;
-    steamCdnImagesHash = "sha256-Jjbon1OdIDS9jCqealZK0KTHef6GACknC/lNzv/Uxto=";
+    steamCdnImagesHash = "sha256-O+NIb+H9/mks6xhG+VJJiGcdrfqj2L2VR3BKketUtXc=";
   };
 
   games.scummvm.games.reversion1 = {
@@ -399,7 +400,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Reversion: The Escape";
     path = "${reversion1}";
     steamAppId = 270570;
-    steamCdnImagesHash = "sha256-PwvYym0hAzkI7IwtCErR01Rgl1m/3pL2x+eoMNsNdn4=";
+    steamCdnImagesHash = "sha256-UpHHRPn+bqHzle8ZPo9G7HXl1/j6eG8ejotZIybAhkk=";
   };
 
   games.scummvm.games.reversion2 = {
@@ -409,7 +410,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Reversion: The Meeting";
     path = "${reversion2}";
     steamAppId = 281060;
-    steamCdnImagesHash = "sha256-fL+P+v1XgpF1ZgjGcGTi/JZZil+qbJ6GIfatJeni/BY=";
+    steamCdnImagesHash = "sha256-xdiWiz5zAVbqgdtmL0UuHd9H1MSxNc+4Cq4c+1F2mb0=";
   };
 
   games.scummvm.games.reversion3 = {
@@ -419,7 +420,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Reversion: The Return";
     path = "${reversion3}";
     steamAppId = 281080;
-    steamCdnImagesHash = "sha256-PwsfQOUa+ak5dwJsH/K4N4RKee8a2l+aFjtqI9465xk=";
+    steamCdnImagesHash = "sha256-26rO3MeqxxC1cWDUAI3Pab2uF4FHmVxY4fklgWx3F08=";
   };
 
   games.scummvm.games.curseOfMonkeyIsland = {
@@ -429,7 +430,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "The Curse of Monkey Island";
     path = "${curseOfMonkeyIsland}/ScummVM/monkey3";
     steamAppId = 730820;
-    steamCdnImagesHash = "sha256-C/genikl2VB0vIcWWzQK0FhHIwe9ArO//zoel4X7OlM=";
+    steamCdnImagesHash = "sha256-hwK2CDIEccs8M2TurPPc/d0HVCfxxnt+5XC9FXoMnV4=";
   };
 
   games.scummvm.games.lastExpress = {
@@ -438,7 +439,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "The Last Express";
     path = "${lastExpress}";
     steamAppId = 252710;
-    steamCdnImagesHash = "sha256-IbFjMlH0HJjegftDMkE4cAcDd68cZFKfn9GGaORTCfg=";
+    steamCdnImagesHash = "sha256-4v1k3kbPEje3JYtuoA9pImzbfC72pzXqZsArKW1Ht44=";
   };
 
   games.scummvm.games.fateOfAtlantis = {
@@ -461,7 +462,7 @@ lib.mkIf config.games.scummvm.enable {
     speech_mute = false;
     path = "${fateOfAtlantis}/ATLANTIS";
     steamAppId = 6010;
-    steamCdnImagesHash = "sha256-7OMty66bcTdP7pDrcmqi1ifn3AITXYdI7kx+rVVaqCE=";
+    steamCdnImagesHash = "sha256-oBJqv6qpa5V/RTA3KAwmz+aJawE0OB+rDqc2spAuO0M=";
   };
 
   # Both classic-engine variants live inside this one Steam depot, but a
@@ -475,7 +476,7 @@ lib.mkIf config.games.scummvm.enable {
   games.scummvm.games.maniacMansionV2 = mkManiac 2 {
     path = "${maniacMansionDl}/ScummVM/enhanced";
     steamAppId = 529890;
-    steamCdnImagesHash = "sha256-sF80rLlsSHcmhw9Rnhgnc5KE93hIJx3WXXF3iwsMstg=";
+    steamCdnImagesHash = "sha256-Du18nbKfyueABTzNsJmCXUuLky52PozbICbipnlXrbw=";
   };
 
   games.scummvm.games.lsl1 = {
@@ -490,7 +491,7 @@ lib.mkIf config.games.scummvm.enable {
     commandpromptwindow = true;
     path = "${lsl1}";
     steamAppId = 763970;
-    steamCdnImagesHash = "sha256-zjHWGtpRxyPeB3TP7m+/0/ouS6cX+70JrcP6BO4HnDk=";
+    steamCdnImagesHash = "sha256-nU2uBgXU2AL7XSzx5QTtQpw9kvmf8qv9RP31d4yHF4c=";
   };
 
   games.scummvm.games.lsl2 = mkLslGame 2 {
@@ -499,7 +500,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Leisure Suit Larry 2: Goes Looking for Love (in Several Wrong Places)";
     path = "${lsl2}";
     steamAppId = 765840;
-    steamCdnImagesHash = "sha256-0ik37xw4TjMeBelNWJKRUNy1vzBZJATcQpgA8ry//xE=";
+    steamCdnImagesHash = "sha256-5gpLiYUMnSwXEop4dHF9cN25CBO8ADLYUxC0AHcw0Ak=";
   };
 
   games.scummvm.games.lsl3 = mkLslGame 3 {
@@ -507,7 +508,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Leisure Suit Larry 3: Passionate Patti in Pursuit of the Pulsating Pectorals";
     path = "${lsl3}";
     steamAppId = 765850;
-    steamCdnImagesHash = "sha256-st47GCH+DwjNaOJluXYjvLG3JjzNkx/vuu5BT3fpnD4=";
+    steamCdnImagesHash = "sha256-FWVRw0MxbTxYXlM/hbI/lIxh22dyUn2NcdmaKqH0kW4=";
   };
 
   games.scummvm.games.lsl5 = mkLslGame 5 {
@@ -515,7 +516,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Leisure Suit Larry 5: Passionate Patti Does a Little Undercover Work";
     path = "${lsl5}";
     steamAppId = 765860;
-    steamCdnImagesHash = "sha256-v2qU6xMn7LghpwXtA/MM52zHWHE+Kndsd9jMYvXZygg=";
+    steamCdnImagesHash = "sha256-KOetaJMpMD98IDQxDeslvKfjbFvNIMmPIqfkoY0m+Io=";
   };
 
   games.scummvm.games.lsl6 = mkLslGame 6 {
@@ -525,7 +526,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Leisure Suit Larry 6: Shape Up or Slip Out!";
     path = "${lsl6}";
     steamAppId = 765910;
-    steamCdnImagesHash = "sha256-jIo5Abvrd+3BTLLnkH1MzxAZj8/QmoOnD5Jickq6I74=";
+    steamCdnImagesHash = "sha256-qilysgCGVGuzmoBfe0icxJ37m1b4XRIKD1bAStS/kVo=";
   };
 
   games.scummvm.games.lsl7 = mkLslGame 7 {
@@ -536,7 +537,7 @@ lib.mkIf config.games.scummvm.enable {
     description = "Leisure Suit Larry 7: Love for Sail!";
     path = "${lsl7}";
     steamAppId = 765890;
-    steamCdnImagesHash = "sha256-AV7JUz8g6JC4nbVgcCKoiMy4kO+n8sBysYsz/Sa6tJg=";
+    steamCdnImagesHash = "sha256-pvOwjwJUaZDuIdQa5OuWh7P0RdX9WzyCFtGzq2LScPI=";
   };
 
   games.scummvm.games.lastCrusade = {
@@ -550,6 +551,6 @@ lib.mkIf config.games.scummvm.enable {
     description = "Indiana Jones and the Last Crusade";
     path = "${lastCrusade}/INDY3";
     steamAppId = 32310;
-    steamCdnImagesHash = "sha256-ep5NMWINRWTu4xFhsKA4a/BqEV8fByrmFkJ0KsLeeHg=";
+    steamCdnImagesHash = "sha256-tHyEF3rgAvlUyCF8gD3UOoM8x2z1JL/XHbZtPQLkBYk=";
   };
 }

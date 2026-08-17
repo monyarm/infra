@@ -17,6 +17,17 @@ from urllib.parse import urlparse
 
 USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0"
 
+
+def nixpkgs_import_expr():
+    """`<nixpkgs>` resolves through Nix's global 'system' registry pin
+    (observed stale on this machine -- e.g. missing lib.sources.urlToName),
+    not this flake's own pinned input. Resolve through the flake itself
+    (git+file:// so untracked/ignored cruft like .codegraph/'s daemon
+    socket isn't swept in) so these ad-hoc evals see the same nixpkgs
+    `nix build .#pkgname` does. Called after main() has chdir'd to the
+    repo root, so os.getcwd() is the repo."""
+    return f'(builtins.getFlake "git+file://{os.getcwd()}").inputs.nixpkgs'
+
 # .pk3/.ipk3 are GZDoom containers that are just zip files under the hood;
 # listing what's inside them (in addition to the outer archive's own file
 # list) lets the Nix side extract/optimize/repack their members without
@@ -169,6 +180,35 @@ def process_url(name, url):
     }
 
 
+def process_github_release_asset(name, value):
+    """value: "https://github.com/<owner>/<repo>#<tag-prefix>/<asset-name>" -- resolves
+    to the newest release whose tag starts with tag-prefix, no hardcoded tag needed."""
+    print(f"Updating [github-release] {name} from {value}...")
+    repo_url, fragment = value.split('#', 1)
+    tag_prefix, asset_name = fragment.split('/', 1)
+    owner, repo = urlparse(repo_url).path.strip('/').split('/')[:2]
+    repo = repo[:-4] if repo.endswith('.git') else repo
+
+    releases = json.loads(http_get(
+        f"https://api.github.com/repos/{owner}/{repo}/releases",
+        headers={'Accept': 'application/vnd.github+json'},
+    ))
+    matching = [r for r in releases if r.get('tag_name', '').startswith(tag_prefix)]
+    if not matching:
+        raise ValueError(f"No release with tag prefix '{tag_prefix}' for {owner}/{repo}")
+    matching.sort(key=lambda r: r.get('published_at') or '', reverse=True)
+    tag_name = matching[0]['tag_name']
+
+    asset_url = f"https://github.com/{owner}/{repo}/releases/download/{tag_name}/{asset_name}"
+    h = calculate_sri_hash(download_file(asset_url))
+    return {
+        "type": "url",
+        "url": asset_url,
+        "hash": h,
+        "tag": tag_name,
+    }
+
+
 def process_zip(name, url):
     print(f"Updating [zip] {name} from {url}...")
     data = download_file(url)
@@ -307,11 +347,12 @@ def get_git_metadata(name, git_url, rev):
             print(f"  -> Complex repo detected for {name}, falling back to Nix for hash calculation...")
             nix_expr = (
                 f"let\n"
-                f"  pkgs = import <nixpkgs> {{}};\n"
+                f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
                 f"  customLib = import ./lib {{\n"
                 f"    inherit pkgs;\n"
                 f"    inherit (pkgs) lib system;\n"
                 f"    mkOutOfStoreSymlink = _x: {{}};\n"
+                f"    optimizePkgs = pkgs;\n"
                 f"    config = {{}};\n"
                 f"  }};\n"
                 f"in\n"
@@ -452,11 +493,12 @@ def process_go(name, source_name, results, previous_sources):
     src_expr = make_nix_src_expr(results[source_name])
     nix_expr = (
         f"let\n"
-        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
         f"  customLib = import ./lib {{\n"
         f"    inherit pkgs;\n"
         f"    inherit (pkgs) lib system;\n"
         f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
         f"    config = {{}};\n"
         f"  }};\n"
         f"  src = {src_expr};\n"
@@ -484,11 +526,12 @@ def process_npm(name, source_name, results, previous_sources):
     src_expr = make_nix_src_expr(results[source_name])
     nix_expr = (
         f"let\n"
-        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
         f"  customLib = import ./lib {{\n"
         f"    inherit pkgs;\n"
         f"    inherit (pkgs) lib system;\n"
         f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
         f"    config = {{}};\n"
         f"  }};\n"
         f"  src = {src_expr};\n"
@@ -503,15 +546,106 @@ def process_npm(name, source_name, results, previous_sources):
     return {"type": "npm", "source": source_name, "hash": extract_hash_from_nix_build(nix_expr, f"npm-vendor {name}")}
 
 
-def process_custom(fetcher_name, name, url):
-    print(f"Updating [{fetcher_name}] {name} from {url}...")
+CARGO_GIT_PACKAGE_RE = re.compile(
+    r'^\[\[package\]\]\nname = "([^"]+)"\nversion = "([^"]+)"\n'
+    r'source = "(git\+[^"]+)"',
+    re.MULTILINE,
+)
+
+
+def prefetch_git_sri(git_url, rev):
+    res = subprocess.run(
+        ["nix-prefetch-git", "--quiet", "--url", git_url, "--rev", rev],
+        capture_output=True, text=True, check=True,
+    )
+    sha256 = json.loads(res.stdout)["sha256"]
+    res2 = subprocess.run(["nix", "hash", "to-sri", "--type", "sha256", sha256], capture_output=True, text=True, check=True)
+    return res2.stdout.strip()
+
+
+def process_cargo(name, results, previous_sources):
+    """[cargo] entries reference an already-resolved [git]/[git-tag] source by
+    name (processed earlier in ordered_sections) and merge a generated
+    Cargo.lock (plus outputHashes for any git-patched dependencies) straight
+    into that source's own result dict -- not a separate top-level key, since
+    main()'s flat-key -> nested_results merge treats any dict with a "type"
+    field as an opaque leaf, so a dotted sibling key like "name.cargo" would
+    never surface as its own attribute for check_vendor_cache-style lookups.
+    No nix sandbox involved: this whole script runs with real network access
+    already (git ls-remote, http downloads, ...), same place every other
+    hash in this file gets resolved -- `cargo generate-lockfile` and
+    `nix-prefetch-git` need exactly that, which a sandboxed nix build never
+    grants (see packages/maxima-cli.nix's history before this existed)."""
+    if name not in results:
+        raise ValueError(f"[cargo] entry '{name}' references unknown source '{name}' (must be a [git]/[git-tag] source processed earlier).")
+    src = results[name]
+    if src.get("type") not in ("git", "git-tag"):
+        raise ValueError(f"[cargo] entry '{name}' must reference a git source, got type={src.get('type')!r}")
+
+    print(f"Checking [cargo] {name}...")
+    old = previous_sources.get(name)
+    if old and old.get("rev") == src.get("rev") and old.get("cargoLock"):
+        print(f"  -> Cache hit for cargo lockfile of {name}! Source hasn't changed.")
+        src["cargoLock"] = old["cargoLock"]
+        if old.get("cargoOutputHashes"):
+            src["cargoOutputHashes"] = old["cargoOutputHashes"]
+        return src
+
+    print(f"  -> Generating Cargo.lock for {name}...")
+    src_expr = make_nix_src_expr(src)
     nix_expr = (
         f"let\n"
-        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
         f"  customLib = import ./lib {{\n"
         f"    inherit pkgs;\n"
         f"    inherit (pkgs) lib system;\n"
         f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
+        f"    config = {{}};\n"
+        f"  }};\n"
+        f"in\n"
+        f"  {src_expr}"
+    )
+    res = subprocess.run(
+        ["nix", "build", "--impure", "--no-link", "--print-out-paths", "--expr", nix_expr],
+        capture_output=True, text=True, check=True,
+    )
+    store_path = res.stdout.strip().splitlines()[-1]
+
+    with tempfile.TemporaryDirectory() as work_dir:
+        tree = os.path.join(work_dir, "src")
+        shutil.copytree(store_path, tree)
+        subprocess.run(["chmod", "-R", "u+w", tree], check=True)
+        subprocess.run(["cargo", "generate-lockfile"], cwd=tree, check=True)
+        with open(os.path.join(tree, "Cargo.lock")) as f:
+            lock_text = f.read()
+
+    output_hashes = {}
+    for pkg_name, pkg_version, source in CARGO_GIT_PACKAGE_RE.findall(lock_text):
+        # crane's vendorGitDeps.nix looks up outputHashes by the *exact*
+        # Cargo.lock `source` string (git+<url>[?branch=..|?tag=..]#<rev>),
+        # not a name-version pair -- must match byte-for-byte.
+        url_and_params, git_rev = source[len("git+"):].rsplit("#", 1)
+        git_url = url_and_params.split("?", 1)[0]
+        print(f"  -> Prefetching git dependency {pkg_name}-{pkg_version} ({git_url}#{git_rev[:12]})...")
+        output_hashes[source] = prefetch_git_sri(git_url, git_rev)
+
+    src["cargoLock"] = lock_text
+    if output_hashes:
+        src["cargoOutputHashes"] = output_hashes
+    return src
+
+
+def process_custom(fetcher_name, name, url):
+    print(f"Updating [{fetcher_name}] {name} from {url}...")
+    nix_expr = (
+        f"let\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
+        f"  customLib = import ./lib {{\n"
+        f"    inherit pkgs;\n"
+        f"    inherit (pkgs) lib system;\n"
+        f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
         f"    config = {{}};\n"
         f"  }};\n"
         f"in\n"
@@ -926,11 +1060,12 @@ def nix_build_expr(fetch_call, extra_args):
     # `hash`, as their actual argument name.
     return (
         f"let\n"
-        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
         f"  customLib = import ./lib {{\n"
         f"    inherit pkgs;\n"
         f"    inherit (pkgs) lib system;\n"
         f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
         f"    config = {{}};\n"
         f"  }};\n"
         f'  hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";\n'
@@ -951,11 +1086,12 @@ def realize_build_output(fetch_call, extra_args, real_hash):
     args_str = "".join(f'    {k} = {v};\n' for k, v in extra_args.items())
     nix_expr = (
         f"let\n"
-        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
         f"  customLib = import ./lib {{\n"
         f"    inherit pkgs;\n"
         f"    inherit (pkgs) lib system;\n"
         f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
         f"    config = {{}};\n"
         f"  }};\n"
         f"in\n"
@@ -1203,11 +1339,12 @@ def process_idgames(name, game, previous_sources):
 
     nix_expr = (
         f"let\n"
-        f"  pkgs = import <nixpkgs> {{}};\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
         f"  customLib = import ./lib {{\n"
         f"    inherit pkgs;\n"
         f"    inherit (pkgs) lib system;\n"
         f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
         f"    config = {{}};\n"
         f"  }};\n"
         f"in\n"
@@ -1265,7 +1402,10 @@ def to_nix_val(val, indent_level=0):
     if isinstance(val, bool):
         return "true" if val else "false"
     if isinstance(val, str):
-        escaped = val.replace("\\", "\\\\").replace('"', '\\"')
+        # ${ must be escaped too or Nix reads it as string interpolation --
+        # unlikely in most fields, but cargoLock embeds a whole file's text
+        # (e.g. Cargo.lock) where it could plausibly appear.
+        escaped = val.replace("\\", "\\\\").replace('"', '\\"').replace("${", "\\${")
         return f'"{escaped}"'
     elif isinstance(val, list):
         if not val:
@@ -1307,7 +1447,7 @@ def main():
     has_errors = False
 
     # Insert idgames into the designated priority fetching queue
-    priority_sections = ["url", "zip", "git", "git-tag", "idgames"]
+    priority_sections = ["url", "zip", "git", "git-tag", "cargo", "idgames", "github-release"]
     custom_sections = [s for s in sources_data.keys() if s not in priority_sections and s not in ["go", "npm"]]
     ordered_sections = priority_sections + custom_sections + ["go", "npm"]
     
@@ -1326,8 +1466,12 @@ def main():
                     results[name] = process_git_tag(name, target)
                 elif section == "git":
                     results[name] = process_git(name, target)
+                elif section == "cargo":
+                    results[name] = process_cargo(name, results, previous_sources)
                 elif section == "idgames":
                     results[name] = process_idgames(name, target, previous_sources)
+                elif section == "github-release":
+                    results[name] = process_github_release_asset(name, target)
                 elif section == "go":
                     results[name] = process_go(name, target, results, previous_sources)
                 elif section == "npm":
@@ -1352,7 +1496,7 @@ def main():
             except Exception as e:
                 print(f"Error updating {name} under [{section}]: {e}", file=sys.stderr)
                 has_errors = True
-                
+
     if has_errors:
         print("Update completed with errors. sources.nix was not updated.", file=sys.stderr)
         sys.exit(1)

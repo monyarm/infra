@@ -2,6 +2,7 @@
   config,
   lib,
   fetchGOG,
+  pkgs,
   compressScummvmGame,
   getFiles,
   ...
@@ -147,12 +148,27 @@ let
     }
     |> compressScummvmGame "sky";
 
+  # queen.tbl not in GOG data, compress_queen needs it (scummvm-optimize.nix)
+  # -- grab from pkgs.scummvm.src, no new fetch needed.
   flightOfTheAmazonQueen =
-    fetchGOG {
-      game = "flight_of_the_amazon_queen";
-      fileId = "en1installer0";
-      sha256 = "sha256-Egml84/1hn9zHXFNPJOb5bpZ3qTJCJLS+1PBYF8P6rQ=";
-    }
+    let
+      queenData = fetchGOG {
+        game = "flight_of_the_amazon_queen";
+        fileId = "en1installer0";
+        sha256 = "sha256-Egml84/1hn9zHXFNPJOb5bpZ3qTJCJLS+1PBYF8P6rQ=";
+      };
+    in
+    pkgs.runCommand "flight-of-the-amazon-queen-with-tbl"
+      {
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p $out
+        cp -Rs ${queenData}/. $out/
+        cp -R ${pkgs.scummvm.src}/dists/engine-data/queen.tbl $out/queen.tbl
+      ''
     |> compressScummvmGame "queen";
 
   lureOfTheTemptress =

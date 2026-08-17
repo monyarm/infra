@@ -9,7 +9,7 @@
 let
   cli = "${pkgs.scummvm-tools}/bin/scummvm-tools-cli";
 
-  baseCruft = import ../cruft.nix;
+  baseCruft = import ./cruft.nix;
 
   # scummvm-only chrome, hand-verified per entry (exe check below).
   # baseCruft/gogCruft merged in too, for non-GOG-fetched games.
@@ -144,9 +144,9 @@ let
           newSize=$(${pkgs.coreutils}/bin/du -sb "${compressedDrv}" | ${pkgs.coreutils}/bin/cut -f1)
           ${pkgs.coreutils}/bin/mkdir -p "$out"
           if [ "$newSize" -gt "$origSize" ]; then
-            ${pkgs.coreutils}/bin/cp -a "${originalDrv}/." "$out/"
+            ${pkgs.coreutils}/bin/cp -as "${originalDrv}/." "$out/"
           else
-            ${pkgs.coreutils}/bin/cp -a "${compressedDrv}/." "$out/"
+            ${pkgs.coreutils}/bin/cp -as "${compressedDrv}/." "$out/"
           fi
           exit 0;
         ''
@@ -192,7 +192,7 @@ let
       ''
         work="$TMPDIR/work"
         mkdir -p "$work"
-        cp -a "${gameDrv}/." "$work/"
+        cp -as "${gameDrv}/." "$work/"
         chmod -R u+w "$work"
         cd "$work"
         ${script}
@@ -261,13 +261,23 @@ let
     done || true
   '';
 
+  # scummvm-tools' Tool::_outputToDirectory defaults to true and this tool
+  # never overrides it, so -o is ALWAYS directory-mode upstream (a trailing
+  # '/' gets forced on whatever we pass, before execute() ever sees it) --
+  # passing a constructed destination filename here just makes the tool
+  # nest its own hardcoded output name inside a directory named after that
+  # filename (e.g. -o "MONSTER.sof" -> "MONSTER.sof/monster.sof", which
+  # doesn't exist as a real directory and fatal-errors on open). The actual
+  # output name is never ours to choose: compress_scumm_sou hardcodes it
+  # per codec (monster.sof for FLAC) regardless of the input's name. Pass a
+  # real directory and let it do that.
   compressScummSou = ''
     find . -iname '*.sou' | while IFS= read -r f; do
-      out="''${f%.*}.sof"
-      if ${cli} --tool compress_scumm_sou --flac -o "$out" "$f"; then
+      dir=$(dirname "$f")
+      if ${cli} --tool compress_scumm_sou --flac -o "$dir" "$f"; then
         rm -f "$f"
       else
-        rm -f "$out"
+        rm -f "$dir/monster.sof"
       fi
     done || true
   '';
@@ -277,22 +287,32 @@ let
   # Its output-directory/naming convention (this tool doesn't take -o) is
   # untested here, so unlike the others this doesn't delete the original --
   # avoid guessing at a filename to rm and risking losing data instead.
+  # Unlike every other compress_* tool here, this one does NOT support FLAC
+  # (compress_scumm_san.cpp hard-errors "Only ogg vorbis and MP3 are
+  # supported for this tool" on AUDIO_FLAC) -- don't "fix" this to match.
   compressScummSan = ''
     find . -iname '*.san' | while IFS= read -r f; do
-      ${cli} --tool compress_scumm_san --flac "$f" || true
+      ${cli} --tool compress_scumm_san --vorbis "$f" || true
     done
   '';
 
   # Upstream notes FLAC can produce *larger* output than the original for
   # this engine -- guardDirSize (folder-level) covers that, same as
   # guardSize does for the single-file optimize.nix pipelines.
+  # Same -o-is-always-a-directory upstream behavior as compressScummSou
+  # above (Tool::_outputToDirectory defaults true, unset here too): when
+  # forced into directory mode this tool reuses the *input's* own basename
+  # and swaps the extension to .clf, so a constructed destination filename
+  # collides with that same-named directory instead of naming the file.
+  # Pass a real directory; "''${f%.*}.clf" is still the name the tool itself
+  # produces there, so it's the right path to clean up on failure.
   compressSword2 = ''
     find . -iname '*.clu' | while IFS= read -r f; do
-      out="''${f%.*}.clf"
-      if ${cli} --tool compress_sword2 --flac -o "$out" "$f"; then
+      dir=$(dirname "$f")
+      if ${cli} --tool compress_sword2 --flac -o "$dir" "$f"; then
         rm -f "$f"
       else
-        rm -f "$out"
+        rm -f "''${f%.*}.clf"
       fi
     done || true
   '';
@@ -344,6 +364,16 @@ let
     fi
   '';
 
+  cruftAgs = ''
+    find . \( \
+      -iname 'ags32' -o -iname 'ags64' \
+      -o -iname 'ags32.exe' -o -iname 'ags64.exe' \
+      -o -iname 'licenses' \
+      -o -iname 'Game.sh' -o -iname 'lib32' -o -iname 'lib64' \
+      \) \
+      --delete || true
+  ''
+
   engineGatedScripts = {
     agos = compressAgos;
     kyra = compressKyra;
@@ -352,6 +382,7 @@ let
     touche = compressTouche;
     tucker = compressTucker;
     tinsel = compressTinsel;
+    ags = cruftAgs;
   };
 
   formatDetectedScripts = [

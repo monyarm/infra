@@ -4,14 +4,12 @@
   system,
   mkOutOfStoreSymlink,
   config,
-  # Separately-pinned pkgs for lib/optimize and lib/compressRom's actual
+  # Separately-pinned pkgs for files/media/optimize/compressRom's actual
   # tool invocations -- see optimize-nixpkgs in flake.nix and
-  # hosts/modules/lib.nix's construction of this. Everything else in this
-  # file keeps using the ambient `pkgs` above. Defaults to the ambient pkgs
-  # for callers that don't care about the pin distinction (e.g.
-  # packages/default.nix's own internal customLib, used only for unrelated
-  # utility functions).
-  optimizePkgs ? pkgs,
+  # hosts/modules/lib.nix's construction of this. Required, not defaulted:
+  # callers that don't care about the pin (e.g. packages/default.nix's
+  # internal customLib) must say so explicitly by passing `pkgs` here too.
+  optimizePkgs,
   # Overridable so lib/optimize/dynamic.nix's isolated inner evaluation
   # (inside a recursive-nix sandbox, no relative-path access to the repo
   # root) can supply this via a NIX_PATH-resolved value instead. Every other
@@ -22,6 +20,9 @@
   # underlying derivation unless a caller actually uses it, so callers that
   # don't touch wasm.* (most of them) never need this.
   nixWasmRustPath ? null,
+  # niccup's system-independent `lib` output (github:embedding-shapes/niccup)
+  # -- see flake.nix's niccup input. Optional/lazy like nixWasmRustPath above.
+  niccupLib ? null,
   ...
 }:
 let
@@ -31,19 +32,30 @@ let
   nixSettings = import ./nixSettings.nix ({ inherit lib; } // math);
   strings = import ./strings.nix ({ inherit pkgs lib; } // constants // misc);
   imp = import ./imports.nix ({ inherit pkgs lib; } // misc);
+  # optimizePkgs, not ambient pkgs: files.nix's functions (getFile, getFiles,
+  # removeFiles, packArchive, derefSymlinks, rename, patchFile, ...) are all
+  # file conversion/copying/compression tool invocations (p7zip, rpatool,
+  # ...), so they always run through the pin -- regardless of whether the
+  # caller is a game def (ScummVM/Doom) or the optimize/compressRom chains.
   files = import ./files.nix (
     {
-      inherit
-        pkgs
-        lib
-        mkOutOfStoreSymlink
-        config
-        ;
+      pkgs = optimizePkgs;
+      inherit (optimizePkgs) lib;
+      inherit mkOutOfStoreSymlink config;
     }
     // strings
     // misc
   );
-  media = import ./media.nix ({ inherit pkgs lib; } // strings // misc);
+  # optimizePkgs, not ambient pkgs: media.nix's tool invocations (imagemagick,
+  # ffmpeg-headless) get the same pin as files.nix above.
+  media = import ./media.nix (
+    {
+      pkgs = optimizePkgs;
+      inherit (optimizePkgs) lib;
+    }
+    // strings
+    // misc
+  );
   meta = import ./meta.nix {
     inherit pkgs;
     inherit (pkgs) lib system;
@@ -65,8 +77,8 @@ let
   );
   scummvmOptimize = import ./scummvm-optimize.nix (
     {
-      inherit pkgs;
-      inherit (pkgs) lib;
+      pkgs = optimizePkgs;
+      inherit (optimizePkgs) lib;
     }
     // files
     // imp
@@ -77,8 +89,8 @@ let
   );
   compressRom = import ./compressRom (
     {
-      inherit pkgs;
-      inherit (pkgs) lib;
+      pkgs = optimizePkgs;
+      inherit (optimizePkgs) lib;
     }
     // files
     // imp
@@ -91,6 +103,7 @@ let
     inherit (pkgs) lib;
   };
   wasm = import ./wasm.nix { inherit pkgs lib nixWasmRustPath; };
+  niccup = niccupLib;
   all = {
     inherit
       format
@@ -108,6 +121,7 @@ let
       compressRom
       misc
       wasm
+      niccup
       ;
   }
   // format

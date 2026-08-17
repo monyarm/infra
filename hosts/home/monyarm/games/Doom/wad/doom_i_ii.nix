@@ -56,7 +56,7 @@ lib.mkIf config.games.doom.enable {
       # original get this real app patched with LaunchOptions instead of a
       # synthetic non-Steam shortcut.
       steamAppId = 2300;
-      steamCdnImagesHash = "sha256-uQwly0rSgAcVIRB0PZkaEl6j1ocfqX1RWK8beI+IIT4=";
+      steamCdnImagesHash = "sha256-C7UH5r9SIaMYc9AvJnie/Tdegce9J0etTf6MGvxEhC4=";
     };
     NERVE = mkDoom {
       name = "No Rest for the Living";

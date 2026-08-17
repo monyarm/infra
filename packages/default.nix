@@ -15,15 +15,28 @@
   # packages/minijson.nix's drowse.instantiate step -- see flake.nix's
   # drowse input. Optional/lazy like nixWasmRustPath above.
   drowseSrc ? null,
+  craneLib ? null,
+  # niccup's system-independent `lib` output -- see flake.nix's niccup
+  # input. Optional/lazy like nixWasmRustPath above.
+  niccupLib ? null,
 }:
 
 let
   # Import our custom library and extend the passed lib
   customLib = import libPath {
-    inherit pkgs lib nixWasmRustPath;
-    inherit (pkgs) system;
+    inherit
+      pkgs
+      lib
+      nixWasmRustPath
+      niccupLib
+      ;
+    system = pkgs.stdenv.hostPlatform.system;
     mkOutOfStoreSymlink = _x: { };
     config = { };
+    # No packages/*.nix uses customLib's optimize/compressRom/media/files --
+    # only unrelated utility functions (filterAttrs, etc.) -- so the real
+    # optimize-nixpkgs pin would be pure overhead here.
+    optimizePkgs = pkgs;
   };
   extendedLib = lib // customLib // { inherit customLib; };
 
@@ -54,7 +67,7 @@ extendedLib.genAttrs (map dropSuffix packageNames) (
   pkgs.callPackage (./. + "/${fileName}") (
     {
       lib = extendedLib;
-      inherit sources drowseSrc;
+      inherit sources drowseSrc craneLib;
     }
     // customLib
   )

@@ -16,13 +16,52 @@ rec {
     in
     builtins.parallel b result;
 
-  # Longest key first, so ".psp.iso" wins over ".iso". "_" excluded (fallback).
-  # Split out so callers can sort once and reuse via resolveExtSorted.
+  # Longest name wins across all kinds (prefix "decorate*" beats suffix
+  # ".txt"). Was a linear scan, biggest per-file cost (trace-function-calls).
+  # Bucketed by length instead, hashmap lookup per kind.
   sortDispatchKeys =
     extMap:
-    lib.sort (a: b: builtins.stringLength a.name > builtins.stringLength b.name) (
-      lib.attrsToList (removeAttrs extMap [ "_" ])
-    );
+    let
+      normalized = map (
+        m:
+        if lib.hasPrefix "$" m.name then
+          {
+            kind = "exact";
+            compareStr = lib.toLower (lib.removePrefix "$" m.name);
+            rawLen = builtins.stringLength m.name;
+            inherit (m) value;
+          }
+        else if lib.hasSuffix "*" m.name then
+          {
+            kind = "prefix";
+            compareStr = lib.toLower (lib.removeSuffix "*" m.name);
+            rawLen = builtins.stringLength m.name;
+            inherit (m) value;
+          }
+        else
+          {
+            kind = "suffix";
+            compareStr = lib.toLower m.name;
+            rawLen = builtins.stringLength m.name;
+            inherit (m) value;
+          }
+      ) (lib.attrsToList (removeAttrs extMap [ "_" ]));
+      byLength = lib.groupBy (e: toString e.rawLen) normalized;
+      mapOfKind =
+        kind: es:
+        builtins.listToAttrs (
+          map (e: lib.nameValuePair e.compareStr e.value) (lib.filter (e: e.kind == kind) es)
+        );
+      lengthBuckets = lib.mapAttrs (_: es: {
+        exactMap = mapOfKind "exact" es;
+        suffixMap = mapOfKind "suffix" es;
+        prefixMap = mapOfKind "prefix" es;
+      }) byLength;
+      sortedLengths = lib.sort (a: b: a > b) (lib.unique (map (e: e.rawLen) normalized));
+    in
+    {
+      inherit lengthBuckets sortedLengths;
+    };
 
   # Strips a leading store-path hash ("<32 chars>-") if present. Duplicated
   # from (not shared with) lib/strings.nix's own stripStoreHash: strings.nix
@@ -49,24 +88,49 @@ rec {
       # decorate's own comment: "matches bare DECORATE and
       # DECORATE.ChexMonsters"), since the hash sits before the real name.
       rawFileName = stripStoreHash (src.name or (builtins.baseNameOf (toString src)));
-      fileName = lib.toLower rawFileName;
-      fullPath = lib.toLower (src.fullPath or rawFileName);
+      # Stripped: .${...} needs context-free keys. src (context intact)
+      # reaches the handler, not these.
+      fileName = builtins.unsafeDiscardStringContext (lib.toLower rawFileName);
+      fullPath = builtins.unsafeDiscardStringContext (lib.toLower (src.fullPath or rawFileName));
 
-      # "$..." matches the full path exactly (one-off override for a
-      # specific broken file). "...*" matches by basename PREFIX, not
-      # suffix -- for bare GZDoom lump names like "DECORATE".
-      matches =
-        m:
-        if lib.hasPrefix "$" m.name then
-          fullPath == lib.toLower (lib.removePrefix "$" m.name)
-        else if lib.hasSuffix "*" m.name then
-          lib.hasPrefix (lib.toLower (lib.removeSuffix "*" m.name)) fileName
+      fileNameLen = builtins.stringLength fileName;
+      fullPathLen = builtins.stringLength fullPath;
+
+      # markedLen = l - 1: exact/prefix compareStr had its "$"/"*" marker
+      # stripped, suffix didn't.
+      tryLength =
+        lengths:
+        if lengths == [ ] then
+          null
         else
-          lib.hasSuffix (lib.toLower m.name) fileName;
+          let
+            l = builtins.head lengths;
+            markedLen = l - 1;
+            bucket = matchableList.lengthBuckets.${toString l};
+            exactHit = if markedLen == fullPathLen then bucket.exactMap.${fullPath} or null else null;
+            suffixHit =
+              if l <= fileNameLen then
+                bucket.suffixMap.${builtins.substring (fileNameLen - l) l fileName} or null
+              else
+                null;
+            prefixHit =
+              if markedLen >= 0 && markedLen <= fileNameLen then
+                bucket.prefixMap.${builtins.substring 0 markedLen fileName} or null
+              else
+                null;
+          in
+          if exactHit != null then
+            exactHit
+          else if suffixHit != null then
+            suffixHit
+          else if prefixHit != null then
+            prefixHit
+          else
+            tryLength (builtins.tail lengths);
 
-      matched = lib.findFirst matches null matchableList;
+      matched = tryLength matchableList.sortedLengths;
     in
-    if matched != null then matched.value else extMap."_" or null;
+    if matched != null then matched else extMap."_" or null;
 
   resolveExt = extMap: resolveExtSorted (sortDispatchKeys extMap) extMap;
 

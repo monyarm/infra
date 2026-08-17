@@ -4,47 +4,83 @@
   user,
   stateVersion,
   timeZone,
+  config,
   ...
 }:
 
+let
+  # fleet machines, self included -- lets other hosts reach this one too.
+  # filter below drops self -- no ssh-to-self loop.
+  allBuildMachines = [
+    {
+      hostName = "monyarm";
+      protocol = "ssh-ng";
+      system = "x86_64-linux";
+      maxJobs = 16;
+      speedFactor = 2;
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+        "ca-derivations"
+        "cdrom"
+      ];
+
+      sshUser = user.name;
+      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+
+    }
+
+    {
+      hostName = "gaming-laptop";
+      protocol = "ssh-ng";
+      system = "x86_64-linux";
+      maxJobs = 8;
+      speedFactor = 1;
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+        "ca-derivations"
+      ];
+
+      sshUser = user.name;
+      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+
+    }
+
+    # {
+    #   hostName = "eu.nixbuild.net";
+    #   system = "x86_64-linux";
+    #   maxJobs = 24;
+    #   speedFactor = 1;
+    #   supportedFeatures = [
+    #     "nixos-test"
+    #     "big-parallel"
+    #     "ca-derivations"
+    #   ];
+    #   sshUser = user.name;
+    #   sshKey = "/etc/ssh/ssh_host_ed25519_key";
+    # }
+  ];
+  # max-jobs = this host's own entry above, minus 2. add an entry above
+  # before reusing this module on a new host.
+  currentHostMachine = builtins.head (
+    builtins.filter (m: m.hostName == config.networking.hostName) allBuildMachines
+  );
+in
 {
   nix = {
     package = inputs.determinate-nix.packages."x86_64-linux".nix;
 
     distributedBuilds = true;
-    buildMachines = [
-      {
-        hostName = "monyarm";
-        system = "x86_64-linux";
-        maxJobs = 16;
-        speedFactor = 2;
-        supportedFeatures = [
-          "nixos-test"
-          "benchmark"
-          "big-parallel"
-          "kvm"
-          "ca-derivations"
-        ];
-
-        sshUser = user.name;
-        sshKey = "/etc/ssh/ssh_host_ed25519_key";
-
-      }
-
-      # {
-      #   hostName = "eu.nixbuild.net";
-      #   system = "x86_64-linux";
-      #   maxJobs = 24;
-      #   speedFactor = 1;
-      #   supportedFeatures = [
-      #     "nixos-test"
-      #     "big-parallel"
-      #     "ca-derivations"
-      #   ];
-      #   sshUser = user.name;
-      #   sshKey = "/etc/ssh/ssh_host_ed25519_key";
-      # }
-    ];
+    # appended here, not in allBuildMachines -- would break self-matching
+    # above. ssh:// force-resets max-connections to 1 regardless; ssh-ng doesn't.
+    buildMachines = map (
+      m: m // { hostName = "${m.hostName}?max-connections=${toString m.maxJobs}"; }
+    ) (builtins.filter (m: m.hostName != config.networking.hostName) allBuildMachines);
 
     settings = nixSettings.common // {
       trusted-users = [
@@ -52,8 +88,10 @@
         user.name
       ];
       builders-use-substitutes = true;
-      max-jobs = 8 - 2;
+      max-jobs = currentHostMachine.maxJobs - 2;
     };
+
+    nrBuildUsers = 64;
   };
 
   boot.loader.systemd-boot.enable = true;
@@ -90,6 +128,14 @@
   # Without IdentitiesOnly, ssh offers every key in the agent before this
   # one -- nixbuild.net's server hits its max-auth-tries limit and drops
   # the connection as "Permission denied" before ever trying the right key.
+  #
+  # monyarm builder gets its own stanza: ControlMaster keeps one session
+  # alive and reused instead of a fresh SSH handshake per connection --
+  # what Hydra itself uses (github.com/NixOS/nix/issues/8499). Shared
+  # sticky-bit socket dir (like /tmp), not root-only -- both nix-daemon's
+  # root-owned remote-build connections and this user's own interactive
+  # `ssh monyarm` need to land in the same place without colliding (%r in
+  # the path already keys each user's socket separately).
   programs.ssh.extraConfig = ''
     Host eu.nixbuild.net
       PubkeyAcceptedKeyTypes ssh-ed25519
@@ -97,7 +143,14 @@
       IdentityFile /etc/ssh/ssh_host_ed25519_key
       ServerAliveInterval 60
       IPQoS throughput
+
+    Host monyarm
+      ControlMaster auto
+      ControlPath /run/ssh-control/%r@%h-%p
+      ControlPersist 10m
   '';
+
+  systemd.tmpfiles.rules = [ "d /run/ssh-control 1777 root root -" ];
 
   systemd.services.nix-daemon = {
     serviceConfig = {

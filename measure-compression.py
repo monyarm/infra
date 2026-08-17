@@ -5,17 +5,28 @@ compressScummvmGame module args force-overridden to passthrough stubs (via
 extendModules, from this script -- nothing in the repo's lib is touched) --
 and record both sizes in compression-savings.csv.
 
-Sizes are read via a getSize derivation (du -sb wrapped in a runCommand) and
-import-from-derivation, not a separate `nix build` + `nix path-info`/`du`
-subprocess dance -- that way the actual build happens exactly the way any
-plain `nix build`/`nix eval` on this flake would (same local/remote builder
-resolution as everything else), so there's nothing for this script to get
-out of sync with. Both real and mock, for every requested game, are computed
-in a single `nix eval` call, so the (substantial, ~10s) cost of constructing
-pkgs only gets paid once per run.
+Two build phases, not one eval: (1) cheap `nix eval` resolves each target to
+a `.drv` path via a symlink wrapper (`.drvPath` never forces a build, even
+through dynamic derivations -- see lib/optimize/dynamic.nix); (2) each `.drv`
+builds via its own `nix build "<drv>^out" --print-out-paths` -- building the
+wrapper realizes the real target too, at a real local path `du` reads
+directly. No IFD.
+
+Default: every target builds concurrently, one subprocess each -- not one
+multi-target `nix build` call. Two reasons: a dynamic-derivation chain's
+output path is unknown until built (`nix-store -q --outputs` errors on it),
+so paths can't be pre-resolved; and a single multi-target `nix build` prints
+*no* paths at all -- not even for successes -- if any one target fails.
+Separate subprocesses keep failures independent; the nix daemon's own
+job-slot admission still paces the real concurrency.
+
+Safe now that instantiateDrv (lib/optimize/dynamic.nix) takes a real flock
+around its own nix-instantiate step -- used to freeze the machine when many
+ran concurrently. `--sequential` opts back into one-drv-at-a-time.
 
 Usage:
-  ./measure-compression.py                    # all games
+  ./measure-compression.py                    # all games, batch-built
+  ./measure-compression.py --sequential        # all games, one at a time
   ./measure-compression.py teenagent grim      # only games whose name
                                                 # contains "teenagent"/"grim"
   ./measure-compression.py --doom              # only Doom wads
@@ -25,6 +36,7 @@ Usage:
 """
 
 import argparse
+import concurrent.futures
 import csv
 import datetime
 import fcntl
@@ -35,6 +47,7 @@ import re
 import signal
 import subprocess
 import sys
+import tempfile
 import termios
 import threading
 from pathlib import Path
@@ -98,7 +111,6 @@ MOCK_ARGS_NIX = """
 CONFIG_EXPR = """
 let
   flake = builtins.getFlake (toString ./.);
-  lib = flake.inputs.nixpkgs.lib;
   real = flake.homeConfigurations.{user};
   mocked = real.extendModules {
     modules = [ { _module.args = {mock_args}; } ];
@@ -114,6 +126,7 @@ let
     overlays = flake.lib.overlays;
     config.allowUnfree = true;
   };
+  lib = pkgs.lib;
   sources = import ./sources.nix;
   # optimize's own tool invocations (oxipng/ffmpeg/wadptr/minijson/...) are
   # pinned to a *separate* nixpkgs revision (flake.nix's optimize-nixpkgs
@@ -122,12 +135,13 @@ let
   # tool under the wrong pin, missing every cache hit real usage already
   # has. Mirrors hosts/modules/lib.nix's own optimizePkgs construction.
   optimizePkgs = import flake.inputs.optimize-nixpkgs {
-    inherit (pkgs) system;
+    system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
     overlays = import ./lib/optimize/overlays.nix {
       inherit sources;
-      determinateNix = flake.inputs.determinate-nix.packages.${pkgs.system}.nix;
+      determinateNix = flake.inputs.determinate-nix-optimize.packages.${pkgs.stdenv.hostPlatform.system}.nix;
       drowseSrc = flake.inputs.drowse;
+      craneLib = flake.inputs.crane.mkLib pkgs;
     };
   };
   # Doom WAD/PK3 registry entries (games.doom.wads.*) are never compressed
@@ -141,24 +155,29 @@ let
     inherit pkgs lib optimizePkgs;
     system = pkgs.stdenv.hostPlatform.system;
     mkOutOfStoreSymlink = p: p;
-    config = null;
+    # Must match hosts/modules/lib.nix's own customLib call -- this feeds
+    # dynamic.nix's toolPathsJSON, baked into instantiateDrv's derivation
+    # hash, so omitting it here builds a *different* instantiateDrv than
+    # the real deploy needs (looks cached, isn't).
+    nixWasmRustPath = flake.inputs.nix-wasm-rust;
+    niccupLib = flake.inputs.niccup.lib;
+    config = {};
   };
-  # Reads a size back via IFD instead of a separate `nix build` + query --
-  # this way the build happens through the exact same mechanism (and
-  # builder config) as any other `nix build`/`nix eval` on this flake, so
-  # there's no separate "did the script build this the same way I would
-  # have" question. `value` can be a derivation or a context-bearing string
-  # (e.g. "${someDrv}/subdir") -- either works as a `du` interpolation.
-  getSize = value:
-    lib.toInt (
-      lib.removeSuffix "\\n" (
-        builtins.readFile (
-          pkgs.runCommand "size" { } ''
-            du -sb --apparent-size "${value}" | cut -f1 > $out
-          ''
-        )
-      )
-    );
+  
+  # `value` can be a derivation or a context-bearing string (e.g.
+  # "${someDrv}/subdir") -- either works as a `ln -s` interpolation. A plain
+  # symlink to `value`'s real store path, not a du-computing IFD: once
+  # `nix build` realizes this target, `value` itself is realized too (as
+  # its input) at a real, resolvable local path -- `du` can then just read
+  # it directly in the driver, no second nix eval needed at all.
+  mkTarget = value:
+    pkgs.runCommand "target" { } ''
+      ln -s "${value}" "$out"
+    '';
+  # .drvPath alone never forces a build -- even a dynamic-derivation
+  # placeholder embeds fine into a new .drv's text unresolved -- so this is
+  # safe to call in a cheap, no-building eval pass.
+  getDrvPath = value: (mkTarget value).drvPath;
 in
 {body}
 """.replace("{user}", USER).replace("{mock_args}", MOCK_ARGS_NIX)
@@ -322,9 +341,9 @@ def names_nix(names):
     return "[ " + " ".join(f'"{n}"' for n in names) + " ]"
 
 
-def measure_all(targets, max_jobs, cores):
-    """targets: {"doom": [names], "scummvm": [names]}. Returns the same
-    shape with {name: {"real": bytes, "mock": bytes}} values, in one call."""
+def build_measure_body(targets):
+    """targets: {"doom": [names], "scummvm": [names]}. Each leg wrapped in
+    getDrvPath -- a plain symlink-to-value target, not a size computation."""
     parts = []
     if targets["doom"]:
         parts.append(f"""
@@ -332,8 +351,8 @@ def measure_all(targets, max_jobs, cores):
     builtins.listToAttrs (map (n: {{
       name = n;
       value = {{
-        real = getSize (customLib.optimize real.config.games.doom.wads.${{n}});
-        mock = getSize mocked.config.games.doom.wads.${{n}};
+        real = getDrvPath (customLib.optimize real.config.games.doom.wads.${{n}});
+        mock = getDrvPath mocked.config.games.doom.wads.${{n}};
       }};
     }}) names);""")
     if targets["scummvm"]:
@@ -342,16 +361,101 @@ def measure_all(targets, max_jobs, cores):
     builtins.listToAttrs (map (n: {{
       name = n;
       value = {{
-        real = getSize real.config.games.scummvm.games.${{n}}.path;
-        mock = getSize mocked.config.games.scummvm.games.${{n}}.path;
+        real = getDrvPath real.config.games.scummvm.games.${{n}}.path;
+        mock = getDrvPath mocked.config.games.scummvm.games.${{n}}.path;
       }};
     }}) names);""")
-    body = "{\n" + "\n".join(parts) + "\n}"
-    result = nix_eval_json(body, max_jobs, cores)
+    return "{\n" + "\n".join(parts) + "\n}"
+
+
+def get_drv_paths(targets):
+    """Phase 1: one cheap eval, `.drvPath` only -- never forces a build."""
+    body = build_measure_body(targets)
+    result = nix_eval_json(body, max_jobs=1, cores=1)
     return {
         "doom": result.get("doom", {}),
         "scummvm": result.get("scummvm", {}),
     }
+
+
+def read_size(path):
+    """du -sb --apparent-size on an already-built local path -- no nix
+    involvement at all, everything's already realized by build_sequential/
+    build_batch."""
+    out = subprocess.run(
+        ["du", "-Llsb", "--apparent-size", path], capture_output=True, text=True, check=True
+    ).stdout
+    return int(out.split()[0])
+
+
+def build_one(category, name, leg, drv, max_jobs, cores):
+    """Runs `nix build <drv>^out --print-out-paths` for a single target.
+    Returns (category, name, leg, real_path), real_path None on failure --
+    shared by build_batch (called concurrently, one subprocess per target)
+    and build_sequential (called one at a time)."""
+    cmd = [
+        "nix",
+        "build",
+        "--no-link",
+        "--print-out-paths",
+        "-L",
+        "--max-jobs",
+        str(max_jobs),
+        "--cores",
+        str(cores),
+        f"{drv}^out",
+    ]
+    print(drv)
+    proc = subprocess.run(" ".join(cmd), shell=True, cwd=REPO_ROOT, stdout=subprocess.PIPE, text=True)
+    if proc.returncode != 0 or not proc.stdout.strip():
+        return category, name, leg, None
+    target_path = proc.stdout.strip().splitlines()[-1]
+    return category, name, leg, os.path.realpath(target_path)
+
+
+def build_batch(drv_list, max_jobs, cores):
+    """drv_list: [(category, name, leg, drvpath), ...]. Launches every
+    target's own `nix build` concurrently and lets the nix daemon's own
+    job-slot admission pace the real work -- safe now that
+    lib/optimize/dynamic.nix's instantiateDrv takes out a real flock
+    (dynamic-optimize.lock) around its own expensive nix-instantiate step,
+    so concurrently-invalidated games no longer pile up their eval work and
+    overload the machine the way they used to. Returns (sizes, failed) with
+    the same shape as build_sequential."""
+    print(f"--- building {len(drv_list)} derivations concurrently ---")
+    sizes = {}
+    failed = set()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(drv_list)) as pool:
+        futures = [pool.submit(build_one, c, n, leg, drv, max_jobs, cores) for c, n, leg, drv in drv_list]
+        for future in concurrent.futures.as_completed(futures):
+            category, name, leg, real_path = future.result()
+            if real_path is None:
+                print(f"WARNING: build failed for {category}/{name} ({leg}), dropping from results", file=sys.stderr)
+                failed.add((category, name))
+                continue
+            sizes[(category, name, leg)] = read_size(real_path)
+    return sizes, failed
+
+
+def build_sequential(drv_list, max_jobs, cores):
+    """drv_list: [(category, name, leg, drvpath), ...]. Builds each ^out one
+    at a time -- opt-in via --sequential, for forcing every top-level game to
+    build one after another (see build_batch, the default, for why this
+    isn't needed just to avoid overloading the machine anymore). Returns
+    (sizes, failed): sizes is {(category, name, leg): bytes} for everything
+    that built; failed is the set of (category, name) pairs where either leg
+    failed."""
+    sizes = {}
+    failed = set()
+    for i, (category, name, leg, drv) in enumerate(drv_list, 1):
+        print(f"--- [{i}/{len(drv_list)}] building {category}/{name} ({leg}) ---")
+        _, _, _, real_path = build_one(category, name, leg, drv, max_jobs, cores)
+        if real_path is None:
+            print(f"WARNING: build failed for {category}/{name} ({leg}), dropping from results", file=sys.stderr)
+            failed.add((category, name))
+            continue
+        sizes[(category, name, leg)] = read_size(real_path)
+    return sizes, failed
 
 
 TOTAL_KEY = ("TOTAL", "")
@@ -402,9 +506,20 @@ def main():
     )
     parser.add_argument("--doom", action="store_true", help="restrict to Doom wads")
     parser.add_argument("--scummvm", action="store_true", help="restrict to ScummVM games")
+    parser.add_argument(
+        "--sequential",
+        action="store_true",
+        help="build one game at a time instead of handing the whole batch to one nix build call",
+    )
     parser.add_argument("--max-jobs", type=int, default=6)
     parser.add_argument("--cores", type=int, default=6)
     args = parser.parse_args()
+
+    # deploy.sh runs `nix fmt` (whole repo) before every build; this doesn't,
+    # so a build here could measure/cache pre-format bytes that then differ
+    # from what deploy.sh's build sees once it formats -- silently
+    # invalidating every dynamic derivation deploy.sh's build actually needs.
+    subprocess.run(["nix", "fmt"], cwd=REPO_ROOT, check=True)
 
     categories = []
     if args.doom:
@@ -430,15 +545,44 @@ def main():
         sys.exit("No games matched the given patterns.")
 
     rows = load_csv()
-    now = datetime.datetime.now().isoformat(timespec="seconds")
 
-    print("=== building real (compressed) and mock (passthrough) versions ===")
-    sizes = measure_all(targets, max_jobs=args.max_jobs, cores=args.cores)
+    print("=== resolving derivations (1 cheap eval, no building) ===")
+    drv_map = get_drv_paths(targets)
+    drv_list = [
+        (category, name, leg, drv_map[category][name][leg])
+        for category in categories
+        for name in targets[category]
+        for leg in ("real", "mock")
+    ]
+
+    drv_list_path = Path(tempfile.mkstemp(prefix="measure-compression-drvs-", suffix=".json")[1])
+    with drv_list_path.open("w") as f:
+        json.dump(
+            [{"category": c, "name": n, "leg": leg, "drv": d} for c, n, leg, d in drv_list],
+            f,
+            indent=1,
+        )
+    print(f"Saved {len(drv_list)} derivation paths to {drv_list_path}")
+
+    with drv_list_path.open() as f:
+        drv_list = [(e["category"], e["name"], e["leg"], e["drv"]) for e in json.load(f)]
+    if args.sequential:
+        print(f"=== building {len(drv_list)} derivations, one at a time ===")
+        sizes, failed = build_sequential(drv_list, max_jobs=args.max_jobs, cores=args.cores)
+    else:
+        sizes, failed = build_batch(drv_list, max_jobs=args.max_jobs, cores=args.cores)
+
+    for category in categories:
+        targets[category] = [n for n in targets[category] if (category, n) not in failed]
+    if not targets["doom"] and not targets["scummvm"]:
+        sys.exit("Every build failed, nothing to measure.")
+
+    now = datetime.datetime.now().isoformat(timespec="seconds")
 
     for category in categories:
         for name in targets[category]:
-            real_b = sizes[category][name]["real"]
-            mock_b = sizes[category][name]["mock"]
+            real_b = sizes[(category, name, "real")]
+            mock_b = sizes[(category, name, "mock")]
             savings = 0.0 if mock_b == 0 else (1 - real_b / mock_b) * 100
             rows[(category, name)] = {
                 "category": category,

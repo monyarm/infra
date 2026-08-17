@@ -5,6 +5,7 @@
   config,
   sanitizeName,
   getFileName,
+  getName,
   parallel,
   dispatchExt,
   ...
@@ -298,7 +299,7 @@ rec {
         args = [
           "-c"
           ''
-            ${pkgs.coreutils}/bin/cp "${drv}" "$out"
+            ${pkgs.coreutils}/bin/cp -as "${drv}" "$out"
             exit 0; # fix for 2176?
           ''
         ];
@@ -363,6 +364,7 @@ rec {
       {
         __contentAddressed = true;
         allowSubstitutes = false;
+        preferLocalBuild = true;
         outputHashAlgo = "sha256";
         outputHashMode = "recursive";
       }
@@ -375,7 +377,7 @@ rec {
           (
             IFS=
             set -- "${folderDrv}"/$pattern
-            cp -a -- "$@" "$destDir/"
+            cp -as -- "$@" "$destDir/"
           )
         '') paths}
       '';
@@ -390,40 +392,96 @@ rec {
   # tweaking the list doesn't require re-running a slow/networked fetch.
   removeFiles =
     paths: folderDrv:
+    let
+      isKeep = p: lib.hasInfix "!" p;
+      isGlob = p: lib.hasInfix "*" p && !(lib.hasInfix "/" p);
+      keepEntries = lib.filter isKeep paths;
+      globEntries = lib.filter (p: !isKeep p && isGlob p) paths;
+      literalEntries = lib.filter (p: !isKeep p && !isGlob p) paths;
+      keepScript = lib.concatMapStringsSep "\n" (
+        p:
+        let
+          parts = lib.splitString "!" p;
+          dir = lib.removeSuffix "/" (lib.head parts);
+          keep = lib.last parts;
+        in
+        ''find "$work/${dir}" -mindepth 1 ! -name ${lib.escapeShellArg keep} -delete 2>/dev/null || true''
+      ) keepEntries;
+      # One tree walk for every glob, instead of one walk per glob -- with
+      # dozens of cruft patterns applied to trees with huge file counts
+      # (e.g. Last Express's per-frame TGA backgrounds), repeating the walk
+      # per pattern dominated build time despite the work being disk-bound,
+      # not CPU-bound.
+      globScript = lib.optionalString (globEntries != [ ]) ''
+        find "$work" \( ${
+          lib.concatMapStringsSep " -o " (p: "-iname ${lib.escapeShellArg p}") globEntries
+        } \) -delete 2>/dev/null || true
+      '';
+      literalScript = lib.concatMapStringsSep "\n" (p: ''rm -rf -- "$work/${p}"'') literalEntries;
+    in
     pkgs.runCommand "${sanitizeName folderDrv.name}-pruned"
       {
         __contentAddressed = true;
         allowSubstitutes = false;
+        preferLocalBuild = true;
         outputHashAlgo = "sha256";
         outputHashMode = "recursive";
       }
       ''
         work="$TMPDIR/work"
         mkdir -p "$work"
-        cp -a "${folderDrv}/." "$work/"
-        chmod -R u+w "$work"
-        ${lib.concatMapStringsSep "\n" (
-          p:
-          if lib.hasInfix "!" p then
-            let
-              parts = lib.splitString "!" p;
-              dir = lib.removeSuffix "/" (lib.head parts);
-              keep = lib.last parts;
-            in
-            ''find "$work/${dir}" -mindepth 1 ! -name ${lib.escapeShellArg keep} -delete 2>/dev/null || true''
-          else if lib.hasInfix "*" p && !(lib.hasInfix "/" p) then
-            ''find "$work" -iname ${lib.escapeShellArg p} -delete 2>/dev/null || true''
-          else
-            ''rm -rf -- "$work/${p}"''
-        ) paths}
+        # -s: symlink file leaves instead of copying bytes -- cp -a was an
+        # O(data size) full copy just to delete a few cruft files. chmod
+        # stays dir-only since a recursive one would dereference into (and
+        # mutate) the read-only symlinked sources.
+        cp -as "${folderDrv}/." "$work/"
+        find "$work" -type d -exec chmod u+w {} +
+        ${keepScript}
+        ${globScript}
+        ${literalScript}
         cd /
         mv "$work" "$out"
+      '';
+
+  # Materializes a folder's symlinks (e.g. a linkFarm-style output) into
+  # real byte copies, as its own cached CA derivation -- callers that need
+  # dereferenced input get early cutoff: if folderDrv's content is
+  # unchanged, this step (and anything built on top of its output) is
+  # skipped entirely, no matter how many times/places it's asked for.
+  # `cp --dereference` still hashes the *symlink's target text* if given
+  # the symlink path itself unexpanded, so this copies from "$folderDrv/."
+  # (trailing dot) to walk into it first.
+  # `name`: optional override for the intermediate derivation's name. Needed
+  # when folderDrv is a dynamic-derivation output (builtins.outputOf, e.g.
+  # optimizeFolderDynamic's return) rather than a real derivation/store
+  # path -- its string form is a bare CA placeholder hash, so getName's
+  # fallback ("ca-file") would otherwise be all this step's name shows.
+  derefSymlinks =
+    {
+      name ? null,
+    }:
+    folderDrv:
+    pkgs.runCommand "${if name != null then name else getName folderDrv}-deref"
+      {
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        preferLocalBuild = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p "$out"
+        cp -r --dereference --no-preserve=mode "${folderDrv}/." "$out/"
       '';
 
   # Packs a folder's contents into a single archive named "<name>.<extension>".
   # `format` picks the archiver/compression scheme; `extension` (defaults to
   # `format`) is just the output filename's suffix, for formats like pk7/ipk3
-  # that are really a well-known format under a different name.
+  # that are really a well-known format under a different name. Assumes
+  # folderDrv is already real bytes, no symlinks -- callers that might hand
+  # in a symlink farm (e.g. archive.nix) run it through
+  # `derefSymlinks` first, once, as its own cached step, rather than
+  # every format branch here re-copying it inline on every repack.
   packArchive =
     {
       format,
@@ -435,11 +493,7 @@ rec {
         "7z" = {
           buildInputs = [ pkgs.p7zip ];
           script = ''
-            # A symlink-farm folder (e.g. linkFarm output) has its entries
-            # archived as the link target string rather than its contents
-            # unless dereferenced into real copies first.
-            cp -rL "${folderDrv}" ./repack-real
-            cd repack-real
+            cd "$folderDrv"
             7z a -bd "$out" . >/dev/null
           '';
         };
@@ -450,17 +504,15 @@ rec {
         "zip" = {
           buildInputs = [ pkgs.p7zip ];
           script = ''
-            cp -rL "${folderDrv}" ./repack-real
-            cd repack-real
+            cd "$folderDrv"
             7z a -tzip -bd "$out" . >/dev/null
           '';
         };
         "rpa" = {
           buildInputs = [ pkgs.rpatool ];
           script = ''
-            cp -rL "${folderDrv}" ./repack-real
-            cd repack-real
-            rpatool -c "$out" -- $(find . -type f)
+            cd "$folderDrv"
+            rpatool -c "$out" -- $(find -L . -type f)
           '';
         };
       };
@@ -468,10 +520,12 @@ rec {
     in
     pkgs.runCommand "${name}.${extension}" {
       inherit (chosen) buildInputs;
+      inherit folderDrv;
       __contentAddressed = true;
       allowSubstitutes = false;
       outputHashAlgo = "sha256";
       outputHashMode = "flat";
+      disallowedReferences = [ folderDrv ];
     } chosen.script;
 
   patchFile =

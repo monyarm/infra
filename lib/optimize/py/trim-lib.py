@@ -20,6 +20,18 @@ Usage: trim-lib.py LIB_DIR OPTIMIZE_DIR OUT_DIR FILE1,FILE2,...
   OPTIMIZE_DIR: directory walked for root names (every *.nix file's own
     first `{...}:` param block)
   OUT_DIR: where trimmed copies of each target file get written
+
+Second mode -- Usage: trim-lib.py --strip-tree SRC_DIR OUT_DIR
+  Comment/blank-line-strips (not dead-code-eliminates) every *.nix file
+  under SRC_DIR, mirroring its subdirectory layout into OUT_DIR. Unlike the
+  mode above, this covers the *whole* lib/optimize/ subtree (dynamic.nix,
+  dynamic-inner.nix, every handlers/*.nix, ...), which -- being handler
+  files auto-discovered by lib/mkFormatDispatch.nix rather than statically
+  referenced by name -- isn't safe to run the binding-level tree-shake on.
+  Comment-stripping alone is enough to stop doc-only edits (this repo's
+  handlers carry heavy header comments) from perturbing optimizeLibPath's
+  hash and forcing a full re-nix-instantiate for no real reason. Non-.nix
+  files are skipped entirely -- the caller copies those through verbatim.
 """
 import re
 import sys
@@ -246,22 +258,98 @@ def extract_top_level_bindings(text):
     return pre_text, bindings, post_text
 
 
+def _strip_interpolation_body(text, open_at, out):
+    """open_at points at the '$' of a '${' already detected. Blanks the
+    '${'/'}' delimiters but recursively keeps the interpolation's own
+    content visible to the reference scan (it's real Nix code, e.g. the
+    `getName` in `"${getName folderDrv}-deref"` is a genuine reference,
+    not string data) -- including any strings/comments nested inside it.
+    Returns the index just past the matching '}'."""
+    close = skip_balanced(text, open_at + 2, "{", "}")
+    inner_start = open_at + 2
+    inner_end = close - 1
+    out.append("  ")
+    out.append(strip_strings_and_comments(text[inner_start:inner_end]))
+    out.append(" ")
+    return close
+
+
+def _strip_double_string(text, i, out):
+    """i points at the opening '\"'. Blanks the literal text, preserving
+    interpolations (see _strip_interpolation_body). Returns index just
+    past the closing '\"'."""
+    n = len(text)
+    out.append(" ")
+    j = i + 1
+    while j < n:
+        if text[j] == "\\":
+            out.append("  ")
+            j += 2
+            continue
+        if text.startswith("${", j):
+            j = _strip_interpolation_body(text, j, out)
+            continue
+        if text[j] == '"':
+            out.append(" ")
+            return j + 1
+        out.append(" ")
+        j += 1
+    return n
+
+
+def _strip_indented_string(text, i, out):
+    """i points at the opening \"''\". Blanks the literal text, preserving
+    interpolations (see _strip_interpolation_body). Returns index just
+    past the closing \"''\"."""
+    n = len(text)
+    out.append("  ")
+    j = i + 2
+    while j < n:
+        if text.startswith("''${", j):
+            out.append("    ")
+            j += 4
+            continue
+        if text.startswith("${", j):
+            j = _strip_interpolation_body(text, j, out)
+            continue
+        if text.startswith("'''", j):
+            out.append("   ")
+            j += 3
+            continue
+        if text.startswith("''", j):
+            out.append("  ")
+            return j + 2
+        out.append(" ")
+        j += 1
+    return n
+
+
 def strip_strings_and_comments(text):
     """For reference-scanning only: replace every string/comment span with
-    spaces (preserving length/newlines, not that it matters here) so an
+    spaces (preserving length, not that it matters here) so an
     identifier-looking substring inside a string literal or comment (e.g. a
     throw message that happens to start with a binding's name) can't be
-    mistaken for a real code reference. Not used for binding extraction --
-    only this narrower scan needs precision; extraction already only ever
-    over-includes, which is safe."""
+    mistaken for a real code reference -- EXCEPT a string's own `${...}`
+    interpolations, which are real Nix expressions (not string data) and
+    must stay visible, recursively, or a binding referenced only inside one
+    (e.g. `pkgs.runCommand "${getName folderDrv}-deref"`) would look
+    unreferenced and get trimmed away. Not used for binding extraction --
+    only this narrower scan needs this precision; extraction already only
+    ever over-includes, which is safe."""
     out = []
     i = 0
     n = len(text)
     while i < n:
-        skipped = skip_string_or_comment(text, i)
-        if skipped is not None:
+        if text.startswith("#", i) or text.startswith("/*", i):
+            skipped = skip_string_or_comment(text, i)
             out.append(" " * (skipped - i))
             i = skipped
+            continue
+        if text.startswith("''", i):
+            i = _strip_indented_string(text, i, out)
+            continue
+        if text.startswith('"', i):
+            i = _strip_double_string(text, i, out)
             continue
         out.append(text[i])
         i += 1
@@ -306,7 +394,30 @@ def references(expr_text, candidate_names):
     return found & candidate_names
 
 
+def strip_tree(src_dir, out_dir):
+    import os
+
+    for root, _dirs, names in os.walk(src_dir):
+        for fn in names:
+            if not fn.endswith(".nix"):
+                continue
+            src_path = os.path.join(root, fn)
+            rel = os.path.relpath(src_path, src_dir)
+            out_path = os.path.join(out_dir, rel)
+            os.makedirs(os.path.dirname(out_path), exist_ok=True)
+            with open(src_path) as f:
+                text = f.read()
+            stripped = strip_blank_lines(strip_comments_for_output(text))
+            with open(out_path, "w") as f:
+                f.write(stripped + "\n")
+
+
 def main():
+    if sys.argv[1:2] == ["--strip-tree"]:
+        src_dir, out_dir = sys.argv[2:4]
+        strip_tree(src_dir, out_dir)
+        return
+
     lib_dir, optimize_dir, out_dir, files_csv = sys.argv[1:5]
     import os
 

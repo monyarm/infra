@@ -112,7 +112,6 @@ in
       # output derivations are already keyed by `hash`, not `name`, so
       # folding it into `name` bought nothing and could run past Nix's
       # 211-char derivation-name limit for games with several uploads.
-      version ? null,
       # sources.nix's recorded archive member list, when this source is a
       # pk3/archive -- attached as passthru so optimize/optimize' can
       # transparently extract/optimize/repack it without a caller needing
