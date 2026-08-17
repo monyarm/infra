@@ -319,6 +319,27 @@ let
             return games
 
 
+        def list_mode(sources):
+            per_provider = {p: set(t) for p, t in sources.items()}
+
+            title_providers = {}
+            for provider, titles in per_provider.items():
+                for title in titles:
+                    title_providers.setdefault(title, set()).add(provider)
+            multi = {t: p for t, p in title_providers.items() if len(p) > 1}
+
+            for provider in sorted(per_provider):
+                titles = sorted(t for t in per_provider[provider] if t not in multi)
+                print(f"\n=== {provider} ({len(titles)}) ===")
+                for title in titles:
+                    print(f"  {title}")
+
+            print(f"\n=== Multi-Provider ({len(multi)}) ===")
+            for title in sorted(multi):
+                providers = ", ".join(sorted(multi[title]))
+                print(f"  {title}  ({providers})")
+
+
         def main():
             ap = argparse.ArgumentParser(
                 description=(
@@ -328,9 +349,13 @@ let
             )
             ap.add_argument("--secrets-file", default="secrets/env.json")
             ap.add_argument("--threshold", type=float, default=0.7)
+            ap.add_argument(
+                "--list",
+                action="store_true",
+                help="List owned titles per provider instead of matching "
+                "against ScummVM.",
+            )
             args = ap.parse_args()
-
-            index = build_index(scummvm_games())
 
             sources = {
                 "GOG": gog_titles(args.secrets_file),
@@ -338,6 +363,12 @@ let
                 "Steam": steam_titles(args.secrets_file),
                 "Maxima": maxima_titles(args.secrets_file),
             }
+
+            if args.list:
+                list_mode(sources)
+                return
+
+            index = build_index(scummvm_games())
 
             for source, titles in sources.items():
                 print(f"\n=== {source} ({len(titles)} owned) ===")

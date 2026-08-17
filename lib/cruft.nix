@@ -8,7 +8,7 @@
   "*.md" # readmes (not md2/md3 -- Quake models)
   "*.DS_Store" # Finder junk
   "*.bat" # Windows batch scripts
-  "*.lnk"
+  "Launch_*.lnk" # Not plain LNK, as some dos-era games use that as an extension
   "__redist"
   "webcache.zip"
   "app/webcache.zip"
@@ -21,12 +21,10 @@
   "goglog.ini"
   ".DepotDownloader"
   "scummvm" # bundled scummvm, NOT "ScummVM" which also contains lucasarts games in some releases
-  "DOSBOX/!dosbox*.conf" #bundled dosbox
+  "DOSBOX/!dosbox*.conf" # bundled dosbox
   "VERSION"
-  "README"
-  "READ.ME"
-  "*.txt" # readmes, changelogs, etc.
-  "*.TXT" # readmes, changelogs, etc.
+  "READ*ME*"
+  "MANUAL.txt"
   "savegame.___"
   "winsetup.exe"
   "winsetup.ini"

@@ -371,8 +371,8 @@ let
       -o -iname 'licenses' \
       -o -iname 'Game.sh' -o -iname 'lib32' -o -iname 'lib64' \
       \) \
-      --delete || true
-  ''
+      -delete || true
+  '';
 
   engineGatedScripts = {
     agos = compressAgos;

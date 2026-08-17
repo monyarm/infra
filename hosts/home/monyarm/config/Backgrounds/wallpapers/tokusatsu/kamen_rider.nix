@@ -534,4 +534,22 @@ with image;
     sha256 = "sha256-R6QcJPnR1d2UuO2QKcZeQtGF6gyKkktFiJNGiRNZcek=";
   };
 
+  blackRX = pkgs.fetchurl {
+    url = "https://i0.hdslb.com/bfs/album/cc841beeb32d43191c56289e1041398f63113288.jpg";
+    hash = "sha256-ydpcoMn8V9hqT0IuvbJKAEcVv0iRoiKwWXCWBLtl+5w=";
+  };
+
+  tsukasaCards = pkgs.fetchurl {
+    url = "https://pbs.twimg.com/media/HNRq17makAAseBS?format=jpg&name=large";
+    name = "tsukasaCards.jpg";
+    hash = "sha256-TfccC96bFt11c0JnLUFiTePLnzVPvK6sRCkh6i7ShFY=";
+  };
+
+  ankh =
+    pkgs.fetchurl {
+      url = "https://pbs.twimg.com/media/HHoz1knbEAE6fkb?format=jpg&name=4096x4096";
+      name = "ankh.jpg";
+      hash = "sha256-YrYiAVbyTpsiYU9TlilbA7xes9o6hgjPbOC0wCpzoCM=";
+    }
+    |> crop16x9North;
 }

@@ -16,9 +16,17 @@ let
     |> getFiles [ "AboveTheWaves/data" ]
     |> compressScummvmGame "sludge";
   heroinesQuest =
-    fetchItch sources.scummvm.heroinesquest |> getFiles [ "data/Heroine's Quest.ags" "*.tra" ] |> compressScummvmGame "ags";
+    fetchItch sources.scummvm.heroinesquest
+    |> getFiles [
+      "data/Heroine's Quest.ags"
+      "data/*.tra"
+    ]
+    |> compressScummvmGame "ags";
   indianaRodent = fetchItch sources.scummvm.indianarodent |> compressScummvmGame "ags";
-  shoaly = fetchItch sources.scummvm.shoaly |> getFiles [ "Linux/data/SYCBS.ags" ] |> compressScummvmGame "ags";
+  shoaly =
+    fetchItch sources.scummvm.shoaly
+    |> getFiles [ "Linux/data/SYCBS.ags" ]
+    |> compressScummvmGame "ags";
   cosmosQuest3 = fetchItch sources.scummvm.cosmosquest3 |> compressScummvmGame "ags";
   cosmosQuest4 = fetchItch sources.scummvm.cosmosquest4 |> compressScummvmGame "ags";
   aDateInThePark =
