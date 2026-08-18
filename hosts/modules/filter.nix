@@ -17,6 +17,7 @@ let
     "niri"
     "firefox" # only so I can then set package to null
     "home-manager" # package is readOnly
+    "claude-code"
   ];
 
   retainedServices = [

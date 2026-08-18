@@ -21,3 +21,13 @@ being corrected still hides the same progress/error visibility. The user called 
 explicitly after it happened. Same applies to any other reflexive line-limiting (`| sed -n`,
 `| grep -m N`, manual slicing) used out of context-economy habit rather than because the
 output is actually unbounded.
+
+Broken a second time (2026-08-17, ~/.nix): piped `update-sources.py --help` through `tail`
+to peek at CLI flags before running the real command — the script has no `--help` at all,
+so the piped invocation silently ran the real (mutating, network-fetching) update instead of
+erroring, and `tail` hid the output that would have shown this immediately. Two lessons: (1)
+the `tail`/`head` ban applies to *almost every* invocation of a command, including ones meant as a
+quick "just checking the interface" probe — there's almost no safe-to-truncate case; (2) don't guess
+at a script's CLI flags (`--help`) when unsure — read its `argparse`/arg-parsing source (or
+just its main()) directly instead of executing a guess against a mutating script.
+Only use `tail`/`head` if you know the command will be long and unwieldly

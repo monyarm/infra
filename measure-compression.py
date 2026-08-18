@@ -31,6 +31,7 @@ Usage:
                                                 # contains "teenagent"/"grim"
   ./measure-compression.py --doom              # only Doom wads
   ./measure-compression.py --scummvm           # only ScummVM games
+  ./measure-compression.py --emulation         # only games.emulation.roms.*
   ./measure-compression.py --list              # print available game names
   ./measure-compression.py --list --missing    # ...only those with no CSV row yet
 """
@@ -47,7 +48,6 @@ import re
 import signal
 import subprocess
 import sys
-import tempfile
 import termios
 import threading
 from pathlib import Path
@@ -325,6 +325,7 @@ def list_names():
         """{
   doom = builtins.attrNames real.config.games.doom.wads;
   scummvm = builtins.attrNames real.config.games.scummvm.games;
+  emulation = builtins.attrNames real.config.games.emulation.roms;
 }""",
         max_jobs=1,
         cores=1,
@@ -342,8 +343,9 @@ def names_nix(names):
 
 
 def build_measure_body(targets):
-    """targets: {"doom": [names], "scummvm": [names]}. Each leg wrapped in
-    getDrvPath -- a plain symlink-to-value target, not a size computation."""
+    """targets: {"doom": [names], "scummvm": [names], "emulation": [names]}.
+    Each leg wrapped in getDrvPath -- a plain symlink-to-value target, not a
+    size computation."""
     parts = []
     if targets["doom"]:
         parts.append(f"""
@@ -365,6 +367,16 @@ def build_measure_body(targets):
         mock = getDrvPath mocked.config.games.scummvm.games.${{n}}.path;
       }};
     }}) names);""")
+    if targets["emulation"]:
+        parts.append(f"""
+  emulation = let names = {names_nix(targets["emulation"])}; in
+    builtins.listToAttrs (map (n: {{
+      name = n;
+      value = {{
+        real = getDrvPath (customLib.compressRom real.config.games.emulation.roms.${{n}});
+        mock = getDrvPath real.config.games.emulation.roms.${{n}};
+      }};
+    }}) names);""")
     return "{\n" + "\n".join(parts) + "\n}"
 
 
@@ -375,6 +387,7 @@ def get_drv_paths(targets):
     return {
         "doom": result.get("doom", {}),
         "scummvm": result.get("scummvm", {}),
+        "emulation": result.get("emulation", {}),
     }
 
 
@@ -506,6 +519,7 @@ def main():
     )
     parser.add_argument("--doom", action="store_true", help="restrict to Doom wads")
     parser.add_argument("--scummvm", action="store_true", help="restrict to ScummVM games")
+    parser.add_argument("--emulation", action="store_true", help="restrict to games.emulation.roms.*")
     parser.add_argument(
         "--sequential",
         action="store_true",
@@ -526,8 +540,10 @@ def main():
         categories.append("doom")
     if args.scummvm:
         categories.append("scummvm")
+    if args.emulation:
+        categories.append("emulation")
     if not categories:
-        categories = ["doom", "scummvm"]
+        categories = ["doom", "scummvm", "emulation"]
 
     names = list_names()
 
@@ -539,9 +555,12 @@ def main():
                     print(f"{category:8} {n}")
         return
 
-    targets = {c: ([n for n in names[c] if matches(n, args.patterns)] if c in categories else []) for c in ("doom", "scummvm")}
+    targets = {
+        c: ([n for n in names[c] if matches(n, args.patterns)] if c in categories else [])
+        for c in ("doom", "scummvm", "emulation")
+    }
 
-    if not targets["doom"] and not targets["scummvm"]:
+    if not targets["doom"] and not targets["scummvm"] and not targets["emulation"]:
         sys.exit("No games matched the given patterns.")
 
     rows = load_csv()
@@ -555,17 +574,6 @@ def main():
         for leg in ("real", "mock")
     ]
 
-    drv_list_path = Path(tempfile.mkstemp(prefix="measure-compression-drvs-", suffix=".json")[1])
-    with drv_list_path.open("w") as f:
-        json.dump(
-            [{"category": c, "name": n, "leg": leg, "drv": d} for c, n, leg, d in drv_list],
-            f,
-            indent=1,
-        )
-    print(f"Saved {len(drv_list)} derivation paths to {drv_list_path}")
-
-    with drv_list_path.open() as f:
-        drv_list = [(e["category"], e["name"], e["leg"], e["drv"]) for e in json.load(f)]
     if args.sequential:
         print(f"=== building {len(drv_list)} derivations, one at a time ===")
         sizes, failed = build_sequential(drv_list, max_jobs=args.max_jobs, cores=args.cores)
@@ -574,7 +582,7 @@ def main():
 
     for category in categories:
         targets[category] = [n for n in targets[category] if (category, n) not in failed]
-    if not targets["doom"] and not targets["scummvm"]:
+    if not targets["doom"] and not targets["scummvm"] and not targets["emulation"]:
         sys.exit("Every build failed, nothing to measure.")
 
     now = datetime.datetime.now().isoformat(timespec="seconds")

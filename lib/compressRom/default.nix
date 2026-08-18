@@ -42,6 +42,7 @@ let
       "gc.iso"
       "wii.iso"
     ];
+    mame-zip = [ "zip" ];
   };
 
   # ==========================================================================
@@ -94,13 +95,29 @@ let
     let
       isAttrsShape = builtins.isAttrs x && !(lib.isDerivation x);
       rom = if isAttrsShape then x.rom else x;
+      # Soft-patching (mGBA, RetroArch cores, ...) auto-applies an ips/bps/ups
+      # sidecar only if its basename exactly matches the rom's -- rename each
+      # patch to "<romBase>.<ext>" via originalName, which stageFiles/
+      # stagedNames already prefer over the patch's own on-disk name.
+      romBase =
+        let
+          m = builtins.match "(.*)\\.[^.]+" (fileNameOf rom);
+        in
+        if m == null then fileNameOf rom else lib.head m;
       patches =
         if isAttrsShape then
-          lib.filter (p: p != null) [
-            (x.ips or null)
-            (x.bps or null)
-            (x.ups or null)
-          ]
+          lib.filter (p: p != null) (
+            map
+              (
+                ext:
+                if x ? ${ext} && x.${ext} != null then x.${ext} // { originalName = "${romBase}.${ext}"; } else null
+              )
+              [
+                "ips"
+                "bps"
+                "ups"
+              ]
+          )
         else
           [ ];
       allFiles = [ rom ] ++ patches;

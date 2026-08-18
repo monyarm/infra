@@ -15,3 +15,5 @@
 - [Verify against pinned version](feedback_verify_against_pinned_version.md) — fetch a dependency's docs/source at the exact locked commit, not master/latest.
 - [Use codegraph, not subagents](feedback_use_codegraph_not_subagents.md) — for file/symbol lookups in this repo, call codegraph_explore directly instead of dispatching Explore/general-purpose agents.
 - [packages/ has two overlay sites](project_packages_two_overlay_sites.md) — hosts/default.nix and lib/optimize/overlays.nix both re-import packages/default.nix separately from flake.nix; new callPackage args (craneLib etc.) must be threaded into all of them.
+- [Prefer sources.toml + fetchGitTree](feedback_prefer_sources_toml_fetchgittree.md) — new git-hosted package sources go through sources.toml/update-sources.py --append, not hand-written fetchFromGitHub; version = bare .date.
+- [packages/\*.nix needs trailing `...`](feedback_packages_need_ellipsis_arg.md) — customLib spreads extra keys (e.g. meta) into every callPackage call unfiltered.

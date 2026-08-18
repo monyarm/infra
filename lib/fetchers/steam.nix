@@ -259,7 +259,9 @@ rec {
         MANIFEST_ID = toString manifestId;
         PUBFILE_ID = toString pubfileId;
         UGC_ID = toString ugcId;
-        inherit filelist;
+      }
+      // lib.optionalAttrs (filelist != null) {
+        filelist = lib.concatStringsSep "\n" filelist;
         passAsFile = [ "filelist" ];
       };
       script = ''

@@ -48,6 +48,14 @@ let
       inherit (inputs.determinate-nix.packages."x86_64-linux") nix;
       nix-rom = inputs.rom.packages."x86_64-linux".default;
     })
+    (final: prev: {
+      # nixpkgs minizip.pc advertises -I$out/include, but unzip.h/zip.h live
+      # under $out/include/minizip. snes9x-gtk's #include "unzip.h" can't
+      # find it. Upstream bug.
+      snes9x-gtk = prev.snes9x-gtk.overrideAttrs (old: {
+        NIX_CFLAGS_COMPILE = "${old.NIX_CFLAGS_COMPILE or ""} -I${final.minizip}/include/minizip";
+      });
+    })
   ];
 
   pkgsGen =
