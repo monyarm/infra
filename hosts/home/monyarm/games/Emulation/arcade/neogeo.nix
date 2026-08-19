@@ -4,6 +4,7 @@
   pkgs,
   fetchSteam,
   mkNeoGeo,
+  getFile,
   ...
 }:
 let
@@ -83,14 +84,10 @@ let
         "twinspri.zip"
         "neogeo.zip"
       ]
-    } \) -type f -exec cp -t $out {} +
+    } \) -type f -exec cp -n -t $out {} +
   '';
 
-  extractedZip =
-    name:
-    pkgs.runCommand "${name}.zip" { } ''
-      cp ${resolvedZips}/${name}.zip $out
-    '';
+  extractedZip = name: resolvedZips |> getFile "${name}.zip";
 
   biosDir = pkgs.runCommand "neogeo-bios-dir" { } ''
     mkdir -p $out
