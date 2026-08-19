@@ -152,5 +152,11 @@ lib.mkIf config.games.emulation.enable {
       rom = kidDracula;
       system = "nes";
     };
+
+    MEGA_MAN_LEGACY_COLLECTION = {
+      disabled = true;
+      name = "Mega Man Legacy Collection";
+      steamAppId = 363440;
+    };
   };
 }

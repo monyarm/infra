@@ -160,6 +160,10 @@ in
           removeAttrs g [
             "steamAppId"
             "steamCdnImagesHash"
+            "gogId"
+            "epicId"
+            "maximaSlug"
+            "disabled"
           ]
         )
       ) (lib.attrValues config.games.scummvm.games)
@@ -175,6 +179,10 @@ in
         }
         // lib.optionalAttrs (g ? steamAppId) { inherit (g) steamAppId; }
         // lib.optionalAttrs (g ? steamCdnImagesHash) { inherit (g) steamCdnImagesHash; }
+        // lib.optionalAttrs (g ? gogId) { inherit (g) gogId; }
+        // lib.optionalAttrs (g ? epicId) { inherit (g) epicId; }
+        // lib.optionalAttrs (g ? maximaSlug) { inherit (g) maximaSlug; }
+        // lib.optionalAttrs (g ? disabled) { inherit (g) disabled; }
       )
     ) config.games.scummvm.games;
 

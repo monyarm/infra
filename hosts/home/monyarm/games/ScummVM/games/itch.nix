@@ -71,6 +71,8 @@ lib.mkIf config.games.scummvm.enable {
       description = "Heroine's Quest: The Herald of Ragnarok";
       platform = "";
       path = "${heroinesQuest}/data";
+      steamAppId = 283880;
+      steamCdnImagesHash = "sha256-L8ijWyeoQZpYgouhb6yWWNznpcsGgRMoJ8BPCvTEA+w=";
     };
 
     indianaRodent = {

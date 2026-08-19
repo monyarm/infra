@@ -340,6 +340,10 @@ rec {
       "hero"
       "logo"
     ]; # Maniac Mansion: same
+    "366280" = [
+      "hero"
+      "logo"
+    ]; # Twinkle Star Sprites: no library_hero, no logo
   };
 
   fetchSteamCdnImages =

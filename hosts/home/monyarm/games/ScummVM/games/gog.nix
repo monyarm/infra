@@ -187,6 +187,7 @@ let
     }
     |> getFiles [ "SAVAGE" ]
     |> compressScummvmGame "ultima";
+
 in
 lib.mkIf config.games.scummvm.enable {
   games.scummvm.games = {
@@ -196,6 +197,7 @@ lib.mkIf config.games.scummvm.enable {
       extra = "Alt version";
       description = "Teen Agent";
       path = "${teenagent}";
+      gogId = "teenagent";
     };
 
     ultima4Enh = {
@@ -204,12 +206,14 @@ lib.mkIf config.games.scummvm.enable {
       guioptions = "sndNoSpeech";
       description = "Ultima IV - Quest of the Avatar - Enhanced";
       path = "${ultima4}";
+      gogId = "ultima_iv_quest_of_the_avatar";
     };
 
     dragonsphere = {
       engineid = "mads";
       description = "Dragonsphere";
       path = "${dragonsphere}/DRAGON";
+      gogId = "dragonsphere";
     };
 
     martianDreams = {
@@ -217,18 +221,24 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "ultima";
       description = "Ultima: Worlds of Adventure 2 - Martian Dreams";
       path = "${martianDreams}/MARTIAN";
+      gogId = "ultima_worlds_of_adventure_2_martian_dreams";
     };
 
     bladeRunner = {
       engineid = "bladerunner";
       description = "Blade Runner";
       path = "${bladeRunner}";
+      # GOG relaunched this as "Blade Runner - Enhanced Edition"; the
+      # library API now reports this gamename, even though the original
+      # "blade_runner" slug still resolves for lgogdownloader fetches.
+      gogId = "blade_runner_enhanced_edition_base";
     };
 
     grimFandango = {
       engineid = "grim";
       description = "Grim Fandango Remastered";
       path = "${grimFandango}/app";
+      gogId = "grim_fandango_remastered";
     };
 
     conquestsOfCamelot = {
@@ -236,6 +246,7 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "sci";
       description = "Conquests of Camelot";
       path = "${conquestsOfCamelot}";
+      gogId = "conquests_of_camelot";
     };
 
     conquestsOfTheLongbow = {
@@ -243,6 +254,7 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "sci";
       description = "Conquests of the Longbow";
       path = "${conquestsOfTheLongbow}";
+      gogId = "conquests_of_the_longbow";
     };
 
     returnOfThePhantom = {
@@ -250,6 +262,7 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "mads";
       description = "Return of the Phantom";
       path = "${returnOfThePhantom}/RotP/RESOURCE";
+      gogId = "return_of_the_phantom";
     };
 
     daggerOfAmonRa = {
@@ -257,6 +270,7 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "sci";
       description = "The Dagger of Amon Ra";
       path = "${daggerOfAmonRa}";
+      gogId = "the_dagger_of_amon_ra";
     };
 
     torinsPassage = {
@@ -264,6 +278,7 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "sci";
       description = "Torin's Passage";
       path = "${torinsPassage}";
+      gogId = "torins_passage";
     };
 
     beneathASteelSky = {
@@ -272,6 +287,7 @@ lib.mkIf config.games.scummvm.enable {
       description = "Beneath a Steel Sky";
       alt_intro = false;
       path = "${beneathASteelSky}";
+      gogId = "beneath_a_steel_sky";
     };
 
     flightOfTheAmazonQueen = {
@@ -281,6 +297,7 @@ lib.mkIf config.games.scummvm.enable {
       description = "Flight of the Amazon Queen";
       alt_intro = false;
       path = "${flightOfTheAmazonQueen}";
+      gogId = "flight_of_the_amazon_queen";
     };
 
     lureOfTheTemptress = {
@@ -291,6 +308,7 @@ lib.mkIf config.games.scummvm.enable {
       tts_narrator = false;
       description = "Lure of the Temptress";
       path = "${lureOfTheTemptress}";
+      gogId = "lure_of_the_temptress";
     };
 
     savageEmpire = {
@@ -298,6 +316,8 @@ lib.mkIf config.games.scummvm.enable {
       engineid = "ultima";
       description = "Worlds of Ultima: The Savage Empire";
       path = "${savageEmpire}/SAVAGE";
+      gogId = "worlds_of_ultima_the_savage_empire";
     };
+
   };
 }

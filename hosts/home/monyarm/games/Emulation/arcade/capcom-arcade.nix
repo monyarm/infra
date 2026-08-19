@@ -564,11 +564,24 @@ lib.mkIf config.games.emulation.enable {
   games.emulation.roms = lib.foldl' (acc: entry: acc // entry.roms) { } (
     lib.attrValues capcomEntries
   );
-  programs.steam.games = lib.mapAttrs (
-    _: entry:
-    mkArcade {
-      inherit (entry) name shortname;
-      romset = config.games.emulation.roms.${entry.shortname};
-    }
-  ) capcomEntries;
+  programs.steam.games =
+    lib.mapAttrs (
+      _: entry:
+      mkArcade {
+        inherit (entry) name shortname;
+        romset = config.games.emulation.roms.${entry.shortname};
+      }
+    ) capcomEntries
+    // {
+      CAPCOM_ARCADE_STADIUM_SOURCE = {
+        disabled = true;
+        name = "Capcom Arcade Stadium";
+        steamAppId = 1515950;
+      };
+      CAPCOM_ARCADE_2ND_STADIUM_SOURCE = {
+        disabled = true;
+        name = "Capcom Arcade 2nd Stadium";
+        steamAppId = 1755910;
+      };
+    };
 }

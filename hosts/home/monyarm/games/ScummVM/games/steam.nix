@@ -301,6 +301,47 @@ let
     }
     |> compressScummvmGame "sci";
 
+  sanitarium =
+    fetchSteam {
+      appId = 284050;
+      depotId = 284051;
+      manifestId = 2197383176086176404;
+      os = "windows";
+      filelist = [ "regex:^Data/EN/.*$" ];
+      sha256 = "sha256-skT+f2qJOFSPEadeFYSNLYJrjzbvE6iJPpwXU6gh2IY=";
+    }
+    |> compressScummvmGame "asylum";
+
+  # tenta.cle is a DoubleFine LPAK bundle holding both the HD remaster's
+  # assets/engine and the original 1993 SCUMM data together in one opaque
+  # blob -- filelist can't narrow inside a single file, so the whole bundle
+  # is fetched, then pkgs.untangle (packages/untangle.nix, sourced via
+  # sources.toml) pulls out just the classic/en/ subset ScummVM's scumm
+  # engine needs.
+  dottDl = fetchSteam {
+    appId = 388210;
+    depotId = 388211;
+    manifestId = 8150331470367542821;
+    os = "windows";
+    filelist = [ "tenta.cle" ];
+    sha256 = "sha256-70W9NcCB4gDKbJp55wAwvHfmkw7z3MibYvUW/sWSZEk=";
+  };
+
+  dott =
+    pkgs.runCommand "dott-classic-extracted"
+      {
+        nativeBuildInputs = [ pkgs.untangle ];
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        untangle -x -F 'classic/en/*' ${dottDl}/tenta.cle
+        mkdir -p $out
+        cp classic/en/* $out/
+      ''
+    |> compressScummvmGame "scumm";
+
   lastCrusade =
     fetchSteam {
       appId = 32310;
@@ -552,5 +593,23 @@ lib.mkIf config.games.scummvm.enable {
     path = "${lastCrusade}/INDY3";
     steamAppId = 32310;
     steamCdnImagesHash = "sha256-tHyEF3rgAvlUyCF8gD3UOoM8x2z1JL/XHbZtPQLkBYk=";
+  };
+
+  games.scummvm.games.sanitarium = {
+    engineid = "asylum";
+    description = "Sanitarium";
+    path = "${sanitarium}/Data/EN";
+    steamAppId = 284050;
+    steamCdnImagesHash = "sha256-l3KKfVLE9KyajpfHMPspnK4Srw0+LPJmGx6Z0JXGh3g=";
+  };
+
+  games.scummvm.games.dott = {
+    gameid = "tentacle";
+    engineid = "scumm";
+    extra = "Steam";
+    description = "Day of the Tentacle";
+    path = "${dott}";
+    steamAppId = 388210;
+    steamCdnImagesHash = "sha256-xN9rcc5XSp7V7Vusucvf9nkoYe22X5xncwyNb9WP0Es=";
   };
 }

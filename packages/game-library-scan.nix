@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   script =
-    pkgs.writers.writePython3Bin "scummvm-library-scan"
+    pkgs.writers.writePython3Bin "game-library-scan"
       {
         flakeIgnore = [
           "E501"
@@ -147,7 +147,7 @@ let
                         file=sys.stderr,
                     )
                     return []
-                return [g["title"] for g in data]
+                return [(g.get("gamename"), g["title"]) for g in data]
 
 
         def epic_titles(secrets_file):
@@ -179,7 +179,7 @@ let
                         file=sys.stderr,
                     )
                     return []
-                return [g["app_title"] for g in data]
+                return [(g.get("app_name"), g["app_title"]) for g in data]
 
 
         # maxima-cli logs every line through a custom log::Log impl (see
@@ -198,7 +198,7 @@ let
         # the title itself contains " - " (e.g. "S.T.A.L.K.E.R. - Shadow of
         # Chernobyl").
         MAXIMA_GAME_LINE_RE = re.compile(
-            r"^\S+\s+-\s+(.+)\s+-\s+\S+\s*-\s*Installed:\s*\w+\s*$",
+            r"^\S+\s+-\s+(.+)\s+-\s+(\S+)\s*-\s*Installed:\s*\w+\s*$",
             re.MULTILINE,
         )
 
@@ -226,7 +226,7 @@ let
                     "", MAXIMA_ANSI_RE.sub("", res.stdout)
                 )
                 return [
-                    m.group(1).strip()
+                    (m.group(2).strip(), m.group(1).strip())
                     for m in MAXIMA_GAME_LINE_RE.finditer(clean)
                 ]
 
@@ -237,15 +237,18 @@ let
             if not vdf.exists():
                 return []
             paths = re.findall(r'"path"\s*"([^"]+)"', vdf.read_text())
-            titles = []
+            games = []
             for p in paths:
                 acf_dir = Path(p) / "steamapps"
                 for acf in acf_dir.glob("appmanifest_*.acf"):
                     text = acf.read_text(errors="ignore")
                     m = re.search(r'"name"\s*"([^"]+)"', text)
-                    if m:
-                        titles.append(m.group(1))
-            return titles
+                    if not m:
+                        continue
+                    appid_m = re.match(r"appmanifest_(\d+)\.acf", acf.name)
+                    appid = appid_m.group(1) if appid_m else None
+                    games.append((appid, m.group(1)))
+            return games
 
 
         def local_steamid64():
@@ -297,7 +300,7 @@ let
                 return steam_installed_titles()
 
             games = data.get("response", {}).get("games", [])
-            return [g["name"] for g in games if "name" in g]
+            return [(g["appid"], g["name"]) for g in games if "name" in g]
 
 
         def scummvm_games():
@@ -319,41 +322,116 @@ let
             return games
 
 
-        def list_mode(sources):
-            per_provider = {p: set(t) for p, t in sources.items()}
+        # Maps each provider to the already-defined.json field holding this
+        # repo's own ids for that source, so ownership can be excluded by id
+        # instead of fuzzy title matching.
+        PROVIDER_ID_KEYS = {
+            "GOG": "gogIds",
+            "Epic": "epicIds",
+            "Steam": "steamAppIds",
+            "Maxima": "maximaSlugs",
+        }
+
+
+        def already_defined():
+            path = (
+                Path.home()
+                / ".local"
+                / "share"
+                / "game-library-scan"
+                / "already-defined.json"
+            )
+            if not path.exists():
+                print(
+                    f"Warning: {path} not found (run `home-manager switch` "
+                    "first); treating this repo's existing library as empty.",
+                    file=sys.stderr,
+                )
+                return {key: [] for key in PROVIDER_ID_KEYS.values()}
+            return json.loads(path.read_text())
+
+
+        def excluded_ids(defined):
+            return {
+                provider: {str(x) for x in defined.get(key, [])}
+                for provider, key in PROVIDER_ID_KEYS.items()
+            }
+
+
+        def split_owned(entries, seen_ids):
+            visible, hidden = [], 0
+            for gid, title in entries:
+                if gid is not None and str(gid) in seen_ids:
+                    hidden += 1
+                else:
+                    visible.append((gid, title))
+            return visible, hidden
+
+
+        def list_mode(sources, defined):
+            already = excluded_ids(defined)
+            visible = {}
+            hidden_counts = {}
+            for provider, entries in sources.items():
+                visible[provider], hidden_counts[provider] = split_owned(
+                    entries, already.get(provider, set())
+                )
 
             title_providers = {}
-            for provider, titles in per_provider.items():
-                for title in titles:
-                    title_providers.setdefault(title, set()).add(provider)
-            multi = {t: p for t, p in title_providers.items() if len(p) > 1}
+            for provider, entries in visible.items():
+                for gid, title in entries:
+                    title_providers.setdefault(title, []).append((provider, gid))
+            multi = {t: v for t, v in title_providers.items() if len({p for p, _ in v}) > 1}
 
-            for provider in sorted(per_provider):
-                titles = sorted(t for t in per_provider[provider] if t not in multi)
-                print(f"\n=== {provider} ({len(titles)}) ===")
-                for title in titles:
-                    print(f"  {title}")
+            for provider in sorted(visible):
+                entries = sorted(
+                    (gid, title) for gid, title in visible[provider] if title not in multi
+                )
+                hidden = hidden_counts[provider]
+                hidden_note = f", {hidden} already owned" if hidden else ""
+                print(f"\n=== {provider} ({len(entries)}{hidden_note}) ===")
+                for gid, title in entries:
+                    id_note = f"  [{gid}]" if gid is not None else ""
+                    print(f"  {title}{id_note}")
 
             print(f"\n=== Multi-Provider ({len(multi)}) ===")
             for title in sorted(multi):
-                providers = ", ".join(sorted(multi[title]))
+                providers = ", ".join(f"{p} [{gid}]" for p, gid in sorted(multi[title]))
                 print(f"  {title}  ({providers})")
+
+
+        def scummvm_mode(sources, defined, threshold):
+            already = excluded_ids(defined)
+            index = build_index(scummvm_games())
+
+            for provider in sorted(sources):
+                visible, _ = split_owned(sources[provider], already.get(provider, set()))
+                print(f"\n=== {provider} ({len(visible)} owned) ===")
+                for gid, title in sorted(set(visible), key=lambda x: x[1]):
+                    matches = fuzzy_matches(title, index, threshold)
+                    if matches:
+                        shown = ", ".join(
+                            f"{name} [{sgid}] ({ratio:.2f})"
+                            for ratio, sgid, name in matches
+                        )
+                        print(f"  {title}  ->  {shown}")
 
 
         def main():
             ap = argparse.ArgumentParser(
                 description=(
-                    "Cross-reference owned GOG/Steam/Epic games against "
+                    "List owned GOG/Steam/Epic/Maxima games not yet defined "
+                    "in this repo's config, or match them against "
                     "ScummVM-supported titles."
                 )
             )
             ap.add_argument("--secrets-file", default="secrets/env.json")
             ap.add_argument("--threshold", type=float, default=0.7)
             ap.add_argument(
-                "--list",
+                "--scummvm",
                 action="store_true",
-                help="List owned titles per provider instead of matching "
-                "against ScummVM.",
+                help="Fuzzy-match owned titles against ScummVM's supported "
+                "games instead of just listing them.",
             )
             args = ap.parse_args()
 
@@ -363,23 +441,12 @@ let
                 "Steam": steam_titles(args.secrets_file),
                 "Maxima": maxima_titles(args.secrets_file),
             }
+            defined = already_defined()
 
-            if args.list:
-                list_mode(sources)
-                return
-
-            index = build_index(scummvm_games())
-
-            for source, titles in sources.items():
-                print(f"\n=== {source} ({len(titles)} owned) ===")
-                for title in sorted(set(titles)):
-                    matches = fuzzy_matches(title, index, args.threshold)
-                    if matches:
-                        shown = ", ".join(
-                            f"{name} [{gid}] ({ratio:.2f})"
-                            for ratio, gid, name in matches
-                        )
-                        print(f"  {title}  ->  {shown}")
+            if args.scummvm:
+                scummvm_mode(sources, defined, args.threshold)
+            else:
+                list_mode(sources, defined)
 
 
         if __name__ == "__main__":

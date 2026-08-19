@@ -113,6 +113,8 @@ lib.mkIf config.games.doom.enable {
         doom64CESfxHq
         doom64LostLevels
       ];
+      steamAppId = 1148590;
+      steamCdnImagesHash = "sha256-ApOBrSzbKuOpFGzYON2V1kVzp0MO0NxPcg0M2zyV4Es=";
     };
   };
 }

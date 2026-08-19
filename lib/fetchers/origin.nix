@@ -54,25 +54,40 @@ in
       useSecrets = true;
       nativeBuildInputs = [
         pkgs.maxima-cli
-        (pkgs.python3.withPackages (ps: [ ps.pexpect ]))
+        (pkgs.python3.withPackages (ps: [
+          ps.pexpect
+          ps.tomli-w
+        ]))
       ];
       extraAttrs = {
         SEARCH = search;
       };
       script = ''
-        export HOME=$TMPDIR/HOME
-        mkdir -p "$HOME/.local/share/maxima"
+                export HOME=$TMPDIR/HOME
+                mkdir -p "$HOME/.local/share/maxima"
 
-        if [ -z "''${MAXIMA_AUTH:-}" ]; then
-          echo "Error: MAXIMA_AUTH is not set in the environment." >&2
-          echo "Run 'maxima-cli create-auth-code --client-id <id>' then" >&2
-          echo "'maxima-cli juno-token-refresh' once locally, and set MAXIMA_AUTH" >&2
-          echo "to the resulting auth.toml's contents as a sops secret." >&2
-          exit 1
-        fi
-        printf '%s' "$MAXIMA_AUTH" > "$HOME/.local/share/maxima/auth.toml"
+                # MAXIMA_AUTH is JSON, not the raw auth.toml -- .envrc's `sops -d
+                # secrets/env.json | jq` step already tojson-encodes any non-string
+                # secret value before exporting it, so a JSON object here just works.
+                # It must mirror auth.toml's AuthStorage shape (see
+                # maxima-lib/src/core/auth/storage.rs): a "selected" user id and a
+                # matching "accounts" table.
+                if [ -z "''${MAXIMA_AUTH:-}" ]; then
+                  echo "Error: MAXIMA_AUTH is not set in the environment." >&2
+                  echo "Run 'maxima-cli create-auth-code --client-id <id>' then" >&2
+                  echo "'maxima-cli juno-token-refresh' once locally to produce" >&2
+                  echo "~/.local/share/maxima/auth.toml, then convert it to JSON" >&2
+                  echo "and set it as MAXIMA_AUTH's value in secrets/env.json" >&2
+                  echo '  python3 -c '"'"'import tomllib, json, sys; json.dump(tomllib.load(open(sys.argv[1], "rb")), sys.stdout)'"'"' ~/.local/share/maxima/auth.toml' >&2
+                  exit 1
+                fi
+                python3 -c '
+        import json, os, sys, tomli_w
+        with open(sys.argv[1], "wb") as f:
+            tomli_w.dump(json.loads(os.environ["MAXIMA_AUTH"]), f)
+        ' "$HOME/.local/share/maxima/auth.toml"
 
-        python3 ${originInstallScript} "$SEARCH" "$out"
+                python3 ${originInstallScript} "$SEARCH" "$out"
       '';
     };
 }

@@ -42,6 +42,7 @@ tools.mmlcDacExtractor = "https://github.com/HTV04/mmlc-dac-extractor"
 tools.mmxlcRomExtractor = "https://github.com/s3phir0th115/MMXLC1-Rom-Extractor"
 tools.neogeoRomExtractor = "https://github.com/DrRetroMod/neogeo-rom-extractor"
 tools.reePakTool = "https://github.com/Ekey/REE.PAK.Tool"
+tools.untangle = "https://github.com/fleger/untangle"
 # despacer has no tags upstream -- pinned by the exact commit minijson's
 # dub.sdl submodule reference points at.
 tools.minijson-despacer = "https://github.com/aminya/despacer#6e501899eeb7686b1b04de40f02f9792a4e3e8b9"

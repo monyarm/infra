@@ -115,6 +115,36 @@ let
           type = lib.types.str;
           default = name; # Automatically defaults to the attribute set key!
           description = "The name of the shortcut.";
+          apply = v: if config.disabled then "[Unused] ${v}" else v;
+        };
+
+        disabled = lib.mkOption {
+          type = lib.types.bool;
+          default = false;
+          description = ''
+            Marks this as a real Steam appid that's fetched (e.g. mined for
+            assets like ROMs/WADs) but never launched directly. Excluded
+            from shortcuts.vdf/acf/artwork generation entirely; only its id
+            fields remain visible for game-library-scan's exclusion set.
+          '';
+        };
+
+        gogId = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "GOG game id (lgogdownloader slug), for exclusion bookkeeping only.";
+        };
+
+        epicId = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Epic (legendary) app_name, for exclusion bookkeeping only.";
+        };
+
+        maximaSlug = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Maxima/EA-Origin slug, for exclusion bookkeeping only.";
         };
 
         steamAppId = lib.mkOption {
@@ -200,6 +230,7 @@ let
           type = lib.types.listOf lib.types.str;
           default = [ ];
           description = "Steam categories/tags to apply.";
+          apply = ts: if config.disabled then ts ++ [ "Disabled" ] else ts;
         };
 
         # --- Calculated Outputs ---
@@ -223,7 +254,7 @@ let
     };
 
   # Convert the games attribute set into a list for JSON / Report processing
-  gamesList = lib.attrValues cfg.games;
+  gamesList = lib.filter (g: !g.disabled) (lib.attrValues cfg.games);
 
   # Games with a real appid get an appmanifest_<id>.acf and are excluded
   # from shortcuts.vdf; everything else is a non-Steam shortcut entry.

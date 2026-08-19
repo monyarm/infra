@@ -17,3 +17,5 @@
 - [packages/ has two overlay sites](project_packages_two_overlay_sites.md) — hosts/default.nix and lib/optimize/overlays.nix both re-import packages/default.nix separately from flake.nix; new callPackage args (craneLib etc.) must be threaded into all of them.
 - [Prefer sources.toml + fetchGitTree](feedback_prefer_sources_toml_fetchgittree.md) — new git-hosted package sources go through sources.toml/update-sources.py --append, not hand-written fetchFromGitHub; version = bare .date.
 - [packages/\*.nix needs trailing `...`](feedback_packages_need_ellipsis_arg.md) — customLib spreads extra keys (e.g. meta) into every callPackage call unfiltered.
+- [No unasked activation](feedback_no_unasked_activation.md) — never run home-manager/nixos switch or a generation's activate script without asking first; build/eval only.
+- [Use prefetch scripts pattern](feedback_use_prefetch_scripts_pattern.md) — check scripts/prefetch/*.sh first for hash-discovery, don't invent a full homeConfigurations eval.

@@ -92,5 +92,23 @@ in
         }
         |> unpack "castlevania-advance";
     };
+
+    programs.steam.games = {
+      CONTRA_ANNIVERSARY_COLLECTION_SOURCE = {
+        disabled = true;
+        name = "Contra Anniversary Collection";
+        steamAppId = 1018020;
+      };
+      CASTLEVANIA_ANNIVERSARY_COLLECTION_SOURCE = {
+        disabled = true;
+        name = "Castlevania Anniversary Collection";
+        steamAppId = 1018010;
+      };
+      CASTLEVANIA_ADVANCE_COLLECTION_SOURCE = {
+        disabled = true;
+        name = "Castlevania Advance Collection";
+        steamAppId = 1552550;
+      };
+    };
   };
 }

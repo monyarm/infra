@@ -106,5 +106,11 @@ lib.mkIf config.games.emulation.enable {
       rom = superCastlevaniaIv;
       system = "snes";
     };
+
+    MEGA_MAN_X_LEGACY_COLLECTION = {
+      disabled = true;
+      name = "Mega Man X Legacy Collection";
+      steamAppId = 743890;
+    };
   };
 }

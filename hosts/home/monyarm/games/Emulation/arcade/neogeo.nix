@@ -102,21 +102,29 @@ lib.mkIf config.games.emulation.enable {
       name = "Metal Slug";
       romset = extractedZip "mslug";
       shortname = "mslug";
+      steamAppId = 366250;
+      steamCdnImagesHash = "sha256-r9m1r2wiGoq+6CjrsXjrvZ41YzESaDHo0waVazDw4KU=";
     };
     METAL_SLUG_2 = mkNeoGeo {
       name = "Metal Slug 2";
       romset = extractedZip "mslug2";
       shortname = "mslug2";
+      steamAppId = 366260;
+      steamCdnImagesHash = "sha256-8xjPkk8/x9sHGx+PAlYdMwvhnYt2ezpo4idy+X0euKU=";
     };
     METAL_SLUG_3 = mkNeoGeo {
       name = "Metal Slug 3";
       romset = extractedZip "mslug3";
       shortname = "mslug3";
+      steamAppId = 250180;
+      steamCdnImagesHash = "sha256-Hyz2JzSka/ps4YPrhW1nObpOnx7VDTnKmdfHQRv6byk=";
     };
     TWINKLE_STAR_SPRITES = mkNeoGeo {
       name = "Twinkle Star Sprites";
       romset = extractedZip "twinspri";
       shortname = "twinspri";
+      steamAppId = 366280;
+      steamCdnImagesHash = "sha256-Wwvl3VSdqJVtoEwppbPGt9lm2ZtBt9tNRa9TrZqKzS4=";
     };
 
     # Owned, but outside neogeo-rom-extractor's coverage, no other extractor found:
