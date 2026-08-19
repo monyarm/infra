@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import urllib.parse
 import urllib.request
@@ -206,6 +207,31 @@ def process_github_release_asset(name, value):
         "url": asset_url,
         "hash": h,
         "tag": tag_name,
+    }
+
+
+def process_npmjs(name, value):
+    """value: "<pkg>" or "<pkg>@<version>" (scoped names like "@scope/pkg" ok).
+    No version -> dist-tags.latest. Resolves to the published registry tarball."""
+    print(f"Updating [npmjs] {name} from {value}...")
+    if value.startswith('@'):
+        scope_pkg, _, version = value[1:].partition('@')
+        pkg = '@' + scope_pkg
+    else:
+        pkg, _, version = value.partition('@')
+
+    meta = json.loads(http_get(f"https://registry.npmjs.org/{pkg}"))
+    if not version:
+        version = meta["dist-tags"]["latest"]
+    tarball_url = meta["versions"][version]["dist"]["tarball"]
+
+    h = calculate_sri_hash(download_file(tarball_url))
+    return {
+        "type": "npmjs",
+        "url": tarball_url,
+        "hash": h,
+        "package": pkg,
+        "version": version,
     }
 
 
@@ -454,6 +480,8 @@ def make_nix_src_expr(info):
         return f'pkgs.fetchzip {{ url = "{info["url"]}"; hash = "{info["hash"]}"; }}'
     elif t == "url":
         return f'pkgs.fetchurl {{ url = "{info["url"]}"; hash = "{info["hash"]}"; }}'
+    elif t == "npmjs":
+        return f'pkgs.fetchurl {{ url = "{info["url"]}"; hash = "{info["hash"]}"; }}'
     elif t == "idgames":
         game_val = str(info["game"]) if isinstance(info["game"], int) else f'"{info["game"]}"'
         return f'customLib.fetchIdGames {{ game = {game_val}; version = "{info["version"]}"; hash = "{info["hash"]}"; }}'
@@ -513,37 +541,103 @@ def process_go(name, source_name, results, previous_sources):
     return {"type": "go", "source": source_name, "hash": extract_hash_from_nix_build(nix_expr, f"go-vendor {name}")}
 
 
-def process_npm(name, source_name, results, previous_sources):
-    if source_name not in results:
-        raise ValueError(f"NPM vendor '{name}' references missing source '{source_name}'.")
-        
-    cached_hash = check_vendor_cache(name, source_name, results, previous_sources)
-    if cached_hash:
-        return {"type": "npm", "source": source_name, "hash": cached_hash}
-        
-    print(f"Updating [npm] {name} using source {source_name}...")
-    
-    src_expr = make_nix_src_expr(results[source_name])
-    nix_expr = (
-        f"let\n"
-        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
-        f"  customLib = import ./lib {{\n"
-        f"    inherit pkgs;\n"
-        f"    inherit (pkgs) lib system;\n"
-        f"    mkOutOfStoreSymlink = _x: {{}};\n"
-        f"    optimizePkgs = pkgs;\n"
-        f"    config = {{}};\n"
-        f"  }};\n"
-        f"  src = {src_expr};\n"
-        f"in\n"
-        f"  (pkgs.buildNpmPackage {{\n"
-        f'    pname = "npm-vendor-calc";\n'
-        f'    version = "0.0.1";\n'
-        f"    inherit src;\n"
-        f'    npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";\n'
-        f"  }}).npmDeps"
-    )
-    return {"type": "npm", "source": source_name, "hash": extract_hash_from_nix_build(nix_expr, f"npm-vendor {name}")}
+def generate_npm_lockfile(tarball_url):
+    """npm registry tarballs only ship package.json, not a lock file --
+    buildNpmPackage requires one. Synthesize it the same way a fresh `npm
+    install` would, without actually installing anything. Returned as text
+    and stored in sources.nix (like process_cargo's cargoLock) so the actual
+    package build can materialize it via pkgs.writeText in its own postPatch,
+    not just this hash-calc build."""
+    data = download_file(tarball_url)
+    with tempfile.TemporaryDirectory() as tmp:
+        with tarfile.open(fileobj=io.BytesIO(data)) as tf:
+            tf.extractall(tmp)
+        pkg_dir = os.path.join(tmp, "package")
+        subprocess.run(
+            ["npm", "install", "--package-lock-only", "--ignore-scripts", "--legacy-peer-deps"],
+            cwd=pkg_dir, check=True,
+        )
+        with open(os.path.join(pkg_dir, "package-lock.json")) as f:
+            return f.read()
+
+
+def process_npm(name, results, previous_sources):
+    """[npm] entries reference an already-resolved [npmjs]/[git]/[git-tag] source
+    by the SAME name (same convention as [cargo]) and merge a generated
+    npmDepsHash straight into that source's own result dict -- see
+    process_cargo's docstring for why a separate sibling key doesn't work."""
+    if name not in results:
+        raise ValueError(f"[npm] entry '{name}' references unknown source '{name}' (must be processed earlier).")
+    src = results[name]
+
+    print(f"Checking [npm] {name}...")
+    old = previous_sources.get(name)
+    if (
+        old
+        and old.get("hash") == src.get("hash")
+        and old.get("npmDepsHash")
+        and (old.get("npmLockFile") or old.get("npmLockFileNotNeeded"))
+    ):
+        print(f"  -> Cache hit for npm deps of {name}! Source hasn't changed.")
+        src["npmDepsHash"] = old["npmDepsHash"]
+        if old.get("npmLockFile"):
+            src["npmLockFile"] = old["npmLockFile"]
+        else:
+            src["npmLockFileNotNeeded"] = True
+        return src
+
+    print(f"  -> Generating npmDepsHash for {name}...")
+    src_expr = make_nix_src_expr(src)
+
+    def build(extra_attrs=""):
+        nix_expr = (
+            f"let\n"
+            f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
+            f"  customLib = import ./lib {{\n"
+            f"    inherit pkgs;\n"
+            f"    inherit (pkgs) lib system;\n"
+            f"    mkOutOfStoreSymlink = _x: {{}};\n"
+            f"    optimizePkgs = pkgs;\n"
+            f"    config = {{}};\n"
+            f"  }};\n"
+            f"  src = {src_expr};\n"
+            f"in\n"
+            f"  (pkgs.buildNpmPackage {{\n"
+            f'    pname = "npm-vendor-calc";\n'
+            f'    version = "0.0.1";\n'
+            f"    inherit src;\n"
+            f"{extra_attrs}"
+            f'    npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";\n'
+            f"  }}).npmDeps"
+        )
+        return extract_hash_from_nix_build(nix_expr, f"npm-vendor {name}")
+
+    try:
+        h = build()
+        src["npmLockFileNotNeeded"] = True
+    except ValueError as e:
+        if "No lock file!" not in str(e):
+            raise
+        if "url" not in src:
+            raise ValueError(
+                f"[npm] entry '{name}': source has no committed lock file and isn't a "
+                f"tarball source, so a lock file can't be auto-generated for it."
+            )
+        print(f"  -> No lock file in {name}, generating one via `npm install --package-lock-only`...")
+        lockfile_content = generate_npm_lockfile(src["url"])
+        fd, tmp_path = tempfile.mkstemp(suffix="-package-lock.json")
+        with os.fdopen(fd, "w") as f:
+            f.write(lockfile_content)
+        extra_attrs = (
+            '    postPatch = "cp ${pkgs.writeText "package-lock.json" '
+            '(builtins.readFile "' + tmp_path + '")} package-lock.json";\n'
+        )
+        h = build(extra_attrs)
+        os.unlink(tmp_path)
+        src["npmLockFile"] = lockfile_content
+
+    src["npmDepsHash"] = h
+    return src
 
 
 CARGO_GIT_PACKAGE_RE = re.compile(
@@ -1448,8 +1542,8 @@ def main():
 
     # Insert idgames into the designated priority fetching queue
     priority_sections = ["url", "zip", "git", "git-tag", "cargo", "idgames", "github-release"]
-    custom_sections = [s for s in sources_data.keys() if s not in priority_sections and s not in ["go", "npm"]]
-    ordered_sections = priority_sections + custom_sections + ["go", "npm"]
+    custom_sections = [s for s in sources_data.keys() if s not in priority_sections and s not in ["go", "npmjs", "npm"]]
+    ordered_sections = priority_sections + custom_sections + ["go", "npmjs", "npm"]
     
     for section in ordered_sections:
         if section not in sources_data:
@@ -1474,8 +1568,10 @@ def main():
                     results[name] = process_github_release_asset(name, target)
                 elif section == "go":
                     results[name] = process_go(name, target, results, previous_sources)
+                elif section == "npmjs":
+                    results[name] = process_npmjs(name, target)
                 elif section == "npm":
-                    results[name] = process_npm(name, target, results, previous_sources)
+                    results[name] = process_npm(name, results, previous_sources)
                 elif section.startswith("itch"):
                     system = section.split('-', 1)[1] if '-' in section else None
                     results[name] = process_itch(name, target, previous_sources, system)

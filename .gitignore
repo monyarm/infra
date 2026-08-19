@@ -28,4 +28,5 @@ nix.profile.zstd
 benchmark.txt
 .env
 .direnv
+games.list
 # keep-sorted end

@@ -63,7 +63,7 @@ tools.maxima = "true"
 claude.plugins.ponytail = "https://github.com/DietrichGebert/ponytail"
 claude.plugins.superpowers = "https://github.com/obra/superpowers"
 # plugin lives in plugins/claude/context7 subdir, mcp server is remote (mcp.context7.com)
-claude.plugins.context7 = "https://github.com/upstash/context7"
+ai.mcp.context7 = "https://github.com/upstash/context7"
 # real binary is a platform npm optionalDependency, not this repo -- tag tracking only
 tools.codegraph = "https://github.com/colbymchenry/codegraph"
 tools.mcp-compressor = "https://github.com/atlassian-labs/mcp-compressor"
@@ -71,6 +71,7 @@ node-datachannel = "https://github.com/murat-dogan/node-datachannel"
 mpv.mpris = "https://github.com/hoyon/mpv-mpris"
 wad.blasphemer = "https://github.com/Blasphemer/blasphemer"
 tools.minijson = "https://github.com/aminya/minijson"
+ai.skills.mattpocock-skills = "https://github.com/mattpocock/skills"
 
 [itch]
 wad.simonsdestiny = "https://batandy.itch.io/simonsdestiny"
@@ -122,6 +123,8 @@ wad.inquisitor = "levels/doom2/Ports/g-i/inqstr.zip"
 wad.inquisitor2 = "levels/doom2/Ports/g-i/inqstr2.zip"
 wad.inquisitor3 = "levels/doom2/Ports/g-i/inqstr3e.zip"
 
-# NPM Support currently broken
-#[npm]
-#node-datachannel-npm = "node-datachannel"
+[npmjs]
+ai.services.omniroute = "omniroute"
+
+[npm]
+ai.services.omniroute = "true"

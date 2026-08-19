@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  programs.claude-code.mcpServers = {
+  ai.mcp = {
     codegraph = {
       type = "stdio";
       command = "${pkgs.codegraph}/bin/codegraph";

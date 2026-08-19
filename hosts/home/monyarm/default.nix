@@ -9,6 +9,7 @@ rec {
   home.stateVersion = "25.05";
   home.pointerCursor.enable = true;
   programs.home-manager.enable = true;
+  systemd.user.startServices = "sd-switch";
 
   imports = (autoImport ./config) ++ (autoImport ./games);
 }
