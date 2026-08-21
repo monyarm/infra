@@ -3,6 +3,7 @@ let
   script =
     pkgs.writers.writePython3Bin "game-library-scan"
       {
+        libraries = [ pkgs.python3Packages.tomli-w ];
         flakeIgnore = [
           "E501"
           "W503"
@@ -20,6 +21,8 @@ let
         import urllib.parse
         import urllib.request
         from pathlib import Path
+
+        import tomli_w
 
         SOPS = "${pkgs.sops}/bin/sops"
         LGOGDOWNLOADER = "${pkgs.lgogdownloader}/bin/lgogdownloader"
@@ -214,7 +217,8 @@ let
             with tempfile.TemporaryDirectory() as home:
                 maxima_dir = Path(home) / ".local" / "share" / "maxima"
                 maxima_dir.mkdir(parents=True)
-                (maxima_dir / "auth.toml").write_text(auth)
+                with open(maxima_dir / "auth.toml", "wb") as f:
+                    tomli_w.dump(auth, f)
                 env = {**os.environ, "HOME": home}
                 res = subprocess.run(
                     [MAXIMA_CLI, "list-games"],

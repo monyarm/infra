@@ -19,3 +19,6 @@
 - [packages/\*.nix needs trailing `...`](feedback_packages_need_ellipsis_arg.md) — customLib spreads extra keys (e.g. meta) into every callPackage call unfiltered.
 - [No unasked activation](feedback_no_unasked_activation.md) — never run home-manager/nixos switch or a generation's activate script without asking first; build/eval only.
 - [Use prefetch scripts pattern](feedback_use_prefetch_scripts_pattern.md) — check scripts/prefetch/*.sh first for hash-discovery, don't invent a full homeConfigurations eval.
+- [Source list first, then intersect](feedback_source_list_first_then_intersect.md) — pull the full external list (PCGamingWiki etc) before comparing to local data, don't grep local data for remembered titles.
+- [Delegate noisy research to subagents](feedback_delegate_noisy_research_to_subagents.md) — WebSearch-heavy multi-source research goes to subagents that return only the distilled list.
+- [Ground plan in source table rows](feedback_ground_plan_in_source_table_rows.md) — map engines to prior research file's exact game rows, don't re-list engines abstractly.

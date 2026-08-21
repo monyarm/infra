@@ -236,6 +236,12 @@ add plus a data fetcher, not a from-source build.
   isn't packaged in nixpkgs, and its original upstream repo is now
   archived/unmaintained. DevilutionX wins on maturity and packaging effort
   by a wide margin.
+- **Owned copy is a physical CD, not GOG** -- the `fetchGOG` path above
+  doesn't apply to this specific copy. `DIABDAT.MPQ` needs pulling off the
+  disc by hand first; the result then becomes a local, hash-pinned source
+  (plain store path, not a network fetcher) feeding the same DevilutionX
+  data wiring `fetchGOG` would have. Same disc-sourcing caveat applies to
+  every other disc-owned title in this file below.
 
 ## OpenRA
 
@@ -490,3 +496,594 @@ Leads worth checking against actual current terms before fetching anything:
   commercial ROMs and don't reliably distinguish the two per-title, so they're
   not a safe source to build a fetcher against without manually verifying
   each specific title's license first.
+
+## Kathy Rain
+
+Point-and-click adventure built on Adventure Game Studio (AGS) -- no
+separate reimplementation project needed, ScummVM's built-in AGS engine
+already plays it directly (confirmed on ScummVM's own compatibility pages;
+minor issues that don't affect playthrough). Same install shape as every
+other ScummVM entry in this repo already: the Steam release's game
+directory (containing the `.ags` data file) becomes a `games.scummvm.games`
+entry via `fetchSteam`, same pattern as
+`hosts/home/monyarm/games/ScummVM/games/steam.nix`. No fetcher gap, no
+modding ecosystem worth tracking -- this is close to the cheapest entry in
+this whole file.
+
+## KeeperFX
+
+DK1-specific engine reimplementation for Dungeon Keeper (Gold) -- actively
+maintained (v1.4.0, mid-2026, ~200K downloads), not a binary patch but a
+full from-scratch rewrite that still only needs the original GOG data as
+proof of ownership. Not in nixpkgs yet, so this would be a from-source
+package (CMake, moderate complexity) added under `packages/`, unlike the
+already-packaged engines elsewhere in this file.
+
+- Data: base game assets straight out of the GOG install --
+  `lib/fetchers/gog.nix`'s `fetchGOG` on the `dungeon_keeper` product slug,
+  same mechanics as OpenMW/Daggerfall Unity/DevilutionX above.
+- KeeperFX effectively *is* the mod layer (built-in level editor, active
+  balance/content development) -- no separate community-mod fetcher list
+  needed on top of it, unlike the Ikemen/STK/TDM content-ecosystem entries.
+
+## OpenRCT2
+
+Already-packaged (`pkgs.openrct2` in nixpkgs, mature and cross-distro),
+auto-detecting RCT1 data once pointed at an RCT2 install -- about as
+low-effort as the OpenTyrian entry above. `pkgs.openrct2`'s own package
+exposes `rct1Path`/`rct2Path` override args for baking a known data
+location in at build time, rather than needing the in-game
+first-launch file picker.
+
+- Data: `lib/fetchers/gog.nix`'s `fetchGOG` on `rollercoaster_tycoon_deluxe`
+  feeds `rct2Path` directly, same `fetchGOG`-then-point-a-package-at-it shape
+  as DevilutionX's `DIABDAT.MPQ`.
+- Content ecosystem: large scenario/track-design/object addon community --
+  same "many small fetched pieces, one nix-managed list" shape as
+  everything else content-ecosystem-shaped in this file, though (like
+  OpenTTD's NewGRF angle) only worth scoping if the addon side is actually
+  wanted; the base game is a zero-effort win on its own.
+
+## Half-Life (Xash3D-FWGS)
+
+GoldSrc engine reimplementation covering Half-Life, Half-Life: Opposing
+Force, and Half-Life: Blue Shift -- actively maintained fork (the upstream
+FWGS org, old repo archived, this one continues). Needs building from
+source (Waf build system, SDL2/freetype/vorbis deps); an open nixpkgs PR
+exists but isn't merged, so this would be a `packages/` addition here too,
+same shape as KeeperFX above.
+
+- Data: just the `valve/` asset directory out of each title's Steam depot
+  (no binaries) -- `fetchSteam` per appid (70 / 50 / 130), same
+  depot-extraction shape as `Doom/wad/doom64.nix`'s `fetchSteam` call, piped
+  through `getFile`/`wadFilter`-style filtering to keep only the asset tree.
+- No significant centralized mod ecosystem worth a nix-fetcher list --
+  community fixes are scattered, not worth the infrastructure the
+  GameBanana/ModDB-hosted entries elsewhere in this file get.
+
+## Portal 2
+
+Puzzle-platformer (Valve, Source engine) -- native Linux Steam build, unlike
+the Xash3D-FWGS reimplementation the Half-Life entry above needs; this is a
+straight `fetchSteam` binary extraction. Steam-only, no GOG release.
+
+- Data: `fetchSteam` [appid 620], native Linux depot, standard extraction
+  shape.
+- Mod support: real ecosystem -- official in-game Puzzle Maker for
+  user-built test chambers, Steam Workshop integration for sharing/playing
+  co-op community chambers, GameBanana presence, 25 mods on NexusMods
+  (modest -- most activity is Workshop-side, not Nexus). Worth a
+  Workshop-content fetcher list if pursued further, same spirit as this
+  file's other Workshop-backed entries.
+
+## Half-Life 2 (+ Episode One, Episode Two)
+
+Source-engine FPS (Valve) -- native Linux Steam build, `fetchSteam` binary
+extraction like Portal 2 above. Steam-only, no GOG despite the base game
+being DRM-free on Steam itself.
+
+- As of the Nov 2024 20th-anniversary update, Episode One, Episode Two, and
+  Lost Coast are bundled into the base HL2 app (delisted as separate store
+  listings, launched from the HL2 main menu) -- one `fetchSteam` [appid 220]
+  call covers all three instead of three separate appids (380/420 still
+  exist as legacy "Tools" entries but aren't the current path).
+- Mod support: largest ecosystem of the Source titles here -- built-in
+  Steam Workshop (added same anniversary update), 95 mods on NexusMods
+  (HD texture packs, gameplay overhauls), extensive GameBanana/ModDB
+  presence, notable standalone total conversions historically spun off
+  the base (MINERVA, etc.). Worth a Workshop/GameBanana/NexusMods fetcher
+  list if pursued.
+
+## Jedi Knight: Jedi Academy / Jedi Outcast (OpenJK)
+
+Actively maintained reimplementation covering both STAR WARS Jedi Knight:
+Jedi Academy and Jedi Knight II: Jedi Outcast -- but not symmetrically:
+Academy is fully supported, Outcast singleplayer is still experimental/
+disabled by default (Outcast multiplayer instead routes through the
+separate JK2MV project, not OpenJK). Already packaged in nixpkgs.
+
+- Data: each title's `GameData/` directory out of its Steam depot --
+  `fetchSteam` per appid (6020 Academy, 6030 Outcast), same shape as the
+  Half-Life entry above.
+- Real mod ecosystem: JKHub (jkhub.org) hosts 3000+ mods with an active
+  forum -- would need a small `fetchHtmlThenCurl`-based fetcher (same shape
+  as `moddb.nix`) since it's forum/site-hosted content, not a CDN with a
+  stable API.
+
+## STAR WARS: Dark Forces (The Force Engine)
+
+Actively maintained, feature-complete reimplementation (full Dark Forces
+support as of the current 1.22.x line; Outlaws support is a planned v2.0
+target, not relevant to the currently-owned title). Auto-detects Steam/GOG
+install paths directly, no manual data extraction needed. Not in nixpkgs
+(an old packaging request appears stalled) -- another `packages/` build,
+same shape as KeeperFX/Xash3D-FWGS above.
+
+- Data: `fetchSteam` on appid 32400 for the base Steam depot; the engine
+  also transparently supports the official Dark Forces Remaster's HD
+  assets if that's ever added as a second source later.
+- Mod ecosystem: dedicated hub at DF-21 (df-21.net), not GameBanana --
+  built-in mod loader takes zip or plain directories, active custom
+  mission/map community; would need the same `fetchHtmlThenCurl` site
+  fetcher shape as the JKHub/Dark Forces community above if pursued.
+
+## X-COM: UFO Defense (OpenXcom / OpenXcom Extended)
+
+One important correction versus the naive "OpenXcom" pick: the original
+OpenXcom project itself moved to legacy/maintenance-only status in early
+2026, with **OpenXcom Extended (OXCE)** now the actively developed fork to
+target instead. `pkgs.openxcom` is packaged in nixpkgs but likely tracks
+the legacy project -- worth checking whether nixpkgs has (or needs) an
+OXCE-specific package before wiring this up.
+
+- Data: the Steam release is DOSBox-wrapped, but the actual data directory
+  underneath (`GEODATA`/`GEOGRAPH`/`MAPS`/`ROUTES`/`SOUND`/`TERRAIN`/
+  `UFOGRAPH`/`UFOINTRO`/`UNITS`) is what OpenXcom/OXCE actually reads --
+  `fetchSteam` on appid 7760 then extract just those subdirectories, same
+  "depot has more than the engine needs" filtering as the Doom64 entry's
+  `wadFilter`.
+- No significant mod ecosystem worth a nix-fetcher list -- mostly informal
+  balance-patch sharing, not a hosted content pipeline.
+
+## DOOM 3 (dhewm3 vs. RBDOOM-3-BFG)
+
+Not a "which is better" choice -- the two owned DOOM 3 releases ship
+genuinely incompatible data formats, so each release needs its own engine:
+
+- **dhewm3** (nixpkgs-packaged, actively maintained, v1.5.4) targets the
+  original 2004 release's loose `.pk4` archives (Quake 3-style format) --
+  use this for DOOM 3 [appid 9050] and Resurrection of Evil [appid 9070].
+- **RBDOOM-3-BFG** (nixpkgs-packaged, actively developed with nightly
+  builds and 40+ contributors) targets the 2012 BFG Edition's repackaged
+  `.resources` binary containers with remastered textures/shaders -- use
+  this for DOOM 3: BFG Edition [appid 208200]. Original-release data doesn't
+  fit RBDOOM-3-BFG's expected container structure (some export/conversion
+  tooling exists but that's a workaround, not the natural path); BFG
+  Edition's data likewise doesn't work in dhewm3.
+- Data: `fetchSteam` per appid, straightforward since both engines are
+  already nixpkgs-packaged -- this is a `home.packages` + data-fetcher pair
+  for each, not a from-source build like most of the entries above.
+- Mod ecosystem: both have real ModDB communities (dhewm3: hidef2k, sikkmod
+  and similar overhaul mods; RBDOOM-3-BFG: derivative forks like DOOM: BFA
+  adding Ultimate DOOM/DOOM 2 compatibility) -- `lib/fetchers/moddb.nix`
+  already covers the hosting, so this is a "yes, worth a fetcher list if
+  wanted" case unlike the plain OpenXcom/Half-Life entries above.
+
+## Fallout / Fallout 2 (fo1-ce / fo2-ce / fo1in2)
+
+Both community editions are mature, actively maintained decompilation-based
+ports -- fo1-ce (alexbatalov/fallout1-ce) and fo2-ce, whose canonical repo
+has since moved to the `fallout2-ce` org (not alexbatalov's personal
+account anymore -- worth pointing at the current org, not an outdated URL).
+Both need the unpacked original game data (`critter.lst`, `master.dat`,
+etc.) straight out of each title's Steam depot.
+
+- Data: `fetchSteam` on appid 38400 (Fallout) / 38410 (Fallout 2), same
+  depot-extraction shape used throughout this file. Neither engine needs
+  anything beyond that -- no GOG-specific wrinkle here since both are owned
+  on Steam.
+- No major third-party mod CDN to track -- native `.dat` mod support
+  exists, but community mods are small and scattered across NMA forums/
+  GitHub, not worth a dedicated fetcher list.
+- **fo1in2** (rotators/Fo1in2, aka "Fallout et Tu") is a different thing
+  entirely from the two CE ports above: a total-conversion mod that runs
+  Fallout 1's full campaign inside the Fallout 2 engine (enhanced combat,
+  motorcycle travel, optional F2-style content, toggleable via ini). It
+  needs *both* games' data (Fallout 1's `MASTER.DAT` gets extracted via a
+  bundled tool) and layers on top of either vanilla Fallout 2 or fo2-ce --
+  worth treating as an optional third entry alongside the two CE installs,
+  not a replacement for either.
+
+## Infinity Engine Enhanced Editions (GemRB caveat -- no clean path currently)
+
+Worth flagging clearly rather than writing this up as a settled win: GemRB
+is a mature, actively maintained Infinity Engine reimplementation, but per
+GemRB's own 0.9.5 release notes it explicitly does **not** support the
+Beamdog Enhanced Edition data format that this repo's owned titles actually
+are (Baldur's Gate: EE, Baldur's Gate II: EE, Icewind Dale: EE, Planescape:
+Torment: EE) -- "due to low interest, GemRB does not support the EE
+versions of the games." BG2:EE has experimental/unstable support
+(Shadows of Amn campaign playable); the other three EE titles aren't
+supported at all.
+
+- This means there's currently no clean engine-reimplementation path for
+  the specific Enhanced Edition copies owned here -- GemRB only plays the
+  classic, pre-Beamdog releases, which would mean separately acquiring the
+  original (non-EE) data rather than pointing GemRB at the owned Steam
+  copies. Not worth pursuing as-is; revisit if GemRB's EE support matures,
+  or if the classic releases become available through some other owned
+  channel.
+- Mod ecosystem note for if the classic-data path is ever pursued: the
+  Infinity Engine mod scene (Spellhold Studios, Gibberlings3) is real and
+  active, but targets the original engine or EE format specifically, not
+  GemRB's reimplementation -- compatibility would be mod-by-mod, not a
+  blanket fetcher-list win the way GameBanana/ModDB content usually is here.
+
+## Build engine trio (eDuke32 / Raze / VoidSW)
+
+Not a single three-way engine choice -- the two owned Build-engine titles
+each need their own answer, and neither is a clean win:
+
+- **Duke Nukem 3D: 20th Anniversary World Tour** [Steam appid 434050] --
+  the Steam release itself is Windows-only (no native Linux binary), and
+  Proton has reported failures on it (process kills, DLL issues). The
+  open-source path is eDuke32 pointed at the title's extracted data files
+  plus community patches for the World Tour-specific episode content --
+  workable per community reports, but manual/patched, not "just point
+  fetchSteam at it and go." The earlier candidates-file note that this
+  "already ships on eduke32 upstream, nothing to port" does **not** hold up
+  under checking -- treat this as a real, moderately fiddly port, not a
+  freebie.
+- **Shadow Warrior Classic Complete** [GOG slug: `shadow_warrior_complete`]
+  (base game + Wanton Destruction + Twin Dragon expansions) -- pick
+  **VoidSW** for a faithful software-rendered classic experience (actively
+  maintained by the eDuke32 team, more reliable Twin Dragon expansion
+  detection); **Raze** is the alternative if external sound/texture mod
+  support matters more than expansion-detection reliability (some reported
+  GOG folder-structure quirks recognizing Twin Dragon specifically). Raze
+  is the multi-engine Build port (also covers Duke3D, Blood, etc. in one
+  codebase) and has more GitHub packaging interest, but VoidSW is the
+  simpler, more faithful pick for this specific title.
+- Data: `fetchSteam` (appid 434050) / `fetchGOG` (`shadow_warrior_complete`)
+  respectively, feeding whichever engine's expected data-directory layout.
+  None of eDuke32/Raze/VoidSW are confirmed current in nixpkgs -- from-source
+  builds, same category as KeeperFX/Xash3D-FWGS/TFE above.
+- Mod ecosystem: large community level/mod presence on Duke4.net for both
+  titles -- Raze's external sound/sprite-pack support makes it the more
+  mod-friendly target if that ecosystem is ever wired up as a fetcher list.
+
+## Tomb Raider I-III + Anniversary (TR1X)
+
+TR1X (LostArtefacts/TRX) now covers all of TR1, TR2, and TR3 in one
+actively maintained, decompiled-for-accuracy codebase -- OpenLara only
+has official support for TR1 (TR2/3 are unsupported tech-demo territory)
+and has a harder build process for a narrower win, so TR1X is the pick
+across the board rather than splitting the four owned titles between two
+engines. No current active reimplementation targets Tomb Raider:
+Anniversary specifically -- skip that title for this approach.
+
+- Data: `fetchSteam` per appid (224960 TR1, 225300 TR2, 225320 TR3),
+  pointed at whatever data-directory layout TR1X expects per title.
+- No significant nix-fetcher-worthy mod ecosystem beyond what TR1X itself
+  ships (community level packs exist but are niche compared to the
+  Build-engine/Infinity-Engine mod scenes above).
+
+## Serious Sam Classic (SeriousSamClassic-VK)
+
+Single actively maintained Vulkan-backed port (tx00100xt/SeriousSamClassic-VK)
+covering all three owned Serious Engine 1 titles -- The First Encounter,
+The Second Encounter, and the Classics: Revolution community-remaster
+bundle, since Revolution targets the same underlying engine. No nixpkgs
+package currently (a PPA exists for Debian-family distros, not relevant
+here) -- from-source build, GPLv2, same category as the other from-source
+engines in this file.
+
+- Data: original `.gro` game archives copied from each title's Steam
+  depot -- `fetchSteam` per appid (41050 / 41060 / 227780).
+- No dedicated nix-fetcher-worthy mod ecosystem beyond what ships with the
+  binary archive bundles the project itself distributes.
+
+## Neverwinter Nights (xoreos -- not currently playable)
+
+Worth flagging the same way as the GemRB entry above rather than writing it
+up as viable: xoreos remains pre-alpha per the project's own current status
+page -- foundational resource-loading/rendering work is done, areas
+partially render in a "spectator mode," but there's no combat, scripting,
+dialogue, or quest system implemented yet. It also only recognizes the
+original Neverwinter Nights Diamond Edition data, not the owned NWN:
+Enhanced Edition [Steam appid 704450] release at all.
+
+- Not worth pursuing as an install target today for either owned NWN
+  release -- revisit only if xoreos reaches actual playable status, which
+  it has not as of this research pass.
+
+## Space Quest Collection
+
+Steam's "Collection" bundle [appid 10110] is not a ScummVM case despite
+Sierra's SCI-engine games normally running there -- it ships as six
+separate pre-configured DOSBox 0.63 instances, one per game, each mounting
+its own folder (`sq[1-6]/DOSBOX/`) and launching with game-specific
+parameters. The bundled DOSBox is old enough to have known compatibility
+issues on modern systems, and repackaging six fragile per-game DOSBox
+setups isn't a clean nix-fetcher target.
+
+- Better split: Space Quest I-V actually run fine on ScummVM's own SCI
+  engine (same shape as this repo's other ScummVM entries, no DOSBox
+  needed at all) -- only Space Quest 6 genuinely requires DOSBox, since SCI
+  support doesn't extend that far. `lib/fetchers/dosbox.nix` covers just
+  that one title; the rest go through the existing ScummVM `games/` pattern.
+- Data: `fetchSteam` on appid 10110, then split extraction -- SQ1-5 game
+  folders feed ScummVM entries, SQ6's folder feeds the DOSBox path.
+
+## Fallout Tactics (FreeFT -- WIP, not playable end-to-end)
+
+FreeFT (nadult/FreeFT) is unmaintained and genuinely incomplete, not just
+"early but usable" -- missing lighting, RPG dialogue/scripting, and quest
+systems entirely; movement and combat work as a tech demo, but there's no
+complete game loop. Requires converting the original Fallout Tactics data
+[Steam appid 38420] into FreeFT's own format via a bundled conversion tool
+before the engine can use it.
+
+- Not recommended for actual play today -- worth revisiting only if the
+  project sees renewed development, otherwise this is a "known dead end,
+  don't invest fetcher effort" entry, same spirit as the OpenRW/Alive
+  Reversing WIP caveats already noted in the candidates-file source pass.
+
+## Unity Player-binary swap builder (unify)
+
+Extends the existing "Unity -- swap matching-version Linux Player binaries"
+note above: [unify](https://github.com/0xf4b1/unify) is the actively
+maintained tool that actually automates that swap -- detects a Windows/
+macOS Unity title's exact engine version, pulls the matching official Linux
+Player build from Unity's own distribution servers, and drops it in to
+produce a native Linux launch, without touching game assets or scripts. Its
+real constraint is the same one already noted: only works if the original
+build used a portable renderer (OpenGL/Vulkan, not pure DX) and doesn't
+lean on Windows-only native plugins.
+
+- Nix shape: package `unify` itself once as a plain tool (build from source,
+  Go or similar toolchain per its repo) under `packages/`, then any
+  Unity-title entry in this file that turns out to be a good match can
+  invoke it as a build step rather than each one reinventing the
+  version-detection/binary-fetch logic -- same "shared tool, per-title
+  application" relationship as the mkxp-z/EasyRPG runtimes above.
+
+## The Dig / Full Throttle / Sam & Max Hit the Road (ScummVM, disc rip)
+
+Three more LucasArts SCUMM-engine adventures, same ScummVM install shape as
+Kathy Rain above -- but unlike Kathy Rain (Steam, `fetchSteam`) and every
+other digitally-owned ScummVM-shaped entry in this repo, **these are owned
+as physical CDs**, not Steam/GOG. No `fetchGOG`/`fetchSteam` path exists for
+them: the game directory has to come off the disc by hand first, then be
+added as a local, hash-pinned source (plain store path) feeding the same
+`games.scummvm.games` entry shape everything else here uses -- the ScummVM
+side of the work is identical to Kathy Rain, only the data-acquisition step
+differs.
+
+## StarCraft + Brood War (OpenBW)
+
+Open-source reimplementation of the SC1/Brood War engine, pixel-accurate to
+the original -- but worth the same "not a settled win" framing as the GemRB/
+xoreos/FreeFT caveats elsewhere in this file: OpenBW has **no built-in
+single-player AI** (skirmish/campaign opponents don't act on their own), and
+the project is fundamentally oriented around AI-bot research/development via
+BWAPI rather than a polished human single-player experience. Human-playable
+options are narrower: a browser-based OpenBW build (casual 1v1 only) is the
+more approachable route than the bot-development-focused native BWAPI build.
+Multiplayer is capped at 1v1 and can't interop with retail StarCraft:
+Remastered clients.
+
+- Data: needs the original `STARDAT.MPQ`/`BROODAT.MPQ` -- **owned as a
+  physical CD** here too, same manual-rip-then-local-store-path shape as
+  Diablo/DevilutionX and the ScummVM trio above, not a `fetchGOG`/`fetchSteam`
+  case.
+- Given the no-built-in-AI and bot-research-first caveats, worth confirming
+  the browser build actually covers "just play a casual game" before
+  investing packaging effort in the native BWAPI-oriented build.
+
+## Jak 3 (OpenGOAL, disc rip)
+
+`open-goal/jak-project` decompiles and ports the whole original trilogy to
+PC -- Jak 1 "considered in a polished, complete state for years," Jak 2 in
+beta, **Jak 3 has a good amount of work left to do** but is playable.
+Confirmed native on x86_64 Linux (also Windows, macOS via Rosetta), not
+just Windows-plus-Proton.
+
+- Explicit legal stance per the README: "Do not use this decompilation
+  project without the use of your own legally purchased copy of the game" --
+  supports every retail PAL/NTSC/NTSC-J build including Greatest Hits, but
+  not the PS3/PS4/PS5 re-releases.
+- **Owned copy is a physical disc** -- same manual-rip shape as every other
+  disc-owned entry in this file: dump the ISO, drop its contents into
+  `iso_data/jak3/` (per `task set-game-jak3`), then the project's own
+  `task extract` / `task repl` -> `(mi)` / `task boot-game` pipeline handles
+  the rest. Rip step becomes a local, hash-pinned source feeding that
+  pipeline, not a `fetchGOG`/`fetchSteam` case.
+
+## The Legend of Zelda: Twilight Princess (zeldaret/tp -- not playable yet)
+
+Worth the same caveat framing as the GemRB/xoreos/FreeFT entries above
+rather than a settled win: the GameCube release's code is **fully
+matching** (100% decompiled to code that recompiles byte-identical to the
+original), but per the project's own README this "is not, and will not,
+produce a port, to PC or any other platform" -- it's a decompilation
+artifact, not a runnable game on its own. Wii versions are still WIP
+(aligning Debug, matching in progress).
+
+- Build needs an owned disc image (`orig/GZ2E01`, ISO/RVZ/WIA/WBFS/CISO/
+  NFS/GCZ/TGC all accepted, deletable after the initial build) -- **physical
+  disc rip**, same shape as the other disc-owned entries in this file --
+  but the payoff today is a bit-identical rebuilt binary, not a native
+  Linux game to actually play. Linux is a supported *build* platform (via
+  `wibo`, a 32-bit Windows binary wrapper) for producing that artifact, not
+  evidence of a playable native port.
+- Not worth pursuing as an install target today -- revisit if/when a real
+  PC-port layer (Harbour Masters' Courage Reborn, or similar) builds on top
+  of this decomp and actually produces something launchable.
+
+## Unreal / Unreal Tournament / UT2004 (OldUnreal, disc rip)
+
+OldUnreal (took over official maintenance from Epic in 2019) now ships
+native Linux full-installers and ongoing patches for **Unreal (Gold)**,
+**Unreal Tournament (99)**, and **Unreal Tournament 2004** -- actively
+maintained, including a 2026 UT2004 patch overhauling Linux/macOS support
+(x86_64/arm64/ppc64le, runs on a Raspberry Pi). **Unreal 2 has no native
+port or reimplementation** -- skip it if it's part of the owned Anthology
+bundle.
+
+- OldUnreal's own full-installer scripts normally pull the original disc
+  image from archive.org automatically -- **not needed here since the owned
+  copies are physical CDs already**: same manual-rip-then-local-store-path
+  shape as every other disc-owned entry above, feeding OldUnreal's patch
+  layer directly instead of the archive.org download step.
+- Nix shape: package OldUnreal's Linux installer/patch tarballs under
+  `packages/` (not in nixpkgs currently), one per title (Unreal Gold, UT99,
+  UT2004), same from-source-build category as KeeperFX/Xash3D-FWGS/TFE
+  elsewhere in this file.
+
+## Street Fighter X Mega Man
+
+Official Capcom-published freeware crossover (Mega Man's cast, played as a
+Street Fighter-style fighting/platformer hybrid, made for Mega Man's 25th/
+Street Fighter's anniversary in 2012) -- unlike every fan-made entry in this
+file, Capcom fully owns and still distributes this one directly, binary-only,
+no source ever released.
+
+- Distribution: still live on Capcom's own site
+  (`megaman.capcom.com/sfxmm/sfxmm_dl_us.html`), direct `.zip` download,
+  v2.0 (Jan 2013) -- also mirrored on Internet Archive
+  (`archive.org/details/sf-x-mm`) as a hash-pinned fallback if Capcom's page
+  ever disappears. Windows-only binary, no confirmed native Linux build.
+- Nix shape: about as simple as this category gets -- a plain `fetchurl`
+  against Capcom's stable direct-download URL (or the Archive.org mirror),
+  unzip, wrap for Wine/Proton. No fetcher-infrastructure gap to fill, no mod
+  ecosystem to track.
+
+## Abobo's Big Adventure
+
+Double Dragon/Mario/Zelda-esque NES mashup platformer -- originally an Adobe
+Flash game (Flash reached EOL Dec 2020), but a standalone native build exists
+separately from the `.swf`.
+
+- Distribution: Internet Archive
+  (`archive.org/details/abobos-big-adventure-flash-game`) hosts both the
+  original `.swf` and native `.exe` builds; a community GitHub repo
+  (`javiermisol/abobosbigadventure`) also ships packaged Linux/Windows builds
+  via GitHub Releases. The original abobosbigadventure.com site is no longer
+  the primary distribution point. Freeware, binary-only.
+- Nix shape: prefer the native build (Archive.org or the GitHub releases)
+  over the Flash version -- skips needing Ruffle (the Flash-emulation layer)
+  entirely. Straightforward `fetchurl`/`fetchzip` against whichever host has
+  the native build, no from-source build needed.
+
+## Mariovania
+
+Mario Metroidvania fangame (by KoBeWi), hosted on MFGG (Mario Fan Games
+Galaxy) -- the site this repo doesn't have a fetcher for yet, unlike
+GameBanana/ModDB/itch.io which already do.
+
+- MFGG's download flow is opaque from the outside (no direct file URLs
+  surfaced by search; the wiki page links through to an Internet Archive
+  embed rather than a first-party direct link) -- worth checking the actual
+  MFGG page/forum thread by hand before assuming a scrape pattern, but
+  Archive.org (`archive.org/embed/Mariovania`) looks like the practical
+  primary source regardless of what MFGG itself does.
+- Nix shape: needs a new `lib/fetchers/mfgg.nix`, same `fetchHtmlThenCurl`
+  shape as `moddb.nix`/`dosbox.nix` if MFGG's own download page turns out to
+  be a real click-through gate -- worth building this fetcher generically
+  (not Mariovania-specific) since MFGG is the de facto Mario-fangame hub and
+  would cover future entries too, same spirit as `gamebanana.nix` already
+  being shared infrastructure rather than single-use.
+- Engine unconfirmed -- worth checking on download before writing the actual
+  nix expression.
+
+## Mushroom Kingdom Fusion
+
+30+ franchise crossover platformer (Mario as the base game, levels/bosses/
+assets pulled from Castlevania, Mega Man, Sonic, Halo, Doom, and dozens more)
+-- cancelled once, open-sourced, then revived; actively updated again
+(v0.93 Rev D, March 2026).
+
+- Distribution: itch.io (`fusion-fangaming.itch.io`), GameMaker Studio build,
+  freeware binary.
+- Nix shape: `lib/fetchers/itch.nix` already covers this hosting directly --
+  no new fetcher infrastructure needed, same pattern as the Ren'Py itch.io
+  entries elsewhere in this file.
+
+## Castlevania: The Lecarde Chronicles 2
+
+Metroidvania sequel starring Eric Lecarde's son -- notable among the
+fan-made entries in this file for being explicitly Konami-approved
+(documented, not just fan lore), by Migami Games (2017).
+
+- Distribution: source available on GitHub (`katriellucas/lecarde-2`) under
+  freeware terms (no resale, derivatives stay free); Windows build mirrored
+  on Uptodown and Internet Archive (`archive.org/details/lecarde-2`). Engine
+  not confirmed from a source browse -- worth checking before packaging
+  (GameMaker is the working assumption given the rest of this genre, not
+  confirmed).
+- Nix shape: lowest-friction fangame entry in this batch -- a real GitHub
+  source repo plus an explicit legal green light, so this is a
+  `fetchFromGitHub` + build (or `fetchurl` against the prebuilt Windows
+  binary if building from source turns out not worth it) with no
+  legal-risk caveat to carry, unlike most of the Castlevania-tribute
+  fangames turned up in the wider search for this entry.
+
+## Thrive
+
+Original (not fan-derivative) open-source evolution/life-simulation game --
+start as a single cell, evolve toward multicellular and beyond. Godot 4.7
+(.NET/C# build), actively developed (commits as recent as July 2026).
+
+- Distribution: GitHub releases (`Revolutionary-Games/Thrive`), also
+  mirrored on itch.io and Steam. **Not currently packaged in nixpkgs** --
+  would need a from-source build (Godot 4.7 .NET + C#, not the simpler
+  GDScript-only case some other Godot titles would be) or packaging the
+  prebuilt release binary directly, whichever turns out less painful once
+  actually attempted.
+- Real open-source project (GPL-family, matches this file's non-fangame OSS
+  entries like OpenTTD/OpenRA) -- no legal caveats, just a packaging-effort
+  question.
+
+## NEO Scavenger
+
+Post-apocalyptic survival RPG (Blue Bottle Games) -- built on Flixel/FlashDevelop,
+so it's a genuine Flash (`.swf`) title, unlike the "Flash but has a native
+build" shape of Abobo's Big Adventure above. No Steam Workshop/achievements
+(dev has confirmed Flash doesn't cooperate with Steam's APIs), but a real
+modding scene exists off-platform via the Blue Bottle Games forums.
+
+- Runtime: needs testing whether Ruffle (already the assumed path for any
+  Flash title in this repo, given Abobo's Big Adventure explicitly avoided
+  it in favor of a native build) actually handles NEO Scavenger's `.swf`
+  correctly -- unconfirmed here, worth a quick manual launch check before
+  committing to this as the install path.
+- Data: sold on both Steam [appid 248860] and GOG (`neo_scavenger`) -- no
+  cross-platform key gifting between the two per the dev, so whichever
+  storefront the owned copy is on picks `fetchSteam` vs `fetchGOG`; either
+  extraction is otherwise the standard shape used throughout this file.
+- Assets: has optimizable content (worth a size pass once the base install
+  works, same spirit as this repo's existing asset-optimization tooling
+  elsewhere -- not scoped further here).
+- Mod support: "of sorts" -- no Workshop, no formal mod API, just
+  community-shared file replacements/patches surfaced on the Blue Bottle
+  Games and GOG forums. Would need manual survey of what a mod actually
+  touches (data files vs `.swf` patching) before any nix-managed install-list
+  idea (Ikemen/kart-racer style) could apply -- likely too unstructured for
+  that pattern and closer to a "drop pre-patched files in" case.
+
+## Freeciv
+
+Original `freeciv.org` project (distinct from Freeciv21, the Longturn
+community's separate Qt-based fork -- the two are parallel, both-maintained
+projects, not a predecessor/successor relationship) -- turn-based 4X
+civilization builder, GPL-2+.
+
+- **Already packaged in nixpkgs** as `pkgs.freeciv` (currently tracking
+  3.2.1, slightly behind upstream's 3.2.5) -- a `home.packages` add, no
+  custom derivation work needed, same zero-effort shape as OpenTTD/OpenTyrian
+  elsewhere in this file.
+- No content-ecosystem angle worth tracking the way the kart-racer/Ikemen
+  entries have -- ruleset variety is built into the base game (civ2civ3,
+  classic, multiplayer rulesets) rather than needing external addon
+  fetchers.
