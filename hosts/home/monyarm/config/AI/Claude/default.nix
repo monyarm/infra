@@ -23,7 +23,7 @@
       # OmniRoute combo, configured through its own UI/CLI -- see omniroute-proxy.nix
       # model = "custom/claude";
     };
-    mcpServers = config.ai.mcp;
+    enableMcpIntegration = true;
     skills = config.ai.skills;
   };
 

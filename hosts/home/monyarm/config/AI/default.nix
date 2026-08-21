@@ -9,6 +9,7 @@
     ./mcp.nix
     # ./omniroute-proxy.nix # Stability issues
     ./Claude
+    ./OpenCode
   ];
 
   options.ai = {
@@ -16,11 +17,6 @@
       type = lib.types.attrsOf lib.types.path;
       default = { };
       description = "Tool-agnostic skill directories, keyed by installed skill name.";
-    };
-    mcp = lib.mkOption {
-      type = lib.types.attrsOf lib.types.attrs;
-      default = { };
-      description = "Tool-agnostic MCP server definitions (command/args/env/type), keyed by server name.";
     };
     agentMd = lib.mkOption {
       type = lib.types.lines;

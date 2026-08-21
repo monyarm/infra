@@ -92,12 +92,13 @@ lib.mkIf config.games.doom.enable {
       wad = [ id1 ];
     };
 
-    _masterLevels = mkDoom {
+    _masterLevels = {
       disabled = true;
       appId = 9160;
     };
-    _doom_i_ii = mkDoom {
+    _doom_i_ii = {
       disabled = true;
       appId = 2280;
+    };
   };
 }
