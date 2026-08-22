@@ -1,5 +1,7 @@
 {
   fetchSteamCards,
+  fetchSteam,
+  splitFiles,
   pkgs,
   image,
   ...
@@ -35,6 +37,26 @@ with image;
     ];
     sha256 = "sha256-buiKNH9cHi7jxI2mP21xNji/X/z/L19yfTpLbNGKWZ4=";
   };
+  warhammer40kGladiusWallpapers =
+    let
+      files = [
+        "Wallpapers/W40K_Gladius-wallpapers-1920x1080/W40K_Gladius-wallpapers-1920x1080_1.jpg"
+        "Wallpapers/W40K_Gladius-wallpapers-1920x1080/W40K_Gladius-wallpapers-1920x1080_2.jpg"
+        "Wallpapers/W40K_Gladius-wallpapers-1920x1080/W40K_Gladius-wallpapers-1920x1080_3.jpg"
+        "Wallpapers/W40K_Gladius-wallpapers-1920x1080/W40K_Gladius-wallpapers-1920x1080_4.jpg"
+        "Wallpapers/W40K_Gladius-wallpapers-1920x1080/W40K_Gladius-wallpapers-1920x1080_5.jpg"
+        "Wallpapers/W40K_Gladius-wallpapers-1920x1080/W40K_Gladius-wallpapers-1920x1080_6.jpg"
+        "Wallpapers/W40K_Gladius-wallpapers-1920x1080/W40K_Gladius-wallpapers-1920x1080_7.jpg"
+      ];
+    in
+    fetchSteam {
+      appId = 489630;
+      depotId = 870550;
+      manifestId = 7813621408118342533;
+      sha256 = "sha256-W7SIhjt7CqgW4jeBPByp2jjGhzlIToarTavMECt+iI0=";
+      filelist = files;
+    }
+    |> splitFiles files;
   spaceMarine = pkgs.fetchurl {
     url = "https://assets.warhammer-community.com/sm-desktop.jpg";
     hash = "sha256-CYwGERtQIsdypMSnuNmLhcWS7/Toya0To2FubhR526E=";

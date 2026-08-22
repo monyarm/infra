@@ -17,6 +17,7 @@ with image;
           y = 935;
         }
       ];
+      fillColor = "#6b6f79";
       fuzz = 7;
     }
     |> grow16x9South' "white";

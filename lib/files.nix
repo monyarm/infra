@@ -350,6 +350,22 @@ rec {
       '';
 
   splitFiles = fileList: _drv: parallel (map (file: getFile file _drv)) fileList;
+  splitFilesWith =
+    fileSpecs: drv:
+    parallel (map (
+      {
+        file,
+        transform ? (x: x),
+        ...
+      }:
+      let
+        extracted = getFile file drv;
+      in
+      if builtins.isList transform then
+        lib.foldl' (value: operation: operation value) extracted transform
+      else
+        transform extracted
+    )) fileSpecs;
   splitFilesBaseName =
     fileList: splitFiles (parallel (map (file: builtins.baseNameOf file)) fileList);
 

@@ -202,6 +202,7 @@ rec {
           gravity,
           nameSuffix,
           extraArgs,
+          extent ? true,
         }:
         src:
         let
@@ -211,7 +212,7 @@ rec {
           resolutions = standardResolutions.${aspectRatio} or [ ];
         in
         transform {
-          args = ''-resize "$finalWidth"x"$finalHeight" ${extraArgs} -gravity ${gravity} -extent "$finalWidth"x"$finalHeight"'';
+          args = ''-resize "$finalWidth"x"$finalHeight" ${extraArgs} -gravity ${gravity} ${lib.optionalString extent ''-extent "$finalWidth"x"$finalHeight"''}'';
           nameSuffix = "${nameSuffix}-${aspectRatio}-${gravity}";
           extraAttrs = {
             RESOLUTIONS_JSON = builtins.toJSON resolutions;
@@ -236,11 +237,35 @@ rec {
                end')
             finalWidth=$(printf '%s' "$finalDims" | jq -r .w)
             finalHeight=$(printf '%s' "$finalDims" | jq -r .h)
+
+            # -extent fills new pixels with the background; use an identity
+            # distortion viewport so -virtual-pixel edge supplies them instead.
+            if (( srcWidth * finalHeight < srcHeight * finalWidth )); then
+              resizedWidth=$(( (srcWidth * finalHeight + srcHeight / 2) / srcHeight ))
+              resizedHeight=$finalHeight
+            else
+              resizedWidth=$finalWidth
+              resizedHeight=$(( (srcHeight * finalWidth + srcWidth / 2) / srcWidth ))
+            fi
+
+            case "${gravity}" in
+              north) placementX=$(( (finalWidth - resizedWidth) / 2 )); placementY=0 ;;
+              south) placementX=$(( (finalWidth - resizedWidth) / 2 )); placementY=$(( finalHeight - resizedHeight )) ;;
+              east) placementX=$(( finalWidth - resizedWidth )); placementY=$(( (finalHeight - resizedHeight) / 2 )) ;;
+              west) placementX=0; placementY=$(( (finalHeight - resizedHeight) / 2 )) ;;
+              northeast) placementX=$(( finalWidth - resizedWidth )); placementY=0 ;;
+              northwest) placementX=0; placementY=0 ;;
+              southeast) placementX=$(( finalWidth - resizedWidth )); placementY=$(( finalHeight - resizedHeight )) ;;
+              southwest) placementX=0; placementY=$(( finalHeight - resizedHeight )) ;;
+              *) placementX=$(( (finalWidth - resizedWidth) / 2 )); placementY=$(( (finalHeight - resizedHeight) / 2 )) ;;
+            esac
+            viewport="''${finalWidth}x''${finalHeight}$(printf '%+d' "$((-placementX))")$(printf '%+d' "$((-placementY))")"
           '';
         } src;
 
       # growEdge:
-      #   Expands an image to a specified aspect ratio by extending edge pixels (blur effect).
+      #   Expands an image to a specified aspect ratio by repeating its
+      #   one-pixel edge strips without interpolating them.
       #   Type: growEdge -> { aspectRatio, ?gravity } -> src -> Derivation
       growEdge =
         {
@@ -251,7 +276,8 @@ rec {
         growTransform {
           inherit aspectRatio gravity;
           nameSuffix = "grown-edge";
-          extraArgs = "-virtual-pixel edge";
+          extent = false;
+          extraArgs = ''-virtual-pixel edge -interpolate nearest -filter point -set option:distort:viewport "$viewport" -distort SRT 0'';
         } src;
 
       # grow:
@@ -277,12 +303,13 @@ rec {
         {
           coordinates ? [ ],
           fuzz ? 10,
+          fillColor ? null,
         }:
         src:
         let
           floodFillCommands =
             lib.concatMapStringsSep " "
-              (coord: "-draw \"alpha ${toString coord.x},${toString coord.y} floodfill\"")
+              (coord: "-draw \"color ${toString coord.x},${toString coord.y} floodfill\"")
               (
                 coordinates
                 ++ [
@@ -294,9 +321,11 @@ rec {
               );
         in
         transform {
-          args = "-alpha set -fuzz ${toString fuzz}% -fill none ${floodFillCommands}";
+          args = "-alpha set -fuzz ${toString fuzz}% -fill ${
+            lib.escapeShellArg (if fillColor == null then "none" else fillColor)
+          } ${floodFillCommands}";
           nameSuffix = "no-bg";
-          extension = "png";
+          extension = if fillColor == null then "png" else null;
         } src;
 
       # fillBackground:

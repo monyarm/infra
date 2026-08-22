@@ -78,7 +78,24 @@ in
         lgogdownloader --download-file "${downloadFileArg}" --directory "$TMPDIR/download"
 
         mkdir -p "$out"
-        INSTALLER=$(find "$TMPDIR/download" -iname '*.exe' -o -iname '*.sh' | head -1)
+        mapfile -d "" DOWNLOADS < <(find "$TMPDIR/download" -type f -print0)
+        INSTALLERS=()
+        ARCHIVES=()
+        for DOWNLOAD in "''${DOWNLOADS[@]}"; do
+          case "''${DOWNLOAD,,}" in
+            *.exe | *.sh)
+              INSTALLERS+=("$DOWNLOAD")
+              ;;
+            *.7z | *.bz2 | *.gz | *.iso | *.rar | *.tar | *.tar.bz2 | *.tar.gz | *.tar.xz | *.tgz | *.xz | *.zip)
+              ARCHIVES+=("$DOWNLOAD")
+              ;;
+          esac
+        done
+        if [ "''${#INSTALLERS[@]}" -gt 1 ]; then
+          echo "Error: multiple GOG installers found" >&2
+          exit 1
+        fi
+        INSTALLER="''${INSTALLERS[0]:-}"
         case "$INSTALLER" in
           *.exe)
             # GOG's Windows installers are InnoSetup archives; the actual game
@@ -94,8 +111,22 @@ in
             chmod +x "$INSTALLER"
             "$INSTALLER" --target "$out" --noexec --nox11
             ;;
+          "")
+            # GOG also exposes bonus content as a standalone archive rather
+            # than an installer. Extract that archive directly.
+            if [ "''${#ARCHIVES[@]}" -eq 0 ]; then
+              echo "Error: no installer or archive found in the GOG download" >&2
+              exit 1
+            fi
+            for ARCHIVE in "''${ARCHIVES[@]}"; do
+              ${extractArchiveSnippet {
+                file = "$ARCHIVE";
+                outDir = "$out";
+              }}
+            done
+            ;;
           *)
-            echo "Error: no .exe or .sh installer found in the GOG download" >&2
+            echo "Error: unsupported GOG download layout" >&2
             exit 1
             ;;
         esac
@@ -104,7 +135,7 @@ in
         # image bundled by the installer (e.g. Return of the Phantom's
         # RotP.iso), rather than as loose files; extract each one found and
         # drop the now-redundant raw image.
-        find "$out" -iname '*.iso' | while IFS= read -r iso; do
+        while IFS= read -r -d "" iso; do
           isoDir="''${iso%.iso}"
           mkdir -p "$isoDir"
           ${extractArchiveSnippet {
@@ -112,7 +143,7 @@ in
             outDir = "$isoDir";
           }}
           rm -f "$iso"
-        done
+        done < <(find "$out" -type f -iname '*.iso' -print0)
       '';
     })
     |> removeFiles gogCruft;

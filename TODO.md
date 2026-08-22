@@ -1,5 +1,18 @@
 # TODO
 
+## Add ZM Desktop Elf wallpapers
+
+Steam metadata:
+
+- App ID: `3003300`
+- Depot ID: `3003301`
+- Manifest ID: `687685243173997847`
+- Selected files:
+  `bin/Skin/wallpaper/sourceImage/{06,07,08,09,10,11,12}.png`
+- Use `fetchSteam` with `filelist` restricted to those seven files.
+- Requires a newer DepotDownloader before the depot can be prefetched and its
+  fixed-output hash recorded.
+
 ## Fix `<nixpkgs>` system registry pin
 
 `nix registry list` shows `system flake:nixpkgs path:/nix/store/2gi66ywhbj66ssbz5bhgibzafa15m7zy-source`

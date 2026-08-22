@@ -20,13 +20,8 @@ let
 in
 with image;
 {
-  dnd50thDesktop = dnd50thZip |> getFile "D&D_50th_Wallpaper_Desktop-3840x2140.jpg";
+  dnd50thDesktop = dnd50thZip |> getFile "D&D_50th_Wallpaper_Desktop-3840x2140.jpg" |> crop16x9;
   dndHolidayHaul = dndHolidayHaulZip |> getFile "D&D Holiday Wallpaper_1920x1080 1.jpg";
-
-  PHB = pkgs.fetchurl {
-    url = "https://images.ctfassets.net/swt2dsco9mfe/2pui27Vw8m7PTg7qbn7Iez/5049ae63f58ee50f1e47cd0fe2ce9c72/PHB_1920x1080.jpeg";
-    hash = "sha256-YyCpc1LAwQBXTS3r/C6I3DRX8XBLkezybyBIdh8sIbk=";
-  };
 
   MM = pkgs.fetchurl {
     url = "https://images.ctfassets.net/swt2dsco9mfe/60I3oouRXM8rbBUFfRHK4s/cbcacd497d8dd2c8d724cb8d6463bda9/MM_1920x1080.jpeg";

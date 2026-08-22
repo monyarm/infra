@@ -149,7 +149,10 @@
           # Name-based, not value-based: isDerivation forces full
           # construction, cost ~8.6% of an eval. Add non-derivation
           # packages/*.nix names here; build fails loudly if you forget.
-          nonDerivationPackageNames = [ "minijson-dub-lock" ];
+          nonDerivationPackageNames = [
+            "builders"
+            "minijson-dub-lock"
+          ];
         in
         rec {
           inherit legacyPackages;
@@ -183,7 +186,7 @@
                 "**/.github/**"
                 "**/*.sops.nix"
                 ".claude/skills/**"
-
+                "hosts/home/monyarm/config/AI/Claude/memory/**"
               ];
               # nix
               programs.nixfmt.enable = true;
@@ -243,6 +246,10 @@
               nix-direnv # Added for optimized environment caching
               sops
               jq
+              lgogdownloader
+              depotdownloader
+              innoextract
+              p7zip
             ];
 
             shellHook = ''

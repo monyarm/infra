@@ -41,12 +41,27 @@ fi
 build_expr() {
   local hashVal="$1"
   cat <<EOF
-(import ./lib/fetchers.nix {
+let
   pkgs = import <nixpkgs> {};
+  files = import ./lib/files.nix {
+    inherit pkgs;
+    lib = pkgs.lib;
+    mkOutOfStoreSymlink = null;
+    config = {};
+    sanitizeName = x: x;
+    getFileName = x: x;
+    getName = x: x;
+    parallel = x: x;
+    dispatchExt = null;
+  };
+in
+(import ./lib/fetchers.nix {
+  inherit pkgs;
   dirs = null;
   importSopsString = null;
   urlEncode = x: x;
   splitFiles = (fileList: _drv: map (_: _drv) fileList);
+  inherit (files) removeFiles;
   getFileNameFromUrl = _u: "download";
   sources = null;
 }).fetchGOG {

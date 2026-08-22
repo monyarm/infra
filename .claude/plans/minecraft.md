@@ -17,8 +17,7 @@ Key architectural decision (confirmed with user): modpack manifests
 inside `update-sources.py`**, at source-update time — not read back via
 `builtins.readFile` on a fetched derivation at Nix eval time. This repo has
 an established no-IFD convention (`[[feedback_no_ifd]]`) and a working
-build-time-only mechanism for content discovered late (`lib/optimize/
-dynamic.nix`'s recursive-nix + `builtins.outputOf` trick), but for modpacks
+build-time-only mechanism for content discovered late (`lib/optimize/ dynamic.nix`'s recursive-nix + `builtins.outputOf` trick), but for modpacks
 specifically the simplest correct answer is: do the HTTP+JSON work in Python
 once, bake the fully-resolved {name, version, url, hash} list for every
 mod/resourcepack straight into `sources.nix` as a plain committed Nix value.
@@ -29,6 +28,7 @@ their component mods/resourcepacks into the registry for free, because the
 data was never behind a derivation at eval time to begin with.
 
 Scope confirmed with user:
+
 - Vanilla Minecraft fetcher goes all the way back to pre-2010 Classic/Indev/
   Infdev, via `skyrising/mc-versions`' extended manifest (a superset of
   Mojang's official `version_manifest_v2.json` that also covers those eras,
@@ -39,7 +39,7 @@ Scope confirmed with user:
 - This is a phased plan. Each phase is independently shippable; implement
   and check in one at a time rather than attempting all of it in one pass.
 
----
+______________________________________________________________________
 
 ## Phase 1 — Foundation: registry skeleton + PrismLauncher deploy + vanilla/loader fetchers
 
@@ -52,6 +52,7 @@ modeled directly on `hosts/home/monyarm/games/ScummVM/default.nix:104-196`
 (options block + `_module.args` builder injection + config merge +
 `xdg.dataFile` output), and `Emulation/mkRom.nix` for the builder-function
 shape:
+
 - `options.games.minecraft.enable` — same `LIGHT` env var gate as
   `games.scummvm.enable` (`ScummVM/default.nix:106-117`).
 - `options.games.minecraft.instances` — `attrsOf attrs`, each fed to
@@ -67,18 +68,16 @@ shape:
   resolves at eval time. Re-running `update-sources.py --append` re-checks
   every `latest`/`latest<mcVersion>` entry for a newer match each run
   (same as the existing plain-`latest` re-check behavior already in
-  `process_modrinth`/`process_curseforge`, `update-sources.py:1308-1309,
-  1340-1341`); literal version keys are cached and skipped once resolved.
-- `options.games.minecraft.resourcePacks` / `.skins` — flat `attrsOf
-  package`, populated both by hand-written entries and (Phase 2)
+  `process_modrinth`/`process_curseforge`, `update-sources.py:1308-1309, 1340-1341`); literal version keys are cached and skipped once resolved.
+- `options.games.minecraft.resourcePacks` / `.skins` — flat `attrsOf package`, populated both by hand-written entries and (Phase 2)
   auto-population from modpack sources.
 - `imports = autoImport ./instances` (+ `./mods`, `./resourcepacks`,
   `./skins` in later phases), same `autoImport` helper ScummVM/Emulation use.
 
 **`mkPrismInstance` builder** — new `Minecraft/mkPrismInstance.nix`:
-takes `{ name, minecraftVersion, loader ? null, loaderVersion ? null, mods ?
-[], resourcePacks ? [], shaderPacks ? [], javaArgs ? {}, ... }@args` and
+takes `{ name, minecraftVersion, loader ? null, loaderVersion ? null, mods ? [], resourcePacks ? [], shaderPacks ? [], javaArgs ? {}, ... }@args` and
 returns a derivation tree for one instance directory:
+
 - `instance.cfg` — generated via `lib.generators.toINI` (already used for
   `scummvm.ini` in `ScummVM/default.nix:189`) from `javaArgs`/window
   size/etc.
@@ -87,8 +86,7 @@ returns a derivation tree for one instance directory:
   loader component (`net.fabricmc.fabric-loader`, `net.minecraftforge`,
   `net.neoforged`, `org.quiltmc.quilt-loader`).
 - `.minecraft/mods`, `.minecraft/resourcepacks`, `.minecraft/shaderpacks` —
-  built via the existing `linkFiles`/`parallel` helpers (`ScummVM/
-  default.nix:191`) symlinking each entry from `mods`/`resourcePacks`/
+  built via the existing `linkFiles`/`parallel` helpers (`ScummVM/ default.nix:191`) symlinking each entry from `mods`/`resourcePacks`/
   `shaderPacks` by filename.
 - `.minecraft/saves`, `.minecraft/logs`, `.minecraft/config`,
   `.minecraft/options.txt` — **not** store paths: PrismLauncher writes to
@@ -102,6 +100,7 @@ instance, same shape as ScummVM's `xdg.dataFile` block.
 
 **Vanilla + loader fetchers** — new `lib/fetchers/minecraft.nix`, wired into
 `lib/fetchers.nix`'s existing merge the same way `dafont.nix` etc. are:
+
 - `fetchMinecraftVersion = { version, sha1 }: pkgs.fetchurl {...}` — resolves
   the client jar URL for a given version ID against the pinned manifest data
   (see sources.toml entry below); one derivation per version.
@@ -118,15 +117,13 @@ instance, same shape as ScummVM's `xdg.dataFile` block.
   `sources.toml` like any other static asset.
 
 **sources.toml additions** (new `[minecraft-version]` section type) +
-`update-sources.py`: new `process_minecraft_version(name, version_id,
-previous_sources)` alongside the existing `process_modrinth`/
+`update-sources.py`: new `process_minecraft_version(name, version_id, previous_sources)` alongside the existing `process_modrinth`/
 `process_curseforge` (`update-sources.py:1286-1357`) — fetches
 `skyrising/mc-versions`' manifest once per run, resolves `version_id` to its
-client-jar URL + sha1, writes `{"type": "minecraft-version", "id":
-version_id, "url": ..., "hash": ...}` into `sources.nix`. Same
+client-jar URL + sha1, writes `{"type": "minecraft-version", "id": version_id, "url": ..., "hash": ...}` into `sources.nix`. Same
 `--append`-only, cache-if-unchanged pattern as the existing processors.
 
----
+______________________________________________________________________
 
 ## Phase 2 — Modrinth/CurseForge fetchers: single files + modpack expansion
 
@@ -140,15 +137,16 @@ the `<modName>.<version>` nested-key registry shape including `"latest"` /
 **Version-alias resolution** (extends the existing single-mod processors,
 not the modpack ones): `sources.toml` entries for mods gain a
 `<modName>.<versionKey>` dotted-key shape, e.g.:
+
 ```toml
 [modrinth]
 sodium.latest = "AANobbMI"
 sodium."latest1.20.1" = "AANobbMI"
 sodium."0.5.8" = "AANobbMI"
 ```
+
 `process_modrinth`/`process_curseforge` parse the trailing key segment as
-the version selector: bare `latest` keeps today's behavior (`sort_by
-(.date_published) | last`, `update-sources.py:1336`); `latest<mcVersion>`
+the version selector: bare `latest` keeps today's behavior (`sort_by (.date_published) | last`, `update-sources.py:1336`); `latest<mcVersion>`
 adds Modrinth's `game_versions` query param (`?game_versions=["<mcVersion>"]`
 on the version-list endpoint) / CurseForge's files-endpoint `gameVersion`
 filter before taking the newest match; a literal version string is passed
@@ -161,21 +159,18 @@ resolved result is written into `sources.nix` keyed by the full
 `process_curseforge_modpack`, triggered by a `[modrinth-modpack]`/
 `[curseforge-modpack]` sources.toml section (parallel to the existing
 `[modrinth]`/`[curseforge]` single-file sections at
-`update-sources.py:1580-1583`), with optional version pinning (`name =
-"project:versionId"` syntax, matching how `[github-release]` entries already
+`update-sources.py:1580-1583`), with optional version pinning (`name = "project:versionId"` syntax, matching how `[github-release]` entries already
 pin a tag prefix). Each processor:
+
 1. Resolves+downloads the pack file itself (`.mrpack` is a zip; CurseForge
    pack is a zip with `manifest.json` + `overrides/`) via the same
    `http_get`/API-key handling `process_curseforge`/`process_modrinth`
    already use.
-2. Parses `modrinth.index.json` (`files[]`: `path`, `hashes.sha1`,
+1. Parses `modrinth.index.json` (`files[]`: `path`, `hashes.sha1`,
    `downloads[]`, `env`) or `manifest.json` (`files[]`: `projectID`,
    `fileID`, `required` — each resolved to a real download URL via one
    CurseForge API call per file, same auth as `process_curseforge`).
-3. Writes a nested structure into `sources.nix`: `{type =
-   "modrinth-modpack"; minecraftVersion; loader; loaderVersion; files = {
-   <name> = {url; hash; path; env}; ... }; overrides = <fetched overrides
-   dir hash>; }`.
+1. Writes a nested structure into `sources.nix`: `{type = "modrinth-modpack"; minecraftVersion; loader; loaderVersion; files = { <name> = {url; hash; path; env}; ... }; overrides = <fetched overrides dir hash>; }`.
 
 **Nix side** — new `Minecraft/modpacks/mkModpack.nix`: given a
 `sources.modpacks.<name>` entry (now a plain static Nix value, see Context),
@@ -187,26 +182,25 @@ of `mods/`. Feeds straight into `mkPrismInstance`'s `mods`/`resourcePacks`
 args.
 
 **Auto-registration into the registry:** because `sources.modpacks.<name>`
-is already a fully-resolved static value (no IFD needed), `Minecraft/
-modpacks/default.nix` can `lib.mapAttrs'` over its `files` and merge each
+is already a fully-resolved static value (no IFD needed), `Minecraft/ modpacks/default.nix` can `lib.mapAttrs'` over its `files` and merge each
 mod into `games.minecraft.mods.<modName>.<resolvedVersion>` (resourcepacks
 still go into the flat `games.minecraft.resourcePacks`) via
 `lib.recursiveUpdate` — this is the piece that specifically required the
 Python-side resolution decision from the Context section above.
 
 **Technic/PlanetMinecraft/VanillaTweaks:**
+
 - Technic/PlanetMinecraft have no API; both are direct-download-link sites.
   Add `[technic]`/`[planetminecraft]` as thin sources.toml `[url]`-style
   entries (or literally reuse the existing `[url]` section) — no new
   processor needed, they're just pinned download links.
 - VanillaTweaks: wrap the community `vanillatweaks-stuff` CLI
-  (github.com/OmerMakesStuff/vanillatweaks-stuff) as a new `packages/
-  vanillatweaks-cli.nix` (same `mkPythonToolWrapper`/similar wrapper shape
+  (github.com/OmerMakesStuff/vanillatweaks-stuff) as a new `packages/ vanillatweaks-cli.nix` (same `mkPythonToolWrapper`/similar wrapper shape
   as `packages/mmlc-dac-extractor.nix`), then `Minecraft/fetchVanillaTweaks.nix`
   invokes it inside a fixed-output derivation (`outputHashMode = "recursive"`,
   network-enabled build) given a pack-name list + target MC version.
 
----
+______________________________________________________________________
 
 ## Phase 3 — research: mod jars through `lib/optimize`
 
@@ -226,7 +220,7 @@ Verify with a real mod jar that round-trips through `optimize` unchanged
 except for its embedded PNGs, and that the existing "revert if optimized
 output isn't smaller" guard still protects against jar corruption.
 
----
+______________________________________________________________________
 
 ## Phase 4 — Resource-pack builders: convertPack, combinePacks, extractMobTextures, mkRandomobs
 
@@ -243,8 +237,7 @@ helpers from `lib/compressRom/default.nix` for any multi-file staging.
   those need an explicit per-version-range rename table, not a generic CLI.
 - **`combinePacks.nix`** — `{ packs }` (ordered list, later entries win):
   `pkgs.runCommand` copying each pack's tree in order (later overwrites
-  earlier, standard `cp -rT` loop) for normal files, then a `jq -s 'reduce
-  .[] as $x ({}; . * $x)'` deep-merge pass specifically for JSON files
+  earlier, standard `cp -rT` loop) for normal files, then a `jq -s 'reduce .[] as $x ({}; . * $x)'` deep-merge pass specifically for JSON files
   (`lang/*.json`, `sounds.json`) so language packs merge instead of
   clobbering — no existing deep-merge helper in the repo, this is new but
   trivial (matches the exploration finding that `jq -s` is the right tool,
@@ -260,7 +253,7 @@ helpers from `lib/compressRom/default.nix` for any multi-file staging.
   `mob.png`, `mob2.png`, ... convention. `pkgs.runCommand` doing a sorted
   walk + rename loop.
 
----
+______________________________________________________________________
 
 ## Phase 5 — Skin builders: fetchSkin, mkSkinPermutations, addHatLayer
 
@@ -272,8 +265,7 @@ here, rather than writing new ImageMagick plumbing from scratch.
 - **`fetchSkin.nix`** — `{ url }` or `{ username }` (resolves via Mojang's
   session-server API to the current skin URL, then fetches): thin
   `pkgs.fetchurl`, same convention as other single-file fetchers.
-- **`mkSkinPermutations.nix`** — `{ heads, torsos, legs, combine ?
-  <default cartesian> }`: slices each 64×64 skin into its three named
+- **`mkSkinPermutations.nix`** — `{ heads, torsos, legs, combine ? <default cartesian> }`: slices each 64×64 skin into its three named
   regions via `media.nix`'s `transform` (one crop-derivation per region per
   input skin — cheap, cached individually), then `combine` (an eval-time
   function, overridable, defaulting to full cartesian product via
@@ -290,7 +282,7 @@ here, rather than writing new ImageMagick plumbing from scratch.
   cartesian-attrset mechanism as above, composing via ImageMagick
   `-composite` instead of crop.
 
----
+______________________________________________________________________
 
 ## Verification
 

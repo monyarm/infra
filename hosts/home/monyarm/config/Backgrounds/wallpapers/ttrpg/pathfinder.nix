@@ -74,10 +74,12 @@ with image;
     sha256 = "173gz7ds6ky4j4gn4i5kj0v2n3lzvw9i22s0d0jaaiyjh8my7wi5";
   };
 
-  pathfinderWrath04 = pkgs.fetchurl {
-    url = "https://wrath.owlcat.games/storage/images/755804c5453403cd25e23c3a07db3b42.jpg";
-    sha256 = "1dj1gsrnhwb2d53dfdjybq7vnp8qni346jf8vh2zq443f7bhzh89";
-  };
+  pathfinderWrath04 =
+    pkgs.fetchurl {
+      url = "https://wrath.owlcat.games/storage/images/755804c5453403cd25e23c3a07db3b42.jpg";
+      sha256 = "1dj1gsrnhwb2d53dfdjybq7vnp8qni346jf8vh2zq443f7bhzh89";
+    }
+    |> grow16x9South' "#dfdad4";
 
   pathfinderWrath05 = pkgs.fetchurl {
     url = "https://wrath.owlcat.games/storage/images/9edc2bcc644954f0e1bd0d192a2d2860.jpg";

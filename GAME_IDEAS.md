@@ -734,7 +734,7 @@ each need their own answer, and neither is a clean win:
   "already ships on eduke32 upstream, nothing to port" does **not** hold up
   under checking -- treat this as a real, moderately fiddly port, not a
   freebie.
-- **Shadow Warrior Classic Complete** [GOG slug: `shadow_warrior_complete`]
+- **Shadow Warrior Classic Complete** \[GOG slug: `shadow_warrior_complete`\]
   (base game + Wanton Destruction + Twin Dragon expansions) -- pick
   **VoidSW** for a faithful software-rendered classic experience (actively
   maintained by the eDuke32 team, more reliable Twin Dragon expansion
