@@ -108,13 +108,20 @@ let
   # rather than silently passthrough. Rare, and visible beats wrong.)
   rawLibSource = lib.fileset.toSource {
     root = ../.;
-    fileset = lib.fileset.unions (
-      [
-        ../optimize
-        ../mkFormatDispatch.nix
-      ]
-      ++ map (f: ../. + "/${f}") trimmedFiles
-    );
+    fileset =
+      let
+        sourceFiles = lib.fileset.unions (
+          [
+            ../optimize
+            ../mkFormatDispatch.nix
+          ]
+          ++ map (f: ../. + "/${f}") trimmedFiles
+        );
+        generatedPythonFiles = lib.fileset.fileFilter (
+          file: file.name == "__pycache__" || lib.hasSuffix ".pyc" file.name || lib.hasSuffix ".pyo" file.name
+        ) ../.;
+      in
+      lib.fileset.difference sourceFiles generatedPythonFiles;
   };
   # Strip comments across the entire lib fileset, run the binding
   # tree-shaker on the four trimmed files, format them, and assemble the

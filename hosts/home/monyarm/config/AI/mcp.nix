@@ -1,31 +1,45 @@
 { pkgs, ... }:
+let
+  compressedToolsConfig = pkgs.writeText "compressed-tools-mcp.json" (
+    builtins.toJSON {
+      mcpServers = {
+        codegraph = {
+          command = "${pkgs.codegraph}/bin/codegraph";
+          args = [
+            "serve"
+            "--mcp"
+          ];
+        };
+        context7 = {
+          url = "https://mcp.context7.com/mcp";
+        };
+        gh_grep = {
+          url = "https://mcp.grep.app";
+        };
+      };
+    }
+  );
+in
 {
   programs.mcp = {
     enable = true;
     servers = {
-      codegraph = {
-        command = "${pkgs.codegraph}/bin/codegraph";
-        args = [
-          "serve"
-          "--mcp"
-        ];
-      };
-
       # microsoft's MarkItDown -- docx/pdf/pptx/xlsx/html to markdown before Claude reads it
       markitdown = {
         command = "${pkgs.markitdown-mcp}/bin/markitdown-mcp";
+        timeout = 60000;
       };
 
-      # wraps codegraph + markitdown, compresses their tool surfaces/results
+      # Compresses tool metadata; results normally pass through unchanged.
+      # --toonify converts structured JSON results to token-efficient TOON.
       compressed-tools = {
         command = "${pkgs.mcp-compressor}/bin/mcp-compressor";
         args = [
           "-c"
           "medium"
-          "--"
-          "${pkgs.codegraph}/bin/codegraph"
-          "serve"
-          "--mcp"
+          "--toonify"
+          "--config"
+          "${compressedToolsConfig}"
         ];
       };
     };

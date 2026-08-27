@@ -142,7 +142,7 @@ def main():
                 continue
             os.unlink(path)
             dropped += 1
-        print(f"prune-handlers: {len(exts)} extensions, kept {kept}, dropped {dropped}", file=sys.stderr)
+        print(f"prune-handlers: {len(exts)} extensions, kept {kept}, dropped {dropped}, doom {doom_arg}", file=sys.stderr)
     else:
         print("prune-handlers: no file list (or no handlers dir), keeping full set", file=sys.stderr)
 

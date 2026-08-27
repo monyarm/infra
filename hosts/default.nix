@@ -118,6 +118,7 @@ let
           autoImport
           sources
           ;
+        hostName = meta.hostName or "localhost";
         isNixOS = false;
         isHomeManager = true;
         isHomeManagerInNixOS = false;
@@ -153,6 +154,7 @@ let
           autoImport
           sources
           ;
+        inherit hostName;
         isNixOS = true;
         isHomeManager = false;
         isHomeManagerInNixOS = true;
@@ -181,6 +183,7 @@ let
                 autoImport
                 sources
                 ;
+              inherit hostName;
               isNixOS = false;
               isHomeManager = true;
               isHomeManagerInNixOS = true;

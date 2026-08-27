@@ -1,5 +1,7 @@
 {
   config,
+  pkgs,
+  hostName ? "localhost",
   ...
 }:
 {
@@ -10,7 +12,7 @@
       enable = true;
       extraArgs = [
         "--hostname"
-        "127.0.0.1"
+        hostName
       ];
     };
     context = config.ai.agentMd;
@@ -21,10 +23,22 @@
       share = "disabled";
       compaction.prune = true;
       lsp = true;
+      # C# LSP also requires Microsoft's C# extension in VS Code.
+      mcp.markitdown = {
+        command = [ "${pkgs.markitdown-mcp}/bin/markitdown-mcp" ];
+        timeout = 60000;
+        type = "local";
+      };
+      plugin = [
+        "opencode-direnv"
+        "envsitter-guard"
+      ];
       permission = {
         external_directory."~/.claude/**/memory/**" = "allow";
         read."~/.claude/**/memory/**" = "allow";
       };
     };
   };
+
+  # Consider tmux/Zellij integration later for observing concurrent agent work.
 }

@@ -16,9 +16,6 @@
     # skills lib: TDD, debugging, planning (/brainstorm, /write-plan, /execute-plan)
     superpowers = fetchGitTree sources.claude.plugins.superpowers;
 
-    # bundles its own .mcp.json -- registers the hosted mcp.context7.com server,
-    # no local binary. anonymous/shared rate limit; set CONTEXT7_API_KEY to use own quota.
-    context7 = fetchGitTree sources.ai.mcp.context7 + "/plugins/claude/context7";
   };
 
   # rtk (Rust Token Killer) -- NOT installed. JetBrains benchmark: 7.6% cost INCREASE at
