@@ -234,61 +234,64 @@ let
             pkgs.git
             pkgs.coreutils
           ];
+          gitDrv = derivation (
+            cleanArgs
+            // {
+              inherit name;
+
+              # Explicitly choose the execution platform
+              system = args.system or pkgs.stdenv.hostPlatform.system;
+
+              # Network fetch, not compute -- keep it off remote builders
+              # entirely (unlike every other fetcher here, this one didn't
+              # have this set, which let it drift onto nixbuild.net and hit a
+              # git-hashed-FOD store-path mismatch their build fleet computes
+              # differently for).
+              preferLocalBuild = true;
+
+              # Tell Nix we are running an RFC0133 Git-Hashed FOD
+              outputHashMode = "git";
+              outputHashAlgo = "sha1";
+              outputHash = targetHash;
+
+              # Bare-metal derivations require you to explicitly pass the builder executable and its args
+              builder = "${pkgs.bash}/bin/bash";
+              args = [
+                "-e" # Exit on any command failure
+                (pkgs.writeText "fetch-git-tree-builder.sh" ''
+                  # Set up our bare-metal environment path
+                  export PATH="${binPath}"
+                  export GIT_SSL_CAINFO="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+
+                  # 1. Initialize cleanly
+                  git init -q --template=/var/empty "$out"
+                  cd "$out"
+
+                  git config advice.detachedHead false
+                  git config advice.defaultBranchName false
+
+                  # 2. Add remote and fetch quietly
+                  git remote add origin "${url}"
+                  git -c core.hooksPath=/dev/null fetch --progress --depth 1 origin "${rev}" 2>&1
+
+                  # 3. Checkout files
+                  git -c core.hooksPath=/dev/null reset --hard  FETCH_HEAD
+
+                  # # 4. If submodules exist, fetch them recursively
+                  # if [ -f .gitmodules ]; then
+                  #   git submodule update --init --recursive
+                  # fi
+
+                  # 5. Cleanup git metadata
+                  rm -rf .git
+                '')
+              ];
+            }
+          );
         in
-        derivation (
-          cleanArgs
-          // {
-            inherit name;
-
-            # Explicitly choose the execution platform
-            system = args.system or pkgs.stdenv.hostPlatform.system;
-
-            # Network fetch, not compute -- keep it off remote builders
-            # entirely (unlike every other fetcher here, this one didn't
-            # have this set, which let it drift onto nixbuild.net and hit a
-            # git-hashed-FOD store-path mismatch their build fleet computes
-            # differently for).
-            preferLocalBuild = true;
-
-            # Tell Nix we are running an RFC0133 Git-Hashed FOD
-            outputHashMode = "git";
-            outputHashAlgo = "sha1";
-            outputHash = targetHash;
-
-            # Bare-metal derivations require you to explicitly pass the builder executable and its args
-            builder = "${pkgs.bash}/bin/bash";
-            args = [
-              "-e" # Exit on any command failure
-              (pkgs.writeText "fetch-git-tree-builder.sh" ''
-                # Set up our bare-metal environment path
-                export PATH="${binPath}"
-                export GIT_SSL_CAINFO="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-
-                # 1. Initialize cleanly
-                git init -q --template=/var/empty "$out"
-                cd "$out"
-
-                git config advice.detachedHead false
-                git config advice.defaultBranchName false
-
-                # 2. Add remote and fetch quietly
-                git remote add origin "${url}"
-                git -c core.hooksPath=/dev/null fetch --progress --depth 1 origin "${rev}" 2>&1
-
-                # 3. Checkout files
-                git -c core.hooksPath=/dev/null reset --hard  FETCH_HEAD
-
-                # # 4. If submodules exist, fetch them recursively
-                # if [ -f .gitmodules ]; then
-                #   git submodule update --init --recursive
-                # fi
-
-                # 5. Cleanup git metadata
-                rm -rf .git
-              '')
-            ];
-          }
-        );
+        # The sources entry's recorded file list (update-sources.py's git scan)
+        # rides along, enabling downstream fileList-based filtering.
+        if args ? files then gitDrv // { passthru.fileList = args.files; } else gitDrv;
 
       fetchzipNoSubst =
         args:

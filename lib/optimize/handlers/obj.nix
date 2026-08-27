@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   guardSizeTail,
   getName,
   ...
@@ -11,18 +12,23 @@ let
   # trims trailing zeros and loses "-0" sign.
   lossy =
     src:
-    pkgs.runCommand "${getName src}-objmin"
-      {
-        nativeBuildInputs = [ pkgs.nodejs ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        node ${../js/objmin.js} "${src}" > tmp.obj || rm -f tmp.obj
-        ${guardTmpObj src}
-      '';
+    derivation {
+      name = "${getName src}-objmin";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.nodejs}/bin:${pkgs.gawk}/bin
+          node ${../js/objmin.js} "${src}" > tmp.obj || rm -f tmp.obj
+          ${guardTmpObj src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 
   # Same comment/blank-line stripping, but trailing zeros are trimmed as
   # pure text in a single obj-specific awk pass (see obj-lossless.awk) --
@@ -30,18 +36,23 @@ let
   # "-0") are preserved.
   lossless =
     src:
-    pkgs.runCommand "${getName src}-objlossless"
-      {
-        nativeBuildInputs = [ pkgs.gawk ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        gawk -f ${../awk/obj-lossless.awk} "${src}" > tmp.obj || rm -f tmp.obj
-        ${guardTmpObj src}
-      '';
+    derivation {
+      name = "${getName src}-objlossless";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.nodejs}/bin:${pkgs.gawk}/bin
+          gawk -f ${../awk/obj-lossless.awk} "${src}" > tmp.obj || rm -f tmp.obj
+          ${guardTmpObj src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 in
 {
   normal = lossless;

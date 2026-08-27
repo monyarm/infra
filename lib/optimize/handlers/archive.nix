@@ -10,6 +10,7 @@
 {
   pkgs,
   lib,
+  system,
   getName,
   guardSize,
   optimizeFolderDynamic,
@@ -44,22 +45,32 @@ let
   # advzip losslessly recompresses an existing zip's DEFLATE streams with
   # more effort (zopfli) -- Linux equivalent of gameoptimizer's
   # defluff/deflopt. advancecomp is already a dependency here (png/ico).
+  # Raw `derivation`, not pkgs.runCommand: the inner sandbox overlays all
+  # tools as store-path STRINGS, and runCommand (-> mkDerivation -> stdenv)
+  # constructs real packages, which both boots the whole stdenv bootstrap
+  # in there and reads overlaid attrs like pkgs.gcc as sets. Same reasoning
+  # for every other stage below and files.nix's packArchive.
   advzipOptimize =
     zipDrv:
-    pkgs.runCommand "${getName zipDrv}-advzip"
-      {
-        nativeBuildInputs = [ pkgs.advancecomp ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        cp "${zipDrv}" out.zip
-        chmod +w out.zip
-        advzip -z -4 -q out.zip || true
-        cp out.zip "$out"
-      '';
+    derivation {
+      name = "${getName zipDrv}-advzip";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.advancecomp}/bin:${pkgs.coreutils}/bin
+          cp "${zipDrv}" out.zip
+          chmod +w out.zip
+          advzip -z -4 -q out.zip || true
+          cp out.zip "$out"
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 
   commonExtractedArgs = {
     __contentAddressed = true;
@@ -69,9 +80,7 @@ let
   };
 
   sevenZipExtract = {
-    env = commonExtractedArgs // {
-      buildInputs = [ pkgs.p7zip ];
-    };
+    tool = pkgs.p7zip;
     script = src: ''
       mkdir -p "$out"
       7z x -o"$out" -y "${src}" >/dev/null
@@ -79,9 +88,7 @@ let
   };
 
   rpaExtract = {
-    env = commonExtractedArgs // {
-      nativeBuildInputs = [ pkgs.rpatool ];
-    };
+    tool = pkgs.rpatool;
     script = src: ''
       mkdir -p "$out"
       rpatool -x -o "$out" "${src}"
@@ -180,12 +187,62 @@ let
     let
       f = formatFor src;
       ext = (f.outExt or (e: e)) (extOf src);
-      extracted = pkgs.runCommand "${getName src}-extracted" (
-        f.extract.env // { passthru.isDoom = f.doom or false; }
-      ) (f.extract.script src);
+      # Recorded listing for THIS archive: a flat passthru.fileList, or --
+      # for sources.* fetches (idgames/itch/gdrive/moddb/mediafire) -- the
+      # fetcher-attached archiveContent map, keyed by the archive's own
+      # basename by update-sources.py's content scan. No record -> null =
+      # full handler set.
+      fileList =
+        let
+          direct = src.passthru.fileList or null;
+          ac = src.passthru.archiveContent or null;
+          ownKey = builtins.unsafeDiscardStringContext (
+            builtins.baseNameOf (toString (src.originalName or src.name or (baseNameOf (toString src))))
+          );
+        in
+        if direct != null then
+          direct
+        else if ac == null then
+          null
+        else if builtins.isList ac then
+          # Self-attached lists (e.g. doom64's generated pk3 knows its own
+          # members) come pre-narrowed.
+          ac
+        else
+          let
+            # Fetcher-attached maps are keyed by inner-archive basename;
+            # compare case-insensitively since sanitization may shift case.
+            hit = lib.findFirst (k: lib.toLower k == lib.toLower ownKey) null (builtins.attrNames ac);
+          in
+          if hit == null then null else ac.${hit};
+      # Raw derivation (see advzipOptimize's comment). passthru is attached
+      # with `//` AFTER the derivation -- a nested attrset passed directly
+      # to `derivation {}` would be coerced to an env var and error out.
+      extracted =
+        let
+          d = derivation (
+            {
+              name = "${getName src}-extracted";
+              inherit system;
+              builder = "${pkgs.bash}/bin/bash";
+              args = [
+                "-c"
+                (
+                  ''
+                    export PATH=${f.extract.tool}/bin:${pkgs.coreutils}/bin
+                  ''
+                  + f.extract.script src
+                )
+              ];
+            }
+            // commonExtractedArgs
+          );
+        in
+        d // { passthru.isDoom = f.doom or false; };
       optimizedDir = optimizeFolderDynamic {
         inherit prime;
         droppedExtensions = droppedArchiveExtensions;
+        inherit fileList;
       } extracted;
       # Its own cached CA step (lib/files.nix's derefSymlinks), not inlined
       # per-format inside packArchive -- unchanged optimizedDir means this

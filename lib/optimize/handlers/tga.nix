@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   guardSizeTail,
   getName,
   ...
@@ -11,16 +12,21 @@
 {
   handler =
     src:
-    pkgs.runCommand "${getName src}-optimized.tga"
-      {
-        nativeBuildInputs = [ pkgs.imagemagick ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        magick convert "${src}" -compress RLE tmp.tga || rm -f tmp.tga
-        ${guardSizeTail "tmp.tga" src}
-      '';
+    derivation {
+      name = "${getName src}-optimized.tga";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.imagemagick}/bin
+          magick convert "${src}" -compress RLE tmp.tga || rm -f tmp.tga
+          ${guardSizeTail "tmp.tga" src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 }

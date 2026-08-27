@@ -263,6 +263,14 @@ rec {
       // lib.optionalAttrs (filelist != null) {
         filelist = lib.concatStringsSep "\n" filelist;
         passAsFile = [ "filelist" ];
+      }
+      // lib.optionalAttrs (filelist != null && lib.any (f: !lib.hasPrefix "regex:" f) filelist) {
+        # Non-regex entries are literal paths -- a real manifest of this
+        # depot's contents -- riding along as a recorded file list.
+        # regex: filters name no files and would poison downstream
+        # extension extraction, so all-regex: lists stay unattached
+        # (null = full handler set).
+        passthru.fileList = lib.filter (f: !lib.hasPrefix "regex:" f) filelist;
       };
       script = ''
         export HOME=$TMPDIR/HOME

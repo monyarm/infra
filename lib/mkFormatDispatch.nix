@@ -163,5 +163,10 @@ in
     mkDispatchMap
     toList
     run
+    # canonical handler name -> extension list (self-declared `extensions`
+    # merged with the caller's alias table) -- lets consumers derive
+    # ext->file mappings without re-importing handlers or duplicating the
+    # lists.
+    combinedAliases
     ;
 }

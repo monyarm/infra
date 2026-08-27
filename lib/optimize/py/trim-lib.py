@@ -408,8 +408,12 @@ def strip_tree(src_dir, out_dir):
             with open(src_path) as f:
                 text = f.read()
             stripped = strip_blank_lines(strip_comments_for_output(text))
+            # rstrip: a comment-only edit that adds/removes trailing blank
+            # lines must not change the stripped bytes, or it would still
+            # invalidate optimizeLibPath's CA hash (defeats the whole point
+            # of comment-stripping).
             with open(out_path, "w") as f:
-                f.write(stripped + "\n")
+                f.write(stripped.rstrip() + "\n")
 
 
 def main():

@@ -32,22 +32,35 @@
 }:
 let
   toolPaths = builtins.fromJSON toolPathsJSON;
-  pkgs = import optimizeNixpkgsPath {
-    system = targetSystem;
-    config.allowUnfree = true;
-    overlays = [
-      (
-        _final: _prev:
-        builtins.mapAttrs (_: builtins.storePath) (
-          removeAttrs toolPaths [
-            "nixWasmRust"
-            "dispatchWasm"
-          ]
-        )
-      )
-    ];
-  };
-  inherit (pkgs) lib;
+  # NO `import optimizeNixpkgsPath {}` here -- importing full nixpkgs boots
+  # the whole stdenv bootstrap UNCONDITIONALLY (its top-level `checked`
+  # wrapper deep-forces into stdenv/linux/default.nix, which reads pkgs.gcc
+  # as a set), even if nothing ever touches a package. That is exactly what
+  # this sandbox exists to avoid. nixpkgs' lib is self-contained -- import
+  # it directly from the source tree -- and every pkgs.<attr> the optimize
+  # subtree references comes from the tool overlay below (see dynamic.nix's
+  # handlerTools: archive.nix's extract/repack stages and files.nix's
+  # packArchive/derefSymlinks are all raw derivations now, so NOTHING in
+  # here constructs a real nixpkgs package).
+  lib = import (optimizeNixpkgsPath + "/lib");
+  pkgs = {
+    inherit lib;
+    # Threaded onward by nested recursions: dynamic.nix passes it back
+    # down as the next level's optimizeNixpkgsPath. storePath (not the
+    # bare string) re-attaches store CONTEXT -- --argstr strips it, and
+    # without it the next level's sandbox build wouldn't have the
+    # nixpkgs source as an input at all.
+    path = builtins.storePath optimizeNixpkgsPath;
+    # Loud tripwire: reaching for real nixpkgs machinery here means a new
+    # dependency wasn't added to dynamic.nix's handlerTools.
+    stdenv = throw "inner optimize sandbox has no stdenv; add the tool to dynamic.nix's handlerTools instead";
+  }
+  // builtins.mapAttrs (_: builtins.storePath) (
+    removeAttrs toolPaths [
+      "nixWasmRust"
+      "dispatchWasm"
+    ]
+  );
   misc = import (optimizeLibPath + "/misc.nix") {
     inherit pkgs;
     inherit (pkgs) lib;
@@ -58,6 +71,9 @@ let
   files = import (optimizeLibPath + "/files.nix") (
     {
       inherit pkgs lib;
+      # Threaded system: rename runs per file -- without this it would
+      # construct real stdenv in here just to read the platform string.
+      system = targetSystem;
       mkOutOfStoreSymlink = _x: { };
       config = { };
     }
@@ -67,6 +83,7 @@ let
   customLib = import (optimizeLibPath + "/optimize") (
     {
       inherit pkgs lib;
+      system = targetSystem;
       nixWasmRustPath =
         if toolPaths.nixWasmRust == null then null else builtins.storePath toolPaths.nixWasmRust;
       dispatchWasmPath = "${builtins.storePath toolPaths.dispatchWasm}/nix_wasm_plugin_dispatch.wasm";
@@ -84,16 +101,28 @@ let
 
   folderSrcPath = builtins.storePath folderSrc;
 
-  # Lowercased once here, not per-file inside isDropped.
-  droppedExtsLower = map (ext: ".${lib.toLower ext}") (
-    lib.filter (s: s != "") (lib.splitString " " droppedExtensions)
+  # Lowercased once here, not per-file inside isDropped. Attrset, not list:
+  # membership is an O(1) lookup instead of lib.any over a hasSuffix scan.
+  # The old shape (hasSuffix ".ext" per extension per file) was ~65k
+  # hasSuffix calls at 7k files -- several percent of the whole inner eval
+  # (trace-function-calls), nearly all of it nixpkgs' hasSuffix internals
+  # (two stringLengths + a substring + compare per call).
+  droppedExtsSet = builtins.listToAttrs (
+    map (ext: lib.nameValuePair (lib.toLower ext) true) (
+      lib.filter (s: s != "") (lib.splitString " " droppedExtensions)
+    )
   );
   isDropped =
     relpath:
     let
-      lower = lib.toLower relpath;
+      # One regex extracts the basename's final dot-segment; a lookup then
+      # decides. Equivalent to the old hasSuffix sweep: "x.bat.gz" matches
+      # neither shape ("gz" isn't dropped, doesn't end in .bat); a dotfile
+      # like ".gitignore" still yields segment "gitignore"; an extensionless
+      # name matches nothing, exactly like hasSuffix ".ext" on it.
+      m = builtins.match ".*\\.([^.]+)" (builtins.baseNameOf relpath);
     in
-    lib.any (suffix: lib.hasSuffix suffix lower) droppedExtsLower;
+    m != null && droppedExtsSet ? ${lib.toLower (builtins.head m)};
 
   # Recursively enumerate folderSrcPath at eval time -- safe here, unlike
   # at the outer flake's eval, because the folder is already extracted to
@@ -120,21 +149,28 @@ let
     );
   keptRelPaths = lib.filter (p: !(isDropped p)) (walk "");
 
-  # One batched wasm call resolves every kept file's dispatch handler up
-  # front, instead of each processOne call resolving its own live. Keyed
-  # by base (sanitized basename), not relpath -- dispatch resolution is a
-  # pure function of the basename alone, so files sharing a basename
-  # across subdirectories correctly share one lookup.
-  keptBases = map (relpath: sanitizeName (baseNameOf relpath)) keptRelPaths;
-  batchResults = customLib.batchResolveDispatch { inherit prime doom; } keptBases;
+  # Keyed by base (sanitized basename), not relpath -- dispatch resolution
+  # is a pure function of the basename alone, so files sharing a basename
+  # across subdirectories correctly share one lookup. Dedupe is O(n) via an
+  # attrset (lib.unique is O(n^2): linear `elem` scan per element, ~50M
+  # comparisons at 7k files); duplicates collapse harmlessly since the wasm
+  # payload only needs each base once and results are keyed.
+  fileEntries = map (relpath: {
+    inherit relpath;
+    # Sanitized once here -- processOne used to recompute it per file.
+    base = sanitizeName (baseNameOf relpath);
+  }) keptRelPaths;
+  uniqueBases = builtins.attrNames (
+    builtins.listToAttrs (map (e: lib.nameValuePair e.base null) fileEntries)
+  );
+  batchResults = customLib.batchResolveDispatch { inherit prime doom; } uniqueBases;
 
   # builtins.path hashes on (name, content) only, so an unchanged file
   # keeps the same store path across archive updates regardless of its
   # siblings, and Nix skips rebuilding it.
   processOne =
-    relpath:
+    { relpath, base }:
     let
-      base = sanitizeName (baseNameOf relpath);
       added = builtins.path {
         path = folderSrcPath + "/${relpath}";
         name = base;
@@ -159,12 +195,12 @@ let
   # "${f.result}" interpolation needs; deepSeq would stack-overflow on
   # self-referential attrs some stdenv derivations carry.
   fileResults = misc.parallel (map (
-    relpath:
+    entry:
     let
-      r = processOne relpath;
+      r = processOne entry;
     in
     builtins.seq (builtins.toString r.result) r
-  )) keptRelPaths;
+  )) fileEntries;
 
   coreutilsBin = "${pkgs.coreutils}/bin";
   # One JSON blob (passAsFile'd -- can't embed thousands of interpolated

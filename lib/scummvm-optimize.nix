@@ -1,7 +1,7 @@
 {
   pkgs,
   lib,
-  sanitizeName,
+  getName,
   removeFiles,
   optimize,
   ...
@@ -134,7 +134,10 @@ let
   guardDirSize =
     compressedDrv: originalDrv:
     derivation {
-      name = "${originalDrv.name}-g";
+      # getName, not .name: originalDrv can be optimize's output -- a bare
+      # dynamic-derivation placeholder string (builtins.outputOf), which has
+      # no .name attribute.
+      name = "${getName originalDrv}-g";
       system = pkgs.stdenv.hostPlatform.system;
       builder = "${pkgs.bash}/bin/bash";
       args = [
@@ -178,7 +181,9 @@ let
   # itself exited 0. Only the final, cleaned-up state gets copied to $out.
   compressPass =
     gameDrv: script:
-    pkgs.runCommand "${sanitizeName gameDrv.name}-scummvm-compressed"
+    # getName, not .name -- same dynamic-derivation-string caveat as
+    # guardDirSize above; getName already sanitizeNames.
+    pkgs.runCommand "${getName gameDrv}-scummvm-compressed"
       {
         buildInputs = [
           pkgs.scummvm-tools
@@ -405,17 +410,17 @@ let
 in
 {
   # Pipes a fetched ScummVM game folder through: universal installer-cruft
-  # removal, then whichever scummvm-tools compress_* passes apply to it
-  # (guarding each against the possibility that "compressed" comes out
-  # larger -- documented for several engines upstream, e.g. compress_sword2's
-  # FLAC output), then a blanket optimize pass over whatever's left (png/jpg/
-  # mp3/ogg/etc -- most of a game folder's bytes have no matching handler and
-  # pass through untouched; relying on auto-optimise-store to hardlink those
-  # back down rather than skipping the walk). Safe (and intended) to call at
-  # every ScummVM game's fetch site regardless of engine: engines with no
-  # matching compress_* tool at all just skip straight to cruft+optimize
-  # without paying for a folder copy that could never find anything to
-  # compress.
+  # removal, a blanket optimize pass (png/jpg/mp3/ogg/etc -- most of a game
+  # folder's bytes have no matching handler and pass through untouched),
+  # THEN whichever scummvm-tools compress_* passes apply to it (guarding
+  # each against the possibility that "compressed" comes out larger --
+  # documented for several engines upstream, e.g. compress_sword2's FLAC
+  # output). Optimize-first: the compress_* passes then run over already-
+  # shrunken assets, and their scratch-copy/guard bookkeeping carries
+  # fewer bytes. Safe (and intended) to call at every ScummVM game's fetch
+  # site regardless of engine: engines with no matching compress_* tool at
+  # all just skip straight to cruft+optimize without paying for a folder
+  # copy that could never find anything to compress.
   compressScummvmGame =
     # A bare engineid string is shorthand for `{ engineid = ...; }` -- the
     # common case, since almost every call site has no other option to set.
@@ -432,9 +437,10 @@ in
         || engineGatedScripts ? ${engineid}
         || (engineid == "sci" && sciSupported);
       cleaned = removeFiles (scummvmCruft ++ (scummvmEngineCruft.${engineid} or [ ])) gameDrv;
+      optimized = optimize cleaned;
       compressed =
         if !isRelevant then
-          cleaned
+          optimized
         else
           let
             scripts =
@@ -442,7 +448,7 @@ in
               ++ lib.optional sciSupported compressSci
               ++ lib.optional (engineGatedScripts ? ${engineid}) engineGatedScripts.${engineid};
           in
-          guardDirSize (compressPass cleaned (lib.concatStringsSep "\n" scripts)) cleaned;
+          guardDirSize (compressPass optimized (lib.concatStringsSep "\n" scripts)) optimized;
     in
-    optimize compressed;
+    compressed;
 }

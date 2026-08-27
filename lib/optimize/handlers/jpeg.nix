@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   guardSizeTail,
   getName,
   ...
@@ -9,34 +10,44 @@ let
 
   jpegoptim =
     src:
-    pkgs.runCommand "${getName src}-jpegoptim.jpg"
-      {
-        buildInputs = [ pkgs.jpegoptim ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        cp "${src}" tmp.jpg
-        jpegoptim --strip-all --all-normal tmp.jpg || rm -f tmp.jpg
-        ${guardTmpJpg src}
-      '';
+    derivation {
+      name = "${getName src}-jpegoptim.jpg";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.jpegoptim}/bin:${pkgs.mozjpeg}/bin
+          cp "${src}" tmp.jpg
+          jpegoptim --strip-all --all-normal tmp.jpg || rm -f tmp.jpg
+          ${guardTmpJpg src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 
   mozjpeg =
     src:
-    pkgs.runCommand "${getName src}-mozjpeg.jpg"
-      {
-        buildInputs = [ pkgs.mozjpeg ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        cjpeg -quality 85 -optimize "${src}" > tmp.jpg || rm -f tmp.jpg
-        ${guardTmpJpg src}
-      '';
+    derivation {
+      name = "${getName src}-mozjpeg.jpg";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.jpegoptim}/bin:${pkgs.mozjpeg}/bin
+          cjpeg -quality 85 -optimize "${src}" > tmp.jpg || rm -f tmp.jpg
+          ${guardTmpJpg src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 in
 {
   normal = src: src |> jpegoptim;

@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   guardSizeTail,
   getName,
   ...
@@ -22,18 +23,23 @@
 {
   handler =
     src:
-    pkgs.runCommand "${getName src}-noblanks"
-      {
-        nativeBuildInputs = [ pkgs.libxml2 ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        xmllint --noblanks --nonet "${src}" > tmp.out || rm -f tmp.out
-        ${guardSizeTail "tmp.out" src}
-      '';
+    derivation {
+      name = "${getName src}-noblanks";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+            export PATH=${pkgs.coreutils}/bin:${pkgs.libxml2}/bin
+          xmllint --noblanks --nonet "${src}" > tmp.out || rm -f tmp.out
+          ${guardSizeTail "tmp.out" src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
   extensions = [
     "xml"
     "svg"

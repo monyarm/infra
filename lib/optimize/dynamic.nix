@@ -44,6 +44,11 @@
   lib,
   getName,
   derefSymlinks,
+  # Threaded from default.nix (which threads it from its own caller): the
+  # sandboxed nested-archive recursion re-evaluates this file with the
+  # reconstructed inner pkgs, and touching pkgs.stdenv there would boot the
+  # whole bootstrap just to read the platform string.
+  system ? pkgs.stdenv.hostPlatform.system,
   nixWasmRustPath ? null,
   # Already-built lib/wasm/dispatch output dir, threaded down from an outer
   # dynamic.nix invocation via dynamic-inner.nix (see optimize/default.nix).
@@ -58,6 +63,17 @@
   # Extensions to drop entirely (see droppedArchiveExtensions in
   # archive.nix). Empty by default -- folderWalkOptimize keeps everything.
   droppedExtensions ? [ ],
+  # Eval-time file list for this archive/folder (recorded pk3/rpa listings
+  # via passthru.fileList, etc.), or null for the full handler set. Passed
+  # to the prep derivation as JSON; py/prune-handlers.py extracts its
+  # extensions at BUILD time and drops handlers/*.nix the list can't reach,
+  # so adding a NEW handler leaves every archive that can't use it
+  # byte-identical all the way through prep -- no rebuild cascade.
+  # Handlers with only $exact/prefix* alias keys are structural and always
+  # included. Nested archives found mid-walk recurse without a list and
+  # get the parent's copy as-is; a file needing an excluded handler
+  # degrades to passthrough rather than failing.
+  fileList ? null,
 }:
 folderSrc:
 let
@@ -76,6 +92,20 @@ let
   # `import ../wasm.nix` on that path -- dynamic-inner.nix always threads
   # dispatchWasmDir through (see below), so ../wasm.nix + its crate sources
   # don't need to be in this fileset at all.
+  #
+  # Static on purpose: per-archive handler pruning (which handlers/*.nix the
+  # recorded file list can reach, plus the doom/ overlay) happens at BUILD
+  # time now -- py/prune-handlers.py inside optimizeLibPath below, fed the
+  # raw fileList as JSON. The old eval-time version walked the list and ran
+  # lib.fileset union/difference algebra over ../. per archive, which cost
+  # real seconds of outer eval per game; the prep derivation is CA, so the
+  # caching granularity (same list extensions => same stripped tree) is
+  # unchanged.
+  #
+  # (Caveat inherited from the old eval-time shape: a nested pk3 inside a
+  # non-doom filtered archive recurses with doom=true into a copy whose
+  # doom/ was pruned by the PARENT's flag; its inner walk will fail loudly
+  # rather than silently passthrough. Rare, and visible beats wrong.)
   rawLibSource = lib.fileset.toSource {
     root = ../.;
     fileset = lib.fileset.unions (
@@ -86,59 +116,63 @@ let
       ++ map (f: ../. + "/${f}") trimmedFiles
     );
   };
-  # Step 1: Strip comments across the entire lib fileset first
-  strippedSourceDrv =
-    pkgs.runCommand "optimize-lib-stripped"
-      {
-        nativeBuildInputs = [ pkgs.python3 ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "recursive";
-      }
-      ''
-        mkdir -p "$out"
-        python3 ${./py/trim-lib.py} --strip-tree "${rawLibSource}" "$out"
-      '';
-
-  # Step 2: Run the binding tree-shaker on the already-stripped files
-  trimmedFilesDrv =
-    pkgs.runCommand "optimize-lib-trimmed"
-      {
-        nativeBuildInputs = [
-          pkgs.python3
-          pkgs.nixfmt
-        ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "recursive";
-      }
-      ''
-        mkdir -p "$out"
-        python3 ${./py/trim-lib.py} "${strippedSourceDrv}" "${strippedSourceDrv}/optimize" "$out" \
-          "${lib.concatStringsSep "," trimmedFiles}"
-        nixfmt "$out"/*.nix
-      '';
-
-  # Step 3: Combine stripped tree base with trimmed overrides
-  optimizeLibPath =
-    pkgs.runCommand "optimize-lib"
-      {
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "recursive";
-      }
-      ''
-        cp -r --no-preserve=mode "${rawLibSource}" "$out"
-        cp -r --no-preserve=mode "${strippedSourceDrv}"/. "$out"/
-        cp ${trimmedFilesDrv}/*.nix "$out"/
-      '';
-  innerExprPath = ./dynamic-inner.nix;
+  # Strip comments across the entire lib fileset, run the binding
+  # tree-shaker on the four trimmed files, format them, and assemble the
+  # final tree -- all in ONE derivation. These steps always rebuilt
+  # together anyway (each consumed the previous CA output); fusing drops
+  # two full-tree copies/hashes from every cold pass.
+  # Raw `derivation`, not pkgs.runCommand: nested-archive recursion
+  # re-evaluates THIS file inside the inner sandbox, whose pkgs is the tool
+  # overlay -- no runCommand/stdenv there (see dynamic-inner.nix).
+  # nativeBuildInputs becomes an explicit PATH export instead.
+  optimizeLibPath = derivation (
+    {
+      name = "optimize-lib";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.python3}/bin:${pkgs.nixfmt}/bin:${pkgs.coreutils}/bin
+          mkdir -p "$out"
+          # Verbatim base first (non-.nix assets: awk/, js/, sh/, py/), then
+          # --strip-tree OVERWRITES each .nix in place with its stripped
+          # version (same final state the old strip->overlay pipeline made).
+          cp -r --no-preserve=mode "${rawLibSource}"/. "$out"/
+          python3 ${./py/trim-lib.py} --strip-tree "${rawLibSource}" "$out"
+          mkdir -p "$TMPDIR/trim"
+          python3 ${./py/trim-lib.py} "$out" "$out/optimize" "$TMPDIR/trim" \
+            "${lib.concatStringsSep "," trimmedFiles}"
+          cp "$TMPDIR"/trim/*.nix "$out"/
+          nixfmt "$out"/${lib.concatStringsSep " \"$out\"/" trimmedFiles}
+          # Handler pruning LAST: --strip-tree above mirrors every *.nix from
+          # the (unpruned) source tree into $out, so anything pruned earlier
+          # would just be resurrected. Runs on the final assembled tree.
+          # -P: without it sys.path[0] is the script's own directory -- which
+          # for a store-path script IS /nix/store -- and every stdlib import
+          # then enumerates the whole store looking for modules.
+          python3 -P ${./py/prune-handlers.py} "$out" \
+            "$fileListJSONPath" ${doomArg} ${./py/trim-lib.py}
+        ''
+      ];
+      # Build-time handler pruning input: the raw recorded file list (see
+      # py/prune-handlers.py). passAsFile keeps multi-thousand-entry lists
+      # out of the .drv text itself.
+      fileListJSON = builtins.toJSON fileList;
+      passAsFile = [ "fileListJSON" ];
+    }
+    // {
+      __contentAddressed = true;
+      allowSubstitutes = false;
+      outputHashAlgo = "sha256";
+      outputHashMode = "recursive";
+    }
+  );
+  # The COMMENT-STRIPPED copy from optimizeLibPath, not ./dynamic-inner.nix:
+  # a doc-only edit to the real file must not re-instantiate every archive.
+  innerExprPath = "${optimizeLibPath}/optimize/dynamic-inner.nix";
   primeArg = if prime then "true" else "false";
   doomArg = if doom then "true" else "false";
-  system = pkgs.stdenv.hostPlatform.system;
   shell = "${pkgs.bash}/bin/bash";
   droppedExtsArg = lib.concatStringsSep " " droppedExtensions;
   # Built outside the sandbox: the sandbox has no network (substituters =
@@ -156,15 +190,64 @@ let
   # One JSON blob instead of a growing --argstr/--arg list that has to be
   # added in lockstep on both sides per tool. toJSON carries real `null`
   # for nixWasmRust, no "" sentinel needed.
-  toolPathsJSON = builtins.toJSON {
-    wadptr = "${pkgs.wadptr}";
-    rpatool = "${pkgs.rpatool}";
-    minijson = "${pkgs.minijson}";
-    # Determinate Nix, not stock pkgs.nix -- see dynamic-inner.nix's comment.
-    nix = "${pkgs.nix}";
-    nixWasmRust = if nixWasmRustPath == null then null else "${nixWasmRustPath}";
-    dispatchWasm = if dispatchWasmModule == null then null else "${dispatchWasmModule}";
+  #
+  # The handlerTools block overlays every pkgs.<attr> the optimize subtree
+  # can reference as a prebuilt store path, so the inner evaluator never
+  # constructs a real nixpkgs package (which would boot the whole stdenv
+  # bootstrap there -- see dynamic-inner.nix). Names must exist in the
+  # ambient optimizePkgs -- an `inherit` here fails loudly at eval time if
+  # one is renamed upstream. fonttools/glslmin are packages/
+  # files (python3+fonttools env, glslmin's npm-deps FOD) promoted to real
+  # packages precisely so they can ride this overlay like any other tool.
+  handlerTools = {
+    inherit (pkgs)
+      coreutils
+      bash
+      gawk
+      python3
+      p7zip
+      nodejs
+      gnugrep
+      advancecomp
+      oxipng
+      optipng
+      mozjpeg
+      jq
+      jpegoptim
+      gnused
+      flac
+      xdelta
+      pngquant
+      midicsv
+      lightningcss
+      libxml2
+      libwebp
+      icoutils
+      gnupatch
+      gifsicle
+      gcc
+      flips
+      findutils
+      ffmpeg-headless
+      util-linux
+      nixfmt
+      fonttools
+      glslmin
+      imagemagick
+      ;
   };
+  toolPathsJSON = builtins.toJSON (
+    {
+      wadptr = "${pkgs.wadptr}";
+      rpatool = "${pkgs.rpatool}";
+      minijson = "${pkgs.minijson}";
+      # Determinate Nix, not stock pkgs.nix -- see dynamic-inner.nix's comment.
+      nix = "${pkgs.nix}";
+      nixWasmRust = if nixWasmRustPath == null then null else "${nixWasmRustPath}";
+      dispatchWasm = if dispatchWasmModule == null then null else "${dispatchWasmModule}";
+    }
+    // builtins.mapAttrs (_: p: "${p}") handlerTools
+  );
 
   # folderSrc may symlink into another store path (lib/files.nix
   # getFiles/removeFiles) -- builtins.path in dynamic-inner.nix hashes a
@@ -173,6 +256,16 @@ let
   # helper, its own cached CA derivation), so both this and instantiateDrv
   # get early cutoff.
   derefFolderSrc = derefSymlinks { } folderSrc;
+
+  # Too many concurrent nix-instantiate processes trash the disk via nix
+  # sqlite write contention and can freeze the system on large folders --
+  # serialize them for the duration of the inner eval.
+  flockBlock = ''
+    if [ -d /build-locks ]; then
+      exec 9>/build-locks/dynamic-optimize.lock
+      flock 9
+    fi
+  '';
 
   instantiateDrv = derivation {
     name = "${getName folderSrc}-optimize-instantiate.drv";
@@ -190,12 +283,7 @@ let
           substituters =
           connect-timeout = 1'
 
-        # Too many concurrent nix-instantiate can freeze the system (nix
-        # sqlite db busy) -- serialize via flock.
-        if [ -d /build-locks ]; then
-          exec 9>/build-locks/dynamic-optimize.lock
-          flock 9
-        fi
+        ${flockBlock}
 
         drv=$(nix-instantiate --add-root "$TMPDIR/inner-drv" \
           "${innerExprPath}" \
@@ -219,4 +307,22 @@ let
     allowSubstitutes = false;
   };
 in
-builtins.outputOf instantiateDrv.outPath "out"
+{
+  # The public folder-in/folder-out value -- what every caller consumes.
+  out = builtins.outputOf instantiateDrv.outPath "out";
+
+  # Internals, exposed purely for benchmarking/debugging (the .bench/
+  # harness reconstructs the exact sandboxed nix-instantiate invocation
+  # from these). Production callers never touch these.
+  inherit
+    optimizeLibPath
+    instantiateDrv
+    derefFolderSrc
+    toolPathsJSON
+    innerExprPath
+    prime
+    doom
+    droppedExtensions
+    fileList
+    ;
+}

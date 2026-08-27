@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   guardSizeTail,
   getName,
   ...
@@ -11,17 +12,22 @@
 {
   handler =
     src:
-    pkgs.runCommand "${getName src}-minified.css"
-      {
-        nativeBuildInputs = [ pkgs.lightningcss ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        lightningcss --minify "${src}" > tmp.out || rm -f tmp.out
-        ${guardSizeTail "tmp.out" src}
-      '';
+    derivation {
+      name = "${getName src}-minified.css";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.lightningcss}/bin
+          lightningcss --minify "${src}" > tmp.out || rm -f tmp.out
+          ${guardSizeTail "tmp.out" src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
   extensions = [ "css" ];
 }

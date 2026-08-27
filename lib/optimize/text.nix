@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   lib,
   getName,
   ...
@@ -79,7 +80,7 @@ let
     in
     derivation {
       name = "${getName src}-${filter.name}";
-      system = pkgs.stdenv.hostPlatform.system;
+      inherit system;
       builder = "${pkgs.bash}/bin/bash";
       args = [
         "-c"
@@ -112,7 +113,7 @@ let
     else
       derivation {
         name = "${getName src}-${lib.concatMapStringsSep "-" (f: f.name) filters}";
-        system = pkgs.stdenv.hostPlatform.system;
+        inherit system;
         builder = "${pkgs.bash}/bin/bash";
         args = [
           "-c"

@@ -103,6 +103,12 @@ rec {
   sanitizeName =
     name:
     let
+      # Fast path: an already-clean name (the overwhelming majority --
+      # store basenames, archive entries) is returned by the general case
+      # below unchanged, so skip straight to truncation instead of paying
+      # the split/filter/concat machinery. This pipeline is ~10% of inner
+      # eval self-time at 7k files (trace-function-calls), most of it here.
+      fastPath = builtins.match "[a-zA-Z0-9_.-]*" name != null;
       # Replace spaces with underscores
       noSpaces = lib.replaceStrings [ " " ] [ "_" ] name;
       # Filter out any other character that isn't alphanumeric, -, _, or .
@@ -120,15 +126,19 @@ rec {
     # several stages in. Truncating here is safe -- these are all
     # __contentAddressed derivations, so the name is cosmetic, not part of
     # the store path's identity.
-    lib.substring 0 100 filtered;
+    lib.substring 0 100 (if fastPath then name else filtered);
 
   removeExtension =
     filename:
-    let
-      parts = builtins.filter builtins.isString (builtins.split "\\." filename);
-    in
-    # Fallback case if the file has no dot extension at all, or if it is a bare hash
-    if (builtins.length parts) > 1 then builtins.concatStringsSep "." (lib.init parts) else filename;
+    # Fast path: no dot at all -> the general case returns filename as-is.
+    if builtins.match "[^.]*" filename != null then
+      filename
+    else
+      let
+        parts = builtins.filter builtins.isString (builtins.split "\\." filename);
+      in
+      # Fallback case if the file has no dot extension at all, or if it is a bare hash
+      if (builtins.length parts) > 1 then builtins.concatStringsSep "." (lib.init parts) else filename;
 
   # Strips a leading store-path hash ("<32 chars>-") if present, e.g. from a
   # derivation's .name or a bare path's own baseNameOf -- both carry one.

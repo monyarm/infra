@@ -51,7 +51,7 @@ in
 EOF
 }
 
-echo $(build_expr 'sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')
+build_expr 'sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
 
 echo "Running initial build to discover fetched hash (this will fail)..."
 set +e

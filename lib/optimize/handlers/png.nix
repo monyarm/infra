@@ -1,98 +1,85 @@
 {
   pkgs,
-  guardSizeTail,
+  system,
   pngLosslessFlags,
   getName,
   ...
 }:
-# Every stage falls back to src on failure via guardSizeTail's
-# missing-candidate case.
+# The whole lossless chain (oxipng -> optipng -> advpng, prefixed by
+# pngquant in the prime variant) runs inside ONE raw derivation instead of
+# three or four chained CA stages: one builder launch and one store path
+# per file instead of one per tool.
+#
+# Raw `derivation`, not runCommand/mkDerivation: no stdenv machinery in the
+# .drv, just the tools and the script.
 let
-  # Bound once here (candidate is always "tmp.png" across every stage),
-  # not re-applied fresh per file -- guardSizeTail's own candidate-
-  # dependent setup only pays for itself once for the whole archive this
-  # way, instead of once per file per stage. oxipng4 the same, for the
-  # oxipng-at-level-4 partial application `lossless` uses on every file.
-  guardTmpPng = guardSizeTail "tmp.png";
+  coreutilsBin = "${pkgs.coreutils}/bin";
+  oxipngBin = "${pkgs.oxipng}/bin/oxipng";
+  optipngBin = "${pkgs.optipng}/bin/optipng";
+  advpngBin = "${pkgs.advancecomp}/bin/advpng";
+  pngquantBin = "${pkgs.pngquant}/bin/pngquant";
 
-  pngquant =
-    src:
-    pkgs.runCommand "${getName src}-quantized.png"
-      {
-        buildInputs = [ pkgs.pngquant ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        cp "${src}" tmp.png
-        chmod +w tmp.png
-        pngquant --quality=80-98 --skip-if-larger --ext .png --force tmp.png || rm -f tmp.png
-        ${guardTmpPng src}
-      '';
+  # Inlined guardSizeTail, restoring the candidate in place rather than to
+  # $out: the merged script keeps its running best in tmp.png, so every
+  # stage re-guards against the ORIGINAL src exactly like the old chained
+  # stages' own guards did.
+  guard = src: ''
+    if [ -s "tmp.png" ] && [ "$(${coreutilsBin}/stat -L -c%s "tmp.png")" -le "$(${coreutilsBin}/stat -L -c%s "${src}")" ]; then
+      :
+    else
+      ${coreutilsBin}/cp "${src}" "tmp.png"
+    fi
+  '';
 
-  oxipng =
-    level: src:
-    pkgs.runCommand "${getName src}-oxipng.png"
-      {
-        buildInputs = [ pkgs.oxipng ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        cp "${src}" tmp.png
-        chmod +w tmp.png
-        oxipng ${pngLosslessFlags.oxipng level} tmp.png || rm -f tmp.png
-        ${guardTmpPng src}
-      '';
+  # Every tool gets `|| rm -f` (never `|| true`) so a crash can't leave a
+  # truncated candidate for the guard to accept -- same rule as before.
+  losslessSteps = src: ''
+    ${oxipngBin} ${pngLosslessFlags.oxipng 4} tmp.png || rm -f tmp.png
+    ${guard src}
+    ${optipngBin} ${pngLosslessFlags.optipng} tmp.png || rm -f tmp.png
+    ${guard src}
+    ${advpngBin} ${pngLosslessFlags.advpng} tmp.png || rm -f tmp.png
+    ${guard src}
+  '';
 
-  oxipng4 = oxipng 4;
-
-  optipng =
-    src:
-    pkgs.runCommand "${getName src}-optipng.png"
-      {
-        buildInputs = [ pkgs.optipng ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        cp "${src}" tmp.png
-        chmod +w tmp.png
-        optipng ${pngLosslessFlags.optipng} tmp.png || rm -f tmp.png
-        ${guardTmpPng src}
-      '';
-
-  advpng =
-    src:
-    pkgs.runCommand "${getName src}-advpng.png"
-      {
-        buildInputs = [ pkgs.advancecomp ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        cp "${src}" tmp.png
-        chmod +w tmp.png
-        advpng ${pngLosslessFlags.advpng} tmp.png || rm -f tmp.png
-        ${guardTmpPng src}
-      '';
-
-  lossless =
-    src:
-    src
-    |> oxipng4
-    |> optipng
-    |> advpng;
+  mkPng =
+    steps: src:
+    derivation {
+      name = "${getName src}-optimized.png";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        (
+          ''
+            export PATH=${coreutilsBin}
+            cp "${src}" tmp.png
+            chmod +w tmp.png
+          ''
+          + steps src
+          + ''
+            ${coreutilsBin}/cp "tmp.png" "$out"
+          ''
+        )
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 in
 {
-  normal = lossless;
-  prime = src: src |> pngquant |> lossless;
+  # Lossless-only chain, one derivation.
+  normal = mkPng losslessSteps;
+
+  # pngquant is lossy-but-bigger-is-rejected: run it first, guard, then the
+  # lossless chain over whatever survived -- all in the same derivation.
+  prime = mkPng (
+    src:
+    ''
+      ${pngquantBin} --quality=80-98 --skip-if-larger --ext .png --force tmp.png || rm -f tmp.png
+      ${guard src}
+    ''
+    + losslessSteps src
+  );
 }

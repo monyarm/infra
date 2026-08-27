@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   guardSizeTail,
   getName,
   ...
@@ -15,35 +16,36 @@
 {
   handler =
     src:
-    pkgs.runCommand "${getName src}-minified"
-      {
-        nativeBuildInputs = [
-          pkgs.minijson
-          pkgs.jq
-          pkgs.python3
-        ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        # minijson's CLI prompts interactively (hangs in a sandboxed build)
-        # if the target filename doesn't look like JSON -- tmp.json, not
-        # tmp.out, sidesteps that.
-        cp "${src}" tmp.json
-        chmod +w tmp.json
-        if ! minijson --file tmp.json --comment; then
-          rm -f tmp.json
-          if python3 ${../py/jsoncstrip.py} "${src}" stripped.json \
-            && jq -c . stripped.json > tmp.json; then
-            :
-          else
+    derivation {
+      name = "${getName src}-minified";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.minijson}/bin:${pkgs.jq}/bin:${pkgs.python3}/bin
+          # minijson's CLI prompts interactively (hangs in a sandboxed build)
+          # if the target filename doesn't look like JSON -- tmp.json, not
+          # tmp.out, sidesteps that.
+          cp "${src}" tmp.json
+          chmod +w tmp.json
+          if ! minijson --file tmp.json --comment; then
             rm -f tmp.json
+            if python3 ${../py/jsoncstrip.py} "${src}" stripped.json \
+              && jq -c . stripped.json > tmp.json; then
+              :
+            else
+              rm -f tmp.json
+            fi
           fi
-        fi
-        ${guardSizeTail "tmp.json" src}
-      '';
+          ${guardSizeTail "tmp.json" src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
   extensions = [
     "json"
     "jsonc"

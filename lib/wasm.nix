@@ -1,7 +1,10 @@
 { pkgs, nixWasmRustPath, ... }:
 let
   # crateDir's Cargo.toml has a nix-wasm-rust path dep, populated here from
-  # the flake input. Input-addressed, not CA -- fixed source is deterministic.
+  # the flake input. Content-addressed, recursive: a rustc/nix-wasm-rust/
+  # toolchain bump that still produces byte-identical .wasm keeps the same
+  # outPath, so dynamic.nix's toolPathsJSON (and with it every archive's
+  # optimize-instantiate step) survives unrelated rebuilds of this module.
   buildWasmModule =
     { name, crateDir }:
     pkgs.stdenv.mkDerivation {
@@ -29,6 +32,9 @@ let
         mkdir -p $out
         cp target/wasm32-unknown-unknown/release/*.wasm $out/
       '';
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "recursive";
       allowSubstitutes = false;
     };
 

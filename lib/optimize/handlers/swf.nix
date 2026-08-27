@@ -1,5 +1,6 @@
 {
   pkgs,
+  system,
   guardSizeTail,
   getName,
   ...
@@ -9,17 +10,22 @@
 {
   handler =
     src:
-    pkgs.runCommand "${getName src}-recompressed.swf"
-      {
-        nativeBuildInputs = [ pkgs.python3 ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        python3 ${../py/swfrecompress.py} "${src}" tmp.out || rm -f tmp.out
-        ${guardSizeTail "tmp.out" src}
-      '';
+    derivation {
+      name = "${getName src}-recompressed.swf";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.python3}/bin
+          python3 ${../py/swfrecompress.py} "${src}" tmp.out || rm -f tmp.out
+          ${guardSizeTail "tmp.out" src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
   extensions = [ "swf" ];
 }

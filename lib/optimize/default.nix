@@ -7,6 +7,11 @@
   sortDispatchKeys,
   packArchive,
   derefSymlinks,
+  # Threaded so the sandboxed inner evaluation (dynamic-inner.nix) can pass
+  # targetSystem instead of touching pkgs.stdenv -- constructing real stdenv
+  # there boots the whole bootstrap for every archive. Outer callers omit it
+  # and get the ambient value.
+  system ? pkgs.stdenv.hostPlatform.system,
   nixWasmRustPath ? null,
   # Pre-built lib/wasm/dispatch .wasm, built outside dynamic-inner.nix's
   # sandbox (see dynamic.nix's toolPathsJSON) and passed as a store path.
@@ -75,7 +80,7 @@ let
     originalDrv: src:
     derivation {
       name = "${originalDrv.name}-g";
-      system = pkgs.stdenv.hostPlatform.system;
+      inherit system;
       builder = "${pkgs.bash}/bin/bash";
       args = [
         "-c"
@@ -122,18 +127,23 @@ let
   # copy. -fflags +bitexact also drops ffmpeg's own encoder tag.
   ffmpegStripMetadata =
     ext: src:
-    pkgs.runCommand "${getName src}-stripped.${ext}"
-      {
-        nativeBuildInputs = [ pkgs.ffmpeg-headless ];
-        __contentAddressed = true;
-        allowSubstitutes = false;
-        outputHashAlgo = "sha256";
-        outputHashMode = "flat";
-      }
-      ''
-        ffmpeg -y -i "${src}" -map_metadata -1 -fflags +bitexact -c copy tmp.${ext} || rm -f tmp.${ext}
-        ${guardSizeTail "tmp.${ext}" src}
-      '';
+    derivation {
+      name = "${getName src}-stripped.${ext}";
+      inherit system;
+      builder = "${pkgs.bash}/bin/bash";
+      args = [
+        "-c"
+        ''
+          export PATH=${pkgs.coreutils}/bin:${pkgs.ffmpeg-headless}/bin
+          ffmpeg -y -i "${src}" -map_metadata -1 -fflags +bitexact -c copy tmp.${ext} || rm -f tmp.${ext}
+          ${guardSizeTail "tmp.${ext}" src}
+        ''
+      ];
+      allowSubstitutes = false;
+      __contentAddressed = true;
+      outputHashAlgo = "sha256";
+      outputHashMode = "flat";
+    };
 
   # Shared by png.nix's lossless chain and ico.nix's per-frame loop -- same
   # tools/flags, run against different filenames.
@@ -147,26 +157,35 @@ let
     inherit
       pkgs
       lib
+      system
       guardSize
       getName
       ;
   };
 
-  optimizeFolderDynamic = import ./dynamic.nix {
+  # One shared import; the public wrapper selects `.out`, the bench/debug
+  # handle (optimizeDynamicParts) returns the full internals attrset.
+  dynamicOptimize = import ./dynamic.nix {
     inherit
       pkgs
       lib
       getName
       derefSymlinks
+      system
       nixWasmRustPath
       dispatchWasmDir
       ;
   };
 
+  optimizeFolderDynamic = optArgs: folderSrc: (dynamicOptimize optArgs folderSrc).out;
+
+  optimizeDynamicParts = optArgs: folderSrc: dynamicOptimize optArgs folderSrc;
+
   commonArgs = {
     inherit
       pkgs
       lib
+      system
       guardSize
       guardSizeTail
       ffmpegStripMetadata
@@ -380,10 +399,16 @@ let
 
   # For folders with no static archiveContent (e.g. wallpapers). `doom`
   # context is derived by optimizeFolderDynamic from the folder's own
-  # passthru.isDoom tag -- never set for a plain folder here.
+  # passthru.isDoom tag -- never set for a plain folder here. A recorded
+  # file list riding along on the folder (fetched zips, cruft-pruned
+  # trees) enables per-archive handlerFiles filtering.
   folderWalkOptimize =
     { prime }:
-    folderSrc: optimizeFolderDynamic { inherit prime; } folderSrc;
+    folderSrc:
+    optimizeFolderDynamic {
+      inherit prime;
+      fileList = folderSrc.passthru.fileList or null;
+    } folderSrc;
 
   # --- PUBLIC API ---
 
@@ -397,6 +422,7 @@ in
     optimize'
     optimizeWith
     optimizeFolderDynamic
+    optimizeDynamicParts
     isUnhandledExt
     extOf
     batchResolveDispatch
