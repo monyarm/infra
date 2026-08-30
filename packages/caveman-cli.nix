@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   stdenv,
   fetchGitTree,
   fetchurl,
@@ -10,14 +11,45 @@
   fetchPnpmDeps,
   makeWrapper,
   jq,
+  gawk,
+  writeShellScript,
   ...
 }:
 
 let
   # packages/cli: no lockfile of its own, uses repo-root pnpm-lock.yaml workspace
-  src = fetchGitTree sources.claude.plugins.caveman;
-  version = sources.claude.plugins.caveman.tag or "0-unstable-${sources.claude.plugins.caveman.date}";
-  pnpmWorkspaces = [ "@caveman-ai/cli" ];
+  cavemanSource = sources.claude.plugins.caveman;
+  src = fetchGitTree (
+    removeAttrs cavemanSource [
+      "pnpmDepsHash"
+      "pnpmWorkspace"
+      "pnpmRemoveRootDependency"
+    ]
+  );
+  version = cavemanSource.tag or "0-unstable-${cavemanSource.date}";
+  pnpmWorkspaces = [ cavemanSource.pnpmWorkspace ];
+  pnpmPackageFilter = pkgs.writeText "caveman-pnpm-package-normalization.jq" ''
+    del(.dependencies[$package], .devDependencies[$package], .optionalDependencies[$package])
+  '';
+  pnpmLockFilter = pkgs.writeText "caveman-pnpm-lock-normalization.awk" ''
+    BEGIN { root = 0; section = ""; skip = 0 }
+    /^importers:$/ { print; in_importers = 1; next }
+    in_importers && /^  [^ ].*:/ { root = ($0 == "  .:"); section = ""; skip = 0 }
+    root && /^    (dependencies|devDependencies|optionalDependencies):$/ { section = 1; print; next }
+    root && /^    [^ ].*:/ { section = 0; print; next }
+    skip && /^[ ]{7}/ { next }
+    { skip = 0 }
+    root && section && /^[ ]{6}[^ ].*:/ { key = $0; sub(/^[ ]{6}/, "", key); sub(/:.*/, "", key); gsub(sprintf("%c", 34), "", key); gsub(sprintf("%c", 39), "", key); if (key == package) { skip = 1; next } }
+    { print }
+  '';
+  normalizePnpm = writeShellScript "caveman-normalize-pnpm" ''
+    set -e
+    package=${lib.escapeShellArg cavemanSource.pnpmRemoveRootDependency}
+    jq --arg package "$package" -f ${pnpmPackageFilter} package.json > package.json.tmp
+    mv package.json.tmp package.json
+    awk -v package="$package" -f ${pnpmLockFilter} pnpm-lock.yaml > pnpm-lock.yaml.tmp
+    mv pnpm-lock.yaml.tmp pnpm-lock.yaml
+  '';
 
   # what `caveman setup --install` would fetch -- do it at build time instead
   engineBinaries = {
@@ -41,13 +73,9 @@ stdenv.mkDerivation (finalAttrs: {
       pnpmWorkspaces
       ;
     fetcherVersion = 4; # 3 dropped for pnpm_11, and this nixpkgs pins pnpm 11
-    # HEAD sometimes has root package.json ahead of pnpm-lock.yaml (caveman-installer
-    # deps drift) -- same fix as MPV/scripts.nix's node-datachannel postPatch
-    prePnpmInstall = ''
-      jq 'del(.dependencies."@caveman-ai/cli")' package.json > package.json.tmp
-      mv package.json.tmp package.json
-    '';
-    hash = "sha256-CdEo7mdrzBfwPIWwN4Vdnbo6cgeOqoFyVcSCPHw46sI=";
+    # HEAD sometimes has root package.json ahead of pnpm-lock.yaml.
+    prePnpmInstall = "${normalizePnpm}";
+    hash = cavemanSource.pnpmDepsHash;
   };
 
   nativeBuildInputs = [
@@ -56,15 +84,13 @@ stdenv.mkDerivation (finalAttrs: {
     pnpmConfigHook
     makeWrapper
     jq
+    gawk
   ];
 
-  # same package.json fix as pnpmDeps.prePnpmInstall above, needed again here since
+  # Same package.json fix as pnpmDeps.prePnpmInstall above, needed again here since
   # pnpmConfigHook re-runs `pnpm install --frozen-lockfile` on this derivation's own
   # (unpatched) copy of src
-  postPatch = ''
-    jq 'del(.dependencies."@caveman-ai/cli")' package.json > package.json.tmp
-    mv package.json.tmp package.json
-  '';
+  postPatch = "${normalizePnpm}";
 
   buildPhase = ''
     runHook preBuild

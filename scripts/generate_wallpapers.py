@@ -137,9 +137,11 @@ def build_entry(entry):
         explicit_filename = name_token
 
     if not IDENT_RE.fullmatch(attr_name):
-        raise GenError(f"line {entry['lineno']}: '{attr_name}' is not a valid attr name")
+        raise GenError(
+            f"line {entry['lineno']}: '{attr_name}' is not a valid attr name"
+        )
 
-    pipeline_stages = list(entry["pipeline"])
+    pipeline_stages = entry["pipeline"].copy()
     for stage in pipeline_stages:
         stage_name, is_image = classify_stage(stage)
         needs.add("image" if is_image else stage_name)
@@ -225,7 +227,8 @@ def split_header(content):
 
 
 def merge_file(path, entries_nix, required_names):
-    content = open(path).read()
+    with open(path) as file:
+        content = file.read()
     names, multiline, with_clause, body_open_idx = split_header(content)
 
     body_close_idx = content.rstrip().rfind("}")
@@ -233,10 +236,14 @@ def merge_file(path, entries_nix, required_names):
         raise GenError(f"{path}: could not find closing '}}' of body attrset")
     body_inner = content[body_open_idx + 1 : body_close_idx]
 
-    existing_attrs = set(re.findall(r"^\s{2}([A-Za-z_][A-Za-z0-9_']*)\s*=", body_inner, re.M))
+    existing_attrs = set(
+        re.findall(r"^\s{2}([A-Za-z_][A-Za-z0-9_']*)\s*=", body_inner, re.MULTILINE)
+    )
     for _, _, attr_name in entries_nix:
         if attr_name in existing_attrs:
-            raise GenError(f"{path}: attr '{attr_name}' already exists, refusing to overwrite")
+            raise GenError(
+                f"{path}: attr '{attr_name}' already exists, refusing to overwrite"
+            )
 
     plain_names = {n for n in names if n != "..."}
     if with_clause:
@@ -245,8 +252,13 @@ def merge_file(path, entries_nix, required_names):
     if "..." in names:
         all_needed.discard("...")
     new_names_ordered = [n for n in names if n != "..."]
-    for n in sorted(all_needed - set(new_names_ordered) - ({with_clause} if with_clause else set())):
-        new_names_ordered.append(n)
+    new_names_ordered.extend(
+        sorted(
+            all_needed
+            - set(new_names_ordered)
+            - ({with_clause} if with_clause else set())
+        )
+    )
 
     header_str = format_header(new_names_ordered, multiline)
 
@@ -284,7 +296,8 @@ def main(argv):
         print(f"Usage: {argv[0]} <input.txt>", file=sys.stderr)
         return 1
 
-    text = open(argv[1]).read()
+    with open(argv[1]) as file:
+        text = file.read()
     blocks = parse_input(text)
 
     for rel_path, entries in blocks:
@@ -296,7 +309,9 @@ def main(argv):
         out_path = os.path.join(WALLPAPERS_ROOT, rel_path + ".nix")
         if os.path.exists(out_path):
             merge_file(out_path, entries_nix, required_names)
-            print(f"merged {len(entries_nix)} entr{'y' if len(entries_nix) == 1 else 'ies'} into {out_path}")
+            print(
+                f"merged {len(entries_nix)} entr{'y' if len(entries_nix) == 1 else 'ies'} into {out_path}"
+            )
         else:
             write_new_file(out_path, entries_nix, required_names)
             print(f"wrote {out_path}")

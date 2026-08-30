@@ -19,7 +19,6 @@ let
     overlays = import ../../lib/optimize/overlays.nix {
       inherit sources;
       determinateNix = inputs.determinate-nix-optimize.packages.${pkgs.stdenv.hostPlatform.system}.nix;
-      drowseSrc = inputs.drowse;
       craneLib = inputs.crane.mkLib pkgs;
     };
   };
@@ -28,13 +27,14 @@ let
     inherit (pkgs) lib;
     inherit pkgs mkOutOfStoreSymlink optimizePkgs;
     nixWasmRustPath = inputs.nix-wasm-rust;
+    nixWasmRustOptimizePath = inputs.nix-wasm-rust-optimize;
     niccupLib = inputs.niccup.lib;
     config = if config != null then config else { };
   };
 in
 {
   _module.args = {
-    inherit inputs mkOutOfStoreSymlink;
+    inherit inputs mkOutOfStoreSymlink optimizePkgs;
     shouldFullUpdate = customLib.meta.deviceType != "android" && (builtins.getEnv "FULLUPDATE") != "";
   }
   // customLib;

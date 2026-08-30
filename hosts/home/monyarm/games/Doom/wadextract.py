@@ -53,6 +53,7 @@ Usage:
             into it to find its own marker and extract its sibling
             lumps into <output dir> as well.
 """
+
 import os
 import struct
 import sys
@@ -63,7 +64,7 @@ ENTRY_SIZE = struct.calcsize(ENTRY_FMT)
 
 
 class WadEntry:
-    __slots__ = ("filepos", "size", "name")
+    __slots__ = ("filepos", "name", "size")
 
     def __init__(self, filepos, size, raw_name):
         self.filepos = filepos
@@ -112,7 +113,7 @@ def extract_all(wad_path, out_dir):
         else:
             used_names[fname] = 0
         with open(os.path.join(out_dir, fname), "wb") as out:
-            out.write(data[e.filepos:e.filepos + e.size])
+            out.write(data[e.filepos : e.filepos + e.size])
         count += 1
 
     print(f"Extracted {count} lumps to {out_dir}", file=sys.stderr)
@@ -134,7 +135,7 @@ def _extract_siblings(data, entries, marker_idx, out_dir):
         e = entries[i]
         fname = e.name or f"_{i}"
         with open(os.path.join(out_dir, fname), "wb") as out:
-            out.write(data[e.filepos:e.filepos + e.size])
+            out.write(data[e.filepos : e.filepos + e.size])
         written.append(fname)
         i += 1
     return written
@@ -159,17 +160,23 @@ def extract_map(wad_path, entry_name, out_dir):
         written = _extract_siblings(data, entries, idx, out_dir)
         if not written:
             sys.exit(f"error: marker '{entry_name}' had no lumps after it")
-        print(f"Extracted from marker '{entry_name}': {', '.join(written)}", file=sys.stderr)
+        print(
+            f"Extracted from marker '{entry_name}': {', '.join(written)}",
+            file=sys.stderr,
+        )
         return
 
     # Real, non-zero-size lump. Write the raw blob (this is what a BPS
     # patch is applied against), then recurse into it if it's itself a
     # valid embedded WAD.
-    blob = data[target.filepos:target.filepos + target.size]
+    blob = data[target.filepos : target.filepos + target.size]
     blob_path = os.path.join(out_dir, "_MAP.WAD")
     with open(blob_path, "wb") as f:
         f.write(blob)
-    print(f"Wrote raw lump '{entry_name}' ({target.size} bytes) to {blob_path}", file=sys.stderr)
+    print(
+        f"Wrote raw lump '{entry_name}' ({target.size} bytes) to {blob_path}",
+        file=sys.stderr,
+    )
 
     sub_entries = parse_directory(blob)
     if sub_entries is None:
@@ -190,7 +197,9 @@ def extract_map(wad_path, entry_name, out_dir):
 
     written = _extract_siblings(blob, sub_entries, marker_idx, out_dir)
     if not written:
-        sys.exit(f"error: embedded marker '{sub_entries[marker_idx].name}' had no lumps after it")
+        sys.exit(
+            f"error: embedded marker '{sub_entries[marker_idx].name}' had no lumps after it"
+        )
     print(
         f"Extracted from embedded marker '{sub_entries[marker_idx].name}': {', '.join(written)}",
         file=sys.stderr,

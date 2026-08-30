@@ -40,7 +40,6 @@ let
         inherit (prev) lib;
         inherit sources;
         nixWasmRustPath = inputs.nix-wasm-rust;
-        drowseSrc = inputs.drowse;
         craneLib = inputs.crane.mkLib final;
       }
     )
@@ -125,7 +124,6 @@ let
       };
       modules = homeManagerModules ++ [
         ./modules/packages/nix.nix
-        ./modules/filter.nix
         userDir
         "${dirs.secrets}/home.nix"
       ];

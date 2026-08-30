@@ -8,6 +8,7 @@ backslashes sitting directly next to '//'/'/* */'-looking sequences).
 Output is still JSON, not further minified -- the caller pipes it through
 jq -c for that.
 """
+
 import sys
 
 
@@ -47,5 +48,5 @@ def strip_jsonc(text: str) -> str:
 
 
 src, dest = sys.argv[1], sys.argv[2]
-with open(dest, "w") as f:
-    f.write(strip_jsonc(open(src).read()))
+with open(src) as src_file, open(dest, "w") as dest_file:
+    dest_file.write(strip_jsonc(src_file.read()))

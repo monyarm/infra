@@ -85,4 +85,11 @@ in
       path = "${dispatchModule}/nix_wasm_plugin_dispatch.wasm";
       function = "resolve_dispatch_batch";
     } input;
+
+  detectOptimizerTools =
+    files:
+    builtins.wasm {
+      path = "${dispatchModule}/nix_wasm_plugin_dispatch.wasm";
+      function = "detect_optimizer_tools";
+    } files;
 }

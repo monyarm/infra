@@ -33,6 +33,7 @@ Second mode -- Usage: trim-lib.py --strip-tree SRC_DIR OUT_DIR
   hash and forcing a full re-nix-instantiate for no real reason. Non-.nix
   files are skipped entirely -- the caller copies those through verbatim.
 """
+
 import re
 import sys
 
@@ -470,7 +471,7 @@ def main():
     while frontier:
         keep |= frontier
         next_frontier = set()
-        for _fn, (_params, bindings, _post) in parsed.items():
+        for _params, bindings, _post in parsed.values():
             for name in frontier:
                 expr = bindings.get(name)
                 if expr is None:

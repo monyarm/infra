@@ -1,34 +1,56 @@
+use std::fmt::Write;
+
 use nix_wasm_rust::{panic, Type, Value};
 
 // toKeyValues: Valve KeyValues format, matches lib/format.nix's pure-Nix
 // version. get_attrset() is a BTreeMap, matching Nix's sorted iteration.
 
-fn keyvalues_leaf_string(v: &Value) -> String {
+fn write_keyvalues_leaf(out: &mut String, v: &Value) {
     // Matches Nix's toString: Bool -> "1"/"", Null -> "", others throw.
     match v.get_type() {
-        Type::String => v.get_string(),
-        Type::Int => v.get_int().to_string(),
-        Type::Float => format_float(v.get_float()),
-        Type::Bool => if v.get_bool() { "1" } else { "" }.to_string(),
-        Type::Null => String::new(),
-        Type::Path => v.get_path().to_string_lossy().into_owned(),
+        Type::String => out.push_str(&v.get_string()),
+        Type::Int => write!(out, "{}", v.get_int()).unwrap(),
+        Type::Float => write_float(out, v.get_float()),
+        Type::Bool => out.push_str(if v.get_bool() { "1" } else { "" }),
+        Type::Null => {}
+        Type::Path => write!(out, "{}", v.get_path().to_string_lossy()).unwrap(),
         _ => panic("toKeyValues: leaf value cannot be coerced to a string"),
     }
 }
 
-fn keyvalues_lines(depth: usize, attrs: &std::collections::BTreeMap<String, Value>) -> String {
-    let indent = "\t".repeat(depth);
-    let lines: Vec<String> = attrs
-        .iter()
-        .map(|(name, value)| match value.get_type() {
-            Type::Attrs => format!(
-                "{indent}\"{name}\"\n{indent}{{\n{}\n{indent}}}",
-                keyvalues_lines(depth + 1, &value.get_attrset())
-            ),
-            _ => format!("{indent}\"{name}\"\t\t\"{}\"", keyvalues_leaf_string(value)),
-        })
-        .collect();
-    lines.join("\n")
+fn write_indent(out: &mut String, depth: usize) {
+    for _ in 0..depth {
+        out.push('\t');
+    }
+}
+
+fn write_keyvalues_lines(
+    out: &mut String,
+    depth: usize,
+    attrs: &std::collections::BTreeMap<String, Value>,
+) {
+    for (index, (name, value)) in attrs.iter().enumerate() {
+        if index != 0 {
+            out.push('\n');
+        }
+        write_indent(out, depth);
+        match value.get_type() {
+            Type::Attrs => {
+                writeln!(out, "\"{name}\"").unwrap();
+                write_indent(out, depth);
+                out.push_str("{\n");
+                write_keyvalues_lines(out, depth + 1, &value.get_attrset());
+                out.push('\n');
+                write_indent(out, depth);
+                out.push('}');
+            }
+            _ => {
+                write!(out, "\"{name}\"\t\t\"").unwrap();
+                write_keyvalues_leaf(out, value);
+                out.push('"');
+            }
+        }
+    }
 }
 
 #[no_mangle]
@@ -36,41 +58,47 @@ pub extern "C" fn to_keyvalues(arg: Value) -> Value {
     if !matches!(arg.get_type(), Type::Attrs) {
         panic("toKeyValues: top-level value must be an attrset");
     }
-    let out = keyvalues_lines(0, &arg.get_attrset()) + "\n";
+    let mut out = String::new();
+    write_keyvalues_lines(&mut out, 0, &arg.get_attrset());
+    out.push('\n');
     Value::make_string(&out)
 }
 
 // toSexpr: matches ihalseide/json-sexpr's sexpr.py `to_s` exactly,
 // including no string escaping and Python True/False/None rendering.
 
-fn format_float(f: f64) -> String {
+fn write_float(out: &mut String, f: f64) {
     // Python str(float) always shows a decimal point; Rust's doesn't.
     if f.fract() == 0.0 && f.is_finite() {
-        format!("{f:.1}")
+        write!(out, "{f:.1}").unwrap();
     } else {
-        f.to_string()
+        write!(out, "{f}").unwrap();
     }
 }
 
-fn sexpr_atom(v: &Value) -> String {
+fn write_sexpr_atom(out: &mut String, v: &Value) {
     match v.get_type() {
-        Type::String => format!("\"{}\"", v.get_string()),
-        Type::Path => format!("\"{}\"", v.get_path().to_string_lossy()),
-        Type::Int => v.get_int().to_string(),
-        Type::Float => format_float(v.get_float()),
-        Type::Bool => if v.get_bool() { "True" } else { "False" }.to_string(),
-        Type::Null => "None".to_string(),
+        Type::String => write!(out, "\"{}\"", v.get_string()).unwrap(),
+        Type::Path => write!(out, "\"{}\"", v.get_path().to_string_lossy()).unwrap(),
+        Type::Int => write!(out, "{}", v.get_int()).unwrap(),
+        Type::Float => write_float(out, v.get_float()),
+        Type::Bool => out.push_str(if v.get_bool() { "True" } else { "False" }),
+        Type::Null => out.push_str("None"),
         Type::List => {
-            let items: Vec<String> = v.get_list().iter().map(sexpr_atom).collect();
-            format!("(list {})", items.join(" "))
+            out.push_str("(list");
+            for item in v.get_list() {
+                out.push(' ');
+                write_sexpr_atom(out, &item);
+            }
+            out.push(')');
         }
         Type::Attrs => {
-            let pairs: Vec<String> = v
-                .get_attrset()
-                .iter()
-                .map(|(k, val)| format!("\"{k}\" {}", sexpr_atom(val)))
-                .collect();
-            format!("(dict {})", pairs.join(" "))
+            out.push_str("(dict");
+            for (key, value) in v.get_attrset() {
+                write!(out, " \"{key}\" ").unwrap();
+                write_sexpr_atom(out, &value);
+            }
+            out.push(')');
         }
         Type::Function => panic("toSexpr: cannot serialize a function"),
     }
@@ -78,6 +106,8 @@ fn sexpr_atom(v: &Value) -> String {
 
 #[no_mangle]
 pub extern "C" fn to_sexpr(arg: Value) -> Value {
-    let out = sexpr_atom(&arg) + "\n";
+    let mut out = String::new();
+    write_sexpr_atom(&mut out, &arg);
+    out.push('\n');
     Value::make_string(&out)
 }

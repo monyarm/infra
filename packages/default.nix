@@ -12,9 +12,6 @@
   # nothing here forces it unless a packages/*.nix file actually calls
   # something wasm-backed (format.toKeyValues/toSexpr, wasm.crc32).
   nixWasmRustPath ? null,
-  # packages/minijson.nix's drowse.instantiate step -- see flake.nix's
-  # drowse input. Optional/lazy like nixWasmRustPath above.
-  drowseSrc ? null,
   craneLib ? null,
   # niccup's system-independent `lib` output -- see flake.nix's niccup
   # input. Optional/lazy like nixWasmRustPath above.
@@ -67,7 +64,7 @@ extendedLib.genAttrs (map dropSuffix packageNames) (
   pkgs.callPackage (./. + "/${fileName}") (
     {
       lib = extendedLib;
-      inherit sources drowseSrc craneLib;
+      inherit sources craneLib;
     }
     // customLib
   )

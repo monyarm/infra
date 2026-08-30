@@ -57,12 +57,6 @@
       url = "github:nix-community/steam-fetcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # packages/minijson.nix's dub-to-nix-at-build-time step -- dynamic
-    # derivations without a committed lockfile.
-    drowse = {
-      url = "github:figsoda/drowse";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # packages/maxima-cli.nix -- static Rust build (Cargo.lock hand-committed,
     # see packages/maxima-cli-cargo-lock.nix), no dynamic-derivation codegen.
     crane.url = "github:ipetkov/crane";
@@ -82,6 +76,12 @@
     # only (flake = false); lib/wasm.nix vendors it as a Cargo dependency.
     nix-wasm-rust = {
       url = "github:DeterminateSystems/nix-wasm-rust";
+      flake = false;
+    };
+    # Dynamic derivations must not change when the moving WASM support input
+    # is updated. Bump this manually when the dynamic WASM ABI needs it.
+    nix-wasm-rust-optimize = {
+      url = "github:DeterminateSystems/nix-wasm-rust/c000d3992a7a9450c647c7bf7c3b6436790270e9";
       flake = false;
     };
 
@@ -142,7 +142,6 @@
             inherit pkgs;
             inherit (pkgs) lib;
             inherit sources;
-            drowseSrc = inputs.drowse;
             craneLib = inputs.crane.mkLib pkgs;
             niccupLib = inputs.niccup.lib;
           };
@@ -151,8 +150,8 @@
           # packages/*.nix names here; build fails loudly if you forget.
           nonDerivationPackageNames = [
             "builders"
-            "minijson-dub-lock"
           ];
+          tests = import ./tests { inherit pkgs; };
         in
         rec {
           inherit legacyPackages;
@@ -162,9 +161,11 @@
 
           # Checks the filtered `packages`, not `legacyPackages` -- only
           # forced by `nix flake check`, not every eval.
-          checks.legacyPackagesAreDerivations =
-            assert pkgs.lib.all pkgs.lib.isDerivation (pkgs.lib.attrValues packages);
-            pkgs.runCommand "check-legacyPackages-are-derivations" { } "touch $out";
+          checks = tests // {
+            packagesAreDerivations =
+              assert pkgs.lib.all pkgs.lib.isDerivation (pkgs.lib.attrValues packages);
+              pkgs.runCommand "check-packages-are-derivations" { } "touch $out";
+          };
 
           topology.modules = [
             ./topology
@@ -221,12 +222,16 @@
                   extraPythonPackages = with pkgs.python3.pkgs; [ ];
                 };
               };
-              programs.ruff.enable = true;
+              programs.ruff-check.enable = true;
+              programs.ruff-format.enable = true;
               programs.isort.enable = true;
               # yaml
               programs.yamlfmt.enable = true;
               # toml
               programs.taplo.enable = true;
+              # rust
+              programs.rustfmt.enable = true;
+              programs.rustfmt.edition = "2021";
               # generic text/config
               programs.keep-sorted.enable = true;
               # xml

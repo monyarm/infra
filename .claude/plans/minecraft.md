@@ -1,305 +1,366 @@
-# Minecraft tooling: PrismLauncher instances, fetchers, resource-pack/skin pipeline
+# Minecraft tooling: PrismLauncher instances, sources, pack tools, and skins
 
 ## Context
 
-There's no Minecraft support in this repo at all yet. The goal is a fully
-declarative pipeline: fetch vanilla/loaders/mods/resourcepacks/modpacks/skins
-as pinned Nix derivations, assemble them into deployable PrismLauncher
-instances, and register everything in a `games.minecraft.*` registry
-following the same shape as the existing `games.doom`/`games.emulation`/
-`games.scummvm` registries. On top of that, a set of standalone texture/skin
-builders (mkRandomobs, combinePacks, convertPack, extractMobTextures,
-fetchSkin, mkSkinPermutations, addHatLayer) for building custom resource
-packs and skins from arbitrary inputs.
+There is limited Minecraft support already: `hosts/home/monyarm/games/Minecraft.nix`
+manages launcher accounts. There is not yet a declarative PrismLauncher instance,
+mod, modpack, resource-pack, or datapack pipeline.
 
-Key architectural decision (confirmed with user): modpack manifests
-(Modrinth `.mrpack` / CurseForge `manifest.json`) are resolved **in Python,
-inside `update-sources.py`**, at source-update time — not read back via
-`builtins.readFile` on a fetched derivation at Nix eval time. This repo has
-an established no-IFD convention (`[[feedback_no_ifd]]`) and a working
-build-time-only mechanism for content discovered late (`lib/optimize/ dynamic.nix`'s recursive-nix + `builtins.outputOf` trick), but for modpacks
-specifically the simplest correct answer is: do the HTTP+JSON work in Python
-once, bake the fully-resolved {name, version, url, hash} list for every
-mod/resourcepack straight into `sources.nix` as a plain committed Nix value.
-The Nix side then just `lib.mapAttrsToList fetchurl`s over that static list
-(same pattern as the existing `dafont-pack` multi-FOD derivation) — no IFD,
-no recursive-nix needed for this part, and modpacks *can* auto-register
-their component mods/resourcepacks into the registry for free, because the
-data was never behind a derivation at eval time to begin with.
+The goal is a declarative pipeline that:
 
-Scope confirmed with user:
+- Registers Minecraft sources through `sources.toml` and resolves them during
+  `update-sources.py`, not during Nix evaluation or builds.
+- Builds deployable PrismLauncher instances from pinned Nix inputs.
+- Exposes `games.minecraft.mods`, `modpacks`, `resourcePacks`, `datapacks`, and
+  `instances` registries.
+- Registers each instance as a Steam shortcut, like the existing ScummVM
+  registry.
+- Provides optional resource-pack and skin builders.
 
-- Vanilla Minecraft fetcher goes all the way back to pre-2010 Classic/Indev/
-  Infdev, via `skyrising/mc-versions`' extended manifest (a superset of
-  Mojang's official `version_manifest_v2.json` that also covers those eras,
-  hosted at https://skyrising.github.io/mc-versions/ — note some of its
-  oldest entries point at archive.org URLs that have rotted since 2021, so
-  the fetcher must treat per-version fetch failures as non-fatal, same as
-  the existing `downloadNamedUrls` convention in `lib/fetchers.nix:194-202`).
-- This is a phased plan. Each phase is independently shippable; implement
-  and check in one at a time rather than attempting all of it in one pass.
+Modpacks are a layer under explicitly configured instance content. An instance
+may have all of these first-class fields:
 
-______________________________________________________________________
-
-## Phase 1 — Foundation: registry skeleton + PrismLauncher deploy + vanilla/loader fetchers
-
-**Goal:** `games.minecraft.instances.<name>` exists, deploys a real
-PrismLauncher instance (vanilla, no mods yet) to
-`~/.local/share/PrismLauncher/instances/`, and launches.
-
-**Registry module** — new `hosts/home/monyarm/games/Minecraft/default.nix`,
-modeled directly on `hosts/home/monyarm/games/ScummVM/default.nix:104-196`
-(options block + `_module.args` builder injection + config merge +
-`xdg.dataFile` output), and `Emulation/mkRom.nix` for the builder-function
-shape:
-
-- `options.games.minecraft.enable` — same `LIGHT` env var gate as
-  `games.scummvm.enable` (`ScummVM/default.nix:106-117`).
-- `options.games.minecraft.instances` — `attrsOf attrs`, each fed to
-  `mkPrismInstance`.
-- `options.games.minecraft.mods` — **nested** `attrsOf (attrsOf package)`:
-  `games.minecraft.mods.<modName>.<version>`. `<version>` is either a
-  literal pinned mod-version string, or one of two resolved-at-update-time
-  aliases: `"latest"` (newest published version of the mod, any MC
-  version) or `"latest<mcVersion>"` e.g. `"latest1.20.1"` (newest version
-  compatible with that specific Minecraft version). Both aliases are
-  resolved to a concrete file+hash by `update-sources.py` (see Phase 2) —
-  the alias string is only ever a registry *key*, never something Nix
-  resolves at eval time. Re-running `update-sources.py --append` re-checks
-  every `latest`/`latest<mcVersion>` entry for a newer match each run
-  (same as the existing plain-`latest` re-check behavior already in
-  `process_modrinth`/`process_curseforge`, `update-sources.py:1308-1309, 1340-1341`); literal version keys are cached and skipped once resolved.
-- `options.games.minecraft.resourcePacks` / `.skins` — flat `attrsOf package`, populated both by hand-written entries and (Phase 2)
-  auto-population from modpack sources.
-- `imports = autoImport ./instances` (+ `./mods`, `./resourcepacks`,
-  `./skins` in later phases), same `autoImport` helper ScummVM/Emulation use.
-
-**`mkPrismInstance` builder** — new `Minecraft/mkPrismInstance.nix`:
-takes `{ name, minecraftVersion, loader ? null, loaderVersion ? null, mods ? [], resourcePacks ? [], shaderPacks ? [], javaArgs ? {}, ... }@args` and
-returns a derivation tree for one instance directory:
-
-- `instance.cfg` — generated via `lib.generators.toINI` (already used for
-  `scummvm.ini` in `ScummVM/default.nix:189`) from `javaArgs`/window
-  size/etc.
-- `mmc-pack.json` — generated JSON: base `net.minecraft` component (uid/
-  version from `minecraftVersion`) plus, if `loader != null`, the matching
-  loader component (`net.fabricmc.fabric-loader`, `net.minecraftforge`,
-  `net.neoforged`, `org.quiltmc.quilt-loader`).
-- `.minecraft/mods`, `.minecraft/resourcepacks`, `.minecraft/shaderpacks` —
-  built via the existing `linkFiles`/`parallel` helpers (`ScummVM/ default.nix:191`) symlinking each entry from `mods`/`resourcePacks`/
-  `shaderPacks` by filename.
-- `.minecraft/saves`, `.minecraft/logs`, `.minecraft/config`,
-  `.minecraft/options.txt` — **not** store paths: PrismLauncher writes to
-  these at runtime (confirmed instance dirs need write access for saves/
-  logs/options). Use `mkOutOfStoreSymlink` to a persistent
-  `${dirs.hmConfig}/Minecraft/instances/<name>/...` dir, exactly like
-  ScummVM's `saves` symlink (`ScummVM/default.nix:193`).
-
-**Deploy site:** `xdg.dataFile."PrismLauncher/instances/<name>"` per
-instance, same shape as ScummVM's `xdg.dataFile` block.
-
-**Vanilla + loader fetchers** — new `lib/fetchers/minecraft.nix`, wired into
-`lib/fetchers.nix`'s existing merge the same way `dafont.nix` etc. are:
-
-- `fetchMinecraftVersion = { version, sha1 }: pkgs.fetchurl {...}` — resolves
-  the client jar URL for a given version ID against the pinned manifest data
-  (see sources.toml entry below); one derivation per version.
-- `fetchFabricLoader`, `fetchQuiltLoader` — both have clean versioned APIs
-  (`meta.fabricmc.net`, `meta.quiltmc.org`); use the `fetchHtmlThenCurl`
-  pattern (`lib/fetchers.nix:138-192`) already used by `fetchModrinth`/
-  `fetchCurseForge`.
-- `fetchForge`, `fetchNeoForge` — no clean JSON API (Maven directory
-  listing only); resolve via their maven-metadata.xml, same
-  `fetchHtmlThenCurl` shape.
-- Legacy loaders for old modpacks (Risugami's ModLoader, ancient Forge for
-  1.2.5-era Tekkit, LiteLoader) have no API at all — don't build bespoke
-  fetchers for these; pin them as plain `[url]`/`[zip]` entries in
-  `sources.toml` like any other static asset.
-
-**sources.toml additions** (new `[minecraft-version]` section type) +
-`update-sources.py`: new `process_minecraft_version(name, version_id, previous_sources)` alongside the existing `process_modrinth`/
-`process_curseforge` (`update-sources.py:1286-1357`) — fetches
-`skyrising/mc-versions`' manifest once per run, resolves `version_id` to its
-client-jar URL + sha1, writes `{"type": "minecraft-version", "id": version_id, "url": ..., "hash": ...}` into `sources.nix`. Same
-`--append`-only, cache-if-unchanged pattern as the existing processors.
-
-______________________________________________________________________
-
-## Phase 2 — Modrinth/CurseForge fetchers: single files + modpack expansion
-
-**Goal:** individual mods/resourcepacks fetchable by project/mod id (already
-half-done — `fetchModrinth`/`fetchCurseForge` in `lib/fetchers/modrinth.nix`
-and `curseforge.nix` already exist and are wired into `update-sources.py`'s
-`process_modrinth`/`process_curseforge`, lines 1286-1357). New work is (a)
-the `<modName>.<version>` nested-key registry shape including `"latest"` /
-`"latest<mcVersion>"` resolution, and (b) the **modpack** case.
-
-**Version-alias resolution** (extends the existing single-mod processors,
-not the modpack ones): `sources.toml` entries for mods gain a
-`<modName>.<versionKey>` dotted-key shape, e.g.:
-
-```toml
-[modrinth]
-sodium.latest = "AANobbMI"
-sodium."latest1.20.1" = "AANobbMI"
-sodium."0.5.8" = "AANobbMI"
+```nix
+games.minecraft.instances.example = {
+  modpacks = [ ... ];
+  configs = { "example.toml" = ./example.toml; };
+  datapacks = [ ... ];
+  resourcePacks = [ ... ];
+  mods = [ ... ];
+  files = { "some/path" = ./some-file; };
+};
 ```
 
-`process_modrinth`/`process_curseforge` parse the trailing key segment as
-the version selector: bare `latest` keeps today's behavior (`sort_by (.date_published) | last`, `update-sources.py:1336`); `latest<mcVersion>`
-adds Modrinth's `game_versions` query param (`?game_versions=["<mcVersion>"]`
-on the version-list endpoint) / CurseForge's files-endpoint `gameVersion`
-filter before taking the newest match; a literal version string is passed
-through as an explicit `versionId`/`fileId` pin exactly as today. Each
-resolved result is written into `sources.nix` keyed by the full
-`<modName>.<versionKey>` path, which `Minecraft/mods/default.nix` then maps
-1:1 into `games.minecraft.mods.<modName>.<versionKey>`.
+Precedence is lowest to highest: modpack files, explicit mods, explicit
+resource packs, explicit datapacks, `configs`, then arbitrary `files`. Duplicate
+paths replace lower layers. Duplicate logical mods or packs should be rejected
+unless an explicit override mechanism is added.
 
-**`update-sources.py` extension:** new `process_modrinth_modpack` /
-`process_curseforge_modpack`, triggered by a `[modrinth-modpack]`/
-`[curseforge-modpack]` sources.toml section (parallel to the existing
-`[modrinth]`/`[curseforge]` single-file sections at
-`update-sources.py:1580-1583`), with optional version pinning (`name = "project:versionId"` syntax, matching how `[github-release]` entries already
-pin a tag prefix). Each processor:
+Datapacks are installed at `.minecraft/datapacks/`, not inside world saves.
+The intended use is a datapack loader mod, so the instance-wide datapack
+directory is the correct target.
 
-1. Resolves+downloads the pack file itself (`.mrpack` is a zip; CurseForge
-   pack is a zip with `manifest.json` + `overrides/`) via the same
-   `http_get`/API-key handling `process_curseforge`/`process_modrinth`
-   already use.
-1. Parses `modrinth.index.json` (`files[]`: `path`, `hashes.sha1`,
-   `downloads[]`, `env`) or `manifest.json` (`files[]`: `projectID`,
-   `fileID`, `required` — each resolved to a real download URL via one
-   CurseForge API call per file, same auth as `process_curseforge`).
-1. Writes a nested structure into `sources.nix`: `{type = "modrinth-modpack"; minecraftVersion; loader; loaderVersion; files = { <name> = {url; hash; path; env}; ... }; overrides = <fetched overrides dir hash>; }`.
+The implementation must preserve mutable runtime state outside immutable Nix
+outputs. Saves, logs, options, and other runtime-mutated files should use the
+existing `mkOutOfStoreSymlink` pattern. Declarative `config`, `datapacks`,
+`resourcepacks`, and `mods` remain store-backed.
 
-**Nix side** — new `Minecraft/modpacks/mkModpack.nix`: given a
-`sources.modpacks.<name>` entry (now a plain static Nix value, see Context),
-`lib.mapAttrsToList` generates one `fetchurl` per file — same pattern as
-`dafont-pack` in `hosts/home/monyarm/config/Fonts.nix` (multi-FOD
-`stdenv.mkDerivation` with `srcs = lib.mapAttrsToList fetchX manifest;`).
-Files with `path` under `resourcepacks/`/`shaderpacks/` route there instead
-of `mods/`. Feeds straight into `mkPrismInstance`'s `mods`/`resourcePacks`
-args.
-
-**Auto-registration into the registry:** because `sources.modpacks.<name>`
-is already a fully-resolved static value (no IFD needed), `Minecraft/ modpacks/default.nix` can `lib.mapAttrs'` over its `files` and merge each
-mod into `games.minecraft.mods.<modName>.<resolvedVersion>` (resourcepacks
-still go into the flat `games.minecraft.resourcePacks`) via
-`lib.recursiveUpdate` — this is the piece that specifically required the
-Python-side resolution decision from the Context section above.
-
-**Technic/PlanetMinecraft/VanillaTweaks:**
-
-- Technic/PlanetMinecraft have no API; both are direct-download-link sites.
-  Add `[technic]`/`[planetminecraft]` as thin sources.toml `[url]`-style
-  entries (or literally reuse the existing `[url]` section) — no new
-  processor needed, they're just pinned download links.
-- VanillaTweaks: wrap the community `vanillatweaks-stuff` CLI
-  (github.com/OmerMakesStuff/vanillatweaks-stuff) as a new `packages/ vanillatweaks-cli.nix` (same `mkPythonToolWrapper`/similar wrapper shape
-  as `packages/mmlc-dac-extractor.nix`), then `Minecraft/fetchVanillaTweaks.nix`
-  invokes it inside a fixed-output derivation (`outputHashMode = "recursive"`,
-  network-enabled build) given a pack-name list + target MC version.
+The no-IFD rule applies throughout: HTTP, JSON, archive inspection, and source
+expansion happen in `update-sources.py`; generated `sources.nix` contains plain
+static values consumed by Nix fetchers and builders.
 
 ______________________________________________________________________
 
-## Phase 3 — research: mod jars through `lib/optimize`
+## Registry and instance model
 
-**Goal:** answer whether `.jar` mods can go through the existing
-`lib/optimize/` pipeline for texture/asset compression, and wire it in if
-so — no separate builder needed if this works.
+Add `hosts/home/monyarm/games/Minecraft/default.nix`, while preserving the
+existing `games/Minecraft.nix` launcher-account module. The home configuration
+uses `autoImport`, so the new directory must be checked in before flake
+evaluation.
 
-A JAR is a ZIP; `lib/optimize/`'s dispatcher already handles nested
-archives (`.pk3`/`.ipk3` mentioned as already-handled nested-archive cases
-per the emulation-pipeline exploration). The research task is: check
-`lib/optimize/default.nix`'s extension dispatch table and `archive.nix`'s
-nested-archive handling, and determine whether adding `.jar` (and
-`.mrpack`) to that table is sufficient, or whether jar-internal binary
-`.class` files need to be excluded from whatever the generic handler does
-(they must pass through byte-for-byte — corrupting them breaks the mod).
-Verify with a real mod jar that round-trips through `optimize` unchanged
-except for its embedded PNGs, and that the existing "revert if optimized
-output isn't smaller" guard still protects against jar corruption.
+Expose:
 
-______________________________________________________________________
+- `games.minecraft.mods`: nested `attrsOf (attrsOf package)`, keyed by name and
+  pinned version key.
+- `games.minecraft.modpacks`: resolved modpack packages or source-backed pack
+  definitions.
+- `games.minecraft.resourcePacks`: flat reusable resource-pack registry.
+- `games.minecraft.datapacks`: flat reusable datapack registry.
+- `games.minecraft.instances`: instance definitions passed to
+  `mkPrismInstance`.
 
-## Phase 4 — Resource-pack builders: convertPack, combinePacks, extractMobTextures, mkRandomobs
+Datapacks are globally reusable packages, but their instance field is a list of
+packages copied to `.minecraft/datapacks/`.
 
-All four live under a new `Minecraft/resourcepacks/builders/` directory and
-reuse `lib/files.nix`'s `getFile`/`splitFiles`/`removeFiles`
-(`lib/files.nix:317-352`) plus the `stageFiles`/`stagedNames` shell-escaping
-helpers from `lib/compressRom/default.nix` for any multi-file staging.
+The module should follow:
 
-- **`convertPack.nix`** — `{ pack, targetVersion }`: patches
-  `pack.mcmeta`'s `pack_format` integer via `jq` (format-to-version mapping
-  is a static lookup table, no external tool needed for the common case).
-  Research whether cross-major-version structural moves (e.g. 1.13's
-  `textures/blocks` → `textures/block` flattening) are in scope; if so,
-  those need an explicit per-version-range rename table, not a generic CLI.
-- **`combinePacks.nix`** — `{ packs }` (ordered list, later entries win):
-  `pkgs.runCommand` copying each pack's tree in order (later overwrites
-  earlier, standard `cp -rT` loop) for normal files, then a `jq -s 'reduce .[] as $x ({}; . * $x)'` deep-merge pass specifically for JSON files
-  (`lang/*.json`, `sounds.json`) so language packs merge instead of
-  clobbering — no existing deep-merge helper in the repo, this is new but
-  trivial (matches the exploration finding that `jq -s` is the right tool,
-  just not yet wrapped).
-- **`extractMobTextures.nix`** — `{ jar, mobPattern }`: scans a mod jar
-  (or folder) for texture paths matching a glob/regex, extracts+renames
-  them via `getFile`/`splitFiles`, output is a plain folder derivation
-  suitable as `mkRandomobs`'s input — same shape as the emulation
-  extractors (`neogeo-rom-extractor`, `mmlc-dac-extractor`) that scan an
-  archive for pattern-matched members.
-- **`mkRandomobs.nix`** — `{ sources, mobName }` where `sources` is folders/
-  zips/individual PNGs: extracts+sequentially numbers into OptiFine/ETF's
-  `mob.png`, `mob2.png`, ... convention. `pkgs.runCommand` doing a sorted
-  walk + rename loop.
+- ScummVM's options, `_module.args`, registry folding, and `xdg.dataFile`
+  pattern at `games/ScummVM/default.nix`.
+- Emulation's builder injection pattern.
+- Steam's `programs.steam.games` schema at
+  `games/Steam/shortcuts.vdf.nix`.
+
+Each instance becomes a synthetic Steam shortcut. The low-level builder must
+not know about Steam. The Minecraft module maps an instance to PrismLauncher,
+using the instance name as the launch target and deploying the instance under:
+
+```text
+~/.local/share/PrismLauncher/instances/<name>
+```
 
 ______________________________________________________________________
 
-## Phase 5 — Skin builders: fetchSkin, mkSkinPermutations, addHatLayer
+## Stage 1 - Static source foundation
 
-Reuse `lib/media.nix`'s `transform` function (`lib/media.nix` — the
-`pkgs.runCommand` + ImageMagick `magick` wrapper already used for wallpaper
-crop/grow, content-addressed per-output) as the base for all region-slicing
-here, rather than writing new ImageMagick plumbing from scratch.
+Implement update-time-resolved source records and a small Modrinth API layer.
+Extend the explicit source dispatch in `update-sources.py`; do not make the
+existing generic URL processor parse structured manifests.
 
-- **`fetchSkin.nix`** — `{ url }` or `{ username }` (resolves via Mojang's
-  session-server API to the current skin URL, then fetches): thin
-  `pkgs.fetchurl`, same convention as other single-file fetchers.
-- **`mkSkinPermutations.nix`** — `{ heads, torsos, legs, combine ? <default cartesian> }`: slices each 64×64 skin into its three named
-  regions via `media.nix`'s `transform` (one crop-derivation per region per
-  input skin — cheap, cached individually), then `combine` (an eval-time
-  function, overridable, defaulting to full cartesian product via
-  `lib.cartesianProduct` or manual nested `map`) produces an **attrset**
-  keyed by combo name, each value its own composite derivation. This is
-  the mechanism that satisfies "adding one input doesn't rebuild
-  everything": because the registry is a lazy Nix attrset generated by
-  `map`/`lib.cartesianProduct`, not a single derivation, only the *new*
-  combos' derivations are realized on `nix build`; existing ones are
-  untouched (same principle as `media.nix`'s pre-generated crop-function
-  table and the emulation pipeline's `lib.listToAttrs (map ...)` per-variant
-  derivations).
-- **`addHatLayer.nix`** — `{ bodies, hats }` (two lists): same
-  cartesian-attrset mechanism as above, composing via ImageMagick
-  `-composite` instead of crop.
+### Individual Modrinth sources
+
+Support project IDs and slugs, with optional selectors:
+
+```nix
+fetchModrinth {
+  project = "sodium";
+  minecraftVersion = "1.20.1"; # optional
+  loader = "fabric";            # optional
+  versionId = "...";            # optional exact pin
+  filename = "...";             # optional
+}
+```
+
+Behavior:
+
+- `versionId` selects an exact version.
+- `minecraftVersion` filters Modrinth `game_versions`.
+- `loader` filters Modrinth `loaders`.
+- With no version filter, a project or slug alone is valid and selects the
+  newest published matching version.
+- The update processor records the selected direct file URL, filename, API
+  hashes, and Nix-compatible content hash.
+- Literal pins are cached; `latest`-style selectors are explicitly rechecked
+  by update operations.
+
+Modrinth versions provide direct file URLs and SHA-1/SHA-512 hashes. Builds
+should consume the recorded URL and hash, rather than resolve the API again.
+
+Resource packs use Modrinth project type `resourcepack`. Modrinth has no
+separate `datapack` project type; datapack sources are downloaded assets and
+validated by their `pack.mcmeta` and layout.
+
+Generated records should retain project, version, filename, URL, Nix hash,
+API hashes, supported Minecraft versions, loaders, and asset kind.
+
+### Modrinth modpack sources
+
+Add a structured section such as:
+
+```toml
+[modrinth-modpack]
+minecraft.modpacks.example = "project-id:version-id"
+```
+
+The version selector is optional. A project or slug alone selects the newest
+pack version, optionally filtered by `minecraftVersion` and loader using the
+Modrinth version-list endpoint.
+
+The updater downloads and hashes the `.mrpack` once, parses
+`modrinth.index.json`, and records:
+
+- Minecraft and loader dependencies.
+- Every file path, direct download URL, file size, SHA-1, SHA-512, and `env`.
+- `overrides`, `client-overrides`, and `server-overrides` content.
+- The pack archive URL and hash.
+
+The index already contains file URLs and hashes, so individual files do not
+need additional Modrinth API calls. Optional project identity enrichment can
+use hash lookup later, but must not be required for the POC.
+
+Validate every archive path as relative and reject absolute paths and `..`.
+The Nix side should fetch the pinned pack archive and its listed files without
+network API resolution.
+
+______________________________________________________________________
+
+## Stage 2 - Minimal PrismLauncher builder
+
+Implement `games/Minecraft/mkPrismInstance.nix` and the smallest registry
+needed to build one instance.
+
+The builder should generate:
+
+- `instance.cfg` using existing INI generators.
+- `mmc-pack.json` with Minecraft and loader components.
+- `.minecraft/mods` from pack and explicit mods.
+- `.minecraft/resourcepacks` from pack and explicit resource packs.
+- `.minecraft/datapacks` from pack and explicit datapacks.
+- `.minecraft/config` from pack and `configs`.
+- Arbitrary safe paths from `files`.
+
+Use existing `linkFiles`/`parallel` helpers where suitable. Normalize all
+inputs into a path map, apply the documented layer precedence, and reject
+unsafe paths and unresolvable collisions.
+
+Runtime-mutated paths such as saves, logs, and options must not be store paths.
+Use persistent out-of-store locations analogous to ScummVM's saves handling.
+
+Do not add CurseForge, alternate loaders, version aliases, skin builders, or
+JAR optimization in this stage.
+
+______________________________________________________________________
+
+## Stage 3 - Modrinth end-to-end proof of concept
+
+Check in one small Modrinth pack and build/deploy it through the complete path.
+The instance must demonstrate:
+
+- An arbitrary Minecraft version.
+- A loader and loader version from the pack.
+- Multiple mods from the pack.
+- At least one resource pack.
+- At least one datapack installed at `.minecraft/datapacks`.
+- A pack-provided config file.
+- An explicit config override.
+- An arbitrary explicit file override.
+- Modpack contents acting as the lower layer.
+- No Modrinth API access during the Nix build.
+
+Verify generated `instance.cfg`, `mmc-pack.json`, paths, hashes, and collision
+precedence. Build verification must use the repository's normal flake checks;
+launching PrismLauncher is a manual validation step, not an unattended
+activation step.
+
+______________________________________________________________________
+
+## Stage 4 - Steam integration and complete registry
+
+Map every `games.minecraft.instances.<name>` entry to a synthetic Steam game
+option in `games/Minecraft/default.nix`. Use PrismLauncher as the executable
+and launch the named instance. Keep Steam registration separate from
+`mkPrismInstance`.
+
+Add the explicit global registries:
+
+- `mods`: direct source-backed and hand-built mod packages.
+- `modpacks`: reusable resolved pack definitions.
+- `resourcePacks`: resource-pack packages.
+- `datapacks`: datapack packages.
+- `instances`: the only entries that become Steam options.
+
+Do not automatically promote every anonymous modpack file into the global mod
+registry. If stable component registration is later desired, use Modrinth hash
+lookup to recover project/version identity.
+
+______________________________________________________________________
+
+## Stage 5 - Standalone resource/data pack tooling
+
+Add source processors and validators for standalone resource packs and
+datapacks. Reuse `fetchHtmlThenCurl`, `process_zip`, `getFile`, and existing
+hash discovery patterns.
+
+Validate:
+
+- ZIP or directory input.
+- Root `pack.mcmeta`.
+- Resource-pack versus datapack layout.
+- Safe paths.
+- Supported Minecraft versions when metadata provides them.
+
+Implement `convertPack` only with a version-aware metadata mapping. Newer
+Minecraft versions use different pack metadata fields, and cross-version
+directory changes need explicit tables. A generic integer rewrite is
+insufficient.
+
+Implement `combinePacks` with ordered overlay semantics and deep merging for
+known JSON files such as language files and `sounds.json`.
+
+______________________________________________________________________
+
+## Stage 6 - VanillaTweaks
+
+Fetch VanillaTweaks resource packs and datapacks using its machine-readable
+version/category JSON and generated archive endpoints. Do not package the
+archived `vanillatweaks-stuff` CLI as a maintained dependency.
+
+The updater should accept a Minecraft version and selected pack IDs, resolve
+the category metadata, request the generated archive, and hash the resulting
+content. Generated URLs are not durable pins; the resolved archive hash is the
+reproducibility boundary.
+
+______________________________________________________________________
+
+## Stage 7 - PlanetMinecraft and Technic
+
+PlanetMinecraft has no dependable public API or checksum service and may block
+automated page access. Support manually selected final download URLs through
+the existing URL source processor, with update-time hashing. Do not add page
+scraping to the core pipeline.
+
+Technic should support manually pinned downloads first. For Solder-backed packs,
+investigate the Solder API (`/api/modpack/<slug>` and
+`/api/modpack/<slug>/<version>`) for build metadata, per-mod URLs, and MD5
+values. Keep this separate from CurseForge because authentication and manifest
+semantics differ.
+
+______________________________________________________________________
+
+## Stage 8 - Randomobs and texture extraction
+
+Research and implement `extractMobTextures` and `mkRandomobs` only after the
+instance pipeline works.
+
+OptiFine/ETF-compatible output is conventionally:
+
+```text
+assets/minecraft/optifine/random/entity/creeper/creeper.png
+assets/minecraft/optifine/random/entity/creeper/creeper2.png
+assets/minecraft/optifine/random/entity/creeper/creeper3.png
+```
+
+Index 1 is the base texture; alternates start at 2. Without a properties file,
+variant numbering must be contiguous. If the base name ends in a digit, use a
+dot separator such as `name_2.2.png`.
+
+`mkRandomobs` must:
+
+- Deterministically sort inputs.
+- Define whether the first input becomes `mob.png` or only alternates are
+  emitted.
+- Never invent `mob1.png` as a vanilla replacement.
+- Preserve dimensions, transparency, UV layout, and animation layout.
+- Reject mixed dimensions and ambiguous duplicate variants.
+
+`extractMobTextures` must match full resource paths, preserve texture families,
+handle namespace collisions deterministically, and distinguish auxiliary eyes,
+overlay, armor, marking, and cracking textures from base entity textures.
+
+______________________________________________________________________
+
+## Stage 9 - CurseForge and alternate sources
+
+Implement CurseForge mod and modpack support independently from Modrinth.
+CurseForge manifests provide project/file IDs but not download URLs or hashes.
+Use authenticated API calls, preferably batch file lookup, and record the
+resolved URL and hash in `sources.nix`.
+
+Handle `required`, environment metadata, unavailable files, and override
+collisions explicitly. Add legacy loaders and other direct-download sources
+only as pinned URL assets unless a stable metadata API exists.
+
+______________________________________________________________________
+
+## Stage 10 - Optional skins and archive optimization
+
+Implement `fetchSkin`, `mkSkinPermutations`, and `addHatLayer` using the existing
+media transform helper.
+
+Keep JAR optimization an opt-in experiment. A JAR is a ZIP, but Java class files
+must remain byte-for-byte valid. First prove a real mod round-trips with an
+identical file set and only intended image changes before exposing it as a
+normal Minecraft pipeline feature.
 
 ______________________________________________________________________
 
 ## Verification
 
-- **Phase 1:** `nix build .#legacyPackages.x86_64-linux.<a-test-instance>`
-  (or the equivalent `homeConfigurations` eval) succeeds; inspect the built
-  instance dir has valid `instance.cfg`/`mmc-pack.json`; actually launch
-  PrismLauncher with it deployed and confirm vanilla Minecraft boots.
-- **Phase 2:** build a real small Modrinth modpack (e.g. Fabulously
-  Optimized) end-to-end; diff the resolved mod list against the modpack's
-  published mod list; confirm `games.minecraft.mods` contains each one.
-- **Phase 3:** build a mod jar through `optimize`, diff its zip listing
-  before/after (must be identical file set, only PNG bytes may change),
-  confirm the mod still loads in-game.
-- **Phase 4:** run `combinePacks` on two packs with overlapping
-  `lang/en_us.json` keys, confirm both packs' keys survive in the merged
-  output; run `convertPack` on a pack across a `pack_format` boundary and
-  load it in-game to confirm no missing-texture warnings.
-- **Phase 5:** build one `mkSkinPermutations` combo, confirm image
-  dimensions/regions are correct by eye; add one new head input and
-  confirm only the new combos rebuild (`nix build --dry-run` diff).
+- Static source update produces pinned URLs and hashes without secrets in
+  generated files.
+- A Modrinth pack build performs no API resolution during Nix evaluation or
+  build.
+- The POC instance contains arbitrary mods, resource packs, datapacks,
+  configs, and files with the documented layering.
+- Datapacks appear under `.minecraft/datapacks`.
+- Runtime state is outside immutable store-backed content.
+- `games.minecraft.instances` produces PrismLauncher deployment and Steam
+  shortcut entries.
+- Resource/data pack validators reject malformed metadata and unsafe paths.
+- `convertPack` is tested against real Minecraft version boundaries.
+- `combinePacks` preserves keys from overlapping JSON files.
+- Randomobs output uses valid OptiFine/ETF numbering and preserves source
+  dimensions.
+- PlanetMinecraft URL sources, Technic/Solder sources, VanillaTweaks generated
+  archives, and CurseForge manifests each have separate focused tests.
+- Run `nix fmt` and `nix flake check`; do not activate Home Manager or NixOS
+  while verifying the implementation.

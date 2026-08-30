@@ -24,6 +24,7 @@ let
   # stage re-guards against the ORIGINAL src exactly like the old chained
   # stages' own guards did.
   guard = src: ''
+    [ ! -e "tmp.png" ] || ${coreutilsBin}/chmod u+w "tmp.png"
     if [ -s "tmp.png" ] && [ "$(${coreutilsBin}/stat -L -c%s "tmp.png")" -le "$(${coreutilsBin}/stat -L -c%s "${src}")" ]; then
       :
     else
@@ -34,10 +35,13 @@ let
   # Every tool gets `|| rm -f` (never `|| true`) so a crash can't leave a
   # truncated candidate for the guard to accept -- same rule as before.
   losslessSteps = src: ''
+    ${coreutilsBin}/chmod u+w tmp.png
     ${oxipngBin} ${pngLosslessFlags.oxipng 4} tmp.png || rm -f tmp.png
     ${guard src}
+    ${coreutilsBin}/chmod u+w tmp.png
     ${optipngBin} ${pngLosslessFlags.optipng} tmp.png || rm -f tmp.png
     ${guard src}
+    ${coreutilsBin}/chmod u+w tmp.png
     ${advpngBin} ${pngLosslessFlags.advpng} tmp.png || rm -f tmp.png
     ${guard src}
   '';
@@ -77,7 +81,9 @@ in
   prime = mkPng (
     src:
     ''
-      ${pngquantBin} --quality=80-98 --skip-if-larger --ext .png --force tmp.png || rm -f tmp.png
+      ${coreutilsBin}/chmod u+w tmp.png
+      ${pngquantBin} --quality=80-98 --skip-if-larger --output tmp-quant.png tmp.png || rm -f tmp-quant.png tmp.png
+      [ ! -e tmp-quant.png ] || mv tmp-quant.png tmp.png
       ${guard src}
     ''
     + losslessSteps src

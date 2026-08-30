@@ -8,6 +8,7 @@ just zlib-deflated. Round-trip verified: zlib.decompress on the result
 reproduces the original body byte-for-byte. Anything not starting with
 "FWS" (already CWS/ZWS, or not a SWF at all) is passed through unchanged.
 """
+
 import sys
 import zlib
 

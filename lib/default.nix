@@ -20,6 +20,7 @@
   # underlying derivation unless a caller actually uses it, so callers that
   # don't touch wasm.* (most of them) never need this.
   nixWasmRustPath ? null,
+  nixWasmRustOptimizePath ? null,
   # niccup's system-independent `lib` output (github:embedding-shapes/niccup)
   # -- see flake.nix's niccup input. Optional/lazy like nixWasmRustPath above.
   niccupLib ? null,
@@ -67,7 +68,7 @@ let
     {
       pkgs = optimizePkgs;
       inherit (optimizePkgs) lib;
-      inherit nixWasmRustPath;
+      nixWasmRustPath = nixWasmRustOptimizePath;
     }
     // files
     // imp

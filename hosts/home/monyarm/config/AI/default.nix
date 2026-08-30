@@ -1,13 +1,11 @@
 {
   lib,
-  pkgs,
   ...
 }:
 {
   imports = [
     ./skills.nix
     ./mcp.nix
-    # ./omniroute-proxy.nix # Stability issues
     ./Claude
     ./OpenCode
   ];
@@ -33,6 +31,5 @@
         pipe `nix build`/`nix eval` output through `tail`/`head` or wrap it in `timeout`.
     '';
 
-    home.packages = [ pkgs.omniroute ];
   };
 }

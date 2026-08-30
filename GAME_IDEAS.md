@@ -353,58 +353,6 @@ player project:
   source-port package shared across every WAD in `Doom/wad/`, rather than
   each WAD carrying its own engine copy.
 
-## Ren'Py shared runtime
-
-Same shared-engine idea as the RPG Maker runtimes above, applied to the
-`RenPy/` directory that already exists in this repo (currently just
-`default.nix`, symlinking a shared `.renpy` persistent-save-data folder --
-no actual game-install layer yet, just the save-data plumbing).
-
-- Ren'Py's own distributed-game layout already separates cleanly: a
-  downloaded build bundles `renpy/` + `lib/` (the interpreter, per-game
-  copies of the same engine binaries and bundled Python) alongside `game/`
-  (that title's actual script/asset content) -- only `game/` is
-  title-specific. The engine copy any given download ships is pure cruft
-  once a shared SDK is in place, same shape as `gog.nix`'s `gogCruft` list
-  stripping the GOG/Galaxy chrome down to just the game data.
-- Running a game against a SDK/install that isn't the one it shipped with
-  is an officially-supported shape, not a hack: point the shared `renpy`
-  binary at any directory containing a `game/` subfolder (either directly
-  on the command line, or registered via the launcher's `projects.txt`) and
-  it runs. Ren'Py maintains broad backward compatibility across versions,
-  so one current shared SDK covering older titles too is realistic --
-  though very old (Ren'Py 6-era) games are the one place this could
-  actually break and would need checking per-title, not assumed safe.
-- nixpkgs already has both `renpy` and `renpyMinimal` -- worth checking
-  which one actually corresponds to "just the runtime, no bundled
-  editor/launcher UI" before picking one to wire up as the shared engine
-  package this directory's games run against.
-- Nix-managed install shape: same `Doom/wad/`-style per-source fetcher
-  files, each one fetching a title's distributed build and keeping only
-  its `game/` folder (existing `removeFiles`-style cruft-stripping, same
-  tool `gog.nix` already uses). Katawa Shoujo (already present as a real
-  save-data example in `.renpy/katawashoujo_actual_1.3/`) would be the
-  natural first title to wire up this way, since its persistent-data
-  plumbing already exists and only the fetcher/game-folder half is
-  missing. Common hosting: itch.io (`lib/fetchers/itch.nix` already
-  covers it) is the dominant source for freeware/indie Ren'Py titles.
-
-## Katawa Shoujo
-
-The concrete first title for the Ren'Py shared runtime above -- already
-half-present in this repo: `.renpy/katawashoujo_actual_1.3/persistent`
-exists as real save-data plumbing, but nothing actually fetches/installs
-the game itself yet. Freeware visual novel (Four Leaf Studios), assets
-released under Creative Commons, no legal complexity -- hosted on the
-project's own site (katawa-shoujo.com), itch.io, and Steam (free).
-
-- Nix-managed shape: exactly the `RenPy/`-shared-runtime pattern above --
-  fetch the distributed build, strip it down to just `game/` (drop the
-  bundled `renpy/`/`lib/` engine copy), run it against the shared `renpy`
-  package. itch.io is likely the easiest source given
-  `lib/fetchers/itch.nix` already exists; the project's own site would
-  need a plain `fetchurl` if it has a stable direct download link.
-
 ## Mari0
 
 Open-source Super Mario Bros. x Portal crossover built on LÖVE (nixpkgs
@@ -610,41 +558,6 @@ separate JK2MV project, not OpenJK). Already packaged in nixpkgs.
   as `moddb.nix`) since it's forum/site-hosted content, not a CDN with a
   stable API.
 
-## STAR WARS: Dark Forces (The Force Engine)
-
-Actively maintained, feature-complete reimplementation (full Dark Forces
-support as of the current 1.22.x line; Outlaws support is a planned v2.0
-target, not relevant to the currently-owned title). Auto-detects Steam/GOG
-install paths directly, no manual data extraction needed. Not in nixpkgs
-(an old packaging request appears stalled) -- another `packages/` build,
-same shape as KeeperFX/Xash3D-FWGS above.
-
-- Data: `fetchSteam` on appid 32400 for the base Steam depot; the engine
-  also transparently supports the official Dark Forces Remaster's HD
-  assets if that's ever added as a second source later.
-- Mod ecosystem: dedicated hub at DF-21 (df-21.net), not GameBanana --
-  built-in mod loader takes zip or plain directories, active custom
-  mission/map community; would need the same `fetchHtmlThenCurl` site
-  fetcher shape as the JKHub/Dark Forces community above if pursued.
-
-## X-COM: UFO Defense (OpenXcom / OpenXcom Extended)
-
-One important correction versus the naive "OpenXcom" pick: the original
-OpenXcom project itself moved to legacy/maintenance-only status in early
-2026, with **OpenXcom Extended (OXCE)** now the actively developed fork to
-target instead. `pkgs.openxcom` is packaged in nixpkgs but likely tracks
-the legacy project -- worth checking whether nixpkgs has (or needs) an
-OXCE-specific package before wiring this up.
-
-- Data: the Steam release is DOSBox-wrapped, but the actual data directory
-  underneath (`GEODATA`/`GEOGRAPH`/`MAPS`/`ROUTES`/`SOUND`/`TERRAIN`/
-  `UFOGRAPH`/`UFOINTRO`/`UNITS`) is what OpenXcom/OXCE actually reads --
-  `fetchSteam` on appid 7760 then extract just those subdirectories, same
-  "depot has more than the engine needs" filtering as the Doom64 entry's
-  `wadFilter`.
-- No significant mod ecosystem worth a nix-fetcher list -- mostly informal
-  balance-patch sharing, not a hosted content pipeline.
-
 ## DOOM 3 (dhewm3 vs. RBDOOM-3-BFG)
 
 Not a "which is better" choice -- the two owned DOOM 3 releases ship
@@ -751,22 +664,6 @@ each need their own answer, and neither is a clean win:
 - Mod ecosystem: large community level/mod presence on Duke4.net for both
   titles -- Raze's external sound/sprite-pack support makes it the more
   mod-friendly target if that ecosystem is ever wired up as a fetcher list.
-
-## Tomb Raider I-III + Anniversary (TR1X)
-
-TR1X (LostArtefacts/TRX) now covers all of TR1, TR2, and TR3 in one
-actively maintained, decompiled-for-accuracy codebase -- OpenLara only
-has official support for TR1 (TR2/3 are unsupported tech-demo territory)
-and has a harder build process for a narrower win, so TR1X is the pick
-across the board rather than splitting the four owned titles between two
-engines. No current active reimplementation targets Tomb Raider:
-Anniversary specifically -- skip that title for this approach.
-
-- Data: `fetchSteam` per appid (224960 TR1, 225300 TR2, 225320 TR3),
-  pointed at whatever data-directory layout TR1X expects per title.
-- No significant nix-fetcher-worthy mod ecosystem beyond what TR1X itself
-  ships (community level packs exist but are niche compared to the
-  Build-engine/Infinity-Engine mod scenes above).
 
 ## Serious Sam Classic (SeriousSamClassic-VK)
 
@@ -1087,3 +984,235 @@ civilization builder, GPL-2+.
   entries have -- ruleset variety is built into the base game (civ2civ3,
   classic, multiplayer rulesets) rather than needing external addon
   fetchers.
+
+## Tales of Maj'Eyal
+
+Turn-based fantasy roguelike RPG with a large persistent world, many playable
+classes, talent trees, factions, lore, and permadeath. It is built around
+exploration and highly configurable character builds rather than real-time
+combat.
+
+- Mod support: the official addon system supports new classes, races, zones,
+  quests, talents, items, and complete gameplay alterations. Addons are
+  distributed as `.teaa` archives through the official addon browser
+  (`te4.org/addons`).
+- Nix-managed install shape: package the native game once, fetch selected
+  versioned addon archives as separate derivations, and install them into the
+  game's writable addon directory through a generated profile or wrapper.
+  Runtime saves and configuration must remain outside the store.
+- Caveat: addons can depend on exact game versions and may contain mixed
+  licenses or bundled assets, so each addon needs compatibility and
+  redistribution review before being added.
+- Sources: [official site](https://te4.org/) and
+  [addon browser](https://te4.org/addons).
+
+## Vampire: The Masquerade - Bloodlines
+
+First-person narrative RPG about a newly embraced vampire navigating faction
+politics, supernatural conspiracies, and personal quests in Los Angeles.
+Dialogue choices, character disciplines, stealth, combat, and exploration all
+support substantially different playthroughs.
+
+- Mod support: the community has produced major repairs and expansions,
+  including the Unofficial Patch, Clan Quest, The Final Nights, and Camarilla
+  Edition. ModDB is the main organized source for many releases.
+- Nix-managed install shape: fetch the owned Steam or GOG game data, fetch a
+  selected patch or total-conversion archive, and expose a wrapper that
+  launches the corresponding mod directory or profile. This would likely need
+  more per-mod installation logic than the Doom WAD entries.
+- Caveat: the game uses a Windows executable, proprietary data, installer-heavy
+  mods, and strict base-patch assumptions. Linux runtime and exact mod
+  compatibility need testing before committing to a shared package shape.
+- Sources: [Steam](https://store.steampowered.com/app/2600/Vampire_The_Masquerade_Bloodlines/),
+  [GOG](https://www.gog.com/en/game/vampire_the_masquerade_bloodlines), and
+  [ModDB](https://www.moddb.com/games/vampire-the-masquerade-bloodlines/mods).
+
+## Texture replacement on Linux
+
+Texture replacement is a separate, useful game/modding direction. The key
+distinction is between asset replacement, runtime GPU-texture replacement,
+shader replacement, and post-processing. `vkBasalt`, Gamescope effects, and
+ordinary ReShade presets alter the already-rendered frame; they do not replace
+an individual game texture. RenderDoc and apitrace can inspect/export
+resources, but are not persistent replacement loaders.
+
+There is no universal Linux equivalent for arbitrary native OpenGL/Vulkan
+games. A reliable implementation normally comes from the game/engine's own
+resource loader, a game-specific mod loader, an emulator's texture cache, or a
+Windows Direct3D wrapper running through Wine/Proton.
+
+### Emulator shortlist
+
+The following emulators have genuine dump-and-replace workflows rather than
+only resolution scaling, shaders, filesystem mods, or texture inspection.
+
+- **PPSSPP** -- strongest general candidate. Packs live at
+  `~/.config/ppsspp/PSP/TEXTURES/<GAME_ID>/` on normal Linux SDL builds, or in
+  the configured memstick. `textures.ini` supports versioning, `quick`,
+  `xxh32`, and `xxh64` hashes, aliases/custom filenames, wildcard hash
+  components, hash ranges, mip levels, ignored textures, and per-game INI
+  overrides. PNG, DDS, KTX2, and ZIM are supported, with KTX2/DDS generally
+  preferred for large packs. A `textures.zip` containing `textures.ini` is
+  also supported. This is the best fit for a declarative pack library.
+- **DuckStation** -- PS1 replacement under
+  `~/.local/share/duckstation/textures/<SERIAL>/replacements/`, with dumps in
+  the sibling `dumps/` directory. Per-game `config.yaml` supports detailed
+  dumping/cache behavior and an `Aliases:` map that lets multiple source
+  hashes use one replacement image. Current replacement scanning accepts PNG,
+  JPEG, and WebP; filenames are generated from texture/palette hashes and VRAM
+  upload metadata. Replacement textures are effectively single images rather
+  than DDS-style mip chains.
+- **Dolphin** -- mature GameCube/Wii support. Replacements are under
+  `~/.local/share/dolphin-emu/Load/Textures/<GAMEID>/`, with dumps under
+  `Dump/Textures/<GAMEID>/`. Current names contain dimensions, an XXH64 texture
+  hash, optional palette hash, and the original format. PNG and DDS are
+  accepted; a complete DDS mip chain is the safest choice when mipmaps matter.
+  Current resource packs use `manifest.json`; a marker file named after the
+  game ID selects a directory, but `Info.txt` is not a general metadata or
+  alias format in current source.
+- **Azahar** -- active Citra/Lime3DS successor with 3DS custom textures.
+  Replacements are under
+  `~/.local/share/azahar-emu/load/textures/<16-digit-title-ID>/`, with dumps in
+  the corresponding `dump/textures/` tree. Current packs can contain
+  `pack.json`, select new versus legacy CityHash64 behavior, and map hashes to
+  alternate filenames or shared files. PNG, DDS, and KTX are supported,
+  including normal-map material files. Legacy Citra/Lime3DS paths and hash
+  conventions should not be assumed to be identical to Azahar's.
+- **PCSX2** -- PS2 replacement under
+  `~/.config/PCSX2/textures/<SERIAL>/replacements/`, with dumps in `dumps/`.
+  The global `[Folders] Textures` setting in `PCSX2.ini` can redirect the
+  complete texture root. Names contain texture hashes, optional CLUT hashes,
+  region dimensions, and GS metadata. PNG and DDS are accepted; replacement
+  mipmaps should normally be embedded in DDS rather than copied from the
+  separate dumped `-mipN.png` files. There is no documented alias language.
+- **Beetle PSX HW** -- RetroArch core-side replacement, Vulkan only. Enable
+  `beetle_psx_hw_renderer = "hardware_vk"`, texture tracking, and texture
+  replacement. Classic packs sit beside content in
+  `<Game>-texture-replacements/` and use lowercase texture/palette CRC names
+  such as `<texture-hash>-<palette-hash>.png`. Current source also has
+  page-aligned modes, alternate texture directories, and more image formats,
+  but 8-bit PNG is the safest portable format because it is what the official
+  documentation guarantees.
+- **GLideN64 / Mupen64Plus-Next** -- N64 high-resolution replacement through
+  standalone Mupen64Plus or RetroArch. Unpacked packs use
+  `hires_texture/<game-ident>/` and Rice-style names containing the game
+  identifier, texture CRC, original format/size, and sometimes palette CRC.
+  RetroArch normally uses
+  `<system>/Mupen64plus/hires_texture/<game-ident>/`, with compiled `.htc` or
+  `.hts` caches under `cache/`. Host/frontend path and game-ident behavior is
+  more variable than the other emulators.
+- **Flycast** -- Dreamcast, Naomi, Naomi 2, and Atomiswave replacement through
+  game-ID directories and hexadecimal texture hashes. Standalone builds can
+  use `Dreamcast.TexturePath` and `Dreamcast.TextureDumpPath`; the Libretro
+  layout is normally `system/dc/textures/<game-id>/`. PNG/JPEG is established
+  in released versions. Current development source adds DDS/BC7 and KTX2
+  support, but native Linux renderer verification for those newer formats is
+  weaker.
+
+Useful upstream references:
+
+- [PPSSPP texture replacement](https://www.ppsspp.org/docs/reference/texture-replacement/)
+- [DuckStation texture replacement](https://github.com/stenzek/duckstation/wiki/Texture-Replacement)
+- [Dolphin resource packs](https://github.com/dolphin-emu/dolphin/blob/master/docs/ResourcePacks.md)
+- [Azahar](https://github.com/azahar-emu/azahar)
+- [PCSX2](https://github.com/PCSX2/pcsx2)
+- [Beetle PSX HW texture replacement](https://docs.libretro.com/library/beetle_psx_hw/#texture-replacements-vulkan-only)
+- [Mupen64Plus-Next](https://docs.libretro.com/library/mupen64plus/)
+- [Flycast](https://github.com/flyinghead/flycast)
+
+### Systems not to count as generic replacement
+
+- **Cemu** has graphic packs and debug texture dumping, but no external
+  PNG/DDS runtime replacement system. Its `rules.txt` packs change resolution,
+  texture allocation, shaders, patches, and virtual files.
+- **Ryujinx** uses LayeredFS mods under
+  `mods/contents/<TITLE_ID>/<mod>/romfs/`, which can replace the game's
+  original texture resource files. That is useful file replacement, but not a
+  hash-based runtime texture cache. The original project is discontinued;
+  current fork behavior needs independent verification.
+- **RPCS3** and **Xenia** have patches, captures, and debugging facilities but
+  no documented general custom-texture replacement pipeline.
+- **RetroArch** itself has no frontend-wide replacement feature. Replacement
+  is implemented by individual cores, notably Beetle PSX HW and
+  Mupen64Plus-Next.
+
+### Windows tools under Wine/Proton
+
+- **Special K** is the best first experiment for an offline Windows Direct3D
+  game running through Proton. It can dump/load textures and has documented
+  Wine/DXVK support; per-game configuration generally needs `UsingWINE=true`.
+  Injection order, overlays, renderer choice, and game-specific support matter.
+- **3Dmigoto** provides strong DX11 texture dumping/replacement and hash-based
+  overrides, but is game-specific and only experimentally useful under Wine.
+- **TexMod** is useful for older DirectX 9 games. It may work with a 32-bit
+  Wine prefix, but its age and launcher/DLL quirks make it a fallback.
+- **uMod** is a similarly inconsistent legacy option with support varying by
+  fork and game.
+- **Ninja Ripper** is primarily an extraction tool, not a persistent runtime
+  replacement framework; Windows or a VM is the safer environment.
+- **RenderDoc** and **apitrace** are valuable for discovering resource formats,
+  draw calls, and hashes, but do not provide a normal replacement-pack
+  workflow.
+
+`DXVK` and `vkd3d-proton` do not themselves dump or replace textures; they
+translate Direct3D to Vulkan. Windows DLL wrappers intercept on the Direct3D
+side before translation, which explains why some Proton games work while
+native Vulkan games do not. Do not use injection tools with protected online
+games: anti-cheat can reject them regardless of whether the intended change is
+cosmetic.
+
+References:
+
+- [Special K](https://github.com/SpecialKO/SpecialK)
+- [3Dmigoto](https://github.com/bo3b/3Dmigoto)
+- [TexMod](https://www.tzarsector.com/texmod/)
+- [RenderDoc](https://github.com/baldurk/renderdoc)
+- [apitrace](https://github.com/apitrace/apitrace)
+- [DXVK](https://github.com/doitsujin/dxvk)
+- [vkBasalt](https://github.com/DadSchoorse/vkBasalt)
+
+### Native Linux alternatives
+
+There is no mature general-purpose texture hook for arbitrary native Vulkan or
+OpenGL games. Prefer the game's own asset/mod system:
+
+- Minecraft Java resource packs.
+- OpenMW's ordered `data=` directories.
+- GZDoom WAD/PK3 replacement resources.
+- Factorio ZIP mods and graphics API.
+- Unity game-specific loaders, BepInEx plugins, or AssetBundles.
+- Unreal game-specific `.pak` mods or loaders.
+
+A custom Vulkan layer is theoretically possible through the loader layer API,
+but Vulkan usually no longer knows the original asset filename. Compressed,
+tiled, transient, bindless, and procedurally generated textures also make
+identity and replacement difficult. Linux OpenGL interposition via
+`LD_PRELOAD` is less standardized and generally requires per-game work.
+
+### Nix management model
+
+The most practical design is to keep finalized packs immutable and keep only
+emulator state and authoring output mutable:
+
+```text
+Nix store:    versioned texture derivation
+User data:    emulator settings, caches, and dump directories
+Runtime:      symlink or managed files exposing the pack at its expected path
+```
+
+The pack-authoring workflow is inherently mutable: dump to a writable
+directory, edit/convert the images, then package the finalized tree and expose
+it with `home.file`, `xdg.dataFile`, or a wrapper. Do not point dumping at a
+Nix-store path. Keep the entire emulator data directory writable where the
+program creates settings, caches, or dump folders.
+
+The strongest first targets for a shared Nix pattern are PPSSPP and
+DuckStation because their pack formats explicitly support aliases and their
+paths are predictable. Dolphin and Azahar are also good candidates. PCSX2,
+Beetle PSX HW, GLideN64, and Flycast should be added as concrete packs justify
+their frontend-specific configuration.
+
+This repository currently has a RetroArch Flatpak reference but no emulator
+texture-pack module. Start with one real, legally obtained pack and one
+emulator before designing a shared helper. Pack licenses and the legality of
+redistributing copyrighted replacement assets need checking per pack.

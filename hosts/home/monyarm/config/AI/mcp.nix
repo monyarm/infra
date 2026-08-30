@@ -1,25 +1,4 @@
 { pkgs, ... }:
-let
-  compressedToolsConfig = pkgs.writeText "compressed-tools-mcp.json" (
-    builtins.toJSON {
-      mcpServers = {
-        codegraph = {
-          command = "${pkgs.codegraph}/bin/codegraph";
-          args = [
-            "serve"
-            "--mcp"
-          ];
-        };
-        context7 = {
-          url = "https://mcp.context7.com/mcp";
-        };
-        gh_grep = {
-          url = "https://mcp.grep.app";
-        };
-      };
-    }
-  );
-in
 {
   programs.mcp = {
     enable = true;
@@ -30,16 +9,41 @@ in
         timeout = 60000;
       };
 
-      # Compresses tool metadata; results normally pass through unchanged.
+      # Compresses local tool metadata; results normally pass through unchanged.
       # --toonify converts structured JSON results to token-efficient TOON.
-      compressed-tools = {
+      compressed-codegraph = {
         command = "${pkgs.mcp-compressor}/bin/mcp-compressor";
         args = [
           "-c"
           "medium"
           "--toonify"
-          "--config"
-          "${compressedToolsConfig}"
+          "--"
+          "${pkgs.codegraph}/bin/codegraph"
+          "serve"
+          "--mcp"
+        ];
+      };
+
+      # Remote URLs must be passed directly. The pinned compressor does not
+      # support URL backends in its MCP config JSON parser.
+      compressed-context7 = {
+        command = "${pkgs.mcp-compressor}/bin/mcp-compressor";
+        args = [
+          "-c"
+          "medium"
+          "--toonify"
+          "--"
+          "https://mcp.context7.com/mcp"
+        ];
+      };
+      compressed-gh-grep = {
+        command = "${pkgs.mcp-compressor}/bin/mcp-compressor";
+        args = [
+          "-c"
+          "medium"
+          "--toonify"
+          "--"
+          "https://mcp.grep.app"
         ];
       };
     };

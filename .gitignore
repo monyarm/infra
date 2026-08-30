@@ -29,4 +29,5 @@ benchmark.txt
 .env
 .direnv
 games.list
+lib/wasm/*/target
 # keep-sorted end

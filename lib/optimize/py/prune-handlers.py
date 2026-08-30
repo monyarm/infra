@@ -32,6 +32,7 @@ Usage: prune-handlers.py OUT_DIR FILELIST_JSON_PATH DOOM_ARG TRIM_LIB_PATH
     materializes each ${./py/*.py} reference as its own store path, so a
     plain `import` can't see it)
 """
+
 import importlib.util
 import json
 import os
@@ -52,7 +53,9 @@ def ident_bounds_ok(text, start, end):
     """True when text[start:end] isn't glued to a larger identifier."""
     before = text[start - 1] if start > 0 else ""
     after = text[end] if end < len(text) else ""
-    ident_chars = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'")
+    ident_chars = set(
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'"
+    )
     return before not in ident_chars and after not in ident_chars
 
 
@@ -142,9 +145,15 @@ def main():
                 continue
             os.unlink(path)
             dropped += 1
-        print(f"prune-handlers: {len(exts)} extensions, kept {kept}, dropped {dropped}, doom {doom_arg}", file=sys.stderr)
+        print(
+            f"prune-handlers: {len(exts)} extensions, kept {kept}, dropped {dropped}, doom {doom_arg}",
+            file=sys.stderr,
+        )
     else:
-        print("prune-handlers: no file list (or no handlers dir), keeping full set", file=sys.stderr)
+        print(
+            "prune-handlers: no file list (or no handlers dir), keeping full set",
+            file=sys.stderr,
+        )
 
     if doom_arg != "true":
         shutil.rmtree(os.path.join(out_dir, "optimize", "doom"), ignore_errors=True)

@@ -3,12 +3,9 @@
   pkgs,
   fetchGitTree,
   sources,
-  drowseSrc,
   ...
 }:
 let
-  drowse = import drowseSrc { inherit pkgs; };
-
   minijsonSrc = fetchGitTree sources.tools.minijson;
   despacerSrc = fetchGitTree sources.tools.minijson-despacer;
 
@@ -45,50 +42,26 @@ let
     sources.tools.minijson.tag or "0-unstable-${sources.tools.minijson.date}"
   );
 in
-drowse.instantiate {
+pkgs.buildDubPackage {
   pname = "minijson";
   inherit version;
 
-  # buildDubPackage constructed *inside* the build (drowse's whole point:
-  # fine-grained dynamic-derivation caching without a committed generated
-  # .nix file for the derivation graph itself). dubLock's own *data* still
-  # has to be committed, though -- see minijson-dub-lock.nix's header:
-  # unlike Cargo.lock, dub.selections.json carries no checksums, so
-  # resolving it needs a real network lookup against the dub registry,
-  # which no nix sandbox grants without a pre-known hash (verified: even
-  # with requiredSystemFeatures = ["recursive-nix"], nix-prefetch-url
-  # inside the sandbox can't even resolve DNS). despacer's own dub.sdl runs
-  # cmake itself (preBuildCommands), hence cmake/gcc/gnumake alongside
-  # dub/ldc.
-  expr = ''
-    let
-      pkgs = import <nixpkgs> { config.allowUnfree = true; };
-      src = ${combinedSrc};
-    in
-    pkgs.buildDubPackage {
-      pname = "minijson";
-      version = "${version}";
-      inherit src;
-      dubLock = ${builtins.readFile ./minijson-dub-lock.nix};
-      compiler = pkgs.ldc;
-      dubBuildFlags = [ "--config=executable" ];
-      nativeBuildInputs = [
-        pkgs.cmake
-        pkgs.gnumake
-      ];
-      buildInputs = [ pkgs.gcc ];
-      # dub.sdl's own targetPath ("./dist") -- buildDubPackage has no
-      # install hook of its own, it just runs `dub build` and stops.
-      installPhase = "install -Dm755 dist/minijson $out/bin/minijson";
-      meta = {
-        description = "Minify JSON files, with support for comments";
-        homepage = "https://github.com/aminya/minijson";
-        license = pkgs.lib.licenses.mit;
-        mainProgram = "minijson";
-        platforms = pkgs.lib.platforms.unix;
-      };
-    }
-  '';
-  env.NIX_PATH = "nixpkgs=${pkgs.path}";
-  dontUnpack = true;
+  src = combinedSrc;
+  dubLock = sources.tools.minijson.dubLock;
+  compiler = pkgs.ldc;
+  dubBuildFlags = [ "--config=executable" ];
+  nativeBuildInputs = [
+    pkgs.cmake
+    pkgs.gnumake
+  ];
+  buildInputs = [ pkgs.gcc ];
+  # dub.sdl's own targetPath ("./dist").
+  installPhase = "install -Dm755 dist/minijson $out/bin/minijson";
+  meta = {
+    description = "Minify JSON files, with support for comments";
+    homepage = "https://github.com/aminya/minijson";
+    license = pkgs.lib.licenses.mit;
+    mainProgram = "minijson";
+    platforms = pkgs.lib.platforms.unix;
+  };
 }

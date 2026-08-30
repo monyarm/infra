@@ -227,6 +227,7 @@ let
             "sha1"
             "name"
             "files"
+            "dubLock"
           ];
 
           # Since we don't have stdenv, we build our own basic PATH

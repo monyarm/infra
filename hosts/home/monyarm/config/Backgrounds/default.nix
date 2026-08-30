@@ -5,6 +5,7 @@
   config,
   dirs,
   customLib,
+  optimizePkgs,
   parallel,
   optimize',
   ...
@@ -37,7 +38,14 @@ let
   wallpaperFilePaths = lib.filesystem.listFilesRecursive ./wallpapers;
 
   importedWallpapers = parallel (map (
-    filePath: import filePath ({ inherit pkgs lib; } // customLib)
+    filePath:
+    import filePath (
+      {
+        pkgs = optimizePkgs;
+        inherit lib;
+      }
+      // customLib
+    )
   )) wallpaperFilePaths;
 
   allWallpaperDrvs = lib.flatten (parallel (map builtins.attrValues) importedWallpapers);

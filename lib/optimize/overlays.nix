@@ -12,11 +12,6 @@
   # Determinate Nix, not pkgs.nix -- required for dynamic.nix's `nix
   # derivation add` JSON schema (differs from stock nix 2.31.5's).
   determinateNix,
-  # packages/minijson.nix's drowse.instantiate step. Only the outer
-  # (hosts/modules/lib.nix) call site needs this -- dynamic-inner.nix's own
-  # sandbox never builds minijson itself, it receives an already-built
-  # minijsonPath the same way it already does for wadptr/rpatool.
-  drowseSrc,
   # packages/maxima-cli.nix's craneLib.buildPackage -- without this the
   # self-referential `packages` overlay below builds maxima-cli with
   # craneLib = null (packages/default.nix's default) and crashes.
@@ -31,7 +26,6 @@
       inherit
         sources
         libPath
-        drowseSrc
         craneLib
         ;
     }

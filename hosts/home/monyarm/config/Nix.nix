@@ -24,5 +24,9 @@ in
   nix = {
     enable = true;
     package = lib.mkForce inputs.determinate-nix.packages."x86_64-linux".nix;
+    channels.nixpkgs = inputs.nixpkgs;
+    registry = lib.mapAttrs (_: flake: { inherit flake; }) (
+      lib.filterAttrs (_: value: builtins.isAttrs value) inputs
+    );
   };
 }

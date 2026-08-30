@@ -54,14 +54,21 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent
 CSV_PATH = REPO_ROOT / "compression-savings.csv"
-CSV_FIELDS = ["category", "game", "real_bytes", "mock_bytes", "savings_pct", "updated_at"]
+CSV_FIELDS = [
+    "category",
+    "game",
+    "real_bytes",
+    "mock_bytes",
+    "savings_pct",
+    "updated_at",
+]
 USER = "monyarm"
 
 # nix's own build progress (downloads, "building '...'") is left inherited
 # so the user can see something's happening; these two prefixes are the
 # only thing filtered out, since a single pk3 can emit hundreds of them
 # (one per member with no dedicated optimizer) and they add nothing here.
-NOISY_TRACE_PREFIXES = (b"trace: ")
+NOISY_TRACE_PREFIXES = b"trace: "
 
 # Matches a leading ANSI escape (color codes etc) so a filtered trace line
 # is still recognized even if nix colorizes its output first.
@@ -140,7 +147,6 @@ let
     overlays = import ./lib/optimize/overlays.nix {
       inherit sources;
       determinateNix = flake.inputs.determinate-nix-optimize.packages.${pkgs.stdenv.hostPlatform.system}.nix;
-      drowseSrc = flake.inputs.drowse;
       craneLib = flake.inputs.crane.mkLib pkgs;
     };
   };
@@ -160,6 +166,7 @@ let
     # hash, so omitting it here builds a *different* instantiateDrv than
     # the real deploy needs (looks cached, isn't).
     nixWasmRustPath = flake.inputs.nix-wasm-rust;
+    nixWasmRustOptimizePath = flake.inputs.nix-wasm-rust-optimize;
     niccupLib = flake.inputs.niccup.lib;
     config = {};
   };
@@ -234,7 +241,11 @@ def _ensure_terminated(proc):
     Escalates SIGINT -> SIGTERM -> SIGKILL, waiting between each."""
     if proc.poll() is not None:
         return
-    for sig, timeout in ((signal.SIGINT, 10), (signal.SIGTERM, 5), (signal.SIGKILL, None)):
+    for sig, timeout in (
+        (signal.SIGINT, 10),
+        (signal.SIGTERM, 5),
+        (signal.SIGKILL, None),
+    ):
         proc.send_signal(sig)
         try:
             proc.wait(timeout=timeout)
@@ -262,8 +273,11 @@ def nix_eval_json(body, max_jobs, cores):
     if not sys.stderr.isatty():
         # Not an interactive terminal ourselves (e.g. output redirected to a
         # file) -- a pty would be pointless, just filter the plain-text log.
-        proc = subprocess.Popen(cmd, cwd=REPO_ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            cmd, cwd=REPO_ROOT, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
         try:
+
             def stream_stderr():
                 for line in proc.stderr:
                     if not _is_noisy_line(line):
@@ -292,7 +306,12 @@ def nix_eval_json(body, max_jobs, cores):
         attrs[1] &= ~termios.ONLCR
         termios.tcsetattr(slave_fd, termios.TCSANOW, attrs)
         proc = subprocess.Popen(
-            cmd, cwd=REPO_ROOT, stdout=subprocess.PIPE, stderr=slave_fd, stdin=slave_fd, close_fds=True
+            cmd,
+            cwd=REPO_ROOT,
+            stdout=subprocess.PIPE,
+            stderr=slave_fd,
+            stdin=slave_fd,
+            close_fds=True,
         )
         os.close(slave_fd)
 
@@ -396,7 +415,10 @@ def read_size(path):
     involvement at all, everything's already realized by build_sequential/
     build_batch."""
     out = subprocess.run(
-        ["du", "-Llsb", "--apparent-size", path], capture_output=True, text=True, check=True
+        ["du", "-Llsb", "--apparent-size", path],
+        capture_output=True,
+        text=True,
+        check=True,
     ).stdout
     return int(out.split()[0])
 
@@ -419,7 +441,14 @@ def build_one(category, name, leg, drv, max_jobs, cores):
         f"{drv}^out",
     ]
     print(drv)
-    proc = subprocess.run(" ".join(cmd), shell=True, cwd=REPO_ROOT, stdout=subprocess.PIPE, text=True)
+    proc = subprocess.run(
+        " ".join(cmd),
+        shell=True,
+        cwd=REPO_ROOT,
+        stdout=subprocess.PIPE,
+        text=True,
+        check=False,
+    )
     if proc.returncode != 0 or not proc.stdout.strip():
         return category, name, leg, None
     target_path = proc.stdout.strip().splitlines()[-1]
@@ -439,11 +468,17 @@ def build_batch(drv_list, max_jobs, cores):
     sizes = {}
     failed = set()
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(drv_list)) as pool:
-        futures = [pool.submit(build_one, c, n, leg, drv, max_jobs, cores) for c, n, leg, drv in drv_list]
+        futures = [
+            pool.submit(build_one, c, n, leg, drv, max_jobs, cores)
+            for c, n, leg, drv in drv_list
+        ]
         for future in concurrent.futures.as_completed(futures):
             category, name, leg, real_path = future.result()
             if real_path is None:
-                print(f"WARNING: build failed for {category}/{name} ({leg}), dropping from results", file=sys.stderr)
+                print(
+                    f"WARNING: build failed for {category}/{name} ({leg}), dropping from results",
+                    file=sys.stderr,
+                )
                 failed.add((category, name))
                 continue
             sizes[(category, name, leg)] = read_size(real_path)
@@ -464,7 +499,10 @@ def build_sequential(drv_list, max_jobs, cores):
         print(f"--- [{i}/{len(drv_list)}] building {category}/{name} ({leg}) ---")
         _, _, _, real_path = build_one(category, name, leg, drv, max_jobs, cores)
         if real_path is None:
-            print(f"WARNING: build failed for {category}/{name} ({leg}), dropping from results", file=sys.stderr)
+            print(
+                f"WARNING: build failed for {category}/{name} ({leg}), dropping from results",
+                file=sys.stderr,
+            )
             failed.add((category, name))
             continue
         sizes[(category, name, leg)] = read_size(real_path)
@@ -484,7 +522,7 @@ def load_csv():
 
 
 def save_csv(rows):
-    now = datetime.datetime.now().isoformat(timespec="seconds")
+    now = datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds")
     total_real = sum(int(r["real_bytes"]) for r in rows.values())
     total_mock = sum(int(r["mock_bytes"]) for r in rows.values())
     savings = 0.0 if total_mock == 0 else (1 - total_real / total_mock) * 100
@@ -509,17 +547,27 @@ def save_csv(rows):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("patterns", nargs="*", help="substrings to filter game names (default: all)")
-    parser.add_argument("--list", action="store_true", help="list available game names and exit")
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument(
+        "patterns", nargs="*", help="substrings to filter game names (default: all)"
+    )
+    parser.add_argument(
+        "--list", action="store_true", help="list available game names and exit"
+    )
     parser.add_argument(
         "--missing",
         action="store_true",
         help="with --list, only show games that have no row in compression-savings.csv yet",
     )
     parser.add_argument("--doom", action="store_true", help="restrict to Doom wads")
-    parser.add_argument("--scummvm", action="store_true", help="restrict to ScummVM games")
-    parser.add_argument("--emulation", action="store_true", help="restrict to games.emulation.roms.*")
+    parser.add_argument(
+        "--scummvm", action="store_true", help="restrict to ScummVM games"
+    )
+    parser.add_argument(
+        "--emulation", action="store_true", help="restrict to games.emulation.roms.*"
+    )
     parser.add_argument(
         "--sequential",
         action="store_true",
@@ -533,7 +581,7 @@ def main():
     # so a build here could measure/cache pre-format bytes that then differ
     # from what deploy.sh's build sees once it formats -- silently
     # invalidating every dynamic derivation deploy.sh's build actually needs.
-    subprocess.run(["nix", "fmt"], cwd=REPO_ROOT, check=True)
+    subprocess.run(["nix", "fmt"], cwd=REPO_ROOT, check=False)
 
     categories = []
     if args.doom:
@@ -556,7 +604,11 @@ def main():
         return
 
     targets = {
-        c: ([n for n in names[c] if matches(n, args.patterns)] if c in categories else [])
+        c: (
+            [n for n in names[c] if matches(n, args.patterns)]
+            if c in categories
+            else []
+        )
         for c in ("doom", "scummvm", "emulation")
     }
 
@@ -576,16 +628,20 @@ def main():
 
     if args.sequential:
         print(f"=== building {len(drv_list)} derivations, one at a time ===")
-        sizes, failed = build_sequential(drv_list, max_jobs=args.max_jobs, cores=args.cores)
+        sizes, failed = build_sequential(
+            drv_list, max_jobs=args.max_jobs, cores=args.cores
+        )
     else:
         sizes, failed = build_batch(drv_list, max_jobs=args.max_jobs, cores=args.cores)
 
     for category in categories:
-        targets[category] = [n for n in targets[category] if (category, n) not in failed]
+        targets[category] = [
+            n for n in targets[category] if (category, n) not in failed
+        ]
     if not targets["doom"] and not targets["scummvm"] and not targets["emulation"]:
         sys.exit("Every build failed, nothing to measure.")
 
-    now = datetime.datetime.now().isoformat(timespec="seconds")
+    now = datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds")
 
     for category in categories:
         for name in targets[category]:

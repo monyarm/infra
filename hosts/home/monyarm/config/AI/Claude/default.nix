@@ -20,8 +20,6 @@
       editorMode = "normal";
       agentPushNotifEnabled = true;
       permissions.defaultMode = "plan";
-      # OmniRoute combo, configured through its own UI/CLI -- see omniroute-proxy.nix
-      # model = "custom/claude";
     };
     enableMcpIntegration = true;
     skills = config.ai.skills;
@@ -50,12 +48,6 @@
   };
 
   home.sessionVariables = {
-    # Routes claude through the local OmniRoute gateway (../omniroute-proxy.nix)
-    # instead of Anthropic directly -- no CLI wrapping needed, and
-    # --remote-control only works against the official Anthropic base URL anyway,
-    # so it's dropped rather than kept as a bare flag.
-    # ANTHROPIC_BASE_URL = "http://localhost:20128";
-    # CLAUDE_CODE_SUBAGENT_MODEL = "custom/subagent";
     CLAUDE_CODE_SUBAGENT_MODEL = "haiku";
   };
 }

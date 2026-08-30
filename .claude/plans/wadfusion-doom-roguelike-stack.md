@@ -1,5 +1,33 @@
 # WadFusion + Doom infinite roguelike stack
 
+## Plan revision
+
+This document is both the research record and the implementation plan. The
+implementation work should follow the dependency order below rather than the
+order in which the research was collected.
+
+Decisions confirmed after repository and upstream review:
+
+- Classic `base/` Doom files intentionally replace the currently registered
+  KEX `rerelease/` files. The current files were assumed to be classic and
+  that assumption was wrong; the replacement is deliberate, not a temporary
+  WadFusion workaround.
+- WadFusion receives a named input attrset. Supported inputs that are not
+  available are represented by `null`, rather than relying on positional list
+  order. Required inputs fail clearly when null; optional inputs are omitted.
+- The map merger uses DoomTools' script-driven `wadmerge`, specifically
+  `MERGEMAPFILE`, not a nonexistent Python `wadmerge` library or the
+  symbol-oriented `MERGEMAP` command.
+- MOShuffle changes `nextmap`/`secretmap` at runtime. The map pool therefore
+  does not need to be a connected campaign: ordinary standalone `MAPnn` maps
+  can be shuffled. Maps with explicit scripted warps are an exception.
+- The requested randomizer projects are Vandomizer (weapons/items and other
+  spawn randomization) and Universal Entropy (monster-property
+  randomization). They replace the placeholder names used in the earlier
+  draft.
+- Doom64, HXDD, Works of the Masters, and other exploratory ideas remain
+  deferred until the Doom stack works end to end.
+
 ## wadsmoosh derivation
 
 A Python tool (upstream original now retired, its own author's own words --
@@ -753,22 +781,18 @@ or accepting the current uncertainty.
 
 ### Open items before implementation
 
-In priority order: (1) SteamDB lookup for the "Previous re-release 2019
-version" beta branch's own `depotId`/`manifestId` for appId 2280 (the
-Unity-port set: `doom`/`doom2`/`tnt`/`plutonia`/`nerve`); (2) same for
-Doom 3: BFG Edition (appId 208200), and confirm exact `base/`
-filenames/layout in the already-fetched regular depot (build/inspect
-`DOOM_I_II`, or check the real local install on this host) -- all three
-sources get fetched and registered together, not chosen between; (3)
-confirm whether Master Levels has an equivalent variant in the Unity
-branch/BFG Edition or is `base/`/its-own-historical-app only; (4) DoomWiki
-hash-table lookups for the v1.9/BFG/Unity-port variants of
-`tnt`/`plutonia`/`nerve`/`sigil`/`sigil2`/`sewers`/`betray` and each
-Master Levels file (only `doom.wad`/`doom2.wad` v1.9 are pinned above) to
-fill out the validation table, one row per variant per wad; (5) confirm
-`wadsmoosh-plus`'s actual CLI/output-path/dependency shape; (6) the two
-licensing checks above. None of these block writing the plan further, but
-all of them block actually implementing the derivation.
+In priority order: (1) confirm exact `base/` filenames/layout in the
+already-fetched `DOOM_I_II` depot and fill the classic validation rows for
+`doom`/`doom2`/`tnt`/`plutonia`; (2) complete the WadFusion input validation
+table, including the chosen KEX bonus files and Xbox files; (3) inspect and
+pin the WadFusion v1.6.1 release artifact and matching UZDoom variant; (4)
+package and smoke-test DoomTools/WadMerge; (5) implement parser fixtures and
+the collision/reference-rewrite policy; (6) obtain and test MOShuffle against
+standalone generated maps, gaps, and explicit warp maps; (7) inspect and test
+Vandomizer, Universal Entropy, and CorruptionCards independently; (8) resolve
+the remaining provenance/hash details for the requested optional sources.
+These are implementation gates, not reasons to keep expanding the research
+appendix.
 
 ## Doom infinite roguelike stack
 
@@ -856,13 +880,18 @@ the script, not left as an assumption -- a silent texture override would
 be a subtle, hard-to-notice bug (everything still loads and plays, walls
 just look wrong) rather than a loud failure.
 
-**Map-merging build script** -- reads `doom_complete.pk3`/`.wad` to find
-the highest existing `MAPnn` slot (wadsmoosh's own output tops out around
-`MAP33`-ish depending on what got merged in), then re-indexes an arbitrary
-number of separate custom map WADs to start right after it, chaining them
-together with a generated `MAPINFO` (`next = "MAPnn"` from each map to the
-following one). Needs `omgifol` (Python WAD library, `pip install omgifol`)
-and DoomTools' `wadmerge` on `PATH`.
+**Map-merging build script** -- reads `doom_fusion.ipk3`/`.wad` to find the
+highest existing `MAPnn` slot, then re-indexes an arbitrary number of separate
+custom map WADs to start right after it. The actual WadFusion output is the
+source of truth; there is no fixed `MAP33` assumption. The generated maps are
+ordinary standalone `MAPnn` entries for MOShuffle, which changes `nextmap` and
+`secretmap` at runtime. Do not add synthetic `next` links unless testing shows
+the selected MOShuffle mode requires them. Inputs with explicit scripted warps
+need separate handling because they can bypass MOShuffle.
+
+The script needs `omgifol` (Python WAD library) and DoomTools' `wadmerge` on
+`PATH`. WadMerge is a command-line utility, not a Python library:
+https://mtrop.github.io/DoomTools/wadmerge.html.
 
 ```python
 #!/usr/bin/env python3
@@ -874,48 +903,40 @@ import subprocess
 import zipfile
 from omgifol import WAD
 
-def get_next_available_map_index(wadsmoosh_path):
+def get_next_available_map_index(base_wadfusion_path):
     map_numbers = []
 
-    if wadsmoosh_path.endswith('.pk3') and zipfile.is_zipfile(wadsmoosh_path):
-        with zipfile.ZipFile(wadsmoosh_path, 'r') as pk3:
+    if base_wadfusion_path.endswith('.pk3') and zipfile.is_zipfile(base_wadfusion_path):
+        with zipfile.ZipFile(base_wadfusion_path, 'r') as pk3:
             for filename in pk3.namelist():
-                match = re.search(r'map(\d+)', filename, re.IGNORECASE)
-                if match:
-                    map_numbers.append(int(match.group(1)))
+                # Do not infer maps from arbitrary PK3 filenames. Inspect WAD
+                # members and their actual map-marker lump sequences.
+                if filename.lower().endswith(('.wad', '.iwad')):
+                    map_numbers.extend(read_map_numbers_from_wad_member(pk3, filename))
 
-    elif wadsmoosh_path.endswith('.wad'):
+    elif base_wadfusion_path.endswith('.wad'):
         src_wad = WAD()
-        src_wad.from_file(wadsmoosh_path)
+        src_wad.from_file(base_wadfusion_path)
         for map_name in src_wad.maps:
             match = re.match(r'MAP(\d+)', map_name, re.IGNORECASE)
             if match:
                 map_numbers.append(int(match.group(1)))
 
     if not map_numbers:
-        print(f"[!] Warning: Could not detect MAP entries in {wadsmoosh_path}. Defaulting start slot to MAP33.")
-        return 33
+        raise ValueError(f"Could not detect numeric MAP entries in {base_wadfusion_path}")
 
     highest_map = max(map_numbers)
     next_slot = highest_map + 1
-    print(f"[*] WadSmoosh highest slot detected: MAP{highest_map:02d}. Custom maps will start at MAP{next_slot:02d}.")
+    print(f"[*] WadFusion highest slot detected: MAP{highest_map:02d}. Custom maps will start at MAP{next_slot:02d}.")
     return next_slot
 
-def generate_wadmerge_auto(wadsmoosh_path, output_pk3, input_wads):
-    start_index = get_next_available_map_index(wadsmoosh_path)
+def generate_wadmerge_auto(base_wadfusion_path, output_pk3, input_wads):
+    start_index = get_next_available_map_index(base_wadfusion_path)
     script_filename = "auto_merge.txt"
 
     wadmerge_commands = [
-        "# Auto-generated WadMerge Script starting dynamically after WadSmoosh",
+        "# Auto-generated WadMerge Script starting dynamically after WadFusion",
         "create outwad",
-    ]
-
-    mapinfo_lines = [
-        "// Global Merged MAPINFO",
-        f"map MAP{start_index - 1:02d} optional",
-        "{",
-        f'    next = "MAP{start_index:02d}"',
-        "}\n"
     ]
 
     current_map_idx = start_index
@@ -931,15 +952,9 @@ def generate_wadmerge_auto(wadsmoosh_path, output_pk3, input_wads):
 
         for orig_map in maps:
             new_map_slot = f"MAP{current_map_idx:02d}"
-            next_map_slot = f"MAP{current_map_idx + 1:02d}"
-
-            wadmerge_commands.append(f"mergemap outwad {orig_map} {wad_path} {new_map_slot}")
-
-            mapinfo_lines.append(f'map {new_map_slot} "Custom Level {current_map_idx}"')
-            mapinfo_lines.append('{')
-            mapinfo_lines.append(f'    next = "{next_map_slot}"')
-            mapinfo_lines.append('    sky1 = "SKY1"')
-            mapinfo_lines.append('}\n')
+            wadmerge_commands.append(
+                f"mergemapfile outwad {new_map_slot} {wad_path} {orig_map}"
+            )
 
             current_map_idx += 1
 
@@ -949,16 +964,12 @@ def generate_wadmerge_auto(wadsmoosh_path, output_pk3, input_wads):
     with open(script_filename, "w") as f:
         f.write("\n".join(wadmerge_commands))
 
-    with open("MAPINFO", "w") as f:
-        f.write("\n".join(mapinfo_lines))
-
     print("\nExecuting WadMerge...")
     subprocess.run(["wadmerge", script_filename], check=True)
 
     print(f"Packaging into {output_pk3}...")
     with zipfile.ZipFile(output_pk3, 'w', zipfile.ZIP_DEFLATED) as pk3:
         pk3.write("temp_merged_maps.wad", arcname="maps/custom_maps.wad")
-        pk3.write("MAPINFO", arcname="MAPINFO")
 
     if os.path.exists("temp_merged_maps.wad"):
         os.remove("temp_merged_maps.wad")
@@ -968,43 +979,52 @@ def generate_wadmerge_auto(wadsmoosh_path, output_pk3, input_wads):
     print(f"\n[+] Success! Packaged custom maps ranging from MAP{start_index:02d} to MAP{current_map_idx - 1:02d}.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Merge custom WAD maps dynamically starting after WadSmoosh's last map.")
-    parser.add_argument("-b", "--base-wadsmoosh", required=True, help="Path to doom_complete.pk3 or doom_complete.wad")
+    parser = argparse.ArgumentParser(description="Merge custom WAD maps dynamically starting after WadFusion's last map.")
+    parser.add_argument("-b", "--base-wadfusion", required=True, help="Path to doom_fusion.ipk3 or doom_fusion.wad")
     parser.add_argument("-o", "--output", default="custom_maps.pk3", help="Output PK3 file name")
     parser.add_argument("wads", nargs="+", help="Input custom WAD files")
 
     args = parser.parse_args()
-    generate_wadmerge_auto(args.base_wadsmoosh, args.output, args.wads)
+    generate_wadmerge_auto(args.base_wadfusion, args.output, args.wads)
 ```
 
 Build + launch shape:
 
 ```sh
-# build custom_maps.pk3 from N arbitrary map WADs, indexed after wadsmoosh's last slot
-python build_dynamic.py -b doom_complete.pk3 -o custom_maps.pk3 mapset1.wad mapset2.wad mapset3.wad
+# build custom_maps.pk3 from N arbitrary map WADs, indexed after WadFusion's last slot
+python build_dynamic.py -b doom_fusion.ipk3 -o custom_maps.pk3 mapset1.wad mapset2.wad mapset3.wad
 
 # stack everything and launch
-gzdoom \
-  -iwad doom_complete.pk3 \
+uzdoom \
+  -iwad doom_fusion.ipk3 \
   -file custom_maps.pk3 \
         MOShuffle.pk3 \
-        universal_weapon_randomizer.pk3 \
-        universal_monster_randomizer.pk3 \
+        Vandomizer.pk3 \
+        UniversalEntropy.pk3 \
         CorruptionCards.pk3
 ```
 
-Run mechanics: MOShuffle shuffles the full `MAP01`-`MAPnn` pool into a
-random order per run; the universal randomizers pull weapon/monster spawns
-from the loaded content pools on every map; Corruption Cards offers 3
-random permanent run mutators at the start of each map.
+Run mechanics: MOShuffle builds a random order from conventional
+`MAP01`-`MAPnn` maps and changes the next destination at runtime; the maps do
+not need to be connected in advance. Maps with explicit scripted warps can
+evade the shuffle. Vandomizer randomizes weapon/item and related spawns,
+Universal Entropy randomizes monster properties, and Corruption Cards presents
+configured cards per level. The exact permanent-card semantics must be tested
+against the selected CorruptionCards release.
 
 ### Full implementation plan -- WadFusion derivation + map-fusion pipeline
 
 Pulls together every finding above (this doc's WadFusion section and
 this roguelike-stack section) into one ordered build sequence. Still a
-plan, not code, per the original "don't implement" framing -- five
-phases, each blocked only on the specific open items already flagged
-above, not on any new research. **Corrected from an earlier draft**: the
+plan, not code, per the original "don't implement" framing. The work is
+split into independently testable vertical slices: source inputs, WadFusion,
+one merged map pack, MOShuffle, and then each gameplay mod separately.
+The implementation order is: (1) classic source registry and validation,
+(2) WadFusion plus a plain launcher, (3) DoomTools/WadMerge and the parser
+with fixtures, (4) one minimal generated map pack, (5) MOShuffle, (6)
+CorruptionCards, (7) Vandomizer, (8) Universal Entropy, and only then the
+complete map pool and final shortcut. Each layer must work before the next is
+added. **Corrected from an earlier draft**: the
 source wads all land in the shared `games.doom.wads` registry (not
 private `let`-bound fetches), and every game entry (base WadFusion, the
 roguelike stack, and every other piece already in `Doom/wad/`) is wired
@@ -1019,16 +1039,18 @@ content list) and isn't where any of this gets wired in.
 derivations) rather than a separate file, since these are now real
 registry entries, not private inputs:
 
-1. **Repoint `doom`/`doom2` from `rerelease/` to `base/`** -- the
+1. **Repoint the classic inputs from `rerelease/` to `base/`** --
+   intentionally change `doom`, `doom2`, `tnt`, and `plutonia` to their
+   classic `base/` files. The current KEX files were mistakenly assumed to be
+   classic; this is a deliberate correction and applies to existing consumers
+   as well as WadFusion.
+1. **Wire the classic Doom and Doom II files** -- the
    `games.doom.wads.doom`/`.doom2` keys `doom_i_ii.nix` already defines
    switch from `getFile "rerelease/doom.wad" DOOM_I_II` to `getFile "base/doom.wad" DOOM_I_II` (same for `doom2`), fixing every existing
    consumer (`DOOM`, `DOOM_2`, `NERVE`, `MASTER_LEVELS`, `SIGIL_I`,
    `SIGIL_II`, `ID1`) to the uncensored classic version, not just
-   WadFusion. Confirm exact `base/` filenames/casing first (open item 2
-   above). **Open question, not yet decided**: `tnt`/`plutonia` have the
-   identical KEX-vs-classic mismatch and are natural candidates for the
-   same swap -- flagging rather than silently included, since only
-   `doom`/`doom2` were explicitly called out.
+   WadFusion. Confirm exact `base/` filenames/casing first. Apply the same
+   intentional classic swap to the `tnt` and `plutonia` registry entries.
 1. **KEX `rerelease/` content already fetched today** -- add `getFile`
    calls for `id1-res`, `id24res`, `iddm1`, and `extras` (four more pulls
    off the same already-fetched `DOOM_I_II` derivation, no new fetcher).
@@ -1085,16 +1107,41 @@ registry entries, not private inputs:
 
 **Phase 2 -- the WadFusion derivation itself, and two game entries:**
 
-9. Add the tool's source repo to `sources.toml` and fetch via
-   `fetchGitTree`, same pattern `freedoom.nix` already uses for
-   `blasphemer`: `[git-tag] wad.wadfusion = "https://github.com/Owlet7/wadfusion"` (it cuts tagged releases, per
-   its changelog -- pin like `blasphemer`, not like the untagged
-   `lastermaul`). Run `wadfusion.py` via `pkgs.python3` (needs
-   `omgifol`). **No `Wadfusion-Xtras` entry** -- reversed above, its
-   Doom 64 content doesn't clear this doc's provenance bar.
-1. Confirm the actual CLI entrypoint, output path, and full dependency
-   list (open item 5) before writing the derivation body -- not yet
-   checked.
+9. Add the selected WadFusion release to `sources.toml` with
+   `update-sources.py --append`, then fetch the pinned release/tree through
+   the repository's existing source mechanism. The current upstream release
+   target is v1.6.1: https://github.com/Owlet7/wadfusion/releases/tag/v1.6.1.
+   Inspect the release archive before choosing `fetchGitTree` versus the
+   release artifact; pin the exact script, data files, `omgifol` dependency,
+   and matching UZDoom variant together. **No `Wadfusion-Xtras` entry** --
+   reversed above, its Doom 64 content doesn't clear this doc's provenance
+   bar.
+1. Build from a named input attrset rather than a positional list. Inputs
+   correspond to WadFusion's logical source names (`doom`, `doom2`, `tnt`,
+   `plutonia`, `nerve`, `masterlevels`, `sigil`, `sigil2`, `id1`, and so on).
+   Supported but unavailable inputs are `null`; required null inputs fail
+   clearly, while optional null inputs are omitted from the invocation.
+   The derivation interface should have this shape (with the complete
+   upstream-supported set filled in during implementation):
+   ```nix
+   wadfusion = mkWadFusion {
+     doom = doomClassic;
+     doom2 = doom2Classic;
+     tnt = tntClassic;
+     plutonia = plutoniaClassic;
+     nerve = nerve;
+     masterlevels = masterLevels;
+     sigil = sigil;
+     sigil2 = sigil2;
+     id1 = id1;
+     id1Res = id1Res;
+     id24res = id24res;
+     iddm1 = iddm1;
+     extras = extras;
+     # Supported, but not available in this checkout:
+     someOptionalInput = null;
+   };
+   ```
 1. Register the result as `games.doom.wads.wadfusion` in the shared
    registry, same as every other entry.
 1. **Two separate game entries**, both built from the one
@@ -1265,26 +1312,46 @@ assumptions can be checked -- not blocking the rest of this plan.
 
 **Phase 4 -- `build_dynamic.py` derivation:**
 
-17. Package as its own derivation (`nativeBuildInputs = [ omgifol wadmerge ]`), taking the Phase 2 `wadfusion` output and the Phase 3
+17. Add a pinned DoomTools release/package first. WadMerge is the MIT-licensed
+    command-line utility in DoomTools, not a Python module. Expose its
+    launcher on `PATH` (or wrap its JAR entrypoint) and verify the package with
+    a smoke-test script. The generated script must use
+    `MERGEMAPFILE outwad <new-map> <source-path> <source-map>`; `MERGEMAP`
+    takes a previously declared WadMerge symbol instead of a filesystem path.
+01. Package `build_dynamic.py` as its own derivation (`nativeBuildInputs = [ omgifol wadmerge ]`), taking the Phase 2 `wadfusion` output and the Phase 3
     map-WAD derivation list as inputs, producing `custom_maps.pk3`. Needs
-    the script itself retargeted from wadsmoosh's `doom_complete.pk3`
-    naming/defaults to WadFusion's `doom_fusion.ipk3`, per the "Revised
+    the script itself retargeted from the earlier wadsmoosh
+    `doom_complete.pk3` naming/defaults to WadFusion's `doom_fusion.ipk3`, per the "Revised
     recommendation" pivot above.
 01. Re-indexing target is WadFusion's own highest `MAPnn` slot, not
-    wadsmoosh-plus's -- needs checking once Phase 2 is actually built
-    (the two tools' content sets differ, so the ~MAP33 estimate from
-    wadsmoosh doesn't necessarily carry over).
+    wadsmoosh-plus's. Parse actual WAD directory/map-marker structures,
+    including WAD members inside PK3/IPK3 files; filename regexes are not
+    sufficient. Missing or ambiguous numeric maps fail the build rather than
+    defaulting to `MAP33`.
+01. Validate unique output slots and reject explicit scripted-warps unless
+    their behavior is deliberately supported. MOShuffle can shuffle
+    standalone maps because it changes `nextmap`/`secretmap` at runtime, but
+    a map that explicitly warps elsewhere can bypass it.
+01. Add deterministic resource collision handling. Renaming files alone is
+    insufficient: rewrite supported map texture/flat references and relevant
+    `TEXTURE1`/`PNAMES`, sound, music, MAPINFO, DECORATE, and ZScript
+    references. Fail on references the tool cannot safely rewrite. Use
+    fixtures for Freedoom and one resource-heavy map before expanding the
+    pool.
 01. Result (`custom_maps.pk3`) is one of the `wad` list entries in
     `WADFUSION_ROGUELIKE` above, not a separate registration mechanism.
 
 **Phase 5 -- remaining stack pieces, unblocked but not yet sourced:**
 
-20. `MOShuffle.pk3`, the universal weapon/monster spawn randomizers, and
-    `CorruptionCards` still need their actual hosting identified (likely
-    GameBanana or the ZDoom forums, same shape as other GZDoom-family
-    mods already under `Doom/wad/`) before real fetcher files can be
-    written -- each becomes its own `games.doom.wads.*` entry, then joins
-    `customMaps` in `WADFUSION_ROGUELIKE`'s `wad` list above.
+20. Add the actual gameplay mods independently, not as one unverified final
+    bundle: MOShuffle from CutmanMike's ZDoom release thread
+    (https://forum.zdoom.org/viewtopic.php?f=43&t=72760), CorruptionCards
+    v6.3b from ModDB file 293793, Vandomizer v1.3.1 from
+    https://github.com/MFG38/vandomizer, and Universal Entropy v3.666b from
+    https://forum.zdoom.org/viewtopic.php?t=66778. Inspect each archive,
+    pin its source/hash through `sources.toml`, and register each as its own
+    `games.doom.wads.*` entry. Test each layer against WadFusion and the
+    minimal generated map pack before adding it to the final `wad` list.
 
 ### Feasibility check: same idea for Heretic/Hexen -- a real equivalent exists (HXDD)
 

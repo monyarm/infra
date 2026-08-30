@@ -8,12 +8,28 @@ uses, so a .mod-extensioned file that isn't actually a recognized
 ProTracker-family module (2/4/6/8/xxCHN, M.K./M!K!/FLT4/FLT8/TDZx/etc.)
 is left untouched rather than guessed at.
 """
+
 import sys
 
 KNOWN_TAGS = {
-    b"M.K.", b"M!K!", b"M&K!", b"N.T.", b"FLT4", b"FLT8",
-    b"2CHN", b"6CHN", b"8CHN", b"5CHN", b"7CHN", b"9CHN",
-    b"CD81", b"OKTA", b"OCTA", b"TDZ1", b"TDZ2", b"TDZ3",
+    b"M.K.",
+    b"M!K!",
+    b"M&K!",
+    b"N.T.",
+    b"FLT4",
+    b"FLT8",
+    b"2CHN",
+    b"6CHN",
+    b"8CHN",
+    b"5CHN",
+    b"7CHN",
+    b"9CHN",
+    b"CD81",
+    b"OKTA",
+    b"OCTA",
+    b"TDZ1",
+    b"TDZ2",
+    b"TDZ3",
 }
 
 
@@ -35,7 +51,7 @@ def main():
         data[0:20] = b"\x00" * 20
         for i in range(31):
             off = 20 + i * 30
-            data[off:off + 22] = b"\x00" * 22
+            data[off : off + 22] = b"\x00" * 22
 
     with open(dst, "wb") as f:
         f.write(data)

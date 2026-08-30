@@ -40,14 +40,6 @@ craneLib.buildPackage {
   inherit version;
   src = combinedSrc;
 
-  # [patch.crates-io] in root Cargo.toml pulls flate2/async-compression from
-  # ArmchairDevelopers git forks -- crane's own vendoring (importCargoLock
-  # under the hood) needs an explicit hash per git dependency for these;
-  # process_cargo computed them into sources.tools.maxima.cargoOutputHashes
-  # via nix-prefetch-git at update-sources.py time. Passed straight to
-  # buildPackage (not a separate vendorCargoDeps call assigned to
-  # cargoVendorDir) so crane's own plumbing threads it through both the
-  # buildDepsOnly and full-build passes consistently.
   outputHashes = sources.tools.maxima.cargoOutputHashes;
 
   # maxima-resources's build.rs (prost-build, for its GRPC bindings) shells

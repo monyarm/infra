@@ -117,11 +117,16 @@ let
           ]
           ++ map (f: ../. + "/${f}") trimmedFiles
         );
-        generatedPythonFiles = lib.fileset.fileFilter (
+        generatedFiles = lib.fileset.fileFilter (
           file: file.name == "__pycache__" || lib.hasSuffix ".pyc" file.name || lib.hasSuffix ".pyo" file.name
         ) ../.;
+        generatedWasmTargets = lib.fileset.unions (
+          map (crate: lib.fileset.maybeMissing (../wasm + "/${crate}/target")) (
+            builtins.attrNames (builtins.readDir ../wasm)
+          )
+        );
       in
-      lib.fileset.difference sourceFiles generatedPythonFiles;
+      lib.fileset.difference (lib.fileset.difference sourceFiles generatedFiles) generatedWasmTargets;
   };
   # Strip comments across the entire lib fileset, run the binding
   # tree-shaker on the four trimmed files, format them, and assemble the
@@ -182,6 +187,31 @@ let
   doomArg = if doom then "true" else "false";
   shell = "${pkgs.bash}/bin/bash";
   droppedExtsArg = lib.concatStringsSep " " droppedExtensions;
+  dummyTool =
+    name:
+    pkgs.writeShellScriptBin name ''
+      printf '%s was executed unexpectedly; this optimizer path is unavailable\n' '${name}' >&2
+      kill -TERM "$PPID"
+      exit 1
+    '';
+  dummyWadptr = dummyTool "wadptr";
+  dummyRpatool = dummyTool "rpatool";
+  dummyMinijson = dummyTool "minijson";
+  hasExtension =
+    extensions: paths:
+    paths == null
+    || lib.any (
+      path:
+      let
+        basename = lib.toLower (builtins.baseNameOf path);
+      in
+      lib.any (extension: lib.hasSuffix extension basename) extensions
+    ) paths;
+  toolRequirements =
+    if fileList == null || dispatchWasmModule == null then
+      null
+    else
+      (import ../wasm.nix { inherit pkgs lib nixWasmRustPath; }).detectOptimizerTools fileList;
   # Built outside the sandbox: the sandbox has no network (substituters =
   # "" below), so cargo/rustc fetching crate deps has to happen out here.
   dispatchWasmModule =
@@ -245,9 +275,23 @@ let
   };
   toolPathsJSON = builtins.toJSON (
     {
-      wadptr = "${pkgs.wadptr}";
-      rpatool = "${pkgs.rpatool}";
-      minijson = "${pkgs.minijson}";
+      # These are only real inputs when their handlers can be reached. Dummy
+      # executables keep unrelated archives independent of updates to tools.
+      wadptr = if doom then "${pkgs.wadptr}" else "${dummyWadptr}";
+      rpatool =
+        if toolRequirements == null then
+          if hasExtension [ ".rpa" ] fileList then "${pkgs.rpatool}" else "${dummyRpatool}"
+        else if lib.hasInfix "rpa" toolRequirements then
+          "${pkgs.rpatool}"
+        else
+          "${dummyRpatool}";
+      minijson =
+        if toolRequirements == null then
+          if hasExtension [ ".json" ".jsonc" ] fileList then "${pkgs.minijson}" else "${dummyMinijson}"
+        else if lib.hasInfix "json" toolRequirements then
+          "${pkgs.minijson}"
+        else
+          "${dummyMinijson}";
       # Determinate Nix, not stock pkgs.nix -- see dynamic-inner.nix's comment.
       nix = "${pkgs.nix}";
       nixWasmRust = if nixWasmRustPath == null then null else "${nixWasmRustPath}";

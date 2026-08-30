@@ -6,20 +6,12 @@
   sources,
   ...
 }:
-
-let
-  # sources.toml only tracks the tag for version bookkeeping -- real binary is a
-  # platform-specific npm optionalDependency (esbuild-style), fetched below by hand.
-  # Bumping the tag doesn't auto-update `hash`.
-  version = lib.removePrefix "v" sources.tools.codegraph.tag;
-in
 stdenv.mkDerivation {
   pname = "codegraph";
-  inherit version;
+  inherit (sources.tools.codegraph) version;
 
   src = fetchurl {
-    url = "https://registry.npmjs.org/@colbymchenry/codegraph-linux-x64/-/codegraph-linux-x64-${version}.tgz";
-    hash = "sha256-ZQFSDvM3LrdO5KhTfYsu5jyz2VU2+O3oUOdF6wam0aI=";
+    inherit (sources.tools.codegraph) url hash;
   };
 
   # bundled node binary needs libstdc++ (checked with ldd), rest is glibc

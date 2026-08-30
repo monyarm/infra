@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   rustPlatform,
   fetchGitTree,
   sources,
@@ -7,14 +8,23 @@
 }:
 
 let
-  src = fetchGitTree sources.tools.mcp-compressor;
-  version = sources.tools.mcp-compressor.tag or "0-unstable-${sources.tools.mcp-compressor.date}";
+  compressorSource = sources.tools.mcp-compressor;
+  src = fetchGitTree (
+    removeAttrs compressorSource [
+      "cargoLock"
+      "cargoOutputHashes"
+    ]
+  );
+  version = compressorSource.tag or "0-unstable-${compressorSource.date}";
 in
 rustPlatform.buildRustPackage {
   pname = "mcp-compressor";
   inherit version src;
 
-  cargoLock.lockFile = "${src}/Cargo.lock";
+  cargoLock = {
+    lockFile = pkgs.writeText "mcp-compressor-Cargo.lock" compressorSource.cargoLock;
+    outputHashes = compressorSource.cargoOutputHashes or { };
+  };
   # workspace also has python/node binding crates (pyo3/napi) -- only need the CLI
   buildAndTestSubdir = "crates/mcp-compressor";
   # integration tests spawn external fixtures not available in the sandbox
