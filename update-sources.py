@@ -1049,6 +1049,142 @@ def process_cargo(name, results, previous_sources):
     return src
 
 
+def process_nuget(name, raw, results, previous_sources):
+    """[nuget] entries reference an already-resolved [git]/[git-tag] source by
+    name and merge a generated deps.json (NuGet dependency lock) into that
+    source's result dict. Runs dotnet restore + nuget-to-json outside the Nix
+    sandbox so NuGet registry lookups have real network access."""
+    if name not in results:
+        raise ValueError(
+            f"[nuget] entry '{name}' references unknown source '{name}' (must be a [git]/[git-tag] source processed earlier)."
+        )
+    print(f"Checking [nuget] {name}...")
+    src = results[name]
+    if src.get("type") not in ("git", "git-tag"):
+        raise ValueError(
+            f"[nuget] entry '{name}' must reference a git source, got type={src.get('type')!r}"
+        )
+
+    _, options = parse_source_spec(raw)
+    project_file = options.get("projectFile")
+    old = previous_sources.get(name)
+    if (
+        old
+        and old.get("rev") == src.get("rev")
+        and old.get("nugetProjectFile") == project_file
+        and old.get("nugetDeps")
+    ):
+        print(f"  -> Cache hit for nuget deps of {name}! Source hasn't changed.")
+        src["nugetDeps"] = old["nugetDeps"]
+        if project_file:
+            src["nugetProjectFile"] = project_file
+        return src
+
+    print(f"  -> Generating NuGet deps for {name}...")
+    src_expr = make_nix_src_expr(src)
+    nix_expr = (
+        f"let\n"
+        f"  pkgs = import {nixpkgs_import_expr()} {{}};\n"
+        f"  customLib = import ./lib {{\n"
+        f"    inherit pkgs;\n"
+        f"    inherit (pkgs) lib system;\n"
+        f"    mkOutOfStoreSymlink = _x: {{}};\n"
+        f"    optimizePkgs = pkgs;\n"
+        f"    config = {{}};\n"
+        f"  }};\n"
+        f"in\n"
+        f"  {src_expr}"
+    )
+    tool_res = subprocess.run(
+        [
+            "nix",
+            "build",
+            "--impure",
+            "--no-link",
+            "--print-out-paths",
+            "--expr",
+            f"let pkgs = import {nixpkgs_import_expr()} {{}}; in pkgs.nuget-to-json",
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    source_res = subprocess.run(
+        [
+            "nix",
+            "build",
+            "--impure",
+            "--no-link",
+            "--print-out-paths",
+            "--expr",
+            nix_expr,
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    tool = os.path.join(
+        tool_res.stdout.strip().splitlines()[-1], "bin", "nuget-to-json"
+    )
+    store_path = source_res.stdout.strip().splitlines()[-1]
+
+    with tempfile.TemporaryDirectory() as work_dir:
+        tree = os.path.join(work_dir, "src")
+        shutil.copytree(store_path, tree)
+        subprocess.run(["chmod", "-R", "u+w", tree], check=True)
+        project_path = (
+            os.path.join(tree, os.path.dirname(project_file)) if project_file else tree
+        )
+
+        # Read the specified project file for TargetFramework
+        csproj_path = os.path.join(tree, project_file) if project_file else None
+        if csproj_path and os.path.exists(csproj_path):
+            with open(csproj_path) as cf:
+                csproj_content = cf.read()
+            tf_match = re.search(
+                r"<TargetFramework>(.*?)</TargetFramework>", csproj_content
+            )
+            if tf_match:
+                tfm = tf_match.group(1)
+                # Extract major.minor (e.g. net8.0 -> 8_0, net10.0 -> 10_0)
+                tfm_parts = re.sub(r"^net(\d+)\.(\d+).*$", r"\1_\2", tfm)
+                src["dotnetSdk"] = f"sdk_{tfm_parts}"
+                src["dotnetRuntime"] = f"runtime_{tfm_parts}"
+
+        # Run dotnet restore inside a nix-shell with the matching SDK
+        sdk_attr = src.get("dotnetSdk", "sdk_8_0")
+        pkg_dir = os.path.join(work_dir, "packages")
+        nix_shell_expr = (
+            f"let pkgs = import {nixpkgs_import_expr()} {{}}; in "
+            f"pkgs.mkShell {{ buildInputs = [ pkgs.dotnetCorePackages.{sdk_attr} ]; }}"
+        )
+        restore_target = (
+            os.path.join(tree, project_file) if project_file else project_path
+        )
+        subprocess.run(
+            [
+                "nix-shell",
+                "--pure",
+                "--run",
+                f"dotnet restore --packages={pkg_dir} {restore_target}",
+                "--expr",
+                nix_shell_expr,
+            ],
+            check=True,
+        )
+        nuget_json = subprocess.run(
+            [tool, pkg_dir],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+
+    src["nugetDeps"] = nuget_json.stdout.strip()
+    if project_file:
+        src["nugetProjectFile"] = project_file
+    return src
+
+
 def process_dub(name, raw, results, previous_sources):
     """[dub] entries generate a Nix lock attrset from a same-name git source.
 
@@ -2223,6 +2359,10 @@ def main():
                     results[name] = process_git(name, target)
                 elif section == "cargo":
                     results[name] = process_cargo(name, results, previous_sources)
+                elif section == "nuget":
+                    results[name] = process_nuget(
+                        name, target, results, previous_sources
+                    )
                 elif section == "dub":
                     results[name] = process_dub(name, target, results, previous_sources)
                 elif section == "pnpm":

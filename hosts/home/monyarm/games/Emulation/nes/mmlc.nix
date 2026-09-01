@@ -6,6 +6,9 @@
   getFile,
   splitFiles,
   mkRom,
+  patchFile,
+  fetchGitTree,
+  sources,
   ...
 }:
 let
@@ -57,11 +60,29 @@ let
       )
   );
 
-  inherit (config.games.emulation) marchive;
+  mmlcSource = fetchGitTree sources.tools.mmlcDacExtractor;
+
+  mmlcPatches = {
+    megaMan1Restore = getFile "patches/mmlc/Mega Man (Original).ips" mmlcSource;
+    megaMan2Restore = getFile "patches/mmlc/Mega Man 2 (Original).ips" mmlcSource;
+    megaMan3Restore = getFile "patches/mmlc/Mega Man 3 (Original).ips" mmlcSource;
+    megaMan4Restore = getFile "patches/mmlc/Mega Man 4 (Original).ips" mmlcSource;
+    megaMan5Restore = getFile "patches/mmlc/Mega Man 5 (Original).ips" mmlcSource;
+    megaMan6Restore = getFile "patches/mmlc/Mega Man 6 (Original).ips" mmlcSource;
+  };
+
+  patchedMmlcRoms = {
+    megaMan1 = mmlcRoms.megaMan1 |> patchFile mmlcPatches.megaMan1Restore;
+    megaMan2 = mmlcRoms.megaMan2 |> patchFile mmlcPatches.megaMan2Restore;
+    megaMan3 = mmlcRoms.megaMan3 |> patchFile mmlcPatches.megaMan3Restore;
+    megaMan4 = mmlcRoms.megaMan4 |> patchFile mmlcPatches.megaMan4Restore;
+    megaMan5 = mmlcRoms.megaMan5 |> patchFile mmlcPatches.megaMan5Restore;
+    megaMan6 = mmlcRoms.megaMan6 |> patchFile mmlcPatches.megaMan6Restore;
+  };
 in
 lib.mkIf config.games.emulation.enable {
   games.emulation.roms = {
-    inherit (mmlcRoms)
+    inherit (patchedMmlcRoms)
       megaMan1
       megaMan2
       megaMan3
@@ -69,24 +90,17 @@ lib.mkIf config.games.emulation.enable {
       megaMan5
       megaMan6
       ;
+  };
 
-    contra = marchive.contra |> getFile "nes_Contra.nes";
-    superC = marchive.contra |> getFile "nes_SuperC.nes";
-
-    castlevania1 = marchive.castlevaniaAnniversary |> getFile "nes_01_Castlevania.nes";
-    castlevania2 = marchive.castlevaniaAnniversary |> getFile "nes_02_Castlevania2.nes";
-    castlevania3 = marchive.castlevaniaAnniversary |> getFile "nes_02_Castlevania3.nes";
-    # SRAM save data for this rom recovered separately by marchive.nix's
-    # kidDraculaSavExtra (kid-dracula.sav, not a rom, not registered here).
-    kidDracula = marchive.castlevaniaAnniversary |> getFile "kid-dracula.nes";
-
-    # regional variants, registered for enumeration only -- not launchable
-    probotectorII = marchive.contra |> getFile "nes_ProbotectorII.nes";
-    contraFamicom = marchive.contra |> getFile "famicom_Contra.nes";
-    superContraFamicom = marchive.contra |> getFile "famicom_SuperContra.nes";
-    castlevania1Famicom = marchive.castlevaniaAnniversary |> getFile "famicom_01_AkumajouDracula.nes";
-    castlevania3Famicom = marchive.castlevaniaAnniversary |> getFile "famicom_03_AkumajouDensetsu.nes";
-    kidDraculaFamicom = marchive.castlevaniaAnniversary |> getFile "famicom_04_BokuDraculakun.nes";
+  games.emulation.patches = {
+    inherit (mmlcPatches)
+      megaMan1Restore
+      megaMan2Restore
+      megaMan3Restore
+      megaMan4Restore
+      megaMan5Restore
+      megaMan6Restore
+      ;
   };
 
   programs.steam.games = with config.games.emulation.roms; {
@@ -118,38 +132,6 @@ lib.mkIf config.games.emulation.enable {
     MEGA_MAN_6 = mkRom {
       name = "Mega Man 6";
       rom = megaMan6;
-      system = "nes";
-    };
-
-    CONTRA = mkRom {
-      name = "Contra";
-      rom = contra;
-      system = "nes";
-    };
-    SUPER_C = mkRom {
-      name = "Super C";
-      rom = superC;
-      system = "nes";
-    };
-
-    CASTLEVANIA = mkRom {
-      name = "Castlevania";
-      rom = castlevania1;
-      system = "nes";
-    };
-    CASTLEVANIA_2 = mkRom {
-      name = "Castlevania II: Simon's Quest";
-      rom = castlevania2;
-      system = "nes";
-    };
-    CASTLEVANIA_3 = mkRom {
-      name = "Castlevania III: Dracula's Curse";
-      rom = castlevania3;
-      system = "nes";
-    };
-    KID_DRACULA = mkRom {
-      name = "Kid Dracula";
-      rom = kidDracula;
       system = "nes";
     };
 

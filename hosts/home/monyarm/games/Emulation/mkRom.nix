@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  compressRom,
+  compressRom',
   ...
 }:
 let
@@ -13,7 +13,16 @@ let
     gbc = pkgs.mgba;
     gba = pkgs.mgba;
     genesis = pkgs.blastem;
+    gamegear = pkgs.gearsystem;
   };
+
+  # Sibling keys consumed by compressRom, never format-identifying -- stripped
+  # from the game config so they don't leak into programs.steam.games options.
+  auxKeys = [
+    "patch"
+    "sidecar"
+    "tracks"
+  ];
 
   # generalizes Doom's mkDoom; rom always goes through real compressRom
   mkRom =
@@ -21,15 +30,24 @@ let
       rom,
       system,
       launcher ? { },
+      parent ? null,
       ...
     }@args:
-    (lib.removeAttrs args [
-      "rom"
-      "system"
-      "launcher"
-    ])
+    let
+      romArgs = lib.removeAttrs args (
+        [
+          "rom"
+          "system"
+          "launcher"
+          "parent"
+        ]
+        ++ auxKeys
+      );
+      compressArgs = lib.intersectAttrs (lib.genAttrs auxKeys (_: null)) args;
+    in
+    romArgs
     // {
-      game = compressRom rom;
+      game = compressRom' parent ({ inherit rom; } // compressArgs);
       launcher = {
         package = systemLaunchers.${system};
       }

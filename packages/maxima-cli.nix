@@ -25,7 +25,7 @@ let
   # access no nix sandbox grants. Overlay it onto the fetched tree before
   # handing off to crane, same shape as minijson.nix's combinedSrc
   # overlaying despacerSrc.
-  cargoLock = pkgs.writeText "Cargo.lock" sources.tools.maxima.cargoLock;
+  cargoLock = builtins.toFile "Cargo.lock" sources.tools.maxima.cargoLock;
 
   combinedSrc = pkgs.runCommand "maxima-cli-combined-src" { } ''
     cp -r --no-preserve=mode "${maximaSrc}" "$out"

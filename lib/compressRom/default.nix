@@ -14,6 +14,7 @@ let
   aliases = {
     sevenzip-lzma = [
       "bin"
+      "rom"
       "md"
       "gb"
       "gbc"
@@ -28,6 +29,10 @@ let
       "smc"
       "nes"
       "fds"
+      "gg"
+      "sms"
+      "sg"
+      "mv"
     ];
     zstd = [ "vb" ];
     chd = [
@@ -81,7 +86,7 @@ let
       fi
     '';
 
-  # "rom + optional ips/bps/ups patches" builder, shared by sevenzip-lzma,
+  # "rom + optional patch/sidecar" builder, shared by sevenzip-lzma,
   # sevenzip-deflate, and zstd's patches case -- callers supply only the
   # tool invocation.
   mkPatchBundleHandler =
@@ -106,18 +111,25 @@ let
         if m == null then fileNameOf rom else lib.head m;
       patches =
         if isAttrsShape then
-          lib.filter (p: p != null) (
-            map
-              (
-                ext:
-                if x ? ${ext} && x.${ext} != null then x.${ext} // { originalName = "${romBase}.${ext}"; } else null
-              )
-              [
-                "ips"
-                "bps"
-                "ups"
-              ]
-          )
+          let
+            toPatch =
+              p:
+              let
+                fname = fileNameOf p;
+                ext =
+                  let
+                    m = builtins.match ".*\\.([^.]+)" fname;
+                  in
+                  if m == null then null else lib.head m;
+              in
+              if ext == null then p else p // { originalName = "${romBase}.${ext}"; };
+            raw = if x ? patch && x.patch != null then x.patch else [ ];
+            flat = if builtins.isList raw then raw else [ raw ];
+            sidecar = lib.optional (x ? sidecar && x.sidecar != null) (
+              x.sidecar // { originalName = "${romBase}.sav"; }
+            );
+          in
+          sidecar ++ (map toPatch (lib.filter (p: p != null) flat))
         else
           [ ];
       allFiles = [ rom ] ++ patches;

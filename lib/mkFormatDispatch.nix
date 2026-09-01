@@ -107,10 +107,8 @@ let
   # Sibling keys, never format-identifying -- excluded from the dispatch
   # scan below, or `{ cue; bin = [...]; }` wrongly matches "bin" first.
   auxiliaryAttrKeys = [
-    "ips"
-    "bps"
-    "ups"
-    "bin"
+    "patch"
+    "sidecar"
     "tracks"
   ];
 

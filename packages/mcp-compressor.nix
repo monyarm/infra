@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   rustPlatform,
   fetchGitTree,
   sources,
@@ -22,7 +21,7 @@ rustPlatform.buildRustPackage {
   inherit version src;
 
   cargoLock = {
-    lockFile = pkgs.writeText "mcp-compressor-Cargo.lock" compressorSource.cargoLock;
+    lockFile = builtins.toFile "mcp-compressor-Cargo.lock" compressorSource.cargoLock;
     outputHashes = compressorSource.cargoOutputHashes or { };
   };
   # workspace also has python/node binding crates (pyo3/napi) -- only need the CLI

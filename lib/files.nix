@@ -324,7 +324,7 @@ rec {
     let
       fileName = builtins.baseNameOf filePath;
     in
-    pkgs.runCommand fileName
+    pkgs.runCommand (sanitizeName fileName)
       {
         # Not preferLocalBuild: getFile is called constantly throughout the
         # optimize/fetch chains (pk3 member extraction, etc.) -- same
@@ -732,6 +732,7 @@ rec {
     dispatchExt {
       ".ips" = flipsHandler;
       ".bps" = flipsHandler;
+      ".ups" = flipsHandler;
       ".xdelta" = xdeltaHandler;
       ".vcdiff" = xdeltaHandler;
       ".diff" = patchHandler;

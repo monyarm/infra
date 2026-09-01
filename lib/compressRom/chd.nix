@@ -10,7 +10,7 @@
 # CHD family: dispatched both as a bare src (lone .iso/.img, or .cso --
 # decompressed first -- via createdvd, no forced hunk size, matching
 # chdconv.sh's original behavior) and as a named-parts attrset (`{ cue;
-# bin = [...]; }` or `{ gdi; tracks = [...]; }`, via createcd, staged in a
+# tracks = [...]; }` or `{ gdi; tracks = [...]; }`, via createcd, staged in a
 # scratch dir under each file's *real* name so the index file's internal
 # relative-path references resolve). `extra` (only ever non-null via
 # compressRom') is a parent CHD, passed as -op for delta-diffed storage --
@@ -35,7 +35,7 @@ let
       {
         indexFile = x.cue;
         primary = x.cue;
-        siblings = [ x.cue ] ++ x.bin;
+        siblings = [ x.cue ] ++ x.tracks;
       }
     else if x ? gdi then
       {

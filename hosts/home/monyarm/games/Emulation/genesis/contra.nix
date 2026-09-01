@@ -1,8 +1,8 @@
 {
   config,
   lib,
-  mkRom,
   getFile,
+  mkRom,
   ...
 }:
 let
@@ -11,25 +11,17 @@ in
 lib.mkIf config.games.emulation.enable {
   games.emulation.roms = {
     contraHardCorps = marchive.contra |> getFile "sega_ContraHardCorps.bin";
-    castlevaniaBloodlines =
-      marchive.castlevaniaAnniversary |> getFile "sega_us_CastlevaniaBloodlines.bin";
 
     # regional variants, registered for enumeration only -- not launchable
     contraTheHardCoreJp = marchive.contra |> getFile "sega_ContraTheHardCore.BIN";
     probotectorGenesis = marchive.contra |> getFile "sega_Probotector.BIN";
     probotectorGenesisHackedWW = marchive.contra |> getFile "sega_Probotector_hacked_WW.BIN";
-    vampireKillerJp = marchive.castlevaniaAnniversary |> getFile "sega_jp_VampireKiller.bin";
   };
 
   programs.steam.games = with config.games.emulation.roms; {
     CONTRA_HARD_CORPS = mkRom {
       name = "Contra: Hard Corps";
       rom = contraHardCorps;
-      system = "genesis";
-    };
-    CASTLEVANIA_BLOODLINES = mkRom {
-      name = "Castlevania: Bloodlines";
-      rom = castlevaniaBloodlines;
       system = "genesis";
     };
   };

@@ -61,6 +61,9 @@ mpv.webtorrent-mpv-hook = "https://github.com/mrxdst/webtorrent-mpv-hook"
 tools.maxima = "true"
 tools.mcp-compressor = "true"
 
+[nuget]
+tools.puyoTools = ";projectFile=src/PuyoTools.App.Cli/PuyoTools.App.Cli.csproj"
+
 [dub]
 tools.minijson = "true"
 
@@ -76,6 +79,8 @@ mpv.mpris = "https://github.com/hoyon/mpv-mpris"
 wad.blasphemer = "https://github.com/Blasphemer/blasphemer"
 tools.minijson = "https://github.com/aminya/minijson"
 ai.skills.mattpocock-skills = "https://github.com/mattpocock/skills"
+emu.gearsystem = "https://github.com/drhelius/Gearsystem"
+tools.puyoTools = "https://github.com/nickworonekin/puyotools"
 
 [itch]
 wad.simonsdestiny = "https://batandy.itch.io/simonsdestiny"
