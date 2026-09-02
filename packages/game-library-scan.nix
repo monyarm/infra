@@ -404,6 +404,87 @@ let
                 print(f"  {title}  ({providers})")
 
 
+        VNDB_STEAM_URL_RE = re.compile(r"store\.steampowered\.com/app/(\d+)")
+        VNDB_GOG_URL_RE = re.compile(r"gog\.com/(?:en/)?game/([a-zA-Z0-9_-]+)")
+
+
+        def vndb_extract_ids(extlinks):
+            steam = gog = None
+            for link in extlinks or []:
+                url = link.get("url", "")
+                m = VNDB_STEAM_URL_RE.search(url)
+                if m:
+                    steam = m.group(1)
+                m = VNDB_GOG_URL_RE.search(url)
+                if m:
+                    gog = m.group(1)
+            return steam, gog
+
+
+        def vndb_renpy_releases():
+            releases = []
+            page = 1
+            while page <= 20:
+                body = json.dumps(
+                    {
+                        "filters": ["engine", "=", "Ren'Py"],
+                        "fields": "title, engine, extlinks.name, extlinks.url",
+                        "results": 100,
+                        "page": page,
+                    }
+                ).encode()
+                req = urllib.request.Request(
+                    "https://api.vndb.org/kana/release",
+                    data=body,
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                try:
+                    with urllib.request.urlopen(req) as resp:
+                        data = json.loads(resp.read())
+                except Exception as e:
+                    print(f"Warning: VNDB API request failed ({e}).", file=sys.stderr)
+                    break
+                releases.extend(data.get("results", []))
+                if not data.get("more"):
+                    break
+                page += 1
+            return releases
+
+
+        def renpy_mode(sources, defined, threshold):
+            already = excluded_ids(defined)
+            releases = vndb_renpy_releases()
+
+            steam_ids = {}
+            gog_ids = {}
+            titles = []
+            for r in releases:
+                title = r.get("title") or ""
+                steam, gog = vndb_extract_ids(r.get("extlinks"))
+                if steam:
+                    steam_ids[steam] = title
+                if gog:
+                    gog_ids[gog] = title
+                titles.append((r.get("id"), title))
+            index = build_index(titles)
+
+            for provider in sorted(sources):
+                visible, _ = split_owned(sources[provider], already.get(provider, set()))
+                print(f"\n=== {provider} ({len(visible)} owned) ===")
+                for gid, title in sorted(set(visible), key=lambda x: x[1]):
+                    id_pool = steam_ids if provider == "Steam" else gog_ids if provider == "GOG" else None
+                    if id_pool is not None and gid is not None and str(gid) in id_pool:
+                        print(f"  {title}  ->  {id_pool[str(gid)]}  (VNDB id-match)")
+                        continue
+                    matches = fuzzy_matches(title, index, threshold)
+                    if matches:
+                        shown = ", ".join(
+                            f"{name} [{vid}] ({ratio:.2f})" for ratio, vid, name in matches
+                        )
+                        print(f"  {title}  ->  {shown}")
+
+
         def scummvm_mode(sources, defined, threshold):
             already = excluded_ids(defined)
             index = build_index(scummvm_games())
@@ -437,6 +518,13 @@ let
                 help="Fuzzy-match owned titles against ScummVM's supported "
                 "games instead of just listing them.",
             )
+            ap.add_argument(
+                "--renpy",
+                action="store_true",
+                help="Cross-reference owned titles against VNDB's Ren'Py-"
+                "engine release catalog (Steam AppID/GOG id exact match, "
+                "fuzzy title fallback) instead of just listing them.",
+            )
             args = ap.parse_args()
 
             sources = {
@@ -449,6 +537,8 @@ let
 
             if args.scummvm:
                 scummvm_mode(sources, defined, args.threshold)
+            elif args.renpy:
+                renpy_mode(sources, defined, args.threshold)
             else:
                 list_mode(sources, defined)
 

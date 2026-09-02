@@ -32,6 +32,7 @@ Usage:
   ./measure-compression.py --doom              # only Doom wads
   ./measure-compression.py --scummvm           # only ScummVM games
   ./measure-compression.py --emulation         # only games.emulation.roms.*
+  ./measure-compression.py --renpy             # only games.renpy.games.*
   ./measure-compression.py --list              # print available game names
   ./measure-compression.py --list --missing    # ...only those with no CSV row yet
 """
@@ -345,6 +346,7 @@ def list_names():
   doom = builtins.attrNames real.config.games.doom.wads;
   scummvm = builtins.attrNames real.config.games.scummvm.games;
   emulation = builtins.attrNames real.config.games.emulation.roms;
+  renpy = builtins.attrNames real.config.games.renpy.games;
 }""",
         max_jobs=1,
         cores=1,
@@ -362,9 +364,9 @@ def names_nix(names):
 
 
 def build_measure_body(targets):
-    """targets: {"doom": [names], "scummvm": [names], "emulation": [names]}.
-    Each leg wrapped in getDrvPath -- a plain symlink-to-value target, not a
-    size computation."""
+    """targets: {"doom": [names], "scummvm": [names], "emulation": [names],
+    "renpy": [names]}. Each leg wrapped in getDrvPath -- a plain
+    symlink-to-value target, not a size computation."""
     parts = []
     if targets["doom"]:
         parts.append(f"""
@@ -396,6 +398,16 @@ def build_measure_body(targets):
         mock = getDrvPath real.config.games.emulation.roms.${{n}};
       }};
     }}) names);""")
+    if targets["renpy"]:
+        parts.append(f"""
+  renpy = let names = {names_nix(targets["renpy"])}; in
+    builtins.listToAttrs (map (n: {{
+      name = n;
+      value = {{
+        real = getDrvPath (customLib.optimize real.config.games.renpy.games.${{n}}.game);
+        mock = getDrvPath mocked.config.games.renpy.games.${{n}}.game;
+      }};
+    }}) names);""")
     return "{\n" + "\n".join(parts) + "\n}"
 
 
@@ -407,6 +419,7 @@ def get_drv_paths(targets):
         "doom": result.get("doom", {}),
         "scummvm": result.get("scummvm", {}),
         "emulation": result.get("emulation", {}),
+        "renpy": result.get("renpy", {}),
     }
 
 
@@ -569,6 +582,9 @@ def main():
         "--emulation", action="store_true", help="restrict to games.emulation.roms.*"
     )
     parser.add_argument(
+        "--renpy", action="store_true", help="restrict to games.renpy.games.*"
+    )
+    parser.add_argument(
         "--sequential",
         action="store_true",
         help="build one game at a time instead of handing the whole batch to one nix build call",
@@ -590,8 +606,10 @@ def main():
         categories.append("scummvm")
     if args.emulation:
         categories.append("emulation")
+    if args.renpy:
+        categories.append("renpy")
     if not categories:
-        categories = ["doom", "scummvm", "emulation"]
+        categories = ["doom", "scummvm", "emulation", "renpy"]
 
     names = list_names()
 
@@ -609,10 +627,10 @@ def main():
             if c in categories
             else []
         )
-        for c in ("doom", "scummvm", "emulation")
+        for c in ("doom", "scummvm", "emulation", "renpy")
     }
 
-    if not targets["doom"] and not targets["scummvm"] and not targets["emulation"]:
+    if not any(targets.values()):
         sys.exit("No games matched the given patterns.")
 
     rows = load_csv()
@@ -638,7 +656,7 @@ def main():
         targets[category] = [
             n for n in targets[category] if (category, n) not in failed
         ]
-    if not targets["doom"] and not targets["scummvm"] and not targets["emulation"]:
+    if not any(targets.values()):
         sys.exit("Every build failed, nothing to measure.")
 
     now = datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds")

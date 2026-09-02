@@ -27,3 +27,5 @@
 - [Verify opaque ids by resolving](feedback_verify_opaque_ids_by_resolving.md) — a moddb/Steam-style numeric id can resolve to the wrong content with no build error; check what it actually points to.
 - [attrsOf entries can't reference siblings](feedback_attrsof_entries_cant_reference_siblings.md) — a `types.attrsOf` registry entry reading `config.<same-option>.<otherKey>` is real infinite recursion, not a syntax issue.
 - [getFile output has hash in filename](feedback_getfile_output_hash_in_filename.md) — `getFile`'s single-file store path bakes the hash into the filename itself; strip it before deriving names/prefixes from the basename.
+- [game-library-scan.nix is the scanner tool](reference_game_library_scan_tool.md) — owned-vs-catalog cross-referencing already lives here (`--scummvm` mode precedent); extend it, don't write a new script.
+- [GAME_IDEAS.md has mod-helper sketches](reference_game_ideas_mod_helpers.md) — `mkModDir`/`wrapGame` proposed shape for symlinking mod derivations into named game-dir paths.
