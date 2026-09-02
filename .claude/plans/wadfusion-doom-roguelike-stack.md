@@ -1440,6 +1440,68 @@ KEX remaster ($14.99) are **purchase required**, nothing free covers
 this game pair the way freeware/idgames content covers most of the
 Doom-side plan. See "Purchase-required items" below.
 
+### Fantasy Roguelike Stack: HXDD + Heretic/Hexen (data-only, deferred)
+
+**Status: research placeholder. Not implemented. Purchase required for
+Heretic+Hexen before any of this becomes actionable.**
+
+Same architecture as the Doom stack (IWAD merge, map pool, shuffle,
+randomizers, corruption cards), but targeting Heretic/Hexen via HXDD.
+
+#### HXDD base
+
+- **Tool**: `Lemon-King/HXDD` (MIT, actively maintained as of 2026-05-20).
+  Merges `heretic.wad` + `hexen.wad` + `hexdd.wad` (Deathkings) into one
+  `hxdd.ipk3`, playable via UZDoom/VKDOOM -- matches this repo's existing
+  `pkgs.uzdoom` launcher.
+- **Packaging blocker**: HXDD is a Java GUI app (GraalVM/Gluon), no
+  documented CLI/headless mode. Needs either: (a) finding an undocumented
+  CLI flag, (b) building from source with a scripted GUI driver, or
+  (c) reconstructing its merge logic from source. None investigated yet.
+- **PWAD Mode**: `hxdd.ipk3` can load as `-file` on top of Doom IWADs,
+  bringing Heretic/Hexen classes/items into Doom. Whether this composes
+  with WadFusion specifically is unconfirmed.
+
+#### Heretic/Hexen inputs
+
+- Only three files needed: `heretic.wad`, `hexen.wad`, `hexdd.wad`.
+- Heretic's "Shadow of the Serpent Riders" expansion ships unified inside
+  `heretic.wad` -- no version fragmentation like Doom's `base/`/`rerelease/`.
+- **2025 KEX remaster** (Nightdive, 2025-08-07): bundles both games, both
+  expansions, and two new bonus episodes ("Heretic: Faith Renewed," "Hexen:
+  Vestiges of Grandeur"). HXDD's README doesn't mention it. Unknown whether
+  it introduces classic-vs-rerelease format mismatch. Needs own research pass.
+- **Purchase required**: classic Steam bundle (sub 439) or 2025 KEX remaster
+  ($14.99).
+
+#### Map pool (not researched)
+
+Heretic and Hexen have separate idgames ecosystems:
+- `/idgames/levels/heretic/`
+- `/idgames/levels/hexen/`
+
+Needs own survey of available community megawads. No equivalent of the
+Doom-side's curated list exists yet.
+
+#### Roguelike mod compatibility (open question)
+
+MOShuffle, CorruptionCards, Vandomizer, and Universal Entropy are
+GZDoom-family ZScript mods. Heretic/Hexen have completely different weapon
+and monster rosters. Whether these mods support non-Doom actor classes is
+unknown -- determines if the full stack works or only "HXDD + map shuffle"
+without randomizers/cards.
+
+#### Implementation path (when unblocked)
+
+1. Purchase Heretic+Hexen
+2. Research HXDD CLI mode / from-source build
+3. Research 2025 KEX remaster format story
+4. Survey Heretic/Hexen idgames map pool
+5. Test mod compatibility against HXDD base
+6. Package HXDD derivation (or reconstruct merge)
+7. Build `HXDD_ROGUELIKE` game entry (or separate `HERETIC_ROGUELIKE`/
+   `HEXEN_ROGUELIKE` if composition differs)
+
 ### Purchase-required items -- not yet registered anywhere in this repo
 
 Sweep of everything in this doc's WadFusion/roguelike-stack plan that

@@ -12,3 +12,5 @@ Never run `du -sh /nix/store`, `find / ...`, `find /nix/store ...`, or `ls /nix/
 - "Is this derivation built/cached?": `nix path-info <installable>` or `nix build --dry-run`.
 - A flake input's store path/rev: `nix flake metadata --json` (or `flake.lock` directly) for the locked rev, then fetch/inspect that specific ref (e.g. `nix eval`/`WebFetch` against the pinned commit) — not `find /nix/store` for a directory name that happens to match.
 - A specific file's contents inside a known derivation: build/eval that exact attribute and read from its resolved `out` path, never scan for it.
+
+**Subagents don't inherit this automatically.** A dispatched Explore/general-purpose agent has no view of this CLAUDE.md rule and will happily `grep -r`/`find` across `/nix/store` if asked to "search nixpkgs source for X" — caught doing exactly this while researching package attributes. Any subagent prompt that touches nixpkgs internals must explicitly restate the constraint (e.g. "resolve exact store paths via `nix eval`/`nix search`, never grep/find/ls the whole `/nix/store`").

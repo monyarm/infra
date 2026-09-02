@@ -107,6 +107,7 @@ scummvm.leewardep1 = "https://esterasbros.itch.io/leeward-episode-1"
 wad.legendofdoombase = "120nPbFJY9y0qMF_CSXA3XvutdEp_Gcja;name=LegendOfDoom.pk3"
 wad.actiondoomrampageedition = "115GyqVk6QzG9AeA219AtWlVXul9jiLN7;extract"
 wad.hdoom = "197tg35i1tOaFPwg37NY57eFgRQf_6HDJ;name=HDoom.pk3"
+wad.anotherMonsterRandomizer = "1Lft4vWki-U4uXX-whGwJUub6_2tBEDwS;name=Monster Randomizer.pk3"
 
 [mediafire]
 wad.seriousSamRetroEncounter = "http://www.mediafire.com/file/3tgp183p48vb06z/SS_RETRO_ENCOUNTER_2018_hotfix.pk3"
@@ -120,6 +121,8 @@ wad.metroidDreadnought = "182831"
 wad.spramsMetroidDoom = "170103"
 wad.hocusPocusDoom = "189681"
 wad.doom64CE = "285205"
+wad.doomZero = "219272"
+wad.corruptionCards = "293793"
 
 [idgames]
 wad.paranoid = "levels/doom2/Ports/p-r/paranoid.zip"
@@ -131,6 +134,34 @@ wad.batmandoom = "themes/batman/batman.zip"
 wad.inquisitor = "levels/doom2/Ports/g-i/inqstr.zip"
 wad.inquisitor2 = "levels/doom2/Ports/g-i/inqstr2.zip"
 wad.inquisitor3 = "levels/doom2/Ports/g-i/inqstr3e.zip"
+# Master Levels Rejects -- WADs submitted for the 1995 Master Levels but not selected.
+wad.mlRejectCpu = "levels/doom2/a-c/cpu.zip"
+wad.mlRejectDevice1 = "levels/doom2/d-f/device_1.zip"
+wad.mlRejectDmz = "levels/doom2/d-f/dmz.zip"
+wad.mlRejectCdkFury = "levels/doom2/a-c/cdk_fury.zip"
+wad.mlRejectEInside = "levels/doom2/d-f/e_inside.zip"
+wad.mlRejectHive = "levels/doom2/g-i/hive.zip"
+wad.mlRejectTwm01 = "levels/doom2/s-u/twm01.zip"
+wad.mlRejectMines = "levels/doom2/m-o/mines2.zip"
+wad.mlRejectAnomaly = "levels/doom2/a-c/anomaly.zip"
+wad.mlRejectFarside = "levels/doom2/d-f/farside.zip"
+wad.mlRejectTrouble = "levels/doom2/s-u/trouble.zip"
+wad.mlRejectDante25 = "levels/doom2/d-f/dante25.zip"
+wad.mlRejectAchron22 = "levels/doom2/a-c/achron22.zip"
+wad.mlRejectUdtwid = "levels/doom/s-u/udtwid.zip"
+# Community megawads for the map shuffle pool.
+wad.tntr = "levels/doom2/megawads/tntr.zip"
+wad.pl2 = "levels/doom2/megawads/pl2.zip"
+wad.prcp = "levels/doom2/Ports/megawads/prcp.zip"
+wad.neis = "levels/doom/Ports/megawads/neis.zip"
+wad.jpcp = "levels/doom2/Ports/megawads/jpcp.zip"
+# v1.2 (final) -- the doc's original target (a beta6 Dropbox link) is now
+# superseded by an actual idgames release; any current release works fine
+# for our own map-shuffle pool (we don't go through wadsmoosh's WAD_LUMP_LISTS).
+wad.tnt2Devilution = "levels/doom2/megawads/tnt2.zip"
+wad.perditionsGate = "levels/doom2/p-r/pdgate.zip"
+wad.e1m8b = "levels/doom/Ports/d-f/e1m8b.zip"
+wad.e1m4b = "levels/doom/Ports/d-f/e1m4b.zip"
 
 [npmjs]
 tools.codegraph = "@colbymchenry/codegraph-linux-x64@1.6.0"

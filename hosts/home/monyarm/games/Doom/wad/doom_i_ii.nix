@@ -27,15 +27,24 @@ let
 in
 lib.mkIf config.games.doom.enable {
   games.doom.wads = {
-    doom = DOOM_I_II |> getFile "rerelease/doom.wad";
-    doom2 = DOOM_I_II |> getFile "rerelease/doom2.wad";
+    # Classic base/ versions -- uncensored (no red-cross replacement etc).
+    # The rerelease/ files are KEX-era replacements with altered graphics;
+    # base/ has the original retail content wadsmoosh/WadFusion expect.
+    doom = DOOM_I_II |> getFile "base/DOOM.WAD";
+    doom2 = DOOM_I_II |> getFile "base/doom2/DOOM2.WAD";
+    tnt = DOOM_I_II |> getFile "base/tnt/TNT.WAD";
+    plutonia = DOOM_I_II |> getFile "base/plutonia/PLUTONIA.WAD";
+
+    # KEX rerelease/ content -- bonus material not in classic base/.
     nerve = DOOM_I_II |> getFile "rerelease/nerve.wad";
     masterLevels = DOOM_I_II |> getFile "rerelease/masterlevels.wad";
     sigil = DOOM_I_II |> getFile "rerelease/sigil.wad";
     sigil2 = DOOM_I_II |> getFile "rerelease/sigil2.wad";
-    plutonia = DOOM_I_II |> getFile "rerelease/plutonia.wad";
     id1 = DOOM_I_II |> getFile "rerelease/id1.wad";
-    tnt = DOOM_I_II |> getFile "rerelease/tnt.wad";
+    id1Res = DOOM_I_II |> getFile "rerelease/id1-res.wad";
+    id24res = DOOM_I_II |> getFile "rerelease/id24res.wad";
+    iddm1 = DOOM_I_II |> getFile "rerelease/iddm1.wad";
+    extras = DOOM_I_II |> getFile "rerelease/extras.wad";
 
     sewers = xboxspec |> getFile "SEWERS.WAD";
     betray = xboxspec |> getFile "BETRAY.WAD";
