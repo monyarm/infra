@@ -30,4 +30,5 @@ benchmark.txt
 .direnv
 games.list
 lib/wasm/*/target
+.decrypted~*.sops
 # keep-sorted end

@@ -1,5 +1,4 @@
 {
-  pkgs,
   dirs,
   toTOML,
   ...
@@ -29,7 +28,7 @@ let
   };
 in
 {
-  xdg.configFile."ygofab/config.toml".source = pkgs.writeText "ygofab-config.toml" (
+  xdg.configFile."ygofab/config.toml".source = builtins.toFile "ygofab-config.toml" (
     toTOML ygofabConfig
   );
 }

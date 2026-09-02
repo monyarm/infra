@@ -470,7 +470,7 @@ let
 
   python3WithVdf = pkgs.python3.withPackages (ps: [ ps.vdf ]);
 
-  localconfigPatchFile = pkgs.writeText "localconfig-launchoptions-patch.json" localconfigPatchData;
+  localconfigPatchFile = builtins.toFile "localconfig-launchoptions-patch.json" localconfigPatchData;
 
   # Runs at activation time (not build time), since it needs to read/modify
   # the live, mutable localconfig.vdf under $HOME — a Nix build sandbox has

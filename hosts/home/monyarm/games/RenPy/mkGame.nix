@@ -22,6 +22,7 @@ let
       renpy ? pkgs.renpyMinimal,
       mods ? [ ],
       modDir ? null,
+      postPatch ? "",
       ...
     }@args:
     let
@@ -30,12 +31,15 @@ let
       game = pkgs.stdenv.mkDerivation {
         pname = name;
         version = "0";
-        inherit src;
+        inherit src postPatch;
         dontConfigure = true;
         nativeBuildInputs = [ renpy ];
 
         buildPhase = ''
           runHook preBuild
+
+          export HOME="$TMPDIR/home"
+          mkdir -p "$HOME"
 
           mkdir -p "${modTarget}"
           ${lib.concatMapStringsSep "\n" (m: ''
@@ -59,6 +63,10 @@ let
           cp -r game $out/game
           runHook postInstall
         '';
+
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
       };
     in
     (lib.removeAttrs args [
@@ -67,6 +75,7 @@ let
       "renpy"
       "mods"
       "modDir"
+      "postPatch"
     ])
     // {
       inherit renpy game;
