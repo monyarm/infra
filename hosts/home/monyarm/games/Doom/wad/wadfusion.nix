@@ -317,6 +317,28 @@ lib.mkIf config.games.doom.enable (
           wads.corruptionCards
           wads.variedDoom
         ];
+        images = {
+          wide = pkgs.fetchurl {
+            url = "https://cdn2.steamgriddb.com/grid/52699fa80061960bdd1064367a7f47e0.jpg";
+            sha256 = "sha256-mY0e2lbgZD5cDekoVXY/VqTKg9Udn/IwLmSqdAWH1Sw=";
+          };
+          logo = pkgs.fetchurl {
+            url = "https://cdn2.steamgriddb.com/logo/131efc3e9dc6088e07ffe4a4c0b2997d.png";
+            sha256 = "sha256-PBRfMLxYvUSxObyvs0vsZ8g3TKb48++pa9ZBuXTxXX4=";
+          };
+          icon = pkgs.fetchurl {
+            url = "https://cdn2.steamgriddb.com/icon/c98399cf427813fcbe9bd5ad68d18f56.png";
+            sha256 = "sha256-nz4/nx197ggJTM2pcalMHi9/vHGWCXwLQlxLFYSOZ9w=";
+          };
+          grid = pkgs.fetchurl {
+            url = "https://cdn2.steamgriddb.com/grid/c2341621cac5449c2e3b8b6a653b3f12.jpg";
+            sha256 = "sha256-NG3tZai6KGlt8mawfUtVsi7xZfhuICOOFKle+ttjnFE=";
+          };
+          hero = pkgs.fetchurl {
+            url = "https://cdn2.steamgriddb.com/hero/9373a1d0e8a2225fd83ce8d97fd59ac2.png";
+            sha256 = "sha256-6+D/X7r/lX2TjptUzH0wpMKChYf/iencgiS9Jy3hviE=";
+          };
+        };
       };
     };
   }

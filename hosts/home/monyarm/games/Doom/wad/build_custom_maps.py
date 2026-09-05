@@ -135,7 +135,7 @@ def derive_prefix(name, used):
         if code not in RESERVED_PREFIXES and code not in used:
             used.add(code)
             return code + "_"
-    raise ValueError("could not derive a unique prefix for %r" % name)
+    raise ValueError(f"could not derive a unique prefix for {name!r}")
 
 
 def used_names_in(wads, omg):
@@ -196,7 +196,9 @@ def parse_legacy_mapinfo(text):
 def source_mapinfo(wad):
     if "MAPINFO" not in wad.data:
         return {}
-    return parse_legacy_mapinfo(wad.data["MAPINFO"].data.decode("latin1", errors="ignore"))
+    return parse_legacy_mapinfo(
+        wad.data["MAPINFO"].data.decode("latin1", errors="ignore")
+    )
 
 
 def rename_for(prefix, name):
@@ -257,7 +259,9 @@ def discover_loose_entries(container, claimed_members):
     return files, dirs
 
 
-def merge_wad_assets(wad, tex_used, flat_used, prefix, rename, claimed, dirs, merged_textures, Textures):
+def merge_wad_assets(
+    wad, tex_used, flat_used, prefix, rename, claimed, dirs, merged_textures, Textures
+):
     """Dead-strip + collision-resolve one wad's textures/patches/flats/
     sprites/sounds/music against `claimed`, write survivors, and return
     (tex_rename, flat_rename) for rewriting map sidedef/sector references."""
@@ -316,14 +320,26 @@ def merge_wad_assets(wad, tex_used, flat_used, prefix, rename, claimed, dirs, me
     # Sprites/sounds/music: no used-name computation possible from raw map
     # data (thing->sprite mapping lives in DECORATE/actor defs, not here)
     # -- carried through whole, same drop-or-rename policy.
-    resolve_group(wad.sprites, "sprite", claimed, prefix, rename, dirs["sprites"], ".lmp")
+    resolve_group(
+        wad.sprites, "sprite", claimed, prefix, rename, dirs["sprites"], ".lmp"
+    )
     resolve_group(wad.sounds, "sound", claimed, prefix, rename, dirs["sounds"], ".lmp")
     resolve_group(wad.music, "music", claimed, prefix, rename, dirs["music"], ".mus")
 
     return tex_rename, flat_rename
 
 
-def extract_maps(wad, prefix, tex_rename, flat_rename, dirs, mapinfo_lines, omg, info_by_map=None, map_names=None):
+def extract_maps(
+    wad,
+    prefix,
+    tex_rename,
+    flat_rename,
+    dirs,
+    mapinfo_lines,
+    omg,
+    info_by_map=None,
+    map_names=None,
+):
     info_by_map = info_by_map or {}
     count = 0
     for map_name in wad.maps.find("*"):
@@ -352,36 +368,77 @@ def extract_maps(wad, prefix, tex_rename, flat_rename, dirs, mapinfo_lines, omg,
         if is_hexen:
             num = level_number(map_name)
             if num is not None:
-                fields.append("\tlevelnum = %d" % num)
+                fields.append(f"\tlevelnum = {num}")
         if "music" in info:
-            fields.append('\tMusic = "%s"' % info["music"])
+            fields.append(f'\tMusic = "{info["music"]}"')
         if "sky1" in info:
-            fields.append('\tSky1 = "%s"' % info["sky1"])
+            fields.append(f'\tSky1 = "{info["sky1"]}"')
         if "par" in info:
-            fields.append("\tPar = %s" % info["par"])
+            fields.append(f"\tPar = {info['par']}")
         if fields:
             title = info.get("title", out_name)
-            mapinfo_lines.append('map %s "%s"\n{\n%s\n}\n' % (out_name, title, "\n".join(fields)))
+            joined = "\n".join(fields)
+            mapinfo_lines.append(f'map {out_name} "{title}"\n{{\n{joined}\n}}\n')
     return count
 
 
-def process_simple_source(path, used_prefixes, rename_assets, claimed, dirs, merged_textures, mapinfo_lines, map_names, omg, Textures):
+def process_simple_source(
+    path,
+    used_prefixes,
+    rename_assets,
+    claimed,
+    dirs,
+    merged_textures,
+    mapinfo_lines,
+    map_names,
+    omg,
+    Textures,
+):
     name = source_name(path)
     prefix = derive_prefix(name, used_prefixes)
     rename = name in rename_assets
     wad = omg.WAD(path)
     tex_used, flat_used = used_names_in([wad], omg)
     tex_rename, flat_rename = merge_wad_assets(
-        wad, tex_used, flat_used, prefix, rename, claimed, dirs, merged_textures, Textures
+        wad,
+        tex_used,
+        flat_used,
+        prefix,
+        rename,
+        claimed,
+        dirs,
+        merged_textures,
+        Textures,
     )
     count = extract_maps(
-        wad, prefix, tex_rename, flat_rename, dirs, mapinfo_lines, omg, source_mapinfo(wad), map_names
+        wad,
+        prefix,
+        tex_rename,
+        flat_rename,
+        dirs,
+        mapinfo_lines,
+        omg,
+        source_mapinfo(wad),
+        map_names,
     )
-    print("  %s: %d maps" % (name, count))
+    print(f"  {name}: {count} maps")
     return count
 
 
-def process_composite_source(src, used_prefixes, rename_assets, claimed, dirs, out_dir, merged_textures, mapinfo_lines, map_names, omg, Textures, tmpdir):
+def process_composite_source(
+    src,
+    used_prefixes,
+    rename_assets,
+    claimed,
+    dirs,
+    out_dir,
+    merged_textures,
+    mapinfo_lines,
+    map_names,
+    omg,
+    Textures,
+    tmpdir,
+):
     name = src["name"]
     prefix = derive_prefix(name, used_prefixes)
     rename = name in rename_assets
@@ -390,7 +447,11 @@ def process_composite_source(src, used_prefixes, rename_assets, claimed, dirs, o
     def extract_member(member):
         dest = os.path.join(tmpdir, name, member.replace("/", "_"))
         os.makedirs(os.path.dirname(dest), exist_ok=True)
-        with zipfile.ZipFile(container) as z, z.open(member) as src_f, open(dest, "wb") as dst_f:
+        with (
+            zipfile.ZipFile(container) as z,
+            z.open(member) as src_f,
+            open(dest, "wb") as dst_f,
+        ):
             shutil.copyfileobj(src_f, dst_f)
         return dest
 
@@ -401,7 +462,15 @@ def process_composite_source(src, used_prefixes, rename_assets, claimed, dirs, o
     tex_rename, flat_rename, info_by_map = {}, {}, {}
     for wad in resource_wads:
         t_ren, f_ren = merge_wad_assets(
-            wad, tex_used, flat_used, prefix, rename, claimed, dirs, merged_textures, Textures
+            wad,
+            tex_used,
+            flat_used,
+            prefix,
+            rename,
+            claimed,
+            dirs,
+            merged_textures,
+            Textures,
         )
         tex_rename.update(t_ren)
         flat_rename.update(f_ren)
@@ -433,17 +502,31 @@ def process_composite_source(src, used_prefixes, rename_assets, claimed, dirs, o
     count = 0
     for wad in map_wads:
         info_by_map.update(source_mapinfo(wad))
-        count += extract_maps(wad, prefix, tex_rename, flat_rename, dirs, mapinfo_lines, omg, info_by_map, map_names)
-    print("  %s: %d maps" % (name, count))
+        count += extract_maps(
+            wad,
+            prefix,
+            tex_rename,
+            flat_rename,
+            dirs,
+            mapinfo_lines,
+            omg,
+            info_by_map,
+            map_names,
+        )
+    print(f"  {name}: {count} maps")
     return count
 
 
 def main():
-    manifest = json.load(open(sys.argv[1]))
+    with open(sys.argv[1]) as f:
+        manifest = json.load(f)
     omg, Textures = load_omg(manifest["omgPath"])
 
     out_dir = manifest["outputDir"]
-    dirs = {sub: os.path.join(out_dir, sub) for sub in ("maps", "flats", "patches", "sprites", "sounds", "music")}
+    dirs = {
+        sub: os.path.join(out_dir, sub)
+        for sub in ("maps", "flats", "patches", "sprites", "sounds", "music")
+    }
     for d in dirs.values():
         os.makedirs(d, exist_ok=True)
 
@@ -453,17 +536,39 @@ def main():
     with zipfile.ZipFile(manifest["baseIpk3"]) as z:
         names = set(z.namelist())
         claimed = {
-            "flat": {os.path.splitext(os.path.basename(n))[0] for n in names if n.startswith("flats/")},
-            "patch": {os.path.splitext(os.path.basename(n))[0] for n in names if n.startswith("patches/")},
-            "sprite": {os.path.splitext(os.path.basename(n))[0] for n in names if n.startswith("sprites/")},
-            "sound": {os.path.splitext(os.path.basename(n))[0] for n in names if n.startswith("sounds/")},
-            "music": {os.path.splitext(os.path.basename(n))[0] for n in names if n.startswith("music/")},
+            "flat": {
+                os.path.splitext(os.path.basename(n))[0]
+                for n in names
+                if n.startswith("flats/")
+            },
+            "patch": {
+                os.path.splitext(os.path.basename(n))[0]
+                for n in names
+                if n.startswith("patches/")
+            },
+            "sprite": {
+                os.path.splitext(os.path.basename(n))[0]
+                for n in names
+                if n.startswith("sprites/")
+            },
+            "sound": {
+                os.path.splitext(os.path.basename(n))[0]
+                for n in names
+                if n.startswith("sounds/")
+            },
+            "music": {
+                os.path.splitext(os.path.basename(n))[0]
+                for n in names
+                if n.startswith("music/")
+            },
         }
         if "TEXTURE1.lmp" in names and "PNAMES.lmp" in names:
             from omg.lump import Lump
 
             base_textures = Textures()
-            base_textures.from_lumps(Lump(z.read("TEXTURE1.lmp")), Lump(z.read("PNAMES.lmp")))
+            base_textures.from_lumps(
+                Lump(z.read("TEXTURE1.lmp")), Lump(z.read("PNAMES.lmp"))
+            )
             claimed["texture"] = set(base_textures.keys())
         else:
             claimed["texture"] = set()
@@ -476,7 +581,11 @@ def main():
         # unbroken sequential MAP01/MAP02/... run and silently stops at the
         # first mismatch, which never holds across multiple differently-
         # prefixed sources -- an explicit name list has no such limit.
-        map_names = [os.path.splitext(os.path.basename(n))[0] for n in names if n.startswith("maps/")]
+        map_names = [
+            os.path.splitext(os.path.basename(n))[0]
+            for n in names
+            if n.startswith("maps/")
+        ]
 
     merged_textures = Textures()
     mapinfo_lines = []
@@ -527,7 +636,10 @@ def main():
     with open(os.path.join(out_dir, "ROGUEMAPS"), "w") as f:
         f.write("\n".join(map_names))
 
-    print("Total: %d maps from %d sources (%d in shuffle pool)" % (total_maps, len(manifest["sources"]), len(map_names)))
+    print(
+        f"Total: {total_maps} maps from {len(manifest['sources'])} sources "
+        f"({len(map_names)} in shuffle pool)"
+    )
 
 
 if __name__ == "__main__":

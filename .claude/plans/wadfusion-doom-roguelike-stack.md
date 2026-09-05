@@ -1477,6 +1477,7 @@ randomizers, corruption cards), but targeting Heretic/Hexen via HXDD.
 #### Map pool (not researched)
 
 Heretic and Hexen have separate idgames ecosystems:
+
 - `/idgames/levels/heretic/`
 - `/idgames/levels/hexen/`
 
@@ -1494,12 +1495,12 @@ without randomizers/cards.
 #### Implementation path (when unblocked)
 
 1. Purchase Heretic+Hexen
-2. Research HXDD CLI mode / from-source build
-3. Research 2025 KEX remaster format story
-4. Survey Heretic/Hexen idgames map pool
-5. Test mod compatibility against HXDD base
-6. Package HXDD derivation (or reconstruct merge)
-7. Build `HXDD_ROGUELIKE` game entry (or separate `HERETIC_ROGUELIKE`/
+1. Research HXDD CLI mode / from-source build
+1. Research 2025 KEX remaster format story
+1. Survey Heretic/Hexen idgames map pool
+1. Test mod compatibility against HXDD base
+1. Package HXDD derivation (or reconstruct merge)
+1. Build `HXDD_ROGUELIKE` game entry (or separate `HERETIC_ROGUELIKE`/
    `HEXEN_ROGUELIKE` if composition differs)
 
 ### Purchase-required items -- not yet registered anywhere in this repo
