@@ -58,6 +58,26 @@ lib.mkIf config.games.emulation.enable {
       name = "Raiden";
       romset = extractedZip "raidenb";
       shortname = "raidenb";
+      images.icon = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/icon/b7c72b1b53ebc0b5af2bcf4c7c52e5aa.png";
+        sha256 = "sha256-zKX4CKxyscRVh3rCn/h2wfkWTziYouJhB0+130tpgeQ=";
+      };
+      images.hero = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/hero/eb844cbe61ad95e6462ee45f7c3d87ae.png";
+        sha256 = "sha256-Rtc156mEunseVNeupGqrfeI8/x+vUqIePhXj9jYk38s=";
+      };
+      images.grid = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/grid/e09a0a2083ca253edb80920fc0cc43b9.png";
+        sha256 = "sha256-eS8pRX7aMNlAXwfPbSlWd+yZRhBs14SV5LjdGAFGE/4=";
+      };
+      images.wide = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/grid/4cb2d7e692818b5e431b4f6ddaacd5a4.png";
+        sha256 = "sha256-/AhN9Pavum9MD7M6rpi+DWony/sqe8RVWkT+oDGzcPE=";
+      };
+      images.logo = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/logo/de4ae1f4f810873e3b18b2f942b45795.png";
+        sha256 = "sha256-53CPz0T6owyEHF3hPpegp/CS+cy1Pw+jHzbPHlLFAU8=";
+      };
     };
     RAIDEN_FIGHTERS = mkArcade {
       name = "Raiden Fighters";

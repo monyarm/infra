@@ -125,6 +125,16 @@ lib.mkIf config.games.emulation.enable {
       shortname = "twinspri";
       steamAppId = 366280;
       steamCdnImagesHash = "sha256-Wwvl3VSdqJVtoEwppbPGt9lm2ZtBt9tNRa9TrZqKzS4=";
+      images = {
+        hero = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/hero/3a6cd33291178d268ef37b305c3f8c0e.jpg";
+          sha256 = "sha256-rXZqGECsEIGX5ylTd+R1zDbkzUl+1hnkqVPICAusFh8=";
+        };
+        logo = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/logo/aef26bbca340bfeca3e5138aff165c59.png";
+          sha256 = "sha256-s+L8AQsEU7MJBwGG3MM3yYVxjbwGLucCnCaJCl8ojXY=";
+        };
+      };
     };
 
     # Owned, but outside neogeo-rom-extractor's coverage, no other extractor found:
