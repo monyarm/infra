@@ -29,3 +29,4 @@
 - [getFile output has hash in filename](feedback_getfile_output_hash_in_filename.md) — `getFile`'s single-file store path bakes the hash into the filename itself; strip it before deriving names/prefixes from the basename.
 - [game-library-scan.nix is the scanner tool](reference_game_library_scan_tool.md) — owned-vs-catalog cross-referencing already lives here (`--scummvm` mode precedent); extend it, don't write a new script.
 - [GAME_IDEAS.md has mod-helper sketches](reference_game_ideas_mod_helpers.md) — `mkModDir`/`wrapGame` proposed shape for symlinking mod derivations into named game-dir paths.
+- [Haiku for basic edit subagents](feedback_haiku_for_basic_edit_subagents.md) — fully-inlined mechanical multi-file edit subagents (SteamGridDB-apply pattern) should run on Haiku, not Sonnet.
