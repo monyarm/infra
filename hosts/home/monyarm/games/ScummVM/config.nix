@@ -55,6 +55,11 @@ let
     };
 
   }
+  # Owned as physical CDs, not Steam/GOG -- deferred until disc-ripping
+  # support lands (see GAME_IDEAS.md's "The Dig / Full Throttle / Sam & Max
+  # Hit the Road (ScummVM, disc rip)" section and TODO.md's "Disc ripping"
+  # section). Stay scummvm.ini-only (playable from ScummVM's own UI) until
+  # then -- not registered as Steam shortcuts.
   // (mkScummVMGame {
     gameid = "samnmax";
     extra = "CD";
@@ -75,79 +80,6 @@ let
     engineid = "scumm";
     guioptions = "sndNoMIDI";
     description = "The Dig";
-  })
-  // (mkScummVMGame {
-    engineid = "sword25";
-    english_speech = true;
-    guioptions = "sndNoMIDI noAspect gameOption1";
-    description = "Broken Sword 2.5";
-  })
-  // (mkScummVMGame {
-    engineid = "drascula";
-    originalsaveload = true;
-    guioptions = "sndNoMIDI sndLinkSpeechToSfx gameOption1";
-    description = "Drascula: The Vampire Strikes Back";
-  })
-  // (mkScummVMGame {
-    gameid = "dreamweb_cd";
-    extra = "CD";
-    engineid = "dreamweb";
-    tts_enabled_speech = false;
-    originalsaveload = true;
-    tts_enabled_objects = false;
-    guioptions = "sndNoMIDI gameOption1 gameOption2";
-    bright_palette = true;
-    description = "DreamWeb";
-  })
-  // (mkScummVMGame {
-    engineid = "griffon";
-    platform = "windows";
-    guioptions = "sndNoMIDI gameOption1";
-    description = "The Griffon Legend";
-    tts_enabled = false;
-  })
-  // (mkScummVMGame {
-    engineid = "lure";
-    extra = "EGA";
-    guioptions = "sndNoSpeech gameOption1";
-    tts_narrator = false;
-    description = "Lure of the Temptress";
-  })
-  // (mkScummVMGame {
-    gameid = "sfinx";
-    engineid = "cge2";
-    extra = "Freeware v1.1";
-    tts_enabled_speech = false;
-    tts_enabled_objects = false;
-    guioptions = "gameOption1 gameOption2 gameOption3";
-    description = "Sfinx";
-    enable_color_blind = false;
-  })
-  // (mkScummVMGame {
-    engineid = "cge";
-    extra = "Freeware v1.0";
-    guioptions = "gameOption1 gameOption2";
-    description = "Soltys";
-  })
-  // (mkScummVMGame {
-    engineid = "parallaction";
-    extra = "Multi-lingual";
-    guioptions = "sndNoSpeech launchNoLoad";
-    description = "Nippon Safes Inc.";
-    language = "";
-  })
-  // (mkScummVMGame {
-    categoryId = "hires1_apple2";
-    gameid = "hires1";
-    engineid = "adl";
-    extra = "Public Domain";
-    color = true;
-    platform = "apple2";
-    scanlines = false;
-    monotext = true;
-    guioptions = "sndNoMIDI gameOption1 gameOption2 gameOption4 gameOption5";
-    description = "Hi-Res Adventure #1: Mystery House";
-    ntsc = true;
   });
 in
 {

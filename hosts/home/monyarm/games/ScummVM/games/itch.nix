@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   fetchItch,
   sources,
   compressScummvmGame,
@@ -115,6 +116,20 @@ lib.mkIf config.games.scummvm.enable {
       description = "A Date in the Park";
       platform = "";
       path = "${aDateInThePark}/A Date in the Park";
+      images = {
+        logo = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/logo/faa6af9037ad85e9050a1147d9f1aead.png";
+          sha256 = "sha256-VXzFUIhdJJjJQhsnWscRN3aq2ZLqIsVvXFKS0XcM1p4=";
+        };
+        grid = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/grid/4e5cd2f8d3a5e092c45e4dadfb76b614.png";
+          sha256 = "sha256-NkVKV+N0Lo8TLSTsJtOoMcOpWtVCvGHoSY+Fe4IQdPw=";
+        };
+        hero = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/hero/e7803c8c6041d459fe3d7db32af97830.png";
+          sha256 = "sha256-/v6HFoGYmNOkjCoc0Tz2Jxe6NVMsAPjXrxM2PAUkpA4=";
+        };
+      };
     };
 
     leewardEp1 = {
@@ -123,6 +138,20 @@ lib.mkIf config.games.scummvm.enable {
       description = "Leeward - Episode 1";
       platform = "";
       path = "${leewardEp1}/Leeward Episode 1";
+      images = {
+        hero = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/hero/fd8bc9c273e33cac67286605e40c3add.png";
+          sha256 = "sha256-LwxU5xWZBc3im+1vf1uIFYvoft8s0Fp/WVuhtfdwkKM=";
+        };
+        grid = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/grid/e7efedac5f64a7c67179cc8737d8d0c6.jpg";
+          sha256 = "sha256-ubQPeO8Yr5Fo8J8VIRMmgvd4jYDJemyw/fbMlhM+Jys=";
+        };
+        logo = pkgs.fetchurl {
+          url = "https://cdn2.steamgriddb.com/logo/cb2e31e6543c1a8e4c33636b666e5b1d.png";
+          sha256 = "sha256-FB1hkLP7xJuvJbA6Q4PPJ2xlxY0PVQDM/aFZuMT+wWY=";
+        };
+      };
     };
 
     suliFallenHarmony = {

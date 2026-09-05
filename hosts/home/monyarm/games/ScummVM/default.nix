@@ -164,6 +164,7 @@ in
             "epicId"
             "maximaSlug"
             "disabled"
+            "images"
           ]
         )
       ) (lib.attrValues config.games.scummvm.games)
@@ -183,6 +184,7 @@ in
         // lib.optionalAttrs (g ? epicId) { inherit (g) epicId; }
         // lib.optionalAttrs (g ? maximaSlug) { inherit (g) maximaSlug; }
         // lib.optionalAttrs (g ? disabled) { inherit (g) disabled; }
+        // lib.optionalAttrs (g ? images) { inherit (g) images; }
       )
     ) config.games.scummvm.games;
 

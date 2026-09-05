@@ -65,18 +65,24 @@ lib.mkIf config.games.scummvm.enable {
       gameid = "transylvania";
       description = "Transylvania";
       path = "${transylvania}";
+      images.wide = "${./art/wide/transylvania.jpg}";
     };
 
     transylvaniaV2 = mkGlkCommonGame {
       gameid = "transylvaniav2";
       description = "Transylvania (V2)";
       path = "${transylvaniaV2}";
+      # Same game, same art -- reuse transylvania's images wholesale instead
+      # of duplicating individual fields (same idiom as ScummVM/games/steam.nix's
+      # maniacMansionV1/V2).
+      images = config.programs.steam.games.transylvania.images;
     };
 
     ootopos = mkGlkCommonGame {
       gameid = "ootopos";
       description = "OO-Topos";
       path = "${ooTopos}";
+      images.wide = "${./art/wide/ootopos.png}";
     };
 
     crimsoncrown = mkGlkCommonGame {
@@ -84,12 +90,18 @@ lib.mkIf config.games.scummvm.enable {
       filename = "CC1.GDA";
       description = "Crimson Crown";
       path = "${crimsonCrown}";
+      images.wide = "${./art/wide/crimsoncrown.png}";
     };
 
     talisman = mkGlkCommonGame {
       gameid = "talisman";
       description = "Talisman: Challenging the Sands of Time";
       path = "${talisman}";
+      images.wide = "${./art/wide/talisman.png}";
+      images.grid = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/grid/ac911ec027bb2da79f1bc4639b17fc90.png";
+        sha256 = "sha256-lOe43RscapNpig5XPKaT2ctmlKK1VIfTTtXdFBDGzbs=";
+      };
     };
   };
 }

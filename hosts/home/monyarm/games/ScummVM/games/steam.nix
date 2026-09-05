@@ -362,6 +362,24 @@ lib.mkIf config.games.scummvm.enable {
     path = "${alphaPolaris}";
     steamAppId = 405780;
     steamCdnImagesHash = "sha256-I6suEDTQ69BzjKfXOQVWZYSn911fGe8QvB9LBOn3TiU=";
+    images = {
+      hero = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/hero/a3c36d0c741ddabbdb44b35a4fbebcb4.png";
+        sha256 = "sha256-5p1naWQ+43W7xh0Adc9nVH6fqE3NVAR9BE5vqI+K5gk=";
+      };
+      grid = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/grid/f72fa6f2f063283c6b651992c71695e7.png";
+        sha256 = "sha256-wsoucu9SA2NZuzDZf+Qo+8K4cgFBkGjLTTL/abdlCc4=";
+      };
+      logo = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/logo/b7b70189b9698f6213f2799fb12925e2.png";
+        sha256 = "sha256-pceElzB+yLMu09DDI3nPBYVHIhuhpZ+0+ioBZQZ0l/w=";
+      };
+      icon = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/icon/82890048e6491bf26edcb8987d19a6ae.ico";
+        sha256 = "sha256-Exv1axiYjH2TWaz4rfFlSIzbCMmKg98MBlFk79t5JpM=";
+      };
+    };
   };
 
   games.scummvm.games.artOfMurder1 = {
@@ -504,6 +522,24 @@ lib.mkIf config.games.scummvm.enable {
     path = "${fateOfAtlantis}/ATLANTIS";
     steamAppId = 6010;
     steamCdnImagesHash = "sha256-oBJqv6qpa5V/RTA3KAwmz+aJawE0OB+rDqc2spAuO0M=";
+    images = {
+      hero = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/hero/bf40f0ab4e5e63171dd16036913ae828.png";
+        sha256 = "sha256-p6qGkGZb16pG3Xqzwl0RzqQgUInhLrmQC6GWZa7kbGc=";
+      };
+      grid = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/grid/2d9d8c02281a1e13edbe828ba0eaa0d4.png";
+        sha256 = "sha256-MbC+o62ZnSgu6dBLU51EuEjIzgZ+//MACcZAmTXIZoU=";
+      };
+      icon = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/icon/a8e70c922b1f1b78e11b47f3bd9368cc.png";
+        sha256 = "sha256-65dSfZ5PDIGgiI3A0JAQpcIAOTVsVHMRQ4EgAPxGqvs=";
+      };
+      logo = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/logo/2050e03ca119580f74cca14cc6e97462.png";
+        sha256 = "sha256-Lew8EisaxGXBtr30LvEBaY7FjS9Yc+aG0BBf2xnhh5A=";
+      };
+    };
   };
 
   # Both classic-engine variants live inside this one Steam depot, but a
@@ -512,12 +548,25 @@ lib.mkIf config.games.scummvm.enable {
   # stays a synthetic (non-Steam-linked) shortcut using the same fetch.
   games.scummvm.games.maniacMansionV1 = mkManiac 1 {
     path = "${maniacMansionDl}/ScummVM/original";
+    # Same game, same art -- reuse V2's real Steam CDN artwork instead of a
+    # separate manual SteamGridDB fetch.
+    images = config.programs.steam.games.maniac_v2.images;
   };
 
   games.scummvm.games.maniacMansionV2 = mkManiac 2 {
     path = "${maniacMansionDl}/ScummVM/enhanced";
     steamAppId = 529890;
     steamCdnImagesHash = "sha256-Du18nbKfyueABTzNsJmCXUuLky52PozbICbipnlXrbw=";
+    images = {
+      hero = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/hero/56b68074a594752f33faa659f227ac65.png";
+        sha256 = "sha256-N39xP3l3oaHgJoDP+ub/GzbkEnc6Br0tzYR489zKO5I=";
+      };
+      logo = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/logo/1dcfee25dedf7c8e7e25a9b588299f84.png";
+        sha256 = "sha256-9ss8wnNDW13hoyULJWm2+8+QXhAw+JTHMugT0pWwvQ0=";
+      };
+    };
   };
 
   games.scummvm.games.lsl1 = {
@@ -593,6 +642,28 @@ lib.mkIf config.games.scummvm.enable {
     path = "${lastCrusade}/INDY3";
     steamAppId = 32310;
     steamCdnImagesHash = "sha256-tHyEF3rgAvlUyCF8gD3UOoM8x2z1JL/XHbZtPQLkBYk=";
+    images = {
+      hero = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/hero/f8dc55f175972a64dc2b407ef35e4975.png";
+        sha256 = "sha256-IwPIJPs8ZavsicBBj7dNVJQucmx9qJBxjVnht7ItNgw=";
+      };
+      logo = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/logo/489d2e63af438bd79fa555e00ba73e2a.png";
+        sha256 = "sha256-l7PlhNgCpqMKvANRdPAupHjmA+0bYs+cpcrmofLW7l4=";
+      };
+      icon = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/icon/0aff79643e0e8ce75a892aa9a9e736f4.png";
+        sha256 = "sha256-3+mINUP0QCda6jadMt5PD5Lxqsrq4KWIYWr1ziG3wJM=";
+      };
+      grid = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/grid/ae1e42f3b06c4a52820fefaef68a0750.png";
+        sha256 = "sha256-frmGc0oNYrTBNjLtQBYSqvQWaOQbnQ8Co2lOdKXyLLQ=";
+      };
+      wide = pkgs.fetchurl {
+        url = "https://cdn2.steamgriddb.com/grid/f20a744647bb54ae1d2e910e0c831c04.jpg";
+        sha256 = "sha256-Q0+MggAW7qZYOrNSuG/gKMkY3mkGU9u2nxGH6sZIeu4=";
+      };
+    };
   };
 
   games.scummvm.games.sanitarium = {
