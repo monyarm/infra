@@ -3,6 +3,7 @@
   pkgs,
   compressRom,
   compressRom',
+  addChecks,
   autoImport,
   ...
 }:
@@ -22,15 +23,14 @@ let
           pkgs
           compressRom
           compressRom'
+          addChecks
           ;
       })
     )
     mkRom
     ;
 
-  marchiveUnpack =
-    name: fetched:
-    marchiveUnpack' name [] fetched;
+  marchiveUnpack = name: fetched: marchiveUnpack' name [ ] fetched;
 
   marchiveUnpack' =
     name: extraPaths: fetched:
@@ -69,9 +69,14 @@ in
     };
 
     patches = lib.mkOption {
-      type = lib.types.attrsOf lib.types.package;
+      type = lib.types.attrsOf (
+        lib.types.oneOf [
+          lib.types.package
+          lib.types.path
+        ]
+      );
       default = { };
-      description = "Flat registry of registered IPS/BPS/UPS patch derivations.";
+      description = "Flat registry of registered IPS/BPS/UPS patch files.";
     };
 
     marchive = lib.mkOption {
@@ -87,13 +92,16 @@ in
   # mkRom.nix and marchive helpers are helpers, not modules
   imports = autoImport {
     path = ./.;
-    exclude = [ "mkRom.nix" ];
+    exclude = [
+      "mkRom.nix"
+      "emulators.nix"
+    ];
   };
 
   config = {
     _module.args = {
       inherit mkRom marchiveUnpack;
-      marchiveUnpack' = marchiveUnpack';
+      inherit marchiveUnpack';
     };
   };
 }

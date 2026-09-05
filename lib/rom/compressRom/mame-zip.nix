@@ -20,5 +20,5 @@ pkgs.runCommand "${getName rom}.zip"
   ''
     cp "${rom}" "$out"
     chmod +w "$out"
-    advzip -z -4 "$out" || true
+    advzip -z -4 "$out"
   ''

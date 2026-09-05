@@ -10,7 +10,7 @@
 let
   mkOutOfStoreSymlink =
     if (config != null && config ? lib.file) then config.lib.file.mkOutOfStoreSymlink else (_x: { });
-  # Separately-pinned pkgs for lib/optimize and lib/compressRom's actual
+  # Separately-pinned pkgs for lib/optimize and lib/rom's actual
   # tool invocations (oxipng, ffmpeg, wadptr, ...) -- see the
   # optimize-nixpkgs flake input's own comment in flake.nix.
   optimizePkgs = import inputs.optimize-nixpkgs {

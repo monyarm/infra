@@ -198,7 +198,7 @@ let
   }
   // textFns;
 
-  # Shared with lib/compressRom/ via lib/mkFormatDispatch.nix.
+  # Shared with lib/rom/compressRom/ via lib/mkFormatDispatch.nix.
   # listAware = false: every handler here takes a single src, not a list.
   dispatch =
     import ../mkFormatDispatch.nix

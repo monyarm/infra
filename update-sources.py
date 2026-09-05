@@ -1524,6 +1524,33 @@ def process_mediafire(name, raw, previous_sources):
     return result
 
 
+def process_romhacking(name, raw, previous_sources):
+    url, extra = parse_source_spec(raw)
+    extract = bool(extra.get("extract"))
+
+    print(f"Updating [romhacking] {name} from {url}...")
+
+    print(f"  -> Fetching hash for {name} via Nix build (Cloudflare bypass)...")
+    fetch_args = {"url": f'"{url}"'}
+    if extract:
+        fetch_args["extract"] = "true"
+    nix_expr = nix_build_expr("fetchRomhacking", fetch_args)
+    h = extract_hash_from_nix_build(nix_expr, f"fetchRomhacking ({name})")
+
+    print(f"  -> Realizing {name}'s output to record its file list...")
+    store_path = realize_build_output("fetchRomhacking", fetch_args, h)
+    files, archive_content = scan_realized_output(store_path)
+
+    result = {"type": "romhacking", "url": url, "hash": h}
+    if extract:
+        result["extract"] = True
+    if files:
+        result["files"] = files
+    if archive_content:
+        result["archiveContent"] = archive_content
+    return result
+
+
 def resolve_moddb_url(mod_id):
     """Cheaply resolves ModDB's download-start page to the final CDN path,
     without downloading the file body -- mirrors fetchModDB's own curl
@@ -2330,6 +2357,7 @@ def main():
         "pnpm",
         "idgames",
         "github-release",
+        "romhacking",
     ]
     custom_sections = [
         s
@@ -2392,6 +2420,8 @@ def main():
                     results[name] = process_gdrive(name, target, previous_sources)
                 elif section == "mediafire":
                     results[name] = process_mediafire(name, target, previous_sources)
+                elif section == "romhacking":
+                    results[name] = process_romhacking(name, target, previous_sources)
                 elif section == "moddb":
                     results[name] = process_moddb(name, target, previous_sources)
                 else:

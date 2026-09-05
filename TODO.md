@@ -1,5 +1,11 @@
 # TODO
 
+## Merge Multiple ROM Patches
+
+`mkRom` currently supports one configured patch. Add support for merging
+multiple patches into one patch file before compression, including a stable
+single-patch naming scheme.
+
 ## Add ZM Desktop Elf wallpapers
 
 Steam metadata:

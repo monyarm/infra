@@ -1,8 +1,16 @@
-{ pkgs, getName, ... }:
+{
+  pkgs,
+  getName,
+  unwrapRom,
+  ...
+}:
 # rvzconv.sh: GameCube/Wii disc images, dispatched via the ".gc.iso"/
 # ".wii.iso" compound extensions (see default.nix's aliases) since a bare
 # ".iso" alone can't say which console it's from.
-_extra: primary:
+_extra: input:
+let
+  primary = unwrapRom input;
+in
 pkgs.runCommand "${getName primary}.rvz"
   {
     nativeBuildInputs = [ pkgs.dolphin-emu ];

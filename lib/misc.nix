@@ -1,4 +1,8 @@
-{ lib, ... }:
+{
+  lib,
+  pkgs ? null,
+  ...
+}:
 rec {
   # Must share the same thunk in both args -- a separate expression redoes
   # the work instead of reusing it. ~2.9x speedup verified.
@@ -15,6 +19,115 @@ rec {
       result = lib.zipListsWith f a b;
     in
     builtins.parallel b result;
+
+  addChecks =
+    checks: drv:
+    let
+      checkNames = lib.attrNames checks;
+      commandFor =
+        check:
+        if builtins.isFunction check then
+          if builtins.functionArgs check == { } then check else check drv
+        else
+          check;
+      checkScripts = map (
+        name:
+        let
+          command = commandFor checks.${name};
+        in
+        ''
+          current_check=${lib.escapeShellArg name}
+          echo "==> $current_check"
+          reported_failure=0
+          if (set -e; eval ${lib.escapeShellArg command}); then
+            :
+          else
+            status=$?
+            if [ "$status" -ne 0 ] && [ ! -e "$failure_marker" ]; then
+              report FAIL exit "check exited with status $status"
+            fi
+          fi
+          [ -e "$failure_marker" ] && failed=1
+        ''
+      ) checkNames;
+      existingCheck = drv.checkPhase or null;
+      existingScript = lib.optionalString (existingCheck != null) ''
+        current_check=check
+        echo "==> $current_check"
+        reported_failure=0
+        if (set -e; eval ${lib.escapeShellArg existingCheck}); then
+          :
+        else
+          status=$?
+          if [ "$status" -ne 0 ] && [ ! -e "$failure_marker" ]; then
+            report FAIL exit "check exited with status $status"
+          fi
+        fi
+        [ -e "$failure_marker" ] && failed=1
+      '';
+      checkScript = ''
+        set +e
+        summary="$TMPDIR/add-checks-summary"
+        failure_marker="$TMPDIR/add-checks-failure"
+        : > "$summary"
+        rm -f "$failure_marker"
+        failed=0
+
+        report() {
+          status="$1"
+          subcheck="$2"
+          shift 2
+          message="$*"
+          printf '%s:%s | %s\n' "$current_check" "$subcheck" "$status" | tee -a "$summary"
+          printf '%s\n' "$message"
+          if [ "$status" = FAIL ]; then
+            failed=1
+            reported_failure=1
+            : > "$failure_marker"
+            return 1
+          fi
+        }
+
+        report_records() {
+          records="$1"
+          while IFS=$'\t' read -r status subcheck message; do
+            [ -n "$status" ] || continue
+            report "$status" "$subcheck" "$message" || :
+          done < "$records"
+        }
+
+        ${existingScript}
+        ${lib.concatStringsSep "\n" checkScripts}
+
+        echo "==> summary"
+        cat "$summary"
+        exit "$failed"
+      '';
+    in
+    if drv ? overrideAttrs then
+      drv.overrideAttrs (
+        _old:
+        {
+          doCheck = true;
+          checkPhase = checkScript;
+        }
+        // (lib.optionalAttrs (drv ? phases) {
+          phases = lib.unique ((drv.phases or [ ]) ++ [ "checkPhase" ]);
+        })
+      )
+    else
+      # Raw `derivation` (e.g. rename) has no overrideAttrs/checkPhase -- run checks in a wrapper instead.
+      pkgs.runCommand (drv.name or "checked-rom")
+        {
+          allowSubstitutes = false;
+          __contentAddressed = true;
+          outputHashAlgo = "sha256";
+          outputHashMode = "recursive";
+        }
+        ''
+          ${checkScript}
+          cp -as "${drv}" "$out"
+        '';
 
   # Longest name wins across all kinds (prefix "decorate*" beats suffix
   # ".txt"). Was a linear scan, biggest per-file cost (trace-function-calls).

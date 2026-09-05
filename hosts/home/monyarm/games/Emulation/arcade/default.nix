@@ -3,6 +3,7 @@
   pkgs,
   config,
   compressRom,
+  addChecks,
   autoImport,
   ...
 }:
@@ -18,11 +19,31 @@ let
     }@args:
     let
       compressedRomset = compressRom romset;
+      romPaths = [ "${romDir}" ] ++ extraRomPaths;
+      checkedRomset = addChecks {
+        smoke = ''
+          testRomDir="$TMPDIR/${shortname}-rompath"
+          mkdir -p "$testRomDir"
+          ln -s ${lib.escapeShellArg (toString compressedRomset)} "$testRomDir/${shortname}.zip"
+          HOME="$TMPDIR/mame-home"
+          mkdir -p "$HOME"
+          if ${pkgs.coreutils}/bin/timeout --foreground 10s ${pkgs.mame}/bin/mame \
+            -rompath "$testRomDir:${lib.concatStringsSep ":" (map toString extraRomPaths)}" \
+            -video none \
+            -sound none \
+            -bench 10 \
+            ${lib.escapeShellArg shortname}; then
+            report PASS smoke "MAME benchmark completed"
+          else
+            report FAIL smoke "MAME benchmark failed"
+          fi
+        '';
+      } compressedRomset;
       romDir = pkgs.runCommand "${shortname}-romdir" { } ''
         mkdir -p $out
-        ln -s ${compressedRomset} $out/${shortname}.zip
+        ln -s ${checkedRomset} $out/${shortname}.zip
       '';
-      rompath = lib.concatStringsSep ":" ([ "${romDir}" ] ++ extraRomPaths);
+      rompath = lib.concatStringsSep ":" romPaths;
     in
     (lib.removeAttrs args [
       "romset"

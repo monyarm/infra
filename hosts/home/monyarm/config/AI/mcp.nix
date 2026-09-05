@@ -9,6 +9,18 @@
         timeout = 60000;
       };
 
+      # microsoft's Playwright MCP -- browser automation
+      compressed-playwright = {
+        command = "${pkgs.mcp-compressor}/bin/mcp-compressor";
+        args = [
+          "-c"
+          "medium"
+          "--toonify"
+          "--"
+          "${pkgs.playwright-mcp}/bin/playwright-mcp"
+        ];
+      };
+
       # Compresses local tool metadata; results normally pass through unchanged.
       # --toonify converts structured JSON results to token-efficient TOON.
       compressed-codegraph = {

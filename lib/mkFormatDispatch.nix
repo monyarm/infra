@@ -5,7 +5,7 @@
   ...
 }:
 # Generalizes lib/optimize/default.nix's discover/alias/dispatch pattern so
-# lib/compressRom/ can reuse it.
+# lib/rom/compressRom/ can reuse it.
 #
 # listAware: passthrough handler shape only. compressRom's handlers take
 # srcs (true, default); optimize's take a single src (false).

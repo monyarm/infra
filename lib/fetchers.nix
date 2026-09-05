@@ -12,6 +12,17 @@
 let
   inherit (pkgs) lib;
   userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0";
+  nixFetcherFiles =
+    let
+      allFiles = builtins.attrNames (builtins.readDir ./fetchers);
+    in
+    builtins.filter (
+      name:
+      let
+        len = builtins.stringLength name;
+      in
+      len > 4 && builtins.substring (len - 4) 4 name == ".nix"
+    ) allFiles;
   subdirImports = builtins.foldl' (
     acc: file:
     acc
@@ -39,7 +50,7 @@ let
         fetchWithReferrer
         ;
     })
-  ) { } (builtins.attrNames (builtins.readDir ./fetchers));
+  ) { } nixFetcherFiles;
 
   functions =
 

@@ -38,7 +38,7 @@ wad.lastermaul = "https://github.com/GeorgePieVG/Lastermaul"
 tools.wadptr = "https://github.com/fragglet/wadptr"
 tools.scummvmTools = "https://github.com/scummvm/scummvm-tools"
 tools.rpatool = "https://github.com/Shizmob/rpatool"
-tools.mmlcDacExtractor = "https://github.com/HTV04/mmlc-dac-extractor"
+tools.gameExtractionToolbox = "https://github.com/shawngmc/game-extraction-toolbox"
 tools.mmxlcRomExtractor = "https://github.com/s3phir0th115/MMXLC1-Rom-Extractor"
 tools.neogeoRomExtractor = "https://github.com/DrRetroMod/neogeo-rom-extractor"
 tools.reePakTool = "https://github.com/Ekey/REE.PAK.Tool"
@@ -55,9 +55,6 @@ tools.maxima = "https://github.com/ArmchairDevelopers/Maxima"
 mpv.webtorrent-mpv-hook = "https://github.com/mrxdst/webtorrent-mpv-hook"
 
 [cargo]
-# Generates tools.maxima.cargoLock (+ cargoOutputHashes for its
-# [patch.crates-io] git forks) at update-sources.py time -- see
-# packages/maxima-cli.nix, which has no Cargo.lock upstream to build from.
 tools.maxima = "true"
 tools.mcp-compressor = "true"
 
@@ -108,6 +105,9 @@ wad.legendofdoombase = "120nPbFJY9y0qMF_CSXA3XvutdEp_Gcja;name=LegendOfDoom.pk3"
 wad.actiondoomrampageedition = "115GyqVk6QzG9AeA219AtWlVXul9jiLN7;extract"
 wad.hdoom = "197tg35i1tOaFPwg37NY57eFgRQf_6HDJ;name=HDoom.pk3"
 wad.anotherMonsterRandomizer = "1Lft4vWki-U4uXX-whGwJUub6_2tBEDwS;name=Monster Randomizer.pk3"
+patch.mm3improvement = "1OLofZoNHEUYi3h-9JyW_wUGiGLVxy7Et;extract"
+patch.ariaofsorrowDefinitive = "19h8tWNsgcLoulmp53ZntElDO0xY9U8Hk"
+patch.harmonyOfDissonanceImprovement = "14MrOJlmND4v5sSr_GCcxDImSCTU9MrTK;extract"
 
 [mediafire]
 wad.seriousSamRetroEncounter = "http://www.mediafire.com/file/3tgp183p48vb06z/SS_RETRO_ENCOUNTER_2018_hotfix.pk3"
@@ -121,8 +121,18 @@ wad.metroidDreadnought = "182831"
 wad.spramsMetroidDoom = "170103"
 wad.hocusPocusDoom = "189681"
 wad.doom64CE = "285205"
-wad.doomZero = "219272"
+wad.doomZero = "219273"
 wad.corruptionCards = "293793"
+
+[romhacking]
+patch.contra = "https://www.romhacking.net/translations/7271/;extract"
+patch.cv3 = "https://www.romhacking.net/hacks/1983/;extract"
+patch.bn1oss = "https://www.romhacking.net/hacks/3643/;extract"
+patch.bn2revision = "https://www.romhacking.net/hacks/7875/;extract"
+patch.bn3revision = "https://www.romhacking.net/hacks/7876/;extract"
+patch.bn4revision = "https://www.romhacking.net/hacks/8164/;extract"
+patch.mmxcomplete = "https://www.romhacking.net/hacks/8335/;extract"
+patch.mmx3fastrom = "https://www.romhacking.net/hacks/7547/;extract"
 
 [idgames]
 wad.paranoid = "levels/doom2/Ports/p-r/paranoid.zip"
@@ -155,9 +165,6 @@ wad.pl2 = "levels/doom2/megawads/pl2.zip"
 wad.prcp = "levels/doom2/Ports/megawads/prcp.zip"
 wad.neis = "levels/doom/Ports/megawads/neis.zip"
 wad.jpcp = "levels/doom2/Ports/megawads/jpcp.zip"
-# v1.2 (final) -- the doc's original target (a beta6 Dropbox link) is now
-# superseded by an actual idgames release; any current release works fine
-# for our own map-shuffle pool (we don't go through wadsmoosh's WAD_LUMP_LISTS).
 wad.tnt2Devilution = "levels/doom2/megawads/tnt2.zip"
 wad.perditionsGate = "levels/doom2/p-r/pdgate.zip"
 wad.e1m8b = "levels/doom/Ports/d-f/e1m8b.zip"

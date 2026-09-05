@@ -4,7 +4,7 @@
   system,
   mkOutOfStoreSymlink,
   config,
-  # Separately-pinned pkgs for files/media/optimize/compressRom's actual
+  # Separately-pinned pkgs for files/media/optimize/rom's actual
   # tool invocations -- see optimize-nixpkgs in flake.nix and
   # hosts/modules/lib.nix's construction of this. Required, not defaulted:
   # callers that don't care about the pin (e.g. packages/default.nix's
@@ -34,10 +34,10 @@ let
   strings = import ./strings.nix ({ inherit pkgs lib; } // constants // misc);
   imp = import ./imports.nix ({ inherit pkgs lib; } // misc);
   # optimizePkgs, not ambient pkgs: files.nix's functions (getFile, getFiles,
-  # removeFiles, packArchive, derefSymlinks, rename, patchFile, ...) are all
+  # removeFiles, packArchive, derefSymlinks, rename, ...) are all
   # file conversion/copying/compression tool invocations (p7zip, rpatool,
   # ...), so they always run through the pin -- regardless of whether the
-  # caller is a game def (ScummVM/Doom) or the optimize/compressRom chains.
+  # caller is a game def (ScummVM/Doom) or the optimize/rom chains.
   files = import ./files.nix (
     {
       pkgs = optimizePkgs;
@@ -88,7 +88,7 @@ let
     // misc
     // optimize
   );
-  compressRom = import ./compressRom (
+  rom = import ./rom (
     {
       pkgs = optimizePkgs;
       inherit (optimizePkgs) lib;
@@ -119,7 +119,7 @@ let
       fetchers
       optimize
       scummvmOptimize
-      compressRom
+      rom
       misc
       wasm
       niccup
@@ -137,7 +137,7 @@ let
   // fetchers
   // optimize
   // scummvmOptimize
-  // compressRom
+  // rom
   // misc;
 in
 {

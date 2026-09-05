@@ -54,6 +54,8 @@ let
 
   fileNameOf = s: s.originalName or s.name or (builtins.baseNameOf (toString s));
 
+  unwrapRom = x: if builtins.isAttrs x && !(lib.isDerivation x) && x ? rom then x.rom else x;
+
   # `cp` each of `srcs` under its real name -- for handlers staging
   # multiple related files (chd's cue/gdi+tracks, sevenzip's rom+patches).
   stageFiles =
@@ -63,29 +65,6 @@ let
   # `*`, which would also sweep up nix's own build-env artifact files.
   stagedNames = srcs: lib.concatMapStringsSep " " (s: lib.escapeShellArg (fileNameOf s)) srcs;
 
-  # Runs realCmd (leaves $out), retries with fallbackCmd if it didn't shrink.
-  guardCompress =
-    {
-      srcs,
-      realCmd,
-      fallbackCmd,
-    }:
-    ''
-      origSize=0
-      for f in ${lib.concatMapStringsSep " " (s: lib.escapeShellArg "${s}") srcs}; do
-        sz=$(stat -L -c%s "$f")
-        origSize=$((origSize + sz))
-      done
-
-      ${realCmd}
-
-      newSize=$(stat -L -c%s "$out")
-      if [ "$newSize" -gt "$origSize" ]; then
-        rm -f "$out"
-        ${fallbackCmd}
-      fi
-    '';
-
   # "rom + optional patch/sidecar" builder, shared by sevenzip-lzma,
   # sevenzip-deflate, and zstd's patches case -- callers supply only the
   # tool invocation.
@@ -94,13 +73,12 @@ let
       outExt,
       nativeBuildInputs ? [ ],
       compressCmd,
-      fallbackCmd,
     }:
     _extra: x:
     let
       isAttrsShape = builtins.isAttrs x && !(lib.isDerivation x);
       rom = if isAttrsShape then x.rom else x;
-      # Soft-patching (mGBA, RetroArch cores, ...) auto-applies an ips/bps/ups
+      # Soft-patching (mGBA, RetroArch cores, ...) auto-applies a patch
       # sidecar only if its basename exactly matches the rom's -- rename each
       # patch to "<romBase>.<ext>" via originalName, which stageFiles/
       # stagedNames already prefer over the patch's own on-disk name.
@@ -123,7 +101,7 @@ let
                   if m == null then null else lib.head m;
               in
               if ext == null then p else p // { originalName = "${romBase}.${ext}"; };
-            raw = if x ? patch && x.patch != null then x.patch else [ ];
+            raw = if x.patch or null != null then x.patch else [ ];
             flat = if builtins.isList raw then raw else [ raw ];
             sidecar = lib.optional (x ? sidecar && x.sidecar != null) (
               x.sidecar // { originalName = "${romBase}.sav"; }
@@ -144,11 +122,7 @@ let
       }
       ''
         ${stageFiles allFiles}
-        ${guardCompress {
-          srcs = allFiles;
-          realCmd = compressCmd allFiles;
-          fallbackCmd = fallbackCmd allFiles;
-        }}
+        ${compressCmd allFiles}
       '';
 
   commonArgs = {
@@ -159,13 +133,13 @@ let
       fileNameOf
       stageFiles
       stagedNames
-      guardCompress
       mkPatchBundleHandler
+      unwrapRom
       ;
   };
 
   dispatch =
-    import ../mkFormatDispatch.nix
+    import ../../mkFormatDispatch.nix
       {
         inherit lib resolveExtSorted sortDispatchKeys;
       }
@@ -190,11 +164,14 @@ let
   chdFamilyExts = [ "chd" ] ++ aliases.chd ++ aliases."psp-chd";
   isChdFamily =
     x:
-    if builtins.isAttrs x && !(lib.isDerivation x) then
-      x ? cue || x ? gdi || x ? iso || x ? img || x ? cso
+    let
+      rom = unwrapRom x;
+    in
+    if builtins.isAttrs rom && !(lib.isDerivation rom) then
+      rom ? cue || rom ? gdi || rom ? iso || rom ? img || rom ? cso
     else
       let
-        name = lib.toLower (fileNameOf x);
+        name = lib.toLower (fileNameOf rom);
         # Longest-suffix-wins: ".gc.iso"/".wii.iso" is rvz, not chd, despite
         # also ending in plain ".iso".
         candidates = lib.sort (a: b: lib.stringLength a > lib.stringLength b) (
@@ -213,7 +190,7 @@ let
     if parent != null && builtins.isList x then
       throw "compressRom': parent doesn't make sense with a list (each element would share the same parent) -- call compressRom' once per element instead"
     else if parent != null && !(isChdFamily x) then
-      throw "compressRom': parent is only supported for CHD-family sources (.iso/.img/.cso/.cue/.gdi/.psp.iso), got '${fileNameOf x}'"
+      throw "compressRom': parent is only supported for CHD-family sources (.iso/.img/.cso/.cue/.gdi/.psp.iso), got '${fileNameOf (unwrapRom x)}'"
     else
       dispatch.run {
         inherit fallback;

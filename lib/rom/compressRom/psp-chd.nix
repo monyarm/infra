@@ -2,7 +2,7 @@
   pkgs,
   lib,
   getName,
-  guardCompress,
+  unwrapRom,
   ...
 }:
 # PSP-specific CHD path (pspchdconv.sh): DVD hunk size fixed at 2048 (the
@@ -12,12 +12,12 @@
 # ".psp.iso" (see default.nix's aliases), so the input is already a real
 # .iso, not a .cso -- no decompress step needed here. Always a bare src,
 # never a named-parts attrset -- PSP isos never have siblings.
-extra: primary:
+extra: input:
 let
+  primary = unwrapRom input;
   outName = "${getName primary}.chd";
   parentArg = lib.optionalString (extra != null) ''-op "${extra}"'';
-  convertCmd =
-    codecArg: ''chdman createdvd -hs 2048 -i "${primary}" -o "$out" ${codecArg} ${parentArg}'';
+  convertCmd = ''chdman createdvd -hs 2048 -i "${primary}" -o "$out" ${parentArg}'';
 in
 pkgs.runCommand outName
   {
@@ -28,9 +28,5 @@ pkgs.runCommand outName
     outputHashMode = "flat";
   }
   ''
-    ${guardCompress {
-      srcs = [ primary ];
-      realCmd = convertCmd "";
-      fallbackCmd = convertCmd "-c none";
-    }}
+    ${convertCmd}
   ''
