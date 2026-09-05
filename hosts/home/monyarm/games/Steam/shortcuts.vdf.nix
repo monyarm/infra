@@ -60,7 +60,12 @@ let
   # Clean Submodule definition as a configuration set.
   # Using { name, config, ... } lets us access the current key (name) and local configuration values.
   gameSubmodule =
-    { name, config, ... }:
+    {
+      name,
+      config,
+      options,
+      ...
+    }:
     let
       # lazy: no network fetch unless game set an appid and a hash.
       cdnImages =
@@ -249,6 +254,51 @@ let
               config.steamAppId
             else
               generateSteamAppId config.resolvedTargetExe config.name;
+        };
+
+        sourceFile = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          readOnly = true;
+          internal = true;
+          # unsafeGetAttrPos on `config` doesn't work here -- `config` is the
+          # module system's *merged* fixpoint result, assembled through
+          # mergeDefinitions/mkMerge machinery rather than a literal
+          # attrset, so position-tracking on it doesn't reliably point at
+          # the game's actual file. `options.game.files` is the module
+          # system's own supported mechanism for this (same field
+          # nixpkgs's own deprecation/rename warnings use to say "defined
+          # in <file>") -- a real list of every file that set `game` for
+          # this instance. `game` (not `name`) is used since every game
+          # sets it explicitly, unlike options with defaults.
+          #
+          # This file gets position-tracked from wherever Nix last copied it
+          # (autoImport copies each games/ subdirectory into the store
+          # separately -- see steamgriddb-proxy.py's resolve_repo_path),
+          # e.g. "/nix/store/<hash>-nes/castlevania.nix". unsafeGetAttrPos
+          # results are never real derivation outputs (no string context to
+          # discard -- confirmed: unsafeDiscardStringContext here is a
+          # no-op), but the text still *looks* like a store path, and Nix
+          # warns loudly about any derivation (the report build) embedding
+          # store-path-shaped text with no context behind it. Stripping the
+          # "/nix/store/<hash>-" prefix removes the part that pattern-matches
+          # as a store reference; steamgriddb-proxy.py only ever needed the
+          # "<dirname>/<relative-path>" tail anyway.
+          default =
+            let
+              file = if (options.game.files or [ ]) == [ ] then null else lib.head options.game.files;
+              stripped = if file == null then null else builtins.match "^/nix/store/[a-z0-9]{32}-(.*)$" file;
+            in
+            if file == null then
+              null
+            else if stripped != null then
+              builtins.head stripped
+            else
+              file;
+          description = ''
+            File this game block is defined in, purely for informational
+            JSON output (e.g. steamgriddb-proxy.py's apply instructions) --
+            never affects what gets built.
+          '';
         };
       };
     };

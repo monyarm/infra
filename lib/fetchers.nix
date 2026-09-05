@@ -40,7 +40,6 @@ let
         sources
         ;
       inherit (functions)
-        fetchzipNoSubst
         fetchGitTree
         secretsPrelude
         extractArchiveSnippet
@@ -305,12 +304,6 @@ let
         # rides along, enabling downstream fileList-based filtering.
         if args ? files then gitDrv // { passthru.fileList = args.files; } else gitDrv;
 
-      fetchzipNoSubst =
-        args:
-        (pkgs.fetchzip args).overrideAttrs (_oldAttrs: {
-          allowSubstitutes = false;
-        });
-
       fetchzipSelective =
         {
           keepFiles,
@@ -360,7 +353,7 @@ let
           '';
         in
         # 3. Use overrideAttrs to APPEND our script to whatever postFetch fetchzip already runs
-        (fetchzipNoSubst fetchzipArgs).overrideAttrs (oldAttrs: {
+        (pkgs.fetchzip fetchzipArgs).overrideAttrs (oldAttrs: {
           postFetch = (oldAttrs.postFetch or "") + "\n" + selectivePostFetch;
           stripRoot = false;
         });

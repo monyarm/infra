@@ -1,5 +1,5 @@
 {
-  fetchzipNoSubst,
+  pkgs,
   ...
 }:
 {
@@ -10,7 +10,7 @@
       version,
       hash,
     }:
-    fetchzipNoSubst {
+    pkgs.fetchzip {
       name = "${namespace}-${name}-${version}";
       url = "https://thunderstore.io/package/download/${namespace}/${name}/${version}/";
       extension = "zip";

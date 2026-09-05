@@ -211,7 +211,10 @@ let
     if fileList == null || dispatchWasmModule == null then
       null
     else
-      (import ../wasm.nix { inherit pkgs lib nixWasmRustPath; }).detectOptimizerTools fileList;
+      builtins.wasm {
+        path = "${dispatchWasmModule}/nix_wasm_plugin_dispatch.wasm";
+        function = "detect_optimizer_tools";
+      } fileList;
   # Built outside the sandbox: the sandbox has no network (substituters =
   # "" below), so cargo/rustc fetching crate deps has to happen out here.
   dispatchWasmModule =

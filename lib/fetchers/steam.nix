@@ -2,7 +2,6 @@
   pkgs,
   lib,
   splitFiles,
-  fetchzipNoSubst,
   fetchToolOutput,
   fetchHtmlThenCurl,
   userAgent,
@@ -14,7 +13,7 @@ rec {
     let
       name = "GE-Proton${version}";
     in
-    fetchzipNoSubst {
+    pkgs.fetchzip {
       inherit name hash;
       url = "https://github.com/GloriousEggroll/proton-ge-custom/releases/download/${name}/${name}.tar.gz";
     };
@@ -482,33 +481,43 @@ rec {
       )
     );
 
+  # steamgriddb.com's grid/game pages are a client-rendered SPA now (no
+  # server-rendered "asset-download" link left to scrape -- confirmed dead
+  # via a real `nix build`, 2026-09-02), and the API has no "get one grid by
+  # its own asset id" endpoint (only listing by game, and DELETE by id) --
+  # so resolving a specific known `id` means listing the game's grids and
+  # filtering for it. Needs STEAMGRIDDB_API_KEY via /secrets, same
+  # convention as fetchCurseForge etc.
   fetchSteamGrid =
-    { id, sha256 }:
+    {
+      steamAppId,
+      id,
+      sha256,
+    }:
     fetchHtmlThenCurl {
       name = "steamgriddb-${toString id}";
       outputHash = sha256;
       outputHashMode = "flat";
+      useSecrets = true;
       nativeBuildInputs = [
         pkgs.curl
-        pkgs.gnused
-        pkgs.gnugrep
+        pkgs.jq
       ];
       resolve = ''
-        referrer="https://www.steamgriddb.com/grid/${toString id}"
-        echo "Fetching page metadata from: $referrer"
-
-        curl -s -H "User-Agent: ${userAgent}" "$referrer" > page.html
-
-        img_url=$(grep -A 1 'class="asset-download"' page.html | sed -n 's|.*href="\([^"]*\)".*|\1|p' | head -n 1)
-
-        if [ -z "$img_url" ]; then
-          echo "Error: Could not extract download URL from SteamGridDB page."
+        if [ -z "''${STEAMGRIDDB_API_KEY:-}" ]; then
+          echo "Error: STEAMGRIDDB_API_KEY is not set in the environment." >&2
+          echo "Apply for a key at https://www.steamgriddb.com/profile/preferences/api" >&2
           exit 1
         fi
 
-        echo "Found direct image link: $img_url"
-        RESOLVED_URL="$img_url"
+        grids_json=$(curl -fsSL -H "Authorization: Bearer $STEAMGRIDDB_API_KEY" -H "User-Agent: ${userAgent}" \
+          "https://www.steamgriddb.com/api/v2/grids/steam/${toString steamAppId}")
+        RESOLVED_URL=$(echo "$grids_json" | jq -r '.data[] | select(.id == ${toString id}) | .url' | head -n1)
+
+        if [ -z "$RESOLVED_URL" ] || [ "$RESOLVED_URL" = "null" ]; then
+          echo "Error: grid id ${toString id} not found among steam appid ${toString steamAppId}'s grids." >&2
+          exit 1
+        fi
       '';
-      curlOpts = ''-H "User-Agent: ${userAgent}" -H "Referer: $referrer"'';
     };
 }
