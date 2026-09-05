@@ -100750,6 +100750,144 @@
     type = "git-tag";
     url = "https://github.com/murat-dogan/node-datachannel.git";
   };
+  patch = {
+    ariaofsorrowDefinitive = {
+      fileId = "19h8tWNsgcLoulmp53ZntElDO0xY9U8Hk";
+      hash = "sha256-jlMM/IvxMx13HF31BS3tqBjqphOOx5ODlR1En3mwl64=";
+      type = "gdrive";
+      version = "481080:None";
+    };
+    bn1oss = {
+      extract = true;
+      files = [
+        "ChangeLog.txt"
+        "Operation_Patch_0.7.ips"
+        "individual patches/Chip_Buff.ips"
+        "individual patches/Don't use this with the main patch!.txt"
+        "individual patches/opp_colors.ips"
+        "readme.txt"
+      ];
+      hash = "sha256-ZctkAF/JA/wFnOznOGxqrAtbFuKAZ2UklzkdzW6Kqhg=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/hacks/3643/";
+    };
+    bn2revision = {
+      extract = true;
+      files = [
+        "MMBN2Revision/MMBN2Revision.ips"
+        "MMBN2Revision/Readme.txt"
+      ];
+      hash = "sha256-J86uMV+sVwAqfg0x/gXHPWlv7EykyHtX3pV8GU21qLc=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/hacks/7875/";
+    };
+    bn3revision = {
+      extract = true;
+      files = [
+        "MMBN3Revision/MMBN3Revision-Blue.ips"
+        "MMBN3Revision/MMBN3Revision-White.ips"
+        "MMBN3Revision/Readme.txt"
+      ];
+      hash = "sha256-a0yXWx7vupon9jPtIzH/nD/GEajziXrz/K825R37gfo=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/hacks/7876/";
+    };
+    bn4revision = {
+      extract = true;
+      files = [
+        "MMBN4Revision/MMBN4Revision-BlueMoon-PROG.ips"
+        "MMBN4Revision/MMBN4Revision-BlueMoon.ips"
+        "MMBN4Revision/MMBN4Revision-RedSun-PROG.ips"
+        "MMBN4Revision/MMBN4Revision-RedSun.ips"
+        "MMBN4Revision/Readme.txt"
+      ];
+      hash = "sha256-BnnGO8Jzz02xCtrYuSIHlrH0pqEUkJlLABOazKs8N7E=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/hacks/8164/";
+    };
+    contra = {
+      extract = true;
+      files = [
+        "Contra Japan (English w JP Title).bps"
+        "Contra Japan (English w JP Title).ips"
+        "Contra Japan (English w NA Title).bps"
+        "Contra Japan (English w NA Title).ips"
+        "Contra Readme.txt"
+      ];
+      hash = "sha256-9U9QLkRREo8/gkklsqGvfYwO2g0mH/WJXs8slWwVR7c=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/translations/7271/";
+    };
+    cv3 = {
+      extract = true;
+      files = [
+        "Akuden - Logotrans (New Alucard) v8.ips"
+        "Akuden - Logotrans v8.ips"
+      ];
+      hash = "sha256-F0v3AbcABcl4+YPcDflocplHnuFc4ZNLJap/6aQn18g=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/hacks/1983/";
+    };
+    harmonyOfDissonanceImprovement = {
+      extract = true;
+      fileId = "14MrOJlmND4v5sSr_GCcxDImSCTU9MrTK";
+      files = [
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 C-Whip RMenu.ips"
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 C-Whip.ips"
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 Localization Fix C-Whip RMenu.ips"
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 Localization Fix C-Whip.ips"
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 Localization Fix RMenu.ips"
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 Localization Fix.ips"
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 RMenu.ips"
+        "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7.ips"
+        "CV HOD Visual Improvement V1.2.7/Changelog.txt"
+        "CV HOD Visual Improvement V1.2.7/README.txt"
+      ];
+      hash = "sha256-vCUiRiJGZCEeiEpGJHJhewEsA7vU+UFNTdDBZSS3Vio=";
+      type = "gdrive";
+      version = "2006469:None";
+    };
+    mm3improvement = {
+      extract = true;
+      fileId = "1OLofZoNHEUYi3h-9JyW_wUGiGLVxy7Et";
+      files = [
+        "Manual fixes.txt"
+        "MegaFLE X.exe"
+        "Megaman 3 Improvement.rtf"
+        "Megaman3 Improvement.ips"
+        "Rockman3 Improvement.ips"
+        "Story intro guide.rtf"
+        "Text Table (English).tbl"
+        "megafle.dat"
+        "mm3 improvement english settings.zip"
+        "mm3 improvement labels.txt"
+        "unused frames.txt"
+      ];
+      hash = "sha256-5pz8W8aMYf0PxDKz7eZ0aeR3rVjtVDFtQCiciU45N6k=";
+      type = "gdrive";
+      version = "563389:None";
+    };
+    mmx3fastrom = {
+      extract = true;
+      files = [
+        "Megaman X3 - Fastrom v2.1.ips"
+        "Readme.txt"
+      ];
+      hash = "sha256-3qU2gxcnZWYvJvSbvTAKzmIu7meAwOatwnb283/paAk=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/hacks/7547/";
+    };
+    mmxcomplete = {
+      extract = true;
+      files = [
+        "Mega Man X Complete Edition Including Gameplay Changes.ips"
+        "Mega Man X Complete Edition With Text Changes Only.ips"
+      ];
+      hash = "sha256-iuMQdeyTg2FJZ2csgpuvzE6t7Ku8QTIx3IhYMt5UFlA=";
+      type = "romhacking";
+      url = "https://www.romhacking.net/hacks/8335/";
+    };
+  };
   scummvm = {
     abovethewaves = {
       files = [
@@ -101060,6 +101198,177 @@
       type = "npmjs";
       url = "https://registry.npmjs.org/@colbymchenry/codegraph-linux-x64/-/codegraph-linux-x64-1.6.0.tgz";
       version = "1.6.0";
+    };
+    gameExtractionToolbox = {
+      date = "2025-05-15";
+      files = [
+        ".github/workflows/python-publish.yml"
+        ".gitignore"
+        ".pylintrc"
+        ".vscode/launch.json"
+        ".vscode/settings.json"
+        "CHANGELOG.md"
+        "DEVELOPMENT.md"
+        "LICENSE"
+        "README.md"
+        "ROADMAP.md"
+        "docs/rom-identification.md"
+        "docs/titles/unimplemented/cave_titles.md"
+        "docs/titles/unimplemented/ea_replay.md"
+        "docs/titles/unimplemented/hamster_arcade_archives.md"
+        "docs/titles/unimplemented/r-type_dimensions_ex.md"
+        "pyproject.toml"
+        "setup.cfg"
+        "src/gex/__init__.py"
+        "src/gex/commands/archive/__init__.py"
+        "src/gex/commands/archive/arc/__init__.py"
+        "src/gex/commands/archive/arc/arc.py"
+        "src/gex/commands/archive/arc/extract.py"
+        "src/gex/commands/archive/archive.py"
+        "src/gex/commands/archive/kpka/__init__.py"
+        "src/gex/commands/archive/kpka/extract.py"
+        "src/gex/commands/archive/kpka/kpka.py"
+        "src/gex/commands/archive/zip/__init__.py"
+        "src/gex/commands/archive/zip/list.py"
+        "src/gex/commands/archive/zip/zip.py"
+        "src/gex/commands/file/__init__.py"
+        "src/gex/commands/file/deinterleave.py"
+        "src/gex/commands/file/diff.py"
+        "src/gex/commands/file/file.py"
+        "src/gex/commands/file/hash.py"
+        "src/gex/commands/file/identify.py"
+        "src/gex/commands/file/slice.py"
+        "src/gex/commands/finder/__init__.py"
+        "src/gex/commands/finder/bulk.py"
+        "src/gex/commands/finder/finder.py"
+        "src/gex/commands/postprocess/__init__.py"
+        "src/gex/commands/postprocess/postprocess.py"
+        "src/gex/commands/postprocess/wii/__init__.py"
+        "src/gex/commands/postprocess/wii/cleanrip.py"
+        "src/gex/commands/postprocess/wii/wii.py"
+        "src/gex/commands/tasks/__init__.py"
+        "src/gex/commands/tasks/details.py"
+        "src/gex/commands/tasks/extract.py"
+        "src/gex/commands/tasks/list.py"
+        "src/gex/commands/tasks/tasks.py"
+        "src/gex/commands/version.py"
+        "src/gex/lib/archive/__init__.py"
+        "src/gex/lib/archive/arc.py"
+        "src/gex/lib/archive/bplist-mbundle.py"
+        "src/gex/lib/archive/kpka.py"
+        "src/gex/lib/archive/kvq.py"
+        "src/gex/lib/archive/lzma.py"
+        "src/gex/lib/archive/prs.py"
+        "src/gex/lib/archive/zip.py"
+        "src/gex/lib/contrib/bputil.py"
+        "src/gex/lib/file/__init__.py"
+        "src/gex/lib/file/identify.py"
+        "src/gex/lib/tasks/basetask.py"
+        "src/gex/lib/tasks/copytask.py"
+        "src/gex/lib/tasks/helpers.py"
+        "src/gex/lib/tasks/impl/__init__.py"
+        "src/gex/lib/tasks/impl/acac/__init__.py"
+        "src/gex/lib/tasks/impl/acac/metadata.json"
+        "src/gex/lib/tasks/impl/ags_digdug/__init__.py"
+        "src/gex/lib/tasks/impl/ags_digdug/metadata.json"
+        "src/gex/lib/tasks/impl/ags_galaga/__init__.py"
+        "src/gex/lib/tasks/impl/ags_galaga/metadata.json"
+        "src/gex/lib/tasks/impl/ags_mspacman/__init__.py"
+        "src/gex/lib/tasks/impl/ags_mspacman/metadata.json"
+        "src/gex/lib/tasks/impl/ags_pacman/__init__.py"
+        "src/gex/lib/tasks/impl/ags_pacman/metadata.json"
+        "src/gex/lib/tasks/impl/atarivault/__init__.py"
+        "src/gex/lib/tasks/impl/atarivault/arcade.py"
+        "src/gex/lib/tasks/impl/atarivault/metadata.json"
+        "src/gex/lib/tasks/impl/blizzarcade/__init__.py"
+        "src/gex/lib/tasks/impl/blizzarcade/metadata.json"
+        "src/gex/lib/tasks/impl/breakers/__init__.py"
+        "src/gex/lib/tasks/impl/breakers/metadata.json"
+        "src/gex/lib/tasks/impl/bubsy/__init__.py"
+        "src/gex/lib/tasks/impl/bubsy/metadata.json"
+        "src/gex/lib/tasks/impl/cas1/__init__.py"
+        "src/gex/lib/tasks/impl/cas1_old/__init__.py"
+        "src/gex/lib/tasks/impl/cas2/__init__.py"
+        "src/gex/lib/tasks/impl/cbeub/__init__.py"
+        "src/gex/lib/tasks/impl/cbeub/metadata.json"
+        "src/gex/lib/tasks/impl/cfc/__init__.py"
+        "src/gex/lib/tasks/impl/cfc/metadata.json"
+        "src/gex/lib/tasks/impl/ddragontrilogy/__init__.py"
+        "src/gex/lib/tasks/impl/ddragontrilogy/metadata.json"
+        "src/gex/lib/tasks/impl/disneyac/__init__.py"
+        "src/gex/lib/tasks/impl/disneyac/metadata.json"
+        "src/gex/lib/tasks/impl/disneyalkb/__init__.py"
+        "src/gex/lib/tasks/impl/disneyalkb/metadata.json"
+        "src/gex/lib/tasks/impl/genesis/__init__.py"
+        "src/gex/lib/tasks/impl/genesis/metadata.json"
+        "src/gex/lib/tasks/impl/irem/__init__.py"
+        "src/gex/lib/tasks/impl/irem/metadata.json"
+        "src/gex/lib/tasks/impl/kof97_gm/__init__.py"
+        "src/gex/lib/tasks/impl/kof97_gm/metadata.json"
+        "src/gex/lib/tasks/impl/mkak/__init__.py"
+        "src/gex/lib/tasks/impl/mmbnlc1/__init__.py"
+        "src/gex/lib/tasks/impl/mmbnlc1/metadata.json"
+        "src/gex/lib/tasks/impl/mmbnlc2/__init__.py"
+        "src/gex/lib/tasks/impl/mmbnlc2/metadata.json"
+        "src/gex/lib/tasks/impl/mmlc1/__init__.py"
+        "src/gex/lib/tasks/impl/mmlc1/metadata.json"
+        "src/gex/lib/tasks/impl/mmxlc1/__init__.py"
+        "src/gex/lib/tasks/impl/mmxlc1/metadata.json"
+        "src/gex/lib/tasks/impl/mvscc/__init__.py"
+        "src/gex/lib/tasks/impl/mvscc/metadata.json"
+        "src/gex/lib/tasks/impl/neogeo_classics_amazon/__init__.py"
+        "src/gex/lib/tasks/impl/neogeo_classics_amazon/metadata.json"
+        "src/gex/lib/tasks/impl/neogeo_classics_humble/__init__.py"
+        "src/gex/lib/tasks/impl/neogeo_classics_humble/metadata.json"
+        "src/gex/lib/tasks/impl/pacmanmplus/__init__.py"
+        "src/gex/lib/tasks/impl/pacmanmplus/metadata.json"
+        "src/gex/lib/tasks/impl/psikyo/__init__.py"
+        "src/gex/lib/tasks/impl/sadxgg/__init__.py"
+        "src/gex/lib/tasks/impl/sadxgg/metadata.json"
+        "src/gex/lib/tasks/impl/saga/EndianBinaryReader.py"
+        "src/gex/lib/tasks/impl/saga/__init__.py"
+        "src/gex/lib/tasks/impl/saga/metadata.json"
+        "src/gex/lib/tasks/impl/sf30ac/__init__.py"
+        "src/gex/lib/tasks/impl/sf30ac/metadata.json"
+        "src/gex/lib/tasks/impl/snk40/__init__.py"
+        "src/gex/lib/tasks/impl/snk40/arcadedlc.py"
+        "src/gex/lib/tasks/impl/snk40/arcademain.py"
+        "src/gex/lib/tasks/impl/snk40/arcadepatch.py"
+        "src/gex/lib/tasks/impl/snk40/metadata.json"
+        "src/gex/lib/tasks/impl/snk40/nes.py"
+        "src/gex/lib/tasks/impl/snk40/utils.py"
+        "src/gex/lib/tasks/impl/spp_columnsiii/__init__.py"
+        "src/gex/lib/tasks/impl/spp_columnsiii/metadata.json"
+        "src/gex/lib/tasks/impl/spp_drmbm/__init__.py"
+        "src/gex/lib/tasks/impl/spp_drmbm/metadata.json"
+        "src/gex/lib/tasks/impl/ssp1/__init__.py"
+        "src/gex/lib/tasks/impl/ssp1/metadata.json"
+        "src/gex/lib/tasks/impl/ssp2/__init__.py"
+        "src/gex/lib/tasks/impl/ssp2/metadata.json"
+        "src/gex/lib/tasks/impl/toaplan_truxton2/__init__.py"
+        "src/gex/lib/tasks/impl/toaplan_truxton2/metadata.json"
+        "src/gex/lib/tasks/impl/wonderboy3/__init__.py"
+        "src/gex/lib/tasks/impl/wonderboy3/metadata.json"
+        "src/gex/lib/tasks/impl/zamn/__init__.py"
+        "src/gex/lib/tasks/impl/zamn/metadata.json"
+        "src/gex/lib/tasks/splicetask.py"
+        "src/gex/lib/tasks/task_template.py"
+        "src/gex/lib/tasks/zipsplicetask.py"
+        "src/gex/lib/utils/__init__.py"
+        "src/gex/lib/utils/blob/hash.py"
+        "src/gex/lib/utils/blob/transforms.py"
+        "src/gex/lib/utils/gfx_rebuilder.py"
+        "src/gex/lib/utils/helper.py"
+        "src/gex/lib/utils/vendor/capcom.py"
+        "src/gex/lib/utils/vendor/snk.py"
+        "src/gex/lib/utils/vendor/snk_template.py"
+        "src/gex/lib/utils/verify.py"
+        "src/gex/toolbox.py"
+      ];
+      hash = "b8baad3ae736efb07d926a8e4c1eeb55be8fdca6";
+      rev = "7e4ebfd03d60ed8bcf120090ccb888169b007823";
+      type = "git";
+      url = "https://github.com/shawngmc/game-extraction-toolbox.git";
     };
     maxima = {
       cargoLock = "# This file is automatically @generated by Cargo.
@@ -109336,8 +109645,10 @@ dependencies = [
 ";
       cargoLockVersion = 2;
       cargoOutputHashes = {
-        "git+https://github.com/ArmchairDevelopers/async-compression.git#4c9a88aa0ba50b32400e308b0c0dda9e5bf0e779" = "sha256-6PRxfc//AsTJ8MMN3bql3kaNs+jLS7rkmRVJj1Tke0M=";
-        "git+https://github.com/ArmchairDevelopers/flate2-rs.git#42daaa1eb6aad89d9cf8c1fa51f2d6bcae3a3247" = "sha256-j6T/3yNxefDFi6yyPVi0D0hcvRsLz7EJ/Nypf4WRFvA=";
+        "git+https://github.com/ArmchairDevelopers/async-compression.git#4c9a88aa0ba50b32400e308b0c0dda9e5bf0e779" =
+          "sha256-6PRxfc//AsTJ8MMN3bql3kaNs+jLS7rkmRVJj1Tke0M=";
+        "git+https://github.com/ArmchairDevelopers/flate2-rs.git#42daaa1eb6aad89d9cf8c1fa51f2d6bcae3a3247" =
+          "sha256-j6T/3yNxefDFi6yyPVi0D0hcvRsLz7EJ/Nypf4WRFvA=";
       };
       date = "2026-01-25";
       files = [

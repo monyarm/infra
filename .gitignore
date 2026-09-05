@@ -31,4 +31,5 @@ benchmark.txt
 games.list
 lib/wasm/*/target
 .decrypted~*.sops
+docs/superpowers
 # keep-sorted end
