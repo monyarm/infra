@@ -87908,6 +87908,3038 @@
       };
     };
   };
+  minecraft = {
+    mods = {
+      sodium = {
+        project = "sodium";
+        type = "modrinth";
+        versions = {
+          "mc1.16.3-0.1.0" = {
+            date = "2021-01-03T00:54:22.597152Z";
+            filename = "sodium-fabric-mc1.16.3-0.1.0.jar";
+            gameVersions = [
+              "1.16.3"
+              "1.16.4"
+              "1.16.5"
+            ];
+            hash = "sha512-JZcGT3EWMVrc/hFPDXbAQjN5H+0EnLvPci+HgAK/FM2N7EIYBtpjnzH/1Ja53trJ454rSPQwB0J/oPZZ7FEY4g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "yaoBL9D9";
+          };
+          "mc1.16.5-0.2.0" = {
+            date = "2021-06-17T21:43:30.893775Z";
+            filename = "sodium-fabric-mc1.16.5-0.2.0+build.4.jar";
+            gameVersions = [
+              "1.16.3"
+              "1.16.4"
+              "1.16.5"
+            ];
+            hash = "sha512-3g7GzIWpuQpKLcQ8qB25YmkcuVNivejbVBFcj63yV9l/wFJngysU8uV2r0dD396deePe7qC0ayaFCF+h4h1Q7g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "YAGZ1cCS";
+          };
+          "mc1.17.1-0.3.0" = {
+            date = "2021-07-17T20:29:41.734817Z";
+            filename = "sodium-fabric-mc1.17.1-0.3.0+build.5.jar";
+            gameVersions = [
+              "1.17"
+              "1.17.1"
+            ];
+            hash = "sha512-AA0ASW7U6UXE2MTWtwWE/+xa9gNMOeItPMxpc0zKrdN+fp0xEp2oTILQh5hBahqNqvMFZW+kZAZzijZQW3/S5w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "1b0GhKHj";
+          };
+          "mc1.17.1-0.3.1" = {
+            date = "2021-08-28T22:21:35.853159Z";
+            filename = "sodium-fabric-mc1.17.1-0.3.1+build.6.jar";
+            gameVersions = [
+              "1.17"
+              "1.17.1"
+            ];
+            hash = "sha512-CJ+OReGdw17QTwhALnuuTYE7ffBHZ9Rx59FhmNpN3H7fp5R60cNmXV2mVQjbwU5qGSiFa1/mOhJIdM7wVSP+qA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "80jYkEVr";
+          };
+          "mc1.17.1-0.3.2" = {
+            date = "2021-08-29T19:13:40.823951Z";
+            filename = "sodium-fabric-mc1.17.1-0.3.2+build.7.jar";
+            gameVersions = [
+              "1.17"
+              "1.17.1"
+            ];
+            hash = "sha512-EQdvKrqUpCH9KhUUqIvehXF7bKtWFNu1kJT8rpMURpd6bB6jkp84lrwsoiayOG1UJkzDw5N2t4+Sl4ZCnYK0zg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "xuWxRZPd";
+          };
+          "mc1.17.1-0.3.3" = {
+            date = "2021-11-23T16:34:07.617401Z";
+            filename = "sodium-fabric-mc1.17.1-0.3.3+build.8.jar";
+            gameVersions = [
+              "1.17"
+              "1.17.1"
+            ];
+            hash = "sha512-DmhhPaYZ3UuhBiXZPFzBu0eW6o2KvFF5FsONyMFUl/H5euaxWQZy8mIk/ahKD7fUyih0Yk4wlf9+45xaA3NB0g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "3JJvf9Kn";
+          };
+          "mc1.17.1-0.3.4" = {
+            date = "2022-01-14T01:53:03.621701Z";
+            filename = "sodium-fabric-mc1.17.1-0.3.4+build.13.jar";
+            gameVersions = [
+              "1.17"
+              "1.17.1"
+            ];
+            hash = "sha512-/r2EJ06OVSIsRec2hdW8k6CKxxlKYfkGX8YmQgrNHFJ51R+Ywa8YiLZxjLzgmM4dZ8d4c58+vhWX0u6Z5r2Dgg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Fz37KqRh";
+          };
+          "mc1.18-0.4.0-alpha5" = {
+            date = "2021-11-30T18:31:28.512175Z";
+            filename = "sodium-fabric-mc1.18-0.4.0-alpha5+build.9.jar";
+            gameVersions = [
+              "1.18"
+            ];
+            hash = "sha512-3BvKyTMDiLQ7+4Hqv6NtH/Fe+zAJRgs7H7KQ/rcOUqVfcmrZP8CbHJGGztWV+EePvvdirh9RRFaFNuTCb1Rk1g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "6YGRDUVT";
+          };
+          "mc1.18.1-0.4.0-alpha6" = {
+            date = "2022-01-14T02:35:42.634514Z";
+            filename = "sodium-fabric-mc1.18.1-0.4.0-alpha6+build.14.jar";
+            gameVersions = [
+              "1.18.1"
+            ];
+            hash = "sha512-imO/uBmTDFy0cGZMxqJm6UePwSGeNDBwWOMRHvnkAMzxStvjHtcF9w1oIZlkBUDX6JaWW2/l5pvOVD5HXMx/vw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "5JyduDNN";
+          };
+          "mc1.18.2-0.4.1" = {
+            date = "2022-03-02T00:43:40.084050Z";
+            filename = "sodium-fabric-mc1.18.2-0.4.1+build.15.jar";
+            gameVersions = [
+              "1.18.2"
+            ];
+            hash = "sha512-hutNuP258LsGJ0xPFQtVJztbdw/8ieC6aAERUqIxt56+CxrdoN0ZT5LNyzhvemCGPZ/uXRXBw1R/+iKhkIOh7g==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "74Y5Z8fo";
+          };
+          "mc1.19-0.4.2" = {
+            date = "2022-06-07T17:15:16.024498Z";
+            filename = "sodium-fabric-mc1.19-0.4.2+build.16.jar";
+            gameVersions = [
+              "1.19"
+              "1.19.1"
+              "1.19.2"
+            ];
+            hash = "sha512-lVifzKgPd6yo44Y0knv7elvVsxt/NMCTUsx3JFQbnv6Lvh18Gjmvzb9n+jj1hxNVzLVoFwJ79gKCVTk8cXTkUA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "Yp8wLY1P";
+          };
+          "mc1.19.2-0.4.3" = {
+            date = "2022-08-27T21:03:20.814201Z";
+            filename = "sodium-fabric-mc1.19.2-0.4.3+build.17.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-o7eBpYZkn4t81+LfzExsxPaQBzo8kIYrpek+/EX0GxjPcmeqqjRlCC/w+iniRDiHvxHqfy/E5UsV3a+SYP/mhg==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "F79MzDJD";
+          };
+          "mc1.19.2-0.4.4" = {
+            date = "2022-08-29T16:04:46.626363Z";
+            filename = "sodium-fabric-mc1.19.2-0.4.4+build.18.jar";
+            gameVersions = [
+              "1.19"
+              "1.19.1"
+              "1.19.2"
+            ];
+            hash = "sha512-j75a2lxF79Vllrzwxdk9enJk9gJjKJYm6dKwujs8zJFK8tn4Vllqck32dYBOl2aj2JDRcxlX/pYMWKRfBTOzTg==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "rAfhHfow";
+          };
+          "mc1.19.3-0.4.5" = {
+            date = "2022-12-07T16:35:22.699893Z";
+            filename = "sodium-fabric-mc1.19.3-0.4.5+build.19.jar";
+            gameVersions = [
+              "1.19.3"
+            ];
+            hash = "sha512-SpjhEm/XwCtofTqaHntiIB8Kx5LDtfIPw7QAJFCqy6wW2nvx9w1Dwt6izJ2M1Ti5fhpbF9GIvBdvUVSKwWsimw==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "mnEhtGuH";
+          };
+          "mc1.19.3-0.4.6" = {
+            date = "2022-12-08T05:15:50.402404Z";
+            filename = "sodium-fabric-mc1.19.3-0.4.6+build.20.jar";
+            gameVersions = [
+              "1.19.3"
+            ];
+            hash = "sha512-0ybugbL22pcASHndO8bMw12UvEbHoLqMN99qc922IObYmhs/skcakq9CVmSDLt0PqxmbPS6bzWCq9ei3gNYWjg==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "Nr39FOaS";
+          };
+          "mc1.19.3-0.4.7" = {
+            date = "2022-12-29T21:51:45.398469Z";
+            filename = "sodium-fabric-mc1.19.3-0.4.7+build.21.jar";
+            gameVersions = [
+              "1.19.3"
+            ];
+            hash = "sha512-NSnAf9qaQpw8+MPdA6l/jcCKgasB46YXhxVB0IlBwCt3mo0jugB1Dgj1AbXs/aQX3jCrR/MuKlZBKXhrfg6l8g==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "ObtU68vj";
+          };
+          "mc1.19.3-0.4.8" = {
+            date = "2023-01-03T02:54:58.268321Z";
+            filename = "sodium-fabric-mc1.19.3-0.4.8+build.22.jar";
+            gameVersions = [
+              "1.19.3"
+            ];
+            hash = "sha512-UXq1hjuyDHBYFoOj4eQIpdgM10L8rqvkDGUeTXVnw5P9GgbenjJQ8Z5nRSAbc0QU6XThc9pxn60us/vFQJkfsA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "oYfJQ6lR";
+          };
+          "mc1.19.3-0.4.9" = {
+            date = "2023-02-05T19:40:03.767109Z";
+            filename = "sodium-fabric-mc1.19.3-0.4.9+build.23.jar";
+            gameVersions = [
+              "1.19.3"
+            ];
+            hash = "sha512-8tdfLKUZ4ZSc3W6Vy4VYlcVU8IV5bcphZoDz8Op0+d7bkRQmSyz4Z/SQRkBUjLQWJugFmwAI6jnPln/rWYdjFg==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "idtcaIVT";
+          };
+          "mc1.19.4-0.4.10" = {
+            date = "2023-03-14T17:22:35.928436Z";
+            filename = "sodium-fabric-mc1.19.4-0.4.10+build.24.jar";
+            gameVersions = [
+              "1.19.4"
+            ];
+            hash = "sha512-YVYmJocKpAZ2V9JofR/OgPt9Yq8y/WiiJwjiTuW4SznRaybM9NuPU/LaQroZFtal4R78R2y1wqhkQgdln9Xf7w==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "b4hTi3mo";
+          };
+          "mc1.20-0.4.10" = {
+            date = "2023-06-07T00:18:50.320813Z";
+            filename = "sodium-fabric-mc1.20-0.4.10+build.27.jar";
+            gameVersions = [
+              "1.20"
+              "1.20.1"
+            ];
+            hash = "sha512-mu8b3ngKYIckvHB+ISSQehI5nqEY3E28cO/mI07I8Tq3vVPrqrQk2M+R6rmJNL5+jxdb9hWCDU7joI7A+SWWTw==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "vgceLbdH";
+          };
+          "mc1.20.1-0.5.0" = {
+            date = "2023-08-05T00:13:51.574004Z";
+            filename = "sodium-fabric-mc1.20.1-0.5.0.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-UGyA/8kCGc/wmDt02XdLiStKXdHWDXnNKXK1bdOLt9KipiS+mVyXgrrmd1uJtNdTIndZ1thOdXCYZ5PSRaJJ3g==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "hiO9bwqc";
+          };
+          "mc1.20.1-0.5.1" = {
+            date = "2023-08-13T22:42:56.565090Z";
+            filename = "sodium-fabric-mc1.20.1-0.5.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-ea1A3KMqgGXtXjYCHelklG2pj9PYmSqd7BmDwuoLbbW9AI32uA85vI7XnzAmGB0kulFS5Wp5DbgSEtljEuvU8w==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "OkwCNtFH";
+          };
+          "mc1.20.1-0.5.10" = {
+            date = "2024-06-13T21:09:52.183012Z";
+            filename = "sodium-fabric-0.5.10+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-OMd9i6wjVNBmKlM+5DK+MyHh+sFkBxY4rJei/G24V5wrE6MEgJNi1aAENI1tdcoqMidPbz2eh0U6it488TzqWw==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "dEpHs0Hg";
+          };
+          "mc1.20.1-0.5.11" = {
+            date = "2024-06-29T13:43:41.842195Z";
+            filename = "sodium-fabric-0.5.11+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-YoEpcC6DD+iNefC4fvBZG3CPs5BFzj2YVwPWo6eMMMm+tRjfjnAVHlXKbILZJ0/qkEwBb2AIXYiaT3rEMczNng==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "ygf8cVZg";
+          };
+          "mc1.20.1-0.5.12-beta.2-fabric" = {
+            date = "2025-02-26T00:54:03.278312Z";
+            filename = "sodium-fabric-0.5.12-beta.2+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-5pBrd+cJwXv+RF0GU1MBCFPK1YplJS9w+efgYRMVbyHIXpGnHlzOu06g8BaCgHN7sSrkB+EVqfHfO16NIbh+xQ==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "ryOMVRuG";
+          };
+          "mc1.20.1-0.5.13-fabric" = {
+            date = "2025-03-03T17:45:49.132919Z";
+            filename = "sodium-fabric-0.5.13+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-gcZPnC00At+kPuVNj1oFT1JDv7CJhOOt3Kuf6IUHPHnEPByMQejzC2JdJqZW+CqOXzcLu78iL/HAj0syTtt+pA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "OihdIimA";
+          };
+          "mc1.20.1-0.5.2" = {
+            date = "2023-08-17T21:54:47.329409Z";
+            filename = "sodium-fabric-mc1.20.1-0.5.2.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-97D5ksOyzw6iIchRWGDc73pQPnezlUcNtAI++o9tzWcg+rVJGAYJTArZanYBxGT51BYcw/Vsz2Y8i9/TXS9pFQ==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "6SSPmLc9";
+          };
+          "mc1.20.1-0.5.3" = {
+            date = "2023-09-18T02:53:14.619292Z";
+            filename = "sodium-fabric-mc1.20.1-0.5.3.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-mJ3/v0lAMKCdaQBP92Gq3RMKwfvdJtZAwdzLXa5qSNsk3oEr33Wue6Nz6LvdZoMAiE81+a2Fsl8WhhnjMhgnmw==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "4OZL6q9h";
+          };
+          "mc1.20.1-0.5.6" = {
+            date = "2024-01-27T21:27:59.058858Z";
+            filename = "sodium-fabric-0.5.6+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-Hc/+qSIPR9d57x/ZHtF+dXdtPsk8YrctRR7vTqzr2lookmhAgJQ3gqqyHl0iEzOsAy2gUmWta/NFXRcYbwfz0g==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "rUXIwGKA";
+          };
+          "mc1.20.1-0.5.7" = {
+            date = "2024-01-29T01:44:57.870252Z";
+            filename = "sodium-fabric-0.5.7+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-VM67z5Tzp78/3843ER50kqe/OX/NF4bHY6TQGUKGvpZc5ngC+PODSjy8NbFvSuawFmbDOQyCcJ/V+2G22NiLLg==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "umKbm1Rp";
+          };
+          "mc1.20.1-0.5.8" = {
+            date = "2024-02-01T20:32:58.348027Z";
+            filename = "sodium-fabric-0.5.8+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-MTwoHFsIsQBSGg6r2WnUU2F5BKmm5w7QOgqdGsfa4LqpGv4cGLNyqdIps7PBoPpFbhfYuGSprFV4CPZmx10SEw==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "mhZtY2lR";
+          };
+          "mc1.20.1-0.5.9" = {
+            date = "2024-06-13T16:34:03.677481Z";
+            filename = "sodium-fabric-0.5.9+mc1.20.1.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-UYgZ90WYQ39JdMSf6mIzOBEzwVjMyx4LkHi3jChsA1gkClZRoieRogGM2gDe11pUcEVWyp5b4Y4pUrWQEVf0wg==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "QHGZ9XSU";
+          };
+          "mc1.20.2-0.5.3" = {
+            date = "2023-09-21T15:41:14.426062Z";
+            filename = "sodium-fabric-mc1.20.2-0.5.3.jar";
+            gameVersions = [
+              "1.20.2"
+            ];
+            hash = "sha512-5l6Gm60IwQVWn3Y7sAk9Dz/Y6HzXJmU8AYevc/OZUHfZ7NttNBXfpVM42aT3h4jNH8KtJCP8dQX02Jj1pb6rMA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "bbP1qBMr";
+          };
+          "mc1.20.2-0.5.4" = {
+            date = "2023-12-05T23:10:18.903834Z";
+            filename = "sodium-fabric-mc1.20.2-0.5.4.jar";
+            gameVersions = [
+              "1.20.2"
+            ];
+            hash = "sha512-VhB+StEG1UOpA9NCqDEVJA88fx2e6/IqkP07rt5xct0n/LIsLLduXWBsHovQSxwZwcpJFlltlAwTJtSraRaCiA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "lhZYeXLf";
+          };
+          "mc1.20.2-0.5.5" = {
+            date = "2023-12-09T04:07:46.427196Z";
+            filename = "sodium-fabric-mc1.20.2-0.5.5.jar";
+            gameVersions = [
+              "1.20.2"
+            ];
+            hash = "sha512-IiEzxo5JzNum8wzqYYmFoocLKaQKRc1uB0zWrTN6k87R91sw2SQLftYNhPdppNGAE6y6Wcn8AOIsp5trGywPCQ==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "pmgeU5yX";
+          };
+          "mc1.20.3-0.5.4" = {
+            date = "2023-12-05T23:11:21.048815Z";
+            filename = "sodium-fabric-mc1.20.3-0.5.4.jar";
+            gameVersions = [
+              "1.20.3"
+              "1.20.4"
+            ];
+            hash = "sha512-UGSXIKbWD+LZmGNOuHQJJDUKg2mtDa9WZLShHcsWJVWIXyfiM5sNzGnAUh/aGp9QImon0lPG7rSqXfpGhDKyFA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "zPwAvKCF";
+          };
+          "mc1.20.3-0.5.5" = {
+            date = "2023-12-09T04:06:09.723989Z";
+            filename = "sodium-fabric-mc1.20.3-0.5.5.jar";
+            gameVersions = [
+              "1.20.3"
+              "1.20.4"
+            ];
+            hash = "sha512-hcRp9k3Sv7QdFaWBpicJCGecXRnbX2nWHekqkAeyM03wnjujm1A4u8qbMc5VzW9GWqhu++7eQXf7AOtRVYAFpg==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "InGKdfel";
+          };
+          "mc1.20.3-0.5.6" = {
+            date = "2024-01-27T21:28:50.459135Z";
+            filename = "sodium-fabric-0.5.6+mc1.20.3.jar";
+            gameVersions = [
+              "1.20.3"
+              "1.20.4"
+            ];
+            hash = "sha512-fqrSY+q1F37sT84KmZf9E3OI+ynTiH3EPKe8c9xllkxm38Yml3FjJ0RTUdxsnB12rkIvXXdlBI72XxIsQlunRA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "xNJ0Mpbx";
+          };
+          "mc1.20.3-0.5.7" = {
+            date = "2024-01-29T01:45:32.517724Z";
+            filename = "sodium-fabric-0.5.7+mc1.20.3.jar";
+            gameVersions = [
+              "1.20.3"
+              "1.20.4"
+            ];
+            hash = "sha512-6P+M7rzA9MT+qS/UWX10He1fe7Wheb3btihG/MZepV20RuuMJB8ZG2K6BlV6TOmX25H4W+ec2y5acq7smv1wig==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "Wzzjm5lQ";
+          };
+          "mc1.20.4-0.5.8" = {
+            date = "2024-02-01T20:33:48.832862Z";
+            filename = "sodium-fabric-0.5.8+mc1.20.4.jar";
+            gameVersions = [
+              "1.20.3"
+              "1.20.4"
+            ];
+            hash = "sha512-vQC5Vr3hIFFx50Smo3gOg1+2ko62Z/srVkZ4GMl5+x6MglYTgKcafb+hUWzUts+Qh8qZ8a4GbabWWvLIKLjVVA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "4GyXKCLd";
+          };
+          "mc1.20.5-0.5.8" = {
+            date = "2024-04-23T15:41:33.320154Z";
+            filename = "sodium-fabric-0.5.8+mc1.20.5.jar";
+            gameVersions = [
+              "1.20.5"
+            ];
+            hash = "sha512-8GSdI/yJre+6a8ZTJYzMMM7mm155Uby5D7RCa/BT6zjnxazfB48XO1pKdZ1xdeArPmydQWCcLd3NqzP4EMt41A==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "hLV8Q8uu";
+          };
+          "mc1.20.6-0.5.11" = {
+            date = "2024-06-29T13:44:26.613861Z";
+            filename = "sodium-fabric-0.5.11+mc1.20.6.jar";
+            gameVersions = [
+              "1.20.6"
+            ];
+            hash = "sha512-wfHw67d5EmrN5GLf0BCsFC7NFGe7wO/bl8340tTx68PZyesiBTdX8qmBMAEruUZ+0K8HN9mEcXglxb89HKu+VA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "OwLQelEI";
+          };
+          "mc1.20.6-0.5.8" = {
+            date = "2024-04-29T15:59:42.831851Z";
+            filename = "sodium-fabric-0.5.8+mc1.20.6.jar";
+            gameVersions = [
+              "1.20.5"
+              "1.20.6"
+            ];
+            hash = "sha512-v/tPC1NH3c+F7l0SpqdxCYt7thozVM5K+mvNSriOQ40rBTgEgZletY7BoEBP3d2b0ncG8ngugoYo/J3RIgjlAQ==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "IZskON6d";
+          };
+          "mc1.20.6-0.5.9" = {
+            date = "2024-06-13T15:37:13.017120Z";
+            filename = "sodium-fabric-0.5.9+mc1.20.6.jar";
+            gameVersions = [
+              "1.20.6"
+            ];
+            hash = "sha512-H+T6hPP5lChYu+0N2ixbwpolC6BeqWQ3QL7Kgs8eQxkXwOqOcnpGd9cFs39VJp1qdP5uCKKcWSpSv3lgdpwqCA==";
+            loaders = [
+              "fabric"
+              "quilt"
+            ];
+            versionId = "qhg37WBD";
+          };
+          "mc1.21-0.5.11" = {
+            date = "2024-06-29T13:45:49.041594Z";
+            filename = "sodium-fabric-0.5.11+mc1.21.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-qKRSDCiR5qPIkbC1wRBsKYUal8jloBMf6Uzc39dVtnnOVduur9FGOO95h7jvzTJhkgmrpEYHYgJ/Gi6+EhpARg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "RncWhTxD";
+          };
+          "mc1.21-0.5.9" = {
+            date = "2024-06-13T15:38:15.755886Z";
+            filename = "sodium-fabric-0.5.9+mc1.21.jar";
+            gameVersions = [
+              "1.21"
+            ];
+            hash = "sha512-cJ3+TFBLoTTMJGEt2TFzLrco4EiI8/dRCD/FpurmWEERwZTTehGphW7wQgPlLIwBhF7HX+wS3y2qsGn+ui6+xg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "dNHeFokL";
+          };
+          "mc1.21-0.6.0-beta.1-fabric" = {
+            date = "2024-08-22T23:04:32.062618Z";
+            filename = "sodium-fabric-0.6.0-beta.1+mc1.21.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-rMaVBWie+57sO4dJDQTcFY3CV5OzoRbI85XvjVgF/Zo3OGI1rfDbu9LiXVtS2ccA+zMBzjAqoC/Ttrk32iR7HA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "oZOSEhyy";
+          };
+          "mc1.21-0.6.0-beta.1-neoforge" = {
+            date = "2024-08-22T23:03:49.565370Z";
+            filename = "sodium-neoforge-0.6.0-beta.1+mc1.21.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-mIvc6axuZWEDOZH89ZhA8mmUR3l7dgSQ1WqbwHrY5ndCGmQZVj70tNAdE1QGchlfM1gB/KZ0Fhi1ibJPYAKQsw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "rcNehRIZ";
+          };
+          "mc1.21-0.6.0-beta.2-fabric" = {
+            date = "2024-09-15T18:02:43.377384Z";
+            filename = "sodium-fabric-0.6.0-beta.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-zKM3ti5m26FHVe3kPkSwFW3wveuihlHxoaw7fg9vjemZXbuvshp1Om1AnY3n42v1Yif9HDWbOTG97XWZn4HavA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "CcIWi5Av";
+          };
+          "mc1.21-0.6.0-beta.2-neoforge" = {
+            date = "2024-09-15T18:02:07.997499Z";
+            filename = "sodium-neoforge-0.6.0-beta.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-nc+s3QZxDrBN2NNNT8W0Y6i+Q6sGpnyoVxr6ZGaznTRQ/QUlNZjxhbpjUBOk/uNg7x+MBJiOYeuiJxEz2et3Fg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "vO5IVg3V";
+          };
+          "mc1.21.1-0.6.0-beta.4-fabric" = {
+            date = "2024-10-27T23:13:36.382235Z";
+            filename = "sodium-fabric-0.6.0-beta.4+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-N3TLvx085Fv1sf7J7ktnC+2V4qQB6dz8uSAxq6VikKWx1AJcsJLciSf/u7tjhpLIc7idKf/fZDL8w/5Kt7HaaQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "zJZY6GYO";
+          };
+          "mc1.21.1-0.6.0-beta.4-neoforge" = {
+            date = "2024-10-27T23:12:18.440330Z";
+            filename = "sodium-neoforge-0.6.0-beta.4+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-ZnuUDRAlK/ToEQ7LMj5hLSny5yQXZqcUMMGqdxvAhgthmdqQ02Fzs654OyGRNvSC7U009goKgBN0huDRZ0b9mQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "r0Cvb6jf";
+          };
+          "mc1.21.1-0.6.0-fabric" = {
+            date = "2024-11-17T01:42:01.649657Z";
+            filename = "sodium-fabric-0.6.0+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-97kpibpjEjUmI9AxHFu3HrjaFOouWgcPOpWaHxDP5oz8hIfPjb3pGH2EnWwEgz3yqXS+EpSe+uiq/+hzgVunpQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "b70slbHV";
+          };
+          "mc1.21.1-0.6.0-neoforge" = {
+            date = "2024-11-17T01:42:32.268128Z";
+            filename = "sodium-neoforge-0.6.0+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-Kt8dDOx+d5nkXPqddM18bzpeaKzywqmw13QXuIG0NbXgIoYcHrf/C1UKSsbkRbwxo3JgKUGzXX0xZxSZ2Om5UA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Ci7BTU2N";
+          };
+          "mc1.21.1-0.6.1-fabric" = {
+            date = "2024-12-02T20:43:53.732416Z";
+            filename = "sodium-fabric-0.6.1+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-ti/UdkO5jkryRNZk0OU8rj9T3NKQDD8KwGd2bsEcZMUEo8A4EEZyeBitTnMvyfxIrJlPS2hPBI+Bg9K7BVXbGQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "r9o9ggVu";
+          };
+          "mc1.21.1-0.6.1-neoforge" = {
+            date = "2024-12-02T20:44:34.045390Z";
+            filename = "sodium-neoforge-0.6.1+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-CFadKZYgB9r+QmPpGf+l8+iigRKYTkU6ttPIFO8b9OQgB/oFUatlANpkL6s5IUswL9BW9W6uUcd0d4W+vcPGoQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "uc2dogCv";
+          };
+          "mc1.21.1-0.6.13-fabric" = {
+            date = "2025-04-04T00:07:37.476142Z";
+            filename = "sodium-fabric-0.6.13+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-EwMuBkxVT8hnFXPa2we8cObqL2hwbGXAhsT+sdL2ZDRqNBTL+dE2e0K40GOjXkDy+WfvmvMWQuHwCTuFIWH+kQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "u1OEbNKx";
+          };
+          "mc1.21.1-0.6.13-neoforge" = {
+            date = "2025-04-04T00:08:12.456557Z";
+            filename = "sodium-neoforge-0.6.13+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-zljzTQXZbAoQmlzqI8dB9r2y5r4x/Ah8WYknTO/KXxC6DAjGIIPPVUpR8sdme/RuQWQ4P2dchE53YzrvJlmZaw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Pb3OXVqC";
+          };
+          "mc1.21.1-0.6.2-fabric" = {
+            date = "2024-12-03T21:19:24.631677Z";
+            filename = "sodium-fabric-0.6.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-nCwpliDx3ybjMenQxoZBbHBzbP35MujAT6deAv2Z+CR0sLj/68ADalJ58Ugg2dStkEp+G3uqQrLLPg3hlyzwWQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "6b5IXmYv";
+          };
+          "mc1.21.1-0.6.2-neoforge" = {
+            date = "2024-12-03T21:19:56.105602Z";
+            filename = "sodium-neoforge-0.6.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-AOQ/rAp1qUgMg5noSOt4hdE9dychPWYHQPGgfZS9fE7kFsNSt8/PYU+EsJ5b98IDYKuLNWXByn0CcWkmtGEwHA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "2eDS46kO";
+          };
+          "mc1.21.1-0.6.3-fabric" = {
+            date = "2024-12-07T06:56:22.310766Z";
+            filename = "sodium-fabric-0.6.3+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-TmIsvmOXBaMQaAOgbvSqi4c9Jzm4Nef2+URkp/3yVDUo3gaq83YJEE63kboA4TwnCGFhXreb7HR28rYghD4wPg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Hd6ChVqe";
+          };
+          "mc1.21.1-0.6.3-neoforge" = {
+            date = "2024-12-07T06:56:45.624403Z";
+            filename = "sodium-neoforge-0.6.3+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-GgDyo8KwDnXdoF2pnp3lfpp/WJGOWbK2Ygaqo7GZ7FZx/zqnr8TXR6jJqvNoVT3i8/Eo/ePdhf7OdOckkKzqjw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "rS9B5M5H";
+          };
+          "mc1.21.1-0.6.5-fabric" = {
+            date = "2024-12-17T22:10:57.615075Z";
+            filename = "sodium-fabric-0.6.5+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-2JedMYr3Xe821g6CO1AGOo+DuyLbYC8E5BEqiR61ZKvYXGyHou5vrTEsEXA7P1hsbKcvLuE4g6duo/ZVUlYD7g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "EoNKHoLH";
+          };
+          "mc1.21.1-0.6.5-neoforge" = {
+            date = "2024-12-17T22:13:15.464655Z";
+            filename = "sodium-neoforge-0.6.5+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-5z7EvfgSvcMfJoWY5y2wMaHNdyCzhLxraNw8d5ePEKx54oI3X+KKQ0OU5MjEClKegXJqSVScQckSEKr5QaHL9A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "zBRij2cH";
+          };
+          "mc1.21.1-0.6.7-fabric" = {
+            date = "2025-02-09T04:18:26.205923Z";
+            filename = "sodium-fabric-0.6.7+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-FBWHF4kdRYknvHwErJ/UJe/EstzCTGOINR7khyyarLyvLeKVJwTnBVPwjwwFpOGcfdvj+G8JYYQulkI+ZWZrTw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "AxSdcDcP";
+          };
+          "mc1.21.1-0.6.7-neoforge" = {
+            date = "2025-02-09T04:18:51.393682Z";
+            filename = "sodium-neoforge-0.6.7+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-CYt10U188yzFCpW6zyyTQn9mWxhvrfuMBMo3rSoxDWmzmeYYnMavg/FlNQKTGbFekfhvGdU7xngZEuYXbpxgcA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "XurfNSst";
+          };
+          "mc1.21.1-0.6.9-fabric" = {
+            date = "2025-02-19T22:34:49.381915Z";
+            filename = "sodium-fabric-0.6.9+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-iScos8JgOERrn1c2ldueeR+jIJlO00+Jvlx2b6LnNbRq2576j2aI1aW3u46Xk/8J5y8G+1/wdBN9W4M/H+JyJw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "26nVNc41";
+          };
+          "mc1.21.1-0.6.9-neoforge" = {
+            date = "2025-02-19T22:35:11.029930Z";
+            filename = "sodium-neoforge-0.6.9+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-vdK1b9VHh+DvZmx+DTDY2AAJeucmkEotleaJozwgtYOmGewL/dD9H+V8cfwFFv8ru5iAgG9kK5iFRRSBvZ5xSA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "I9RMZOOH";
+          };
+          "mc1.21.1-0.8.12-alpha.1-fabric" = {
+            date = "2026-05-13T18:15:41.832455Z";
+            filename = "sodium-fabric-0.8.12-alpha.1+mc1.21.1-dev.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-4iPWBByZM8EvainHfteJCENrCUMBm+JywCYasfQnTGAcWj/PmDa44ukm1ruCM33uAIrUinNlzMqudNi3Wx6WIg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Uif0LEOw";
+          };
+          "mc1.21.1-0.8.12-alpha.1-neoforge" = {
+            date = "2026-05-13T18:15:41.793284Z";
+            filename = "sodium-neoforge-0.8.12-alpha.1+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-FjDgINFJR1FV79ZwzbP5UsOfBQOZRUx6EDFyYH/EVsB3F6pvA+Va8aVfQHwdZxKjnXEvtcB52dLvCf4WajIE7A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "N36IhsfU";
+          };
+          "mc1.21.1-0.8.12-alpha.2-fabric" = {
+            date = "2026-05-13T23:29:44.435940Z";
+            filename = "sodium-fabric-0.8.12-alpha.2+mc1.21.1-dev.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-01NbckjyVXKSMIRE2fsB8+3fB9Yg76tE59pOAhqASEVcpSrNT5kFScFH3q53wQxpoU0E7Ytp/d3WHi0gGlTVZw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Gv1UmlKg";
+          };
+          "mc1.21.1-0.8.12-alpha.2-neoforge" = {
+            date = "2026-05-13T23:29:44.454608Z";
+            filename = "sodium-neoforge-0.8.12-alpha.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-DdkKAzBilHrDOSpGJMUtoUWbM/XmlKZK/pZt1oE+RfTxzSmd1Ni/vBB/IKMFE6/fhyTo97mEEj4hgRQtI4P1Hw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "hSgrV2wa";
+          };
+          "mc1.21.1-0.8.12-alpha.3-fabric" = {
+            date = "2026-05-13T23:41:04.808660Z";
+            filename = "sodium-fabric-0.8.12-alpha.3+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-0NTUlUAK01ccEY65LYsIPgJt3DVYmrF3UELuH82yzKFUfw2vLXQcATgcjmNtPsjBrTHHpPfhfI8oZGfAiSCVTw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "8kVO74iE";
+          };
+          "mc1.21.1-0.8.12-alpha.4-fabric" = {
+            date = "2026-05-25T13:19:01.423143Z";
+            filename = "sodium-fabric-0.8.12-alpha.4+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-yth2msjPHO7QuqasDAr7UiF6w9S28CLvsOR9xSGksRw3XSsFTSgxEH2XoKpEy38tBPlc/oJ03KiCyEYMgz8ALQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "uheoPKxU";
+          };
+          "mc1.21.1-0.8.12-alpha.4-neoforge" = {
+            date = "2026-05-25T13:19:01.387557Z";
+            filename = "sodium-neoforge-0.8.12-alpha.4+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-LF2xgRQn2WS4hxEOamXcPEtNOj3Q0tUNAoAGqg5GQxNerrebMylinUlwKI4hX5wuxtWScmtv4/vLJm1Rt/c3xg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "tVLDCyrm";
+          };
+          "mc1.21.1-0.8.12-beta.1-fabric" = {
+            date = "2026-06-13T13:24:54.858140Z";
+            filename = "sodium-fabric-0.8.12-beta.1+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-bUlY/TwjwOX9y/zao+c1Eb+JoJiDcKuUyT50DsJFJkkWWzozE1HhLTksz5JK/9wEKz/AGy5iibfZx8RZHH2+6w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "s7adptIg";
+          };
+          "mc1.21.1-0.8.12-beta.1-neoforge" = {
+            date = "2026-06-13T13:24:54.778893Z";
+            filename = "sodium-neoforge-0.8.12-beta.1+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-MdMkTAbbFfO4FuCbJaYtSPUsPc8yaTLgDpIxUpJmlgN3Qsf+AqunQQn4pny8TvcUI7jmDidPz4oR8v1OgXFCLw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "iw5APcWy";
+          };
+          "mc1.21.1-0.8.12-beta.2-fabric" = {
+            date = "2026-06-24T15:49:56.664749Z";
+            filename = "sodium-fabric-0.8.12-beta.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-3x7LMrvm31D7nVpUuT9znVOwA4vNaOR6YsP4Nvfn1BhtPvPSPamOnYfafiB99NdG6VqNjyWj5qhCleDwbnLUNg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "JjCVwmVA";
+          };
+          "mc1.21.1-0.8.12-beta.2-neoforge" = {
+            date = "2026-06-24T15:49:56.642852Z";
+            filename = "sodium-neoforge-0.8.12-beta.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-YiQqO3qPHFZP0mfg3OceWH2GFQg7jaacO7WF65PQ9lkNjfIxEExNyhxkxRPl1ztWZhkwr5yI16yGmv55KZZjHw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "7XOIgnrf";
+          };
+          "mc1.21.1-0.8.12-fabric" = {
+            date = "2026-07-06T17:19:52.471697Z";
+            filename = "sodium-fabric-0.8.12+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-iv5BHuxlqfZ3YR7WOQzmVuWjVy+b5HPl3KUa6IKpQmpUfNLox5MnhXe7FMF+SBWAMLEXUxCJJu8zaYYUvZTtfw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "KIRFiWG4";
+          };
+          "mc1.21.1-0.8.12-neoforge" = {
+            date = "2026-07-06T17:19:52.451799Z";
+            filename = "sodium-neoforge-0.8.12+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-KmieGx4WrMeQwBG0LsIZWJViB8O0nLmctcAG5jl4at8cw2VZ+YQOLB0nSFwA2pcS00Ag+kJ562gQ6qVL8gsZsA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "S3DUMfBo";
+          };
+          "mc1.21.1-0.8.13-beta.1-fabric" = {
+            date = "2026-07-30T00:45:19.119700Z";
+            filename = "sodium-fabric-0.8.13-beta.1+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-MTq0+bNVRJ6nmiLNuGl4ySjnvHglL5VF1qOJ66ozMDeGYNFPiHSsMVbz68Ms1VF84S7d4OfhL48PNmDhn0VzlA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "lYTPBqRz";
+          };
+          "mc1.21.1-0.8.13-beta.1-neoforge" = {
+            date = "2026-07-30T00:45:19.163665Z";
+            filename = "sodium-neoforge-0.8.13-beta.1+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-qM1py/1cQCKkSmEIfZXHfBuiaI6OJp/bteq3ccaDQXGuW2+yxctfONI7UsY20KGih1UzcJgDW6vL6vruIc4AzQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "5EEI3Guz";
+          };
+          "mc1.21.1-0.8.13-beta.2-fabric" = {
+            date = "2026-08-07T00:56:44.021284Z";
+            filename = "sodium-fabric-0.8.13-beta.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-G73iscEcurpHQsMh2+/2hsmnkphIaPPjKx50TpD1o+Cypg6qryiMaPtFQZaAa3Vf599GjjVHd7j1hDYFivUSVg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "QV48eyCs";
+          };
+          "mc1.21.1-0.8.13-beta.2-neoforge" = {
+            date = "2026-08-07T00:56:44.073062Z";
+            filename = "sodium-neoforge-0.8.13-beta.2+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-bpJzhi+zOXtavqetN6ZcPNbWvLXMBmNNK2K0mZnADayJcuRgDh1bPDk20Kksz62O1NBO0GVZV5fTweVZ8gqgjA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "jfHZ5pyN";
+          };
+          "mc1.21.1-0.8.13-fabric" = {
+            date = "2026-08-28T20:55:02.424329Z";
+            filename = "sodium-fabric-0.8.13+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-hhSjdFk2mAaagKx03ozZwo85KNFoGaDg1jILU46CP35U6L4G1epanCaL6w4CBzIJ0fgxoC3t6FFYi5cjZ2gIUw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "SMxNOGZ6";
+          };
+          "mc1.21.1-0.8.13-neoforge" = {
+            date = "2026-08-28T20:55:02.593669Z";
+            filename = "sodium-neoforge-0.8.13+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-T1N2lq+VQR6drxV5X7X8vEmRPUiKlvqRL6jx19tAhxCZXooUYRkPPND4IXv5416VORdlkkKO1YfKLXqoRFCjkA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "uMOpc5uV";
+          };
+          "mc1.21.10-0.7.2-fabric" = {
+            date = "2025-10-09T20:35:39.508957Z";
+            filename = "sodium-fabric-0.7.2+mc1.21.10.jar";
+            gameVersions = [
+              "1.21.9"
+              "1.21.10"
+            ];
+            hash = "sha512-S2Aa5TND4L4gWmuFqOh4k/r6wc39hr6y1TLIxyQF81unJ/mTlAOJaHBEGg6RpHpgCJUrBKebdu1oKUqQkiKUfg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "VTidoe6U";
+          };
+          "mc1.21.10-0.7.2-neoforge" = {
+            date = "2025-10-28T02:03:12.649813Z";
+            filename = "sodium-neoforge-0.7.2+mc1.21.10.jar";
+            gameVersions = [
+              "1.21.10"
+            ];
+            hash = "sha512-E+TyPuRxBsN3iIRG+1ZA1S9sKCIWzSkYrrXbyPAqbQ6XVCEyZQOTAUy7OXeCCLoI90u3x5rOpu6cKiiviaeTGw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "h30oKQW3";
+          };
+          "mc1.21.10-0.7.3-fabric" = {
+            date = "2025-11-10T18:51:15.477709Z";
+            filename = "sodium-fabric-0.7.3+mc1.21.10.jar";
+            gameVersions = [
+              "1.21.9"
+              "1.21.10"
+            ];
+            hash = "sha512-HMzcddly9cF2pIjcyEzOcyC2CKLRBUEvKEckWv+/WqIrGZXto5ITJFP6bhqRVKyZqHrK+NeYm58aI6wQWak9rw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "sFfidWgd";
+          };
+          "mc1.21.10-0.7.3-neoforge" = {
+            date = "2025-11-10T18:51:50.726115Z";
+            filename = "sodium-neoforge-0.7.3+mc1.21.10.jar";
+            gameVersions = [
+              "1.21.10"
+            ];
+            hash = "sha512-JumrPWGwaYf61dIzRiW7dOeA9Oh1iAV6uDbpt4S4E60MHwFf/fg+UKOnIhGgoGAFlwzMCtnQHZKDm/k1Z2FXlw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "PdQpfqPZ";
+          };
+          "mc1.21.11-0.8.0-fabric" = {
+            date = "2025-12-09T17:11:11.360476Z";
+            filename = "sodium-fabric-0.8.0+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-F0BgjGMB7oIGXCnZAqLRgonDPtc7051GQ1Kege7NqCvdnY6NGSP/H+oRRp8rsrip8z8EANAh5pUzE1yTDCgWOA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "MLXdfyIk";
+          };
+          "mc1.21.11-0.8.0-neoforge" = {
+            date = "2025-12-10T16:50:21.762276Z";
+            filename = "sodium-neoforge-0.8.0+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-oJAUZLSHNlgMQt2TNi6lJU9RE52GnyuHdXbnapG3ArXh/PBp09QxAbRtIJ2ORUzfPoiZ5k4pBIKPoIdfvChtkg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "k5Rs4Eru";
+          };
+          "mc1.21.11-0.8.1-fabric" = {
+            date = "2025-12-18T03:16:30.884738Z";
+            filename = "sodium-fabric-0.8.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-nfp3NIiDQlyFB74OeI+T372H/Q8lj2WImO8NKKPl0qwF6YvZ9JTJmByFwz1sQILFuCgRhp0koVv+pImMcUoMEQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "2IxKzI1o";
+          };
+          "mc1.21.11-0.8.1-neoforge" = {
+            date = "2025-12-18T03:17:04.147800Z";
+            filename = "sodium-neoforge-0.8.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-HSmIn3pQCQokNeR27BhRMGABAiDQHBTXHkO+xNEZDLmZSbGhI2POD3S4CZ3f0qwRM1j2LYhSHz/7dXcK5Ik/og==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "z88JSh9S";
+          };
+          "mc1.21.11-0.8.11-fabric" = {
+            date = "2026-05-04T16:50:33.741057Z";
+            filename = "sodium-fabric-0.8.11+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-pPVTXD9nYsX1RbXZcGnYoHofdHnW48/+DrZZIoeL9KV5x+CB4lNsYAmoD8qHF/RkUYk/JTBF5MJHzxTendpmRA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "CL53p97Z";
+          };
+          "mc1.21.11-0.8.11-neoforge" = {
+            date = "2026-05-04T16:50:33.767106Z";
+            filename = "sodium-neoforge-0.8.11+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-xt6mbXFmPKGmDCGjHFIOhCWSwjCqnQNIWzlUN7L519p8VHZhlMnMLa7yQOSrXPO+BOP1uCIfWrw8sS5Lpbi5LA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "aUG2WqLW";
+          };
+          "mc1.21.11-0.8.12-beta.1-fabric" = {
+            date = "2026-05-08T23:01:18.240832Z";
+            filename = "sodium-fabric-0.8.12-beta.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-SUC2aJaWw84UROs/R1XwFzBKRMakHimntRoUxtuBoH3lq/MSNUYzQlIP14Iopzegec2b6TODCKRh4z9QcO5hQA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "UXLJGXZx";
+          };
+          "mc1.21.11-0.8.12-beta.1-neoforge" = {
+            date = "2026-05-08T23:01:18.262269Z";
+            filename = "sodium-neoforge-0.8.12-beta.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-Q7uLIaeANwfj2rXftVspbw3wfednxP6CLXYu10OBlMsd6CvBjmW8iY4qPLzhRV2iCIARQMc0ZV2Rd0A767MJ0w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "IG1eAHBT";
+          };
+          "mc1.21.11-0.8.12-beta.2-fabric" = {
+            date = "2026-05-11T00:24:24.714777Z";
+            filename = "sodium-fabric-0.8.12-beta.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-sopB0T8O5pNtFQBzaNnrffrGAAZtxCKfAAFl6jrR/XipIvFZTiQdtvG42JBm+vGZsJ9/l0pRuWiDnYkwtmokvQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "hjgWF0Ll";
+          };
+          "mc1.21.11-0.8.12-beta.2-neoforge" = {
+            date = "2026-05-11T00:24:24.700135Z";
+            filename = "sodium-neoforge-0.8.12-beta.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-dBidthIue37eVgke6sS+rcGNzNcr2/MX+5VZtuIn58NLfOB1DwDs3gYIr7QoXoDmgFtiMeeTUcPgqSqIkR0C0A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "p8rn2ZbI";
+          };
+          "mc1.21.11-0.8.12-beta.3-fabric" = {
+            date = "2026-05-14T00:07:47.169126Z";
+            filename = "sodium-fabric-0.8.12-beta.3+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-5Ilm8iCe11D9cLj+w9Lhn9R7TMYPQ14hcZ2S+ZGDceaPYCpJpf3KpeQh5hydtShIhHs5OuWBdfqfl742MsoxmQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "x0XUezGL";
+          };
+          "mc1.21.11-0.8.12-beta.3-neoforge" = {
+            date = "2026-05-14T00:07:47.190866Z";
+            filename = "sodium-neoforge-0.8.12-beta.3+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-MR+x712FaG8iO/+Of9S544toWySZtJFJZPG6lonJRhF5LsxPcwcQfYNUP8Bf0A2h2oHirYdcu3RzHrIDDSoQvA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "XSQwpkzX";
+          };
+          "mc1.21.11-0.8.12-fabric" = {
+            date = "2026-05-18T22:12:48.468154Z";
+            filename = "sodium-fabric-0.8.12+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-F/24JAZw0Gnpu00AzT0Xr+KOo/fqfa8n/TKETzAlFueoiWhkKduB8se3OtSvznA8rIljqMOUPP6/RdLFcL2CVg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "NFkjnzWE";
+          };
+          "mc1.21.11-0.8.12-neoforge" = {
+            date = "2026-05-18T22:12:49.426653Z";
+            filename = "sodium-neoforge-0.8.12+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-1VD3qnIu1pmLfM/k2zL4w8tHy0GeoC1wVZUQ0C1fed9/Px1yAmPhHBSCUthBupIO+xY7b8BjfJEM5Jk2V9vMSw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "ylHOo4fY";
+          };
+          "mc1.21.11-0.8.13-beta.1-fabric" = {
+            date = "2026-06-15T18:55:38.620190Z";
+            filename = "sodium-fabric-0.8.13-beta.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-3rfxMpIJJsYFK7LsrUSGHZlQGymd5oUmBAjpyDWTzqxqJ4fEsOdVD/EB3Y8q7/g2UJswB+I2rn+2GQXC6j++Ng==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "1Zzoi12t";
+          };
+          "mc1.21.11-0.8.13-beta.1-neoforge" = {
+            date = "2026-06-15T18:55:38.591620Z";
+            filename = "sodium-neoforge-0.8.13-beta.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-W8l3LgRIv0Ul6ALAiT7Pv4TGWrjp9LQUxGohZye7St6MjWRko1HhuGKuzp6hCdjH3Kkr+nR768AWPPq/jzZGaQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "9LayGURz";
+          };
+          "mc1.21.11-0.8.13-beta.2-fabric" = {
+            date = "2026-06-24T15:48:13.674489Z";
+            filename = "sodium-fabric-0.8.13-beta.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-X3QCNnzF3yFshuPHbHh9JoSjKJNBkZdHaBfcc3snG6a8whwoHnOTdLQ2yMhvbPETqGauaScM/+M0KzeTf+ky6Q==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "paat5Nz2";
+          };
+          "mc1.21.11-0.8.13-beta.2-neoforge" = {
+            date = "2026-06-24T15:48:13.641232Z";
+            filename = "sodium-neoforge-0.8.13-beta.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-NGUtt4cvr0W3O1NrgVu7jrFXURcGabbmNyiVJni8pnuG9MhA0Y3A9WYPJrUxvauCUdNFlZKcPfY9EMyqhs+q5A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "CTr1wDrZ";
+          };
+          "mc1.21.11-0.8.13-beta.3-fabric" = {
+            date = "2026-07-05T23:49:25.589133Z";
+            filename = "sodium-fabric-0.8.13-beta.3+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-/zh/ceBpWdEEcavMR5c8FFUsxJPeOd9A5lNnm7MDXjZ4LGkyPULy8Fl5sModpKD4AiRygjVP2anp41dEgFtxJA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "al82slgf";
+          };
+          "mc1.21.11-0.8.13-beta.3-neoforge" = {
+            date = "2026-07-05T23:49:25.576504Z";
+            filename = "sodium-neoforge-0.8.13-beta.3+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-/ubfn7nTuxRaB2z63VybdavJAIayhrb6yLH3SthctvdpY53YrKQMZxZhyDBOLfJWyWHUcAS06qwyfRrgqFgo6A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "YHaAktjP";
+          };
+          "mc1.21.11-0.8.13-fabric" = {
+            date = "2026-07-06T17:55:24.245453Z";
+            filename = "sodium-fabric-0.8.13+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-bpbtjlR+p6jDInOhFSzwLLJiRrOmBcTteC3ISlLPvBbQcxPC6n4eXlN3eE4+nLxZmw8t0TnZ/kycvjOB8Nww8A==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Ny3XyYle";
+          };
+          "mc1.21.11-0.8.13-neoforge" = {
+            date = "2026-07-06T17:55:24.224794Z";
+            filename = "sodium-neoforge-0.8.13+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-AjiM/flBTZyxcok347P9tis3s2OyhBHmlEdwd2F7jjA12uiMPppAJz0M3mQ1DOUnpKAnZYZRa7WAbQm0P/VmCA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "fyQ1HOA0";
+          };
+          "mc1.21.11-0.8.14-beta.1-fabric" = {
+            date = "2026-07-30T00:36:08.466161Z";
+            filename = "sodium-fabric-0.8.14-beta.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-9f+jK06jDeNwv+MlHaUjW5cF4iOwb2XGH3KMp2HR8V31UjPZbElfqoVo9yGXYiW2xIhQfLGNpkt3hL4tjl8kFw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "TWu15sHW";
+          };
+          "mc1.21.11-0.8.14-beta.1-neoforge" = {
+            date = "2026-07-30T00:36:08.470620Z";
+            filename = "sodium-neoforge-0.8.14-beta.1+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-N+D6wxkqVvvvUQsPV8NOxR+FwILmbghyoEPvXvLG+/VWLi/0fOk5446haVTpwpM+2hsvavN1cj8154xBHBGlRQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "9TOXkS1s";
+          };
+          "mc1.21.11-0.8.14-beta.2-fabric" = {
+            date = "2026-08-07T00:57:36.935722Z";
+            filename = "sodium-fabric-0.8.14-beta.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-RDMNClGqZAq9qNhsSw1t85Dp+flvXJ1OiSMOmNpPA/KASeuXI9HS2GMtxMWZaOyeqsw8+tQc6ocGLIuRIaPBgw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "vqUoGREs";
+          };
+          "mc1.21.11-0.8.14-beta.2-neoforge" = {
+            date = "2026-08-07T00:57:37.975432Z";
+            filename = "sodium-neoforge-0.8.14-beta.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-AA1+RMzn5KxeDW4QTuKlzbEcrv2NlF5YOVaNJMtL3s30y93RpxlbAGyHVenHudd9q2kvfEZt1/DDihE+RSlazQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "l42iw17I";
+          };
+          "mc1.21.11-0.8.14-fabric" = {
+            date = "2026-08-28T21:00:18.180077Z";
+            filename = "sodium-fabric-0.8.14+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-BMQ/noU0uHpSxC/9UbDjRNTvktycxS2jPROvahi/dLBTgNICfx4NuYJpjQr/J0xCdBweIbMTsM117TrwBfyY2Q==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "rkdTcxoT";
+          };
+          "mc1.21.11-0.8.14-neoforge" = {
+            date = "2026-08-28T21:00:18.192349Z";
+            filename = "sodium-neoforge-0.8.14+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-FpmHSo3z2oR1+zcjBqlIaQu3bpUiGmF8c/boHXtwtvtD7Xuej+/HXFoWB+ujOsylbu03T4qLdTqDl2cLQ1mONQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "sC6wj32u";
+          };
+          "mc1.21.11-0.8.2-fabric" = {
+            date = "2025-12-22T20:35:06.214284Z";
+            filename = "sodium-fabric-0.8.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-CrcGAx+VTkrPwIl1NtzRgqrO01uRLuBfAKTHlgkGTCLUJJ18E5mzNZr5dLJYUgZku+sHnUby4Wf59NEu2GrrNw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "59wygFUQ";
+          };
+          "mc1.21.11-0.8.2-neoforge" = {
+            date = "2025-12-22T20:34:32.101126Z";
+            filename = "sodium-neoforge-0.8.2+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-Sjyso3xJfeXNDn3l7gIQorLbOdTQe7ZLo2x/UsmRQv2O2S80DB5QFZgmtaVhRb58G3KEXuwKSYWMcACpW0W1Rw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "8jueyeK2";
+          };
+          "mc1.21.11-0.8.3-fabric" = {
+            date = "2026-01-25T16:01:03.632561Z";
+            filename = "sodium-fabric-0.8.3+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-3KeGIZTB/mOC+VPRS9jglvH3c85ZHOa9oAhE/vCNzxE+MC7DaSLOLbWWmypAYN6ljDe3KJshTdbnB7ZcDVwM0g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "3PnHeviJ";
+          };
+          "mc1.21.11-0.8.3-neoforge" = {
+            date = "2026-01-25T16:00:28.263340Z";
+            filename = "sodium-neoforge-0.8.3+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-OKwCl/+zTwo+eMK+jgvuCoifhy4exq0LRK4jG9jbu1KvE1cu9eaRBfIQIoXpBdvPzDCJVJC5u+4SQR7Hfp3Shw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "W5UZgZ6L";
+          };
+          "mc1.21.11-0.8.4-fabric" = {
+            date = "2026-01-25T23:00:51.098766Z";
+            filename = "sodium-fabric-0.8.4+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-yILgfwnMwEtiWOeZeajhQpAY3lsJ2l/M6hidCl3mDqVHXxiE/HJPTTq6vIq+cwuYVtXkhkw+QYshhx267SHwww==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "1OWNgWVR";
+          };
+          "mc1.21.11-0.8.4-neoforge" = {
+            date = "2026-01-25T23:02:27.251201Z";
+            filename = "sodium-neoforge-0.8.4+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-Z37V0RJsylpeMD6E8LyXlOcucxLfIotBNkXeBI+KrD3MygzEFFyhAF4g9Eq3IFBSc9CISOwjnRXCYCmuY3kA8g==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "B0QEOpLx";
+          };
+          "mc1.21.11-0.8.6-fabric" = {
+            date = "2026-02-23T22:50:04.696529Z";
+            filename = "sodium-fabric-0.8.6+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-VbWt4g3HDoyaD3tqi6g11J79PE+DYIadZVHxPjoBbETdeMXsrWOJAxcomBVBh3JtQprTShTOowq/qL1tYetihw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "ZPWbiWXz";
+          };
+          "mc1.21.11-0.8.6-neoforge" = {
+            date = "2026-02-23T22:51:55.328020Z";
+            filename = "sodium-neoforge-0.8.6+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-LrEjvkvdIUx3p4ll+KvzxPCqA0/Kyj3pqomOKAIUjfdeBbvMdTl8OTv2knaIYC99xeWmw/AfJNxhJsCGeHJAMA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "ZK3jHJgK";
+          };
+          "mc1.21.11-0.8.7-fabric" = {
+            date = "2026-03-24T16:30:41.342552Z";
+            filename = "sodium-fabric-0.8.7+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-1/A11hEuqsks8PEeRCbbYx/KWnEV3TVcISbv7kJVtkigECVSu/eyKn6ukgPQj4dAQ1hCv93NlOJDT1G1funGQQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "UddlN6L4";
+          };
+          "mc1.21.11-0.8.7-neoforge" = {
+            date = "2026-03-24T16:31:21.358019Z";
+            filename = "sodium-neoforge-0.8.7+mc1.21.11.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-2xo9nOqzO8TlIoRJEungqMlbk98S/9gwFH8uNhZxzHCy8tiPh+a5CVbpg8NlMMmZJgzBLFtvzA/DPMyj87iz3g==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "pXyXLdlT";
+          };
+          "mc1.21.2-0.6.0-beta.3-fabric" = {
+            date = "2024-10-22T15:25:25.694428Z";
+            filename = "sodium-fabric-0.6.0-beta.3+mc1.21.2.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-vx6/UlVAdSoD3hIt/2nzWkGqaqE7Z2VwGGXW1JsQFL1wrgM0usb7wwoS7C1KevqUWpl5w79A+QbqnhutL8WjcA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "YWD36TtF";
+          };
+          "mc1.21.2-0.6.0-beta.3-neoforge" = {
+            date = "2024-10-22T16:45:17.662680Z";
+            filename = "sodium-neoforge-0.6.0-beta.3+mc1.21.2.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-ymkVhXC2XxW5Df4+ZNoDQw8eeqyWiCGJ8v0vryzDCf7GvNkcT2662pT1k1l9fy65IjRoXPwqXi1qSPLvhiT/BA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "yExcQU0x";
+          };
+          "mc1.21.3-0.6.0-beta.4-fabric" = {
+            date = "2024-10-27T23:15:06.163814Z";
+            filename = "sodium-fabric-0.6.0-beta.4+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-f7wXPwqBEKz70+kcZwZCck9XGO17wTcEXDeC55Op9U6dOeVCZb7oVGxE6VznODbXDKEQ2wErUpvLU5CESkEbpQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "HCEjRjK4";
+          };
+          "mc1.21.3-0.6.0-beta.4-neoforge" = {
+            date = "2024-10-27T23:14:31.212687Z";
+            filename = "sodium-neoforge-0.6.0-beta.4+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-nQlzbFz7LgHBFkIntWcAmVkjDrn0UWC54HcDczDFNbKuWA0RzPA+SH+QBxKfHv9xpIp1dAwNk/5szdQrUHX8SA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "bSL0wBSW";
+          };
+          "mc1.21.3-0.6.0-beta.5-fabric" = {
+            date = "2024-11-12T06:10:40.999468Z";
+            filename = "sodium-fabric-0.6.0-beta.5+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-QljB0eaxef8iHeiWjhraUP51aL58hEiQdCvhFICHMHwjn0ZpYnjbD1pSq0hjseUWONZYn5VjxpTZLPkS7mPsHg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "hBlmTLJR";
+          };
+          "mc1.21.3-0.6.0-beta.5-neoforge" = {
+            date = "2024-11-12T06:10:05.053669Z";
+            filename = "sodium-neoforge-0.6.0-beta.5+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-9Vyq+g5dcQQfQQY3tuPnhvhaTGoZJtwwHSAIhSl+c1dfUM6Bvw//wIhhtwFxlfyUFgUGpEzBI34VWKxSC7JIFA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "frbpSbY2";
+          };
+          "mc1.21.3-0.6.0-fabric" = {
+            date = "2024-11-17T01:40:01.679736Z";
+            filename = "sodium-fabric-0.6.0+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-wexxegWaE/fKasuh7X5YuR0U0zUj+RxxUJdQLGsP/CBFJXL3+aAAhCk4HMlDw6ftW2rRBvBYkfDVCKZ6n/8/rQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "SzAjFUSx";
+          };
+          "mc1.21.3-0.6.0-neoforge" = {
+            date = "2024-11-17T01:40:42.964587Z";
+            filename = "sodium-neoforge-0.6.0+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-0+tb3oRgiLoo26aTefF0omRvDMqfrrdpmjf8iClY51AwjhmqOPkWq0bu0QoG3IqquTDYN1wNLYd8xDEvEoZb/A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "7zeY2C2J";
+          };
+          "mc1.21.3-0.6.1-fabric" = {
+            date = "2024-12-02T20:42:19.829508Z";
+            filename = "sodium-fabric-0.6.1+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-M6vNcwSUkQ1ZIy2/3CJqK/59HfPs8uF3fMbKDkLpTuRzoa7zbjSJKCy0XE20/BoPyjOXAfr6nhogBV6VgSPzEw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "gXZfuKxx";
+          };
+          "mc1.21.3-0.6.1-neoforge" = {
+            date = "2024-12-02T20:43:14.777496Z";
+            filename = "sodium-neoforge-0.6.1+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-oInWtxKcbSWJDgq6fxjxda2WOtKj4BukLE/vo4OU14g17nxzb/M1EgMwJJ2M2KDjrcWPb+IwSZURvF9PIxwvSQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "V26EsYch";
+          };
+          "mc1.21.3-0.6.13-fabric" = {
+            date = "2025-04-04T00:09:06.087079Z";
+            filename = "sodium-fabric-0.6.13+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-+ZkUHgtBCnbqQzM2/I4F/8gL0n6r+XoYT7YyJ/JtSCusis4rRR0UcvQrJmYStdXh9d6UL9+RsdEit7eO0c2NVg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "rLBgU2jc";
+          };
+          "mc1.21.3-0.6.13-neoforge" = {
+            date = "2025-04-04T00:09:26.031007Z";
+            filename = "sodium-neoforge-0.6.13+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-gUUbQasw+4VnKtpwEf4NZZi1us6geKVGfSRGbmgF0DlbkWTuzptGg5izlp4HqPbiUcdkbHO+LEXpJU+orkBTjw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "M0CXIL7c";
+          };
+          "mc1.21.3-0.6.2-fabric" = {
+            date = "2024-12-03T21:20:27.521350Z";
+            filename = "sodium-fabric-0.6.2+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-AR6lNDnuXPzbU4omfWMo/sE1Lv1aNR90P1XWeiL3zma4pCjYcebvvukxttf94/k2wo+LaB6AErrBxi22RrjYaQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "xy8qdzcb";
+          };
+          "mc1.21.3-0.6.2-neoforge" = {
+            date = "2024-12-03T21:20:53.063421Z";
+            filename = "sodium-neoforge-0.6.2+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-xcDIOqxwHYusUq9F/QJHBw0JcT1NT9jbEbZbS5l1pD2yvh61uLw8AeckcHMxjWoOI3xDYax6FHV9B6HX2X4o+A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "KAzyah9L";
+          };
+          "mc1.21.3-0.6.3-fabric" = {
+            date = "2024-12-07T06:57:56.683931Z";
+            filename = "sodium-fabric-0.6.3+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-hHxlcbkjTIBOOgHAxTZJ5fyxTGenSnL2a1alerU+GgN7l8DdzQKd7aDUtokWcKrMHr/EXefuT43zEHIXSsB+zQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "qufJMFlM";
+          };
+          "mc1.21.3-0.6.3-neoforge" = {
+            date = "2024-12-07T06:58:46.545374Z";
+            filename = "sodium-neoforge-0.6.3+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-+AFWnBsUr4HTm5vXI5uERU9rJ+vjJdEPp6+m51GcR9qDjUSLegcuV5DR4xgkrl5C0sCkM2BlGsbOwVdu/ekkaQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "PoLJlR6Z";
+          };
+          "mc1.21.3-0.6.5-fabric" = {
+            date = "2024-12-17T22:15:19.396605Z";
+            filename = "sodium-fabric-0.6.5+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-JFIcn59U1wL9FdgPlJfMEbA7/GxGVIXYru82V41qFStXlTN7RpzqfrADWf/clNJh9jPEWKoJrfr7/ZM4i8jz/w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "dsw736d2";
+          };
+          "mc1.21.3-0.6.5-neoforge" = {
+            date = "2024-12-17T22:15:46.479255Z";
+            filename = "sodium-neoforge-0.6.5+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-vxHb2pVAPtXWLX8YwYYyrq4umWoxOoNNKd+J/7NRDKyY++PxKiOUc2YsACvm5bbIILzSWx1aO+uS65Q5UbxQUQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "uk3Xx4Zv";
+          };
+          "mc1.21.3-0.6.7-fabric" = {
+            date = "2025-02-09T04:19:17.914838Z";
+            filename = "sodium-fabric-0.6.7+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-gAd1M1sr0UtImZYKs99+jX4iAqvh1hdD1y38tyhaOVu1a352PHjo0UX9oPHRV9DhfkzYpJ/CqYaFV+GpE4DL7A==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "fRVuPyyt";
+          };
+          "mc1.21.3-0.6.7-neoforge" = {
+            date = "2025-02-09T04:19:35.325479Z";
+            filename = "sodium-neoforge-0.6.7+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-Bw5jVbLPht1gAmMmVtxurvENWEj3UIpd89CZqCI1TtXtWAc/8hPPdWkbBcByWf/fs2j7UadpRghpflM2GmktPw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "8HOyt4KQ";
+          };
+          "mc1.21.3-0.6.8-fabric" = {
+            date = "2025-02-09T04:45:07.139397Z";
+            filename = "sodium-fabric-0.6.8+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-HZR5Jo9Oy2Vlx3lLyC2iNPzoGsHZ9Udl8PWlDzqc/03ha2ldsssTsLVTgHPrE5eYs/nXn1KPOZgW3oTmStIvUQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "LL4puCl1";
+          };
+          "mc1.21.3-0.6.8-neoforge" = {
+            date = "2025-02-09T04:52:48.138719Z";
+            filename = "sodium-neoforge-0.6.8+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-/Zkty0Q8K1vZigJCpu/T0r3VnY7NLlaEHXnJ0J7aDIGmVpEt8HKp0SnctBpFEYqUEivCDzqrk2lnPtHgivkUYQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "X0u6q01a";
+          };
+          "mc1.21.3-0.6.9-fabric" = {
+            date = "2025-02-19T22:35:35.940984Z";
+            filename = "sodium-fabric-0.6.9+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-2BCuJSiLHKvXTrhXSg0KumNQiL56bKumc+dyXcS8aUgb4hnxCOmu5faJPGGDQtcO35J24ABp6nBS4UYHoi/Nbg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Hp1g50Pm";
+          };
+          "mc1.21.3-0.6.9-neoforge" = {
+            date = "2025-02-19T22:36:01.515816Z";
+            filename = "sodium-neoforge-0.6.9+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-dJk9FKAV/917wQWiELoE/o9O++zQLGgRAMWk3zY8XTedTGVJqnIWw3sVHwbsWEGBEJqhLmFz+7LGTyKdXcNSxw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "FpkDJuDz";
+          };
+          "mc1.21.4-0.6.10-fabric" = {
+            date = "2025-02-26T17:51:51.491Z";
+            filename = "sodium-fabric-0.6.10+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-5iE7dNw7oVOHBA2t04PwxpmZ82XJv0kok8UvDXQJC1d+TOA8UvKjnNnWgN0yqmIoquJo2rzQwkeJCBlcVtl1yQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "FRXt5xaI";
+          };
+          "mc1.21.4-0.6.10-neoforge" = {
+            date = "2025-02-26T17:52:12.061669Z";
+            filename = "sodium-neoforge-0.6.10+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-ksVabz1IanOYBkMIRkX/oKaGJ4QFz0MVX8izpPjZxtZwc6Zd/wyF8uT9x0JqQ6+Sm6CEzCu5sZCumOfQkkRfwg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "mTW3oi85";
+          };
+          "mc1.21.4-0.6.13-fabric" = {
+            date = "2025-04-04T00:09:49.666331Z";
+            filename = "sodium-fabric-0.6.13+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-LHLKLd/Sfin/bCT8zfbz2AhXvRAUxwcBf5bLSkJPlJGOU7oh2F8i48kXGAP40sEsma6FfTjY6FVGzGWWC5Wi8Q==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "c3YkZvne";
+          };
+          "mc1.21.4-0.6.13-neoforge" = {
+            date = "2025-04-04T00:10:09.871437Z";
+            filename = "sodium-neoforge-0.6.13+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-dZvxnpqm1dYEx6agD0hA7RgLtLhUG4DToJwO/vfMOgV9Z4lTq5j9e7lOcRdPq9IujBPNlBHswWq5bDJ1CwITFA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "XgEfENfn";
+          };
+          "mc1.21.4-0.6.2-fabric" = {
+            date = "2024-12-03T21:21:41.169462Z";
+            filename = "sodium-fabric-0.6.2+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-InoFFgmFWogCe5ODLSBiS0oBYaa1QdD8ZRkRxoDV4vZLg0+nkx61+u2M6iS3X0k8zz4LXQIW98T+BevgnS0hbw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "joBzVWtR";
+          };
+          "mc1.21.4-0.6.2-neoforge" = {
+            date = "2024-12-03T21:28:58.608936Z";
+            filename = "sodium-neoforge-0.6.2+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-mGujJCf9a7ykgCMSOLsElE6amKjrKWpuElhGi1bcFgtBqF347tbM9LrQuknminLO9nLnjfnYcCfckpWiYane9w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "fOY6Lk1h";
+          };
+          "mc1.21.4-0.6.3-fabric" = {
+            date = "2024-12-07T06:59:16.019028Z";
+            filename = "sodium-fabric-0.6.3+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-kGb39Bslp/Vbn4wSiiwMuqTocjL+XsWKTFrGyhyAOAf6QzlL7dOFbMiQMrHrI4pdyhFcFY1ZtNJagyrleSB7fw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "iPRNybGo";
+          };
+          "mc1.21.4-0.6.3-neoforge" = {
+            date = "2024-12-07T06:59:33.752328Z";
+            filename = "sodium-neoforge-0.6.3+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-2TVFP3y+IQjs6c+y1pmK4S9Afrj2EuRCksI4B3X3J8hQVYIVPp4XeeVo0gYBsGEwcfxwR9Okzp4Iz9xDn42AZA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "cQxHrxZR";
+          };
+          "mc1.21.4-0.6.5-fabric" = {
+            date = "2024-12-17T22:16:12.429427Z";
+            filename = "sodium-fabric-0.6.5+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-DM8wdJvmNnMwI/Wzb5j5vi0UDZl1gbD8AWTjDnIHVJyHxNNygfjxvVpA1LzoiAAnveJ11zlpn3olX08UPnGoVA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "aHtQZyzN";
+          };
+          "mc1.21.4-0.6.5-neoforge" = {
+            date = "2024-12-17T22:20:33.945633Z";
+            filename = "sodium-neoforge-0.6.5+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-I4cva5c+j7/r3/4T4hLv08kZtjzOryFBmee6RM1Hgx7qvrFPPUkvH3+gox7a3NFt6bHmEK+XM9BaGiyUqpELrQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "oTFUUvpt";
+          };
+          "mc1.21.4-0.6.6-fabric" = {
+            date = "2024-12-25T04:18:10.552721Z";
+            filename = "sodium-fabric-0.6.6+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-l3YG+PNEQjoZhu/e2W6YRNHg768R2Hf4vsdMS4cR+dkJ3er4ujEmsm9wTwxjYvRMZh5DXNvtSCcr0DuCVXMUtg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "tu8qILqH";
+          };
+          "mc1.21.4-0.6.6-neoforge" = {
+            date = "2024-12-25T04:19:08.603188Z";
+            filename = "sodium-neoforge-0.6.6+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-VnfQEYANiMUlmio8gtDpC13sg6dQX8dQKmii/38hg0Vk8Cdk3IgT+RC9dov/JTiSz1TOfTMA1tC7yLWS24KSUQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "FI3Xu3s3";
+          };
+          "mc1.21.4-0.6.7-fabric" = {
+            date = "2025-02-09T04:20:06.341405Z";
+            filename = "sodium-fabric-0.6.7+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-56Ha/ukPnfmneKnNbBmwHKQQ+bxstDaugSixyohYykCTK+752s0/Qono7U16wrHc4e5++Fef8ucq1kfcPMkbwQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "IIO7jQ3j";
+          };
+          "mc1.21.4-0.6.7-neoforge" = {
+            date = "2025-02-09T04:20:24.639006Z";
+            filename = "sodium-neoforge-0.6.7+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-8/Be2b3+WbS3QBW5/wfRl+9nK6inyOEqDmjnpLV/UurXyC1+xKGcjOaCndg1f7pWE8qSzJPw+ac4wa8ZXg2T7w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "UIdko9JY";
+          };
+          "mc1.21.4-0.6.9-fabric" = {
+            date = "2025-02-19T22:36:35.326282Z";
+            filename = "sodium-fabric-0.6.9+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-TlP47eIHm8fbAMHltzPD89fHfe9TPQPKrlfqj2zVxuUldzgLSs6Z6EzW/W7cCVCLuBsgExPz0R/7sJKL/PK6Ew==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "QuV9hMgB";
+          };
+          "mc1.21.4-0.6.9-neoforge" = {
+            date = "2025-02-19T22:36:56.428161Z";
+            filename = "sodium-neoforge-0.6.9+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-h6FRBXx7MoqpG8R/El0BwhE0P5E7ymiSgFMUjDJxYKsn70F4ZTC+ABoQze5W6sPqG2q/Q4Mi6QN4H3aNSLJoIA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "GUEd3mz0";
+          };
+          "mc1.21.5-0.6.11-fabric" = {
+            date = "2025-03-25T16:14:06.698827Z";
+            filename = "sodium-fabric-0.6.11+mc1.21.5.jar";
+            gameVersions = [
+              "1.21.5"
+            ];
+            hash = "sha512-ToHiqJx/kcvv+k0njeQluGj6kEEt0S8HOfO09O2lmormWx2K8CNF0jMIB0y5HFfErvbbxScSBiRGqKgny04NeA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "JV9BubzL";
+          };
+          "mc1.21.5-0.6.11-neoforge" = {
+            date = "2025-03-25T18:11:21.123894Z";
+            filename = "sodium-neoforge-0.6.11+mc1.21.5.jar";
+            gameVersions = [
+              "1.21.5"
+            ];
+            hash = "sha512-wTDYyoBZClGCMXNj8WqTh6BEqAYgf1wGmwxStd42HGR+VWPP0sg+1FhSAxe2XehM6F+T5i6XJL7ywnf2XY9qKg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "jv9JbDp8";
+          };
+          "mc1.21.5-0.6.12-fabric" = {
+            date = "2025-03-25T23:04:28.438164Z";
+            filename = "sodium-fabric-0.6.12+mc1.21.5.jar";
+            gameVersions = [
+              "1.21.5"
+            ];
+            hash = "sha512-GltCAvSvXbE9B3TjrhbahCpLRg7u3N3RsVMX7GO/SzjmnpYyO2ubQ2DSTBIEz3OdvXr0mShPfT0OY7uZytnlNA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "fVbw1C7i";
+          };
+          "mc1.21.5-0.6.12-neoforge" = {
+            date = "2025-03-25T23:05:33.122375Z";
+            filename = "sodium-neoforge-0.6.12+mc1.21.5.jar";
+            gameVersions = [
+              "1.21.5"
+            ];
+            hash = "sha512-EjrWcf1y2SHxldWtOrcN+NbjILigrDpwh2WLBRaqQ9j4KT4TeyrRBxrWM4W/bL5OZgS1C7oacoxErNxPoTLRPQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "FbKAFCUM";
+          };
+          "mc1.21.5-0.6.13-fabric" = {
+            date = "2025-04-04T00:11:11.321194Z";
+            filename = "sodium-fabric-0.6.13+mc1.21.5.jar";
+            gameVersions = [
+              "1.21.5"
+            ];
+            hash = "sha512-TN3QuPU5IngALmzUyR8gqeSxfnujjBotzEGcpLC4VjZuJHEBvu2v+fAhZkUjqzLFGs9/tN0rQRNnwG+e3rIQjQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "DA250htH";
+          };
+          "mc1.21.5-0.6.13-neoforge" = {
+            date = "2025-04-04T00:11:17.486726Z";
+            filename = "sodium-neoforge-0.6.13+mc1.21.5.jar";
+            gameVersions = [
+              "1.21.5"
+            ];
+            hash = "sha512-OxTGaAlG8DxahltBbb2y9EDaLO+2nd09wXqZ4vWJZ1Zlvl5CwSPCTD6HjKo4R9n/EsW1664ytJaapdTplTZzyw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "dfyNHRhw";
+          };
+          "mc1.21.6-0.6.13-fabric" = {
+            date = "2025-06-17T15:18:49.134677Z";
+            filename = "sodium-fabric-0.6.13+mc1.21.6.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-7pfj3wem9zS8ig93wfHef0e+0Jz2gvBIzrEmdcUbcLpyexH8rLt7EMyfebKD3XGjl1ExK1xwVoqjrJRxQHF02w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "ND4ROcMQ";
+          };
+          "mc1.21.6-0.6.13-neoforge" = {
+            date = "2025-06-17T16:00:07.567865Z";
+            filename = "sodium-neoforge-0.6.13+mc1.21.6.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-yZkSSzpg12oxxFkp3WiV80BuQtYfAVXAVbBTDVwCv22BpAR5ftVXpOBc/uS0ZVXsdwH9bZjSgaAlld0jSLuJFw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "ihzX2Dvy";
+          };
+          "mc1.21.8-0.7.0-fabric" = {
+            date = "2025-09-30T15:07:01.867787Z";
+            filename = "sodium-fabric-0.7.0+mc1.21.8.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-xXSB++ZzpwdOrAx8Zi7PYRq6Ecv3inCjCSmqtaK4PMnwweN/LTgU9HxaCxRFKkgUnOjIYD/kWRCDUgfauLj0rw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "24jH02Sf";
+          };
+          "mc1.21.8-0.7.0-neoforge" = {
+            date = "2025-09-30T15:24:09.099743Z";
+            filename = "sodium-neoforge-0.7.0+mc1.21.8.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-EvXC3N9xcijQTSaUFAeOKOszFM39Li0dngoyp4Jft8AvrIEHkFfRQcT3azNdU6zDaHQQXu+qhxXLl31ppewQtg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "1LjoeVdt";
+          };
+          "mc1.21.8-0.7.2-fabric" = {
+            date = "2025-10-09T20:37:15.691991Z";
+            filename = "sodium-fabric-0.7.2+mc1.21.8.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-vVLCBUgBGR+HD7ym/z2XrKe9p8FfACMUIQK5g93Ut0VP4Q82z75ffQXNgMlbNOKha93wA1CNB2HbuKVlwCCGXg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "pJRT8Zxt";
+          };
+          "mc1.21.8-0.7.2-neoforge" = {
+            date = "2025-10-09T20:38:08.684095Z";
+            filename = "sodium-neoforge-0.7.2+mc1.21.8.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-YBodpZlFZVBI1m3Jz8Gio4bFhwdOf3B6fA2QNJQKh78uYowLX6twjq7q6wHYuC9bLLAW9YZ+K/dmofCBrHXvAw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "lgWRGiHv";
+          };
+          "mc1.21.8-0.7.3-fabric" = {
+            date = "2025-11-10T18:49:39.796580Z";
+            filename = "sodium-fabric-0.7.3+mc1.21.8.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-LH/pmM19IMbezclE33M9uHCrNkpkz9vUxQTB9PEdPkHcGylVXnP7r8BRtMT7+9e1Ji0Tudh09LG4hg3orv6sUw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "7pwil2dy";
+          };
+          "mc1.21.8-0.7.3-neoforge" = {
+            date = "2025-11-10T18:50:44.804773Z";
+            filename = "sodium-neoforge-0.7.3+mc1.21.8.jar";
+            gameVersions = [
+              "1.21.6"
+              "1.21.7"
+              "1.21.8"
+            ];
+            hash = "sha512-BI9ZbvJHpxM1kFp39x5pauABP3kF7Fzs3OBr9a1gn5tppu8xjgWsmpHUdzOqx3v/ynxmoyRjjliIl/UBf6k+8g==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "q6wdZywr";
+          };
+          "mc1.21.9-0.7.0-fabric" = {
+            date = "2025-09-30T15:04:26.070225Z";
+            filename = "sodium-fabric-0.7.0+mc1.21.9.jar";
+            gameVersions = [
+              "1.21.9"
+              "1.21.10"
+            ];
+            hash = "sha512-Z1aH2JDcHANU3uJ16sLcEsMSMjfbSpzVh0gphqZdByrRut/W7oNxvi6DTFnjtfrkqR5zduB26s/wYlf8aWFcNQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "AQpu5aS1";
+          };
+          "mc26.1-0.8.7-fabric" = {
+            date = "2026-03-24T16:17:42.173655Z";
+            filename = "sodium-fabric-0.8.7+mc26.1.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+            ];
+            hash = "sha512-KK6iAh+VJkEsXVKZc22rxtbRyuAEOY9t6NfFwAUG9OFckCC0UV3lW+J/fZLMuTGIJzwQJ6tW/oiaxJQdMEWJRQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Amr4VcZo";
+          };
+          "mc26.1.1-0.8.9-fabric" = {
+            date = "2026-04-03T14:10:45.341213Z";
+            filename = "sodium-fabric-0.8.9+mc26.1.1.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-dPnciWO1JYImg3zDYbprUl2nNKtPpfBdGGK8bpF19PqByj1JRD4vuFvhRNBgQvDWXLzO78ORBDr4V7OKomFK6A==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "uGvVQBnw";
+          };
+          "mc26.1.1-0.8.9-neoforge" = {
+            date = "2026-04-03T14:11:43.469386Z";
+            filename = "sodium-neoforge-0.8.9+mc26.1.1.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-HmP6BhidAT21fIwYdeLD6lEU4Aq4LwtlQPjp7WAH/e+eoquQchzipVtV40hPoWlumlgrM/3ycTCMhxfbSVhinQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Fg5Mk6Y3";
+          };
+          "mc26.1.2-0.8.10-fabric" = {
+            date = "2026-04-25T23:38:17.207633Z";
+            filename = "sodium-fabric-0.8.10+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-rAnwvTbVaCS5aR9RYK3xDnWOxjCbfgUP3O+5CK+deW6vlk4DhuofZEKEhUkm0v+pAsZBzX44VYaXOizYo67WtQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "SIrB5bCM";
+          };
+          "mc26.1.2-0.8.10-neoforge" = {
+            date = "2026-04-25T23:33:55.981858Z";
+            filename = "sodium-neoforge-0.8.10+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-vHqYs13CgEBWC9/xdMDRCvUBzSnNPJWMD5BaIcZ0h0yECWI6lw8Q2sUrIugWJk3gg6InVOYRxr7NWfVeOZgl9w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "qyD7aF0i";
+          };
+          "mc26.1.2-0.8.11-fabric" = {
+            date = "2026-05-04T16:05:01.123072Z";
+            filename = "sodium-fabric-0.8.11+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-tgdVeZ77l/DT0RHJ1piHOC2iiqs6e/L7S3vnqcaEb09VNCGSfBWkA8kBxLCIdzuC/apa8alBSxmmJ5YeaHymbQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "ff7xUQLH";
+          };
+          "mc26.1.2-0.8.11-neoforge" = {
+            date = "2026-05-04T16:05:01.172776Z";
+            filename = "sodium-neoforge-0.8.11+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-+P7qefu0UY0OTtEFufRLPqsUgt62Gg/1jti7qQEdpsBDbPbA75MJQBGSi7pTYnnr4yLwIsCTmyqengvpTXjUzA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "QZUUceyk";
+          };
+          "mc26.1.2-0.8.12-beta.1-fabric" = {
+            date = "2026-05-08T22:38:21.551569Z";
+            filename = "sodium-fabric-0.8.12-beta.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-Lf5iCdxh4fp0+2H25tychqnIigqUkOxAsQJumRt9zJwyRqz1/U/+aWqzEtazFfMiwuotjRhG+9QEg39ZN38O9w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "yUMbbGVC";
+          };
+          "mc26.1.2-0.8.12-beta.1-neoforge" = {
+            date = "2026-05-08T22:38:21.568196Z";
+            filename = "sodium-neoforge-0.8.12-beta.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-+sCJZ4wXrfqhsR9K2fQchyjIYKVUakK+dtSm9xBWCXhuDnFqWp8X+dyuyLBwsEneF98Fs3lwv33gwaruAUx3yw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "tLByymK0";
+          };
+          "mc26.1.2-0.8.12-beta.2-fabric" = {
+            date = "2026-05-11T00:14:30.975389Z";
+            filename = "sodium-fabric-0.8.12-beta.2+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-q0MkodlNq8gdiX4f9R8pY1yKCC0VJdoVI/ULOrtoo3turJ8Dig4WLGGI/91Zsf658eRk9QV84ky6CHhmZXEzYw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "s0gEbAOZ";
+          };
+          "mc26.1.2-0.8.12-beta.2-neoforge" = {
+            date = "2026-05-11T00:14:30.992115Z";
+            filename = "sodium-neoforge-0.8.12-beta.2+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-e/N7U5fZC1VZpcVRbnycG498lwuQ3UXsSHXxnX5wCZ+fyfj1fYD80SwRI5kAoyZrvqGL5qoWTFuZm7kKy2oJiw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "TDDIPBCi";
+          };
+          "mc26.1.2-0.8.12-beta.3-fabric" = {
+            date = "2026-05-13T18:18:35.350504Z";
+            filename = "sodium-fabric-0.8.12-beta.3+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-rjwNjKbcoX4+/TMZEl7THgnQTCnlQSkbQWFWy9b/a4nNg1n7wgYmrfJZVauTlw4I02b7Y6yBzo5IWYtTCTaEyA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "2NVD70pK";
+          };
+          "mc26.1.2-0.8.12-beta.3-neoforge" = {
+            date = "2026-05-13T18:18:35.551311Z";
+            filename = "sodium-neoforge-0.8.12-beta.3+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-8gL5C0zHcI3yAeo8ylZKt1PE6cfakQho0GFIZqxOiWuolaXYSuRxhNdeRzUf7C+zmkKRFFEPjkuHdHjuGwGOUQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "lTkSfJmh";
+          };
+          "mc26.1.2-0.8.12-beta.4-fabric" = {
+            date = "2026-05-14T12:38:04.031677Z";
+            filename = "sodium-fabric-0.8.12-beta.4+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-EXgqqfBi8IOGzTz8GkQnFfhDgt/W97BAlQcZcMeFqJE7AEpG2+SQ7zDoDKW7pFx2Fcg5wE+oZpJLTDJfbSYGQQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "8l4Yx5Q1";
+          };
+          "mc26.1.2-0.8.12-beta.4-neoforge" = {
+            date = "2026-05-14T12:38:04.007023Z";
+            filename = "sodium-neoforge-0.8.12-beta.4+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-VNsXMsn2Aoy35hwKWRWGHt21C7Fl492lUNYrI9bD0mXY6MiPAGZm56DcAdfa3XIBjRvGS6coaOvOJsfZW4JZ+Q==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "g6p4rAa4";
+          };
+          "mc26.1.2-0.8.12-fabric" = {
+            date = "2026-05-18T22:12:28.474147Z";
+            filename = "sodium-fabric-0.8.12+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-QCu5RdH4k6csFSwTfgj4oMBF1yWk1soq97z+kpxNgDONpQkJTP46jNFiNGt4xQadw88dV7+UobzlV/ZCXafnbw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "eRJU33Hp";
+          };
+          "mc26.1.2-0.8.12-neoforge" = {
+            date = "2026-05-18T22:12:28.453346Z";
+            filename = "sodium-neoforge-0.8.12+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-CVqr/iN0k+PH03fNBjEz7Avsraj0goGIlTOJI8p595jssJU3tE9PtohEyAMqZEgu/KaI1xyaPFfUPXNncuR+WQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "775xoFNg";
+          };
+          "mc26.1.2-0.9.0-beta.1-fabric" = {
+            date = "2026-06-15T18:58:02.582281Z";
+            filename = "sodium-fabric-0.9.0-beta.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-nC/LP3L7H+f5HpPrlxNUIlQe6rVsHRpccQ4TSan3RGg0esut9zGli5xnolJWnbBMHnRusWBSxDOfAOkx6PS9zA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "1rha2U1D";
+          };
+          "mc26.1.2-0.9.0-beta.1-neoforge" = {
+            date = "2026-06-15T18:58:02.566102Z";
+            filename = "sodium-neoforge-0.9.0-beta.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-f5+TvdkEA4RP5P0XRmQ1HvCnAEB0xb/nRirXWWiUEC5S1RJoqs0E9/ePgMOSmTQRFh/9UKWzB0dVmEaV+6VJIg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "I6y5LD6f";
+          };
+          "mc26.1.2-0.9.1-beta.2-fabric" = {
+            date = "2026-06-24T15:35:09.255245Z";
+            filename = "sodium-fabric-0.9.1-beta.2+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-xBBr7kdY0d4tQuyBWl50Ehd2ujJL3yCK3jL/paGr8PzYDpFQ7S+vJeFe76CeIvgpUxr3JmXZdXYN1V9HNe4ipw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "NPVnpcnt";
+          };
+          "mc26.1.2-0.9.1-beta.2-neoforge" = {
+            date = "2026-06-24T15:35:09.225526Z";
+            filename = "sodium-neoforge-0.9.1-beta.2+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-q5WRzWeScWC/PO8Fx8Vb4OlwkzDflklFriPM+112pRbSZ/qmPMmBrCbXAO2glINWrE4SFclNYHhTp7ZbJWpxYA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "B5nxF2dz";
+          };
+          "mc26.1.2-0.9.1-beta.3-fabric" = {
+            date = "2026-07-01T01:46:28.816399Z";
+            filename = "sodium-fabric-0.9.1-beta.3+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-UWW0k5ov0hjOVirqJrJma+3acbMK2wIHlWr1y+6of7d+IbyiyaGz+Zf93rDSSaEHhuEV7U09YboacjyAbv+Y4w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "XH7tn3tc";
+          };
+          "mc26.1.2-0.9.1-beta.3-neoforge" = {
+            date = "2026-07-01T01:46:28.837380Z";
+            filename = "sodium-neoforge-0.9.1-beta.3+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-C3WcPoGbB8FJqXjHd9uXqLx6O657JsfIz7J6LQkT+8ZeGTjeAx/gB7UFPe8t5cX0iDfn16DaYoG7SxRLBQwepg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "FVHjuQxV";
+          };
+          "mc26.1.2-0.9.1-beta.4-fabric" = {
+            date = "2026-07-05T23:51:03.675336Z";
+            filename = "sodium-fabric-0.9.1-beta.4+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-JNWgd7I9lw4USDflPDMEh7L/9L6gI5mzmWYxLAP0R0+OLFcT63sVIJkDiPOoJFANiP22XwkH4a3rhPvIjTzxeQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "3gOEYetK";
+          };
+          "mc26.1.2-0.9.1-beta.4-neoforge" = {
+            date = "2026-07-05T23:51:04.948773Z";
+            filename = "sodium-neoforge-0.9.1-beta.4+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-4L7eKTopPnEJ7optb66m8hKYLgZBW6D4pOiLrOZSzVl+pTG6YH/16dEhFC3qETjRLpGJpqwHClST0HiMnSQFZg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "rU20oO6s";
+          };
+          "mc26.1.2-0.9.1-fabric" = {
+            date = "2026-07-08T21:04:04.955260Z";
+            filename = "sodium-fabric-0.9.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-v34kKk31pwvlZ61Y4mLup9tUuSMzmUMxtX3BPy7TbiLRz2YJ5OdlgtMXPV/9zelTREEWS8m3BWDz12Sv/MFq0w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "vf7UgZpC";
+          };
+          "mc26.1.2-0.9.1-neoforge" = {
+            date = "2026-07-08T21:04:04.939552Z";
+            filename = "sodium-neoforge-0.9.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-9/OfwGnZGHO5Uqle53gDK1uXk/3HC+xzInWRnxhEqFj7ujjlNs/CEyUkuBTof5/gAIR8W9JR8bnX1lXYGK+0pQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "UETw0GTI";
+          };
+          "mc26.1.2-0.9.2-alpha.2-fabric" = {
+            date = "2026-07-31T17:33:55.378018Z";
+            filename = "sodium-fabric-0.9.2-alpha.2+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-TXT7pT7T9tyVmWWhV2qAiiptlqnRpahRLj/3VMuGp1kl/24T20Z/rVOqKZq35h1CqRTWwNaxzprtAYFlLk2ZwA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "bDYxMrp3";
+          };
+          "mc26.1.2-0.9.2-alpha.2-neoforge" = {
+            date = "2026-07-31T17:33:55.358060Z";
+            filename = "sodium-neoforge-0.9.2-alpha.2+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-lSR7Plr7x0d67X7JMYpPWg8oKaLg2qdmYwndgnPJ3pi4Ezpfh98OwPDGeNtKved9g1t3r7b0ZA5Gxhuy+DV8RA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "yGgvfqMn";
+          };
+          "mc26.1.2-0.9.2-alpha.3-fabric" = {
+            date = "2026-08-01T00:31:50.628805Z";
+            filename = "sodium-fabric-0.9.2-alpha.3+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-PgNpHfVPki3ymZ3xz9JfvGYdOWxGxs6XDlEGk2GVEI5Oyo9DZYqAyTdCth3AZmy8Bdj6nA7FZJFWNK8a7wSQQw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "7XdPQMOk";
+          };
+          "mc26.1.2-0.9.2-alpha.3-neoforge" = {
+            date = "2026-08-01T00:31:50.580192Z";
+            filename = "sodium-neoforge-0.9.2-alpha.3+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-Us+TCt7foRVN9wGMZZ7EqooJ4MsJoGfMLKDPxW6XE+p0wD0Ua/t8B4J1ZneXevw5gtNVsHqq1uNPCtPHvoFEHQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "YZNHS9YH";
+          };
+          "mc26.1.2-0.9.2-alpha.4-fabric" = {
+            date = "2026-08-07T00:47:20.660309Z";
+            filename = "sodium-fabric-0.9.2-alpha.4+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-8LOnrfUsy8caBKCjc5ZuM49cRZltfbmSz99R3ubhkX+rWSKXL1j4W6oPrqBua5+onCIRGfmWq4tyPJHIM5b1tQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "5FMvNu0I";
+          };
+          "mc26.1.2-0.9.2-alpha.4-neoforge" = {
+            date = "2026-08-07T00:47:20.715555Z";
+            filename = "sodium-neoforge-0.9.2-alpha.4+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-VMwefruSUxMebdBfK2e8EqoCiWeCqDS0WwjkzBjAcvR1ZlvkMtlZ/aLuaxtg+WCCh+JDkLXEa+vBpPWF7Ukefw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "VR1WBv3l";
+          };
+          "mc26.1.2-0.9.2-beta.1-fabric" = {
+            date = "2026-09-02T16:04:29.831120Z";
+            filename = "sodium-fabric-0.9.2-beta.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-5DVTtIiU0nJaS1s4wNmPGfvhSa9Msk8LTwrao/cZbna4xbibeDNczXzOE9l1QzIOQaA3odFtl0RXknUkWtXpTw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "l25R3slV";
+          };
+          "mc26.1.2-0.9.2-beta.1-neoforge" = {
+            date = "2026-09-02T16:04:29.633211Z";
+            filename = "sodium-neoforge-0.9.2-beta.1+mc26.1.2.jar";
+            gameVersions = [
+              "26.1.2"
+            ];
+            hash = "sha512-PE4BELw7q9IwL8nbsZLSit8+alyzomtkTVbPJ2RLufAKgvv2QPd6VKsb6Nf+2eAyRivXtfEWTdcExC5rLYS6Tw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Hf1Foc0b";
+          };
+          "mc26.2-0.9.0-fabric" = {
+            date = "2026-06-16T16:48:58.826896Z";
+            filename = "sodium-fabric-0.9.0+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-z/J+l9F57B07y8/EmCDsYrBP0QHJjCkiy89CajoNOzLNc+LUy+/g4pHJB0SE+/36nVO4zw3IeDsBXzOy4hEmow==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "3QgJXuSK";
+          };
+          "mc26.2-0.9.0-neoforge" = {
+            date = "2026-06-16T16:48:58.797875Z";
+            filename = "sodium-neoforge-0.9.0+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-ADr7vv9EgCrHBRFHGZi/Ckz6y5ebWv1t/ZYAAHDDG6MWiTvaBzYbw65ZucVHft5mHX0xX7mehF6nk0wXVs8WaA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "5dWEDeL4";
+          };
+          "mc26.2-0.9.1-beta.2-fabric" = {
+            date = "2026-06-24T15:13:18.632206Z";
+            filename = "sodium-fabric-0.9.1-beta.2+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-QI8sEmZ8LXKkAD4jE+7/w2pPUuo4jo0LGUiAkFWjQDE5oKUNWD260H2Q92J21UHF2axLIJNNzBhXeU7ltOVuUw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "wpTNXtBM";
+          };
+          "mc26.2-0.9.1-beta.2-neoforge" = {
+            date = "2026-06-24T15:13:18.648411Z";
+            filename = "sodium-neoforge-0.9.1-beta.2+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-/k3p6hivqcdDIAfAgQ8FBErtpaAP7kIvRBWd+sXzXSEaLUPkmyXcZRpakD88Xt7eqUyFxeQiHPw9uRY/25KPTg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "9nutuIup";
+          };
+          "mc26.2-0.9.1-beta.3-fabric" = {
+            date = "2026-07-01T01:41:42.042148Z";
+            filename = "sodium-fabric-0.9.1-beta.3+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-FS1supF9aty7SUCorrq+LwWlogsklvItgDK4XGyoh55gNV/hA6JIM1q1znparsfFpzOb0X0mlJ4926Z7ttPTNA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "jvfEutyx";
+          };
+          "mc26.2-0.9.1-beta.3-neoforge" = {
+            date = "2026-07-01T01:41:42.067630Z";
+            filename = "sodium-neoforge-0.9.1-beta.3+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-RHWkKGaFH44J8BVb0QzjEeUQBSZYyFjM25I0+h+uBTbGTCTBJLNkncTQYxSnnEVZYYTn4dWdNhXhholdNBDDbQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "u9zPxyVL";
+          };
+          "mc26.2-0.9.1-beta.4-fabric" = {
+            date = "2026-07-05T23:52:09.274672Z";
+            filename = "sodium-fabric-0.9.1-beta.4+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-6A718/EM+iYrwpe1fsoKbpUcD4rKp/ELsU4EQkpKVv15h8c+jX5SW9+ezjrS6YSRwmHQet425ttni707BYNEuQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "HWi9uk6d";
+          };
+          "mc26.2-0.9.1-beta.4-neoforge" = {
+            date = "2026-07-05T23:52:11.155202Z";
+            filename = "sodium-neoforge-0.9.1-beta.4+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-WF2ugRHv7iEIhUQn3mdle9YHG0sJie2RlLNLw8lIWgiBdc2vhkUM/3ZZPtcNERjKO6GHkb12Fzm6RYGwWsREUw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "dcg8zoBg";
+          };
+          "mc26.2-0.9.1-fabric" = {
+            date = "2026-07-08T20:58:18.553231Z";
+            filename = "sodium-fabric-0.9.1+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-Yn+/liWkuUaTx4nISgaG/+VYwLHsvszyYCqQPKr6nhJlSLZEKCqpw5HceYkw03hySjg76mtDl8UpTVm6XAppNg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "2Yom1N68";
+          };
+          "mc26.2-0.9.1-neoforge" = {
+            date = "2026-07-08T20:58:18.574849Z";
+            filename = "sodium-neoforge-0.9.1+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-k8GK0MSzpZAJzmUqKfr7HlCNOjYyDYoqMKl8odss9Rv6kDVLcRzDABhzysouUppc3wb5m0Cr88HLqsfe+zFtAg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "KHPycol7";
+          };
+          "mc26.2-0.9.2-alpha.1-fabric" = {
+            date = "2026-07-30T00:31:51.637913Z";
+            filename = "sodium-fabric-0.9.2-alpha.1+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-RvDdnkx8o4HkFCOeuqthZlT9amlGpFXPqVGH0evcIQRjXPiJyz6yFGMhJgIxf/OTUtU7GSzda3bfLjGlkHqB+Q==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "UWnjjQpJ";
+          };
+          "mc26.2-0.9.2-alpha.1-neoforge" = {
+            date = "2026-07-30T00:31:51.624799Z";
+            filename = "sodium-neoforge-0.9.2-alpha.1+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-qT64k2I8amxBMLoFqgX2AuSCQfJIpP5ar+ZfNPR8hpJztgCyK9WsPtqvJ9bu7eWRKSpo42/GMP6QkdFKFf5zbw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "tey73iIl";
+          };
+          "mc26.2-0.9.2-alpha.2-fabric" = {
+            date = "2026-07-31T14:00:08.023365Z";
+            filename = "sodium-fabric-0.9.2-alpha.2+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-xAvR7/vnVRfCSojqW20Po0mOQyD65sY33DOQB3YcvpmXzzF9qI7yXhZYlMritEU8O4JEQ8PR0Ebm/XKDuXOIoA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "7R6RLnxd";
+          };
+          "mc26.2-0.9.2-alpha.2-neoforge" = {
+            date = "2026-07-31T14:00:07.925992Z";
+            filename = "sodium-neoforge-0.9.2-alpha.2+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-lNGvyoHM+Uhz39vu40n3ZLZV7I6ZI8rdG7gShYZO0aIJW3mz4B8ru69+ka4l4tA2dAHyGSqEHoGrYTvjfUwkrg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "iwperv3m";
+          };
+          "mc26.2-0.9.2-alpha.3-fabric" = {
+            date = "2026-08-01T00:28:03.776913Z";
+            filename = "sodium-fabric-0.9.2-alpha.3+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-85OvwSgYQ02iDTUGRipBYy68OfCEmQKjpESJboiB3Nn5b9YgCSZbmS2y7fGE7QyUMwNdPxh88cwDpJNpy6LkGg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "StFfQ110";
+          };
+          "mc26.2-0.9.2-alpha.3-neoforge" = {
+            date = "2026-08-01T00:28:03.772781Z";
+            filename = "sodium-neoforge-0.9.2-alpha.3+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-TcnoSySbYiRKa1ic0IqYqIWSL64o4WblXqeNzMJMsZfQaSJMEcnHFOpub/009g2IV/gaXyMKpsoQL21ofS9N5A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "CAZAVb0n";
+          };
+          "mc26.2-0.9.2-alpha.4-fabric" = {
+            date = "2026-08-07T00:44:20.437948Z";
+            filename = "sodium-fabric-0.9.2-alpha.4+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-LHpUhhbmqezJoKrrPxkr91vkJPqWXnrCSOlYU1MwzO6AWQJsw7q5/EgeCQVURtaEvAfFe8gvkfuWalLXFCvkcg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "a9YZH3ip";
+          };
+          "mc26.2-0.9.2-alpha.4-neoforge" = {
+            date = "2026-08-07T00:44:20.435270Z";
+            filename = "sodium-neoforge-0.9.2-alpha.4+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-m2MYk6vuivAVtXgWbfohvYT3qkXhwOKj/yt/OHBRjoCJ8eEg9Aagei5cstSw07MinlFwdr/suKx6LvijzB8cHQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Db4rYqXN";
+          };
+          "mc26.2-0.9.2-beta.1-fabric" = {
+            date = "2026-09-02T16:13:20.435990Z";
+            filename = "sodium-fabric-0.9.2-beta.1+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-AUlVs7chk9RztEabe00LS478JO3dADelyvXB1MhdxEQyjF8bZOz2NXLZr9lqFqbidrZxcw2suFeNHZve5x8/qg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "A0IzDzaH";
+          };
+          "mc26.2-0.9.2-beta.1-neoforge" = {
+            date = "2026-09-02T16:13:20.653230Z";
+            filename = "sodium-neoforge-0.9.2-beta.1+mc26.2.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-9FDYPw6/M+DPYAqc97Hq01L185hC6C14fpH/NNNs4W1E66zwDyLkjrqPtsdJQ0KbppUijW9M9yBi0cqnGaymkQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "gQDMcWww";
+          };
+          "mc26.2-rc-1-0.9.0-beta.1-fabric" = {
+            date = "2026-06-11T21:42:56.402555Z";
+            filename = "sodium-fabric-0.9.0-beta.1+mc26.2-rc-1.jar";
+            gameVersions = [
+              "26.2-rc-1"
+            ];
+            hash = "sha512-VNPHnoU8VXLfhHXoszWqpjbONVcMLIbU+Ecz2JgH4URlNBo5kqWU31BXUrcVd9CuWSCFeE7k5FX6dt56dQFLSQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "kNdUCPfo";
+          };
+          "mc26.2-rc-1-0.9.0-beta.2-fabric" = {
+            date = "2026-06-12T00:47:33.259264Z";
+            filename = "sodium-fabric-0.9.0-beta.2+mc26.2-rc-1.jar";
+            gameVersions = [
+              "26.2-rc-1"
+            ];
+            hash = "sha512-NeSYGkYIP8SCb7nK4vlYT+k4bc3B/DmrZnXthnN0velG5tj/uo/+gbd/6IwRTXgkDjWwh/9+9e8JqklApxvAkA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Ar8m5Oi9";
+          };
+          "mc26.2r1-0.9.0-beta.3-fabric" = {
+            date = "2026-06-12T10:04:16.316879Z";
+            filename = "sodium-fabric-0.9.0-beta.3+mc26.2r1.jar";
+            gameVersions = [
+              "26.2-rc-1"
+              "26.2-rc-2"
+            ];
+            hash = "sha512-sU3kbOg4BeXvzge6LtyCQn23TqGzHN494AbViI9rMCRIJyLey6DViF6k6lP9NqPDIsCuCg/9qsN2IDWgC9vADQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "pBzGpoaN";
+          };
+          "mc26.2r1-0.9.0-beta.3-neoforge" = {
+            date = "2026-06-12T10:04:16.294621Z";
+            filename = "sodium-neoforge-0.9.0-beta.3+mc26.2r1.jar";
+            gameVersions = [
+              "26.2-rc-1"
+            ];
+            hash = "sha512-DImB5UqfgrqxpfAhNU3Sy80tLvr0wQrFzi0WGgOfRUIh7ciDX0h8Tft/ex419ZZOAsGYBa6es0kud6scBXCfTw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "tQHKoffZ";
+          };
+        };
+      };
+    };
+  };
   mpv = {
     AN3223-dotfiles = {
       date = "2026-04-02";

@@ -2104,41 +2104,58 @@ def process_curseforge(name, mod_id, previous_sources):
     }
 
 
-def process_modrinth(name, project, previous_sources):
-    old = previous_sources.get(name)
-
-    print(f"Checking [modrinth] {name} (project {project})...")
+def resolve_modrinth_versions(project):
     versions = json.loads(
         http_get(f"https://api.modrinth.com/v2/project/{project}/version")
     )
     if not versions:
         raise ValueError(f"No versions found for modrinth project {project}")
+    return versions
 
-    latest = max(versions, key=lambda v: v["date_published"])
-    version_id = latest["id"]
-    version = f"{version_id}:{latest['date_published']}"
 
-    if old and old.get("project") == project and old.get("version") == version:
-        print(f"  -> {name} unchanged (latest version matches); reusing cached hash.")
-        return old
+def modrinth_file_hash(file_entry, name):
+    """Converts a Modrinth file's published sha512 (hex) into a Nix SRI hash
+    string. Modrinth publishes a hash for every file, so this is a metadata
+    -only lookup -- no nix-build hash discovery needed."""
+    sha512_hex = file_entry.get("hashes", {}).get("sha512")
+    if not sha512_hex:
+        raise ValueError(f"{name}: file {file_entry.get('filename')} has no sha512 hash")
+    return "sha512-" + base64.b64encode(bytes.fromhex(sha512_hex)).decode()
 
-    print(f"  -> Fetching hash for {name} via Nix build...")
-    nix_expr = nix_build_expr(
-        "fetchModrinth",
-        {
-            "project": f'"{project}"',
-            "versionId": f'"{version_id}"',
-        },
-    )
-    h = extract_hash_from_nix_build(nix_expr, f"fetchModrinth ({name})")
 
-    return {
-        "type": "modrinth",
-        "project": project,
-        "versionId": version_id,
-        "version": version,
-        "hash": h,
+def process_modrinth(name, project, previous_sources):
+    old = previous_sources.get(name, {})
+    old_versions = old.get("versions", {})
+    known_version_ids = {
+        v.get("versionId") for v in old_versions.values() if v.get("versionId")
     }
+
+    print(f"Checking [modrinth] {name} (project {project})...")
+    versions = resolve_modrinth_versions(project)
+    new_versions = [v for v in versions if v["id"] not in known_version_ids]
+
+    if not new_versions:
+        print(f"  -> {name}: no new versions ({len(old_versions)} already known).")
+        return old if old_versions else {"type": "modrinth", "project": project, "versions": {}}
+
+    print(f"  -> {name}: {len(new_versions)} new version(s) of {len(versions)} total.")
+
+    result_versions = dict(old_versions)
+    for v in new_versions:
+        file_ = next((f for f in v["files"] if f.get("primary")), v["files"][0])
+        key = v["version_number"]
+        if key in result_versions:
+            key = f"{key}-{v['loaders'][0]}" if v.get("loaders") else f"{key}-{v['id']}"
+        result_versions[key] = {
+            "versionId": v["id"],
+            "date": v["date_published"],
+            "gameVersions": v["game_versions"],
+            "loaders": v["loaders"],
+            "filename": file_["filename"],
+            "hash": modrinth_file_hash(file_, name),
+        }
+
+    return {"type": "modrinth", "project": project, "versions": result_versions}
 
 
 # Same mirror list lib/fetchers/idgames.nix's fetchIdGames tries, in the
@@ -2373,7 +2390,7 @@ def main():
             if (
                 append_mode
                 and name in previous_sources
-                and section not in ("cargo", "npm")
+                and section not in ("cargo", "npm", "modrinth", "modrinth-modpack")
             ):
                 continue
             try:

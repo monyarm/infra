@@ -150,6 +150,7 @@ let
           name,
           outputHash,
           outputHashMode ? "flat",
+          outputHashAlgo ? "sha256",
           nativeBuildInputs ? [ pkgs.curl ],
           useSecrets ? false,
           extraAttrs ? { },
@@ -163,9 +164,9 @@ let
               inherit
                 outputHash
                 outputHashMode
+                outputHashAlgo
                 nativeBuildInputs
                 ;
-              outputHashAlgo = "sha256";
               SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
               preferLocalBuild = useSecrets;
             }
