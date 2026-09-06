@@ -103,6 +103,10 @@ let
     inherit pkgs;
     inherit (pkgs) lib;
   };
+  modDir = import ./mod-dir.nix {
+    inherit pkgs;
+    inherit (pkgs) lib;
+  };
   # optimizePkgs: addChecks' pkgs.runCommand fallback branch wraps rom/
   # compressRom outputs, which are always built through the pin.
   test = import ./test.nix {
@@ -127,6 +131,7 @@ let
       scummvmOptimize
       rom
       misc
+      modDir
       test
       wasm
       niccup
@@ -146,6 +151,7 @@ let
   // scummvmOptimize
   // rom
   // misc
+  // modDir
   // test;
 in
 {
