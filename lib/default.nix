@@ -107,6 +107,7 @@ let
     inherit pkgs;
     inherit (pkgs) lib;
   };
+  minecraftVersions = import ./minecraft-versions.nix { inherit (pkgs) lib; };
   # optimizePkgs: addChecks' pkgs.runCommand fallback branch wraps rom/
   # compressRom outputs, which are always built through the pin.
   test = import ./test.nix {
@@ -132,6 +133,7 @@ let
       rom
       misc
       modDir
+      minecraftVersions
       test
       wasm
       niccup
@@ -152,6 +154,7 @@ let
   // rom
   // misc
   // modDir
+  // minecraftVersions
   // test;
 in
 {
