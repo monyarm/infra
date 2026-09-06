@@ -5,6 +5,7 @@
   fetchSteam,
   mkNeoGeo,
   getFile,
+  patchZip,
   ...
 }:
 let
@@ -74,28 +75,49 @@ let
 
   # Extractor nests output under per-title subfolders with unstable names --
   # find by fixed zip name instead, once for all 4 game ROMs + neogeo BIOS
-  resolvedZips = pkgs.runCommand "neogeo-resolved-zips" { } ''
-    mkdir -p $out
-    find ${extracted} \( ${
-      lib.concatMapStringsSep " -o " (n: "-name ${lib.escapeShellArg n}") [
-        "mslug.zip"
-        "mslug2.zip"
-        "mslug3.zip"
-        "twinspri.zip"
-        "neogeo.zip"
-      ]
-    } \) -type f -exec cp -n -t $out {} +
-  '';
+  resolvedZips =
+    pkgs.runCommand "neogeo-resolved-zips"
+      {
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p $out
+        find ${extracted} \( ${
+          lib.concatMapStringsSep " -o " (n: "-name ${lib.escapeShellArg n}") [
+            "mslug.zip"
+            "mslug2.zip"
+            "mslug3.zip"
+            "twinspri.zip"
+            "neogeo.zip"
+          ]
+        } \) -type f -exec cp -n -t $out {} +
+      '';
 
   extractedZip = name: resolvedZips |> getFile "${name}.zip";
 
-  biosDir = pkgs.runCommand "neogeo-bios-dir" { } ''
-    mkdir -p $out
-    cp ${resolvedZips}/neogeo.zip $out/neogeo.zip
-  '';
+  # sm1.sm1 is the no-cartridge self-test sound driver; none of our 4 owned
+  # depots embed it, but real cartridges bank in their own driver instead,
+  # so a dummy value doesn't affect gameplay audio.
+  neogeoZipWithDummySm1 = patchZip { add."sm1.sm1" = 131072; } (resolvedZips |> getFile "neogeo.zip");
+
+  biosDir =
+    pkgs.runCommand "neogeo-bios-dir"
+      {
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        mkdir -p $out
+        cp ${neogeoZipWithDummySm1} $out/neogeo.zip
+      '';
 in
 lib.mkIf config.games.emulation.enable {
-  games.emulation.arcade.neogeoBios = biosDir;
+  games.emulation.bios.neogeo = biosDir;
 
   programs.steam.games = {
     METAL_SLUG = mkNeoGeo {
@@ -114,7 +136,17 @@ lib.mkIf config.games.emulation.enable {
     };
     METAL_SLUG_3 = mkNeoGeo {
       name = "Metal Slug 3";
-      romset = extractedZip "mslug3";
+      # Renames 4 chips (256-sma.bin/256-p1.bin/256-p2.bin/256-m1.bin) to
+      # mainline MAME's current labels (green.neo-sma/256-pg1.p1/256-pg2.p2/
+      # 256-m1.m1) -- same CRCs, just relabeled.
+      romset = patchZip {
+        rename = {
+          "256-sma.bin" = "green.neo-sma";
+          "256-p1.bin" = "256-pg1.p1";
+          "256-p2.bin" = "256-pg2.p2";
+          "256-m1.bin" = "256-m1.m1";
+        };
+      } (extractedZip "mslug3");
       shortname = "mslug3";
       steamAppId = 250180;
       steamCdnImagesHash = "sha256-Hyz2JzSka/ps4YPrhW1nObpOnx7VDTnKmdfHQRv6byk=";

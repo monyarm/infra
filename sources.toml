@@ -38,7 +38,11 @@ wad.lastermaul = "https://github.com/GeorgePieVG/Lastermaul"
 tools.wadptr = "https://github.com/fragglet/wadptr"
 tools.scummvmTools = "https://github.com/scummvm/scummvm-tools"
 tools.rpatool = "https://github.com/Shizmob/rpatool"
-tools.gameExtractionToolbox = "https://github.com/shawngmc/game-extraction-toolbox"
+# shawngmc's main hasn't merged a commit since 2025-05-15; dekr0nos's fork
+# (open PR #107 against upstream) has an unmerged Disney Afternoon Collection
+# fix for the game's newer v1.0.0.43 executable that our GOG/Steam release
+# needs -- switch here until upstream picks it up.
+tools.gameExtractionToolbox = "https://github.com/dekr0nos/game-extraction-toolbox"
 tools.mmxlcRomExtractor = "https://github.com/s3phir0th115/MMXLC1-Rom-Extractor"
 tools.neogeoRomExtractor = "https://github.com/DrRetroMod/neogeo-rom-extractor"
 tools.reePakTool = "https://github.com/Ekey/REE.PAK.Tool"
@@ -58,9 +62,6 @@ mpv.webtorrent-mpv-hook = "https://github.com/mrxdst/webtorrent-mpv-hook"
 tools.maxima = "true"
 tools.mcp-compressor = "true"
 
-[nuget]
-tools.puyoTools = ";projectFile=src/PuyoTools.App.Cli/PuyoTools.App.Cli.csproj"
-
 [dub]
 tools.minijson = "true"
 
@@ -77,7 +78,6 @@ wad.blasphemer = "https://github.com/Blasphemer/blasphemer"
 tools.minijson = "https://github.com/aminya/minijson"
 ai.skills.mattpocock-skills = "https://github.com/mattpocock/skills"
 emu.gearsystem = "https://github.com/drhelius/Gearsystem"
-tools.puyoTools = "https://github.com/nickworonekin/puyotools"
 
 [itch]
 wad.simonsdestiny = "https://batandy.itch.io/simonsdestiny"

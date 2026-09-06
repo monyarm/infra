@@ -506,8 +506,13 @@ let
     })();
   '';
 in
-gamesList: resolvePath:
+gamesList: resolvePath: gameFinalArgs:
 let
+  # For "nix build" scripts / manual testing: a full shell-ready launch
+  # command, not just the bare exe (a launcher-wrapped game needs the
+  # launcher's own args and the game path passed to it too).
+  gameCommand = g: ''cd "${g.workingDirectory}" && "${g.resolvedTargetExe}" ${gameFinalArgs g}'';
+
   launcherPkgName = g: if g.launcher != null then lib.getName g.launcher.package else null;
 
   launcherCounts = lib.foldl' (
@@ -572,6 +577,7 @@ let
     category = categoryFor g;
     missing = missingTypes g;
     images = lib.mapAttrs (_: resolvePath) g.images;
+    command = gameCommand g;
   };
 
   json = builtins.toJSON (parallel (map gameJson) gamesList);

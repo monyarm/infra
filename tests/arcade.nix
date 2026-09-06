@@ -5,7 +5,10 @@ let
   arcadeSource = builtins.readFile ../hosts/home/monyarm/games/Emulation/arcade/default.nix;
   bios = pkgs.runCommand "arcade-test-bios" { } "mkdir -p $out; touch $out/neogeo.zip";
   biosPath = builtins.unsafeDiscardStringContext (toString bios);
-  realAddChecks = (import ../lib/misc.nix { inherit lib; }).addChecks;
+  testLib = import ../lib/test.nix { inherit lib pkgs; };
+  realAddChecks = testLib.addChecks;
+  inherit (testLib) mkSmoke;
+  testSource = builtins.readFile ../lib/test.nix;
   addChecks =
     checks: drv:
     let
@@ -43,8 +46,8 @@ let
     pkgs = pkgs // {
       inherit mame;
     };
-    config.games.emulation.arcade.neogeoBios = bios;
-    inherit compressRom addChecks;
+    config.games.emulation.bios.neogeo = bios;
+    inherit compressRom addChecks mkSmoke;
     autoImport = _: [ ];
   };
   mkArcade = arcade.config._module.args.mkArcade;
@@ -58,8 +61,9 @@ let
   rompath = lib.elemAt game.launcher.args 1;
   romDir = lib.head (lib.splitString ":" rompath);
 in
-assert lib.hasInfix "if \${pkgs.coreutils}/bin/timeout" arcadeSource;
-assert lib.hasInfix "report FAIL smoke" arcadeSource;
+assert lib.hasInfix "mkSmoke" arcadeSource;
+assert lib.hasInfix "\${pkgs.coreutils}/bin/timeout" testSource;
+assert lib.hasInfix "report FAIL smoke" testSource;
 assert game.launcher.package == mame;
 assert game.game == "arcadetst";
 assert rompath == "${romDir}:${biosPath}";

@@ -355,7 +355,7 @@ let
   # Combined JSON data + dark-mode HTML artwork/categories completeness
   # report -- see report.nix for the launcher->category grouping and
   # per-game/category/type accounting.
-  report = import ./report.nix { inherit lib niccup parallel; } gamesList resolvePath;
+  report = import ./report.nix { inherit lib niccup parallel; } gamesList resolvePath gameFinalArgs;
 
   # Combine all missing reports into a string block
   artworkReportContent =

@@ -3,9 +3,15 @@
   pkgs,
   fetchSteam,
   mkArcade,
+  patchZip,
   config,
   ...
 }:
+# Per-title mameSystem/emulator/romPatch overrides here are cross-checked
+# against https://github.com/farmerbb/RED-Project/issues/192 (community
+# survey of which CAS/CAS2 extractions load as-is vs need a rename/dummy
+# file/different core). That thread is known stale in places -- where a
+# real smoke-check build disagrees with it, the build wins.
 let
   # Depot is a raw RE Engine PAK archive, not a MAME romset: REE.Unpacker
   # pulls the title's .mameac.2 out of the .pak (CAS_STM_Release / CAS2_STM_Release
@@ -25,6 +31,10 @@ let
         nativeBuildInputs = [
           pkgs.ree-tools
         ];
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
       }
       ''
         REE.Unpacker ${tag} "$(find ${depot} -name '*.pak' -print -quit)" "$PWD/unpacked"
@@ -43,9 +53,24 @@ let
       depotId,
       manifestId,
       shortname,
+      # CAS2's own internal PAK filenames (shortname above) sometimes carry a
+      # region/date suffix MAME's current driver name has since dropped or
+      # renamed (e.g. "sfau_950727" -> "sfau") -- mameSystem is the string
+      # actually handed to mame (rompath zip name + -bench arg), defaulting
+      # to shortname for every title where the two still coincide.
+      mameSystem ? shortname,
+      # "mame" (default): standalone pkgs.mame. Any other string is a
+      # retroarchCores key, for titles whose dump only matches an older
+      # MAME driver revision (see arcade/default.nix's mkArcade).
+      emulator ? "mame",
       extraVariants ? [ ],
       sha256 ? lib.fakeHash,
       images ? null,
+      # Applied to the launched (shortname) romset only, for titles whose
+      # depot extraction is otherwise correct but needs member renames
+      # and/or a dummy stub added to match the real MAME set (see
+      # lib/rom/patchZip.nix). null: no patch.
+      romPatch ? null,
     }:
     let
       depot = fetchSteam {
@@ -58,11 +83,22 @@ let
       };
     in
     {
-      inherit name shortname;
+      inherit
+        name
+        shortname
+        mameSystem
+        emulator
+        ;
       roms = lib.listToAttrs (
-        map (variant: lib.nameValuePair variant (capcomZip tag depot variant)) (
-          [ shortname ] ++ extraVariants
-        )
+        map (
+          variant:
+          lib.nameValuePair variant (
+            let
+              raw = capcomZip tag depot variant;
+            in
+            if variant == shortname && romPatch != null then patchZip romPatch raw else raw
+          )
+        ) ([ shortname ] ++ extraVariants)
       );
     }
     // (if images != null then { inherit images; } else { });
@@ -90,6 +126,10 @@ let
         nativeBuildInputs = [
           pkgs.ree-tools
         ];
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
       }
       ''
         # base depot also ships patch_*.pak files with no rom data --
@@ -103,6 +143,7 @@ let
     CAS_1943_BATTLE_OF_MIDWAY = {
       name = "1943 -The Battle of Midway-";
       shortname = "1943u";
+      emulator = "mame2010";
       roms = {
         "1943u" = capcom1943Zip "1943u";
         "1943jc" = capcom1943Zip "1943jc";
@@ -136,6 +177,7 @@ let
       manifestId = 720985918200840956;
       sha256 = "sha256-XzBl+QGQPVV12ctyGzz4W1aMn3viOtnH9zBf0F2Lhhw=";
       shortname = "gng";
+      emulator = "mame2010";
       extraVariants = [ "makaimurg" ];
       images = {
         icon = pkgs.fetchurl {
@@ -261,6 +303,37 @@ let
       manifestId = 2012252709011603898;
       sha256 = "sha256-KmXOBBFZOk05TzmLtItEdn54YrOgCBaRkKRHifiYKmk=";
       shortname = "trojanj";
+      romPatch = {
+        rename = {
+          "tb03.8k" = "tb_03.8k";
+          "tb24.13n" = "tb_24.13n";
+          "tb08.4a" = "tb_08.4a";
+          "tb16.3l" = "tb_16.3l";
+          "tb07.3a" = "tb_07.3a";
+          "mb7114e.1e" = "tbb-1.1e";
+          "tb11.3b" = "tb_11.3b";
+          "tb15.2l" = "tb_15.2l";
+          "tb19.2n" = "tb_19.2n";
+          "tb13.6b" = "tb_13.6b";
+          "tb10.8a" = "tb_10.8a";
+          "tb22.7n" = "tb_22.7n";
+          "tb18.7l" = "tb_18.7l";
+          "tb14.8b" = "tb_14.8b";
+          "tb01.6d" = "tb_01.6d";
+          "troj-06.13n" = "tb_06.13n";
+          "tb09.6a" = "tb_09.6a";
+          "tb17.5l" = "tb_17.5l";
+          "tb21.5n" = "tb_21.5n";
+          "tb23.9n" = "tb_23.9n";
+          "tb20.3n" = "tb_20.3n";
+          "troj-04.10n" = "tb_04.10n";
+          "tb12.4b" = "tb_12.4b";
+          "tbp24s10.7j" = "tbb-2.7j";
+          "tb05.12n" = "tb_05.12n";
+          "tb02.15h" = "tb_02.15h";
+          "tb25.15n" = "tb_25.15n";
+        };
+      };
     };
     CAS_LEGENDARY_WINGS = mkCapcomArcade {
       name = "LEGENDARY WINGS";
@@ -463,6 +536,9 @@ let
       manifestId = 8684632688241706607;
       sha256 = "sha256-+dyLdzDHV1cKK6dinreoQE10v7uMSHCkBWR1c167FFc=";
       shortname = "mercsj";
+      romPatch = {
+        add."c628" = 0;
+      };
     };
     CAS_MEGA_TWINS = mkCapcomArcade {
       name = "MEGA TWINS";
@@ -508,6 +584,36 @@ let
       manifestId = 6565168997152152747;
       sha256 = "sha256-wYYt8i1CvW8IIY7jPDDwAAPumomtEKS7FBgsayBg+mQ=";
       shortname = "sf2ul";
+      # Non-standard MAME set name; real driver is sf2um with 23 renamed
+      # chips (per RED-Project#192).
+      mameSystem = "sf2um";
+      romPatch = {
+        rename = {
+          "sf2_16(m4).bin" = "sf2-4m.5c";
+          "sf2u_09.bin" = "sf2_09.12a";
+          "sf2_24(m9).bin" = "sf2-9m.3d";
+          "sf2j_36b.bin" = "sf-2u_36m.10f";
+          "sf2_06(m5).bin" = "sf2-5m.4a";
+          "sf2_35m.bin" = "sf-2u_35m.9f";
+          "sf2_08(m7).bin" = "sf2-7m.6a";
+          "sf2_14(m2).bin" = "sf2-2m.3c";
+          "sf2_30m.bin" = "sf-2u_30m.11e";
+          "sf2_15(m6).bin" = "sf2-6m.4c";
+          "sf2_07(m3).bin" = "sf2-3m.5a";
+          "sf2j_29b.bin" = "sf-2u_29m.10e";
+          "sf2_25(m13).bin" = "sf2-13m.4d";
+          "sf2_17(m8).bin" = "sf2-8m.6c";
+          "sf2_31m.bin" = "sf-2u_31m.12e";
+          "sf2_27(m15).bin" = "sf2-15m.6d";
+          "sf2u_18.bin" = "sf2_18.11c";
+          "sf2u_19.bin" = "sf2_19.12c";
+          "sf2_05(m1).bin" = "sf2-1m.3a";
+          "sf2u_37m.bin" = "sf-2u_37m.11f";
+          "sf2_28m.bin" = "sf-2u_28m.9e";
+          "sf2_38m.bin" = "sf-2u_38m.12f";
+          "sf2_26(m11).bin" = "sf2-11m.5d";
+        };
+      };
       extraVariants = [ "sf2jl" ];
       images = {
         icon = pkgs.fetchurl {
@@ -598,6 +704,7 @@ let
       manifestId = 939928116172609116;
       sha256 = "sha256-UaHbgywPXTPTw0lsktx3v+RFThqa5f3S5SmgA6a9Kuw=";
       shortname = "wofu";
+      emulator = "fbneo";
       extraVariants = [ "wofj" ];
       images = {
         icon = pkgs.fetchurl {
@@ -658,6 +765,7 @@ let
       manifestId = 3507050944236305691;
       sha256 = "sha256-ItUjY5gtNNAtSFC7NR3b4LNXP+WAP7DFdFhGm12QzoI=";
       shortname = "pgear";
+      emulator = "mame2010";
     };
     # Depots 1556730, 1560440 also under base app, ownership unconfirmed -- left out.
 
@@ -719,6 +827,9 @@ let
       depotId = 1842964;
       manifestId = 7113733343069705850;
       shortname = "sfua";
+      # Current MAME hard-requires the protection MCU dump under a new
+      # filename; mame0139's "sfua" marks it NO_DUMP (non-fatal) instead.
+      emulator = "mame2010";
       extraVariants = [ "sfj" ];
       sha256 = "sha256-nG60uUrxYPSKG51GazX9DSMR0dJQXA1+Dk0KKwXqL38=";
       images = {
@@ -787,6 +898,7 @@ let
       depotId = 1842967;
       manifestId = 4888131231458650022;
       shortname = "kodu";
+      emulator = "fbneo";
       extraVariants = [ "kodjr3" ];
       sha256 = "sha256-D5cXpIKc29nUw82Sl48fnzOT7T28xf34o8nZ1xgh788=";
     };
@@ -795,6 +907,12 @@ let
       depotId = 1842968;
       manifestId = 1628235808209934720;
       shortname = "slammastur1";
+      # MAME's current driver dropped the "r1" revision suffix; MAME/mame2010
+      # also want this content cross-combined with mbomberjr1's data
+      # (RED-Project#192), but FBNeo's own ROM database accepts this dump
+      # directly, no reconstruction needed.
+      mameSystem = "slammastu";
+      emulator = "fbneo";
       extraVariants = [ "mbomberjr1" ];
       sha256 = "sha256-KWN1IkEysztoy9vaFtFoWtS4uPsZCbcELGgSs+wslcM=";
       images = {
@@ -825,6 +943,7 @@ let
       depotId = 1842969;
       manifestId = 5392066310871616954;
       shortname = "ecofghtru";
+      emulator = "mame2010";
       extraVariants = [ "uecology" ];
       sha256 = "sha256-AgW8anQJieD7v0MMesnqVki861wpDcJDzqiJfhd7ENE=";
     };
@@ -840,6 +959,7 @@ let
       depotId = 1842971;
       manifestId = 2608157869711750506;
       shortname = "dstlku";
+      emulator = "mame2010";
       extraVariants = [ "vampj_940818" ];
       sha256 = "sha256-KGeRib9LW/1h+FvZspu35a94S5iSP3wTQ/vVi3AvdFU=";
       images = {
@@ -870,6 +990,17 @@ let
       depotId = 1842972;
       manifestId = 1372844834572053952;
       shortname = "sfau_950727";
+      # MAME's current driver dropped the date suffix.
+      mameSystem = "sfau";
+      romPatch = {
+        rename = {
+          "SFZ.05B" = "sfz.05a";
+          "SFZU.04C" = "sfz.04a";
+          "sfzu.key" = "sfau.key";
+          "SFZU.03D" = "sfzu.03a";
+        };
+      };
+      emulator = "mame2010";
       extraVariants = [ "sfzj" ];
       sha256 = "sha256-f7cnKa3uk5uBJZUZ1Moq7SdhNhFhOgsuMaR5BXtPob0=";
       images = {
@@ -930,6 +1061,11 @@ let
       depotId = 1842974;
       manifestId = 5026210803311757706;
       shortname = "sfa2u";
+      # "sfa2u" didn't exist yet as a driver name in mame2010's vintage
+      # (Unknown system); dl-1425.bin is a universal QSound HLE lookup ROM
+      # shared across many CPS1/2 titles, not per-game content -- a dummy
+      # stub lets mainline MAME load it instead.
+      romPatch.add."dl-1425.bin" = 8192;
       extraVariants = [ "sfz2j" ];
       sha256 = "sha256-+K2u/HcbfuO6mbyODJUjSlSa65fihpfRErL8s+bMLA4=";
       images = {
@@ -960,6 +1096,7 @@ let
       depotId = 1842975;
       manifestId = 6279003862699888025;
       shortname = "buraiken";
+      emulator = "mame2010";
       sha256 = "sha256-RZS3ylIL/l8M4jEkxj4Z+GgbKwuaFrC/5w6Gl32i3u8=";
     };
     CAS2_1943_KAI = mkCapcomArcade2 {
@@ -967,6 +1104,7 @@ let
       depotId = 1842976;
       manifestId = 5008732065646381718;
       shortname = "1943kai";
+      emulator = "mame2010";
       sha256 = "sha256-IvlsOf0OPu2nvFL53XEqU3bsbVS3J51Ao0veX7XP7w0=";
       images = {
         icon = pkgs.fetchurl {
@@ -1041,6 +1179,8 @@ let
       depotId = 1842980;
       manifestId = 3617612435567830562;
       shortname = "blockr2";
+      mameSystem = "block";
+      emulator = "mame2010";
       extraVariants = [ "blockj" ];
       sha256 = "sha256-S6P4jbF+N9JYTuI+eQQAAGZWc96tDit/dzC6ykjG8qo=";
     };
@@ -1079,6 +1219,14 @@ let
       depotId = 1842982;
       manifestId = 615881480605010086;
       shortname = "nwarre_950420";
+      # MAME's current driver dropped the date suffix.
+      mameSystem = "nwarr";
+      romPatch = {
+        rename = {
+          "VPHE.03G" = "vphe.03f";
+        };
+      };
+      emulator = "mame2010";
       extraVariants = [ "vhuntj_950420" ];
       sha256 = "sha256-7UNXxH4T6+8wnPtO3huxEdgYLXbaOlY1VC+wDqUc5G8=";
       images = {
@@ -1109,6 +1257,9 @@ let
       depotId = 1842983;
       manifestId = 1897934777002168467;
       shortname = "spf2tu";
+      # Same as sfa2u: "spf2tu" didn't exist as a driver name in mame2010's
+      # vintage; dummy-stub the shared dl-1425.bin under mainline MAME.
+      romPatch.add."dl-1425.bin" = 8192;
       extraVariants = [ "spf2xj" ];
       sha256 = "sha256-BqyS8iQtNUM/N/obzHITvXY3jZgqaGUfFO6eboqDkrI=";
       images = {
@@ -1139,6 +1290,11 @@ let
       depotId = 1842984;
       manifestId = 1023452342768997774;
       shortname = "megaman2";
+      # Current MAME's QSound HLE needs a shared qsound.zip BIOS
+      # (dl-1425.bin) this dump predates -- MAME 0.139's synthesis-based
+      # QSound emulation has no such dependency. Confirmed: passes clean
+      # under mame2010 with zero other changes.
+      emulator = "mame2010";
       extraVariants = [ "rockman2j" ];
       sha256 = "sha256-9MzB2hvWzLrzoaAc+m873m8tyNOspGa06lUazBpOqQ4=";
       images = {
@@ -1169,6 +1325,7 @@ let
       depotId = 1842985;
       manifestId = 6829454349251196795;
       shortname = "vsavu";
+      emulator = "mame2010";
       extraVariants = [ "vsavj" ];
       sha256 = "sha256-lUzpKNKlEs6zuWrCaYnw5EvGD8m9nvNYd8YHfJCpm2A=";
       images = {
@@ -1198,7 +1355,11 @@ let
       name = "Capcom Sports Club";
       depotId = 1842986;
       manifestId = 9090483507631980910;
+      # 4 of 12 files don't match any known csclub-family CRC in MAME
+      # (confirmed independently and by RED-Project#192), but FBNeo's own
+      # ROM database accepts this dump directly.
       shortname = "csclubu_971017";
+      emulator = "fbneo";
       extraVariants = [ "csclubj" ];
       sha256 = "sha256-FW2Ofjidti6B4T8Ihd0DXefMbi7FqL523EW057hFaaA=";
     };
@@ -1207,6 +1368,11 @@ let
       depotId = 1842987;
       manifestId = 7239720317153599283;
       shortname = "sgemfu_970922";
+      # MAME's current driver dropped the date suffix. 4 program chips don't
+      # match any known MAME sgemf-family CRC in any era, but FBNeo's own
+      # ROM database accepts this dump directly.
+      mameSystem = "sgemf";
+      emulator = "fbneo";
       extraVariants = [ "pfghtj_970922" ];
       sha256 = "sha256-dYNtRPiYySqK0OSCqbA+OmsKD9DaFDye6xmDnP03e4g=";
       images = {
@@ -1237,6 +1403,9 @@ let
       depotId = 1842988;
       manifestId = 8254947701711188485;
       shortname = "sfa3u";
+      # Same QSound dl-1425.bin gap as megaman2 -- mame0139 predates the
+      # HLE sample requirement.
+      emulator = "mame2010";
       extraVariants = [ "sfz3j" ];
       sha256 = "sha256-erwPHYa6qny6R7eCrc/kkluN2VolhB5TRR9uByfd2/g=";
       images = {
@@ -1267,6 +1436,7 @@ let
       depotId = 1842989;
       manifestId = 8949776931283853998;
       shortname = "hsf2";
+      emulator = "mame2010";
       extraVariants = [ "hsf2j" ];
       sha256 = "sha256-T0DtHC1LkhfD3VrbaZxVK6rRDfh5gKiHnOcLlZ27Jxw=";
       images = {
@@ -1311,7 +1481,9 @@ lib.mkIf config.games.emulation.enable {
       _: entry:
       mkArcade (
         {
-          inherit (entry) name shortname;
+          inherit (entry) name;
+          shortname = entry.mameSystem or entry.shortname;
+          emulator = entry.emulator or "mame";
           romset = config.games.emulation.roms.${entry.shortname};
         }
         // (if entry ? images then { inherit (entry) images; } else { })

@@ -1,8 +1,11 @@
 { pkgs }:
 
 let
-  misc = import ../lib/misc.nix { inherit (pkgs) lib; };
-  inherit (misc) addChecks;
+  test = import ../lib/test.nix {
+    inherit pkgs;
+    inherit (pkgs) lib;
+  };
+  inherit (test) addChecks;
   base = pkgs.runCommand "add-checks-fixture-input" {
     doCheck = false;
     phases = [ "installPhase" ];

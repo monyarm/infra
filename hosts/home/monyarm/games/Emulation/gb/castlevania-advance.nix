@@ -38,24 +38,6 @@ let
     jp = audioPatches |> getFile "Patches/CV-AoS-JP-Restored-Audio.ups";
   };
 
-  # Filenames say "patch" but these are the actual ROMs (game's own
-  # internal build-tag naming), just missing the collection's WMA-replaced
-  # enhanced audio. Restored via UPS sidecar patches.
-  patchedGbaRoms = {
-    circleOfTheMoon =
-      marchive.castlevaniaAdvance
-      |> getFile "01_Circle_US.patch_210614m.bin"
-      |> patchFile config.games.emulation.patches.cotmUsAudio;
-    harmonyOfDissonance =
-      marchive.castlevaniaAdvance
-      |> getFile "02_Byakuya_US.patch_210520m.bin"
-      |> patchFile config.games.emulation.patches.hodUsAudio;
-    ariaOfSorrow =
-      marchive.castlevaniaAdvance
-      |> getFile "03_Akatsuki_US.patch_210623m.bin"
-      |> patchFile config.games.emulation.patches.aosUsAudio;
-  };
-
   aosDefinitivePatch =
     fetchGDrive sources.patch.ariaofsorrowDefinitive
     |> rename "Aria of Sorrow - Definitive Edition v1.3.ips";
@@ -81,32 +63,55 @@ let
 in
 lib.mkIf config.games.emulation.enable {
   games.emulation.roms = {
-    inherit (patchedGbaRoms) circleOfTheMoon harmonyOfDissonance ariaOfSorrow;
+    # Filenames say "patch" but these are the actual ROMs (game's own
+    # internal build-tag naming), just missing the collection's WMA-replaced
+    # enhanced audio. Restored via UPS sidecar patches.
+    circleOfTheMoon =
+      marchive.castlevaniaAdvance
+      |> getFile "01_Circle_US.patch_210614m.bin"
+      |> rename "CircleOfTheMoon.gba"
+      |> patchFile config.games.emulation.patches.cotmUsAudio;
+    harmonyOfDissonance =
+      marchive.castlevaniaAdvance
+      |> getFile "02_Byakuya_US.patch_210520m.bin"
+      |> rename "HarmonyOfDissonance.gba"
+      |> patchFile config.games.emulation.patches.hodUsAudio;
+    ariaOfSorrow =
+      marchive.castlevaniaAdvance
+      |> getFile "03_Akatsuki_US.patch_210623m.bin"
+      |> rename "AriaOfSorrow.gba"
+      |> patchFile config.games.emulation.patches.aosUsAudio;
 
     # regional variants, registered for enumeration only -- not launchable
     circleOfTheMoonEu =
       marchive.castlevaniaAdvance
       |> getFile "01_Circle_EU.patch_210614m.bin"
+      |> rename "CircleOfTheMoonEu.gba"
       |> patchFile config.games.emulation.patches.cotmEuAudio;
     circleOfTheMoonJp =
       marchive.castlevaniaAdvance
       |> getFile "01_Circle_JP.patch_210623m.bin"
+      |> rename "CircleOfTheMoonJp.gba"
       |> patchFile config.games.emulation.patches.cotmJpAudio;
     harmonyOfDissonanceEu =
       marchive.castlevaniaAdvance
       |> getFile "02_Byakuya_EU.patch_210520m.bin"
+      |> rename "HarmonyOfDissonanceEu.gba"
       |> patchFile config.games.emulation.patches.hodEuAudio;
     harmonyOfDissonanceJp =
       marchive.castlevaniaAdvance
       |> getFile "02_Byakuya_JP.patch_210520m.bin"
+      |> rename "HarmonyOfDissonanceJp.gba"
       |> patchFile config.games.emulation.patches.hodJpAudio;
     ariaOfSorrowEu =
       marchive.castlevaniaAdvance
       |> getFile "03_Akatsuki_EU.patch_210623m.bin"
+      |> rename "AriaOfSorrowEu.gba"
       |> patchFile config.games.emulation.patches.aosEuAudio;
     ariaOfSorrowJp =
       marchive.castlevaniaAdvance
       |> getFile "03_Akatsuki_JP.patch_210623m.bin"
+      |> rename "AriaOfSorrowJp.gba"
       |> patchFile config.games.emulation.patches.aosJpAudio;
   };
 

@@ -103,6 +103,12 @@ let
     inherit pkgs;
     inherit (pkgs) lib;
   };
+  # optimizePkgs: addChecks' pkgs.runCommand fallback branch wraps rom/
+  # compressRom outputs, which are always built through the pin.
+  test = import ./test.nix {
+    pkgs = optimizePkgs;
+    inherit (optimizePkgs) lib;
+  };
   wasm = import ./wasm.nix { inherit pkgs lib nixWasmRustPath; };
   niccup = niccupLib;
   all = {
@@ -121,6 +127,7 @@ let
       scummvmOptimize
       rom
       misc
+      test
       wasm
       niccup
       ;
@@ -138,7 +145,8 @@ let
   // optimize
   // scummvmOptimize
   // rom
-  // misc;
+  // misc
+  // test;
 in
 {
   customLib = all;

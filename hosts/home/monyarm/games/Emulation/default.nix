@@ -5,6 +5,7 @@
   compressRom',
   addChecks,
   autoImport,
+  mkSmoke,
   ...
 }:
 # Owned but no known extractor -- multi-system Steam bundles, so noted here
@@ -24,6 +25,7 @@ let
           compressRom
           compressRom'
           addChecks
+          mkSmoke
           ;
       })
     )

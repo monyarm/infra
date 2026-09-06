@@ -188,6 +188,7 @@
                 "**/.github/**"
                 "**/*.sops.nix"
                 ".claude/skills/**"
+                ".claude/agents/**"
                 "hosts/home/monyarm/config/AI/Claude/memory/**"
               ];
               # nix

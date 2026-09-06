@@ -46,23 +46,28 @@ let
   extracted =
     pkgs.runCommand "double-dragon-trilogy-extracted-roms"
       {
-        nativeBuildInputs = [ pkgs.nodejs ];
+        nativeBuildInputs = [ pkgs.game-extraction-toolbox ];
         __contentAddressed = true;
         allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "recursive";
       }
       ''
-        mkdir -p $out
-        dir="$(find ${doubleDragonTrilogy} -name ddragon_hd6309.bin -printf '%h\n')"
-        (cd $out && ${pkgs.dotemu2mame}/bin/dotemu2mame "$dir")
+        gextoolbox tasks extract --task ddragontrilogy --srcdir "${doubleDragonTrilogy}" --destdir $out
       '';
 
   extractedZip =
     name:
-    pkgs.runCommand "${name}.zip" { } ''
-      cp "$(find ${extracted} -name ${lib.escapeShellArg "${name}.zip"})" $out
-    '';
+    pkgs.runCommand "${name}.zip"
+      {
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        cp "$(find ${extracted} -name ${lib.escapeShellArg "${name}.zip"})" $out
+      '';
 in
 lib.mkIf config.games.emulation.enable {
   programs.steam.games = {
@@ -70,6 +75,10 @@ lib.mkIf config.games.emulation.enable {
       name = "Double Dragon";
       romset = extractedZip "ddragon";
       shortname = "ddragon";
+      # Current MAME's driver renamed several ROM chip labels since this
+      # dump was made; CRCs confirmed byte-identical to mame0139's
+      # ROM_START(ddragon) under the dump's original filenames.
+      emulator = "mame2010";
       images = {
         icon = pkgs.fetchurl {
           url = "https://cdn2.steamgriddb.com/icon/d83a3ece517109abe8c5127136eb6145.png";
@@ -97,6 +106,8 @@ lib.mkIf config.games.emulation.enable {
       name = "Double Dragon II: The Revenge";
       romset = extractedZip "ddragon2";
       shortname = "ddragon2";
+      # CRCs confirmed byte-identical to mame0139's ROM_START(ddragon2).
+      emulator = "mame2010";
       images = {
         icon = pkgs.fetchurl {
           url = "https://cdn2.steamgriddb.com/icon/e746ec9d02541b374a9aead8fdb941fe.png";
@@ -124,6 +135,10 @@ lib.mkIf config.games.emulation.enable {
       name = "Double Dragon 3: The Rosetta Stone";
       romset = extractedZip "ddragon3";
       shortname = "ddragon3";
+      # CRCs confirmed byte-identical to mame0139's ROM_START(ddragon3),
+      # except the PROM (mb7114h.ic38) -- a documented placeholder dump
+      # that the source extractor itself notes works for MAME.
+      emulator = "mame2010";
       images = {
         icon = pkgs.fetchurl {
           url = "https://cdn2.steamgriddb.com/icon/45c1824b0a9aea167565a29e700a1ca1.png";

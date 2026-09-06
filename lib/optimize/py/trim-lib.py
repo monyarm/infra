@@ -108,6 +108,33 @@ def find_matching(text, open_idx):
     return skip_balanced(text, open_idx + 1, ch, close)
 
 
+def split_top_level(text, sep):
+    """Split text on top-level occurrences of sep -- not inside strings,
+    comments, or a balanced ({[ span (e.g. a `?` default value like
+    `foo ? { a = 1; }`)."""
+    parts = []
+    start = 0
+    i = 0
+    n = len(text)
+    while i < n:
+        skipped = skip_string_or_comment(text, i)
+        if skipped is not None:
+            i = skipped
+            continue
+        c = text[i]
+        if c in "{([":
+            i = find_matching(text, i)
+            continue
+        if c == sep:
+            parts.append(text[start:i])
+            i += 1
+            start = i
+            continue
+        i += 1
+    parts.append(text[start:])
+    return parts
+
+
 # NOTE: `with EXPR; BODY` has the exact same ambiguous-';' problem as
 # `let ... in` but isn't handled below (only checked, not fixed) -- none of
 # lib/{misc,strings,constants,files}.nix use `with` today (verified via
@@ -178,7 +205,21 @@ def extract_param_names(text, exclude_lib_pkgs=True):
         if text[i] == "{":
             end = find_matching(text, i)
             inner = text[i + 1 : end - 1]
-            names = set(re.findall(IDENT, inner))
+            names = set()
+            for part in split_top_level(inner, ","):
+                part = part.strip()
+                if not part or part == "...":
+                    continue
+                # A `?` introduces a default-value expression, not another
+                # destructured name -- drop it and everything after, or an
+                # arbitrary identifier in the default (including a nix
+                # keyword like `null`, which any `x or null` binding body
+                # would then spuriously "reference") leaks in as a bogus
+                # required param.
+                q = part.find("?")
+                if q != -1:
+                    part = part[:q]
+                names |= set(re.findall(IDENT, part))
             if exclude_lib_pkgs:
                 names -= {"lib", "pkgs"}
             return names

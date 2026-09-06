@@ -1,10 +1,19 @@
 { pkgs }:
 
 let
-  romChecks = import ../hosts/home/monyarm/games/Emulation/emulators.nix { inherit pkgs; };
-  romChecksSource = builtins.readFile ../hosts/home/monyarm/games/Emulation/emulators.nix;
   inherit (pkgs) lib;
-  inherit ((import ../lib/misc.nix { inherit (pkgs) lib; })) addChecks;
+  inherit
+    (
+      (import ../lib/test.nix {
+        inherit pkgs;
+        inherit (pkgs) lib;
+      })
+    )
+    addChecks
+    mkSmoke
+    ;
+  romChecks = import ../hosts/home/monyarm/games/Emulation/emulators.nix { inherit pkgs mkSmoke; };
+  romChecksSource = builtins.readFile ../hosts/home/monyarm/games/Emulation/emulators.nix;
   fixture = pkgs.runCommand "rom-checks-fixtures" { } ''
         mkdir "$out"
         OUT="$out" ${pkgs.python3}/bin/python <<'PY'
@@ -58,7 +67,7 @@ let
     (out / "gamegear-invalid").write_bytes(bytes(0x100))
 
     genesis = bytearray(0x400)
-    genesis[:4] = (0xffffff00).to_bytes(4, "big")
+    genesis[:4] = (0x00ffff00).to_bytes(4, "big")  # realistic 24-bit-bus SP, top byte 0x00
     genesis[4:8] = (0x200).to_bytes(4, "big")
     genesis[0x100:0x104] = b"SEGA"
     genesis[0x200:0x202] = bytes.fromhex("60fe")
@@ -85,50 +94,35 @@ let
   invalidGamegear = "${pkgs.python3}/bin/python ${validator} gamegear ${fixture}/gamegear-invalid";
   validGenesis = "${pkgs.python3}/bin/python ${validator} genesis ${fixture}/genesis";
   invalidGenesis = "${pkgs.python3}/bin/python ${validator} genesis ${fixture}/genesis-invalid";
-  checked =
-    addChecks
-      {
-        structure = romChecks.nes.structure {
-          system = "nes";
-          rom = "${fixture}/nes";
-        };
-        warning = romChecks.snes.structure {
-          system = "snes";
-          rom = "${fixture}/snes";
-        };
-        failedStructure = romChecks.gba.structure {
-          system = "gba";
-          rom = "${fixture}/gba-invalid";
-        };
-        continued = ''
-          report PASS after-structure "later check ran"
-        '';
-      }
-      (
-        pkgs.runCommand "rom-checks-summary-input" {
-          doCheck = false;
-          phases = [ "installPhase" ];
-        } "touch $out"
-      );
-  mesen = romChecks.nes.smoke { rom = "${fixture}/nes"; };
-  mgba = romChecks.gba.smoke { rom = "${fixture}/gba-valid"; };
-  blastem = romChecks.genesis.smoke { rom = "${fixture}/genesis"; };
-  patch = romChecks.patchCommand {
-    patch = "${fixture}/valid.bps";
-    rom = "${fixture}/nes";
-  };
-  failedPatch = romChecks.patchCommand {
-    patch = "${fixture}/invalid.bps";
-    rom = "${fixture}/nes";
-  };
-  xdeltaPatch = romChecks.patchCommand {
-    patch = "${fixture}/valid.xdelta";
-    rom = "${fixture}/nes";
-  };
-  failedXdeltaPatch = romChecks.patchCommand {
-    patch = "${fixture}/invalid.xdelta";
-    rom = "${fixture}/nes";
-  };
+
+  # addChecks' generated checkPhase reads "$out" now (the real artifact
+  # being checked, not a separately-built reference to it) -- these are
+  # exercised standalone here with no real build, so each replay below
+  # sets `out` itself to point at the fixture being validated.
+  dummyInput = pkgs.runCommand "rom-checks-summary-input" {
+    doCheck = false;
+    phases = [ "installPhase" ];
+  } "touch $out";
+  checkedNes = addChecks {
+    structure = romChecks.nes.structure { system = "nes"; };
+  } dummyInput;
+  checkedSnes = addChecks {
+    warning = romChecks.snes.structure { system = "snes"; };
+  } dummyInput;
+  checkedGba = addChecks {
+    failedStructure = romChecks.gba.structure { system = "gba"; };
+    continued = ''
+      report PASS after-structure "later check ran"
+    '';
+  } dummyInput;
+
+  mesen = romChecks.nes.smoke;
+  mgba = romChecks.gba.smoke;
+  blastem = romChecks.genesis.smoke;
+  patch = romChecks.patchCommand { patch = "${fixture}/valid.bps"; };
+  failedPatch = romChecks.patchCommand { patch = "${fixture}/invalid.bps"; };
+  xdeltaPatch = romChecks.patchCommand { patch = "${fixture}/valid.xdelta"; };
+  failedXdeltaPatch = romChecks.patchCommand { patch = "${fixture}/invalid.xdelta"; };
   runPatch = command: ''
     report() { printf '%s\n' "$*"; }
     ${command}
@@ -148,7 +142,7 @@ let
   failedSmoke = "false";
 in
 assert lib.hasInfix ''flips --apply ''${arg patch} \"$tmp\" \"$tmp.out\"'' romChecksSource;
-assert lib.hasInfix ''xdelta3 -d -f -s ''${arg rom} ''${arg patch} \"$tmp.out\"'' romChecksSource;
+assert lib.hasInfix ''xdelta3 -d -f -s \"$out\" ''${arg patch} \"$tmp.out\"'' romChecksSource;
 assert lib.hasInfix "if \${apply}; then" romChecksSource;
 assert lib.hasInfix "report FAIL patch" romChecksSource;
 pkgs.runCommand "test-rom-checks" { } ''
@@ -230,16 +224,23 @@ pkgs.runCommand "test-rom-checks" { } ''
     exit 1
   fi
 
-  export TMPDIR="$PWD/summary-tmp"
-  mkdir -p "$TMPDIR"
-  ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg checked.checkPhase}
+  mkdir -p "$PWD/nes-tmp"
+  out="${fixture}/nes" TMPDIR="$PWD/nes-tmp" ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg checkedNes.checkPhase}
+  test "$?" -eq 0
+  grep -F "structure:magic | PASS" "$PWD/nes-tmp/add-checks-summary"
+  grep -F "structure:bounds | PASS" "$PWD/nes-tmp/add-checks-summary"
+
+  mkdir -p "$PWD/snes-tmp"
+  out="${fixture}/snes" TMPDIR="$PWD/snes-tmp" ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg checkedSnes.checkPhase}
+  test "$?" -eq 0
+  grep -F "warning:checksum | WARN" "$PWD/snes-tmp/add-checks-summary"
+
+  mkdir -p "$PWD/gba-tmp"
+  out="${fixture}/gba-invalid" TMPDIR="$PWD/gba-tmp" ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg checkedGba.checkPhase}
   test "$?" -ne 0
-  grep -F "structure:magic | PASS" "$TMPDIR/add-checks-summary"
-  grep -F "structure:bounds | PASS" "$TMPDIR/add-checks-summary"
-  grep -F "warning:checksum | WARN" "$TMPDIR/add-checks-summary"
-  grep -F "failedStructure:reset-vector | FAIL" "$TMPDIR/add-checks-summary"
-  grep -F "failedStructure:logo | WARN" "$TMPDIR/add-checks-summary"
-  grep -F "continued:after-structure | PASS" "$TMPDIR/add-checks-summary"
+  grep -F "failedStructure:reset-vector | FAIL" "$PWD/gba-tmp/add-checks-summary"
+  grep -F "failedStructure:logo | WARN" "$PWD/gba-tmp/add-checks-summary"
+  grep -F "continued:after-structure | PASS" "$PWD/gba-tmp/add-checks-summary"
 
   ${runSmoke "passing" passingSmoke}
   test "$?" -eq 0
@@ -250,33 +251,36 @@ pkgs.runCommand "test-rom-checks" { } ''
   require_grep "FAIL smoke failed exited" failed-smoke.out
 
   require_contains ${pkgs.lib.escapeShellArg mesen} "300"
-  require_contains ${pkgs.lib.escapeShellArg mesen} "10s"
+  require_contains ${pkgs.lib.escapeShellArg mesen} "30s"
   require_contains ${pkgs.lib.escapeShellArg mesen} "addEventCallback"
   require_contains ${pkgs.lib.escapeShellArg mesen} "eventType.endFrame"
   require_contains ${pkgs.lib.escapeShellArg mesen} "emu.stop"
-  require_contains ${pkgs.lib.escapeShellArg mgba} "300"
+  require_contains ${pkgs.lib.escapeShellArg mesen} "--testrunner"
+  require_contains ${pkgs.lib.escapeShellArg mesen} "--noVideo"
+  require_contains ${pkgs.lib.escapeShellArg mesen} "--noAudio"
+  require_contains ${pkgs.lib.escapeShellArg mesen} "settings.json"
+  require_contains ${pkgs.lib.escapeShellArg mgba} "-s KILL"
   require_contains ${pkgs.lib.escapeShellArg mgba} "10s"
   require_contains ${pkgs.lib.escapeShellArg blastem} "-b 300"
   require_contains ${pkgs.lib.escapeShellArg blastem} "10s"
   require_contains ${pkgs.lib.escapeShellArg patch} "flips --apply"
   require_contains ${pkgs.lib.escapeShellArg patch} "report PASS patch"
 
-  export TMPDIR="$PWD/patch-tmp"
-  mkdir -p "$TMPDIR"
-  ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch failedPatch)} > failed-patch.out
+  mkdir -p "$PWD/patch-tmp"
+  out="${fixture}/nes" TMPDIR="$PWD/patch-tmp" ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch failedPatch)} > failed-patch.out
   test "$?" -ne 0
   require_grep "FAIL patch patch failed" failed-patch.out
-  cmp "$TMPDIR/rom-patch-test" "${fixture}/nes" || exit 1
-  ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch patch)} > successful-patch.out
+  cmp "$PWD/patch-tmp/rom-patch-test" "${fixture}/nes" || exit 1
+  out="${fixture}/nes" TMPDIR="$PWD/patch-tmp" ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch patch)} > successful-patch.out
   test "$?" -eq 0
-  cmp "$TMPDIR/rom-patch-test" "${fixture}/nes-patched" || exit 1
-  ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch xdeltaPatch)} > xdelta.out
+  cmp "$PWD/patch-tmp/rom-patch-test" "${fixture}/nes-patched" || exit 1
+  out="${fixture}/nes" TMPDIR="$PWD/patch-tmp" ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch xdeltaPatch)} > xdelta.out
   test "$?" -eq 0
   require_grep "PASS patch patch applies" xdelta.out
-  cmp "$TMPDIR/rom-patch-test" "${fixture}/nes-patched" || exit 1
-  ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch failedXdeltaPatch)} > failed-xdelta.out
+  cmp "$PWD/patch-tmp/rom-patch-test" "${fixture}/nes-patched" || exit 1
+  out="${fixture}/nes" TMPDIR="$PWD/patch-tmp" ${pkgs.bash}/bin/bash -c ${pkgs.lib.escapeShellArg (runPatch failedXdeltaPatch)} > failed-xdelta.out
   test "$?" -ne 0
   require_grep "FAIL patch patch failed" failed-xdelta.out
-  cmp "$TMPDIR/rom-patch-test" "${fixture}/nes" || exit 1
+  cmp "$PWD/patch-tmp/rom-patch-test" "${fixture}/nes" || exit 1
   touch "$out"
 ''

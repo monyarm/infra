@@ -2,13 +2,13 @@
 
 let
   inherit (pkgs) lib;
-  inherit ((import ../lib/misc.nix { inherit lib; })) addChecks;
-  smokeCommand =
-    { rom }:
-    ''
-      printf '%s\n' ${lib.escapeShellArg rom.name} >> "$TMPDIR/smoke-paths"
-      report PASS smoke "smoke check ran"
-    '';
+  inherit ((import ../lib/test.nix { inherit lib pkgs; })) addChecks;
+  # No `rom` param: real emulators.nix commands read "$out" directly now.
+  # Plain string, not a function: mkRom.nix reads emulator.smoke directly.
+  smokeCommand = ''
+    printf '%s\n' "$out" >> "$TMPDIR/smoke-paths"
+    report PASS smoke "smoke check ran"
+  '';
   systemEmulators = {
     nes = {
       launcher = pkgs.mesen;
@@ -65,7 +65,7 @@ let
       rom = base;
       system = "nes";
     };
-    smoke = systemEmulators.nes.smoke { rom = base; };
+    smoke = systemEmulators.nes.smoke;
   } base;
   game = mkRom {
     rom = base;
@@ -81,8 +81,8 @@ assert lib.hasInfix "report PASS smoke" compressed.checkPhase;
 pkgs.runCommand "test-mkrom-integration" { } ''
   export TMPDIR="$PWD/tmp"
   mkdir -p "$TMPDIR"
-  ${pkgs.bash}/bin/bash -c ${lib.escapeShellArg baseChecked.checkPhase}
-  ${pkgs.bash}/bin/bash -c ${lib.escapeShellArg compressed.checkPhase}
+  out=${lib.escapeShellArg (toString base)} ${pkgs.bash}/bin/bash -c ${lib.escapeShellArg baseChecked.checkPhase}
+  out=${lib.escapeShellArg (toString compressed)} ${pkgs.bash}/bin/bash -c ${lib.escapeShellArg compressed.checkPhase}
   test "$(wc -l < "$TMPDIR/smoke-paths")" -eq 2
   grep -F ${lib.escapeShellArg base.name} "$TMPDIR/smoke-paths"
   grep -F ${lib.escapeShellArg compressed.name} "$TMPDIR/smoke-paths"

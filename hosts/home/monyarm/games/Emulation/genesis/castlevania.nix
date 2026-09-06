@@ -3,6 +3,7 @@
   lib,
   pkgs,
   getFile,
+  rename,
   mkRom,
   ...
 }:
@@ -11,11 +12,16 @@ let
 in
 lib.mkIf config.games.emulation.enable {
   games.emulation.roms = {
+    # Renamed .md so compressRom routes it to sevenzip-deflate (real zip) --
+    # blastem only added zip-archive loading (0.6.2), not raw .7z.
     castlevaniaBloodlines =
-      marchive.castlevaniaAnniversary |> getFile "sega_us_CastlevaniaBloodlines.bin";
+      marchive.castlevaniaAnniversary
+      |> getFile "sega_us_CastlevaniaBloodlines.bin"
+      |> rename "CastlevaniaBloodlines.md";
 
     # regional variants, registered for enumeration only -- not launchable
-    vampireKillerJp = marchive.castlevaniaAnniversary |> getFile "sega_jp_VampireKiller.bin";
+    vampireKillerJp =
+      marchive.castlevaniaAnniversary |> getFile "sega_jp_VampireKiller.bin" |> rename "VampireKiller.md";
   };
 
   programs.steam.games = with config.games.emulation.roms; {

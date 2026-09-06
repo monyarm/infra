@@ -15,7 +15,6 @@ let
     sevenzip-lzma = [
       "bin"
       "rom"
-      "md"
       "gb"
       "gbc"
       "gba"
@@ -33,6 +32,7 @@ let
       "sms"
       "sg"
       "mv"
+      "md"
     ];
     zstd = [ "vb" ];
     chd = [

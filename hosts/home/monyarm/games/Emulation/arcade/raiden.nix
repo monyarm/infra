@@ -48,9 +48,16 @@ let
 
   extractedZip =
     name:
-    pkgs.runCommand "${name}.zip" { } ''
-      cp "$(find ${extracted} -name ${lib.escapeShellArg "${name}.zip"})" $out
-    '';
+    pkgs.runCommand "${name}.zip"
+      {
+        __contentAddressed = true;
+        allowSubstitutes = false;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        cp "$(find ${extracted} -name ${lib.escapeShellArg "${name}.zip"})" $out
+      '';
 in
 lib.mkIf config.games.emulation.enable {
   programs.steam.games = {
@@ -82,12 +89,17 @@ lib.mkIf config.games.emulation.enable {
     RAIDEN_FIGHTERS = mkArcade {
       name = "Raiden Fighters";
       romset = extractedZip "rdftj";
-      shortname = "rdftj";
+      # Content matches mame0139's "rdft" (then the parent set) byte-for-byte;
+      # current MAME renamed which region variant is the parent, so this
+      # exact dump is "rdftj" there instead -- mame2010 still calls it "rdft".
+      shortname = "rdft";
+      emulator = "mame2010";
     };
     RAIDEN_FIGHTERS_2 = mkArcade {
       name = "Raiden Fighters 2";
       romset = extractedZip "rdft2";
       shortname = "rdft2";
+      emulator = "mame2010";
     };
     RAIDEN_FIGHTERS_JET = mkArcade {
       name = "Raiden Fighters Jet";

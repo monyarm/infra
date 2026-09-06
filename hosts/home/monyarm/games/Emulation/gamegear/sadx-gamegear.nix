@@ -39,21 +39,11 @@ let
         allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "recursive";
-        nativeBuildInputs = [ pkgs.puyo-tools ];
+        nativeBuildInputs = [ pkgs.game-extraction-toolbox ];
       }
       ''
-        mkdir -p work out
-        cp "${sadxSource}"/system/*.PRS work/
-        cd work
-        PuyoToolsCli compression decompress --input "*.PRS" --overwrite
-        for f in *.PRS; do
-          name=$(basename "$f" .PRS)
-          mv "$f" "../out/$name.gg"
-        done
-        mv ../out $out
+        gextoolbox tasks extract --srcdir "${sadxSource}" --destdir $out --task sadxgg
       '';
-
-  prsName = name: "${name}.gg";
 
   sadxRoms = lib.listToAttrs (
     lib.zipListsWith lib.nameValuePair
@@ -74,22 +64,22 @@ let
         "sonicAndTails2"
       ]
       (
-        splitFiles (map prsName [
-          "SONIC"
-          "SONIC2"
-          "SONIC-CH"
-          "S-TAIL2"
-          "G-SONIC"
-          "SPINBALL"
-          "LABYLIN"
-          "SONICDRI"
-          "S-DRIFT2"
-          "TAILSADV"
-          "SKYPAT"
-          "MBMACHIN"
-          "SONICTAI"
-          "SONIC_TT"
-        ]) sadxDecompressed
+        splitFiles [
+          "Sonic The Hedgehog (Rev 1) (World).gg"
+          "Sonic The Hedgehog 2 (World).gg"
+          "Sonic Chaos (Sonic & Tails) (USA,Europe).gg"
+          "Sonic The Hedgehog - Triple Trouble (Sonic & Tails 2) (USA,Europe).gg"
+          "G-Sonic - Sonic Blast (World).gg"
+          "Sonic Spinball (USA,Europe).gg"
+          "Sonic Labyrinth (World).gg"
+          "Sonic Drift (Japan).gg"
+          "Sonic Drift 2 (Japan,USA).gg"
+          "Tails Adventures (World).gg"
+          "Tails no Skypatrol (Japan).gg"
+          "Dr. Robotnik's Mean Bean Machine (USA,Europe).gg"
+          "Sonic & Tails (Japan).gg"
+          "Sonic & Tails 2 (Japan).gg"
+        ] sadxDecompressed
       )
   );
 in

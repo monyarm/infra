@@ -168,7 +168,10 @@ def check_genesis(data: bytes) -> bool:
     )
     sp = int.from_bytes(data[:4], "big") if len(data) >= 4 else 0
     pc = int.from_bytes(data[4:8], "big") if len(data) >= 8 else 0
-    vectors = (sp & 0xFF000000) == 0xFF000000 and 0x200 <= pc < len(data)
+    # Genesis has a 24-bit address bus, so SP's top byte is always 0x00;
+    # the byte that must be 0xFF to land in $FF0000-$FFFFFF work RAM is
+    # the next one down.
+    vectors = (sp & 0x00FF0000) == 0x00FF0000 and 0x200 <= pc < len(data)
     record(
         "PASS" if vectors else "FAIL",
         "vectors",

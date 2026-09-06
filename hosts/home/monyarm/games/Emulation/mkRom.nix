@@ -3,7 +3,10 @@
   pkgs,
   compressRom',
   addChecks,
-  systemEmulators ? import ./emulators.nix { inherit pkgs; },
+  # Optional: unused when a caller (e.g. tests) overrides systemEmulators
+  # with its own fixture instead of the real emulators.nix.
+  mkSmoke ? null,
+  systemEmulators ? import ./emulators.nix { inherit pkgs mkSmoke; },
   ...
 }:
 let
@@ -23,32 +26,34 @@ let
     in
     lib.findFirst (candidate: candidate != null) null patches';
 
+  # No `rom` passed to these -- they default to reading addChecks' own
+  # $out (see emulators.nix's romRef), so checks validate the real,
+  # single-built artifact instead of a separately-built reference to it.
   buildBaseChecks =
     {
       emulator,
-      rom,
       system,
       patch,
     }:
     let
-      patchScript = systemEmulators.patchCommand { inherit patch rom; };
+      patchScript = systemEmulators.patchCommand { inherit patch; };
       patchCheck = if patch == null then { } else { patch = patchScript; };
       structureCheck = {
-        structure = emulator.structure {
-          inherit system rom;
-        };
+        structure = emulator.structure { inherit system; };
       };
-      smokeScript = if emulator.smoke == null then null else emulator.smoke { inherit rom; };
-      smokeCheck = lib.optionalAttrs (smokeScript != null) { smoke = smokeScript; };
+      smokeCheck = lib.optionalAttrs (emulator.smoke != null) { inherit (emulator) smoke; };
     in
     structureCheck // patchCheck // smokeCheck;
 
   buildCompressedChecks =
-    {
-      emulator,
-      rom,
-    }:
-    if emulator.smoke == null then { } else { smoke = emulator.smoke { inherit rom; }; };
+    { emulator }:
+    # compressedSmoke defaults to smoke; a system sets it to null to skip
+    # the post-compression smoke check specifically (e.g. NES/Mesen's
+    # --testrunner can't load a compressed archive at all).
+    let
+      compressedSmoke = emulator.compressedSmoke or emulator.smoke;
+    in
+    if compressedSmoke == null then { } else { smoke = compressedSmoke; };
 
   # generalizes Doom's mkDoom; rom always goes through real compressRom
   mkRom =
@@ -77,7 +82,7 @@ let
 
       # Base checks run against the original ROM.
       baseChecks = buildBaseChecks {
-        inherit emulator rom system;
+        inherit emulator system;
         patch = selectPatch args;
       };
       checkedRom = addChecks baseChecks rom;
@@ -86,10 +91,7 @@ let
       compressed = compressRom' parent ({ rom = checkedRom; } // compressArgs);
 
       # Post-compression smoke runs against the exact compressed artifact.
-      compressedChecks = buildCompressedChecks {
-        inherit emulator;
-        rom = compressed;
-      };
+      compressedChecks = buildCompressedChecks { inherit emulator; };
       checkedGame = addChecks compressedChecks compressed;
     in
     romArgs

@@ -3,6 +3,7 @@
   lib,
   pkgs,
   getFile,
+  rename,
   mkRom,
   ...
 }:
@@ -11,12 +12,17 @@ let
 in
 lib.mkIf config.games.emulation.enable {
   games.emulation.roms = {
-    contraHardCorps = marchive.contra |> getFile "sega_ContraHardCorps.bin";
+    # Renamed .md so compressRom routes it to sevenzip-deflate (real zip) --
+    # blastem only added zip-archive loading (0.6.2), not raw .7z.
+    contraHardCorps =
+      marchive.contra |> getFile "sega_ContraHardCorps.bin" |> rename "ContraHardCorps.md";
 
     # regional variants, registered for enumeration only -- not launchable
-    contraTheHardCoreJp = marchive.contra |> getFile "sega_ContraTheHardCore.BIN";
-    probotectorGenesis = marchive.contra |> getFile "sega_Probotector.BIN";
-    probotectorGenesisHackedWW = marchive.contra |> getFile "sega_Probotector_hacked_WW.BIN";
+    contraTheHardCoreJp =
+      marchive.contra |> getFile "sega_ContraTheHardCore.BIN" |> rename "ContraTheHardCore.md";
+    probotectorGenesis = marchive.contra |> getFile "sega_Probotector.BIN" |> rename "Probotector.md";
+    probotectorGenesisHackedWW =
+      marchive.contra |> getFile "sega_Probotector_hacked_WW.BIN" |> rename "Probotector_hacked_WW.md";
   };
 
   programs.steam.games = with config.games.emulation.roms; {
