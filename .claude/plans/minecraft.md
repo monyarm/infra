@@ -51,6 +51,103 @@ static values consumed by Nix fetchers and builders.
 
 ______________________________________________________________________
 
+## Implementation status (2026-09-07)
+
+Stages 1-4 below are **done and verified** — built real PrismLauncher
+instances (Society Sunlit Valley itself, and a hand-built custom pack) and
+inspected their output on disk. The execution plan lives at
+`~/.claude/plans/read-claude-plans-minecraft-md-it-s-wise-conway.md` (10
+tasks, all complete) and the design-decision history (including two rounds
+of scope correction) is in
+`~/.claude/projects/-home-monyarm--nix/memory/project_minecraft_plan_versioning.md`.
+Real files: `lib/mod-dir.nix`, `lib/minecraft-versions.nix`,
+`lib/minecraft-pack.nix`, `lib/minecraft-prism-meta.nix`,
+`hosts/home/monyarm/games/Minecraft/{default.nix,mkPrismInstance.nix,poc.nix}`,
+plus `[modrinth]`/`[modrinth-modpack]`/`[prism-component]` sections in
+`sources.toml` and their processors in `update-sources.py`.
+
+**Deltas from this doc's original design**, and why:
+
+- No separate `fetchModrinthMod`/`fetchModrinthResourcePack`/
+  `fetchModrinthDataPack`/`fetchModrinthModPack` fetchers — the existing
+  `fetchModrinth` (single Modrinth file, project+versionId+hash) covers
+  mods/resourcepacks/datapacks identically; "datapack-ness" is purely which
+  instance directory the file lands in, not a fetch-time distinction.
+- `games.minecraft.mods`/`resourcePacks`/`datapacks` are nested
+  `attrsOf (attrsOf package)` keyed by Modrinth `version_number` (not this
+  doc's plain `attrsOf (attrsOf package)` with unspecified keys), tracking
+  **every** published version of each explicitly-registered project — not
+  just the latest. This enables a custom modpack to write `{ sodium =
+  "latest"; }` and have Nix pick whichever pinned version matches that
+  pack's own `minecraftVersion`/`loader`, purely from already-hash-pinned
+  `sources.nix` data (no live API lookup at eval time). Tracking every
+  version turned out to be cheap, not heavy: Modrinth publishes a sha512
+  per file already, so no `nix build` hash-discovery trial is needed per
+  version — see `pickModVersion` (`lib/minecraft-versions.nix`) for the
+  selector grammar (`latest`/`latestMajor`/`latestIKnowWhatImDoing`,
+  optional `:loader` override).
+- A modpack's own bundled mods are **never** promoted into the
+  `games.minecraft.mods` registry — `mkModrinthPackTree`
+  (`lib/minecraft-pack.nix`) fetches each file directly from the pack's own
+  `modrinth.index.json`-recorded URL+hash. The registry exists only for
+  mods the user explicitly wants addressable/reusable.
+- No aggregate/discovered hash anywhere for modpacks: `update-sources.py`
+  already opens the `.mrpack` archive to read `dependencies`, so it also
+  copies the `files[]` array (each entry's own published hash) straight
+  into `sources.nix`; Nix fetches each file individually via plain
+  `pkgs.fetchurl`.
+- `games.minecraft.instances` from this doc became `games.minecraft.games`
+  (per later direction in the session) — same role, same "only registry
+  that becomes a Steam shortcut" behavior, and can point at a modpack
+  as-is, layer extras on top of one, or skip `modpack` entirely for a fully
+  custom instance.
+- Registries are populated **both** ways: auto-generated from `sources.nix`
+  as a plain module config contribution, *and* still mergeable with
+  hand-written entries elsewhere via normal NixOS `attrsOf` semantics.
+
+**What Stage 1-4 do NOT cover yet** (real gaps, not silently dropped):
+
+- **Fabric/Quilt loader library fetching is unimplemented.**
+  `process_prism_component` (the `[prism-component]` `sources.toml`
+  handler) only understands the Mojang/Forge/NeoForge library shape
+  (`{name, downloads:{artifact:{url,sha1,size}}}`). Fabric's and Quilt's
+  own PrismLauncher meta files use a third shape:
+  `{name, url}` where `url` is a **Maven repo base**, not a full artifact
+  URL, and no hash is embedded at all. Fix path (verified feasible, not yet
+  built): construct the real artifact URL via the existing
+  `mavenCoordToPath` helper (`lib/minecraft-prism-meta.nix`) + the repo
+  base, then fetch `<url>.sha1` — standard Maven repos (confirmed for
+  `maven.fabricmc.net`) publish a `.sha1` sidecar next to every artifact,
+  so this stays metadata-only, no `nix build` discovery needed, same
+  principle as everywhere else. Because of this gap, the session's
+  custom-modpack POC uses Forge+JEI instead of the originally-planned
+  Fabric+Sodium pairing.
+- **The shared PrismLauncher `libraries/` cache is fetched-metadata-only,
+  not deployed.** `mkPrismComponentLibraries` (`lib/minecraft-prism-meta.nix`)
+  places each library jar at its correct Maven-layout path and is verified
+  working in isolation (built a real `oshi-core-6.2.2.jar` via it during
+  Task 8), but `hosts/home/monyarm/games/Minecraft/default.nix` never
+  actually calls it or deploys a shared `xdg.dataFile."PrismLauncher/
+  libraries/..."` tree. Each instance's generated `mmc-pack.json` and
+  `patches/<uid>.json` *do* carry real Mojang/Forge/PrismLauncher URLs+
+  hashes for every library, so PrismLauncher can still self-download them
+  on first launch exactly like a normal fresh install — the instances are
+  launchable, just not fully Nix-pre-fetched offline yet. Wiring this up
+  needs one more design call: the shared tree should be the *union* of
+  every component's libraries across *all* registered instances (via
+  `mkModDir`, same as everything else), not duplicated per instance.
+- Minecraft's own asset objects (the `assets/objects/<hash-prefix>/<hash>`
+  content store behind `assetIndex`) are deliberately out of scope for the
+  same reason as vanilla PrismLauncher installs: thousands of small files
+  per Minecraft version. `assetIndex`'s own reference (id/url/hash) is
+  captured in `sources.nix`, but no per-object fetching exists.
+
+Stages 5-10 below (standalone resource/data pack tooling, VanillaTweaks,
+PlanetMinecraft/Technic, randomobs/texture extraction, CurseForge, skins)
+are **unchanged from the original design and not started.**
+
+______________________________________________________________________
+
 ## Registry and instance model
 
 Add `hosts/home/monyarm/games/Minecraft/default.nix`, while preserving the
@@ -91,6 +188,8 @@ using the instance name as the launch target and deploying the instance under:
 ______________________________________________________________________
 
 ## Stage 1 - Static source foundation
+
+**DONE** — see Implementation status above.
 
 Implement update-time-resolved source records and a small Modrinth API layer.
 Extend the explicit source dispatch in `update-sources.py`; do not make the
@@ -165,6 +264,8 @@ ______________________________________________________________________
 
 ## Stage 2 - Minimal PrismLauncher builder
 
+**DONE** — see Implementation status above.
+
 Implement `games/Minecraft/mkPrismInstance.nix` and the smallest registry
 needed to build one instance.
 
@@ -192,6 +293,8 @@ ______________________________________________________________________
 
 ## Stage 3 - Modrinth end-to-end proof of concept
 
+**DONE** — Society Sunlit Valley itself, built and inspected. See Implementation status above.
+
 Check in one small Modrinth pack and build/deploy it through the complete path.
 The instance must demonstrate:
 
@@ -214,6 +317,8 @@ activation step.
 ______________________________________________________________________
 
 ## Stage 4 - Steam integration and complete registry
+
+**DONE** (registry renamed `instances` -> `games`). See Implementation status above.
 
 Map every `games.minecraft.instances.<name>` entry to a synthetic Steam game
 option in `games/Minecraft/default.nix`. Use PrismLauncher as the executable
