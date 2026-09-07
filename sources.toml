@@ -173,6 +173,13 @@ wad.e1m4b = "levels/doom/Ports/d-f/e1m4b.zip"
 [modrinth]
 minecraft.mods.sodium = "sodium"
 
+[modrinth-modpack]
+minecraft.modpacks.society-sunlit-valley = "society-sunlit-valley"
+
+[prism-component]
+minecraft.libraries.mc1201 = "net.minecraft:1.20.1"
+minecraft.libraries.forge47_4_10 = "net.minecraftforge:47.4.10"
+
 [npmjs]
 tools.codegraph = "@colbymchenry/codegraph-linux-x64@1.6.0"
 

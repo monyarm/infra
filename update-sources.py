@@ -2158,6 +2158,147 @@ def process_modrinth(name, project, previous_sources):
     return {"type": "modrinth", "project": project, "versions": result_versions}
 
 
+def process_modrinth_modpack(name, project, previous_sources):
+    old = previous_sources.get(name, {})
+    old_versions = old.get("versions", {})
+    known_version_ids = {
+        v.get("versionId") for v in old_versions.values() if v.get("versionId")
+    }
+
+    print(f"Checking [modrinth-modpack] {name} (project {project})...")
+    versions = resolve_modrinth_versions(project)
+    new_versions = [v for v in versions if v["id"] not in known_version_ids]
+
+    if not new_versions:
+        print(f"  -> {name}: no new versions ({len(old_versions)} already known).")
+        return old if old_versions else {
+            "type": "modrinth-modpack",
+            "project": project,
+            "versions": {},
+        }
+
+    print(f"  -> {name}: {len(new_versions)} new pack version(s) of {len(versions)} total.")
+
+    result_versions = dict(old_versions)
+    for v in new_versions:
+        file_ = next((f for f in v["files"] if f.get("primary")), v["files"][0])
+        archive_hash = modrinth_file_hash(file_, name)
+
+        print(f"  -> Downloading {name} {v['version_number']} to read modrinth.index.json...")
+        data = http_get(file_["url"])
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            index = json.loads(z.read("modrinth.index.json"))
+
+        files = []
+        for f in index["files"]:
+            files.append({
+                "path": f["path"],
+                "url": f["downloads"][0],
+                "hash": modrinth_file_hash(f, name),
+                "env": (f.get("env") or {}).get("client", "required"),
+            })
+
+        key = v["version_number"]
+        if key in result_versions:
+            key = f"{key}-{v['id']}"
+        result_versions[key] = {
+            "versionId": v["id"],
+            "date": v["date_published"],
+            "archiveHash": archive_hash,
+            "archiveFilename": file_["filename"],
+            "dependencies": index.get("dependencies", {}),
+            "files": files,
+        }
+
+    return {"type": "modrinth-modpack", "project": project, "versions": result_versions}
+
+
+def prism_library_allowed_on_linux(lib):
+    """Evaluates a Mojang/PrismLauncher library rules[] array for the linux
+    platform: no rules means always allowed; otherwise the last matching
+    rule (one with no "os" constraint, or "os":{"name":"linux"}) wins."""
+    rules = lib.get("rules")
+    if not rules:
+        return True
+    allowed = False
+    for rule in rules:
+        os_constraint = rule.get("os")
+        if os_constraint is None or os_constraint.get("name") == "linux":
+            allowed = rule["action"] == "allow"
+    return allowed
+
+
+def prism_artifact_hash(artifact, name):
+    sha1_hex = artifact.get("sha1")
+    if not sha1_hex:
+        raise ValueError(f"{name}: artifact {artifact.get('url')} has no sha1 hash")
+    return "sha1-" + base64.b64encode(bytes.fromhex(sha1_hex)).decode()
+
+
+def process_prism_component(name, target, previous_sources):
+    """target is "<uid>:<version>", e.g. "net.minecraft:1.20.1". Components
+    are immutable once published, so (unlike modrinth/modrinth-modpack) this
+    does not need the always-recheck exemption -- once fetched, skip like
+    any other pinned source."""
+    old = previous_sources.get(name)
+    if old and old.get("target") == target:
+        return old
+
+    uid, version = target.split(":", 1)
+    print(f"Checking [prism-component] {name} ({uid} {version})...")
+
+    data = http_get(f"https://meta.prismlauncher.org/v1/{uid}/{version}.json")
+    version_json_hash = "sha256-" + base64.b64encode(hashlib.sha256(data).digest()).decode()
+    meta = json.loads(data)
+
+    libraries = []
+    for lib in meta.get("libraries", []):
+        if not prism_library_allowed_on_linux(lib):
+            continue
+        artifact = lib["downloads"]["artifact"]
+        libraries.append({
+            "name": lib["name"],
+            "url": artifact["url"],
+            "size": artifact["size"],
+            "hash": prism_artifact_hash(artifact, name),
+        })
+
+    main_jar = None
+    if "mainJar" in meta:
+        mj = meta["mainJar"]
+        artifact = mj["downloads"]["artifact"]
+        main_jar = {
+            "name": mj["name"],
+            "url": artifact["url"],
+            "size": artifact["size"],
+            "hash": prism_artifact_hash(artifact, name),
+        }
+
+    asset_index = None
+    if "assetIndex" in meta:
+        ai = meta["assetIndex"]
+        asset_index = {
+            "id": ai["id"],
+            "url": ai["url"],
+            "size": ai["size"],
+            "hash": "sha1-" + base64.b64encode(bytes.fromhex(ai["sha1"])).decode(),
+        }
+
+    return {
+        "type": "prism-component",
+        "target": target,
+        "uid": uid,
+        "version": version,
+        "versionJsonHash": version_json_hash,
+        "name": meta.get("name", uid),
+        "mainClass": meta.get("mainClass"),
+        "requires": meta.get("requires", []),
+        "libraries": libraries,
+        "mainJar": main_jar,
+        "assetIndex": asset_index,
+    }
+
+
 # Same mirror list lib/fetchers/idgames.nix's fetchIdGames tries, in the
 # same order; kept here too since get_idgames_mirror_version/
 # download_idgames_archive need real HTTP access during `update-sources.py`
@@ -2433,6 +2574,10 @@ def main():
                     results[name] = process_curseforge(name, target, previous_sources)
                 elif section == "modrinth":
                     results[name] = process_modrinth(name, target, previous_sources)
+                elif section == "modrinth-modpack":
+                    results[name] = process_modrinth_modpack(name, target, previous_sources)
+                elif section == "prism-component":
+                    results[name] = process_prism_component(name, target, previous_sources)
                 elif section == "gdrive":
                     results[name] = process_gdrive(name, target, previous_sources)
                 elif section == "mediafire":
