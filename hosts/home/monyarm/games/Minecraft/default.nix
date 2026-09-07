@@ -7,6 +7,7 @@
   mkModDir,
   mkPrismComponentPatch,
   mkMmcPackComponent,
+  mkPrismComponentLibraries,
   fetchModrinth,
   mkModrinthPackTree,
   pickModVersion,
