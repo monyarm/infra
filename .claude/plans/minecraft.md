@@ -106,39 +106,83 @@ plus `[modrinth]`/`[modrinth-modpack]`/`[prism-component]` sections in
 
 **What Stage 1-4 do NOT cover yet** (real gaps, not silently dropped):
 
-- **Fabric/Quilt loader library fetching is unimplemented.**
-  `process_prism_component` (the `[prism-component]` `sources.toml`
-  handler) only understands the Mojang/Forge/NeoForge library shape
-  (`{name, downloads:{artifact:{url,sha1,size}}}`). Fabric's and Quilt's
-  own PrismLauncher meta files use a third shape:
-  `{name, url}` where `url` is a **Maven repo base**, not a full artifact
-  URL, and no hash is embedded at all. Fix path (verified feasible, not yet
-  built): construct the real artifact URL via the existing
-  `mavenCoordToPath` helper (`lib/minecraft-prism-meta.nix`) + the repo
-  base, then fetch `<url>.sha1` — standard Maven repos (confirmed for
-  `maven.fabricmc.net`) publish a `.sha1` sidecar next to every artifact,
-  so this stays metadata-only, no `nix build` discovery needed, same
-  principle as everywhere else. Because of this gap, the session's
-  custom-modpack POC uses Forge+JEI instead of the originally-planned
-  Fabric+Sodium pairing.
-- **The shared PrismLauncher `libraries/` cache is fetched-metadata-only,
-  not deployed.** `mkPrismComponentLibraries` (`lib/minecraft-prism-meta.nix`)
-  places each library jar at its correct Maven-layout path and is verified
-  working in isolation (built a real `oshi-core-6.2.2.jar` via it during
-  Task 8), but `hosts/home/monyarm/games/Minecraft/default.nix` never
-  actually calls it or deploys a shared `xdg.dataFile."PrismLauncher/ libraries/..."` tree. Each instance's generated `mmc-pack.json` and
-  `patches/<uid>.json` *do* carry real Mojang/Forge/PrismLauncher URLs+
-  hashes for every library, so PrismLauncher can still self-download them
-  on first launch exactly like a normal fresh install — the instances are
-  launchable, just not fully Nix-pre-fetched offline yet. Wiring this up
-  needs one more design call: the shared tree should be the *union* of
-  every component's libraries across *all* registered instances (via
-  `mkModDir`, same as everything else), not duplicated per instance.
+- **Fabric/Quilt loader library fetching, all-versions prism-component
+  tracking, and shared `libraries/` deployment are now DONE** (as of a
+  follow-up session, 2026-09-07) — see the "Prism-component follow-up"
+  section below for what changed and how. The remaining real gap:
 - Minecraft's own asset objects (the `assets/objects/<hash-prefix>/<hash>`
-  content store behind `assetIndex`) are deliberately out of scope for the
-  same reason as vanilla PrismLauncher installs: thousands of small files
-  per Minecraft version. `assetIndex`'s own reference (id/url/hash) is
-  captured in `sources.nix`, but no per-object fetching exists.
+  content store behind `assetIndex`) are still out of scope, same reason as
+  vanilla PrismLauncher installs: thousands of small files per Minecraft
+  version. `assetIndex`'s own reference (id/url/hash) is captured in
+  `sources.nix`, but no per-object fetching exists yet.
+
+### Prism-component follow-up (2026-09-07)
+
+`sources.toml`'s `[prism-component]` entries now register a bare component
+uid (`net.minecraft`, `net.minecraftforge`, `net.fabricmc.fabric-loader`,
+`org.quiltmc.quilt-loader`) instead of one pinned version — same
+all-versions/nested-by-version shape as `[modrinth]`, letting
+`getComponent` resolve any registered `minecraftVersion` a game or custom
+modpack asks for, not just one hardcoded pin. All 6610 versions across the
+four components are fetched and tracked (1016 + 5032 + 253 + 309).
+
+- **Bulk fetch, not one request per version.** A component's own
+  `index.json` only gives a per-version summary; getting full library data
+  needs a separate request per version (`net.minecraftforge` alone has
+  5032). Past a 200-new-version threshold, `process_prism_component`
+  downloads the `PrismLauncher/meta-launcher` GitHub repo as one tarball
+  (confirmed byte-identical to the live API) and reads every version
+  locally instead — memoized per run so multiple components needing the
+  bulk path only trigger one download.
+- **Fabric/Quilt's third library shape is handled.** Their entries are
+  `{name, url=<maven repo base>}` with no embedded hash (unlike Mojang/
+  Forge's `downloads.artifact.sha1`); some legacy Forge-era entries omit
+  `url` entirely too, implying Mojang's own default repo
+  (`libraries.minecraft.net`, confirmed live). Fixed by constructing the
+  real artifact URL (`mavenCoordToPath` + repo base) and fetching its
+  standard Maven `.sha1` sidecar — stays metadata-only, no `nix build`
+  discovery. Custom-modpack testing was later redone with the originally
+  intended Fabric+Sodium pairing successfully.
+- **A single dead dependency no longer sinks an entire version.** Some
+  legacy Forge-era libraries reference Scala/ASM builds no longer hosted
+  anywhere (404 on both their origin repo and Maven Central — genuinely
+  gone, not transient). `parse_prism_component_version` now omits just the
+  unavailable library and keeps the rest, instead of failing the whole
+  version — this mattered a lot in practice: without it, all of 1.12.2
+  (Minecraft's most heavily-modded version) would have ended up
+  unregistered over two missing Scala jars.
+- **Every Maven sidecar lookup is cached to disk**
+  (`.maven-sidecar-cache.json`, gitignored), including negative results.
+  The same library coordinate is referenced by hundreds of component
+  versions largely unchanged; a coordinate confirmed dead is looked up
+  once per script lifetime, not once per version referencing it.
+- **The shared `PrismLauncher/libraries/` cache is now deployed**, not
+  just fetched. `mkPrismComponentLibraries` places each library (and each
+  component's `mainJar` — this is what covers the actual `minecraft.jar`
+  client, not just its dependency libraries) at its Maven-layout path;
+  `default.nix` collects the union across every registered instance's
+  resolved components (deduped by path via `listToAttrs`, since identical
+  coordinate+hash is identical content regardless of which instance pulled
+  it in) into one shared `xdg.dataFile` tree. Verified end-to-end: 69 real
+  files deployed, including a hash-verified, build-confirmed 23MB
+  `com/mojang/minecraft/1.20.1/minecraft-1.20.1-client.jar`.
+- **PrismLauncher account/auth cannot be reused from the vanilla launcher
+  module** (`games/Minecraft.nix`) — different systems entirely. That
+  module targets the vanilla launcher's legacy Mojang-token
+  `launcher_accounts.json`; PrismLauncher's own `accounts.json` (MSA/
+  Microsoft OAuth) needs a real interactive login (browser or device-code
+  flow) run through PrismLauncher itself and cannot be non-interactively
+  provisioned by Nix — confirmed via PrismLauncher's own account/auth
+  documentation. Offline-mode accounts need no real credential but
+  PrismLauncher requires one valid MSA account already present before
+  allowing an offline one (anti-abuse gate). Minecraft account setup stays
+  a manual, one-time step the user does after install.
+- Minecraft version coverage in PrismLauncher's meta is complete back to
+  the actual first pre-classic build (`rd-132211`, May 2009) — confirmed
+  by inspecting the real index, not assumed. No authentication is needed
+  to download `minecraft.jar` itself (confirmed: plain unauthenticated
+  `curl` against the real Mojang `piston-data` URL succeeds) — account
+  auth only gates *launching*, not the download.
 
 Stages 5-10 below (standalone resource/data pack tooling, VanillaTweaks,
 PlanetMinecraft/Technic, randomobs/texture extraction, CurseForge, skins)
