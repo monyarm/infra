@@ -2880,12 +2880,12 @@ def main():
 
     if has_errors:
         print(
-            "Update completed with errors; sources.nix reflects everything "
-            "that succeeded before the first failure.",
+            "Update completed with errors. sources.nix was not updated.",
             file=sys.stderr,
         )
         sys.exit(1)
 
+    write_sources_nix(results, nix_path)
     print(f"Successfully updated {nix_path}")
 
 
