@@ -1879,10 +1879,11 @@ def http_get(url, headers=None, retries=3):
     """Downloads a url using urllib, falling back to system curl if blocked by TLS
     fingerprinting. Retries with backoff on transient truncated-read/connection
     errors, which large archive downloads over a throttled connection hit in
-    practice (observed: http.client.IncompleteRead on a 78MB+ .mrpack) -- and on
-    HTTPError too (observed: sustained rapid sequential requests against
-    maven.minecraftforge.net produce spurious 404s for URLs that resolve fine
-    in isolation moments later; treated as transient rather than permanent)."""
+    practice (observed: http.client.IncompleteRead on a 78MB+ .mrpack). Does NOT
+    retry HTTPError beyond the existing 403 handling: a 404 hit while bulk-
+    fetching Maven sidecars for old Forge-era libraries was confirmed genuinely
+    permanent (also 404s on Maven Central, not just under load) -- retrying it
+    just burns minutes waiting on something that will never succeed."""
     all_headers = {"User-Agent": USER_AGENT, **(headers or {})}
     last_error = None
     for attempt in range(retries):
@@ -1899,15 +1900,6 @@ def http_get(url, headers=None, retries=3):
                 cmd.append(url)
                 res = subprocess.run(cmd, capture_output=True, check=True)
                 return res.stdout
-            last_error = e
-            if attempt + 1 < retries:
-                wait = 5 * (attempt + 1)
-                print(
-                    f"  -> {url}: HTTP {e.code}, retrying in {wait}s ({attempt + 1}/{retries})...",
-                    file=sys.stderr,
-                )
-                time.sleep(wait)
-                continue
             raise
         except (
             http.client.IncompleteRead,
@@ -2325,7 +2317,26 @@ def maven_coord_to_path(coord):
 DEFAULT_MAVEN_LIBRARY_REPO = "https://libraries.minecraft.net/"
 
 
-_maven_sidecar_hash_cache = {}
+MAVEN_SIDECAR_CACHE_PATH = ".maven-sidecar-cache.json"
+_MAVEN_SIDECAR_FAILURE = "FAILED"  # JSON can't hold an exception object
+
+_maven_sidecar_hash_cache = None  # lazily loaded from disk on first use
+
+
+def _load_maven_sidecar_cache():
+    global _maven_sidecar_hash_cache
+    if _maven_sidecar_hash_cache is not None:
+        return
+    try:
+        with open(MAVEN_SIDECAR_CACHE_PATH) as f:
+            _maven_sidecar_hash_cache = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        _maven_sidecar_hash_cache = {}
+
+
+def _save_maven_sidecar_cache():
+    with open(MAVEN_SIDECAR_CACHE_PATH, "w") as f:
+        json.dump(_maven_sidecar_hash_cache, f)
 
 
 def maven_repo_library_hash(lib, name):
@@ -2339,27 +2350,48 @@ def maven_repo_library_hash(lib, name):
     libraries.minecraft.net -- so this stays metadata-only, no nix-build
     hash discovery needed.
 
-    Memoized on the resolved artifact URL: the same library coordinate is
-    referenced by many component versions largely unchanged (measured:
-    fabric-loader alone has 2421 (version, library) pairs across only 422
-    distinct coordinates), so fetching each unique artifact's sidecar once
-    instead of once per version cuts request volume by ~5x."""
+    Memoized on the resolved artifact URL, including negative results: the
+    same library coordinate is referenced by many component versions
+    largely unchanged (measured: fabric-loader alone has 2421 (version,
+    library) pairs across only 422 distinct coordinates), so fetching each
+    unique artifact's sidecar once instead of once per version cuts request
+    volume by ~5x -- and a handful of legacy Forge-era coordinates are
+    genuinely gone (404 on both maven.minecraftforge.net and Maven Central,
+    not transient), so a version referencing one shouldn't re-attempt and
+    re-wait for the same permanently-dead artifact on every occurrence.
+
+    Persisted to MAVEN_SIDECAR_CACHE_PATH after every new lookup (not
+    batched at process exit): this is a small, purely-derived, easily
+    regenerated fact cache -- separate from sources.nix's own atomic
+    end-of-run write, which stays untouched. Killing/restarting the script
+    mid-run re-processes the same version records, but every sidecar
+    lookup they need is now a local dict/disk lookup instead of a repeat
+    network round-trip."""
+    _load_maven_sidecar_cache()
     rel_path = maven_coord_to_path(lib["name"])
     repo_base = lib.get("url", DEFAULT_MAVEN_LIBRARY_REPO)
     full_url = repo_base.rstrip("/") + "/" + rel_path
 
-    cached = _maven_sidecar_hash_cache.get(full_url)
-    if cached is not None:
+    if full_url in _maven_sidecar_hash_cache:
+        cached = _maven_sidecar_hash_cache[full_url]
+        if cached == _MAVEN_SIDECAR_FAILURE:
+            raise ValueError(f"{name}: {full_url} is cached as permanently unavailable")
         return full_url, cached
 
-    sha1_text = http_get(full_url + ".sha1").decode().strip()
-    sha1_hex = sha1_text.split()[0]  # some sidecars are "hash *filename"
-    if len(sha1_hex) != 40:
-        raise ValueError(
-            f"{name}: unexpected .sha1 sidecar content for {full_url}: {sha1_text!r}"
-        )
+    try:
+        sha1_text = http_get(full_url + ".sha1").decode().strip()
+        sha1_hex = sha1_text.split()[0]  # some sidecars are "hash *filename"
+        if len(sha1_hex) != 40:
+            raise ValueError(
+                f"{name}: unexpected .sha1 sidecar content for {full_url}: {sha1_text!r}"
+            )
+    except (urllib.error.URLError, ValueError):
+        _maven_sidecar_hash_cache[full_url] = _MAVEN_SIDECAR_FAILURE
+        _save_maven_sidecar_cache()
+        raise
     nix_hash = "sha1-" + base64.b64encode(bytes.fromhex(sha1_hex)).decode()
     _maven_sidecar_hash_cache[full_url] = nix_hash
+    _save_maven_sidecar_cache()
     return full_url, nix_hash
 
 
@@ -2706,6 +2738,21 @@ def to_nix_val(val, indent_level=0):
     return str(val)
 
 
+def write_sources_nix(results, nix_path):
+    nested_results = {}
+    for flat_key, info in results.items():
+        parts = flat_key.split(".")
+        curr = nested_results
+        for part in parts[:-1]:
+            curr = curr.setdefault(part, {})
+        curr[parts[-1]] = info
+
+    with open(nix_path, "w") as f:
+        f.write(
+            f"# This file is autogenerated by update-sources.py. Do not edit!\n{to_nix_val(nested_results, 0)}\n"
+        )
+
+
 def main():
     append_mode = "--append" in sys.argv
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -2822,23 +2869,12 @@ def main():
 
     if has_errors:
         print(
-            "Update completed with errors. sources.nix was not updated.",
+            "Update completed with errors; sources.nix reflects everything "
+            "that succeeded before the first failure.",
             file=sys.stderr,
         )
         sys.exit(1)
 
-    nested_results = {}
-    for flat_key, info in results.items():
-        parts = flat_key.split(".")
-        curr = nested_results
-        for part in parts[:-1]:
-            curr = curr.setdefault(part, {})
-        curr[parts[-1]] = info
-
-    with open(nix_path, "w") as f:
-        f.write(
-            f"# This file is autogenerated by update-sources.py. Do not edit!\n{to_nix_val(nested_results, 0)}\n"
-        )
     print(f"Successfully updated {nix_path}")
 
 

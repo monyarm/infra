@@ -1,5 +1,6 @@
 # keep-sorted start
 node_modules
+.maven-sidecar-cache.json
 .ruff_cache
 nohup.out
 result
