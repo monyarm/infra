@@ -2,6 +2,7 @@
 import base64
 import fnmatch
 import hashlib
+import http.client
 import io
 import json
 import os
@@ -12,6 +13,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -1873,23 +1875,35 @@ def process_itch(name, url, previous_sources, system=None):
     return result
 
 
-def http_get(url, headers=None):
-    """Downloads a url using urllib, falling back to system curl if blocked by TLS fingerprinting."""
+def http_get(url, headers=None, retries=3):
+    """Downloads a url using urllib, falling back to system curl if blocked by TLS
+    fingerprinting. Retries with backoff on transient truncated-read/connection
+    errors, which large archive downloads over a throttled connection hit in
+    practice (observed: http.client.IncompleteRead on a 78MB+ .mrpack)."""
     all_headers = {"User-Agent": USER_AGENT, **(headers or {})}
-    try:
-        req = urllib.request.Request(url, headers=all_headers)
-        with urllib.request.urlopen(req) as response:
-            return response.read()
-    except urllib.error.HTTPError as e:
-        if e.code == 403:
-            # Fallback to system curl to bypass Python socket TLS/JA3 fingerprint rejections
-            cmd = ["curl", "-sL"]
-            for k, v in all_headers.items():
-                cmd += ["-H", f"{k}: {v}"]
-            cmd.append(url)
-            res = subprocess.run(cmd, capture_output=True, check=True)
-            return res.stdout
-        raise
+    last_error = None
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers=all_headers)
+            with urllib.request.urlopen(req) as response:
+                return response.read()
+        except urllib.error.HTTPError as e:
+            if e.code == 403:
+                # Fallback to system curl to bypass Python socket TLS/JA3 fingerprint rejections
+                cmd = ["curl", "-sL"]
+                for k, v in all_headers.items():
+                    cmd += ["-H", f"{k}: {v}"]
+                cmd.append(url)
+                res = subprocess.run(cmd, capture_output=True, check=True)
+                return res.stdout
+            raise
+        except (http.client.IncompleteRead, ConnectionError, TimeoutError, urllib.error.URLError) as e:
+            last_error = e
+            if attempt + 1 < retries:
+                wait = 5 * (attempt + 1)
+                print(f"  -> {url}: {e!r}, retrying in {wait}s ({attempt + 1}/{retries})...", file=sys.stderr)
+                time.sleep(wait)
+    raise last_error
 
 
 def download_file(url):
@@ -2181,34 +2195,41 @@ def process_modrinth_modpack(name, project, previous_sources):
 
     result_versions = dict(old_versions)
     for v in new_versions:
-        file_ = next((f for f in v["files"] if f.get("primary")), v["files"][0])
-        archive_hash = modrinth_file_hash(file_, name)
+        try:
+            file_ = next((f for f in v["files"] if f.get("primary")), v["files"][0])
+            archive_hash = modrinth_file_hash(file_, name)
 
-        print(f"  -> Downloading {name} {v['version_number']} to read modrinth.index.json...")
-        data = http_get(file_["url"])
-        with zipfile.ZipFile(io.BytesIO(data)) as z:
-            index = json.loads(z.read("modrinth.index.json"))
+            print(f"  -> Downloading {name} {v['version_number']} to read modrinth.index.json...")
+            data = http_get(file_["url"])
+            with zipfile.ZipFile(io.BytesIO(data)) as z:
+                index = json.loads(z.read("modrinth.index.json"))
 
-        files = []
-        for f in index["files"]:
-            files.append({
-                "path": f["path"],
-                "url": f["downloads"][0],
-                "hash": modrinth_file_hash(f, name),
-                "env": (f.get("env") or {}).get("client", "required"),
-            })
+            files = []
+            for f in index["files"]:
+                files.append({
+                    "path": f["path"],
+                    "url": f["downloads"][0],
+                    "hash": modrinth_file_hash(f, name),
+                    "env": (f.get("env") or {}).get("client", "required"),
+                })
 
-        key = v["version_number"]
-        if key in result_versions:
-            key = f"{key}-{v['id']}"
-        result_versions[key] = {
-            "versionId": v["id"],
-            "date": v["date_published"],
-            "archiveHash": archive_hash,
-            "archiveFilename": file_["filename"],
-            "dependencies": index.get("dependencies", {}),
-            "files": files,
-        }
+            key = v["version_number"]
+            if key in result_versions:
+                key = f"{key}-{v['id']}"
+            result_versions[key] = {
+                "versionId": v["id"],
+                "date": v["date_published"],
+                "archiveHash": archive_hash,
+                "archiveFilename": file_["filename"],
+                "dependencies": index.get("dependencies", {}),
+                "files": files,
+            }
+        except Exception as e:
+            # One version's archive failing to download (e.g. a truncated
+            # read past http_get's own retries) shouldn't discard every
+            # other version already fetched in this run -- skip it, retry
+            # next time this project is checked.
+            print(f"  -> Warning: {name} {v['version_number']} failed ({e!r}), skipping for now.", file=sys.stderr)
 
     return {"type": "modrinth-modpack", "project": project, "versions": result_versions}
 
