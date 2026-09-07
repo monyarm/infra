@@ -2197,8 +2197,9 @@ def extract_resource_pack_order(zip_file):
     """Reads the resourcePacks:[...] line from a bundled options.txt if
     present -- options.txt is plain key:value lines, and the value is valid
     JSON (confirmed against real packs: e.g. resourcePacks:["vanilla",
-    "file/Stay_True_1.20.zip",...], leftmost entry = highest priority/
-    loaded last). Checks the "Configured" mod's overrides/configureddefaults/
+    "file/Stay_True_1.20.zip",...] -- the first entry is the top of the
+    in-game resource packs list, i.e. highest priority). Checks the
+    "Configured" mod's overrides/configureddefaults/
     options.txt first -- that mod applies its bundled options.txt as
     first-launch-only defaults without clobbering the player's own settings
     on every launch, which is why many modern packs (including

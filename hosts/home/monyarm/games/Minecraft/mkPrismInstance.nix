@@ -1,38 +1,38 @@
 {
   lib,
   pkgs,
-  mkModDir,
   mkPrismComponentPatch,
   mkMmcPackComponent,
   ...
 }:
 {
-  # Builds one instance's pieces. Nothing here is deployed as a whole-folder
-  # symlink -- the caller (default.nix) decides per piece:
+  # Builds one instance's pieces. Nothing here is a whole-folder symlink to
+  # the store -- the caller (default.nix) deploys each piece differently:
   #   - instanceBase (instance.cfg/mmc-pack.json/patches): declarative-only,
   #     symlinked whole.
-  #   - modFiles/resourcePackFiles/datapackFiles: file-level, one xdg.dataFile
-  #     symlink per jar, so a mod/launcher can freely add its own files into
-  #     the same real directory without fighting a symlinked folder.
-  #   - mutableSeed (everything else the modpack ships -- config/,
-  #     defaultconfigs/, kubejs/, configureddefaults/, ...): activation-time
-  #     COPIED, never symlinked, since mods rewrite their own config files
-  #     at runtime. The caller hash-tracks each seeded file so a later
-  #     `switch` only reseeds files the player/a mod hasn't touched since.
-  #   - filesSeed (the `files` arg, instance-root paths): same
-  #     activation-copy treatment, rooted one level up from mutableSeed.
+  #   - modFiles/resourcePackFiles/datapackFiles/extraSymlinkFiles:
+  #     file-level store symlinks -- static content nothing rewrites at
+  #     runtime, so Nix stays authoritative and a modpack update or
+  #     nix-config change just changes what's symlinked. No reconciliation
+  #     needed for any of these.
+  #   - mutableConfigFiles: config/ specifically -- mods rewrite their own
+  #     config files at runtime, so these need real writable files. The
+  #     caller hash-tracks each one to reseed only what's unmodified since
+  #     the last deploy.
+  #   - filesSeed: the `files` arg (instance-root paths), copy-once.
   mkPrismInstance =
     {
       name,
       minecraftComponent, # resolved prism-component record for net.minecraft
       loaderComponent ? null, # resolved prism-component record for the loader, or null
-      modpackTree ? null, # built modpack directory (its whole .minecraft/-relative content), or null
+      modpackTree ? null, # built modpack directory (its .minecraft/-relative content), or null
       modpackFiles ? [ ], # the modpack's own modrinth.index.json files[], each already fetched: [{ path; drv; }]
+      overridesFiles ? [ ], # every path bundled under the modpack's overrides/, relative to it
       mods ? [ ], # extra mod packages -- each package's own name/pname becomes its filename
       resourcePacks ? [ ],
       datapacks ? [ ],
-      configs ? { }, # "file.toml" -> path, placed under .minecraft/config, activation-copied
-      files ? { }, # "relative/instance/path" -> path, placed at the instance root, activation-copied
+      configs ? { }, # "relpath-under-config" -> path, wins over the modpack's own config/<relpath>
+      files ? { }, # "relative/instance/path" -> path, placed at the instance root, copy-once
     }:
     let
       components = [ minecraftComponent ] ++ lib.optional (loaderComponent != null) loaderComponent;
@@ -68,16 +68,22 @@
         cp -rT "${patchesDir}" "$out/patches"
       '';
 
+      isUnder = prefix: path: lib.hasPrefix prefix path;
+      overridesUnder = prefix: builtins.filter (isUnder prefix) overridesFiles;
+
       # File-level entries for the three binary-content dirs: the modpack's
-      # own files[] entries under that prefix (already individually fetched
-      # with their own hash) plus any explicitly-listed extra packages.
-      modpackFilesUnder = prefix: builtins.filter (f: lib.hasPrefix prefix f.path) modpackFiles;
+      # own files[] entries under that prefix, plus any of the same content
+      # a pack bundled directly in overrides/ instead, plus explicit extras.
       namedFileList =
         prefix: extra:
         (map (f: {
           name = builtins.baseNameOf f.path;
           path = f.drv;
-        }) (modpackFilesUnder prefix))
+        }) (builtins.filter (f: isUnder prefix f.path) modpackFiles))
+        ++ (map (p: {
+          name = builtins.baseNameOf p;
+          path = "${modpackTree}/${p}";
+        }) (overridesUnder prefix))
         ++ (map (p: {
           name = p.name or p.pname;
           path = p;
@@ -87,32 +93,32 @@
       resourcePackFiles = namedFileList "resourcepacks/" resourcePacks;
       datapackFiles = namedFileList "datapacks/" datapacks;
 
-      # Everything the modpack ships besides mods/resourcepacks/datapacks
-      # (those are handled above as file-level entries instead), plus
-      # explicit configs. Rooted at .minecraft/.
-      mutableSeed = pkgs.runCommand "${name}-mutable-seed" { } ''
-        mkdir -p "$out"
-        ${lib.optionalString (modpackTree != null) ''
-          cp -rT "${modpackTree}" "$out"
-          rm -rf "$out/mods" "$out/resourcepacks" "$out/datapacks"
-        ''}
-        ${lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (relPath: src: ''
-            mkdir -p "$out/config/$(dirname "${relPath}")"
-            cp -r "${src}" "$out/config/${relPath}"
-          '') configs
-        )}
-      '';
+      # Everything else the pack ships (kubejs/, defaultconfigs/,
+      # configureddefaults/, ...) -- static content nothing rewrites at
+      # runtime, so a plain store symlink is always correct and needs no
+      # reconciliation.
+      claimedPrefixes = [
+        "mods/"
+        "resourcepacks/"
+        "datapacks/"
+        "config/"
+      ];
+      extraSymlinkFiles = map (p: {
+        path = p;
+        source = "${modpackTree}/${p}";
+      }) (builtins.filter (p: !(lib.any (pre: isUnder pre p) claimedPrefixes)) overridesFiles);
 
-      filesSeed = pkgs.runCommand "${name}-files-seed" { } ''
-        mkdir -p "$out"
-        ${lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (relPath: src: ''
-            mkdir -p "$out/$(dirname "${relPath}")"
-            cp -r "${src}" "$out/${relPath}"
-          '') files
-        )}
-      '';
+      # config/ is the one directory mods actively rewrite at runtime, so it
+      # needs real mutable files, not symlinks -- the caller hash-tracks
+      # each of these to reconcile modpack updates against in-game edits.
+      # Explicit `configs` entries win over the pack's own file at the same
+      # relative path.
+      configFromPack = lib.listToAttrs (
+        map (p: lib.nameValuePair (lib.removePrefix "config/" p) "${modpackTree}/${p}") (
+          overridesUnder "config/"
+        )
+      );
+      mutableConfigFiles = configFromPack // configs;
     in
     {
       inherit
@@ -120,8 +126,9 @@
         modFiles
         resourcePackFiles
         datapackFiles
-        mutableSeed
-        filesSeed
+        extraSymlinkFiles
+        mutableConfigFiles
         ;
+      filesSeed = files;
     };
 }
