@@ -2432,26 +2432,37 @@ def parse_prism_component_version(name, uid, version, data):
     for lib in meta.get("libraries", []):
         if not prism_library_allowed_on_linux(lib):
             continue
-        if "downloads" in lib:
-            artifact = lib["downloads"]["artifact"]
-            libraries.append(
-                {
-                    "name": lib["name"],
-                    "url": artifact["url"],
-                    "size": artifact["size"],
-                    "hash": prism_artifact_hash(artifact, name),
-                }
-            )
-        else:
-            # Fabric/Quilt-style: {name, url=<maven repo base>}, no embedded hash.
-            full_url, h = maven_repo_library_hash(lib, name)
-            libraries.append(
-                {
-                    "name": lib["name"],
-                    "url": full_url,
-                    "size": None,
-                    "hash": h,
-                }
+        try:
+            if "downloads" in lib:
+                artifact = lib["downloads"]["artifact"]
+                libraries.append(
+                    {
+                        "name": lib["name"],
+                        "url": artifact["url"],
+                        "size": artifact["size"],
+                        "hash": prism_artifact_hash(artifact, name),
+                    }
+                )
+            else:
+                # Fabric/Quilt-style: {name, url=<maven repo base>}, no embedded hash.
+                full_url, h = maven_repo_library_hash(lib, name)
+                libraries.append(
+                    {
+                        "name": lib["name"],
+                        "url": full_url,
+                        "size": None,
+                        "hash": h,
+                    }
+                )
+        except (urllib.error.URLError, ValueError, KeyError) as e:
+            # A single dead/malformed dependency (observed: some 1.12.2-era
+            # Forge builds reference a scala-parser-combinators build no
+            # longer hosted anywhere) shouldn't sink the entire version --
+            # that library is very unlikely to be needed for core gameplay.
+            # Skip just this one library; the version stays usable.
+            print(
+                f"  -> Warning: {name} {version}: library {lib.get('name')} unavailable ({e!r}), omitting it.",
+                file=sys.stderr,
             )
 
     main_jar = None
