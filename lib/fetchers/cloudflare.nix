@@ -112,6 +112,34 @@ rec {
       '';
     };
 
+  fetchPlanetMinecraft =
+    {
+      url,
+      name ? "planetminecraft-skin",
+      ...
+    }@args:
+    let
+      planetMinecraftScript = ./planetminecraft-download.py;
+    in
+    fetchThroughCloudflare (
+      args
+      // {
+        inherit name;
+        resolve = ''
+          export TARGET_URL="${url}"
+          export OUT_PATH="$TMPDIR"
+          export POST_BYPASS_SCRIPT="${planetMinecraftScript}"
+          python3 ${cloudflareBypassScript}
+          # PlanetMinecraft's download response isn't byte-stable across
+          # requests (confirmed: same skin, different bytes each fetch,
+          # varying PNG metadata) -- strip it so the FOD hash is
+          # deterministic regardless of what the CDN injects per-request.
+          ${pkgs.imagemagick}/bin/convert png:"$TMPDIR/downloaded" -strip png:"$TMPDIR/downloaded-stripped"
+          DOWNLOADED_FILE="$TMPDIR/downloaded-stripped"
+        '';
+      }
+    );
+
   fetchRomhacking =
     {
       url,
