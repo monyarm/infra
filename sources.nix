@@ -178358,8 +178358,10 @@ dependencies = [
 ";
       cargoLockVersion = 2;
       cargoOutputHashes = {
-        "git+https://github.com/ArmchairDevelopers/async-compression.git#4c9a88aa0ba50b32400e308b0c0dda9e5bf0e779" = "sha256-6PRxfc//AsTJ8MMN3bql3kaNs+jLS7rkmRVJj1Tke0M=";
-        "git+https://github.com/ArmchairDevelopers/flate2-rs.git#42daaa1eb6aad89d9cf8c1fa51f2d6bcae3a3247" = "sha256-j6T/3yNxefDFi6yyPVi0D0hcvRsLz7EJ/Nypf4WRFvA=";
+        "git+https://github.com/ArmchairDevelopers/async-compression.git#4c9a88aa0ba50b32400e308b0c0dda9e5bf0e779" =
+          "sha256-6PRxfc//AsTJ8MMN3bql3kaNs+jLS7rkmRVJj1Tke0M=";
+        "git+https://github.com/ArmchairDevelopers/flate2-rs.git#42daaa1eb6aad89d9cf8c1fa51f2d6bcae3a3247" =
+          "sha256-j6T/3yNxefDFi6yyPVi0D0hcvRsLz7EJ/Nypf4WRFvA=";
       };
       date = "2026-01-25";
       files = [

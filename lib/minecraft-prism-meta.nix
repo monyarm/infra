@@ -27,7 +27,7 @@ rec {
       path = mavenCoordToPath l.name;
       drv = pkgs.fetchurl {
         inherit (l) url;
-        hash = l.hash;
+        inherit (l) hash;
       };
     }) componentRecord.libraries;
 
@@ -38,17 +38,17 @@ rec {
     componentRecord:
     builtins.toJSON (
       {
-        name = componentRecord.name;
-        uid = componentRecord.uid;
-        version = componentRecord.version;
+        inherit (componentRecord) name;
+        inherit (componentRecord) uid;
+        inherit (componentRecord) version;
         formatVersion = 1;
         libraries = map (l: {
-          name = l.name;
+          inherit (l) name;
           downloads.artifact.url = l.url;
         }) componentRecord.libraries;
       }
       // lib.optionalAttrs (componentRecord.mainClass != null) {
-        mainClass = componentRecord.mainClass;
+        inherit (componentRecord) mainClass;
       }
       // lib.optionalAttrs (componentRecord.mainJar != null) {
         mainJar = {
@@ -57,7 +57,7 @@ rec {
         };
       }
       // lib.optionalAttrs (componentRecord.requires != [ ]) {
-        requires = componentRecord.requires;
+        inherit (componentRecord) requires;
       }
       // lib.optionalAttrs (componentRecord.assetIndex != null) {
         assetIndex = {
@@ -71,8 +71,8 @@ rec {
   mkMmcPackComponent =
     componentRecord:
     {
-      uid = componentRecord.uid;
-      version = componentRecord.version;
+      inherit (componentRecord) uid;
+      inherit (componentRecord) version;
       cachedName = componentRecord.name;
       cachedVersion = componentRecord.version;
     }

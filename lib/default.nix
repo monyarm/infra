@@ -109,11 +109,21 @@ let
   };
   minecraftVersions = import ./minecraft-versions.nix { inherit (pkgs) lib; };
   minecraftPack = import ./minecraft-pack.nix (
-    { inherit pkgs; inherit (pkgs) lib; }
-    // { inherit (fetchers) fetchModrinth; }
-    // { inherit (modDir) mkModDir; }
+    {
+      inherit pkgs;
+      inherit (pkgs) lib;
+    }
+    // {
+      inherit (fetchers) fetchModrinth;
+    }
+    // {
+      inherit (modDir) mkModDir;
+    }
   );
-  minecraftPrismMeta = import ./minecraft-prism-meta.nix { inherit pkgs; inherit (pkgs) lib; };
+  minecraftPrismMeta = import ./minecraft-prism-meta.nix {
+    inherit pkgs;
+    inherit (pkgs) lib;
+  };
   # optimizePkgs: addChecks' pkgs.runCommand fallback branch wraps rom/
   # compressRom outputs, which are always built through the pin.
   test = import ./test.nix {

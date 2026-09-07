@@ -16,7 +16,7 @@
     let
       archive = fetchModrinth {
         inherit project;
-        versionId = versionRecord.versionId;
+        inherit (versionRecord) versionId;
         filename = versionRecord.archiveFilename;
         sha256 = versionRecord.archiveHash; # SRI string, algo inferred from prefix
       };
@@ -28,7 +28,7 @@
         inherit (f) path;
         drv = pkgs.fetchurl {
           inherit (f) url;
-          hash = f.hash;
+          inherit (f) hash;
         };
       }) versionRecord.files;
       filesLayer = pkgs.runCommand "modrinth-pack-${project}-files" { } ''

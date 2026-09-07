@@ -18,8 +18,7 @@
 
       loaderOk = entry: builtins.elem effectiveLoader entry.loaders;
       exactOk = entry: builtins.elem minecraftVersion entry.gameVersions;
-      majorOk =
-        entry: builtins.any (gv: majorMinor gv == majorMinor minecraftVersion) entry.gameVersions;
+      majorOk = entry: builtins.any (gv: majorMinor gv == majorMinor minecraftVersion) entry.gameVersions;
 
       candidates =
         if tier == "latest" then
@@ -27,7 +26,7 @@
         else if tier == "latestMajor" then
           lib.filterAttrs (_: e: loaderOk e && majorOk e) modTable
         else if tier == "latestIKnowWhatImDoing" then
-          lib.filterAttrs (_: e: loaderOk e) modTable
+          lib.filterAttrs (_: loaderOk) modTable
         else
           null; # explicit versionKey, handled below
 
@@ -37,7 +36,8 @@
           throw "pickModVersion: no version matched selector ${selector} for minecraftVersion ${minecraftVersion}/${effectiveLoader}"
         else
           (lib.foldlAttrs (
-            best: _: e: if best == null || e.date > best.date then e else best
+            best: _: e:
+            if best == null || e.date > best.date then e else best
           ) null attrs).package;
     in
     if candidates != null then

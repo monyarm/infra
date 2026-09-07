@@ -1897,11 +1897,19 @@ def http_get(url, headers=None, retries=3):
                 res = subprocess.run(cmd, capture_output=True, check=True)
                 return res.stdout
             raise
-        except (http.client.IncompleteRead, ConnectionError, TimeoutError, urllib.error.URLError) as e:
+        except (
+            http.client.IncompleteRead,
+            ConnectionError,
+            TimeoutError,
+            urllib.error.URLError,
+        ) as e:
             last_error = e
             if attempt + 1 < retries:
                 wait = 5 * (attempt + 1)
-                print(f"  -> {url}: {e!r}, retrying in {wait}s ({attempt + 1}/{retries})...", file=sys.stderr)
+                print(
+                    f"  -> {url}: {e!r}, retrying in {wait}s ({attempt + 1}/{retries})...",
+                    file=sys.stderr,
+                )
                 time.sleep(wait)
     raise last_error
 
@@ -2133,7 +2141,9 @@ def modrinth_file_hash(file_entry, name):
     -only lookup -- no nix-build hash discovery needed."""
     sha512_hex = file_entry.get("hashes", {}).get("sha512")
     if not sha512_hex:
-        raise ValueError(f"{name}: file {file_entry.get('filename')} has no sha512 hash")
+        raise ValueError(
+            f"{name}: file {file_entry.get('filename')} has no sha512 hash"
+        )
     return "sha512-" + base64.b64encode(bytes.fromhex(sha512_hex)).decode()
 
 
@@ -2150,7 +2160,11 @@ def process_modrinth(name, project, previous_sources):
 
     if not new_versions:
         print(f"  -> {name}: no new versions ({len(old_versions)} already known).")
-        return old if old_versions else {"type": "modrinth", "project": project, "versions": {}}
+        return (
+            old
+            if old_versions
+            else {"type": "modrinth", "project": project, "versions": {}}
+        )
 
     print(f"  -> {name}: {len(new_versions)} new version(s) of {len(versions)} total.")
 
@@ -2185,13 +2199,19 @@ def process_modrinth_modpack(name, project, previous_sources):
 
     if not new_versions:
         print(f"  -> {name}: no new versions ({len(old_versions)} already known).")
-        return old if old_versions else {
-            "type": "modrinth-modpack",
-            "project": project,
-            "versions": {},
-        }
+        return (
+            old
+            if old_versions
+            else {
+                "type": "modrinth-modpack",
+                "project": project,
+                "versions": {},
+            }
+        )
 
-    print(f"  -> {name}: {len(new_versions)} new pack version(s) of {len(versions)} total.")
+    print(
+        f"  -> {name}: {len(new_versions)} new pack version(s) of {len(versions)} total."
+    )
 
     result_versions = dict(old_versions)
     for v in new_versions:
@@ -2199,19 +2219,23 @@ def process_modrinth_modpack(name, project, previous_sources):
             file_ = next((f for f in v["files"] if f.get("primary")), v["files"][0])
             archive_hash = modrinth_file_hash(file_, name)
 
-            print(f"  -> Downloading {name} {v['version_number']} to read modrinth.index.json...")
+            print(
+                f"  -> Downloading {name} {v['version_number']} to read modrinth.index.json..."
+            )
             data = http_get(file_["url"])
             with zipfile.ZipFile(io.BytesIO(data)) as z:
                 index = json.loads(z.read("modrinth.index.json"))
 
             files = []
             for f in index["files"]:
-                files.append({
-                    "path": f["path"],
-                    "url": f["downloads"][0],
-                    "hash": modrinth_file_hash(f, name),
-                    "env": (f.get("env") or {}).get("client", "required"),
-                })
+                files.append(
+                    {
+                        "path": f["path"],
+                        "url": f["downloads"][0],
+                        "hash": modrinth_file_hash(f, name),
+                        "env": (f.get("env") or {}).get("client", "required"),
+                    }
+                )
 
             key = v["version_number"]
             if key in result_versions:
@@ -2224,12 +2248,24 @@ def process_modrinth_modpack(name, project, previous_sources):
                 "dependencies": index.get("dependencies", {}),
                 "files": files,
             }
-        except Exception as e:
+        except (
+            urllib.error.URLError,
+            http.client.IncompleteRead,
+            ConnectionError,
+            TimeoutError,
+            zipfile.BadZipFile,
+            KeyError,
+            ValueError,
+            json.JSONDecodeError,
+        ) as e:
             # One version's archive failing to download (e.g. a truncated
             # read past http_get's own retries) shouldn't discard every
             # other version already fetched in this run -- skip it, retry
             # next time this project is checked.
-            print(f"  -> Warning: {name} {v['version_number']} failed ({e!r}), skipping for now.", file=sys.stderr)
+            print(
+                f"  -> Warning: {name} {v['version_number']} failed ({e!r}), skipping for now.",
+                file=sys.stderr,
+            )
 
     return {"type": "modrinth-modpack", "project": project, "versions": result_versions}
 
@@ -2269,7 +2305,9 @@ def process_prism_component(name, target, previous_sources):
     print(f"Checking [prism-component] {name} ({uid} {version})...")
 
     data = http_get(f"https://meta.prismlauncher.org/v1/{uid}/{version}.json")
-    version_json_hash = "sha256-" + base64.b64encode(hashlib.sha256(data).digest()).decode()
+    version_json_hash = (
+        "sha256-" + base64.b64encode(hashlib.sha256(data).digest()).decode()
+    )
     meta = json.loads(data)
 
     libraries = []
@@ -2277,12 +2315,14 @@ def process_prism_component(name, target, previous_sources):
         if not prism_library_allowed_on_linux(lib):
             continue
         artifact = lib["downloads"]["artifact"]
-        libraries.append({
-            "name": lib["name"],
-            "url": artifact["url"],
-            "size": artifact["size"],
-            "hash": prism_artifact_hash(artifact, name),
-        })
+        libraries.append(
+            {
+                "name": lib["name"],
+                "url": artifact["url"],
+                "size": artifact["size"],
+                "hash": prism_artifact_hash(artifact, name),
+            }
+        )
 
     main_jar = None
     if "mainJar" in meta:
@@ -2598,9 +2638,13 @@ def main():
                 elif section == "modrinth":
                     results[name] = process_modrinth(name, target, previous_sources)
                 elif section == "modrinth-modpack":
-                    results[name] = process_modrinth_modpack(name, target, previous_sources)
+                    results[name] = process_modrinth_modpack(
+                        name, target, previous_sources
+                    )
                 elif section == "prism-component":
-                    results[name] = process_prism_component(name, target, previous_sources)
+                    results[name] = process_prism_component(
+                        name, target, previous_sources
+                    )
                 elif section == "gdrive":
                     results[name] = process_gdrive(name, target, previous_sources)
                 elif section == "mediafire":
