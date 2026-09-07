@@ -77,8 +77,7 @@ plus `[modrinth]`/`[modrinth-modpack]`/`[prism-component]` sections in
   `attrsOf (attrsOf package)` keyed by Modrinth `version_number` (not this
   doc's plain `attrsOf (attrsOf package)` with unspecified keys), tracking
   **every** published version of each explicitly-registered project — not
-  just the latest. This enables a custom modpack to write `{ sodium =
-  "latest"; }` and have Nix pick whichever pinned version matches that
+  just the latest. This enables a custom modpack to write `{ sodium = "latest"; }` and have Nix pick whichever pinned version matches that
   pack's own `minecraftVersion`/`loader`, purely from already-hash-pinned
   `sources.nix` data (no live API lookup at eval time). Tracking every
   version turned out to be cheap, not heavy: Modrinth publishes a sha512
@@ -127,8 +126,7 @@ plus `[modrinth]`/`[modrinth-modpack]`/`[prism-component]` sections in
   places each library jar at its correct Maven-layout path and is verified
   working in isolation (built a real `oshi-core-6.2.2.jar` via it during
   Task 8), but `hosts/home/monyarm/games/Minecraft/default.nix` never
-  actually calls it or deploys a shared `xdg.dataFile."PrismLauncher/
-  libraries/..."` tree. Each instance's generated `mmc-pack.json` and
+  actually calls it or deploys a shared `xdg.dataFile."PrismLauncher/ libraries/..."` tree. Each instance's generated `mmc-pack.json` and
   `patches/<uid>.json` *do* carry real Mojang/Forge/PrismLauncher URLs+
   hashes for every library, so PrismLauncher can still self-download them
   on first launch exactly like a normal fresh install — the instances are
