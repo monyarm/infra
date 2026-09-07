@@ -30,6 +30,11 @@ let
     ;
 
   inherit
+    (import ./mkRandomobs.nix { inherit lib pkgs; })
+    mkRandomobs
+    ;
+
+  inherit
     (import ./registries.nix {
       inherit
         lib
