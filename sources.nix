@@ -87910,6 +87910,205 @@
   };
   minecraft = {
     libraries = {
+      forge47_4_0 = {
+        assetIndex = null;
+        libraries = [
+          {
+            hash = "sha1-hSt+WXSNoVEtQOOEB+rbHwAxqZY=";
+            name = "io.github.zekerzhayard:ForgeWrapper:prism-2026-08-01";
+            size = 29800;
+            url = "https://files.prismlauncher.org/maven/io/github/zekerzhayard/ForgeWrapper/prism-2026-08-01/ForgeWrapper-prism-2026-08-01.jar";
+          }
+          {
+            hash = "sha1-UeaiLGxxa+sR4kS/W4vkgPUd1rU=";
+            name = "cpw.mods:securejarhandler:2.1.10";
+            size = 88749;
+            url = "https://maven.minecraftforge.net/cpw/mods/securejarhandler/2.1.10/securejarhandler-2.1.10.jar";
+          }
+          {
+            hash = "sha1-8O0TKkkkSwQs0OFXAqufLOPMhDY=";
+            name = "org.ow2.asm:asm:9.7.1";
+            size = 126093;
+            url = "https://maven.minecraftforge.net/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar";
+          }
+          {
+            hash = "sha1-QGxqIiXP4YGfECoWHlTMFqXCT3U=";
+            name = "org.ow2.asm:asm-commons:9.7.1";
+            size = 73459;
+            url = "https://maven.minecraftforge.net/org/ow2/asm/asm-commons/9.7.1/asm-commons-9.7.1.jar";
+          }
+          {
+            hash = "sha1-OlMTl4dmOxOd52tif8oAhKtg0yw=";
+            name = "org.ow2.asm:asm-tree:9.7.1";
+            size = 51939;
+            url = "https://maven.minecraftforge.net/org/ow2/asm/asm-tree/9.7.1/asm-tree-9.7.1.jar";
+          }
+          {
+            hash = "sha1-niM1m1mOxrdLI+UxEN1cV3rfIkM=";
+            name = "org.ow2.asm:asm-util:9.7.1";
+            size = 94519;
+            url = "https://maven.minecraftforge.net/org/ow2/asm/asm-util/9.7.1/asm-util-9.7.1.jar";
+          }
+          {
+            hash = "sha1-+Xo7MZ8O1qjNlE3HkGDTkSoomF8=";
+            name = "org.ow2.asm:asm-analysis:9.7.1";
+            size = 35126;
+            url = "https://maven.minecraftforge.net/org/ow2/asm/asm-analysis/9.7.1/asm-analysis-9.7.1.jar";
+          }
+          {
+            hash = "sha1-Jy0kCqc/QhlbKmji69i3Aez0H2M=";
+            name = "net.minecraftforge:accesstransformers:8.0.4";
+            size = 77756;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/accesstransformers/8.0.4/accesstransformers-8.0.4.jar";
+          }
+          {
+            hash = "sha1-QoZk8F0rf3t2ECBLWqfBdj9iARo=";
+            name = "org.antlr:antlr4-runtime:4.9.1";
+            size = 337868;
+            url = "https://maven.minecraftforge.net/org/antlr/antlr4-runtime/4.9.1/antlr4-runtime-4.9.1.jar";
+          }
+          {
+            hash = "sha1-aZFD3UOEMdBrV0FpRPfO2+UuFHU=";
+            name = "net.minecraftforge:eventbus:6.0.5";
+            size = 53985;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/eventbus/6.0.5/eventbus-6.0.5.jar";
+          }
+          {
+            hash = "sha1-O0lyoM2xNYU9uiGb5hp5siz/Ewk=";
+            name = "net.minecraftforge:forgespi:7.0.1";
+            size = 29831;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/forgespi/7.0.1/forgespi-7.0.1.jar";
+          }
+          {
+            hash = "sha1-4wurJp2JZhPjg5YnRxFBCzoOS4c=";
+            name = "net.minecraftforge:coremods:5.2.4";
+            size = 31872;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/coremods/5.2.4/coremods-5.2.4.jar";
+          }
+          {
+            hash = "sha1-BtlEP1b1C7hc6jg2hv+chnORRYs=";
+            name = "cpw.mods:modlauncher:10.0.9";
+            size = 130343;
+            url = "https://maven.minecraftforge.net/cpw/mods/modlauncher/10.0.9/modlauncher-10.0.9.jar";
+          }
+          {
+            hash = "sha1-VNegpej9txuXMCXKpG80GuWQTzk=";
+            name = "net.minecraftforge:unsafe:0.2.0";
+            size = 2834;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/unsafe/0.2.0/unsafe-0.2.0.jar";
+          }
+          {
+            hash = "sha1-89oY4SxpbTWkfILLssyLWqFeEVQ=";
+            name = "net.minecraftforge:mergetool:1.1.5:api";
+            size = 2572;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/mergetool/1.1.5/mergetool-1.1.5-api.jar";
+          }
+          {
+            hash = "sha1-UQ8XSrvxyUdJTbUO8kRWg71SwjA=";
+            name = "com.electronwill.night-config:core:3.6.4";
+            size = 199834;
+            url = "https://maven.minecraftforge.net/com/electronwill/night-config/core/3.6.4/core-3.6.4.jar";
+          }
+          {
+            hash = "sha1-UdbO+ytV7lXuJrFjkSEvssfftPQ=";
+            name = "com.electronwill.night-config:toml:3.6.4";
+            size = 31816;
+            url = "https://maven.minecraftforge.net/com/electronwill/night-config/toml/3.6.4/toml-3.6.4.jar";
+          }
+          {
+            hash = "sha1-RDP1DAfevvrtBVO9AGj09I1EkxM=";
+            name = "org.apache.maven:maven-artifact:3.8.5";
+            size = 58077;
+            url = "https://maven.minecraftforge.net/org/apache/maven/maven-artifact/3.8.5/maven-artifact-3.8.5.jar";
+          }
+          {
+            hash = "sha1-oBqqbdrqnsB+xPIJSHt6RqUmKDo=";
+            name = "net.jodah:typetools:0.6.3";
+            size = 18281;
+            url = "https://maven.minecraftforge.net/net/jodah/typetools/0.6.3/typetools-0.6.3.jar";
+          }
+          {
+            hash = "sha1-ltAs07OE/wFaj+9CI7y0zPFxfJU=";
+            name = "net.minecrell:terminalconsoleappender:1.2.0";
+            size = 15977;
+            url = "https://maven.minecraftforge.net/net/minecrell/terminalconsoleappender/1.2.0/terminalconsoleappender-1.2.0.jar";
+          }
+          {
+            hash = "sha1-Q4KrE4LHtvN5N37V9mXcL24SGLw=";
+            name = "org.jline:jline-reader:3.12.1";
+            size = 150765;
+            url = "https://maven.minecraftforge.net/org/jline/jline-reader/3.12.1/jline-reader-3.12.1.jar";
+          }
+          {
+            hash = "sha1-x3dEgxTgUNmApraXwUDzv+nrdBY=";
+            name = "org.jline:jline-terminal:3.12.1";
+            size = 211712;
+            url = "https://maven.minecraftforge.net/org/jline/jline-terminal/3.12.1/jline-terminal-3.12.1.jar";
+          }
+          {
+            hash = "sha1-nRwMOjBK5ml+zUdyGPphuFC/V/w=";
+            name = "org.spongepowered:mixin:0.8.5";
+            size = 1089277;
+            url = "https://maven.minecraftforge.net/org/spongepowered/mixin/0.8.5/mixin-0.8.5.jar";
+          }
+          {
+            hash = "sha1-9n9f+qX1Ewz2+5sTPaAMffO1MqU=";
+            name = "org.openjdk.nashorn:nashorn-core:15.4";
+            size = 2167292;
+            url = "https://maven.minecraftforge.net/org/openjdk/nashorn/nashorn-core/15.4/nashorn-core-15.4.jar";
+          }
+          {
+            hash = "sha1-N2zJyOpgcgzwJ8AfwDPekVaZgBw=";
+            name = "net.minecraftforge:JarJarSelector:0.3.19";
+            size = 17374;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/JarJarSelector/0.3.19/JarJarSelector-0.3.19.jar";
+          }
+          {
+            hash = "sha1-AIP+qpt3DmrA6W7k/CP6iTJcX+I=";
+            name = "net.minecraftforge:JarJarMetadata:0.3.19";
+            size = 15895;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/JarJarMetadata/0.3.19/JarJarMetadata-0.3.19.jar";
+          }
+          {
+            hash = "sha1-DFRuAEQ9hDLNprqhyGA0aYB0Jig=";
+            name = "cpw.mods:bootstraplauncher:1.1.2";
+            size = 8284;
+            url = "https://maven.minecraftforge.net/cpw/mods/bootstraplauncher/1.1.2/bootstraplauncher-1.1.2.jar";
+          }
+          {
+            hash = "sha1-JGTrfWud252zaoLPipUZPlxv4CA=";
+            name = "net.minecraftforge:JarJarFileSystems:0.3.19";
+            size = 32195;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/JarJarFileSystems/0.3.19/JarJarFileSystems-0.3.19.jar";
+          }
+          {
+            hash = "sha1-NQKSo8WX9l0TDki25Bmishy6KsE=";
+            name = "net.minecraftforge:fmlloader:1.20.1-47.4.0";
+            size = 267079;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/fmlloader/1.20.1-47.4.0/fmlloader-1.20.1-47.4.0.jar";
+          }
+          {
+            hash = "sha1-WgwtGmWkIr0OZFSOWLcPTQEe94g=";
+            name = "net.minecraftforge:fmlearlydisplay:1.20.1-47.4.0";
+            size = 170517;
+            url = "https://maven.minecraftforge.net/net/minecraftforge/fmlearlydisplay/1.20.1-47.4.0/fmlearlydisplay-1.20.1-47.4.0.jar";
+          }
+        ];
+        mainClass = "io.github.zekerzhayard.forgewrapper.installer.Main";
+        mainJar = null;
+        name = "Forge";
+        requires = [
+          {
+            equals = "1.20.1";
+            uid = "net.minecraft";
+          }
+        ];
+        target = "net.minecraftforge:47.4.0";
+        type = "prism-component";
+        uid = "net.minecraftforge";
+        version = "47.4.0";
+        versionJsonHash = "sha256-fvhbTpOCKigPPgfIKSQZlXOgirYXAZGSxcjqfHMpTUA=";
+      };
       forge47_4_10 = {
         assetIndex = null;
         libraries = [
