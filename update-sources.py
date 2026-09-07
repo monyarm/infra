@@ -1879,7 +1879,10 @@ def http_get(url, headers=None, retries=3):
     """Downloads a url using urllib, falling back to system curl if blocked by TLS
     fingerprinting. Retries with backoff on transient truncated-read/connection
     errors, which large archive downloads over a throttled connection hit in
-    practice (observed: http.client.IncompleteRead on a 78MB+ .mrpack)."""
+    practice (observed: http.client.IncompleteRead on a 78MB+ .mrpack) -- and on
+    HTTPError too (observed: sustained rapid sequential requests against
+    maven.minecraftforge.net produce spurious 404s for URLs that resolve fine
+    in isolation moments later; treated as transient rather than permanent)."""
     all_headers = {"User-Agent": USER_AGENT, **(headers or {})}
     last_error = None
     for attempt in range(retries):
@@ -1896,6 +1899,15 @@ def http_get(url, headers=None, retries=3):
                 cmd.append(url)
                 res = subprocess.run(cmd, capture_output=True, check=True)
                 return res.stdout
+            last_error = e
+            if attempt + 1 < retries:
+                wait = 5 * (attempt + 1)
+                print(
+                    f"  -> {url}: HTTP {e.code}, retrying in {wait}s ({attempt + 1}/{retries})...",
+                    file=sys.stderr,
+                )
+                time.sleep(wait)
+                continue
             raise
         except (
             http.client.IncompleteRead,
