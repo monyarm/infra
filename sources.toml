@@ -178,8 +178,10 @@ minecraft.mods.jei = "jei"
 minecraft.modpacks.society-sunlit-valley = "society-sunlit-valley"
 
 [prism-component]
-minecraft.libraries.mc1201 = "net.minecraft:1.20.1"
-minecraft.libraries.forge47_4_0 = "net.minecraftforge:47.4.0"
+minecraft.libraries.minecraft = "net.minecraft"
+minecraft.libraries.forge = "net.minecraftforge"
+minecraft.libraries.fabric = "net.fabricmc.fabric-loader"
+minecraft.libraries.quilt = "org.quiltmc.quilt-loader"
 
 [npmjs]
 tools.codegraph = "@colbymchenry/codegraph-linux-x64@1.6.0"

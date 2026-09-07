@@ -20,16 +20,24 @@ rec {
     "${groupPath}/${artifact}/${version}/${artifact}-${version}${classifier}.jar";
 
   # Fetches every (already platform-filtered, already hash-pinned) library
-  # in a prism-component's sources.nix record, individually, no discovery.
+  # in a prism-component's sources.nix record, individually, no discovery --
+  # plus the component's own mainJar when present (this is what covers
+  # net.minecraft's actual minecraft.jar: it's just another maven-coordinate
+  # artifact in PrismLauncher's model, placed under libraries/ like anything
+  # else).
   mkPrismComponentLibraries =
     componentRecord:
-    map (l: {
-      path = mavenCoordToPath l.name;
-      drv = pkgs.fetchurl {
-        inherit (l) url;
-        inherit (l) hash;
-      };
-    }) componentRecord.libraries;
+    map
+      (l: {
+        path = mavenCoordToPath l.name;
+        drv = pkgs.fetchurl {
+          inherit (l) url;
+          inherit (l) hash;
+        };
+      })
+      (
+        componentRecord.libraries ++ lib.optional (componentRecord.mainJar != null) componentRecord.mainJar
+      );
 
   # Regenerates a patches/<uid>.json equivalent to what PrismLauncher itself
   # would cache after resolving this component online -- functionally

@@ -2183,6 +2183,9 @@ def process_modrinth(name, project, previous_sources):
             "hash": modrinth_file_hash(file_, name),
         }
 
+    print(
+        f"  -> {name}: fetched {len(new_versions)} version(s), {len(result_versions)} total now tracked."
+    )
     return {"type": "modrinth", "project": project, "versions": result_versions}
 
 
@@ -2214,6 +2217,7 @@ def process_modrinth_modpack(name, project, previous_sources):
     )
 
     result_versions = dict(old_versions)
+    succeeded = 0
     for v in new_versions:
         try:
             file_ = next((f for f in v["files"] if f.get("primary")), v["files"][0])
@@ -2248,6 +2252,7 @@ def process_modrinth_modpack(name, project, previous_sources):
                 "dependencies": index.get("dependencies", {}),
                 "files": files,
             }
+            succeeded += 1
         except (
             urllib.error.URLError,
             http.client.IncompleteRead,
@@ -2267,6 +2272,9 @@ def process_modrinth_modpack(name, project, previous_sources):
                 file=sys.stderr,
             )
 
+    print(
+        f"  -> {name}: {succeeded}/{len(new_versions)} new version(s) fetched, {len(result_versions)} total now tracked."
+    )
     return {"type": "modrinth-modpack", "project": project, "versions": result_versions}
 
 
@@ -2292,19 +2300,85 @@ def prism_artifact_hash(artifact, name):
     return "sha1-" + base64.b64encode(bytes.fromhex(sha1_hex)).decode()
 
 
-def process_prism_component(name, target, previous_sources):
-    """target is "<uid>:<version>", e.g. "net.minecraft:1.20.1". Components
-    are immutable once published, so (unlike modrinth/modrinth-modpack) this
-    does not need the always-recheck exemption -- once fetched, skip like
-    any other pinned source."""
-    old = previous_sources.get(name)
-    if old and old.get("target") == target:
-        return old
+def maven_coord_to_path(coord):
+    """ "group:artifact:version[:classifier]" -> the Maven-layout relative
+    path, matching lib/minecraft-prism-meta.nix's mavenCoordToPath."""
+    parts = coord.split(":")
+    group, artifact, version = parts[0], parts[1], parts[2]
+    classifier = f"-{parts[3]}" if len(parts) > 3 else ""
+    group_path = group.replace(".", "/")
+    return f"{group_path}/{artifact}/{version}/{artifact}-{version}{classifier}.jar"
 
-    uid, version = target.split(":", 1)
-    print(f"Checking [prism-component] {name} ({uid} {version})...")
 
-    data = http_get(f"https://meta.prismlauncher.org/v1/{uid}/{version}.json")
+DEFAULT_MAVEN_LIBRARY_REPO = "https://libraries.minecraft.net/"
+
+
+_maven_sidecar_hash_cache = {}
+
+
+def maven_repo_library_hash(lib, name):
+    """Fabric/Quilt-style library entries are {name, url} where url is a bare
+    Maven repo base, with no embedded hash (unlike Mojang/Forge's
+    downloads.artifact.sha1). Some legacy Forge-era entries omit "url"
+    entirely (e.g. "net.minecraft:launchwrapper:1.12"), implying Mojang's
+    own default library repo -- confirmed: libraries.minecraft.net serves it,
+    Maven Central 404s. Standard Maven repos publish a .sha1 sidecar next to
+    every artifact -- confirmed for maven.fabricmc.net and
+    libraries.minecraft.net -- so this stays metadata-only, no nix-build
+    hash discovery needed.
+
+    Memoized on the resolved artifact URL: the same library coordinate is
+    referenced by many component versions largely unchanged (measured:
+    fabric-loader alone has 2421 (version, library) pairs across only 422
+    distinct coordinates), so fetching each unique artifact's sidecar once
+    instead of once per version cuts request volume by ~5x."""
+    rel_path = maven_coord_to_path(lib["name"])
+    repo_base = lib.get("url", DEFAULT_MAVEN_LIBRARY_REPO)
+    full_url = repo_base.rstrip("/") + "/" + rel_path
+
+    cached = _maven_sidecar_hash_cache.get(full_url)
+    if cached is not None:
+        return full_url, cached
+
+    sha1_text = http_get(full_url + ".sha1").decode().strip()
+    sha1_hex = sha1_text.split()[0]  # some sidecars are "hash *filename"
+    if len(sha1_hex) != 40:
+        raise ValueError(
+            f"{name}: unexpected .sha1 sidecar content for {full_url}: {sha1_text!r}"
+        )
+    nix_hash = "sha1-" + base64.b64encode(bytes.fromhex(sha1_hex)).decode()
+    _maven_sidecar_hash_cache[full_url] = nix_hash
+    return full_url, nix_hash
+
+
+# PrismLauncher's meta service is served directly from this repo's git
+# tree (verified: a version file downloaded from the repo is byte-identical
+# to the same file from meta.prismlauncher.org). Bulk-fetching it once is
+# far cheaper than one HTTP request per version for a component with
+# hundreds/thousands of historical versions (net.minecraftforge alone has
+# 5000+). Memoized so multiple components needing the bulk path in the same
+# update-sources.py run only trigger one download.
+META_LAUNCHER_TARBALL_URL = (
+    "https://github.com/PrismLauncher/meta-launcher/archive/refs/heads/master.tar.gz"
+)
+META_LAUNCHER_TAR_PREFIX = "meta-launcher-master"
+PRISM_BULK_THRESHOLD = 200  # new versions needed before switching to the tarball
+
+_meta_launcher_tar_cache = None
+
+
+def get_meta_launcher_tar():
+    global _meta_launcher_tar_cache
+    if _meta_launcher_tar_cache is None:
+        print(
+            "  -> Downloading full PrismLauncher meta-launcher archive for bulk backfill..."
+        )
+        data = http_get(META_LAUNCHER_TARBALL_URL)
+        _meta_launcher_tar_cache = tarfile.open(fileobj=io.BytesIO(data), mode="r:gz")  # noqa: SIM115 -- intentionally kept open, memoized across many extractfile() calls
+    return _meta_launcher_tar_cache
+
+
+def parse_prism_component_version(name, uid, version, data):
     version_json_hash = (
         "sha256-" + base64.b64encode(hashlib.sha256(data).digest()).decode()
     )
@@ -2314,15 +2388,27 @@ def process_prism_component(name, target, previous_sources):
     for lib in meta.get("libraries", []):
         if not prism_library_allowed_on_linux(lib):
             continue
-        artifact = lib["downloads"]["artifact"]
-        libraries.append(
-            {
-                "name": lib["name"],
-                "url": artifact["url"],
-                "size": artifact["size"],
-                "hash": prism_artifact_hash(artifact, name),
-            }
-        )
+        if "downloads" in lib:
+            artifact = lib["downloads"]["artifact"]
+            libraries.append(
+                {
+                    "name": lib["name"],
+                    "url": artifact["url"],
+                    "size": artifact["size"],
+                    "hash": prism_artifact_hash(artifact, name),
+                }
+            )
+        else:
+            # Fabric/Quilt-style: {name, url=<maven repo base>}, no embedded hash.
+            full_url, h = maven_repo_library_hash(lib, name)
+            libraries.append(
+                {
+                    "name": lib["name"],
+                    "url": full_url,
+                    "size": None,
+                    "hash": h,
+                }
+            )
 
     main_jar = None
     if "mainJar" in meta:
@@ -2346,10 +2432,6 @@ def process_prism_component(name, target, previous_sources):
         }
 
     return {
-        "type": "prism-component",
-        "target": target,
-        "uid": uid,
-        "version": version,
         "versionJsonHash": version_json_hash,
         "name": meta.get("name", uid),
         "mainClass": meta.get("mainClass"),
@@ -2358,6 +2440,73 @@ def process_prism_component(name, target, previous_sources):
         "mainJar": main_jar,
         "assetIndex": asset_index,
     }
+
+
+def process_prism_component(name, uid, previous_sources):
+    """target is a bare component uid, e.g. "net.minecraft" -- tracks every
+    published version, same incremental-diff shape as process_modrinth."""
+    old = previous_sources.get(name, {})
+    old_versions = old.get("versions", {})
+
+    print(f"Checking [prism-component] {name} ({uid})...")
+    index = json.loads(http_get(f"https://meta.prismlauncher.org/v1/{uid}/index.json"))
+    all_versions = [v["version"] for v in index["versions"]]
+    new_versions = [v for v in all_versions if v not in old_versions]
+
+    if not new_versions:
+        print(f"  -> {name}: no new versions ({len(old_versions)} already known).")
+        return (
+            old
+            if old_versions
+            else {"type": "prism-component", "uid": uid, "versions": {}}
+        )
+
+    print(
+        f"  -> {name}: {len(new_versions)} new version(s) of {len(all_versions)} total."
+    )
+
+    use_bulk = len(new_versions) > PRISM_BULK_THRESHOLD
+    if use_bulk:
+        tar = get_meta_launcher_tar()
+
+    result_versions = dict(old_versions)
+    succeeded = 0
+    for i, version in enumerate(new_versions, 1):
+        try:
+            if use_bulk:
+                member = f"{META_LAUNCHER_TAR_PREFIX}/{uid}/{version}.json"
+                data = tar.extractfile(member).read()
+            else:
+                data = http_get(
+                    f"https://meta.prismlauncher.org/v1/{uid}/{version}.json"
+                )
+            result_versions[version] = parse_prism_component_version(
+                name, uid, version, data
+            )
+            succeeded += 1
+        except (
+            urllib.error.URLError,
+            http.client.IncompleteRead,
+            ConnectionError,
+            TimeoutError,
+            KeyError,
+            ValueError,
+            json.JSONDecodeError,
+        ) as e:
+            print(
+                f"  -> Warning: {name} {version} failed ({e!r}), skipping for now.",
+                file=sys.stderr,
+            )
+
+        if i % 500 == 0:
+            print(
+                f"  -> {name}: {i}/{len(new_versions)} processed ({succeeded} succeeded so far)..."
+            )
+
+    print(
+        f"  -> {name}: {succeeded}/{len(new_versions)} new version(s) fetched, {len(result_versions)} total now tracked."
+    )
+    return {"type": "prism-component", "uid": uid, "versions": result_versions}
 
 
 # Same mirror list lib/fetchers/idgames.nix's fetchIdGames tries, in the

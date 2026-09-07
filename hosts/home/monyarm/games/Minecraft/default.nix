@@ -92,17 +92,25 @@ let
     )
   );
 
-  # prism-component records, keyed by "<uid>:<version>" for lookup by
-  # whatever a modpack's own dependencies specify.
-  componentsByUidVersion = listToAttrs (
-    map (e: nameValuePair "${e.uid}:${e.version}" e) (
+  # prism-component registry entries, keyed by uid (one entry per component,
+  # each holding every tracked version -- sources.toml registers just the
+  # bare uid, e.g. "net.minecraft", not a specific version).
+  componentsByUid = listToAttrs (
+    map (e: nameValuePair e.uid e) (
       attrValues (filterAttrs (_: e: e.type == "prism-component") (minecraftSources.libraries or { }))
     )
   );
   getComponent =
     uid: version:
-    componentsByUidVersion."${uid}:${version}"
-      or (throw "games.minecraft: no [prism-component] registered for ${uid}:${version} -- add it to sources.toml and run update-sources.py.");
+    let
+      entry =
+        componentsByUid.${uid}
+          or (throw "games.minecraft: no [prism-component] registered for uid ${uid} -- add it to sources.toml and run update-sources.py.");
+      versionRecord =
+        entry.versions.${version}
+          or (throw "games.minecraft: ${uid} has no tracked version ${version} -- run update-sources.py to pick up new releases.");
+    in
+    versionRecord // { inherit uid version; };
 
   # The single non-"minecraft" key in a modpack's `dependencies` object names
   # the loader, using Modrinth's *dependency-key* vocabulary -- which differs
@@ -242,9 +250,7 @@ let
       extraDatapacks =
         g.datapacks
         ++ (if isCustom then resolveCustomModpackMods "datapacks" autoDatapacks modpackDef else [ ]);
-    in
-    mkPrismInstance {
-      inherit name;
+
       minecraftComponent = getComponent "net.minecraft" minecraftVersion;
       loaderComponent =
         if loader == null then
@@ -253,14 +259,40 @@ let
           getComponent (loaderUidByKey.${loader}
             or (throw "games.minecraft.games.${name}: unknown loader ${loader}")
           ) loaderVersion;
-      inherit modpackTree;
-      mods = extraMods;
-      resourcePacks = extraResourcePacks;
-      datapacks = extraDatapacks;
-      inherit (g) configs files;
+    in
+    {
+      components = [ minecraftComponent ] ++ optional (loaderComponent != null) loaderComponent;
+      instance = mkPrismInstance {
+        inherit
+          name
+          minecraftComponent
+          loaderComponent
+          modpackTree
+          ;
+        mods = extraMods;
+        resourcePacks = extraResourcePacks;
+        datapacks = extraDatapacks;
+        inherit (g) configs files;
+      };
     };
 
-  resolvedInstances = mapAttrs resolveGame config.games.minecraft.games;
+  # Computed once; both resolvedInstances (per-instance deployment/Steam) and
+  # the shared libraries/ cache below (deduped across every instance) read
+  # from this same table instead of re-running resolveGame twice.
+  resolved = mapAttrs resolveGame config.games.minecraft.games;
+  resolvedInstances = mapAttrs (_: r: r.instance) resolved;
+
+  # Every library (+ mainJar) needed by any registered instance, deduped by
+  # its Maven path -- same jar at the same path is identical content
+  # regardless of which instance pulled it in, so last-one-wins collapsing
+  # via listToAttrs is exactly the union we want. Placed in PrismLauncher's
+  # shared libraries/ cache, not per-instance, matching how PrismLauncher
+  # itself organizes them.
+  sharedLibraries = listToAttrs (
+    map (l: nameValuePair l.path l.drv) (
+      concatMap mkPrismComponentLibraries (concatMap (r: r.components) (attrValues resolved))
+    )
+  );
 
 in
 {
@@ -375,26 +407,30 @@ in
       }
     ) resolvedInstances;
 
-    xdg.dataFile = foldlAttrs (
-      acc: name: instanceDrv:
-      acc
-      // {
-        "PrismLauncher/instances/${name}/instance.cfg".source = "${instanceDrv}/instance.cfg";
-        "PrismLauncher/instances/${name}/mmc-pack.json".source = "${instanceDrv}/mmc-pack.json";
-        "PrismLauncher/instances/${name}/patches".source = "${instanceDrv}/patches";
-        "PrismLauncher/instances/${name}/.minecraft/mods".source = "${instanceDrv}/.minecraft/mods";
-        "PrismLauncher/instances/${name}/.minecraft/resourcepacks".source =
-          "${instanceDrv}/.minecraft/resourcepacks";
-        "PrismLauncher/instances/${name}/.minecraft/datapacks".source =
-          "${instanceDrv}/.minecraft/datapacks";
-        "PrismLauncher/instances/${name}/.minecraft/config".source = "${instanceDrv}/.minecraft/config";
-        "PrismLauncher/instances/${name}/.minecraft/saves".source =
-          mkOutOfStoreSymlink "${dirs.hmConfig}/PrismLauncher/instances/${name}/.minecraft/saves";
-        "PrismLauncher/instances/${name}/.minecraft/logs".source =
-          mkOutOfStoreSymlink "${dirs.hmConfig}/PrismLauncher/instances/${name}/.minecraft/logs";
-        "PrismLauncher/instances/${name}/.minecraft/options.txt".source =
-          mkOutOfStoreSymlink "${dirs.hmConfig}/PrismLauncher/instances/${name}/.minecraft/options.txt";
-      }
-    ) { } resolvedInstances;
+    xdg.dataFile =
+      foldlAttrs (
+        acc: name: instanceDrv:
+        acc
+        // {
+          "PrismLauncher/instances/${name}/instance.cfg".source = "${instanceDrv}/instance.cfg";
+          "PrismLauncher/instances/${name}/mmc-pack.json".source = "${instanceDrv}/mmc-pack.json";
+          "PrismLauncher/instances/${name}/patches".source = "${instanceDrv}/patches";
+          "PrismLauncher/instances/${name}/.minecraft/mods".source = "${instanceDrv}/.minecraft/mods";
+          "PrismLauncher/instances/${name}/.minecraft/resourcepacks".source =
+            "${instanceDrv}/.minecraft/resourcepacks";
+          "PrismLauncher/instances/${name}/.minecraft/datapacks".source =
+            "${instanceDrv}/.minecraft/datapacks";
+          "PrismLauncher/instances/${name}/.minecraft/config".source = "${instanceDrv}/.minecraft/config";
+          "PrismLauncher/instances/${name}/.minecraft/saves".source =
+            mkOutOfStoreSymlink "${dirs.hmConfig}/PrismLauncher/instances/${name}/.minecraft/saves";
+          "PrismLauncher/instances/${name}/.minecraft/logs".source =
+            mkOutOfStoreSymlink "${dirs.hmConfig}/PrismLauncher/instances/${name}/.minecraft/logs";
+          "PrismLauncher/instances/${name}/.minecraft/options.txt".source =
+            mkOutOfStoreSymlink "${dirs.hmConfig}/PrismLauncher/instances/${name}/.minecraft/options.txt";
+        }
+      ) { } resolvedInstances
+      // mapAttrs' (
+        path: drv: nameValuePair "PrismLauncher/libraries/${path}" { source = drv; }
+      ) sharedLibraries;
   };
 }
