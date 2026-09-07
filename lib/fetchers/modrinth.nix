@@ -28,6 +28,13 @@
       inherit name;
       outputHash = sha256;
       outputHashMode = "flat";
+      outputHashAlgo =
+        if pkgs.lib.hasPrefix "sha512-" sha256 then
+          "sha512"
+        else if pkgs.lib.hasPrefix "sha1-" sha256 then
+          "sha1"
+        else
+          "sha256";
       nativeBuildInputs = [
         pkgs.curl
         pkgs.jq

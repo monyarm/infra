@@ -172,6 +172,7 @@ wad.e1m4b = "levels/doom/Ports/d-f/e1m4b.zip"
 
 [modrinth]
 minecraft.mods.sodium = "sodium"
+minecraft.mods.jei = "jei"
 
 [modrinth-modpack]
 minecraft.modpacks.society-sunlit-valley = "society-sunlit-valley"

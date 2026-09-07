@@ -4,7 +4,9 @@
   config,
   dirs,
   mkOutOfStoreSymlink,
-  mkPrismInstance,
+  mkModDir,
+  mkPrismComponentPatch,
+  mkMmcPackComponent,
   fetchModrinth,
   mkModrinthPackTree,
   pickModVersion,
@@ -15,6 +17,19 @@
 with lib;
 
 let
+  inherit
+    (import ./mkPrismInstance.nix {
+      inherit
+        lib
+        pkgs
+        mkModDir
+        mkPrismComponentPatch
+        mkMmcPackComponent
+        ;
+    })
+    mkPrismInstance
+    ;
+
   minecraftSources = sources.minecraft or { };
 
   # A project's Modrinth-backed versions table, wrapped in the shape
@@ -210,6 +225,8 @@ let
       loaderVersion =
         if g.loaderVersion != null then
           g.loaderVersion
+        else if isCustom then
+          modpackDef.loaderVersion
         else if loaderInfo != null then
           loaderInfo.loaderVersion
         else
@@ -247,6 +264,8 @@ let
 
 in
 {
+  imports = [ ./poc.nix ];
+
   options.games.minecraft = {
     mods = mkOption {
       type = modVersionsTableType;
