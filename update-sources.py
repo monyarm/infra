@@ -2193,6 +2193,51 @@ def process_modrinth(name, project, previous_sources):
     return {"type": "modrinth", "project": project, "versions": result_versions}
 
 
+def extract_resource_pack_order(zip_file):
+    """Reads the resourcePacks:[...] line from a bundled options.txt if
+    present -- options.txt is plain key:value lines, and the value is valid
+    JSON (confirmed against real packs: e.g. resourcePacks:["vanilla",
+    "file/Stay_True_1.20.zip",...], leftmost entry = highest priority/
+    loaded last). Checks the "Configured" mod's overrides/configureddefaults/
+    options.txt first -- that mod applies its bundled options.txt as
+    first-launch-only defaults without clobbering the player's own settings
+    on every launch, which is why many modern packs (including
+    society-sunlit-valley) ship their default resourcePacks list there
+    instead of a raw overrides/options.txt (confirmed: this pack has no
+    plain overrides/options.txt at all, only the configureddefaults one).
+    Falls back to a plain overrides/options.txt for packs that use that
+    older convention instead. Returns None if the pack bundles neither."""
+    for path in (
+        "overrides/configureddefaults/options.txt",
+        "client-overrides/configureddefaults/options.txt",
+        "overrides/options.txt",
+        "client-overrides/options.txt",
+    ):
+        try:
+            text = zip_file.read(path).decode("utf-8", errors="replace")
+        except KeyError:
+            continue
+        for line in text.splitlines():
+            if line.startswith("resourcePacks:"):
+                return json.loads(line[len("resourcePacks:") :])
+    return None
+
+
+def extract_overrides_file_list(zip_file):
+    """Every file bundled under overrides/ in the .mrpack, as paths
+    relative to overrides/ -- lets the Nix side address each one
+    individually (${modpackTree}/<path>) for file-level deployment
+    without ever reading the built tree's own directory listing (no IFD).
+    Matches mkModrinthPackTree's own merge, which only reads overrides/
+    (not client-overrides/ or server-overrides/, and neither does this)."""
+    prefix = "overrides/"
+    return sorted(
+        name[len(prefix) :]
+        for name in zip_file.namelist()
+        if name.startswith(prefix) and not name.endswith("/")
+    )
+
+
 def process_modrinth_modpack(name, project, previous_sources):
     old = previous_sources.get(name, {})
     old_versions = old.get("versions", {})
@@ -2233,6 +2278,8 @@ def process_modrinth_modpack(name, project, previous_sources):
             data = http_get(file_["url"])
             with zipfile.ZipFile(io.BytesIO(data)) as z:
                 index = json.loads(z.read("modrinth.index.json"))
+                resource_pack_order = extract_resource_pack_order(z)
+                overrides_files = extract_overrides_file_list(z)
 
             files = []
             for f in index["files"]:
@@ -2254,6 +2301,8 @@ def process_modrinth_modpack(name, project, previous_sources):
                 "archiveHash": archive_hash,
                 "archiveFilename": file_["filename"],
                 "dependencies": index.get("dependencies", {}),
+                "resourcePackOrder": resource_pack_order,
+                "overridesFiles": overrides_files,
                 "files": files,
             }
             succeeded += 1

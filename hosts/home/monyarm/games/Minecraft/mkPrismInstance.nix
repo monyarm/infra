@@ -7,23 +7,32 @@
   ...
 }:
 {
-  # Builds one instance's store-backed tree:
-  #   instance.cfg, mmc-pack.json, patches/*.json,
-  #   .minecraft/{mods,resourcepacks,datapacks,config}
-  # Runtime-mutated paths (saves/, logs/, options.txt) are NOT part of this
-  # output -- the caller wires those as mkOutOfStoreSymlink targets instead.
-  # Never references Steam -- that mapping lives in default.nix only.
+  # Builds one instance's pieces. Nothing here is deployed as a whole-folder
+  # symlink -- the caller (default.nix) decides per piece:
+  #   - instanceBase (instance.cfg/mmc-pack.json/patches): declarative-only,
+  #     symlinked whole.
+  #   - modFiles/resourcePackFiles/datapackFiles: file-level, one xdg.dataFile
+  #     symlink per jar, so a mod/launcher can freely add its own files into
+  #     the same real directory without fighting a symlinked folder.
+  #   - mutableSeed (everything else the modpack ships -- config/,
+  #     defaultconfigs/, kubejs/, configureddefaults/, ...): activation-time
+  #     COPIED, never symlinked, since mods rewrite their own config files
+  #     at runtime. The caller hash-tracks each seeded file so a later
+  #     `switch` only reseeds files the player/a mod hasn't touched since.
+  #   - filesSeed (the `files` arg, instance-root paths): same
+  #     activation-copy treatment, rooted one level up from mutableSeed.
   mkPrismInstance =
     {
       name,
       minecraftComponent, # resolved prism-component record for net.minecraft
       loaderComponent ? null, # resolved prism-component record for the loader, or null
-      modpackTree ? null, # a built modpack directory (mods/resourcepacks/datapacks/overrides), or null
-      mods ? [ ], # extra mod packages layered on top -- each package's own name/pname becomes its filename
+      modpackTree ? null, # built modpack directory (its whole .minecraft/-relative content), or null
+      modpackFiles ? [ ], # the modpack's own modrinth.index.json files[], each already fetched: [{ path; drv; }]
+      mods ? [ ], # extra mod packages -- each package's own name/pname becomes its filename
       resourcePacks ? [ ],
       datapacks ? [ ],
-      configs ? { }, # "file.toml" -> path, placed under .minecraft/config
-      files ? { }, # "relative/instance/path" -> path, placed at the instance root
+      configs ? { }, # "file.toml" -> path, placed under .minecraft/config, activation-copied
+      files ? { }, # "relative/instance/path" -> path, placed at the instance root, activation-copied
     }:
     let
       components = [ minecraftComponent ] ++ lib.optional (loaderComponent != null) loaderComponent;
@@ -48,76 +57,71 @@
         '') components}
       '';
 
-      # Places a plain path->source attrset at exact (possibly nested)
-      # relative paths -- for configs/files, where names come from user-given
-      # keys rather than a package's own name.
-      placeAt =
-        drvName: pathMap:
-        pkgs.runCommand drvName { } ''
-          mkdir -p "$out"
-          ${lib.concatStringsSep "\n" (
-            lib.mapAttrsToList (relPath: src: ''
-              mkdir -p "$out/$(dirname "${relPath}")"
-              cp -r "${src}" "$out/${relPath}"
-            '') pathMap
-          )}
-        '';
-
-      # Places a list of packages at their own name/pname -- for
-      # mods/resourcePacks/datapacks, where the filename IS the identity
-      # (e.g. sodium-fabric-0.5.8.jar).
-      namedPackagesLayer =
-        drvName: packages:
-        pkgs.linkFarm drvName (
-          map (p: {
-            name = p.name or p.pname;
-            path = p;
-          }) packages
-        );
-
-      subdirTree =
-        subdir: modpackSub: explicitList:
-        mkModDir {
-          name = "${name}-${subdir}";
-          layers = lib.optional (modpackTree != null) "${modpackTree}/${modpackSub}" ++ [
-            (namedPackagesLayer "${name}-${subdir}-explicit" explicitList)
-          ];
-        };
-
-      modsTree = subdirTree "mods" "mods" mods;
-      resourcePacksTree = subdirTree "resourcepacks" "resourcepacks" resourcePacks;
-      datapacksTree = subdirTree "datapacks" "datapacks" datapacks;
-
-      configTree = mkModDir {
-        name = "${name}-config";
-        layers = lib.optional (modpackTree != null) "${modpackTree}/config" ++ [
-          (placeAt "${name}-config-explicit" configs)
-        ];
-      };
-
-      filesTree = placeAt "${name}-files-explicit" files;
-
-      baseTree = pkgs.runCommand "${name}-base" { } ''
-        mkdir -p "$out"
+      instanceBase = pkgs.runCommand "${name}-base" { } ''
+        mkdir -p "$out" "$out/patches"
         cat > "$out/instance.cfg" <<'CFGEOF'
         ${instanceCfg}
         CFGEOF
         cat > "$out/mmc-pack.json" <<'PACKEOF'
         ${mmcPack}
         PACKEOF
-        mkdir -p "$out/patches" "$out/.minecraft/mods" "$out/.minecraft/resourcepacks" "$out/.minecraft/datapacks" "$out/.minecraft/config"
         cp -rT "${patchesDir}" "$out/patches"
-        cp -rT "${modsTree}" "$out/.minecraft/mods"
-        cp -rT "${resourcePacksTree}" "$out/.minecraft/resourcepacks"
-        cp -rT "${datapacksTree}" "$out/.minecraft/datapacks"
-        cp -rT "${configTree}" "$out/.minecraft/config"
+      '';
+
+      # File-level entries for the three binary-content dirs: the modpack's
+      # own files[] entries under that prefix (already individually fetched
+      # with their own hash) plus any explicitly-listed extra packages.
+      modpackFilesUnder = prefix: builtins.filter (f: lib.hasPrefix prefix f.path) modpackFiles;
+      namedFileList =
+        prefix: extra:
+        (map (f: {
+          name = builtins.baseNameOf f.path;
+          path = f.drv;
+        }) (modpackFilesUnder prefix))
+        ++ (map (p: {
+          name = p.name or p.pname;
+          path = p;
+        }) extra);
+
+      modFiles = namedFileList "mods/" mods;
+      resourcePackFiles = namedFileList "resourcepacks/" resourcePacks;
+      datapackFiles = namedFileList "datapacks/" datapacks;
+
+      # Everything the modpack ships besides mods/resourcepacks/datapacks
+      # (those are handled above as file-level entries instead), plus
+      # explicit configs. Rooted at .minecraft/.
+      mutableSeed = pkgs.runCommand "${name}-mutable-seed" { } ''
+        mkdir -p "$out"
+        ${lib.optionalString (modpackTree != null) ''
+          cp -rT "${modpackTree}" "$out"
+          rm -rf "$out/mods" "$out/resourcepacks" "$out/datapacks"
+        ''}
+        ${lib.concatStringsSep "\n" (
+          lib.mapAttrsToList (relPath: src: ''
+            mkdir -p "$out/config/$(dirname "${relPath}")"
+            cp -r "${src}" "$out/config/${relPath}"
+          '') configs
+        )}
+      '';
+
+      filesSeed = pkgs.runCommand "${name}-files-seed" { } ''
+        mkdir -p "$out"
+        ${lib.concatStringsSep "\n" (
+          lib.mapAttrsToList (relPath: src: ''
+            mkdir -p "$out/$(dirname "${relPath}")"
+            cp -r "${src}" "$out/${relPath}"
+          '') files
+        )}
       '';
     in
-    mkModDir {
-      inherit name;
-      layers = [
-        baseTree
-        filesTree
-      ];
+    {
+      inherit
+        instanceBase
+        modFiles
+        resourcePackFiles
+        datapackFiles
+        mutableSeed
+        filesSeed
+        ;
     };
 }
