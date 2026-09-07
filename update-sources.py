@@ -2476,6 +2476,8 @@ def to_nix_val(val, indent_level=0):
     indent = "  " * indent_level
     if isinstance(val, NixExpression):
         return val
+    if val is None:
+        return "null"
     if isinstance(val, bool):
         return "true" if val else "false"
     if isinstance(val, str):
