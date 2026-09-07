@@ -98,7 +98,9 @@ let
   # bare uid, e.g. "net.minecraft", not a specific version).
   componentsByUid = listToAttrs (
     map (e: nameValuePair e.uid e) (
-      attrValues (filterAttrs (_: e: e.type == "prism-component") (minecraftSources.libraries or { }))
+      attrValues (
+        filterAttrs (_: e: e.type == "prism-component" && e ? versions) (minecraftSources.libraries or { })
+      )
     )
   );
   getComponent =
