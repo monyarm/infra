@@ -117,28 +117,24 @@ in
     games.minecraft.modpacks = autoModpacks;
 
     # autoResourcePacks plus a hand-built randomobs pack, registered like
-    # any other resource pack (project -> versionKey -> record) rather
-    # than inlined at the games.<name>.resourcePacks call site, so it's
-    # addressable/reusable the same way a Modrinth-backed pack is.
+    # any other resource pack -- a bare package (no versions to track or
+    # select among, so no versionKey/gameVersions/loaders/date wrapper)
+    # rather than inlined at the games.<name>.resourcePacks call site, so
+    # it's addressable/reusable the same way a Modrinth-backed pack is.
     games.minecraft.resourcePacks = autoResourcePacks // {
-      randomobs.latest = {
-        package = mkRandomobs {
-          name = "randomobs";
-          packFormat = 15; # 1.20.1
-          texturePacks = [ ];
-          jarTextures = { };
-          skins = {
-            zombie = [
-              (fetchPlanetMinecraft {
-                url = "https://static.planetminecraft.com/files/resource_media/skin/alex-slim-arms-planetminecraft-com-19266440.png";
-                sha256 = "sha256-pPP50NA8bt1y/lcUhlIJ5xq4Bmz81GHF54Ul7h2Oqq8=";
-              })
-            ];
-          };
+      randomobs = mkRandomobs {
+        name = "randomobs";
+        packFormat = 15; # 1.20.1
+        texturePacks = [ ];
+        jarTextures = { };
+        skins = {
+          zombie = [
+            (fetchPlanetMinecraft {
+              url = "https://static.planetminecraft.com/files/resource_media/skin/alex-slim-arms-planetminecraft-com-19266440.png";
+              sha256 = "sha256-pPP50NA8bt1y/lcUhlIJ5xq4Bmz81GHF54Ul7h2Oqq8=";
+            })
+          ];
         };
-        gameVersions = [ ];
-        loaders = [ ];
-        date = "";
       };
     };
 
@@ -147,7 +143,7 @@ in
       # plus the randomobs pack registered above.
       society-sunlit-valley = {
         modpack = "society-sunlit-valley";
-        resourcePacks = [ config.games.minecraft.resourcePacks.randomobs.latest.package ];
+        resourcePacks = with config.games.minecraft.resourcePacks; [ randomobs ];
       };
     };
   };

@@ -1,27 +1,33 @@
 { lib, ... }:
 with lib;
 let
-  # Shared submodule type for mods/resourcePacks/datapacks -- one
-  # project -> versionKey -> resolved-package-plus-metadata table.
+  # Shared type for mods/resourcePacks/datapacks -- each project entry is
+  # EITHER a bare package (a one-off hand-built pack with no versions to
+  # track or select among, e.g. mkRandomobs's output) OR a
+  # versionKey -> resolved-package-plus-metadata table (auto-populated
+  # from sources.nix, tracking every published version for pickModVersion
+  # to select among in a custom modpack).
   modVersionsTableType = types.attrsOf (
-    types.attrsOf (
-      types.submodule {
-        options = {
-          package = mkOption { type = types.package; };
-          gameVersions = mkOption {
-            type = types.listOf types.str;
-            default = [ ];
+    types.either types.package (
+      types.attrsOf (
+        types.submodule {
+          options = {
+            package = mkOption { type = types.package; };
+            gameVersions = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
+            loaders = mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
+            date = mkOption {
+              type = types.str;
+              default = "";
+            };
           };
-          loaders = mkOption {
-            type = types.listOf types.str;
-            default = [ ];
-          };
-          date = mkOption {
-            type = types.str;
-            default = "";
-          };
-        };
-      }
+        }
+      )
     )
   );
 in
