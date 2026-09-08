@@ -128,12 +128,7 @@ in
         texturePacks = [ ];
         jarTextures = { };
         skins = {
-          zombie = [
-            (fetchPlanetMinecraft {
-              url = "https://static.planetminecraft.com/files/resource_media/skin/alex-slim-arms-planetminecraft-com-19266440.png";
-              sha256 = "sha256-pPP50NA8bt1y/lcUhlIJ5xq4Bmz81GHF54Ul7h2Oqq8=";
-            })
-          ];
+          zombie = [];
         };
       };
     };
@@ -143,14 +138,6 @@ in
       # plus the randomobs pack registered above.
       society-sunlit-valley = {
         modpack = "society-sunlit-valley";
-        resourcePacks = with config.games.minecraft.resourcePacks; [ randomobs ];
-      };
-
-      # Fabulously Optimized bundles EMF/ETF plus CIT/CTM/connected-textures
-      # mods already -- exercises randomobs against a modpack that actually
-      # renders it, instead of a bare vanilla instance.
-      fabulously-optimized-test = {
-        modpack = "fabulously-optimized";
         resourcePacks = with config.games.minecraft.resourcePacks; [ randomobs ];
       };
     };

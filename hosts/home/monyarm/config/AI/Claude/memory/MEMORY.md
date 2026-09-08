@@ -30,4 +30,6 @@
 - [game-library-scan.nix is the scanner tool](reference_game_library_scan_tool.md) — owned-vs-catalog cross-referencing already lives here (`--scummvm` mode precedent); extend it, don't write a new script.
 - [GAME_IDEAS.md has mod-helper sketches](reference_game_ideas_mod_helpers.md) — `mkModDir`/`wrapGame` proposed shape for symlinking mod derivations into named game-dir paths.
 - [Haiku for basic edit subagents](feedback_haiku_for_basic_edit_subagents.md) — fully-inlined mechanical multi-file edit subagents (SteamGridDB-apply pattern) should run on Haiku, not Sonnet.
-- [Minecraft plan versioning](project_minecraft_plan_versioning.md) — mods/modpacks need nested all-versions registries for "latest compatible" resolution; don't re-trim to flat/latest-only.
+- [Minecraft plan versioning](project_minecraft_plan_versioning.md) — implemented; nested all-versions registries for "latest" resolution; Fabric-loader fetching now done too (Maven .sha1 sidecars).
+- [linkFiles vs linkFarm](feedback_linkfiles_vs_linkfarm.md) — linkFiles returns an xdg.dataFile-shaped attrset, not a buildable dir; use pkgs.linkFarm in plain builders.
+- [listToAttrs keeps first](feedback_listtoattrs_first_wins.md) — dedup-by-key via listToAttrs silently keeps the FIRST match, not last; filter stale entries before building lookup tables.
