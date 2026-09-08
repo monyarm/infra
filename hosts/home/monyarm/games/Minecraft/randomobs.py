@@ -14,6 +14,7 @@ ETF capabilities but not built here yet -- ENTITY_PATHS below only ever
 points at each entity's own base body texture.
 """
 import argparse
+import fnmatch
 import os
 import shutil
 import sys
@@ -108,16 +109,25 @@ def expand_skin_variants(path):
     return [path]
 
 
-def extract_jar_texture(jar_path, internal_path, work_dir, key):
-    """Pulls one file out of an arbitrary jar/zip at a caller-given
-    internal path -- for mod jars that don't follow the vanilla
-    assets/minecraft/textures/entity/<name>/<name>.png convention at all,
-    letting the caller point at whatever texture inside should be treated
-    as a variant for a given entity."""
-    out_path = os.path.join(work_dir, f"jartex-{key}.png")
-    with zipfile.ZipFile(jar_path) as z, z.open(internal_path) as src, open(out_path, "wb") as dst:
-        shutil.copyfileobj(src, dst)
-    return out_path
+def extract_jar_textures(jar_path, pattern, work_dir, key):
+    """Pulls every file out of an arbitrary jar/zip whose internal path
+    matches a caller-given glob pattern (an exact path with no wildcard
+    just matches itself, extracting one file) -- for mod jars that don't
+    follow the vanilla assets/minecraft/textures/entity/<name>/<name>.png
+    convention at all, letting the caller point at whatever texture(s)
+    inside should be treated as variants for a given entity, without
+    having to enumerate every match by hand."""
+    with zipfile.ZipFile(jar_path) as z:
+        matches = sorted(fnmatch.filter(z.namelist(), pattern))
+        if not matches:
+            sys.exit(f"mkRandomobs: no entries in {jar_path} matched '{pattern}'")
+        out_paths = []
+        for i, internal_path in enumerate(matches):
+            out_path = os.path.join(work_dir, f"jartex-{key}-{i}.png")
+            with z.open(internal_path) as src, open(out_path, "wb") as dst:
+                shutil.copyfileobj(src, dst)
+            out_paths.append(out_path)
+        return out_paths
 
 
 def main():
@@ -129,7 +139,7 @@ def main():
         "--jar-texture",
         action="append",
         default=[],
-        help="ENTITY=JARPATH::INTERNALPATH, repeatable",
+        help="ENTITY=JARPATH::PATTERN (glob, matched against the jar's internal paths), repeatable",
     )
     p.add_argument("--out", required=True)
     args = p.parse_args()
@@ -143,9 +153,9 @@ def main():
         jar_textures_by_entity = {}
         for i, s in enumerate(args.jar_texture):
             entity, _, rest = s.partition("=")
-            jar_path, _, internal_path = rest.partition("::")
-            jar_textures_by_entity.setdefault(entity, []).append(
-                extract_jar_texture(jar_path, internal_path, work_dir, str(i))
+            jar_path, _, pattern = rest.partition("::")
+            jar_textures_by_entity.setdefault(entity, []).extend(
+                extract_jar_textures(jar_path, pattern, work_dir, str(i))
             )
 
         found = set()
