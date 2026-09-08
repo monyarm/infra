@@ -114,6 +114,13 @@ rec {
 
   fetchPlanetMinecraft =
     {
+      # Direct static-CDN asset URL, e.g.
+      # https://static.planetminecraft.com/files/resource_media/skin/<slug>-planetminecraft-com-<id>.png
+      # -- NOT the skin page URL. The page's own "download" button sits
+      # behind an ad-monetized interstitial that intermittently serves the
+      # page's own HTML again instead of the file (confirmed directly,
+      # even with a real click and referrer); the static CDN URL is
+      # Cloudflare-walled the same way but, once cleared, deterministic.
       url,
       name ? "planetminecraft-skin",
       ...
@@ -128,14 +135,10 @@ rec {
         resolve = ''
           export TARGET_URL="${url}"
           export OUT_PATH="$TMPDIR"
+          export CONVERT_BIN="${pkgs.imagemagick}/bin/convert"
           export POST_BYPASS_SCRIPT="${planetMinecraftScript}"
           python3 ${cloudflareBypassScript}
-          # PlanetMinecraft's download response isn't byte-stable across
-          # requests (confirmed: same skin, different bytes each fetch,
-          # varying PNG metadata) -- strip it so the FOD hash is
-          # deterministic regardless of what the CDN injects per-request.
-          ${pkgs.imagemagick}/bin/convert png:"$TMPDIR/downloaded" -strip png:"$TMPDIR/downloaded-stripped"
-          DOWNLOADED_FILE="$TMPDIR/downloaded-stripped"
+          DOWNLOADED_FILE="$TMPDIR/downloaded"
         '';
       }
     );

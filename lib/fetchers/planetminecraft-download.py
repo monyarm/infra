@@ -2,81 +2,72 @@
 PlanetMinecraft download script — run as POST_BYPASS_SCRIPT inside
 cloudflare-bypass.py.
 
-PlanetMinecraft's skin pages show a Google "Funding Choices" consent
-dialog (`.fc-consent-root`) that intercepts pointer events and blocks any
-click on the real page underneath it until dismissed. The real download
-link (confirmed against a live page's DOM, since the site is
-Cloudflare-walled even for automated HTML fetches) is
-`a.skin-pair-download`, `target="_blank"`, whose destination just serves
-the raw PNG bytes.
+Targets PlanetMinecraft's static asset CDN directly (e.g.
+https://static.planetminecraft.com/files/resource_media/skin/<slug>-planetminecraft-com-<id>.png),
+not the skin page's own "download" button -- that endpoint sits behind an
+ad-monetized interstitial flow that intermittently serves the skin page's
+own HTML again instead of the file (observed directly, not assumed), even
+with a real click and a real referrer. The static CDN URL is stable and
+Cloudflare-walled the same way the main site is (confirmed: same
+`cf-mitigated: challenge` response to a plain curl), but once the
+challenge is cleared it serves the actual file deterministically -- no
+interstitial, no ads.
 
-Two dead ends before this approach, both real findings worth keeping:
-  - Clicking the link and waiting for Playwright's "download" event never
-    fires -- the response has no Content-Disposition: attachment, so the
-    browser just renders it inline instead of downloading it.
-  - `page.request.get(url)` (Playwright's APIRequestContext) gets a 403
-    even reusing the same context's cookies -- it doesn't go through the
-    actual browser engine, so it doesn't carry whatever fingerprint let
-    the real navigation past Cloudflare's challenge in the first place.
+cloudflare-bypass.py's own initial navigation already cleared the
+challenge for this exact URL (TARGET_URL == the asset URL, set by the
+caller); this script just re-requests it via a real page navigation to
+capture the raw bytes (an APIRequestContext-level GET was tried first and
+got a 403 even reusing the same context's cookies -- it doesn't carry
+whatever fingerprint let the actual browser navigation through).
 
-What works: open a genuinely new page in the SAME browser context (shares
-cookies/session with the already-challenge-cleared original page) and
-navigate it directly with `goto()`, which returns the main navigation's
-Response object -- `.body()` gives the raw bytes regardless of content
-type, since Playwright captures it at the network level, not through the
-rendered DOM.
+The CDN serves WebP instead of PNG when Chromium's default Accept header
+allows it (confirmed: content-type image/webp, real 64x64-with-alpha skin
+content, not a placeholder) -- converted to PNG since Minecraft skins must
+be PNG. Also stripped of metadata for the same reason as before: response
+bytes aren't stable across requests.
 
-page/ctx are available from the exec() scope of cloudflare-bypass.py.
+page/OUT are available from the exec() scope of cloudflare-bypass.py.
 """
-# ruff: noqa: F821 - page/ctx come from the enclosing exec() scope
+# ruff: noqa: F821 - page comes from the enclosing exec() scope
 
 import os
+import subprocess
 import sys
-import time
-from urllib.parse import urljoin
 
 OUT = os.environ["OUT_PATH"]
+TARGET_URL = os.environ["TARGET_URL"]
 
-consent_button = page.query_selector("button.fc-cta-consent")
-if consent_button:
-    print("[*] planetminecraft-download: dismissing consent dialog", file=sys.stderr)
-    consent_button.click()
-    time.sleep(1)
-else:
-    print("[*] planetminecraft-download: no consent dialog found", file=sys.stderr)
-
-download_link = page.query_selector("a.skin-pair-download")
-if not download_link:
-    print("[!] planetminecraft-download: a.skin-pair-download not found", file=sys.stderr)
-    sys.exit(1)
-
-href = download_link.get_attribute("href")
-download_url = urljoin(page.url, href)
-print(f"[*] planetminecraft-download: navigating to {download_url}", file=sys.stderr)
-
-popup = ctx.new_page()
-response = popup.goto(download_url, timeout=30000)
+response = page.goto(TARGET_URL, timeout=30000)
 body = response.body()
 content_type = response.headers.get("content-type", "")
 print(
-    f"[*] planetminecraft-download: response status={response.status}, "
+    f"[*] planetminecraft-download: status={response.status}, "
     f"content-type={content_type!r}, size={len(body)}",
     file=sys.stderr,
 )
-if response.status != 200 or len(body) == 0:
-    sys.exit(f"planetminecraft-download: bad response ({response.status}, {len(body)} bytes)")
-if not content_type.startswith("image/"):
-    # Seen in practice: repeated requests to the same download URL in a
-    # short window get served an HTML interstitial instead of the file
-    # (rate-limiting or a per-navigation challenge, not investigated
-    # further) -- fail loudly rather than silently writing HTML as if it
-    # were the skin.
+if response.status != 200 or not content_type.startswith("image/"):
     sys.exit(
-        f"planetminecraft-download: expected an image response, got content-type "
-        f"{content_type!r} (likely rate-limited or challenged again -- wait and retry)"
+        f"planetminecraft-download: expected an image response, got "
+        f"{response.status} {content_type!r}"
     )
 
-out_path = os.path.join(OUT, "downloaded")
-with open(out_path, "wb") as f:
+raw_path = os.path.join(OUT, "raw")
+with open(raw_path, "wb") as f:
     f.write(body)
-print(f"[*] planetminecraft-download: saved to {out_path} ({len(body)} bytes)", file=sys.stderr)
+
+out_path = os.path.join(OUT, "downloaded")
+# -strip: response bytes aren't stable across requests (varying metadata) --
+# normalize so the FOD hash is deterministic. png: prefix on both ends
+# since the input has no file extension for ImageMagick to sniff, and the
+# CDN may have served WebP instead of PNG regardless of the source URL's
+# own extension.
+subprocess.run(
+    [
+        os.environ["CONVERT_BIN"],
+        f"{content_type.split('/')[1]}:{raw_path}",
+        "-strip",
+        f"png:{out_path}",
+    ],
+    check=True,
+)
+print(f"[*] planetminecraft-download: saved to {out_path}", file=sys.stderr)
