@@ -8,6 +8,7 @@
   mkMmcPackComponent,
   mkPrismComponentLibraries,
   fetchModrinth,
+  fetchPlanetMinecraft,
   mkModrinthPackTree,
   pickModVersion,
   sources,
@@ -132,9 +133,27 @@ in
     };
 
     games.minecraft.games = {
-      # Modrinth-backed, used as-is (modpackVersion defaults to "latest").
+      # Modrinth-backed, used as-is (modpackVersion defaults to "latest"),
+      # plus a real randomobs zombie pack: a PlanetMinecraft skin fetched
+      # directly (no registry -- fetchPlanetMinecraft is a one-off fetcher
+      # with a manually-discovered hash, since PlanetMinecraft skins do
+      # not update the way a mod release does).
       society-sunlit-valley = {
         modpack = "society-sunlit-valley";
+        resourcePacks = [
+          (mkRandomobs {
+            name = "randomobs";
+            packFormat = 15; # 1.20.1
+            skins = {
+              zombie = [
+                (fetchPlanetMinecraft {
+                  url = "https://static.planetminecraft.com/files/resource_media/skin/alex-slim-arms-planetminecraft-com-19266440.png";
+                  sha256 = "sha256-pPP50NA8bt1y/lcUhlIJ5xq4Bmz81GHF54Ul7h2Oqq8=";
+                })
+              ];
+            };
+          })
+        ];
       };
       poc-custom = {
         modpack = "poc-custom";
