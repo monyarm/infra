@@ -113,50 +113,41 @@ in
     # hand-written entries elsewhere still merge in via normal attrsOf
     # semantics.
     games.minecraft.mods = autoMods;
-    games.minecraft.resourcePacks = autoResourcePacks;
     games.minecraft.datapacks = autoDatapacks;
+    games.minecraft.modpacks = autoModpacks;
 
-    # autoModpacks plus one hand-defined custom modpack proving the
-    # text-based/"latest" resolution path against an explicitly-registered
-    # mod (merged here, not as a separate `games.minecraft.modpacks.poc-custom
-    # = ...;` path, since that would collide with this whole-value assignment
-    # in the same attrset literal).
-    games.minecraft.modpacks = autoModpacks // {
-      poc-custom = {
-        minecraftVersion = "1.20.1";
-        loader = "forge";
-        loaderVersion = "47.4.0";
-        mods = {
-          jei = "latest";
+    # autoResourcePacks plus a hand-built randomobs pack, registered like
+    # any other resource pack (project -> versionKey -> record) rather
+    # than inlined at the games.<name>.resourcePacks call site, so it's
+    # addressable/reusable the same way a Modrinth-backed pack is.
+    games.minecraft.resourcePacks = autoResourcePacks // {
+      randomobs.latest = {
+        package = mkRandomobs {
+          name = "randomobs";
+          packFormat = 15; # 1.20.1
+          texturePacks = [ ];
+          jarTextures = { };
+          skins = {
+            zombie = [
+              (fetchPlanetMinecraft {
+                url = "https://static.planetminecraft.com/files/resource_media/skin/alex-slim-arms-planetminecraft-com-19266440.png";
+                sha256 = "sha256-pPP50NA8bt1y/lcUhlIJ5xq4Bmz81GHF54Ul7h2Oqq8=";
+              })
+            ];
+          };
         };
+        gameVersions = [ ];
+        loaders = [ ];
+        date = "";
       };
     };
 
     games.minecraft.games = {
       # Modrinth-backed, used as-is (modpackVersion defaults to "latest"),
-      # plus a real randomobs zombie pack: a PlanetMinecraft skin fetched
-      # directly (no registry -- fetchPlanetMinecraft is a one-off fetcher
-      # with a manually-discovered hash, since PlanetMinecraft skins do
-      # not update the way a mod release does).
+      # plus the randomobs pack registered above.
       society-sunlit-valley = {
         modpack = "society-sunlit-valley";
-        resourcePacks = [
-          (mkRandomobs {
-            name = "randomobs";
-            packFormat = 15; # 1.20.1
-            skins = {
-              zombie = [
-                (fetchPlanetMinecraft {
-                  url = "https://static.planetminecraft.com/files/resource_media/skin/alex-slim-arms-planetminecraft-com-19266440.png";
-                  sha256 = "sha256-pPP50NA8bt1y/lcUhlIJ5xq4Bmz81GHF54Ul7h2Oqq8=";
-                })
-              ];
-            };
-          })
-        ];
-      };
-      poc-custom = {
-        modpack = "poc-custom";
+        resourcePacks = [ config.games.minecraft.resourcePacks.randomobs.latest.package ];
       };
     };
   };

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Builds an ETF/OptiFine-compatible randomobs resource pack at Nix build
 time. No network access, no vanilla client jar -- every input
-(texturePacks, skins) is already a fetched path on disk, and the entity
-path table below is static, already-verified data (see the plan this was
-built from for exactly how each entry was confirmed), not derived live.
+(texturePacks, jarTextures, skins) is already a fetched path on disk, and
+the entity path table below is static, already-verified data (see the
+plan this was built from for exactly how each entry was confirmed), not
+derived live.
 
 Per ETF's own docs (Traben-0/Entity_Texture_Features, RANDOM_GUIDE.md):
 numbering starts at 2 -- index 1/default is always implicit and this
@@ -16,6 +17,8 @@ import argparse
 import os
 import shutil
 import sys
+import tempfile
+import zipfile
 
 from PIL import Image
 
@@ -95,59 +98,97 @@ def discover_entities(pack_dir):
     return found
 
 
+def expand_skin_variants(path):
+    """A skins entry can be a single skin file, or a directory containing
+    multiple skin PNGs (all treated as separate variants)."""
+    if os.path.isdir(path):
+        return sorted(
+            os.path.join(path, f) for f in sorted(os.listdir(path)) if f.lower().endswith(".png")
+        )
+    return [path]
+
+
+def extract_jar_texture(jar_path, internal_path, work_dir, key):
+    """Pulls one file out of an arbitrary jar/zip at a caller-given
+    internal path -- for mod jars that don't follow the vanilla
+    assets/minecraft/textures/entity/<name>/<name>.png convention at all,
+    letting the caller point at whatever texture inside should be treated
+    as a variant for a given entity."""
+    out_path = os.path.join(work_dir, f"jartex-{key}.png")
+    with zipfile.ZipFile(jar_path) as z, z.open(internal_path) as src, open(out_path, "wb") as dst:
+        shutil.copyfileobj(src, dst)
+    return out_path
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--pack-format", type=int, required=True)
     p.add_argument("--texture-pack", action="append", default=[])
     p.add_argument("--skin", action="append", default=[], help="ENTITY=PATH, repeatable")
+    p.add_argument(
+        "--jar-texture",
+        action="append",
+        default=[],
+        help="ENTITY=JARPATH::INTERNALPATH, repeatable",
+    )
     p.add_argument("--out", required=True)
     args = p.parse_args()
 
     skins_by_entity = {}
     for s in args.skin:
         entity, _, path = s.partition("=")
-        skins_by_entity.setdefault(entity, []).append(path)
+        skins_by_entity.setdefault(entity, []).extend(expand_skin_variants(path))
 
-    found = set()
-    for pack in args.texture_pack:
-        found |= discover_entities(pack)
-    scope = sorted(set(skins_by_entity) | found)
-
-    os.makedirs(args.out, exist_ok=True)
-    with open(os.path.join(args.out, "pack.mcmeta"), "w") as f:
-        f.write(
-            '{ "pack": { "description": "randomobs", "pack_format": %d } }\n'
-            % args.pack_format
-        )
-
-    for entity in scope:
-        variants = []
-        for pack in args.texture_pack:
-            variants.extend(extract_candidates(pack, entity))
-        variants.extend(skins_by_entity.get(entity, []))
-        if not variants:
-            sys.exit(
-                f"mkRandomobs: entity '{entity}' has no texturePack match and no skins assigned"
+    with tempfile.TemporaryDirectory() as work_dir:
+        jar_textures_by_entity = {}
+        for i, s in enumerate(args.jar_texture):
+            entity, _, rest = s.partition("=")
+            jar_path, _, internal_path = rest.partition("::")
+            jar_textures_by_entity.setdefault(entity, []).append(
+                extract_jar_texture(jar_path, internal_path, work_dir, str(i))
             )
 
-        out_dir = os.path.join(
-            args.out, "assets", "minecraft", "optifine", "random", "entity", entity
-        )
-        os.makedirs(out_dir, exist_ok=True)
+        found = set()
+        for pack in args.texture_pack:
+            found |= discover_entities(pack)
+        scope = sorted(set(skins_by_entity) | set(jar_textures_by_entity) | found)
 
-        ref_size = None
-        for i, src in enumerate(variants):
-            with Image.open(src) as im:
-                if ref_size is None:
-                    ref_size = im.size
-                elif im.size != ref_size:
-                    sys.exit(
-                        f"mkRandomobs: entity '{entity}' variant {src} is {im.size}, "
-                        f"expected {ref_size} -- rejecting mixed dimensions"
-                    )
-            # ETF: numbering always starts at 2 -- index 1/default is
-            # implicit and must never be produced by this pack.
-            shutil.copyfile(src, os.path.join(out_dir, f"{entity}{i + 2}.png"))
+        os.makedirs(args.out, exist_ok=True)
+        with open(os.path.join(args.out, "pack.mcmeta"), "w") as f:
+            f.write(
+                '{ "pack": { "description": "randomobs", "pack_format": %d } }\n'
+                % args.pack_format
+            )
+
+        for entity in scope:
+            variants = []
+            for pack in args.texture_pack:
+                variants.extend(extract_candidates(pack, entity))
+            variants.extend(jar_textures_by_entity.get(entity, []))
+            variants.extend(skins_by_entity.get(entity, []))
+            if not variants:
+                sys.exit(
+                    f"mkRandomobs: entity '{entity}' has no texturePack/jarTexture match and no skins assigned"
+                )
+
+            out_dir = os.path.join(
+                args.out, "assets", "minecraft", "optifine", "random", "entity", entity
+            )
+            os.makedirs(out_dir, exist_ok=True)
+
+            ref_size = None
+            for i, src in enumerate(variants):
+                with Image.open(src) as im:
+                    if ref_size is None:
+                        ref_size = im.size
+                    elif im.size != ref_size:
+                        sys.exit(
+                            f"mkRandomobs: entity '{entity}' variant {src} is {im.size}, "
+                            f"expected {ref_size} -- rejecting mixed dimensions"
+                        )
+                # ETF: numbering always starts at 2 -- index 1/default is
+                # implicit and must never be produced by this pack.
+                shutil.copyfile(src, os.path.join(out_dir, f"{entity}{i + 2}.png"))
 
 
 if __name__ == "__main__":
