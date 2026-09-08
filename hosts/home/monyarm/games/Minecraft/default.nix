@@ -145,6 +145,14 @@ in
         modpack = "society-sunlit-valley";
         resourcePacks = with config.games.minecraft.resourcePacks; [ randomobs ];
       };
+
+      # Fabulously Optimized bundles EMF/ETF plus CIT/CTM/connected-textures
+      # mods already -- exercises randomobs against a modpack that actually
+      # renders it, instead of a bare vanilla instance.
+      fabulously-optimized-test = {
+        modpack = "fabulously-optimized";
+        resourcePacks = with config.games.minecraft.resourcePacks; [ randomobs ];
+      };
     };
   };
 }

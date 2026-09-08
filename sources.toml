@@ -176,6 +176,7 @@ minecraft.mods.jei = "jei"
 
 [modrinth-modpack]
 minecraft.modpacks.society-sunlit-valley = "society-sunlit-valley"
+minecraft.modpacks.fabulously-optimized = "fabulously-optimized"
 
 [prism-component]
 minecraft.libraries.minecraft = "net.minecraft"
