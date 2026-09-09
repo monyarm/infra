@@ -8,7 +8,6 @@
   mkMmcPackComponent,
   mkPrismComponentLibraries,
   fetchModrinth,
-  fetchPlanetMinecraft,
   mkModrinthPackTree,
   pickModVersion,
   sources,
@@ -30,8 +29,7 @@ let
     mkPrismInstance
     ;
 
-  inherit
-    (import ./mkRandomobs.nix { inherit lib pkgs; })
+  inherit (import ./mkRandomobs.nix { inherit lib pkgs; })
     mkRandomobs
     ;
 
@@ -108,38 +106,41 @@ in
 {
   imports = [ ./options.nix ];
 
-  config = deployConfig // {
-    # Auto-population: a plain config contribution, not `default`, so
-    # hand-written entries elsewhere still merge in via normal attrsOf
-    # semantics.
-    games.minecraft.mods = autoMods;
-    games.minecraft.datapacks = autoDatapacks;
-    games.minecraft.modpacks = autoModpacks;
+  config = lib.mkIf config.games.minecraft.enable (
+    deployConfig
+    // {
+      # Auto-population: a plain config contribution, not `default`, so
+      # hand-written entries elsewhere still merge in via normal attrsOf
+      # semantics.
+      games.minecraft.mods = autoMods;
+      games.minecraft.datapacks = autoDatapacks;
+      games.minecraft.modpacks = autoModpacks;
 
-    # autoResourcePacks plus a hand-built randomobs pack, registered like
-    # any other resource pack -- a bare package (no versions to track or
-    # select among, so no versionKey/gameVersions/loaders/date wrapper)
-    # rather than inlined at the games.<name>.resourcePacks call site, so
-    # it's addressable/reusable the same way a Modrinth-backed pack is.
-    games.minecraft.resourcePacks = autoResourcePacks // {
-      randomobs = mkRandomobs {
-        name = "randomobs";
-        packFormat = 15; # 1.20.1
-        texturePacks = [ ];
-        jarTextures = { };
-        skins = {
-          zombie = [];
+      # autoResourcePacks plus a hand-built randomobs pack, registered like
+      # any other resource pack -- a bare package (no versions to track or
+      # select among, so no versionKey/gameVersions/loaders/date wrapper)
+      # rather than inlined at the games.<name>.resourcePacks call site, so
+      # it's addressable/reusable the same way a Modrinth-backed pack is.
+      games.minecraft.resourcePacks = autoResourcePacks // {
+        randomobs = mkRandomobs {
+          name = "randomobs";
+          packFormat = 15; # 1.20.1
+          texturePacks = [ ];
+          jarTextures = { };
+          skins = {
+            zombie = [ ];
+          };
         };
       };
-    };
 
-    games.minecraft.games = {
-      # Modrinth-backed, used as-is (modpackVersion defaults to "latest"),
-      # plus the randomobs pack registered above.
-      society-sunlit-valley = {
-        modpack = "society-sunlit-valley";
-        resourcePacks = with config.games.minecraft.resourcePacks; [ randomobs ];
+      games.minecraft.games = {
+        # Modrinth-backed, used as-is (modpackVersion defaults to "latest"),
+        # plus the randomobs pack registered above.
+        society-sunlit-valley = {
+          modpack = "society-sunlit-valley";
+          resourcePacks = with config.games.minecraft.resourcePacks; [ randomobs ];
+        };
       };
-    };
-  };
+    }
+  );
 }

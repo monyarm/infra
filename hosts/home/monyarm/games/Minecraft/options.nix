@@ -33,6 +33,18 @@ let
 in
 {
   options.games.minecraft = {
+    enable = mkOption {
+      type = types.bool;
+      # LIGHT=1 (see hosts/modules/lib.nix's shouldFullUpdate for the same
+      # impure-env-var convention) skips this for a quick deploy.
+      default = (builtins.getEnv "LIGHT") == "";
+      description = ''
+        Whether to fetch, resolve, and deploy Minecraft mods/modpacks/
+        instances at all. Disable to skip the whole (expensive,
+        Modrinth-fetch-and-resolve-heavy) Minecraft build graph entirely,
+        e.g. while setting up additional remote builders.
+      '';
+    };
     mods = mkOption {
       type = modVersionsTableType;
       default = { };
