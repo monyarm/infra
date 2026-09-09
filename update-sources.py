@@ -143,6 +143,28 @@ def parse_toml(content):
     return data
 
 
+def load_previous_private(sops_nix_path):
+    """Like load_previous_nix, but for a sops-encrypted nix file -- decrypts
+    to a temp file first since `nix eval -f` can't read sops ciphertext."""
+    if not os.path.exists(sops_nix_path):
+        return {}
+    res = subprocess.run(
+        ["sops", "--decrypt", sops_nix_path],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".nix", delete=False
+    ) as tmp:
+        tmp.write(res.stdout)
+        tmp_path = tmp.name
+    try:
+        return load_previous_nix(tmp_path)
+    finally:
+        os.unlink(tmp_path)
+
+
 def load_previous_nix(nix_path):
     if not os.path.exists(nix_path):
         return {}
@@ -2833,19 +2855,35 @@ def main():
     os.chdir(script_dir)
 
     nix_path = "sources.nix"
+    sops_nix_path = "sources.sops.nix"
     # sources.toml plus any sources.<category>.toml split-out (sources.dat.toml,
     # sources.wad.toml, ...) -- same section names in different files merge
     # together (e.g. every file's own [git] table combines into one "git"
     # section before processing), sorted so merge order is deterministic.
+    # sources*.sops.toml (sops-encrypted, e.g. sources.renpy.sops.toml) are
+    # included by this same glob -- decrypted below before parsing, and their
+    # entries are tracked as private so they land in sources.sops.nix instead
+    # of the public sources.nix.
     toml_paths = sorted(glob.glob("sources*.toml"))
     if not toml_paths:
         print("Error: no sources*.toml files found.", file=sys.stderr)
         sys.exit(1)
 
     sources_data = {}
+    private_names = set()
     for toml_path in toml_paths:
-        with open(toml_path, "r") as f:
-            toml_content = f.read()
+        is_private_file = toml_path.endswith(".sops.toml")
+        if is_private_file:
+            res = subprocess.run(
+                ["sops", "--decrypt", toml_path],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            toml_content = res.stdout
+        else:
+            with open(toml_path, "r") as f:
+                toml_content = f.read()
         try:
             file_data = parse_toml(toml_content)
         except ValueError as e:
@@ -2862,9 +2900,15 @@ def main():
                     )
                     sys.exit(1)
                 section_dict[key] = val
+                if is_private_file:
+                    private_names.add(key)
 
     previous_sources = load_previous_nix(nix_path)
-    results = dict(previous_sources) if append_mode else {}
+    previous_private = load_previous_private(sops_nix_path)
+    private_names |= set(previous_private)
+    results = (
+        dict(previous_sources) | previous_private if append_mode else {}
+    )
     has_errors = False
 
     # Insert idgames into the designated priority fetching queue
@@ -2893,7 +2937,7 @@ def main():
         for name, target in sources_data[section].items():
             if (
                 append_mode
-                and name in previous_sources
+                and (name in previous_sources or name in previous_private)
                 and section not in ("cargo", "npm", "modrinth", "modrinth-modpack")
             ):
                 continue
@@ -2966,8 +3010,28 @@ def main():
         )
         sys.exit(1)
 
-    write_sources_nix(results, nix_path)
+    public_results = {k: v for k, v in results.items() if k not in private_names}
+    private_results = {k: v for k, v in results.items() if k in private_names}
+
+    write_sources_nix(public_results, nix_path)
     print(f"Successfully updated {nix_path}")
+
+    if private_results:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".nix", delete=False
+        ) as tmp:
+            tmp_path = tmp.name
+        try:
+            write_sources_nix(private_results, tmp_path)
+            with open(sops_nix_path, "wb") as out:
+                subprocess.run(
+                    ["sops", "--encrypt", "--filename-override", sops_nix_path, tmp_path],
+                    stdout=out,
+                    check=True,
+                )
+            print(f"Successfully updated {sops_nix_path}")
+        finally:
+            os.unlink(tmp_path)
 
 
 if __name__ == "__main__":

@@ -114,8 +114,34 @@
 
   outputs =
     inputs:
+    let
+      # Recursively overlays the decrypted contents of sources.sops.nix (any
+      # private, sops-encrypted sources.*.sops.toml entries -- see
+      # update-sources.py) onto the public sources.nix, when that file
+      # exists. Same shape as lib/imports.nix's importSopsNix, duplicated
+      # here (rather than threaded through customLib) because this runs
+      # before perSystem's pkgs/customLib exist -- both call sites below
+      # share this one function instead of re-deriving the merge twice.
+      mergeSopsSources =
+        sopsPkg: publicSources:
+        let
+          privPath = ./sources.sops.nix;
+        in
+        if builtins.pathExists privPath then
+          inputs.nixpkgs.lib.recursiveUpdate publicSources (
+            builtins.exec [
+              "${sopsPkg}/bin/sops"
+              "--decrypt"
+              (toString privPath)
+            ]
+          )
+        else
+          publicSources;
+    in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      _module.args.sources = import ./sources.nix;
+      _module.args.sources =
+        mergeSopsSources (import inputs.nixpkgs { system = builtins.currentSystem; }).sops
+          (import ./sources.nix);
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -137,7 +163,7 @@
             inherit (inputs.self.lib) overlays;
             config.allowUnfree = true;
           };
-          sources = import ./sources.nix;
+          sources = mergeSopsSources pkgs.sops (import ./sources.nix);
           legacyPackages = import ./packages {
             inherit pkgs;
             inherit (pkgs) lib;

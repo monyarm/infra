@@ -2,7 +2,7 @@ keys:
   - &monyarm age1vdst8x84mcar4e09v9j4q6a3k8ztfuj326ymtkvyse9e5wfxgslssvpluq
   - &gaming-laptop age1dgjyyel6vjd8m2ee284m5huy5zm6rqdmgun9uz39n0ftxh3pfu5sue2nad
 creation_rules:
-  - path_regex: .*\.sops.nix$
+  - path_regex: .*\.sops\.(nix|toml)$
     key_groups:
       - age:
           - *monyarm
