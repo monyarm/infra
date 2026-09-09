@@ -2649,6 +2649,310 @@ def process_prism_component(name, uid, previous_sources):
     return {"type": "prism-component", "uid": uid, "versions": result_versions}
 
 
+# `expandPool` itself lives in lib/sources-helper.nix, imported by
+# sources.nix's own generated preamble (see write_sources_nix) -- not baked
+# in here as a string constant, so it's a real, reviewable, syntax-checked
+# .nix file rather than logic embedded in a Python string.
+SOURCES_HELPER_RELPATH = "./lib/sources-helper.nix"
+
+# Every Maven repo actually referenced by a tracked prism-component
+# library, keyed by the short code lib/sources-helper.nix's
+# mavenRepoBases uses to re-derive a URL at eval time.
+MAVEN_REPO_BASES = {
+    "forge": "https://maven.minecraftforge.net/",
+    "forgeFiles": "https://files.minecraftforge.net/maven/",
+    "mojang": "https://libraries.minecraft.net/",
+    "fabric": "https://maven.fabricmc.net/",
+    "modmuss50": "https://maven.modmuss50.me/",
+    "quilt": "https://maven.quiltmc.org/repository/release/",
+    "prism": "https://files.prismlauncher.org/maven/",
+    "central": "https://repo1.maven.org/maven2/",
+}
+
+
+def simplify_maven_record(coord, record):
+    """If record["url"] is exactly `<a known Maven repo's base> +
+    maven_coord_to_path(coord)`, replace it with the repo's short code --
+    lib/sources-helper.nix's mkMavenUrl re-derives the same URL from the
+    coordinate at eval time, so most library records need no URL stored
+    at all (measured: 99.6% of tracked coordinates). Left untouched
+    (explicit url kept) for coordinates whose real URL doesn't follow this
+    convention -- observed for a handful of Forge coordinates whose
+    filename carries a `-shadowed`/`-service` suffix that isn't part of
+    the Maven directory path.
+    """
+    url = record.get("url")
+    if url is None:
+        return record
+    path = maven_coord_to_path(coord)
+    for code, base in MAVEN_REPO_BASES.items():
+        if url == base + path:
+            return {**{k: v for k, v in record.items() if k != "url"}, "repo": code}
+    return record
+
+
+# net.minecraft's mainJar isn't a candidate for pooling (each version's
+# client jar is genuinely unique, one occurrence each) but a majority of
+# the pre-piston-CDN (pre-1.6-ish) versions still follow one fixed
+# archive.org path, derivable from the version already embedded in the
+# coordinate's own name -- no hash/base64 involved, just a string
+# transform, unlike the piston-data/launcher.mojang.com CDN convention
+# (skipped: reconstructing that one needs converting the stored base64 SRI
+# hash to hex, and pure Nix has no base64 decoder).
+ARCHIVE_ORG_MINECRAFT_JAR_BASE = (
+    "https://archive.org/download/assets.minecraft.net-2013-11-13/assets.minecraft.net/"
+)
+
+
+def simplify_archive_org_main_jar(main_jar):
+    """Drops mainJar's `url` when it's exactly
+    ARCHIVE_ORG_MINECRAFT_JAR_BASE + (version with "." -> "_") +
+    "/minecraft.jar" -- lib/sources-helper.nix's resolveMainJar re-derives
+    it from the coordinate's version at eval time. Left untouched for the
+    ~15% of pre-1.6 versions with irregular archive.org paths (a
+    `.zip/bin/` subpath, a missing `b`-prefix, a duplicated suffix, ...)."""
+    parts = main_jar["name"].split(":")
+    version = parts[2] if len(parts) > 2 else None
+    if version is not None:
+        expected = f"{ARCHIVE_ORG_MINECRAFT_JAR_BASE}{version.replace('.', '_')}/minecraft.jar"
+        if main_jar.get("url") == expected:
+            return {k: v for k, v in main_jar.items() if k != "url"}
+    return main_jar
+
+
+def render_pooled_versions(entry, list_field, key_field, derive_maven_url=False):
+    """Rewrites a versions-tracking entry (a [prism-component]'s `libraries`,
+    a [modrinth-modpack]'s `files`, ...) into a NixExpression: `let pool =
+    {...}; in {...}`, hoisting each record that's unique under `key_field`
+    once and replacing every version's `list_field` list with a short
+    `expandPool "<key_field>" pool [ "<key>" ... ]` call. Purely a storage
+    encoding -- `nix eval --json` on the result reproduces the exact same
+    plain records every version had before, so no consumer of sources.nix
+    needs to change. The pool is rebuilt from scratch on every call rather
+    than persisted, since `load_previous_nix` already hands back
+    fully-expanded plain dicts (it round-trips through `nix eval --json`,
+    which evaluates away the `let`/`expandPool` calls).
+
+    A key's other fields aren't guaranteed identical across every
+    occurrence (e.g. two Maven library records with the same coordinate and
+    hash but a `size: null` vs a real size, or two modpack files with the
+    same hash but a `.jar` vs `.jar.disabled` path) -- pooling would
+    silently pick one occurrence's values for every reference, so any key
+    whose fields disagree across occurrences is left inline everywhere
+    instead of pooled.
+    """
+    pool = {}
+    conflicting = set()
+    for version in entry["versions"].values():
+        for item in version[list_field]:
+            key = item[key_field]
+            record = {k: v for k, v in item.items() if k != key_field}
+            if derive_maven_url:
+                record = simplify_maven_record(key, record)
+            existing = pool.get(key)
+            if existing is None:
+                pool[key] = record
+            elif existing != record:
+                conflicting.add(key)
+
+    pooled = {k: v for k, v in pool.items() if k not in conflicting}
+
+    def render_item(item):
+        if item[key_field] in pooled:
+            return to_nix_val(item[key_field])
+        # Not poolable (e.g. this coordinate's size/hash disagrees across
+        # occurrences) doesn't mean this occurrence's own url isn't still
+        # mechanically derivable -- simplify it independently of the
+        # pooling decision.
+        literal = simplify_maven_record(item[key_field], item) if derive_maven_url else item
+        return to_nix_val(literal)
+
+    versions_out = {}
+    for version_key, version in entry["versions"].items():
+        items = version[list_field]
+        if not items or not pooled:
+            items_expr = to_nix_val(items)
+        else:
+            parts = " ".join(render_item(item) for item in items)
+            expand_call = f'expandPool "{key_field}" pool [ {parts} ]'
+            if derive_maven_url:
+                expand_call = f"map resolveMavenLibrary ({expand_call})"
+            items_expr = NixExpression(expand_call)
+        version_out = {**version, list_field: NixExpression(items_expr)}
+        if is_path_list(version.get("overridesFiles")):
+            version_out["overridesFiles"] = render_path_list(version["overridesFiles"])
+        if derive_maven_url and version.get("mainJar") is not None:
+            version_out["mainJar"] = NixExpression(
+                f"resolveMainJar {to_nix_val(simplify_archive_org_main_jar(version['mainJar']))}"
+            )
+        versions_out[version_key] = version_out
+
+    body = to_nix_val({**entry, "versions": versions_out}, indent_level=1)
+
+    if not pooled:
+        return NixExpression(body)
+    pool_text = to_nix_val(pooled, indent_level=1)
+    return NixExpression(f"let pool = {pool_text}; in {body}")
+
+
+# Below this many entries, a tree's own attrset syntax overhead isn't
+# reliably smaller than just writing the flat string list.
+PATH_TREE_MIN_ENTRIES = 5
+
+
+def is_path_list(v):
+    return isinstance(v, list) and v and all(isinstance(x, str) for x in v)
+
+
+def _common_prefix(a, b):
+    i = 0
+    while i < len(a) and i < len(b) and a[i] == b[i]:
+        i += 1
+    return a[:i]
+
+
+def _common_suffix(a, b):
+    i = 0
+    while i < len(a) and i < len(b) and a[-1 - i] == b[-1 - i]:
+        i += 1
+    return a[len(a) - i :] if i else ""
+
+
+def cluster_path_list(names, min_score=5, min_cluster=3):
+    """Greedily groups sibling filenames sharing a template -- e.g. Doom
+    engine sprite frames "krisA0.png".."krisZ0.png" -- into (prefix, suffix,
+    middles) clusters: sort, then extend a running cluster's common prefix
+    and common suffix (recomputed against each new name) while their
+    combined length stays >= min_score, closing and starting a new cluster
+    otherwise. min_score defaults to 5 (not e.g. 3) specifically so that two
+    otherwise-unrelated groups sharing nothing but a common file extension
+    (".png" is already 4 chars) don't glom into one meaningless cluster --
+    verified against real data: with min_score=3, "hopjA1.png".."hopjB8.png"
+    and "krisA0.png".."krisZ0.png" (no shared prefix, only the extension in
+    common) merge into a single bucket; with 5 they correctly split into
+    their own two clusters. Never wrong by construction regardless of the
+    threshold -- a cluster only ever stores each member's own literal
+    middle, so reconstruction (prefix + middle + suffix) is exact no matter
+    how tightly names group. Clusters below min_cluster are dropped back
+    into `leftover` (too few members for the {prefix,suffix,middles}
+    encoding to pay for itself). Returns (clusters, leftover); leftover
+    preserves nothing about order (sorted).
+    """
+    names = sorted(names)
+    if not names:
+        return [], []
+    raw_clusters = []
+    cur = [names[0]]
+    cur_prefix = cur_suffix = names[0]
+    for name in names[1:]:
+        new_prefix = _common_prefix(cur_prefix, name)
+        new_suffix = _common_suffix(cur_suffix, name)
+        if len(new_prefix) + len(new_suffix) > len(name):
+            new_suffix = new_suffix[len(new_prefix) + len(new_suffix) - len(name) :]
+        if len(new_prefix) + len(new_suffix) >= min_score:
+            cur.append(name)
+            cur_prefix, cur_suffix = new_prefix, new_suffix
+        else:
+            raw_clusters.append((cur_prefix, cur_suffix, cur))
+            cur = [name]
+            cur_prefix = cur_suffix = name
+    raw_clusters.append((cur_prefix, cur_suffix, cur))
+
+    clusters = []
+    leftover = []
+    for prefix, suffix, members in raw_clusters:
+        # prefix/suffix are each a valid prefix/suffix of every member by
+        # construction (monotonic narrowing), but the incremental walk
+        # above only trims suffix against the *incoming* name at each
+        # step -- a member added early, before a later name forced suffix
+        # to shrink further, can end up shorter than prefix+suffix
+        # combined (e.g. "Mega Man (Original).ips" alongside "Mega Man 2
+        # (Original).ips".."Mega Man 6 (Original).ips": prefix "Mega Man "
+        # + suffix " (Original).ips" together exceed the no-digit member's
+        # own length, and slicing it would double-count the shared space).
+        # Excluding such members here is necessary, not just defensive.
+        fits = len(prefix) + len(suffix)
+        fitting = [m for m in members if fits <= len(m)]
+        leftover.extend(m for m in members if fits > len(m))
+        if len(fitting) >= min_cluster:
+            middles = [m[len(prefix) : len(m) - len(suffix)] for m in fitting]
+            assert all(prefix + mid + suffix == m for mid, m in zip(middles, fitting))
+            clusters.append((prefix, suffix, middles))
+        else:
+            leftover.extend(fitting)
+    return clusters, leftover
+
+
+def render_leaf_list(names):
+    """Wraps a pure-leaf directory's basename list through
+    cluster_path_list; if nothing clustered, returns the plain list
+    unchanged. Otherwise a NixExpression calling `expandClusters` on a list
+    mixing {p,s,m} cluster specs with plain leftover strings."""
+    clusters, leftover = cluster_path_list(names)
+    if not clusters:
+        return names
+    items = [to_nix_val({"p": p, "s": s, "m": middles}) for p, s, middles in clusters]
+    items += [to_nix_val(n) for n in leftover]
+    return NixExpression(f"expandClusters [ {' '.join(items)} ]")
+
+
+def compact_path_tree(node):
+    """Post-order pass over a path-segment tree (dict[str, None | dict]):
+    any directory whose own children are all plain files (no
+    subdirectories) is compacted from `{ "a" = null; "b" = null; }` down to
+    a bare list `[ "a" "b" ]`, or a single string `"a"` when it has exactly
+    one file -- flattenPaths reconstructs all three shapes identically, so
+    this is purely a smaller encoding of the same tree.
+    """
+    result = {}
+    for name, child in node.items():
+        if child is None:
+            result[name] = None
+            continue
+        compacted_child = compact_path_tree(child)
+        if all(v is None for v in compacted_child.values()):
+            leaves = sorted(compacted_child)
+            result[name] = leaves[0] if len(leaves) == 1 else render_leaf_list(leaves)
+        else:
+            result[name] = compacted_child
+    return result
+
+
+def render_path_list(paths):
+    """Encodes a flat list of "/"-separated path strings (a git-tree
+    sparse-checkout manifest, a pk3/ipk3's internal member list, a
+    modpack's bundled-overrides manifest, ...) as a NixExpression: a nested
+    attrset keyed by path segment, reconstructed into the original flat
+    list by `flattenPaths` (lib/sources-helper.nix) at eval time. Deeply-
+    nested trees share a directory's name once instead of once per file in
+    it -- e.g. a pk3 with thousands of members under a few dozen
+    directories. Falls back to the plain flat list if there are too few
+    paths to be worth it, or if any path segment is used as both a leaf
+    and a branch elsewhere in the same list (impossible in a real
+    filesystem tree, so never expected -- but if it ever happened,
+    silently picking one meaning would be wrong).
+    """
+    if len(paths) < PATH_TREE_MIN_ENTRIES:
+        return NixExpression(to_nix_val(paths))
+
+    tree = {}
+    for path in paths:
+        segments = path.split("/")
+        node = tree
+        for segment in segments[:-1]:
+            child = node.get(segment, {})
+            if child is None:
+                return NixExpression(to_nix_val(paths))  # segment used as a leaf elsewhere
+            node = node.setdefault(segment, child)
+        leaf = segments[-1]
+        if isinstance(node.get(leaf), dict) and node[leaf]:
+            return NixExpression(to_nix_val(paths))  # segment used as a branch elsewhere
+        node[leaf] = None
+
+    tree_text = to_nix_val(compact_path_tree(tree), indent_level=0)
+    return NixExpression(f"flattenPaths {tree_text}")
+
+
 # Same mirror list lib/fetchers/idgames.nix's fetchIdGames tries, in the
 # same order; kept here too since get_idgames_mirror_version/
 # download_idgames_archive need real HTTP access during `update-sources.py`
@@ -2843,10 +3147,30 @@ def write_sources_nix(results, nix_path):
             curr = curr.setdefault(part, {})
         curr[parts[-1]] = info
 
-    with open(nix_path, "w") as f:
-        f.write(
-            f"# This file is autogenerated by update-sources.py. Do not edit!\n{to_nix_val(nested_results, 0)}\n"
+    body = to_nix_val(nested_results, 0)
+    # Substring check on the rendered text rather than walking the
+    # pre-render structure: expandPool/flattenPaths calls can be nested
+    # arbitrarily deep (a "files" field inside an otherwise-plain dict, an
+    # expandPool call inside a per-version record, ...), so a shallow check
+    # on results.values() would miss most of them.
+    used_helpers = [
+        h
+        for h in (
+            "expandPool",
+            "flattenPaths",
+            "resolveMavenLibrary",
+            "resolveMainJar",
+            "expandClusters",
         )
+        if h in body
+    ]
+    preamble = (
+        f"let\n  inherit (import {SOURCES_HELPER_RELPATH}) {' '.join(used_helpers)};\nin\n"
+        if used_helpers
+        else ""
+    )
+    with open(nix_path, "w") as f:
+        f.write(f"# This file is autogenerated by update-sources.py. Do not edit!\n{preamble}{body}\n")
 
 
 def main():
@@ -3009,6 +3333,28 @@ def main():
             file=sys.stderr,
         )
         sys.exit(1)
+
+    for key, entry in results.items():
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("type") == "prism-component":
+            results[key] = render_pooled_versions(entry, "libraries", "name", derive_maven_url=True)
+        elif entry.get("type") == "modrinth-modpack":
+            results[key] = render_pooled_versions(entry, "files", "hash")
+
+    for key, entry in results.items():
+        if not isinstance(entry, dict):
+            continue
+        updated = {}
+        if is_path_list(entry.get("files")):
+            updated["files"] = render_path_list(entry["files"])
+        if isinstance(entry.get("archiveContent"), dict):
+            updated["archiveContent"] = {
+                basename: render_path_list(members) if is_path_list(members) else members
+                for basename, members in entry["archiveContent"].items()
+            }
+        if updated:
+            results[key] = {**entry, **updated}
 
     public_results = {k: v for k, v in results.items() if k not in private_names}
     private_results = {k: v for k, v in results.items() if k in private_names}
