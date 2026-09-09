@@ -1,0 +1,5 @@
+[git]
+fonts.mse.magic = "https://github.com/MagicSetEditorPacks/Full-Magic-Pack"
+fonts.mse.other = "https://github.com/MagicSetEditorPacks/Full-Non-Magic-Pack"
+fonts.keyrune = "https://github.com/andrewgioia/Keyrune"
+fonts.mana = "https://github.com/andrewgioia/Mana"

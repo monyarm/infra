@@ -1,0 +1,32 @@
+[git]
+tools.wadptr = "https://github.com/fragglet/wadptr"
+tools.scummvmTools = "https://github.com/scummvm/scummvm-tools"
+tools.rpatool = "https://github.com/Shizmob/rpatool"
+# shawngmc's main hasn't merged a commit since 2025-05-15; dekr0nos's fork
+# (open PR #107 against upstream) has an unmerged Disney Afternoon Collection
+# fix for the game's newer v1.0.0.43 executable that our GOG/Steam release
+# needs -- switch here until upstream picks it up.
+tools.gameExtractionToolbox = "https://github.com/dekr0nos/game-extraction-toolbox"
+tools.mmxlcRomExtractor = "https://github.com/s3phir0th115/MMXLC1-Rom-Extractor"
+tools.neogeoRomExtractor = "https://github.com/DrRetroMod/neogeo-rom-extractor"
+tools.reePakTool = "https://github.com/Ekey/REE.PAK.Tool"
+tools.untangle = "https://github.com/fleger/untangle"
+# despacer has no tags upstream -- pinned by the exact commit minijson's
+# dub.sdl submodule reference points at.
+tools.minijson-despacer = "https://github.com/aminya/despacer#6e501899eeb7686b1b04de40f02f9792a4e3e8b9"
+# No tags upstream (pre-alpha) -- HEAD pin, same as claude.plugins.caveman.
+tools.maxima = "https://github.com/ArmchairDevelopers/Maxima"
+
+[cargo]
+tools.maxima = "true"
+tools.mcp-compressor = "true"
+
+[dub]
+tools.minijson = "true"
+
+[git-tag]
+tools.mcp-compressor = "https://github.com/atlassian-labs/mcp-compressor"
+tools.minijson = "https://github.com/aminya/minijson"
+
+[npmjs]
+tools.codegraph = "@colbymchenry/codegraph-linux-x64@1.6.0"

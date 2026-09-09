@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import base64
 import fnmatch
+import glob
 import hashlib
 import http.client
 import io
@@ -2819,18 +2820,36 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    toml_path, nix_path = "sources.toml", "sources.nix"
-    if not os.path.exists(toml_path):
-        print(f"Error: {toml_path} not found.", file=sys.stderr)
+    nix_path = "sources.nix"
+    # sources.toml plus any sources.<category>.toml split-out (sources.dat.toml,
+    # sources.wad.toml, ...) -- same section names in different files merge
+    # together (e.g. every file's own [git] table combines into one "git"
+    # section before processing), sorted so merge order is deterministic.
+    toml_paths = sorted(glob.glob("sources*.toml"))
+    if not toml_paths:
+        print("Error: no sources*.toml files found.", file=sys.stderr)
         sys.exit(1)
 
-    with open(toml_path, "r") as f:
-        toml_content = f.read()
-    try:
-        sources_data = parse_toml(toml_content)
-    except ValueError as e:
-        print(f"Error parsing {toml_path}: {e}", file=sys.stderr)
-        sys.exit(1)
+    sources_data = {}
+    for toml_path in toml_paths:
+        with open(toml_path, "r") as f:
+            toml_content = f.read()
+        try:
+            file_data = parse_toml(toml_content)
+        except ValueError as e:
+            print(f"Error parsing {toml_path}: {e}", file=sys.stderr)
+            sys.exit(1)
+        for section, entries in file_data.items():
+            section_dict = sources_data.setdefault(section, {})
+            for key, val in entries.items():
+                if key in section_dict:
+                    print(
+                        f"Error: [{section}] {key} defined in more than one "
+                        f"sources*.toml file (last found in {toml_path})",
+                        file=sys.stderr,
+                    )
+                    sys.exit(1)
+                section_dict[key] = val
 
     previous_sources = load_previous_nix(nix_path)
     results = dict(previous_sources) if append_mode else {}

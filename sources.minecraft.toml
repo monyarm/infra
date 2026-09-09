@@ -1,0 +1,13 @@
+[modrinth]
+minecraft.mods.sodium = "sodium"
+minecraft.mods.jei = "jei"
+
+[modrinth-modpack]
+minecraft.modpacks.society-sunlit-valley = "society-sunlit-valley"
+minecraft.modpacks.fabulously-optimized = "fabulously-optimized"
+
+[prism-component]
+minecraft.libraries.minecraft = "net.minecraft"
+minecraft.libraries.forge = "net.minecraftforge"
+minecraft.libraries.fabric = "net.fabricmc.fabric-loader"
+minecraft.libraries.quilt = "org.quiltmc.quilt-loader"

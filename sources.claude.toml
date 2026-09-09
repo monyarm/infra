@@ -1,0 +1,23 @@
+[github-release]
+# caveman Engine binaries, replaces `caveman setup --install` -- packages/caveman-cli.nix.
+# Resolves to the newest release tagged bin-*, no version hardcoded here.
+claude.engine.caveman-proxy-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-proxy_linux_amd64"
+claude.engine.caveman-engine-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-engine_linux_amd64"
+claude.engine.caveman-mcp-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-mcp_linux_amd64"
+claude.engine.caveman-shrink-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-shrink_linux_amd64"
+claude.engine.caveman-browse-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/caveman-browse_linux_amd64"
+claude.engine.cavemem-linux-amd64 = "https://github.com/JuliusBrussee/caveman#bin-/cavemem_linux_amd64"
+
+[git]
+# claude-plugins-official has no tags, always-updated marketplace repo -- HEAD pin
+claude.plugins.claude-plugins-official = "https://github.com/anthropics/claude-plugins-official"
+# tags here are junk (latest semver-sorted tag predates the Caveman 2 rewrite) -- HEAD pin
+claude.plugins.caveman = "https://github.com/JuliusBrussee/caveman"
+
+[git-tag]
+# claude.plugins.caveman doubles as packages/caveman-cli.nix's src (packages/cli/ subdir)
+claude.plugins.ponytail = "https://github.com/DietrichGebert/ponytail"
+claude.plugins.superpowers = "https://github.com/obra/superpowers"
+
+[pnpm]
+claude.plugins.caveman = "@caveman-ai/cli;removeRootDependency=@caveman-ai/cli"

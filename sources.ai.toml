@@ -1,0 +1,4 @@
+[git-tag]
+# plugin lives in plugins/claude/context7 subdir, mcp server is remote (mcp.context7.com)
+ai.mcp.context7 = "https://github.com/upstash/context7"
+ai.skills.mattpocock-skills = "https://github.com/mattpocock/skills"
