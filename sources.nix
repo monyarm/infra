@@ -1298659,6 +1298659,468 @@
       url = "https://github.com/zenwarr/mpv-config.git";
     };
   };
+  noIntro = {
+    arduboy-inc-arduboy = {
+      hash = "sha256-QL8RnmkrPlvbgiffk2wa3gkAf/BKc0xJPpjsHqHtaOg=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Arduboy%20Inc%20-%20Arduboy.dat";
+    };
+    atari-2600 = {
+      hash = "sha256-blvhogWTFMXC+ArE6uOCcMLpH579EyrC6/rR+LzDDs8=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%202600.dat";
+    };
+    atari-5200 = {
+      hash = "sha256-auu9gG4D2jkd2ZTB2wJtFeoFxfRSWGZaoWFwuRFfb5U=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%205200.dat";
+    };
+    atari-7800 = {
+      hash = "sha256-4ooIJbxwJmREsVT1PZHomA4+VoFroz/yOoOk+8OL1Sc=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%207800.dat";
+    };
+    atari-8-bit-family = {
+      hash = "sha256-8Vpl96mbqDOL6Nrcbwg3fUevRVqq3KRKHN8nuhFp0c8=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%208-bit%20Family.dat";
+    };
+    atari-jaguar = {
+      hash = "sha256-j0wybpoy82ZmK+/jBnq5Uc+we42ng9rjCq2c4Vm16iU=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%20Jaguar.dat";
+    };
+    atari-lynx = {
+      hash = "sha256-4fYenCsydTSkXIjnxCjvpCTzhulYvdD5zOEzRfh1CXo=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%20Lynx.dat";
+    };
+    atari-st = {
+      hash = "sha256-xhthOzwI+00Cn6yX0psepGmt69gkLeEVcwdfPhbk27s=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%20ST.dat";
+    };
+    bandai-wonderswan = {
+      hash = "sha256-V5DZfgnpSvr7F/HwPQTyAXRJe5AcrFK0l0a9PZaZglw=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Bandai%20-%20WonderSwan.dat";
+    };
+    bandai-wonderswan-color = {
+      hash = "sha256-8Yp0jIe0EVtS9EOevBcHpxvoCMPama8vqvgO1UeAsIQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Bandai%20-%20WonderSwan%20Color.dat";
+    };
+    benesse-pocket-challenge-v2 = {
+      hash = "sha256-4LOyg3m+6Mj+sFTH1JGS73iJ2rQ9LctmnEIYQ6Xhj/Y=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Benesse%20-%20Pocket%20Challenge%20V2.dat";
+    };
+    casio-loopy = {
+      hash = "sha256-jkqiS68JlT9DN3pm7LMbGGjWua2MKu6if27vfBjEShI=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Casio%20-%20Loopy.dat";
+    };
+    casio-pv-1000 = {
+      hash = "sha256-TRpydPyoho0WF293YLc1q/hr5GotYkYexPABy0/DOgA=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Casio%20-%20PV-1000.dat";
+    };
+    coleco-colecovision = {
+      hash = "sha256-R5LFjaivqhzXwZxfvVTNDqLv3oD5rqF0GAZJkrvljiQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Coleco%20-%20ColecoVision.dat";
+    };
+    commodore-64 = {
+      hash = "sha256-Xzm6KrwQm18Aa+GkLz2GHl8tpmUI1G8ZMhv62EQnxTw=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%2064.dat";
+    };
+    commodore-amiga = {
+      hash = "sha256-+Lie0Cvxwj6lV6PBrBcutgN6KewmzfLLukZe/rzY3X0=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%20Amiga.dat";
+    };
+    commodore-plus-4 = {
+      hash = "sha256-ltDOfgNFP3et9mAWR1+FXmGrORXI/brAQmS5h4Hhq1Y=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%20Plus-4.dat";
+    };
+    commodore-vic-20 = {
+      hash = "sha256-H5x2nWEsARY6jIyiPhWcMB3kaB08llEzIdB7yyBrmlI=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%20VIC-20.dat";
+    };
+    emerson-arcadia-2001 = {
+      hash = "sha256-f4YC1nvBbzjoeBDmH5E3bxtrxfG43Vhi2MjRvPWred8=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Emerson%20-%20Arcadia%202001.dat";
+    };
+    entex-adventure-vision = {
+      hash = "sha256-pYfncINU9HE6snGl5yi29OyXqtKurWdBW4F+gYCBYoQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Entex%20-%20Adventure%20Vision.dat";
+    };
+    epoch-super-cassette-vision = {
+      hash = "sha256-CDIZsDRiMzO+a8WZBDNoOH5xPm0QiZtz9c4xMZmsDmU=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Epoch%20-%20Super%20Cassette%20Vision.dat";
+    };
+    fairchild-channel-f = {
+      hash = "sha256-5k1WlNaKtqTMtqF2dS36Xt3lMZXHIS3oB3lybjMkehk=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Fairchild%20-%20Channel%20F.dat";
+    };
+    funtech-super-acan = {
+      hash = "sha256-SYdGtsy0Ll+uwM2pc2pEbImPPdF+3C5l5cmzvz6oEpg=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Funtech%20-%20Super%20Acan.dat";
+    };
+    gamepark-gp32 = {
+      hash = "sha256-b+eh8AnGk712GIG4R7IPQgqH9s4p13BAVldo9aQA2SU=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/GamePark%20-%20GP32.dat";
+    };
+    gce-vectrex = {
+      hash = "sha256-zjYrk++EO1g8lsGlGHI5/sTW97+1aLnd4ddUcEaX0bw=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/GCE%20-%20Vectrex.dat";
+    };
+    hartung-game-master = {
+      hash = "sha256-AWsZA2fKOG3voC/YTClnyDm94L4WEt+SAQW1lVVr71I=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Hartung%20-%20Game%20Master.dat";
+    };
+    interton-vc-4000 = {
+      hash = "sha256-LzNvTIapdeLTQal9Z9SJkiJPih7pVAlzgtK29iJLXes=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Interton%20-%20VC%204000.dat";
+    };
+    konami-picno = {
+      hash = "sha256-zC8NmLmJc2hHSB9p5c5g8+WngO+U/7oKl90tb5Hqx9Y=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Konami%20-%20Picno.dat";
+    };
+    leapfrog-leappad = {
+      hash = "sha256-A2n0T+kl5KNeRB54zQEzVvZg5hSEGP+HpKecy3ca3TA=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/LeapFrog%20-%20LeapPad.dat";
+    };
+    leapfrog-leapster-learning-game-system = {
+      hash = "sha256-nGaeIk4tqy7Ly7sc6djFsfe1wDw9ohs37ipDXWLuxGs=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/LeapFrog%20-%20Leapster%20Learning%20Game%20System.dat";
+    };
+    magnavox-odyssey2 = {
+      hash = "sha256-PC1c1BEuuLwJ3TVXbttRDjx+VvGTxWv42DXNb9Uinp4=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Magnavox%20-%20Odyssey2.dat";
+    };
+    mattel-intellivision = {
+      hash = "sha256-ZBWG8/aoPJBzmEtL8veBtEd9AxgmCs7BQ/gb5zlf3qU=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mattel%20-%20Intellivision.dat";
+    };
+    microsoft-msx = {
+      hash = "sha256-w2jX7Lwo104jjPcMU62Sep8HWIT8qR4A4evNCoUmu+4=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20MSX.dat";
+    };
+    microsoft-msx2 = {
+      hash = "sha256-uO+HcGlbshh7a2hqPu3SIAkTWvwpIGcv7jjCvrQqbvM=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20MSX2.dat";
+    };
+    microsoft-xbox-360 = {
+      hash = "sha256-3CetmijvpUdLzg54F6QW791TGSTtaIHwxyS/WDbwFx0=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20Xbox%20360.dat";
+    };
+    microsoft-xbox-360-digital = {
+      hash = "sha256-yEJp8akObBb+itqdROQepTUzw/hbmikvqdJFd32+a8A=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20Xbox%20360%20%28Digital%29.dat";
+    };
+    microsoft-xbox-360-games-on-demand = {
+      hash = "sha256-+piTdNBnHjayB5jZTk4pPCriTYDjofpjemnZF+aFCjQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20XBOX%20360%20%28Games%20on%20Demand%29.dat";
+    };
+    microsoft-xbox-360-title-updates = {
+      hash = "sha256-E9Y3XC1E+VM+pamZu5B2xsP0/1U1F2PBX+qhRhJNIRM=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20XBOX%20360%20%28Title%20Updates%29.dat";
+    };
+    mobile-j2me = {
+      hash = "sha256-e2vy+IHQ6WSHJyrNWxQIJrrmuBiVgRO+6ckIHx+xosQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20J2ME.dat";
+    };
+    mobile-palm-os = {
+      hash = "sha256-UqZHfebo52P5Sj0XhPoU+1801n5OnxzlevcwFuzi/JI=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20Palm%20OS.dat";
+    };
+    mobile-symbian = {
+      hash = "sha256-JziWcFheSPwh7EQzPZPKup2RD+fcVPoWTGDLeAQyqho=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20Symbian.dat";
+    };
+    mobile-zeebo = {
+      hash = "sha256-fGg8XQaMKqZyVXKfKQph4scmW1S+UF92m9pD2VemSy0=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20Zeebo.dat";
+    };
+    nec-pc-engine-supergrafx = {
+      hash = "sha256-fjgjzmWJS0UtvTBQMp3eAkdg5e8AJpm2qZRkAVl3AhQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/NEC%20-%20PC%20Engine%20SuperGrafx.dat";
+    };
+    nec-pc-engine-turbografx-16 = {
+      hash = "sha256-ZOCW5qVqSsGyXAXi2Ywrph2vwiGcJ9Hq+GKT+Tz4ods=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/NEC%20-%20PC%20Engine%20-%20TurboGrafx%2016.dat";
+    };
+    nintendo-e-reader = {
+      hash = "sha256-b2M9gZo3C1mHT4+EoWJ+XrIOsOj0Q9gaxrAG3oDD/84=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20e-Reader.dat";
+    };
+    nintendo-family-computer-disk-system = {
+      hash = "sha256-sAo3G9DHJQamdvMr75Cm0aPOxqB2JwSx78Ip6ooLvyk=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Family%20Computer%20Disk%20System.dat";
+    };
+    nintendo-game-boy = {
+      hash = "sha256-b6AYemNmbZzfWvm7ULrso5L58hlbyyNx5WwKAOYpid4=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Game%20Boy.dat";
+    };
+    nintendo-game-boy-advance = {
+      hash = "sha256-kBiPbk5IHLK+mO2mJxhEt/VoE1dUl766rt33t2pjU9s=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Game%20Boy%20Advance.dat";
+    };
+    nintendo-game-boy-color = {
+      hash = "sha256-+IT7QRsQzuRz9eXNCv9+O0hdHxncQNiTtcLQptUtan4=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Game%20Boy%20Color.dat";
+    };
+    nintendo-new-nintendo-3ds = {
+      hash = "sha256-faHn8aKYdMYIZQicOXglfZH6g46roCBbf9XvwWuygb8=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20New%20Nintendo%203DS.dat";
+    };
+    nintendo-new-nintendo-3ds-digital = {
+      hash = "sha256-l6Y256aW8uP2b/Xtb1YOpjlmnUxg9jFJfMicnTn2+ZY=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20New%20Nintendo%203DS%20%28Digital%29.dat";
+    };
+    nintendo-nintendo-3ds = {
+      hash = "sha256-47Ve1VOCim1bNma86Y8liCEqpBieoNxiSd7S5Ii0KRQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%203DS.dat";
+    };
+    nintendo-nintendo-3ds-digital = {
+      hash = "sha256-rhI7UUI2IxcEgE6r2rBJO3W3AVYf45YrwnIOnDtsOeo=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%203DS%20%28Digital%29.dat";
+    };
+    nintendo-nintendo-64 = {
+      hash = "sha256-6yDvYWTobu5XsEml9FusIcs2pA5e2rJsRNsZ5OxHrIs=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%2064.dat";
+    };
+    nintendo-nintendo-64dd = {
+      hash = "sha256-J3gezRQNSnKr28BCjR67ciLT7XsxJYHsiRN8qjyYPSQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%2064DD.dat";
+    };
+    nintendo-nintendo-ds = {
+      hash = "sha256-8t7ZwxlLLjPwKs44jfnu8bqPwbMTCoFJYTgA58UU3Es=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20DS.dat";
+    };
+    nintendo-nintendo-ds-download-play = {
+      hash = "sha256-O2Tcxnjs0LJ9o+RM2TELoeQwFHzNOoqmCO8pTDQC0sk=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20DS%20%28Download%20Play%29.dat";
+    };
+    nintendo-nintendo-dsi = {
+      hash = "sha256-3sFxDeLO7IXl9gv3wU6a5/pKnpgNzw63lMpnE9LzbQg=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20DSi.dat";
+    };
+    nintendo-nintendo-entertainment-system = {
+      hash = "sha256-hT/8NWxmTXLKbBeoOCotjdUz39in5GRLFDjsaXnmIeE=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20Entertainment%20System.dat";
+    };
+    nintendo-pokemon-mini = {
+      hash = "sha256-ztFI3o1+64ia3oGp4c0i0b+cJRgMr/FVj32kYr90EIs=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Pokemon%20Mini.dat";
+    };
+    nintendo-satellaview = {
+      hash = "sha256-sdDl/SN89+QtUu7/0hqX2vf5xGG9Jc2bjsEeowrHjBA=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Satellaview.dat";
+    };
+    nintendo-sufami-turbo = {
+      hash = "sha256-bUY/uZyBNAKd8oCtshSUf2/TjG5VmpEf5/RFEpfEGL4=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Sufami%20Turbo.dat";
+    };
+    nintendo-super-nintendo-entertainment-system = {
+      hash = "sha256-F1xpzItQ3GDISCitVw5YGnwDYCUYd2VAczY2I1qg/4o=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System.dat";
+    };
+    nintendo-virtual-boy = {
+      hash = "sha256-+MhfX6fa6a1X0ETocgtlPxYZ9fG4BjW2cyYbkM3+0tk=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Virtual%20Boy.dat";
+    };
+    nintendo-wii-digital = {
+      hash = "sha256-GqAaKLsEepihTPcCDidWN6CDrPi3s7cf8E29eutU/c0=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Wii%20%28Digital%29.dat";
+    };
+    nintendo-wii-u-digital = {
+      hash = "sha256-usbEh5Moy4iGV+/2O7hUI4xdha6w5gIaIhKkajqKzgE=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Wii%20U%20%28Digital%29.dat";
+    };
+    philips-videopac = {
+      hash = "sha256-fdKo8FJzV5xdRebXP4WIvnkT9SWvKkPsizy7o0x0tbM=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Philips%20-%20Videopac%2B.dat";
+    };
+    rca-studio-ii = {
+      hash = "sha256-pwaJPz5BGAvFglF8mWLatAwK0EC4xJ+x6g7GTktqHuA=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/RCA%20-%20Studio%20II.dat";
+    };
+    sega-32x = {
+      hash = "sha256-FUQN3kGpgG6oGqdMtvI5MTreUwLQJxHu13uN0xxDGhs=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%2032X.dat";
+    };
+    sega-beena = {
+      hash = "sha256-6DM97g3d9+TYXGt+ezfuTgaI31SKGBbQkUB/SvwIrx0=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Beena.dat";
+    };
+    sega-game-gear = {
+      hash = "sha256-wOEr8w9aOiRyaqIrLJ2T+TnagGPC2EXUeZkX/x56KAA=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Game%20Gear.dat";
+    };
+    sega-master-system-mark-iii = {
+      hash = "sha256-84NxTPJ+aZ62+h3ytb+hN9wDbaAmfxs+qi6veg0vGko=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Master%20System%20-%20Mark%20III.dat";
+    };
+    sega-mega-drive-genesis = {
+      hash = "sha256-jF3etNosUwn7knGHmZ4iXcdHNmoiqLVSkzLOfYfH4KM=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Mega%20Drive%20-%20Genesis.dat";
+    };
+    sega-pico = {
+      hash = "sha256-vXR69QspfiIr/ufQ3fV04tj2A2UqQ2xll67sNnG+vaA=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20PICO.dat";
+    };
+    sega-sg-1000 = {
+      hash = "sha256-Kgy94m2WPjVVIipqaQ5qYP4s/d20cFU0ayAToGJYstY=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20SG-1000.dat";
+    };
+    sharp-x1 = {
+      hash = "sha256-DZ6mA1Y3fCL2VxkmLDv2TVDN4ENJv3Iw/fpWsCjmLQ8=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sharp%20-%20X1.dat";
+    };
+    sharp-x68000 = {
+      hash = "sha256-3BIbTsPE9MIvK3+d+B8Vw+HTdhTzn+/UTfi/hUDiwwk=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sharp%20-%20X68000.dat";
+    };
+    sinclair-zx-spectrum-3 = {
+      hash = "sha256-mj4b8eChBLD9r78ECpy3geYx80/YOhlzQgz77sxwINQ=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sinclair%20-%20ZX%20Spectrum%20%2B3.dat";
+    };
+    snk-neo-geo-pocket = {
+      hash = "sha256-it68/2NRCSjRLV0oRCkZzAbElDQuelQiloGIkpMtnAE=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/SNK%20-%20Neo%20Geo%20Pocket.dat";
+    };
+    snk-neo-geo-pocket-color = {
+      hash = "sha256-fas/vaXZCjetaW+E25mEmHVNkWOe5kBl8BO+xrZ588I=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/SNK%20-%20Neo%20Geo%20Pocket%20Color.dat";
+    };
+    sony-playstation-3-psn = {
+      hash = "sha256-PxEs/QOFpqLTANKodVS/hM5FOmgahG6nWzusMVGx9gI=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%203%20%28PSN%29.dat";
+    };
+    sony-playstation-portable = {
+      hash = "sha256-573lcszvIrlWUdaPMJcAcIt2ss5XBglTxBzO1WQtsAA=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable.dat";
+    };
+    sony-playstation-portable-psn = {
+      hash = "sha256-21bxkP0I7Yk7AtEAEy0mGzhziJqdAgbSvqtWt0S/9gk=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28PSN%29.dat";
+    };
+    sony-playstation-portable-psx2psp = {
+      hash = "sha256-EBrErKFuGYOM9VfJcH1F6IEo+1CB3lrfIJrMWgbaDGg=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28PSX2PSP%29.dat";
+    };
+    sony-playstation-portable-umd-music = {
+      hash = "sha256-fZRLxsTAPbIN14tic1VPF99gldbEYIQ3FNX7rSJfgwk=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28UMD%20Music%29.dat";
+    };
+    sony-playstation-portable-umd-video = {
+      hash = "sha256-+VbCzeEskWHhCeAp4vD2X30DyQmpfeqMU1urFi0TrFc=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28UMD%20Video%29.dat";
+    };
+    sony-playstation-vita = {
+      hash = "sha256-ojhMNbfWHfO0bwB8WZSj29rAcIlNnUkLinrrUQ/79gM=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Vita.dat";
+    };
+    sony-playstation-vita-psn = {
+      hash = "sha256-Ku+4HFDcXGkc43hdYIu2ItBtVUlSqnZP/QfeLgn2r8w=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Vita%20%28PSN%29.dat";
+    };
+    tiger-game-com = {
+      hash = "sha256-j4DumM/ZutBDmu+9mgWCGkMnWfCPc5BhP612n74ozK8=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Tiger%20-%20Game.com.dat";
+    };
+    vtech-creativision = {
+      hash = "sha256-glY3BvYQYZllP4Enws5lE7S8Mqk66fVanDL9SgSVmH4=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/VTech%20-%20CreatiVision.dat";
+    };
+    vtech-v-smile = {
+      hash = "sha256-WU6Up6p0xiSUbz7Nak0zLQ/uXw/l+9o+ApDMBZ70Bq8=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/VTech%20-%20V.Smile.dat";
+    };
+    watara-supervision = {
+      hash = "sha256-Rg9rsGzWAOJ0T1yel4S0bjYQGG7hEpXDcbbek3UZ8EU=";
+      type = "url";
+      url = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Watara%20-%20Supervision.dat";
+    };
+  };
   node-datachannel = {
     date = "2026-08-17";
     files = [
@@ -1307020,6 +1307482,456 @@
       hash = "sha256-iuMQdeyTg2FJZ2csgpuvzE6t7Ku8QTIx3IhYMt5UFlA=";
       type = "romhacking";
       url = "https://www.romhacking.net/hacks/8335/";
+    };
+  };
+  redump = {
+    "3do" = {
+      files = [
+        "Panasonic - 3DO Interactive Multiplayer - Datfile (672) (2026-06-09 14-48-47).dat"
+      ];
+      hash = "sha256-xkkC5qr/pKF6bd6ME4aQaZwa+LYYG2aMIZrBdj74tCE=";
+      type = "zip";
+      url = "http://redump.org/datfile/3do/";
+    };
+    acd = {
+      files = [
+        "Commodore - Amiga CD - Datfile (596) (2026-06-02 00-27-14).dat"
+      ];
+      hash = "sha256-obUEjdeJhdoeshKABHonOadWKjE7KjLou4m+6d6Weu8=";
+      type = "zip";
+      url = "http://redump.org/datfile/acd/";
+    };
+    ajcd = {
+      files = [
+        "Atari - Jaguar CD Interactive Multimedia System - Datfile (38) (2026-04-03 15-50-49).dat"
+      ];
+      hash = "sha256-XUBU96PShLW+gBgrBeuaTJxD9JF3t7X4EfQmnYhStzo=";
+      type = "zip";
+      url = "http://redump.org/datfile/ajcd/";
+    };
+    arch = {
+      files = [
+        "Acorn - Archimedes - Datfile (79) (2026-06-11 15-44-51).dat"
+      ];
+      hash = "sha256-vYxdyUOKuAqnAUpXuZWdFSOLdpXe6qrfQDgSw2jsKDE=";
+      type = "zip";
+      url = "http://redump.org/datfile/arch/";
+    };
+    cd32 = {
+      files = [
+        "Commodore - Amiga CD32 - Datfile (207) (2026-05-08 20-54-04).dat"
+      ];
+      hash = "sha256-2RokvhlzOGJhBr6970eKNPxjQ07lFJGdaqxdU1hZQHg=";
+      type = "zip";
+      url = "http://redump.org/datfile/cd32/";
+    };
+    cdi = {
+      files = [
+        "Philips - CD-i - Datfile (2425) (2026-05-03 02-47-58).dat"
+      ];
+      hash = "sha256-hwSqShQ+Fj5aE2smhMZBhal6uvYbRWeZDGRZXN+I2sw=";
+      type = "zip";
+      url = "http://redump.org/datfile/cdi/";
+    };
+    cdtv = {
+      files = [
+        "Commodore - Amiga CDTV - Datfile (61) (2026-05-16 20-58-08).dat"
+      ];
+      hash = "sha256-5vGhTxOg60Z8I4BOhy+ONx+qx077L5Qxjc5zjktiqY4=";
+      type = "zip";
+      url = "http://redump.org/datfile/cdtv/";
+    };
+    chihiro = {
+      files = [
+        "Arcade - Sega - Chihiro - Datfile (19) (2025-10-07 18-40-35).dat"
+      ];
+      hash = "sha256-T2HiO7WYiQXA+lVQasGUoke9lAUt0JlRHXgpg6DOnOs=";
+      type = "zip";
+      url = "http://redump.org/datfile/chihiro/";
+    };
+    dc = {
+      files = [
+        "Sega - Dreamcast - Datfile (1516) (2026-06-14 18-25-41).dat"
+      ];
+      hash = "sha256-H0gNwpkUAKSdtAa7bw7Rd7L2Ov3DtexFGV25L2DAifQ=";
+      type = "zip";
+      url = "http://redump.org/datfile/dc/";
+    };
+    fmt = {
+      files = [
+        "Fujitsu - FM-Towns - Datfile (947) (2026-05-29 16-51-46).dat"
+      ];
+      hash = "sha256-myTE9J68h0KdA7aaotR2UoMDEYbblFHkCIa30x46khA=";
+      type = "zip";
+      url = "http://redump.org/datfile/fmt/";
+    };
+    fpp = {
+      files = [
+        "funworld - Photo Play - Datfile (17) (2026-06-11 16-18-31).dat"
+      ];
+      hash = "sha256-1dHzKXOTsVkv9GD/tz5qdk+4fDvUbO5K0wXZ0rCzl1Y=";
+      type = "zip";
+      url = "http://redump.org/datfile/fpp/";
+    };
+    gamewave = {
+      files = [
+        "ZAPiT Games - Game Wave Family Entertainment System - Datfile (16) (2025-12-08 00-53-19).dat"
+      ];
+      hash = "sha256-joa8JwRwjRDVVXxBkY0mxadnxbChLHDVh9w+VJTQMa0=";
+      type = "zip";
+      url = "http://redump.org/datfile/gamewave/";
+    };
+    gc = {
+      files = [
+        "Nintendo - GameCube - Datfile (2019) (2026-06-13 18-14-01).dat"
+      ];
+      hash = "sha256-ROZPWJozT/QQxacbXPHT4Z89hWl0g/95udBrjHiiPe8=";
+      type = "zip";
+      url = "http://redump.org/datfile/gc/";
+    };
+    hs = {
+      files = [
+        "Mattel - HyperScan - Datfile (8) (2024-02-26 19-18-13).dat"
+      ];
+      hash = "sha256-9Cb+X1wsg9sxlH9qamjJxAZNwUW8gILfg4GHi8QNgIg=";
+      type = "zip";
+      url = "http://redump.org/datfile/hs/";
+    };
+    ite = {
+      files = [
+        "Incredible Technologies - Eagle - Datfile (7) (2023-04-07 23-42-32).dat"
+      ];
+      hash = "sha256-LyNV+03dTHQk0xjj8G32aBraLNUXe+uKMOU/cY4NmFQ=";
+      type = "zip";
+      url = "http://redump.org/datfile/ite/";
+    };
+    ixl = {
+      files = [
+        "Mattel - Fisher-Price iXL - Datfile (26) (2026-02-20 02-28-55).dat"
+      ];
+      hash = "sha256-QH39OH9mCpK5AJyOc88NDyETIIo5jiiGwxBqVBZKO6g=";
+      type = "zip";
+      url = "http://redump.org/datfile/ixl/";
+    };
+    kea = {
+      files = [
+        "Arcade - Konami - e-Amusement - Datfile (49) (2025-09-28 21-05-27).dat"
+      ];
+      hash = "sha256-NvyzCrqlsTa2e6FnaXGyC5r6L3RuMAVOyQnUCnXmKqY=";
+      type = "zip";
+      url = "http://redump.org/datfile/kea/";
+    };
+    kfb = {
+      files = [
+        "Arcade - Konami - FireBeat - Datfile (10) (2024-03-16 21-47-26).dat"
+      ];
+      hash = "sha256-OGfQLlqZRbXfFk9gN541E09MdqD5jvLQbGhI4jlKuuo=";
+      type = "zip";
+      url = "http://redump.org/datfile/kfb/";
+    };
+    ks573 = {
+      files = [
+        "Arcade - Konami - System 573 - Datfile (44) (2024-04-22 19-05-57).dat"
+      ];
+      hash = "sha256-I/eF4DWnc9IS1Dnc7tZGRzODgk6yy+uyOQEoLF4YhJ4=";
+      type = "zip";
+      url = "http://redump.org/datfile/ks573/";
+    };
+    ksgv = {
+      files = [
+        "Arcade - Konami - System GV - Datfile (2) (2024-09-06 23-18-18).dat"
+      ];
+      hash = "sha256-4BV8NBkMhhWQ5rIyuWJQd+Fv+nxebKQcDGzXRN7jeu4=";
+      type = "zip";
+      url = "http://redump.org/datfile/ksgv/";
+    };
+    ksite = {
+      files = [
+        "Tomy - Kiss-Site - Datfile (30) (2024-07-11 23-01-31).dat"
+      ];
+      hash = "sha256-bFA96CgGlXi5D4HfAfWzxv8KYrKTu3IRI6Uauz7eJIU=";
+      type = "zip";
+      url = "http://redump.org/datfile/ksite/";
+    };
+    lindbergh = {
+      files = [
+        "Arcade - Sega - Lindbergh - Datfile (71) (2025-09-28 21-13-42).dat"
+      ];
+      hash = "sha256-3yikxiCSAXR81Yf13kP2mZLOxCP+An73G2LlrldYNcc=";
+      type = "zip";
+      url = "http://redump.org/datfile/lindbergh/";
+    };
+    mac = {
+      files = [
+        "Apple - Macintosh - Datfile (1357) (2026-06-18 14-24-14).dat"
+      ];
+      hash = "sha256-+DraVdBWTEP37gVGM74t/nJRvNa92VP60UmDKfZWEp4=";
+      type = "zip";
+      url = "http://redump.org/datfile/mac/";
+    };
+    mcd = {
+      files = [
+        "Sega - Mega CD & Sega CD - Datfile (549) (2026-05-28 18-06-58).dat"
+      ];
+      hash = "sha256-p3duIZ4NoXQFLRb37AZlpCGF5raqjIPr8VLV4/nXK/U=";
+      type = "zip";
+      url = "http://redump.org/datfile/mcd/";
+    };
+    naomi = {
+      files = [
+        "Arcade - Sega - Naomi - Datfile (34) (2025-11-08 20-06-27).dat"
+      ];
+      hash = "sha256-8cb72keQBJI9K/j4ObSh7BFxYJ5yE9NyMBW3zlTI8KQ=";
+      type = "zip";
+      url = "http://redump.org/datfile/naomi/";
+    };
+    naomi2 = {
+      files = [
+        "Arcade - Sega - Naomi 2 - Datfile (13) (2025-09-28 21-28-00).dat"
+      ];
+      hash = "sha256-JYvtEejgCWXdIvVeEsmWSPDlF09kBjZatELdhQ4mmp4=";
+      type = "zip";
+      url = "http://redump.org/datfile/naomi2/";
+    };
+    ngcd = {
+      files = [
+        "SNK - Neo Geo CD - Datfile (111) (2026-05-06 12-21-03).dat"
+      ];
+      hash = "sha256-ObHV0rnBidYJ6SZJv7LL11UeesogDryUYzGbY/wQ+hY=";
+      type = "zip";
+      url = "http://redump.org/datfile/ngcd/";
+    };
+    ns246 = {
+      files = [
+        "Arcade - Namco - System 246 - Datfile (13) (2025-09-28 21-11-36).dat"
+      ];
+      hash = "sha256-NypKsIpc3LQDw7n5Bk5r1QXiKS99hgnvkWmWY95dM2Q=";
+      type = "zip";
+      url = "http://redump.org/datfile/ns246/";
+    };
+    nuon = {
+      files = [
+        "VM Labs - NUON - Datfile (11) (2025-01-23 03-39-43).dat"
+      ];
+      hash = "sha256-GssNByRSs+hgCTFFAvMdumXf9GGvHqZlD8fsMIsx93A=";
+      type = "zip";
+      url = "http://redump.org/datfile/nuon/";
+    };
+    palm = {
+      files = [
+        "Palm - Datfile (159) (2026-04-04 02-22-51).dat"
+      ];
+      hash = "sha256-M7Ejyt4/fGGjv0Eae1BRancXGQdMVeIepDndNckg+lA=";
+      type = "zip";
+      url = "http://redump.org/datfile/palm/";
+    };
+    pc = {
+      files = [
+        "IBM - PC compatible - Datfile (58837) (2026-06-15 06-43-57).dat"
+      ];
+      hash = "sha256-1MgOmRcFxbujF0SeKBJoR1Mb5/5n5D4llZ1Sl5716xc=";
+      type = "zip";
+      url = "http://redump.org/datfile/pc/";
+    };
+    pc-88 = {
+      files = [
+        "NEC - PC-88 series - Datfile (4) (2025-05-19 08-26-21).dat"
+      ];
+      hash = "sha256-4wZLvzocnUq09lOkT1u1sTLhDPU557rGPREeHaaQPSw=";
+      type = "zip";
+      url = "http://redump.org/datfile/pc-88/";
+    };
+    pc-98 = {
+      files = [
+        "NEC - PC-98 series - Datfile (127) (2026-04-06 22-04-02).dat"
+      ];
+      hash = "sha256-iIQQhQE115SduhlrG/qQc9m9T1eRN4XY6X4y6N/XJhA=";
+      type = "zip";
+      url = "http://redump.org/datfile/pc-98/";
+    };
+    pc-fx = {
+      files = [
+        "NEC - PC-FX & PC-FXGA - Datfile (79) (2025-05-14 23-35-09).dat"
+      ];
+      hash = "sha256-E33OTRRrlCZEswKKtHERlo78RVUjJB+iPy5Xqq0c8H0=";
+      type = "zip";
+      url = "http://redump.org/datfile/pc-fx/";
+    };
+    pce = {
+      files = [
+        "NEC - PC Engine CD & TurboGrafx CD - Datfile (551) (2026-06-14 14-24-19).dat"
+      ];
+      hash = "sha256-ejdvgI4M519/TkFwiuV6Nkp+YJXY1Hpvt13wBhdEp/c=";
+      type = "zip";
+      url = "http://redump.org/datfile/pce/";
+    };
+    photo-cd = {
+      files = [
+        "Photo CD - Datfile (266) (2026-06-14 02-44-56).dat"
+      ];
+      hash = "sha256-d6S0XDgS2Xb9Yzf4Cpp6bhn5cHDknq5vhuOKjqtgjqw=";
+      type = "zip";
+      url = "http://redump.org/datfile/photo-cd/";
+    };
+    pippin = {
+      files = [
+        "Bandai - Pippin - Datfile (34) (2026-06-13 23-13-02).dat"
+      ];
+      hash = "sha256-8E7jPJgJlvljVPI8jY5zCvWfOClZ9K+dDWGJ1d3cIdE=";
+      type = "zip";
+      url = "http://redump.org/datfile/pippin/";
+    };
+    ppc = {
+      files = [
+        "Pocket PC - Datfile (82) (2026-06-05 22-34-02).dat"
+      ];
+      hash = "sha256-4+aejPbN55n21DZMM0VIecZPIo6yW+iv8FTdqw7fcmo=";
+      type = "zip";
+      url = "http://redump.org/datfile/ppc/";
+    };
+    ps2 = {
+      files = [
+        "Sony - PlayStation 2 - Datfile (11774) (2026-06-15 03-41-38).dat"
+      ];
+      hash = "sha256-JMBRY/FfnaGAAdsQFK5ThSPCmdx6iNnHsct4GaXQoHA=";
+      type = "zip";
+      url = "http://redump.org/datfile/ps2/";
+    };
+    ps3 = {
+      files = [
+        "Sony - PlayStation 3 - Datfile (4503) (2026-06-14 10-20-40).dat"
+      ];
+      hash = "sha256-mRJhnJ4iPZaGkTGxFznZphy0id1Y7geXrU2lE/YAaYc=";
+      type = "zip";
+      url = "http://redump.org/datfile/ps3/";
+    };
+    psp = {
+      files = [
+        "Sony - PlayStation Portable - Datfile (3500) (2026-06-13 08-01-46).dat"
+      ];
+      hash = "sha256-IoAqlbqLJMzMGBythCDXviba+SHE/tYjlS/0GW2Rg5E=";
+      type = "zip";
+      url = "http://redump.org/datfile/psp/";
+    };
+    psx = {
+      files = [
+        "Sony - PlayStation - Datfile (10914) (2026-06-15 11-55-46).dat"
+      ];
+      hash = "sha256-fnfWZIHEcJQ8zLG8OiLcVQPSjpwlih1CAdX59gYULfg=";
+      type = "zip";
+      url = "http://redump.org/datfile/psx/";
+    };
+    psxgs = {
+      files = [
+        "PlayStation GameShark Updates - Datfile (34) (2026-05-08 11-58-25).dat"
+      ];
+      hash = "sha256-NiEgLY/9C8Y53hIrhyRvG0ZYC6WY+YfHIxv22GuT3l0=";
+      type = "zip";
+      url = "http://redump.org/datfile/psxgs/";
+    };
+    qis = {
+      files = [
+        "Bandai - Playdia Quick Interactive System - Datfile (38) (2025-05-14 23-18-46).dat"
+      ];
+      hash = "sha256-g3Ap0SZMNAbN6s146N7SIMnxAPYmPWaEOGnJIdE0ZYk=";
+      type = "zip";
+      url = "http://redump.org/datfile/qis/";
+    };
+    quizard = {
+      files = [
+        "TAB-Austria - Quizard - Datfile (15) (2023-09-13 02-29-02).dat"
+      ];
+      hash = "sha256-5ZIXMKbOJ7J2ENmjqSMMSfGG51gpi3kB/uOihTzdGjo=";
+      type = "zip";
+      url = "http://redump.org/datfile/quizard/";
+    };
+    sp21 = {
+      files = [
+        "Sega - Prologue 21 - Datfile (30) (2024-02-25 18-11-03).dat"
+      ];
+      hash = "sha256-PnycLqf32RfUL7hhAGeqRrbhSpIsvo0IQstRt+rfvxY=";
+      type = "zip";
+      url = "http://redump.org/datfile/sp21/";
+    };
+    sre = {
+      files = [
+        "Arcade - Sega - RingEdge - Datfile (49) (2025-11-09 01-52-37).dat"
+      ];
+      hash = "sha256-LJ8R06XGiw/Gu2jmbJFR8CcX/Uv0MjjKiM0vOKPKK5g=";
+      type = "zip";
+      url = "http://redump.org/datfile/sre/";
+    };
+    sre2 = {
+      files = [
+        "Arcade - Sega - RingEdge 2 - Datfile (42) (2025-10-11 06-53-10).dat"
+      ];
+      hash = "sha256-WJoLTGs3vZ16RiFFap9V2uT86d4vZ9ZzeKJqXBYvWJA=";
+      type = "zip";
+      url = "http://redump.org/datfile/sre2/";
+    };
+    ss = {
+      files = [
+        "Sega - Saturn - Datfile (2457) (2026-06-14 12-36-08).dat"
+      ];
+      hash = "sha256-36Pt31p51aKszMLZu25k5D5PeF4pzwoQPZ+8nuNOWdU=";
+      type = "zip";
+      url = "http://redump.org/datfile/ss/";
+    };
+    trf = {
+      files = [
+        "Arcade - Namco - Sega - Nintendo - Triforce - Datfile (22) (2024-03-27 18-54-01).dat"
+      ];
+      hash = "sha256-GVX4OV6t/K6RGIknGOW0oRY9eF7+i+4BpTcza8LlsXU=";
+      type = "zip";
+      url = "http://redump.org/datfile/trf/";
+    };
+    vflash = {
+      files = [
+        "VTech - V.Flash & V.Smile Pro - Datfile (51) (2026-03-14 01-23-03).dat"
+      ];
+      hash = "sha256-sf7gmUUK6N0ER+UG/soYc7Cvtl6Zv0vPRKr/PMaNegs=";
+      type = "zip";
+      url = "http://redump.org/datfile/vflash/";
+    };
+    vis = {
+      files = [
+        "Memorex - Visual Information System - Datfile (72) (2025-11-25 12-09-13).dat"
+      ];
+      hash = "sha256-NO3M+2pCCHQUviB19BiiXXCsVxtZ4Z/umEaNizxuX20=";
+      type = "zip";
+      url = "http://redump.org/datfile/vis/";
+    };
+    wii = {
+      files = [
+        "Nintendo - Wii - Datfile (3780) (2026-06-15 03-13-28).dat"
+      ];
+      hash = "sha256-Yxx6jcxmBd4wyKgsdNbPsrSexxDZ44qumfSrj3kYrco=";
+      type = "zip";
+      url = "http://redump.org/datfile/wii/";
+    };
+    x68k = {
+      files = [
+        "Sharp - X68000 - Datfile (30) (2025-06-16 20-51-40).dat"
+      ];
+      hash = "sha256-tadsRfCa26FTpNzINaSqxvyTUxzTGtbHSs+OIW1nov0=";
+      type = "zip";
+      url = "http://redump.org/datfile/x68k/";
+    };
+    xbox = {
+      files = [
+        "Microsoft - Xbox - Datfile (2683) (2026-06-14 23-43-27).dat"
+      ];
+      hash = "sha256-Ds0o8P4h0Hmw9iRAtV8KXMUsgFIxFZbBzIe2Rg0/lD0=";
+      type = "zip";
+      url = "http://redump.org/datfile/xbox/";
+    };
+    xbox360 = {
+      files = [
+        "Microsoft - Xbox 360 - Datfile (3691) (2026-06-15 03-15-02).dat"
+      ];
+      hash = "sha256-BHuy3I2jhTc1M3QmIlyGazOqqkK5Bgrjl85eMW8rsfU=";
+      type = "zip";
+      url = "http://redump.org/datfile/xbox360/";
     };
   };
   scummvm = {

@@ -1,0 +1,184 @@
+[zip]
+# redump.org DAT files -- disc hash databases for lib/fetchers/disc.nix's
+# ripDisc/ripDiscContents/ripDiscRedumper. Every system code below was
+# scraped from redump.org's own /discs/ listing and individually verified
+# to return a real zip (not redump's "System doesn't exist" error page)
+# before being added here. PS4 and Wii U were requested too, but redump
+# doesn't have either: confirmed by hitting datfile/ps4/ and datfile/wiiu/
+# directly (same "doesn't exist" error), and the only public Wii U .dat
+# found elsewhere (libretro-database, GameTDB-derived) carries no hash
+# fields at all -- a metadata catalog, not a verification database, so
+# not usable here regardless. iktv/kt/ns12/stv have a redump /system/ page
+# but no public datfile either, same as Wii U -- skipped for the same reason.
+redump.3do = "http://redump.org/datfile/3do/"
+redump.acd = "http://redump.org/datfile/acd/"
+redump.ajcd = "http://redump.org/datfile/ajcd/"
+redump.arch = "http://redump.org/datfile/arch/"
+redump.cd32 = "http://redump.org/datfile/cd32/"
+redump.cdi = "http://redump.org/datfile/cdi/"
+redump.cdtv = "http://redump.org/datfile/cdtv/"
+redump.chihiro = "http://redump.org/datfile/chihiro/"
+redump.dc = "http://redump.org/datfile/dc/"
+redump.fmt = "http://redump.org/datfile/fmt/"
+redump.fpp = "http://redump.org/datfile/fpp/"
+redump.gamewave = "http://redump.org/datfile/gamewave/"
+redump.gc = "http://redump.org/datfile/gc/"
+redump.hs = "http://redump.org/datfile/hs/"
+redump.ite = "http://redump.org/datfile/ite/"
+redump.ixl = "http://redump.org/datfile/ixl/"
+redump.kea = "http://redump.org/datfile/kea/"
+redump.kfb = "http://redump.org/datfile/kfb/"
+redump.ks573 = "http://redump.org/datfile/ks573/"
+redump.ksgv = "http://redump.org/datfile/ksgv/"
+redump.ksite = "http://redump.org/datfile/ksite/"
+redump.lindbergh = "http://redump.org/datfile/lindbergh/"
+redump.mac = "http://redump.org/datfile/mac/"
+redump.mcd = "http://redump.org/datfile/mcd/"
+redump.naomi = "http://redump.org/datfile/naomi/"
+redump.naomi2 = "http://redump.org/datfile/naomi2/"
+redump.ngcd = "http://redump.org/datfile/ngcd/"
+redump.ns246 = "http://redump.org/datfile/ns246/"
+redump.nuon = "http://redump.org/datfile/nuon/"
+redump.palm = "http://redump.org/datfile/palm/"
+redump.pc = "http://redump.org/datfile/pc/"
+redump.pc-88 = "http://redump.org/datfile/pc-88/"
+redump.pc-98 = "http://redump.org/datfile/pc-98/"
+redump.pce = "http://redump.org/datfile/pce/"
+redump.pc-fx = "http://redump.org/datfile/pc-fx/"
+redump.photo-cd = "http://redump.org/datfile/photo-cd/"
+redump.pippin = "http://redump.org/datfile/pippin/"
+redump.ppc = "http://redump.org/datfile/ppc/"
+redump.ps2 = "http://redump.org/datfile/ps2/"
+redump.ps3 = "http://redump.org/datfile/ps3/"
+redump.psp = "http://redump.org/datfile/psp/"
+redump.psx = "http://redump.org/datfile/psx/"
+redump.psxgs = "http://redump.org/datfile/psxgs/"
+redump.qis = "http://redump.org/datfile/qis/"
+redump.quizard = "http://redump.org/datfile/quizard/"
+redump.sp21 = "http://redump.org/datfile/sp21/"
+redump.sre = "http://redump.org/datfile/sre/"
+redump.sre2 = "http://redump.org/datfile/sre2/"
+redump.ss = "http://redump.org/datfile/ss/"
+redump.trf = "http://redump.org/datfile/trf/"
+redump.vflash = "http://redump.org/datfile/vflash/"
+redump.vis = "http://redump.org/datfile/vis/"
+redump.wii = "http://redump.org/datfile/wii/"
+redump.x68k = "http://redump.org/datfile/x68k/"
+redump.xbox = "http://redump.org/datfile/xbox/"
+redump.xbox360 = "http://redump.org/datfile/xbox360/"
+
+[url]
+# No-Intro's own DAT-o-MATIC (datomatic.no-intro.org) has no direct
+# per-system download -- its /profile.xml only lists metadata, with `<url>`
+# and `<file>` both literally "_" placeholders (verified directly); real
+# downloads require its dynamic web UI, not a stable script-fetchable URL.
+# libretro/libretro-database's metadat/no-intro/ re-publishes the same
+# No-Intro data with real crc/md5/sha1 fields (verified against its NES
+# dat: 14132 hash entries, "version 2026.08.01", sourced from
+# github.com/robloach/libretro-dats) -- fetched here as plain per-system
+# files (~31MB total across all 92) rather than cloning the whole ~800MB
+# libretro-database monorepo just for this one subdirectory.
+#
+# Format note: these are ClrMamePro text dats (`game ( name "..." rom (
+# ... crc X md5 X sha1 X ) )`), NOT the Logiqx XML redump.* above uses --
+# lib/fetchers/py/dat-to-json.py only parses Logiqx XML today, so these
+# aren't wired into lib/fetchers/disc.nix yet. Registered as sources for
+# a future cartridge-dump fetcher, not consumed anywhere yet.
+#
+# Wii U: the only redump.org Wii U angle came up empty (see the [zip]
+# comment above), but No-Intro does carry "Nintendo - Wii U (Digital)" --
+# digital/eShop titles specifically, not physical disc dumps, so it
+# doesn't fill the gap this was originally asked about, just noting it
+# exists.
+noIntro.arduboy-inc-arduboy = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Arduboy%20Inc%20-%20Arduboy.dat"
+noIntro.atari-2600 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%202600.dat"
+noIntro.atari-5200 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%205200.dat"
+noIntro.atari-7800 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%207800.dat"
+noIntro.atari-8-bit-family = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%208-bit%20Family.dat"
+noIntro.atari-jaguar = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%20Jaguar.dat"
+noIntro.atari-lynx = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%20Lynx.dat"
+noIntro.atari-st = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Atari%20-%20ST.dat"
+noIntro.bandai-wonderswan = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Bandai%20-%20WonderSwan.dat"
+noIntro.bandai-wonderswan-color = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Bandai%20-%20WonderSwan%20Color.dat"
+noIntro.benesse-pocket-challenge-v2 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Benesse%20-%20Pocket%20Challenge%20V2.dat"
+noIntro.casio-loopy = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Casio%20-%20Loopy.dat"
+noIntro.casio-pv-1000 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Casio%20-%20PV-1000.dat"
+noIntro.coleco-colecovision = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Coleco%20-%20ColecoVision.dat"
+noIntro.commodore-64 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%2064.dat"
+noIntro.commodore-amiga = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%20Amiga.dat"
+noIntro.commodore-plus-4 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%20Plus-4.dat"
+noIntro.commodore-vic-20 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Commodore%20-%20VIC-20.dat"
+noIntro.emerson-arcadia-2001 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Emerson%20-%20Arcadia%202001.dat"
+noIntro.entex-adventure-vision = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Entex%20-%20Adventure%20Vision.dat"
+noIntro.epoch-super-cassette-vision = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Epoch%20-%20Super%20Cassette%20Vision.dat"
+noIntro.fairchild-channel-f = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Fairchild%20-%20Channel%20F.dat"
+noIntro.funtech-super-acan = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Funtech%20-%20Super%20Acan.dat"
+noIntro.gamepark-gp32 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/GamePark%20-%20GP32.dat"
+noIntro.gce-vectrex = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/GCE%20-%20Vectrex.dat"
+noIntro.hartung-game-master = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Hartung%20-%20Game%20Master.dat"
+noIntro.interton-vc-4000 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Interton%20-%20VC%204000.dat"
+noIntro.konami-picno = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Konami%20-%20Picno.dat"
+noIntro.leapfrog-leappad = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/LeapFrog%20-%20LeapPad.dat"
+noIntro.leapfrog-leapster-learning-game-system = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/LeapFrog%20-%20Leapster%20Learning%20Game%20System.dat"
+noIntro.magnavox-odyssey2 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Magnavox%20-%20Odyssey2.dat"
+noIntro.mattel-intellivision = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mattel%20-%20Intellivision.dat"
+noIntro.microsoft-msx = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20MSX.dat"
+noIntro.microsoft-msx2 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20MSX2.dat"
+noIntro.microsoft-xbox-360 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20Xbox%20360.dat"
+noIntro.microsoft-xbox-360-digital = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20Xbox%20360%20%28Digital%29.dat"
+noIntro.microsoft-xbox-360-games-on-demand = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20XBOX%20360%20%28Games%20on%20Demand%29.dat"
+noIntro.microsoft-xbox-360-title-updates = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Microsoft%20-%20XBOX%20360%20%28Title%20Updates%29.dat"
+noIntro.mobile-j2me = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20J2ME.dat"
+noIntro.mobile-palm-os = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20Palm%20OS.dat"
+noIntro.mobile-symbian = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20Symbian.dat"
+noIntro.mobile-zeebo = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Mobile%20-%20Zeebo.dat"
+noIntro.nec-pc-engine-supergrafx = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/NEC%20-%20PC%20Engine%20SuperGrafx.dat"
+noIntro.nec-pc-engine-turbografx-16 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/NEC%20-%20PC%20Engine%20-%20TurboGrafx%2016.dat"
+noIntro.nintendo-e-reader = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20e-Reader.dat"
+noIntro.nintendo-family-computer-disk-system = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Family%20Computer%20Disk%20System.dat"
+noIntro.nintendo-game-boy = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Game%20Boy.dat"
+noIntro.nintendo-game-boy-advance = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Game%20Boy%20Advance.dat"
+noIntro.nintendo-game-boy-color = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Game%20Boy%20Color.dat"
+noIntro.nintendo-new-nintendo-3ds = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20New%20Nintendo%203DS.dat"
+noIntro.nintendo-new-nintendo-3ds-digital = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20New%20Nintendo%203DS%20%28Digital%29.dat"
+noIntro.nintendo-nintendo-3ds = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%203DS.dat"
+noIntro.nintendo-nintendo-3ds-digital = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%203DS%20%28Digital%29.dat"
+noIntro.nintendo-nintendo-64 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%2064.dat"
+noIntro.nintendo-nintendo-64dd = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%2064DD.dat"
+noIntro.nintendo-nintendo-ds = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20DS.dat"
+noIntro.nintendo-nintendo-ds-download-play = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20DS%20%28Download%20Play%29.dat"
+noIntro.nintendo-nintendo-dsi = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20DSi.dat"
+noIntro.nintendo-nintendo-entertainment-system = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Nintendo%20Entertainment%20System.dat"
+noIntro.nintendo-pokemon-mini = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Pokemon%20Mini.dat"
+noIntro.nintendo-satellaview = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Satellaview.dat"
+noIntro.nintendo-sufami-turbo = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Sufami%20Turbo.dat"
+noIntro.nintendo-super-nintendo-entertainment-system = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System.dat"
+noIntro.nintendo-virtual-boy = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Virtual%20Boy.dat"
+noIntro.nintendo-wii-digital = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Wii%20%28Digital%29.dat"
+noIntro.nintendo-wii-u-digital = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Nintendo%20-%20Wii%20U%20%28Digital%29.dat"
+noIntro.philips-videopac = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Philips%20-%20Videopac%2B.dat"
+noIntro.rca-studio-ii = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/RCA%20-%20Studio%20II.dat"
+noIntro.sega-32x = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%2032X.dat"
+noIntro.sega-beena = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Beena.dat"
+noIntro.sega-game-gear = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Game%20Gear.dat"
+noIntro.sega-master-system-mark-iii = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Master%20System%20-%20Mark%20III.dat"
+noIntro.sega-mega-drive-genesis = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20Mega%20Drive%20-%20Genesis.dat"
+noIntro.sega-pico = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20PICO.dat"
+noIntro.sega-sg-1000 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sega%20-%20SG-1000.dat"
+noIntro.sharp-x1 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sharp%20-%20X1.dat"
+noIntro.sharp-x68000 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sharp%20-%20X68000.dat"
+noIntro.sinclair-zx-spectrum-3 = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sinclair%20-%20ZX%20Spectrum%20%2B3.dat"
+noIntro.snk-neo-geo-pocket = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/SNK%20-%20Neo%20Geo%20Pocket.dat"
+noIntro.snk-neo-geo-pocket-color = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/SNK%20-%20Neo%20Geo%20Pocket%20Color.dat"
+noIntro.sony-playstation-3-psn = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%203%20%28PSN%29.dat"
+noIntro.sony-playstation-portable = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable.dat"
+noIntro.sony-playstation-portable-psn = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28PSN%29.dat"
+noIntro.sony-playstation-portable-psx2psp = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28PSX2PSP%29.dat"
+noIntro.sony-playstation-portable-umd-music = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28UMD%20Music%29.dat"
+noIntro.sony-playstation-portable-umd-video = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Portable%20%28UMD%20Video%29.dat"
+noIntro.sony-playstation-vita = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Vita.dat"
+noIntro.sony-playstation-vita-psn = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Sony%20-%20PlayStation%20Vita%20%28PSN%29.dat"
+noIntro.tiger-game-com = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Tiger%20-%20Game.com.dat"
+noIntro.vtech-creativision = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/VTech%20-%20CreatiVision.dat"
+noIntro.vtech-v-smile = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/VTech%20-%20V.Smile.dat"
+noIntro.watara-supervision = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/no-intro/Watara%20-%20Supervision.dat"

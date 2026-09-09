@@ -263,7 +263,6 @@ def process_npmjs(name, value):
 def process_zip(name, url):
     print(f"Updating [zip] {name} from {url}...")
     data = download_file(url)
-    h = calculate_sri_hash(data)
 
     with zipfile.ZipFile(io.BytesIO(data)) as z:
         files = []
@@ -271,8 +270,21 @@ def process_zip(name, url):
             if not info.filename.endswith("/") and not info.is_dir():
                 files.append(zip_member_path(info))
         archive_content = scan_archive_contents_from_zip(z)
-
     files.sort()
+
+    # make_nix_src_expr renders this as pkgs.fetchzip { url; hash; }, whose
+    # hash covers the EXTRACTED tree (NAR, outputHashMode "recursive"), not
+    # the raw downloaded bytes -- hashing the raw zip here would silently
+    # mismatch every time. Verify against Nix's own fetchzip directly so
+    # this always matches whatever nixpkgs' fetchzip actually produces,
+    # rather than reimplementing its unpack semantics by hand.
+    placeholder = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+    nix_expr = (
+        f"let pkgs = import {nixpkgs_import_expr()} {{}}; in "
+        f'pkgs.fetchzip {{ url = "{url}"; hash = "{placeholder}"; extension = "zip"; }}'
+    )
+    h = extract_hash_from_nix_build(nix_expr, name)
+
     result = {"type": "zip", "url": url, "hash": h, "files": files}
     if archive_content:
         result["archiveContent"] = archive_content
@@ -584,7 +596,7 @@ def make_nix_src_expr(info):
     if t in ["git", "git-tag"]:
         return f'customLib.fetchGitTree {{ url = "{info["url"]}"; rev = "{info["rev"]}"; hash = "{info["hash"]}"; date = "{info["date"]}"; }}'
     elif t == "zip":
-        return f'pkgs.fetchzip {{ url = "{info["url"]}"; hash = "{info["hash"]}"; }}'
+        return f'pkgs.fetchzip {{ url = "{info["url"]}"; hash = "{info["hash"]}"; extension = "zip"; }}'
     elif t == "url" or t == "npmjs":
         return f'pkgs.fetchurl {{ url = "{info["url"]}"; hash = "{info["hash"]}"; }}'
     elif t == "idgames":

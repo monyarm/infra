@@ -25,6 +25,7 @@ let
         "kvm"
         "ca-derivations"
         "cdrom"
+        "redumper-drive"
       ];
 
       sshUser = user.name;
@@ -89,6 +90,12 @@ in
       ];
       builders-use-substitutes = true;
       max-jobs = currentHostMachine.maxJobs - 2;
+      # extra- appends to nix.conf's system-features instead of replacing
+      # it, so NixOS's own mkDefault-populated list (CPU-arch features etc)
+      # survives -- currentHostMachine.supportedFeatures only reaches
+      # OTHER hosts' buildMachines entries above (self is filtered out),
+      # so this is the one place it also has to apply locally.
+      extra-system-features = currentHostMachine.supportedFeatures;
     };
 
     nrBuildUsers = 64;
