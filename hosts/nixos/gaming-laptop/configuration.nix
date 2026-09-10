@@ -2,7 +2,12 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ dirs, stateVersion, ... }:
+{
+  dirs,
+  lib,
+  stateVersion,
+  ...
+}:
 
 {
   imports = [
@@ -28,10 +33,8 @@
   hardware.nvidia = {
     modesetting.enable = true;
     prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
+      offload.enable = lib.mkForce false;
+      sync.enable = true;
     };
   };
 
