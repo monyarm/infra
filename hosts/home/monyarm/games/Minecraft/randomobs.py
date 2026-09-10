@@ -13,6 +13,7 @@ horse/sheep/iron_golem "secondary texture" auto-match feature are real
 ETF capabilities but not built here yet -- ENTITY_PATHS below only ever
 points at each entity's own base body texture.
 """
+
 import argparse
 import fnmatch
 import os
@@ -91,7 +92,9 @@ def discover_entities(pack_dir):
     found = set()
     if os.path.isdir(base):
         for name in os.listdir(base):
-            if name not in ENTITY_PATHS and os.path.isfile(os.path.join(base, name, f"{name}.png")):
+            if name not in ENTITY_PATHS and os.path.isfile(
+                os.path.join(base, name, f"{name}.png")
+            ):
                 found.add(name)
     for e in ENTITY_PATHS:
         if extract_candidates(pack_dir, e):
@@ -104,7 +107,9 @@ def expand_skin_variants(path):
     multiple skin PNGs (all treated as separate variants)."""
     if os.path.isdir(path):
         return sorted(
-            os.path.join(path, f) for f in sorted(os.listdir(path)) if f.lower().endswith(".png")
+            os.path.join(path, f)
+            for f in sorted(os.listdir(path))
+            if f.lower().endswith(".png")
         )
     return [path]
 
@@ -134,7 +139,9 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--pack-format", type=int, required=True)
     p.add_argument("--texture-pack", action="append", default=[])
-    p.add_argument("--skin", action="append", default=[], help="ENTITY=PATH, repeatable")
+    p.add_argument(
+        "--skin", action="append", default=[], help="ENTITY=PATH, repeatable"
+    )
     p.add_argument(
         "--jar-texture",
         action="append",
@@ -166,8 +173,7 @@ def main():
         os.makedirs(args.out, exist_ok=True)
         with open(os.path.join(args.out, "pack.mcmeta"), "w") as f:
             f.write(
-                '{ "pack": { "description": "randomobs", "pack_format": %d } }\n'
-                % args.pack_format
+                f'{{ "pack": {{ "description": "randomobs", "pack_format": {args.pack_format} }} }}\n'
             )
 
         for entity in scope:
