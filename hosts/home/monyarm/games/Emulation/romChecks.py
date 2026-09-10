@@ -137,7 +137,7 @@ def check_gba(data: bytes) -> bool:
 
 
 def check_gamegear(data: bytes) -> bool:
-    valid_sizes = {8192, 16384, 32768, 49152, 65536, 131072, 262144, 524288}
+    valid_sizes = {8192, 16384, 32768, 49152, 65536, 131072, 262144, 524288, 1048576}
     sane = len(data) in valid_sizes
     record(
         "PASS" if sane else "FAIL",
