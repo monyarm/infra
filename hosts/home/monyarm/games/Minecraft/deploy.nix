@@ -2,19 +2,26 @@
   lib,
   pkgs,
   dirs,
-  mkOutOfStoreSymlink,
   resolved, # name -> { components; instance; resourcePackOrder; }, from resolveGame
   resolvedInstances, # name -> instance (resolved's .instance, for callers that don't need resourcePackOrder)
   sharedLibraries, # Maven path -> drv, deduped union of every instance's prism-component libraries
   ...
 }:
 with lib;
+let
+  # Real, non-symlinked location PrismLauncher itself writes to at runtime --
+  # config/saves/logs/options.txt must live here as plain files, never behind
+  # an out-of-store symlink into the repo (that dumped ~1800 save/config
+  # files into git as untracked cruft).
+  liveInstanceDir = name: "${dirs.HOME}/.local/share/PrismLauncher/instances/${name}";
+in
 {
   # Deploys every resolved instance: Steam registration, per-file xdg.dataFile
-  # symlinks (mods/resourcepacks/datapacks/extraSymlinkFiles are always
-  # store-authoritative; config/saves/logs/options.txt are out-of-store,
-  # runtime-mutable), and the two activation scripts that reconcile config/
-  # against modpack updates and patch options.txt's resourcePacks line.
+  # symlinks (mods/resourcepacks/datapacks/extraSymlinkFiles/instance.cfg/etc
+  # are store-authoritative); config/saves/logs/options.txt are left as plain
+  # real files at the live PrismLauncher data dir and reconciled in place by
+  # the two activation scripts below (config/ against modpack updates,
+  # options.txt's resourcePacks line).
   programs.steam.games = mapAttrs' (
     name: _instanceDrv:
     nameValuePair name {
@@ -24,7 +31,7 @@ with lib;
         package = pkgs.prismlauncher;
         args = [ "-l" ];
       };
-      workingDirectory = "${dirs.hmConfig}/PrismLauncher/instances/${name}";
+      workingDirectory = liveInstanceDir name;
     }
   ) resolvedInstances;
 
@@ -45,12 +52,6 @@ with lib;
         "${base}/instance.cfg".source = "${inst.instanceBase}/instance.cfg";
         "${base}/mmc-pack.json".source = "${inst.instanceBase}/mmc-pack.json";
         "${base}/patches".source = "${inst.instanceBase}/patches";
-        "${base}/.minecraft/config".source =
-          mkOutOfStoreSymlink "${dirs.hmConfig}/${base}/.minecraft/config";
-        "${base}/.minecraft/saves".source = mkOutOfStoreSymlink "${dirs.hmConfig}/${base}/.minecraft/saves";
-        "${base}/.minecraft/logs".source = mkOutOfStoreSymlink "${dirs.hmConfig}/${base}/.minecraft/logs";
-        "${base}/.minecraft/options.txt".source =
-          mkOutOfStoreSymlink "${dirs.hmConfig}/${base}/.minecraft/options.txt";
       }
       // fileEntries "mods" inst.modFiles
       // fileEntries "resourcepacks" inst.resourcePackFiles
@@ -103,7 +104,7 @@ with lib;
           lib.mapAttrsToList (
             relPath: seed:
             let
-              instanceDir = "${dirs.hmConfig}/PrismLauncher/instances/${name}";
+              instanceDir = liveInstanceDir name;
             in
             ''nix_minecraft_reseed_config "${seed}" "${instanceDir}/.minecraft/config/${relPath}" "${instanceDir}/.nix-seed-state/config/${relPath}.sha256"''
           ) r.instance.mutableConfigFiles
@@ -147,7 +148,7 @@ with lib;
         name: r:
         lib.optionalString (r.resourcePackOrder != null) ''
           nix_minecraft_patch_line \
-            "${dirs.hmConfig}/PrismLauncher/instances/${name}/.minecraft/options.txt" \
+            "${liveInstanceDir name}/.minecraft/options.txt" \
             '^resourcePacks:' \
             'resourcePacks:${builtins.toJSON r.resourcePackOrder}' || exit 1
         '';

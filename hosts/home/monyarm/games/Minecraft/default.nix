@@ -3,7 +3,6 @@
   pkgs,
   config,
   dirs,
-  mkOutOfStoreSymlink,
   mkPrismComponentPatch,
   mkMmcPackComponent,
   mkPrismComponentLibraries,
@@ -96,7 +95,6 @@ let
       lib
       pkgs
       dirs
-      mkOutOfStoreSymlink
       resolved
       resolvedInstances
       sharedLibraries

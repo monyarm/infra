@@ -31,3 +31,9 @@ quick "just checking the interface" probe — there's almost no safe-to-truncate
 at a script's CLI flags (`--help`) when unsure — read its `argparse`/arg-parsing source (or
 just its main()) directly instead of executing a guess against a mutating script.
 Only use `tail`/`head` if you know the command will be long and unwieldly
+
+Broken a third time (2026-09-11, ~/.nix): piped `nix eval`/`nix build` output through
+`tail -20`/`tail -60` while debugging a deploy.nix fix, despite CLAUDE.md stating this
+explicitly by name ("never pipe `nix build`/`nix eval` output through `tail`/`head`"). This
+is a written, standing rule, not just a past correction to recall — check it before running
+`nix build`/`nix eval` specifically, every time, don't rely on remembering not to.
