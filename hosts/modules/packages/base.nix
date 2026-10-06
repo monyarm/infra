@@ -2,33 +2,32 @@
   pkgs,
   ...
 }:
-let
-  basePackages =
-    with pkgs;
-    (builtins.concatLists (
-      builtins.attrValues {
-        cli = [
-          # keep-sorted start
-          bat
-          curl
-          diskus
-          eza
-          git
-          gnupg
-          htop
-          jq
-          ripgrep
-          tree
-          wget
-          # keep-sorted end
-        ];
-        dev = [
-          direnv
-          yarn
-        ];
-      }
-    ));
-in
 {
-  environment.systemPackages = basePackages;
+  environment.systemPackages = with pkgs; [
+    # keep-sorted start
+    appimage-run
+    bat
+    bc
+    curl
+    diskus
+    entr
+    eza
+    file
+    git
+    gnupg
+    htop
+    inotify-tools
+    jq
+    p7zip
+    ripgrep
+    rs
+    socat
+    sqlite
+    sshfs
+    tree
+    unrar
+    unzip
+    wget
+    # keep-sorted end
+  ];
 }

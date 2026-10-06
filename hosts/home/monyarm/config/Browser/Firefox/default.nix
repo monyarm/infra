@@ -1,10 +1,9 @@
-{ ... }:
+{ bookmarks, ... }:
 {
   imports = [
     ./userChrome.nix
     ./policies.nix
     ./settings.nix
-    ./bookmarks.nix
     ./search.nix
   ];
 
@@ -25,6 +24,12 @@
         name = "Default User";
         path = "default";
         isDefault = true;
+
+        # Shared with Chromium -- see ../data/bookmarks.nix
+        bookmarks = {
+          force = true;
+          settings = bookmarks.all;
+        };
       };
     };
   };

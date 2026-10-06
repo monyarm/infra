@@ -55,6 +55,15 @@ let
         NIX_CFLAGS_COMPILE = "${old.NIX_CFLAGS_COMPILE or ""} -I${final.minizip}/include/minizip";
       });
     })
+    (_final: prev: {
+      # p7zip's package.nix takes enableUnfree as a callPackage ARGUMENT (not a
+      # result attribute), defaulting false, which strips CPP/7zip/Compress/Rar*
+      # at fetch time -- so stock p7zip cannot extract RAR at all. The UnRAR
+      # code is separately redistributable, and we already carry allowUnfree =
+      # true, so flip it once here instead of per-call-site. Set globally
+      # because p7zip shows up in scripts too (extract.sh, V5/public/extract.php).
+      p7zip = prev.p7zip.override { enableUnfree = true; };
+    })
   ];
 
   pkgsGen =
@@ -71,6 +80,14 @@ let
     inputs.niri.homeModules.niri
     inputs.niri.homeModules.stylix
     inputs.sops-nix.homeManagerModules.sops
+    # user-only package lists. Not reachable from modules/packages/default.nix:
+    # that is imported by NixOS, where isHomeManager is false, so home.packages
+    # there would silently do nothing. Keep them out of the NixOS tree so the
+    # headless system-manager host doesn't get desktop apps.
+    ./modules/packages/dev.nix
+    ./modules/packages/media.nix
+    ./modules/packages/apps.nix
+    ./modules/packages/games.nix
     ./modules/lib.nix
     "${dirs.secrets}"
   ];

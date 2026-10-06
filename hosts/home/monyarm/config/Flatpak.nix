@@ -22,6 +22,9 @@ in
 {
   # flatpak_program_manager.sh runs through inline_progress_manager.sh, which
   # calls `unbuffer` (from expect) to preserve inline progress output.
+  # The flatpak CLI itself lives in packages/apps.nix (home.packages) -- it
+  # can't go in environment.systemPackages from here, since this file is
+  # imported into home-manager where that option doesn't exist.
   home.packages = [ pkgs.expect ];
 
   home.activation.flatpakManagement = lib.mkIf shouldFullUpdate (

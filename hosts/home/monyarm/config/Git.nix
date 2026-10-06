@@ -4,16 +4,16 @@
     signing = {
       signByDefault = true;
     };
+
+    # Adds git-lfs to home.packages AND generates the [filter "lfs"] section
+    # itself, so the hand-written one in settings below is redundant -- keeping
+    # both would emit a duplicate section into the same generated gitconfig.
+    lfs.enable = true;
+
     settings = {
       user = {
         name = user.fullName;
         inherit (user) email;
-      };
-      filter.lfs = {
-        clean = "git-lfs clean -- %f";
-        smudge = "git-lfs smudge -- %f";
-        process = "git-lfs filter-process";
-        required = true;
       };
       core = {
         autocrlf = "input";

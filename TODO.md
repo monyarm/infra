@@ -395,3 +395,15 @@ regardless of which rip strategy handles it.
   `lib/optimize/dynamic.nix`'s `instantiateDrv`/`builtins.outputOf`
   pattern, applied to naming instead of per-file optimization.
   Needs to be pinned down before a fix can be scoped correctly.
+
+## GIMP config is drifting from the tracked copy
+
+`hosts/home/monyarm/config/GIMP/` tracks ~11 files that GIMP rewrites on its own:
+`sessionrc` (window geometry), `pluginrc`, `tags.xml`, `tool-options/*`,
+`shared/action-history`. They churn constantly -- a 4k-line diff showed up alongside
+unrelated work.
+
+Eventually: switch to managing only the subset that is actually intentional -- likely
+`gimprc`, `themerc`/`theme.css`, and a curated `shortcutsrc` -- and gitignore the
+per-session remainder, rather than tracking GIMP's live state. Nothing to do for the
+`nix profile` migration; noted here because the churn keeps colliding with real changes.

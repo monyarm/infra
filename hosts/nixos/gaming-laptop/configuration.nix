@@ -15,12 +15,14 @@
     "${dirs.modules}/misc"
     "${dirs.modules}/packages"
     "${dirs.modules}/services"
+    "${dirs.modules}/services/archisteamfarm.nix"
     "${dirs.modules}/services/tailscale.nix"
     "${dirs.modules}/services/syncthing.nix"
     # TODO: Fix services
     # "${dirs.modules}/services/waydroid.nix"
     # "${dirs.modules}/programs/android-apps.nix"
     "${dirs.modules}/programs/steam"
+    "${dirs.modules}/programs/chromium.nix"
     "${dirs.modules}/programs/shell.nix"
     "${dirs.modules}/config/doas.nix"
   ];
