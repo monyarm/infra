@@ -6,8 +6,8 @@
 # policies option. The nixos module writes extra.json to
 # environment.etc."chromium/policies/managed".
 {
-  lib,
   pkgs,
+  urlEncodeEucJp,
   ...
 }:
 let
@@ -22,8 +22,7 @@ let
     ];
 
   bookmarks = import ../../home/monyarm/config/Browser/data/bookmarks.nix {
-    inherit importSopsNix;
-    inherit (lib) urlEncodeEucJp;
+    inherit importSopsNix urlEncodeEucJp;
   };
 
   # Firefox tree -> Chromium ManagedBookmarks: `bookmarks` becomes `children`,
@@ -51,10 +50,17 @@ let
   }) bookmarks.all;
 in
 {
-  programs.chromium.extraOpts = {
-    ManagedBookmarks = managed;
+  # NixOS's programs.chromium.enable only gates the environment.etc policy
+  # files -- it does not add chromium to environment.systemPackages, so this
+  # does not duplicate the HM-installed binary. Without it extraOpts is never
+  # forced and no /etc/chromium/policies is written.
+  programs.chromium = {
+    enable = true;
+    extraOpts = {
+      ManagedBookmarks = managed;
 
-    # Chromium otherwise shows the bookmarks bar only on the new-tab page.
-    BookmarkBarEnabled = true;
+      # Chromium otherwise shows the bookmarks bar only on the new-tab page.
+      BookmarkBarEnabled = true;
+    };
   };
 }

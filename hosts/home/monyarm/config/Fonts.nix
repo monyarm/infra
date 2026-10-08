@@ -79,6 +79,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    dejavu_fonts
     mse-fonts-magic
     mse-fonts-other
     keyrune-font

@@ -398,12 +398,22 @@ regardless of which rip strategy handles it.
 
 ## GIMP config is drifting from the tracked copy
 
-`hosts/home/monyarm/config/GIMP/` tracks ~11 files that GIMP rewrites on its own:
-`sessionrc` (window geometry), `pluginrc`, `tags.xml`, `tool-options/*`,
-`shared/action-history`. They churn constantly -- a 4k-line diff showed up alongside
-unrelated work.
+Done. `hosts/home/monyarm/config/GIMP/` tracked 502 files and symlinked the whole
+`GIMP/<version>/` directory, so the repo sat at the end of the chain and everything GIMP
+wrote on exit -- `sessionrc`, `pluginrc`, `tags.xml`, `tool-options/`, even
+`.goutputstream-*` temp files -- landed in git. A 4k-line diff kept colliding with real
+work.
 
-Eventually: switch to managing only the subset that is actually intentional -- likely
-`gimprc`, `themerc`/`theme.css`, and a curated `shortcutsrc` -- and gitignore the
-per-session remainder, rather than tracking GIMP's live state. Nothing to do for the
-`nix profile` migration; noted here because the churn keeps colliding with real changes.
+Now per-file out-of-store symlinks only: a curated `gimprc` (linked into both `2.10/` and
+`3.0/`) and the `export_layers` plug-in. `~/.config/GIMP/<version>/` is a real directory
+GIMP owns. Measured against gimp 3.2.4's shipped defaults first -- `templaterc`, `toolrc`,
+`unitrc`, `controllerrc`, `sessionrc` and `shortcutsrc` were all confirmed to hold zero
+user content (float reformatting, session state, disabled bindings), so only `gimprc`'s 13
+non-default preferences were kept.
+
+`export_layers` is tracked but inert: it is 2.10-era code importing the `gimp`/`gimpenums`/
+`pygimplib` C bindings, which gimp 3 dropped. gimp 3's own Python-Fu plug-ins work fine --
+via `gi.repository.Gimp`, with `Gimp-3.0.typelib` shipped in gimp's output and python3 +
+pygobject3 propagated. `gimp2` (2.10.38) is packaged but has `--disable-python`, since
+Python-Fu there needs EOLed python2. Porting `export_layers` to the introspection API is
+the only way to make it load.

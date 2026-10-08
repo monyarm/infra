@@ -6,9 +6,7 @@
 {
   home.packages = with pkgs; [
     audacity
-    dejavu_fonts
     ffmpeg
-    gimp
     imagemagickBig
     inkscape
     pdf-cli

@@ -1,13 +1,23 @@
-# GIMP gimprc
-# 
-# This is your personal gimprc file.  Any variable defined in this file takes
-# precedence over the value defined in the system-wide gimprc:
-# /etc/gimp/3.0/gimprc
-# Most values can be set within GIMP by changing some options in the
-# Preferences dialog.
+# Only settings that differ from gimp's shipped defaults. GIMP rewrites this file
+# on exit, so it is the one thing here worth tracking; everything else it writes
+# stays untracked. Both GIMP/2.10/ and GIMP/3.0/ link to this file.
+#
+# Absent on purpose: prev-language and config-version (locale/version derived,
+# GIMP rewrites them) and the system-wide gimprc path (a store path, so it
+# churns on every gimp upgrade).
 
-(prev-language "British English")
-(config-version "3.0.6")
+# Real panel DPI; gimp defaults to 96/96.
+(monitor-xresolution 143)
+(monitor-yresolution 144)
+(show-welcome-dialog no)
+
+# keep, not the default ask: otherwise every file with an embedded ICC profile
+# prompts on open.
+(color-profile-policy keep)
+(import-raw-plug-in "${gimp_plug_in_dir}/plug-ins/file-raw-placeholder/file-raw-placeholder")
+
+# Shipped block, kept whole because gimp rewrites a touched colour-management
+# block in full. Only out-of-gamut-color and the two display toggles differ.
 (color-management
     (mode display)
     (display-profile-from-gdk no)
@@ -22,20 +32,21 @@
         (color "R'G'B'A double" 32 "\0\0\0\0\0\0\360\77\0\0\0\0\0\0\0\0\0\0\0\0\0\0\360\77\0\0\0\0\0\0\360\77" 0))
     (show-rgb-u8 yes)
     (show-hsv yes))
-(import-raw-plug-in "${gimp_plug_in_dir}/plug-ins/gimp-org-file-darktable/gimp-org-file-darktable")
-(monitor-xresolution 102)
-(monitor-yresolution 102)
-(show-welcome-dialog no)
-(color-profile-policy keep)
+
+# The 3-colour lowbleed-dither look. Not discoverable by accident.
 (image-convert-indexed-max-colors 3)
 (image-convert-indexed-dither-type fs-lowbleed)
 (image-convert-indexed-dither-alpha yes)
+
 (image-resize-fill-type white)
 (image-resize-layer-set all)
+
 (layer-new-name "watermark")
 (layer-add-mask-type selection)
+
 (selection-grow-radius 5)
 (selection-shrink-radius 20)
+
 (fill-options
     (style fg-color)
     (custom-style solid-color)
@@ -57,6 +68,3 @@
     (dash-offset 0)
     (dash-info 0)
     (emulate-brush-dynamics no))
-
-
-# end of gimprc

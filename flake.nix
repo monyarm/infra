@@ -209,7 +209,6 @@
               settings.global.excludes = [
                 "node_modules/**"
                 ".bench/**"
-                "hosts/home/*/config/GIMP/.config/GIMP/*/**"
                 "hosts/home/*/config/JetBrains/*/**"
                 "**/.github/**"
                 "**/*.sops.nix"
