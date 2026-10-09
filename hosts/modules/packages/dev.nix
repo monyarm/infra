@@ -28,8 +28,6 @@ let
     libx11.dev
     openh264
     openh264.dev
-    python312Packages.capstone
-    python312Packages.numpy
     vips.dev
     # xorgproto deliberately absent: it ships the same
     # include/X11/extensions/*.h as libx11.dev, and home.packages is one
@@ -65,7 +63,6 @@ let
     nim
     nimble
     nodejs
-    python311
     sops
   ];
 
@@ -74,10 +71,33 @@ let
     hyperfine
     rust-analyzer
   ];
+
+  # One interpreter on PATH with the libraries actually importable. Loose
+  # python3Packages entries are not: home.packages is one buildEnv, so
+  # python3Packages.numpy drops its site-packages where no interpreter looks.
+  pythonEnv = pkgs.python3.withPackages (
+    ps: with ps; [
+      aiohttp
+      beautifulsoup4
+      capstone
+      click
+      cryptography
+      httpx
+      lxml
+      numpy
+      pandas
+      pillow
+      pydantic
+      pyyaml
+      requests
+      rich
+      tqdm
+    ]
+  );
 in
 {
   programs.gcc.enable = true;
   programs.gh.enable = true;
 
-  home.packages = libs ++ armEmbedded ++ toolchain ++ runtimes ++ tooling;
+  home.packages = libs ++ armEmbedded ++ toolchain ++ runtimes ++ tooling ++ [ pythonEnv ];
 }
