@@ -73,6 +73,9 @@ let
       outExt,
       nativeBuildInputs ? [ ],
       compressCmd,
+      # Uncompressed inputs to expose as `passthru.raw`. Defaults to the staged
+      # bundle (rom + any patch/sidecar), which is what gets compressed.
+      raw ? allFiles: allFiles,
     }:
     _extra: x:
     let
@@ -119,6 +122,7 @@ let
         allowSubstitutes = false;
         outputHashAlgo = "sha256";
         outputHashMode = "flat";
+        passthru.raw = raw;
       }
       ''
         ${stageFiles allFiles}

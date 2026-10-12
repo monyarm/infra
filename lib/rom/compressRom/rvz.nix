@@ -18,6 +18,7 @@ pkgs.runCommand "${getName primary}.rvz"
     allowSubstitutes = false;
     outputHashAlgo = "sha256";
     outputHashMode = "flat";
+    passthru.raw = primary;
   }
   ''
     dolphin-tool convert -f rvz -b 131072 -c lzma2 -l 9 -s -i "${primary}" -o "$out"

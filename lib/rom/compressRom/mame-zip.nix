@@ -25,6 +25,7 @@ pkgs.runCommand "${getName rom}.zip"
     allowSubstitutes = false;
     outputHashAlgo = "sha256";
     outputHashMode = "flat";
+    passthru.raw = rom;
   }
   ''
     mkdir extracted

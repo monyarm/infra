@@ -79,6 +79,8 @@ pkgs.runCommand outName
     allowSubstitutes = false;
     outputHashAlgo = "sha256";
     outputHashMode = "flat";
+    # The uncompressed inputs, whatever mix of cue/gdi/tracks/iso/cso they are.
+    passthru.raw = norm.siblings;
   }
   ''
     ${stageFiles norm.siblings}

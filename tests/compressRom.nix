@@ -29,12 +29,38 @@ let
     patch = source "game.ips";
     sidecar = source "game.sav";
   };
+
+  # Every compression result must expose its uncompressed input as
+  # passthru.raw, so a consumer can always get the original back.
+  chdCue = rom.compressRom {
+    cue = source "disc.cue";
+    tracks = [ (source "track01.bin") ];
+  };
+  compressed = [
+    chd
+    pspChd
+    rvz
+    bundle
+    patchedZstd
+    (rom.compressRom (wrapped "romset.zip"))
+    (rom.compressRom (source "solo.iso"))
+    chdCue
+  ];
+  missingRaw = builtins.filter (d: !(d ? passthru) || !(d.passthru ? raw)) compressed;
+  emptyRaw = builtins.filter (d: d.passthru.raw == [ ]) compressed;
 in
 assert lib.hasSuffix "game.chd" chd.name;
 assert lib.hasSuffix "game.psp.chd" pspChd.name;
 assert lib.hasSuffix "game.gc.rvz" rvz.name;
 assert lib.hasSuffix "game.7z" bundle.name;
 assert lib.hasSuffix "vb.tar.zst" patchedZstd.name;
+# A cue+tracks CHD must keep the cue, not just the primary track.
+assert builtins.length chdCue.passthru.raw == 2;
+assert lib.hasSuffix ".cue" (toString (builtins.head chdCue.passthru.raw));
+assert lib.hasSuffix ".bin" (toString (builtins.elemAt chdCue.passthru.raw 1));
+assert builtins.length compressed == 8;
+assert missingRaw == [ ];
+assert emptyRaw == [ ];
 pkgs.runCommand "test-compress-rom-wrapped"
   {
     nativeBuildInputs = [

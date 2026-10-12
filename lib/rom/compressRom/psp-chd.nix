@@ -26,6 +26,7 @@ pkgs.runCommand outName
     allowSubstitutes = false;
     outputHashAlgo = "sha256";
     outputHashMode = "flat";
+    passthru.raw = primary;
   }
   ''
     ${convertCmd}

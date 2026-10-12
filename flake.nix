@@ -19,6 +19,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # No nixpkgs.follows: pspdev.cachix.org is populated against the nixpkgs
+    # revision pspdev-nix locks, so forcing ours re-hashes every toolchain
+    # derivation and misses the cache entirely.
+    pspdev-nix.url = "github:pspdev/pspdev-nix";
     nix-mod-manager = {
       url = "github:Nowaaru/nix-mod-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -103,12 +107,15 @@
       "https://nix-community.cachix.org"
       # "https://nix-on-droid.cachix.org"
       "https://install.determinate.systems"
-
+      # Substitutes the PSP toolchain (GCC 15.2.0 + binutils + newlib) instead
+      # of building it locally.
+      "https://pspdev.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE="
       "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
+      "pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0="
     ];
   };
 
@@ -178,12 +185,36 @@
             "builders"
           ];
           tests = import ./tests { inherit pkgs; };
+          # Console deployment CLIs: psp-diff / psp-apply / psp-size.
+          consoleTools = import ./apps/console/packages.nix {
+            inherit (pkgs) lib python3;
+            inherit pkgs;
+          };
         in
         rec {
           inherit legacyPackages;
-          packages = pkgs.lib.filterAttrs (
-            name: _: !(builtins.elem name nonDerivationPackageNames)
-          ) legacyPackages;
+          packages =
+            (pkgs.lib.filterAttrs (name: _: !(builtins.elem name nonDerivationPackageNames)) legacyPackages)
+            // {
+              inherit (consoleTools) psp-diff;
+              inherit (consoleTools) psp-apply;
+              inherit (consoleTools) psp-size;
+            };
+
+          apps = {
+            psp-diff = {
+              type = "app";
+              program = "${consoleTools.psp-diff}/bin/psp-diff";
+            };
+            psp-apply = {
+              type = "app";
+              program = "${consoleTools.psp-apply}/bin/psp-apply";
+            };
+            psp-size = {
+              type = "app";
+              program = "${consoleTools.psp-size}/bin/psp-size";
+            };
+          };
 
           # Checks the filtered `packages`, not `legacyPackages` -- only
           # forced by `nix flake check`, not every eval.

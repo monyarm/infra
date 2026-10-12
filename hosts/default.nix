@@ -273,6 +273,8 @@ in
 {
   flake = {
     inherit nixosConfigurations systemConfigs homeConfigurations;
+    # Console configs are not architecture-keyed: consoleConfig.psp.<name>.
+    consoleConfig = import ./console { inherit inputs sources; };
     lib.overlays = overlays;
   };
 }

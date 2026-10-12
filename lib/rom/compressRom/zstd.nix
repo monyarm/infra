@@ -32,6 +32,7 @@ if !hasPatches then
       allowSubstitutes = false;
       outputHashAlgo = "sha256";
       outputHashMode = "flat";
+      passthru.raw = rom;
     }
     ''
       zstd -19 --ultra "${rom}" -o "$out"
