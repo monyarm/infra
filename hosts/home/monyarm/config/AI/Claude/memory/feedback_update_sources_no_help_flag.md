@@ -27,10 +27,9 @@ Passing a selector implies preserve mode (everything else is carried over). A se
 matches nothing exits 1 and lists the available namespaces and sections rather than
 rewriting `sources.nix` for nothing.
 
-**Still true:** never run it to "see what it does" — use `--help` now, it is safe. And a
-scoped run still touches every entry's *encoding* (see
-[[feedback_update_sources_reencoding-churn]]), so `git diff sources.nix` after a scoped run
-shows far more than the entry you selected.
+**Still true:** every run re-encodes all 289 entries, so `git diff sources.nix` is never small
+— that is expected and documented in AGENTS.md, not a symptom of a bad run. Verify by
+comparing semantics (`nix eval --json -f sources.nix | sha256sum`), not by diff size.
 
 See [[feedback_update_sources_full_run_danger]] and
 [[feedback_prefer_sources_toml_fetchgittree]] for the rest of this script's usage pattern.

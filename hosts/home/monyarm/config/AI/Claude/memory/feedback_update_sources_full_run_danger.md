@@ -23,5 +23,5 @@ longer needed. If a scoped run won't work, `--append` still only picks up TOML e
 from `previous_sources`. A zero-arg run is the only thing that touches everything — always
 confirm that with the user first. Run `update-sources.py` in the background
 (\[[feedback_background_task_pattern]\]), and always sanity-check `git diff sources.nix` before
-and after — but see [[feedback_update_sources_reencoding-churn]]: that diff is large even for a
-scoped run, because every entry gets re-encoded.
+and after — remember that diff is large even for a scoped run, since every run re-encodes all
+entries (expected, documented in AGENTS.md; verify by semantics, not by diff size).
