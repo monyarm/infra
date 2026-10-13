@@ -1,29 +1,36 @@
 ---
 name: feedback-update-sources-no-help-flag
-description: update-sources.py has no argparse/--help; any invocation without the literal string --append in argv runs a full update of every source in sources.toml
+description: update-sources.py now has real argparse parsing (--help/--append/--section/SELECTOR); unknown args exit 2 instead of silently triggering a full refresh
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: 16dd47ec-4739-46a7-bab4-6ccc43f50f6a
 ---
 
-`update-sources.py`'s CLI is just `append_mode = "--append" in sys.argv` (see `main()`,
-~line 2301) — no `argparse`, no `--help`, no flag validation at all. Passing any other flag
-(including `--help`) does NOT show usage and does NOT error; it silently runs with
-`append_mode = False`, which skips the "already in previous_sources" guard entirely and
-re-fetches/re-hashes **every single entry in every section of `sources.toml`** — caveman
-binaries, mpv scripts, itch games, everything, unrelated to whatever you were actually trying
-to update.
+`update-sources.py` used to parse args with a single `append_mode = "--append" in sys.argv`,
+so every other flag — `--help` included — was silently ignored and ran a **full** refresh of
+every source. That landmine is now closed: the CLI is real `argparse` (`parse_args()`), so
+`--help` prints usage (exit 0) and an unknown flag exits 2.
 
-**Why:** caught before execution — I tried `update-sources.py --help` to check usage before a
-real `--append` run and the user stopped me; running it would have kicked off a full-repo
-source refresh instead of showing help.
+Safe invocations:
 
-**How to apply:** never invoke `update-sources.py` to "check what it does" or "see its flags."
-Read the script's own `main()`/arg-handling directly (`grep -n "sys.argv" update-sources.py`)
-instead of probing with `--help` or any other exploratory flag. The only two ways to run it
-safely: exactly `python3 update-sources.py --append` (add newly-declared `sources.toml` entries
-only, skip ones already resolved in `sources.nix`), or with zero args to intentionally refresh
-literally everything (rarely what you want — confirm with the user first). See
-[[project_packages_two_overlay_sites]] and [[feedback_prefer_sources_toml_fetchgittree]] for
-the rest of this script's usage pattern.
+| command | effect |
+|---|---|
+| `./update-sources.py redump` | re-fetch every `redump.*` entry, carry the rest over |
+| `./update-sources.py redump.psp` | re-fetch exactly that entry |
+| `./update-sources.py --section romhacking` | re-fetch every entry in that TOML section (repeatable) |
+| `./update-sources.py --append` | add only TOML entries missing from `sources.nix` |
+| `./update-sources.py` (no args) | full refresh of everything — confirm with the user first |
+
+Selectors are dotted-prefix matched on the source key, so `redump` cannot hit `redump2.foo`.
+Passing a selector implies preserve mode (everything else is carried over). A selector that
+matches nothing exits 1 and lists the available namespaces and sections rather than
+rewriting `sources.nix` for nothing.
+
+**Still true:** never run it to "see what it does" — use `--help` now, it is safe. And a
+scoped run still touches every entry's *encoding* (see
+[[feedback_update_sources_reencoding-churn]]), so `git diff sources.nix` after a scoped run
+shows far more than the entry you selected.
+
+See [[feedback_update_sources_full_run_danger]] and
+[[feedback_prefer_sources_toml_fetchgittree]] for the rest of this script's usage pattern.

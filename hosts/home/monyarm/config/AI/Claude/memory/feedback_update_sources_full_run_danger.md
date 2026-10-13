@@ -15,15 +15,13 @@ whatever you're actually trying to add. Did this once as a workaround for
 "BAD AI! BAD AI! BAD AI! Running a full update would mean updating
 everything in there, and I'm not ready to do that."
 
-**How to apply:** If `--append` won't pick up a new/changed entry because
-its name already exists in `sources.nix` (e.g. a `[cargo]` entry sharing a
-name with its parent `[git]` source, by design, for `flatten()`
-opaque-leaf/caching reasons — see `process_cargo` in `update-sources.py`),
-the fix is to **delete just that entry's block from `sources.nix`** first,
-then run `--append`. `--append` only reprocesses names missing from
-`previous_sources`; everything else stays untouched and no network calls
-happen for unrelated sources. This is the scoped, safe alternative to a
-full run — confirmed working, user's own suggested fix. Always run
-`update-sources.py` (append or otherwise) in the background
-(\[[feedback_background_task_pattern]\]), and always sanity-check
-`git diff sources.nix` before and after to confirm scope.
+**How to apply:** Prefer a **scoped selector run**, which re-fetches one entry and carries
+everything else over — `./update-sources.py tools.wadptr` for a single entry, or
+`--section romrinth` style (`--section <name>`) for a whole fetcher kind. That replaced the
+old workaround of deleting the entry's block from `sources.nix` before `--append`, which is no
+longer needed. If a scoped run won't work, `--append` still only picks up TOML entries missing
+from `previous_sources`. A zero-arg run is the only thing that touches everything — always
+confirm that with the user first. Run `update-sources.py` in the background
+(\[[feedback_background_task_pattern]\]), and always sanity-check `git diff sources.nix` before
+and after — but see [[feedback_update_sources_reencoding-churn]]: that diff is large even for a
+scoped run, because every entry gets re-encoded.

@@ -1,4 +1,6 @@
+import contextlib
 import importlib.util
+import io
 import os
 import pathlib
 import tempfile
@@ -35,6 +37,67 @@ class NpmNormalizationTests(unittest.TestCase):
 
         self.assertIn("npmLibc = if pkgs.stdenv.hostPlatform.isMusl", bindings)
         self.assertIn("@rollup/rollup-${npmOs}-${npmArch}", bindings)
+
+
+class SelectorTests(unittest.TestCase):
+    def test_namespace_selector_matches_every_child(self):
+        self.assertTrue(update_sources.key_matches("redump.psp", ["redump"]))
+        self.assertTrue(update_sources.key_matches("redump", ["redump"]))
+
+    def test_deep_path_selector_matches_exactly_one_entry(self):
+        self.assertTrue(update_sources.key_matches("redump.psp", ["redump.psp"]))
+        self.assertFalse(update_sources.key_matches("redump.ps1", ["redump.psp"]))
+
+    def test_prefix_selector_does_not_match_sibling_namespace(self):
+        # the point of matching on "." rather than str.startswith
+        self.assertFalse(update_sources.key_matches("redump2.psp", ["redump"]))
+
+    def test_any_selector_can_match(self):
+        self.assertTrue(update_sources.key_matches("tools.wadptr", ["redump", "tools"]))
+        self.assertFalse(update_sources.key_matches("fonts.x", ["redump", "tools"]))
+
+    def test_no_selectors_matches_nothing(self):
+        self.assertFalse(update_sources.key_matches("tools.wadptr", []))
+
+
+class ParseArgsTests(unittest.TestCase):
+    def test_no_args_means_unscoped_full_run(self):
+        args = update_sources.parse_args([])
+
+        self.assertFalse(args.append)
+        self.assertEqual(args.selectors, [])
+        self.assertEqual(args.sections, [])
+
+    def test_positional_selectors_and_sections(self):
+        args = update_sources.parse_args(
+            ["redump", "tools.wadptr", "--section", "romhacking", "-s", "zip"]
+        )
+
+        self.assertEqual(args.selectors, ["redump", "tools.wadptr"])
+        self.assertEqual(args.sections, ["romhacking", "zip"])
+
+    def test_append_flag(self):
+        self.assertTrue(update_sources.parse_args(["--append"]).append)
+
+    def test_unknown_flag_is_rejected(self):
+        # regression: unknown args used to be ignored, silently degrading
+        # into a full-repo refresh
+        with (
+            contextlib.redirect_stderr(io.StringIO()),
+            self.assertRaises(SystemExit) as ctx,
+        ):
+            update_sources.parse_args(["--categorie", "redump"])
+
+        self.assertEqual(ctx.exception.code, 2)
+
+    def test_help_exits_zero(self):
+        with (
+            contextlib.redirect_stdout(io.StringIO()),
+            self.assertRaises(SystemExit) as ctx,
+        ):
+            update_sources.parse_args(["--help"])
+
+        self.assertEqual(ctx.exception.code, 0)
 
 
 if __name__ == "__main__":

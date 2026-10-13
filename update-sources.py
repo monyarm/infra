@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import argparse
 import base64
 import fnmatch
 import glob
@@ -3181,8 +3182,80 @@ def write_sources_nix(results, nix_path):
         )
 
 
+# Sections that are re-fetched even under --append: their entries embed
+# something a mere existence check can't trust (a full lockfile hash, the
+# live version list), so "already in sources.nix" is not evidence they're
+# current. Only consulted on unscoped runs -- a scoped run re-fetches
+# exactly what it selected, so it must not silently widen itself.
+ALWAYS_REFETCH = ("cargo", "npm", "modrinth", "modrinth-modpack")
+
+
+def parse_args(argv):
+    """argv -> argparse.Namespace with .append, .selectors, .sections.
+
+    Unknown flags and stray positionals used to be ignored, which meant a
+    typo silently degraded into a full-repo refresh. argparse exits(2) on
+    those instead.
+    """
+    parser = argparse.ArgumentParser(
+        prog="update-sources.py",
+        description=(
+            "Regenerate sources.nix from the sources*.toml manifests. With no "
+            "selectors every entry is re-resolved. With one or more selectors "
+            "only the matching entries are re-fetched and everything else is "
+            "carried over from the current sources.nix."
+        ),
+        epilog=(
+            "examples:\n"
+            "  ./update-sources.py redump              every redump.* entry\n"
+            "  ./update-sources.py redump.psp          just that one entry\n"
+            "  ./update-sources.py --section romhacking\n"
+            "  ./update-sources.py --append            add new TOML entries only\n"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "--append",
+        action="store_true",
+        help="skip entries already present in sources.nix instead of re-fetching them",
+    )
+    parser.add_argument(
+        "-s",
+        "--section",
+        action="append",
+        dest="sections",
+        default=[],
+        metavar="NAME",
+        help="re-fetch every entry whose TOML section is NAME (repeatable)",
+    )
+    parser.add_argument(
+        "selectors",
+        nargs="*",
+        metavar="SELECTOR",
+        help="dotted source key, prefix-matched on '.' (e.g. redump, redump.psp)",
+    )
+    return parser.parse_args(argv)
+
+
+def key_matches(key, selectors):
+    """True if `key` is selected by any dotted-prefix selector.
+
+    Dotted-prefix rather than substring so `redump` cannot accidentally
+    match a `redump2.foo`, and so a selector maps onto one contiguous
+    branch of the emitted attrset.
+    """
+    return any(key == s or key.startswith(s + ".") for s in selectors)
+
+
 def main():
-    append_mode = "--append" in sys.argv
+    args = parse_args(sys.argv[1:])
+    append_mode = args.append
+    selectors = args.selectors
+    sections = args.sections
+    # A selector run must preserve the other 1M lines of sources.nix or it
+    # would delete them, so selecting implies appending.
+    preserve_mode = append_mode or bool(selectors or sections)
+    scoped = bool(selectors or sections)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
@@ -3238,7 +3311,7 @@ def main():
     previous_sources = load_previous_nix(nix_path)
     previous_private = load_previous_private(sops_nix_path)
     private_names |= set(previous_private)
-    results = dict(previous_sources) | previous_private if append_mode else {}
+    results = dict(previous_sources) | previous_private if preserve_mode else {}
     has_errors = False
 
     # Insert idgames into the designated priority fetching queue
@@ -3261,16 +3334,19 @@ def main():
     ]
     ordered_sections = priority_sections + custom_sections + ["go", "npmjs", "npm"]
 
+    selected_names = []
     for section in ordered_sections:
         if section not in sources_data:
             continue
         for name, target in sources_data[section].items():
-            if (
-                append_mode
-                and (name in previous_sources or name in previous_private)
-                and section not in ("cargo", "npm", "modrinth", "modrinth-modpack")
-            ):
-                continue
+            if scoped:
+                if not (key_matches(name, selectors) or section in sections):
+                    continue
+                if name not in selected_names:
+                    selected_names.append(name)
+            elif append_mode and (name in previous_sources or name in previous_private):
+                if section not in ALWAYS_REFETCH:
+                    continue
             try:
                 if section == "url":
                     results[name] = process_url(name, target)
@@ -3332,6 +3408,32 @@ def main():
             except Exception as e:  # noqa: BLE001
                 print(f"Error updating {name} under [{section}]: {e}", file=sys.stderr)
                 has_errors = True
+
+    if scoped:
+        # A typo'd selector would otherwise re-render all of sources.nix
+        # with no network work done -- a huge, meaningless diff.
+        if not selected_names:
+            print(
+                "Error: nothing matched "
+                f"{' '.join(repr(s) for s in selectors + sections)}.",
+                file=sys.stderr,
+            )
+            print(
+                "Available namespaces: "
+                + ", ".join(
+                    sorted({n.split(".")[0] for s in sources_data.values() for n in s})
+                ),
+                file=sys.stderr,
+            )
+            print(
+                "Available sections: " + ", ".join(sorted(sources_data)),
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        print(
+            f"Refetching {len(selected_names)} selected source(s); all others carried over."
+        )
+        print("Review with: git diff sources.nix")
 
     if has_errors:
         print(
