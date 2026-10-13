@@ -17,6 +17,9 @@ rec {
   };
 
   dirs = rec {
+    # impure-only: pure eval gives HOME = "", silently poisoning every path
+    # below -- absolute-path imports then abort, string interpolation just
+    # produces wrong output. Always evaluate this flake with --impure.
     HOME = builtins.getEnv "HOME";
     repo = "${HOME}/.nix";
     xdg = {

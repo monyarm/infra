@@ -27,10 +27,12 @@ let
     '';
   mame = pkgs.writeShellScriptBin "mame" ''
     test "$1" = -rompath
-    case ":$2:" in
-      *":${biosPath}:"*) ;;
-      *) echo "incomplete rompath: $2" >&2; exit 1 ;;
+    # one rompath entry only: extra BIOS zips get merged into it, not appended
+    case "$2" in
+      *:*) echo "rompath must be a single dir, got: $2" >&2; exit 1 ;;
     esac
+    test -e "$2/arcadetst.zip"
+    test "$2/neogeo.zip" -ef "${biosPath}/neogeo.zip"
     test "$3" = -video
     test "$4" = none
     test "$5" = -sound
@@ -66,11 +68,14 @@ assert lib.hasInfix "\${pkgs.coreutils}/bin/timeout" testSource;
 assert lib.hasInfix "report FAIL smoke" testSource;
 assert game.launcher.package == mame;
 assert game.game == "arcadetst";
-assert rompath == "${romDir}:${biosPath}";
+assert rompath == "${romDir}";
 pkgs.runCommand "test-arcade-integration" { } ''
   test -L ${romDir}/arcadetst.zip
   test -e "$(readlink ${romDir}/arcadetst.zip)"
   test -e "$(readlink ${romDir}/arcadetst.zip)/compressed-rom.zip"
+  # extraRomPaths merge into the content-addressed romdir, not a second entry
+  test -L ${romDir}/neogeo.zip
+  test "${romDir}/neogeo.zip" -ef "${bios}/neogeo.zip"
 
   set +e
   export TMPDIR="$PWD/failing-tmp"
