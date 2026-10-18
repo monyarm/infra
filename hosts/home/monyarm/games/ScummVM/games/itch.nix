@@ -34,10 +34,13 @@ let
     fetchItch sources.scummvm.adateinthepark
     |> getFiles [ "A Date in the Park" ]
     |> compressScummvmGame "ags";
-  leewardEp1 =
-    fetchItch sources.scummvm.leewardep1
-    |> getFiles [ "Leeward Episode 1" ]
-    |> compressScummvmGame "ags";
+
+  # Game has been taken off itch while a steam release is being developed.
+  #leewardEp1 =
+  #  fetchItch sources.scummvm.leewardep1
+  #  |> getFiles [ "Leeward Episode 1" ]
+  #  |> compressScummvmGame "ags";
+
   # itch's only non-demo upload is a plain "Suli FH*.rar" alongside a
   # "DEMO - ..." one with the same "default" upload type/traits, so the
   # sources.toml/update-sources.py pipeline (which has no fileMatch concept)

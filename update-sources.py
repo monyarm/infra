@@ -1697,16 +1697,9 @@ def list_itch_uploads(url):
     return game_id, uploads
 
 
-def get_itch_metadata(url):
-    try:
-        _, uploads = list_itch_uploads(url)
-    except (urllib.error.URLError, OSError, json.JSONDecodeError, KeyError) as e:
-        print(
-            f"  -> Couldn't read itch.io upload metadata ({e}); falling back to a real fetch to check.",
-            file=sys.stderr,
-        )
-        return None
-
+def get_itch_metadata(uploads):
+    """`id:md5:updated_at` for every upload, joined -- the fingerprint that
+    actually tells us the bytes changed, unlike a filename."""
     fingerprint = sorted(
         f"{u.get('id')}:{u.get('md5_hash')}:{u.get('updated_at')}" for u in uploads
     )
@@ -1762,8 +1755,9 @@ def select_itch_upload(uploads, platform, file_match="*"):
     return candidates[0]
 
 
-def fetch_itch_asset(_name, url, system=None):
-    _game_id, uploads = list_itch_uploads(url)
+def fetch_itch_asset(_name, url, system=None, uploads=None):
+    if uploads is None:
+        _game_id, uploads = list_itch_uploads(url)
     upload = select_itch_upload(uploads, system or "linux")
 
     api_key = os.environ["ITCH_API_KEY"]
@@ -1857,7 +1851,19 @@ def process_itch(name, url, previous_sources, system=None):
     old = previous_sources.get(name)
 
     print(f"Checking [itch] {name} from {url}...")
-    version = get_itch_metadata(url)
+    # One listing, reused by both the metadata fingerprint and the download.
+    # Asking twice doubled our calls to an API that rate-limits aggressively,
+    # and it was the second ask that tipped it over into a 429.
+    uploads = None
+    try:
+        _, uploads = list_itch_uploads(url)
+    except (urllib.error.URLError, OSError, json.JSONDecodeError, KeyError) as e:
+        print(
+            f"  -> Couldn't read itch.io upload metadata ({e}); falling back to a real fetch to check.",
+            file=sys.stderr,
+        )
+
+    version = get_itch_metadata(uploads) if uploads is not None else None
 
     if (
         version is not None
@@ -1870,13 +1876,9 @@ def process_itch(name, url, previous_sources, system=None):
         )
         return old
 
-    data, filename = fetch_itch_asset(name, url, system)
-
-    if version is None:
-        version = filename
-        if old and old.get("url") == url and old.get("version") == version:
-            print(f"  -> {name} unchanged (filename matches); reusing cached hash.")
-            return old
+    # uploads is None only if the listing failed above, in which case this
+    # second ask is really the retry -- http_get already backed off and waited.
+    data, filename = fetch_itch_asset(name, url, system, uploads)
 
     print(
         f"  -> Rebuilding {name}'s output the way fetchItch does, to hash and seed the store..."
@@ -1899,9 +1901,21 @@ def process_itch(name, url, previous_sources, system=None):
         "type": "itch",
         "url": url,
         "hash": h,
-        "version": version,
         "files": files,
     }
+    if version is not None:
+        result["version"] = version
+    elif old and old.get("version") and old.get("hash") == h:
+        # Metadata was unreachable, but the hash we just computed settles the
+        # only thing the fingerprint stood in for: bytes are identical, so the
+        # old fingerprint is still true. Keep it and stay on the cheap path
+        # next run. If the hash had differed we would have to write nothing --
+        # a stale fingerprint would make the next run "confirm" a wrong hash.
+        result["version"] = old["version"]
+    else:
+        print(
+            "  -> Upload metadata unavailable; recording no version, so the next run re-verifies."
+        )
     if archive_content:
         result["archiveContent"] = archive_content
     if system:
@@ -1909,15 +1923,31 @@ def process_itch(name, url, previous_sources, system=None):
     return result
 
 
+def retry_delay(err, attempt):
+    """Seconds to wait before retrying a transient failure. Honors a numeric
+    Retry-After (what itch.io/Cloudflare send for 429), else backs off on the
+    attempt number. A date-form Retry-After is ignored -- it is rare here and
+    parsing it buys nothing over plain backoff."""
+    if isinstance(err, urllib.error.HTTPError) and err.headers:
+        retry_after = (err.headers.get("Retry-After") or "").strip()
+        if retry_after.isdigit():
+            return min(int(retry_after), 60)
+    return 5 * (attempt + 1) ** 2
+
+
 def http_get(url, headers=None, retries=3):
     """Downloads a url using urllib, falling back to system curl if blocked by TLS
     fingerprinting. Retries with backoff on transient truncated-read/connection
     errors, which large archive downloads over a throttled connection hit in
-    practice (observed: http.client.IncompleteRead on a 78MB+ .mrpack). Does NOT
-    retry HTTPError beyond the existing 403 handling: a 404 hit while bulk-
-    fetching Maven sidecars for old Forge-era libraries was confirmed genuinely
-    permanent (also 404s on Maven Central, not just under load) -- retrying it
-    just burns minutes waiting on something that will never succeed."""
+    practice (observed: http.client.IncompleteRead on a 78MB+ .mrpack), and on
+    429/5xx: itch.io's rate limit is undisclosed and aggressively tuned (their
+    own staff admit bot load trips it "for regular users"), and Cloudflare's 525
+    means its edge could not complete a TLS handshake with itch's origin. Both
+    clear in seconds. Still does NOT retry 4xx that actually mean "gone": a 404
+    hit while bulk-fetching Maven sidecars for old Forge-era libraries was
+    confirmed genuinely permanent (also 404s on Maven Central, not just under
+    load) -- retrying it just burns minutes waiting on something that will never
+    succeed."""
     all_headers = {"User-Agent": USER_AGENT, **(headers or {})}
     last_error = None
     for attempt in range(retries):
@@ -1934,7 +1964,9 @@ def http_get(url, headers=None, retries=3):
                 cmd.append(url)
                 res = subprocess.run(cmd, capture_output=True, check=True)
                 return res.stdout
-            raise
+            if e.code != 429 and not 500 <= e.code < 600:
+                raise
+            last_error = e
         except (
             http.client.IncompleteRead,
             ConnectionError,
@@ -1942,13 +1974,13 @@ def http_get(url, headers=None, retries=3):
             urllib.error.URLError,
         ) as e:
             last_error = e
-            if attempt + 1 < retries:
-                wait = 5 * (attempt + 1)
-                print(
-                    f"  -> {url}: {e!r}, retrying in {wait}s ({attempt + 1}/{retries})...",
-                    file=sys.stderr,
-                )
-                time.sleep(wait)
+        if attempt + 1 < retries:
+            wait = retry_delay(last_error, attempt)
+            print(
+                f"  -> {url}: {last_error!r}, retrying in {wait}s ({attempt + 1}/{retries})...",
+                file=sys.stderr,
+            )
+            time.sleep(wait)
     raise last_error
 
 
