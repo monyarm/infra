@@ -1,4 +1,8 @@
-{ lib, bytes, ... }:
+{
+  lib,
+  bytes,
+  ...
+}:
 let
   common = {
     experimental-features = [

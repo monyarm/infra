@@ -1,4 +1,9 @@
-{ pkgs, nixWasmRustPath, ... }:
+{
+  pkgs,
+  nixWasmRustPath,
+  nixWasmRustDispatchPath ? nixWasmRustPath,
+  ...
+}:
 let
   # crateDir's Cargo.toml has a nix-wasm-rust path dep, populated here from
   # the flake input. Content-addressed, recursive: a rustc/nix-wasm-rust/
@@ -6,7 +11,11 @@ let
   # outPath, so dynamic.nix's toolPathsJSON (and with it every archive's
   # optimize-instantiate step) survives unrelated rebuilds of this module.
   buildWasmModule =
-    { name, crateDir }:
+    {
+      name,
+      crateDir,
+      rustPath ? nixWasmRustPath,
+    }:
     pkgs.stdenv.mkDerivation {
       pname = name;
       version = "0.1.0";
@@ -17,7 +26,7 @@ let
         pkgs.lld
       ];
       postPatch = ''
-        cp -r ${nixWasmRustPath}/nix-wasm-rust ./nix-wasm-rust
+        cp -r ${rustPath}/nix-wasm-rust ./nix-wasm-rust
         chmod -R u+w ./nix-wasm-rust
       '';
       buildPhase = ''
@@ -51,6 +60,7 @@ let
   dispatchModule = buildWasmModule {
     name = "nix-wasm-plugin-dispatch";
     crateDir = ./wasm/dispatch;
+    rustPath = nixWasmRustDispatchPath;
   };
 in
 {

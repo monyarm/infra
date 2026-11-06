@@ -43,8 +43,13 @@ let
     |> rename "Aria of Sorrow - Definitive Edition v1.3.ips";
 
   hodImprovementPatch =
-    fetchGDrive sources.patch.harmonyOfDissonanceImprovement
-    |> getFile "CV HOD Visual Improvement V1.2.7/CV HOD Visual Improvement V1.2.7 Localization Fix C-Whip RMenu.ips";
+    let
+      patchPath =
+        lib.findFirst (p: lib.hasSuffix " Localization Fix C-Whip RMenu.ips" p)
+          (throw "harmonyOfDissonanceImprovement: Localization Fix C-Whip RMenu.ips not found")
+          sources.patch.harmonyOfDissonanceImprovement.files;
+    in
+    fetchGDrive sources.patch.harmonyOfDissonanceImprovement |> getFile patchPath;
 
   patches = {
     cotmUsAudio = cotm.us;

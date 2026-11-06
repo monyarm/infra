@@ -7,7 +7,7 @@
   SDL2,
   libGL,
   glew,
-  libX11,
+  libx11,
   ...
 }:
 
@@ -22,7 +22,7 @@ stdenv.mkDerivation {
     SDL2
     libGL
     glew
-    libX11
+    libx11
   ];
 
   postPatch = ''

@@ -135,27 +135,28 @@ lib.mkIf config.games.scummvm.enable {
       };
     };
 
-    leewardEp1 = {
-      gameid = "leewardep1";
-      engineid = "ags";
-      description = "Leeward - Episode 1";
-      platform = "";
-      path = "${leewardEp1}/Leeward Episode 1";
-      images = {
-        hero = pkgs.fetchurl {
-          url = "https://cdn2.steamgriddb.com/hero/fd8bc9c273e33cac67286605e40c3add.png";
-          sha256 = "sha256-LwxU5xWZBc3im+1vf1uIFYvoft8s0Fp/WVuhtfdwkKM=";
-        };
-        grid = pkgs.fetchurl {
-          url = "https://cdn2.steamgriddb.com/grid/e7efedac5f64a7c67179cc8737d8d0c6.jpg";
-          sha256 = "sha256-ubQPeO8Yr5Fo8J8VIRMmgvd4jYDJemyw/fbMlhM+Jys=";
-        };
-        logo = pkgs.fetchurl {
-          url = "https://cdn2.steamgriddb.com/logo/cb2e31e6543c1a8e4c33636b666e5b1d.png";
-          sha256 = "sha256-FB1hkLP7xJuvJbA6Q4PPJ2xlxY0PVQDM/aFZuMT+wWY=";
-        };
-      };
-    };
+    # Game has been taken off itch while a steam release is being developed.
+    #leewardEp1 = {
+    #  gameid = "leewardep1";
+    #  engineid = "ags";
+    #  description = "Leeward - Episode 1";
+    #  platform = "";
+    #  path = "${leewardEp1}/Leeward Episode 1";
+    #  images = {
+    #    hero = pkgs.fetchurl {
+    #      url = "https://cdn2.steamgriddb.com/hero/fd8bc9c273e33cac67286605e40c3add.png";
+    #      sha256 = "sha256-LwxU5xWZBc3im+1vf1uIFYvoft8s0Fp/WVuhtfdwkKM=";
+    #    };
+    #    grid = pkgs.fetchurl {
+    #      url = "https://cdn2.steamgriddb.com/grid/e7efedac5f64a7c67179cc8737d8d0c6.jpg";
+    #      sha256 = "sha256-ubQPeO8Yr5Fo8J8VIRMmgvd4jYDJemyw/fbMlhM+Jys=";
+    #    };
+    #    logo = pkgs.fetchurl {
+    #      url = "https://cdn2.steamgriddb.com/logo/cb2e31e6543c1a8e4c33636b666e5b1d.png";
+    #      sha256 = "sha256-FB1hkLP7xJuvJbA6Q4PPJ2xlxY0PVQDM/aFZuMT+wWY=";
+    #    };
+    #  };
+    #};
 
     suliFallenHarmony = {
       gameid = "sulifallenharmony";

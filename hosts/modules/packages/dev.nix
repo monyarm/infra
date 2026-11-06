@@ -32,7 +32,7 @@ let
     # xorgproto deliberately absent: it ships the same
     # include/X11/extensions/*.h as libx11.dev, and home.packages is one
     # buildEnv, which hard-fails on conflicting subpaths. libx11.dev wins.
-    xorg.libX11
+    libx11
   ];
 
   armEmbedded = with pkgs; [
@@ -57,7 +57,7 @@ let
 
   runtimes = with pkgs; [
     cargo
-    elixir
+    beamPackages.elixir
     luajit
     luarocks
     nim

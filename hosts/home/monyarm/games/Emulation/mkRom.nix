@@ -96,7 +96,11 @@ let
     in
     romArgs
     // {
-      game = checkedGame;
+      game = lib.extendDerivation true {
+        passthru = (checkedGame.passthru or { }) // {
+          sourceRom = rom;
+        };
+      } checkedGame;
       launcher = {
         package = emulator.launcher;
       }

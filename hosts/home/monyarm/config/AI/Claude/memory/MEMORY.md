@@ -33,3 +33,9 @@
 - [Minecraft plan versioning](project_minecraft_plan_versioning.md) — implemented; nested all-versions registries for "latest" resolution; Fabric-loader fetching now done too (Maven .sha1 sidecars).
 - [linkFiles vs linkFarm](feedback_linkfiles_vs_linkfarm.md) — linkFiles returns an xdg.dataFile-shaped attrset, not a buildable dir; use pkgs.linkFarm in plain builders.
 - [listToAttrs keeps first](feedback_listtoattrs_first_wins.md) — dedup-by-key via listToAttrs silently keeps the FIRST match, not last; filter stale entries before building lookup tables.
+- [flake.lock root nixpkgs node](feedback_flake_lock_root_nixpkgs_node.md) — resolve `.nodes.root.inputs.nixpkgs`; `.nodes.nixpkgs` is a transitive input
+- [Migrate, then validate](feedback_migrate_then_validate.md) — major-version config migration: read migration docs, rewrite, then validate; never validate old config first
+- [pgrep -x nix matches daemon](feedback_pgrep_nix_matches_daemon.md) — use `pgrep -af` on eval command lines instead
+- [No nix while background eval runs](feedback_no_nix_while_background_eval.md) — not even small getFlake --expr lookups; resolve input paths first
+- [No unasked config edits](feedback_no_unasked_config_edits.md) — runtime breakage: give unblock commands; config changes only on explicit yes
+- [No bulk nix copy without asking](feedback_no_bulk_copy_without_asking.md) — debugging probes stay tiny; never copy whole closures to builders unasked

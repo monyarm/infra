@@ -130,7 +130,13 @@ let
     pkgs = optimizePkgs;
     inherit (optimizePkgs) lib;
   };
-  wasm = import ./wasm.nix { inherit pkgs lib nixWasmRustPath; };
+  wasm = import ./wasm.nix {
+    inherit pkgs lib nixWasmRustPath;
+    # dispatch stays on the pinned old ABI: it feeds toolPathsJSON, so a
+    # byte change invalidates every archive's optimize-instantiate step.
+    nixWasmRustDispatchPath =
+      if nixWasmRustOptimizePath == null then nixWasmRustPath else nixWasmRustOptimizePath;
+  };
   niccup = niccupLib;
   all = {
     inherit

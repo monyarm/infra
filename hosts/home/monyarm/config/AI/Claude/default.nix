@@ -14,7 +14,8 @@
 
   programs.claude-code = {
     enable = true;
-    # package left unset -- resolves to pkgs.claude-code by default
+    # llm-agents: daily updates, nixpkgs lags
+    package = pkgs.llm-agents.claude-code;
     settings = {
       theme = "dark";
       editorMode = "normal";
@@ -37,7 +38,7 @@
 
   home.packages = [
     pkgs.caveman-cli
-    pkgs.codegraph
+    pkgs.llm-agents.codegraph
     # ponytail + caveman both run node-based lifecycle hooks (SessionStart/
     # UserPromptSubmit) -- degrade silently without node, but this makes them work
     pkgs.nodejs

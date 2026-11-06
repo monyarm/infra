@@ -17,7 +17,7 @@
     #path to the dvd device to send to lsdvd, leaving this blank will set the script to
     #use the --dvd-device option.
     #It is recommended that this be left blank unless using wsl
-    dvd_device = lib.mkIf (!pkgs.stdenv.isDarwin) "/dev/sr0"; # Assuming Android is not Darwin, and /dev/sr0 is the default for Linux
+    dvd_device = lib.mkIf (!pkgs.stdenv.hostPlatform.isDarwin) "/dev/sr0"; # Assuming Android is not Darwin, and /dev/sr0 is the default for Linux
 
     #number of titles to display on the screen at once
     num_entries = 20;

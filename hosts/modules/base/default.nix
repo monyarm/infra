@@ -84,6 +84,7 @@ in
     ) (builtins.filter (m: m.hostName != config.networking.hostName) allBuildMachines);
 
     settings = nixSettings.common // {
+      inherit (inputs.self.nixConfig) extra-substituters extra-trusted-public-keys;
       trusted-users = [
         "root"
         user.name
@@ -141,8 +142,9 @@ in
   # what Hydra itself uses (github.com/NixOS/nix/issues/8499). Shared
   # sticky-bit socket dir (like /tmp), not root-only -- both nix-daemon's
   # root-owned remote-build connections and this user's own interactive
-  # `ssh monyarm` need to land in the same place without colliding (%r in
-  # the path already keys each user's socket separately).
+  # `ssh monyarm` land here. %u (local user) keeps their sockets apart:
+  # %r is the remote user, same for both, and root muxing into the
+  # user's master hangs remote builds.
   programs.ssh.extraConfig = ''
     Host eu.nixbuild.net
       PubkeyAcceptedKeyTypes ssh-ed25519
@@ -153,7 +155,7 @@ in
 
     Host monyarm
       ControlMaster auto
-      ControlPath /run/ssh-control/%r@%h-%p
+      ControlPath /run/ssh-control/%u-%r@%h-%p
       ControlPersist 10m
   '';
 

@@ -1,5 +1,11 @@
-{ pkgs, mkRenPyGame, ... }:
 {
+  lib,
+  config,
+  pkgs,
+  mkRenPyGame,
+  ...
+}:
+lib.mkIf config.games.renpy.enable {
   games.renpy.games.KATAWA_SHOUJO_RE_ENGINEERED = mkRenPyGame {
     name = "katawa-shoujo-re-engineered";
     src = pkgs.katawa-shoujo-re-engineered.src;

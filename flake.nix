@@ -1,4 +1,4 @@
-{
+rec {
   description = "My Home Manager Flake";
 
   inputs = {
@@ -74,6 +74,8 @@
     # Own pin, not `follows` -- avoids invalidating already-optimized files
     # on unrelated nixpkgs bumps. Bump manually.
     optimize-nixpkgs.url = "github:nixos/nixpkgs/1d4e0f865d68258aada31e68e6d79c8c463f3b34";
+    # Old mame2010 core; newer segfaults arcade smoke. Only used for that pkg.
+    nixpkgs-mame2010.url = "github:nixos/nixpkgs/4382ed2b7a6839d4280a9b386db49cbc5907414d";
     # Separate pin from determinate-nix above -- used for optimizePkgs.
     determinate-nix-optimize.url = "https://flakehub.com/f/DeterminateSystems/nix-src/=3.21.7";
     # Value FFI type + nix_wasm_init_v1 for builtins.wasm plugins. Source
@@ -100,6 +102,11 @@
       url = "github:embedding-shapes/niccup";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Daily-updated AI CLIs (claude-code, opencode2, ...); used via overlay.
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -107,21 +114,26 @@
       "https://nix-community.cachix.org"
       # "https://nix-on-droid.cachix.org"
       "https://install.determinate.systems"
-      # Substitutes the PSP toolchain (GCC 15.2.0 + binutils + newlib) instead
-      # of building it locally.
       "https://pspdev.cachix.org"
+      "https://cache.numtide.com"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE="
+      # "nix-on-droid.cachix.org-1:56snoMJTXmE7wm+67YySRoTY64Zkivk9RT4QaKYgpkE="
       "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
       "pspdev.cachix.org-1:lFw1M0EYJeN3Y2xHR7spiuPmThrNDXo8Z9I0Jgzig/0="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
 
   outputs =
-    inputs:
+    inputs':
     let
+      inputs = inputs' // {
+        self = inputs'.self // {
+          inherit nixConfig;
+        };
+      };
       # Recursively overlays the decrypted contents of sources.sops.nix (any
       # private, sops-encrypted sources.*.sops.toml entries -- see
       # update-sources.py) onto the public sources.nix, when that file

@@ -26,7 +26,7 @@ in
     package = lib.mkForce inputs.determinate-nix.packages."x86_64-linux".nix;
     channels.nixpkgs = inputs.nixpkgs;
     registry = lib.mapAttrs (_: flake: { inherit flake; }) (
-      lib.filterAttrs (_: value: builtins.isAttrs value) inputs
+      lib.filterAttrs (name: value: builtins.isAttrs value && name != "self") inputs
     );
   };
 }

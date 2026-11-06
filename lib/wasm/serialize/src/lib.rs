@@ -1,9 +1,9 @@
 use std::fmt::Write;
 
-use nix_wasm_rust::{panic, Type, Value};
+use nix_wasm_rust::{panic, AttrSet, Type, Value};
 
 // toKeyValues: Valve KeyValues format, matches lib/format.nix's pure-Nix
-// version. get_attrset() is a BTreeMap, matching Nix's sorted iteration.
+// version. AttrSet iterates in Nix's sorted attribute order.
 
 fn write_keyvalues_leaf(out: &mut String, v: &Value) {
     // Matches Nix's toString: Bool -> "1"/"", Null -> "", others throw.
@@ -24,11 +24,7 @@ fn write_indent(out: &mut String, depth: usize) {
     }
 }
 
-fn write_keyvalues_lines(
-    out: &mut String,
-    depth: usize,
-    attrs: &std::collections::BTreeMap<String, Value>,
-) {
+fn write_keyvalues_lines(out: &mut String, depth: usize, attrs: &AttrSet) {
     for (index, (name, value)) in attrs.iter().enumerate() {
         if index != 0 {
             out.push('\n');
@@ -39,14 +35,15 @@ fn write_keyvalues_lines(
                 writeln!(out, "\"{name}\"").unwrap();
                 write_indent(out, depth);
                 out.push_str("{\n");
-                write_keyvalues_lines(out, depth + 1, &value.get_attrset());
+                let nested = value.get_attrset();
+                write_keyvalues_lines(out, depth + 1, &nested);
                 out.push('\n');
                 write_indent(out, depth);
                 out.push('}');
             }
             _ => {
                 write!(out, "\"{name}\"\t\t\"").unwrap();
-                write_keyvalues_leaf(out, value);
+                write_keyvalues_leaf(out, &value);
                 out.push('"');
             }
         }
@@ -59,7 +56,8 @@ pub extern "C" fn to_keyvalues(arg: Value) -> Value {
         panic("toKeyValues: top-level value must be an attrset");
     }
     let mut out = String::new();
-    write_keyvalues_lines(&mut out, 0, &arg.get_attrset());
+    let attrs = arg.get_attrset();
+    write_keyvalues_lines(&mut out, 0, &attrs);
     out.push('\n');
     Value::make_string(&out)
 }
@@ -94,7 +92,8 @@ fn write_sexpr_atom(out: &mut String, v: &Value) {
         }
         Type::Attrs => {
             out.push_str("(dict");
-            for (key, value) in v.get_attrset() {
+            let attrs = v.get_attrset();
+            for (key, value) in &attrs {
                 write!(out, " \"{key}\" ").unwrap();
                 write_sexpr_atom(out, &value);
             }

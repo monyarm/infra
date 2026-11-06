@@ -46,6 +46,7 @@ import json
 import os
 import pty
 import re
+import shlex
 import signal
 import subprocess
 import sys
@@ -70,6 +71,13 @@ USER = "monyarm"
 # only thing filtered out, since a single pk3 can emit hundreds of them
 # (one per member with no dedicated optimizer) and they add nothing here.
 NOISY_TRACE_PREFIXES = b"trace: "
+BUILD_ATTEMPTS = 4
+RETRY_OPTIONS = (
+    (),
+    (),
+    ("--option", "builders", ""),
+    ("--option", "builders", "", "--max-jobs", "1", "--cores", "1"),
+)
 
 # Matches a leading ANSI escape (color codes etc) so a filtered trace line
 # is still recognized even if nix colorizes its output first.
@@ -118,7 +126,10 @@ MOCK_ARGS_NIX = """
 
 CONFIG_EXPR = """
 let
-  flake = builtins.getFlake (toString ./.);
+  # git+file: copies only tracked files, like deploy's `.#`. A bare path
+  # copies ignored dirs too (e.g. lib/wasm/dispatch/target), so every
+  # optimize drv hashes differently and deploy rebuilds it all.
+  flake = builtins.getFlake "git+file://${toString ./.}";
   real = flake.homeConfigurations.{user};
   mocked = real.extendModules {
     modules = [ { _module.args = {mock_args}; } ];
@@ -135,7 +146,7 @@ let
     config.allowUnfree = true;
   };
   lib = pkgs.lib;
-  sources = import ./sources.nix;
+  sources = import "${flake}/sources.nix";
   # optimize's own tool invocations (oxipng/ffmpeg/wadptr/minijson/...) are
   # pinned to a *separate* nixpkgs revision (flake.nix's optimize-nixpkgs
   # input) so they don't get invalidated by unrelated nixpkgs bumps --
@@ -145,7 +156,7 @@ let
   optimizePkgs = import flake.inputs.optimize-nixpkgs {
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
-    overlays = import ./lib/optimize/overlays.nix {
+    overlays = import "${flake}/lib/optimize/overlays.nix" {
       inherit sources;
       determinateNix = flake.inputs.determinate-nix-optimize.packages.${pkgs.stdenv.hostPlatform.system}.nix;
       craneLib = flake.inputs.crane.mkLib pkgs;
@@ -158,7 +169,7 @@ let
   # the registry value itself. Reaching for a standalone real customLib
   # here (not the module-threaded one) lets the "real" leg apply that same
   # final step directly on the registry value instead.
-  customLib = import ./lib {
+  customLib = import "${flake}/lib" {
     inherit pkgs lib optimizePkgs;
     system = pkgs.stdenv.hostPlatform.system;
     mkOutOfStoreSymlink = p: p;
@@ -186,6 +197,8 @@ let
   # placeholder embeds fine into a new .drv's text unresolved -- so this is
   # safe to call in a cheap, no-building eval pass.
   getDrvPath = value: (mkTarget value).drvPath;
+  # Attribute names can't carry store-path string context.
+  drvKey = drv: builtins.unsafeDiscardStringContext drv.drvPath;
 in
 {body}
 """.replace("{user}", USER).replace("{mock_args}", MOCK_ARGS_NIX)
@@ -370,14 +383,41 @@ def build_measure_body(targets):
     parts = []
     if targets["doom"]:
         parts.append(f"""
-  doom = let names = {names_nix(targets["doom"])}; in
-    builtins.listToAttrs (map (n: {{
+  doom = let
+    names = {names_nix(targets["doom"])};
+    registry = real.config.games.doom.wads;
+    games = real.config.programs.steam.games;
+    doomGames = lib.filterAttrs (_: g:
+      g.launcher != null
+      && builtins.isAttrs g.launcher.package
+      && lib.hasPrefix "uzdoom" (g.launcher.package.name or "")
+    ) games;
+    inputPairs = builtins.concatMap (key:
+      let
+        g = doomGames.${{key}};
+        ins = if builtins.isAttrs g.game && g.game ? passthru then
+          (g.game.passthru.optimizedInputs or [])
+        else [ ];
+      in map (i: i // {{ inherit key; }}) ins
+    ) (builtins.attrNames doomGames);
+    byMock = builtins.listToAttrs (map (i: {{
+      name = drvKey i.mock;
+      value = {{ real = getDrvPath i.real; mock = getDrvPath i.mock; }};
+    }}) inputPairs);
+    registryDrvs = map (v: v.drvPath) (builtins.attrValues registry);
+    extras = builtins.filter (i: !(builtins.elem i.mock.drvPath registryDrvs)) inputPairs;
+    registryLegs = builtins.listToAttrs (map (n: {{
       name = n;
-      value = {{
-        real = getDrvPath (customLib.optimize real.config.games.doom.wads.${{n}});
-        mock = getDrvPath mocked.config.games.doom.wads.${{n}};
+      value = byMock.${{drvKey registry.${{n}}}} or {{
+        real = getDrvPath (customLib.optimize registry.${{n}});
+        mock = getDrvPath registry.${{n}};
       }};
-    }}) names);""")
+    }}) names);
+    extraLegs = builtins.listToAttrs (map (i: {{
+      name = "${{i.key}}:${{i.real.name}}";
+      value = {{ real = getDrvPath i.real; mock = getDrvPath i.mock; }};
+    }}) extras);
+  in registryLegs // extraLegs;""")
     if targets["scummvm"]:
         parts.append(f"""
   scummvm = let names = {names_nix(targets["scummvm"])}; in
@@ -390,14 +430,42 @@ def build_measure_body(targets):
     }}) names);""")
     if targets["emulation"]:
         parts.append(f"""
-  emulation = let names = {names_nix(targets["emulation"])}; in
-    builtins.listToAttrs (map (n: {{
-      name = n;
+  emulation = let
+    names = {names_nix(targets["emulation"])};
+    registry = real.config.games.emulation.roms;
+    games = real.config.programs.steam.games;
+    launchable = lib.filterAttrs (_: g:
+      g.launcher != null && builtins.isAttrs g.launcher.package
+    ) games;
+    mkRomGames = lib.filterAttrs (_: g:
+      builtins.isAttrs g.game && g.game ? passthru && g.game.passthru ? sourceRom
+    ) launchable;
+    bySource = builtins.listToAttrs (map (g: {{
+      name = drvKey g.game.passthru.sourceRom;
       value = {{
-        real = getDrvPath (customLib.compressRom real.config.games.emulation.roms.${{n}});
-        mock = getDrvPath real.config.games.emulation.roms.${{n}};
+        real = getDrvPath g.game;
+        mock = getDrvPath g.game.passthru.sourceRom;
       }};
-    }}) names);""")
+    }}) (builtins.attrValues mkRomGames));
+    registryDrvs = map (v: v.drvPath) (builtins.attrValues registry);
+    extras = lib.filterAttrs (_: g:
+      !(builtins.elem g.game.passthru.sourceRom.drvPath registryDrvs)
+    ) mkRomGames;
+    registryLegs = builtins.listToAttrs (map (n: {{
+      name = n;
+      value = bySource.${{drvKey registry.${{n}}}} or {{
+        real = getDrvPath (customLib.compressRom registry.${{n}});
+        mock = getDrvPath registry.${{n}};
+      }};
+    }}) names);
+    extraLegs = builtins.listToAttrs (lib.mapAttrsToList (key: g: {{
+      name = key;
+      value = {{
+        real = getDrvPath g.game;
+        mock = getDrvPath g.game.passthru.sourceRom;
+      }};
+    }}) extras);
+  in registryLegs // extraLegs;""")
     if targets["renpy"]:
         parts.append(f"""
   renpy = let names = {names_nix(targets["renpy"])}; in
@@ -436,12 +504,12 @@ def read_size(path):
     return int(out.split()[0])
 
 
-def build_one(category, name, leg, drv, max_jobs, cores):
+def build_one(category, name, leg, drv, max_jobs, cores, remote=False):
     """Runs `nix build <drv>^out --print-out-paths` for a single target.
     Returns (category, name, leg, real_path), real_path None on failure --
     shared by build_batch (called concurrently, one subprocess per target)
     and build_sequential (called one at a time)."""
-    cmd = [
+    base_cmd = [
         "nix",
         "build",
         "--no-link",
@@ -451,24 +519,32 @@ def build_one(category, name, leg, drv, max_jobs, cores):
         str(max_jobs),
         "--cores",
         str(cores),
-        f"{drv}^out",
     ]
+    if not remote:
+        base_cmd += ["--option", "builders", ""]
     print(drv)
-    proc = subprocess.run(
-        " ".join(cmd),
-        shell=True,
-        cwd=REPO_ROOT,
-        stdout=subprocess.PIPE,
-        text=True,
-        check=False,
-    )
-    if proc.returncode != 0 or not proc.stdout.strip():
-        return category, name, leg, None
-    target_path = proc.stdout.strip().splitlines()[-1]
-    return category, name, leg, os.path.realpath(target_path)
+    for attempt in range(1, BUILD_ATTEMPTS + 1):
+        cmd = base_cmd + list(RETRY_OPTIONS[attempt - 1]) + [f"{drv}^out"]
+        proc = subprocess.run(
+            shlex.join(cmd),
+            shell=True,
+            cwd=REPO_ROOT,
+            stdout=subprocess.PIPE,
+            text=True,
+            check=False,
+        )
+        if proc.returncode == 0 and proc.stdout.strip():
+            target_path = proc.stdout.strip().splitlines()[-1]
+            return category, name, leg, os.path.realpath(target_path)
+        if attempt < BUILD_ATTEMPTS:
+            print(
+                f"build attempt {attempt}/{BUILD_ATTEMPTS} failed; retrying",
+                file=sys.stderr,
+            )
+    return category, name, leg, None
 
 
-def build_batch(drv_list, max_jobs, cores):
+def build_batch(drv_list, max_jobs, cores, remote=False):
     """drv_list: [(category, name, leg, drvpath), ...]. Launches every
     target's own `nix build` concurrently and lets the nix daemon's own
     job-slot admission pace the real work -- safe now that
@@ -482,7 +558,7 @@ def build_batch(drv_list, max_jobs, cores):
     failed = set()
     with concurrent.futures.ThreadPoolExecutor(max_workers=len(drv_list)) as pool:
         futures = [
-            pool.submit(build_one, c, n, leg, drv, max_jobs, cores)
+            pool.submit(build_one, c, n, leg, drv, max_jobs, cores, remote)
             for c, n, leg, drv in drv_list
         ]
         for future in concurrent.futures.as_completed(futures):
@@ -498,7 +574,7 @@ def build_batch(drv_list, max_jobs, cores):
     return sizes, failed
 
 
-def build_sequential(drv_list, max_jobs, cores):
+def build_sequential(drv_list, max_jobs, cores, remote=False):
     """drv_list: [(category, name, leg, drvpath), ...]. Builds each ^out one
     at a time -- opt-in via --sequential, for forcing every top-level game to
     build one after another (see build_batch, the default, for why this
@@ -510,7 +586,9 @@ def build_sequential(drv_list, max_jobs, cores):
     failed = set()
     for i, (category, name, leg, drv) in enumerate(drv_list, 1):
         print(f"--- [{i}/{len(drv_list)}] building {category}/{name} ({leg}) ---")
-        _, _, _, real_path = build_one(category, name, leg, drv, max_jobs, cores)
+        _, _, _, real_path = build_one(
+            category, name, leg, drv, max_jobs, cores, remote
+        )
         if real_path is None:
             print(
                 f"WARNING: build failed for {category}/{name} ({leg}), dropping from results",
@@ -589,6 +667,12 @@ def main():
         action="store_true",
         help="build one game at a time instead of handing the whole batch to one nix build call",
     )
+    parser.add_argument(
+        "--remote",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="allow remote builders (default: remote; --no-remote for local only)",
+    )
     parser.add_argument("--max-jobs", type=int, default=6)
     parser.add_argument("--cores", type=int, default=6)
     args = parser.parse_args()
@@ -637,6 +721,10 @@ def main():
 
     print("=== resolving derivations (1 cheap eval, no building) ===")
     drv_map = get_drv_paths(targets)
+    # The eval can add targets the name filter never saw (e.g. Doom inputs
+    # computed outside the wad registry), so drive both build and CSV from
+    # what it actually resolved.
+    targets = {category: list(drv_map[category]) for category in categories}
     drv_list = [
         (category, name, leg, drv_map[category][name][leg])
         for category in categories
@@ -647,10 +735,12 @@ def main():
     if args.sequential:
         print(f"=== building {len(drv_list)} derivations, one at a time ===")
         sizes, failed = build_sequential(
-            drv_list, max_jobs=args.max_jobs, cores=args.cores
+            drv_list, max_jobs=args.max_jobs, cores=args.cores, remote=args.remote
         )
     else:
-        sizes, failed = build_batch(drv_list, max_jobs=args.max_jobs, cores=args.cores)
+        sizes, failed = build_batch(
+            drv_list, max_jobs=args.max_jobs, cores=args.cores, remote=args.remote
+        )
 
     for category in categories:
         targets[category] = [

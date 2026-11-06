@@ -27,6 +27,3 @@ tools.minijson = "true"
 [git-tag]
 tools.mcp-compressor = "https://github.com/atlassian-labs/mcp-compressor"
 tools.minijson = "https://github.com/aminya/minijson"
-
-[npmjs]
-tools.codegraph = "@colbymchenry/codegraph-linux-x64@1.6.0"

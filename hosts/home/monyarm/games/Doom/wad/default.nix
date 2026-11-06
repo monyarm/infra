@@ -15,22 +15,35 @@ let
       wad ? [ ],
       ...
     }@args:
+    let
+      game = optimize iwad;
+      wadInputs = map (x: {
+        real = optimize x;
+        mock = x;
+      }) ((if wad == null then [ ] else wad) ++ [ config.games.doom.wads.lights ]);
+      optimizedInputs = [
+        {
+          real = game;
+          mock = iwad;
+        }
+      ]
+      ++ wadInputs;
+    in
     (lib.removeAttrs args [
       "wad"
       "iwad"
     ])
     // {
-      game = optimize iwad;
+      game = lib.extendDerivation true {
+        passthru = (game.passthru or { }) // {
+          inherit optimizedInputs;
+        };
+      } game;
       launcher = {
         package = pkgs.uzdoom;
         args = [ "-iwad" ];
       };
-      args = [
-        "-file"
-      ]
-      ++ map (x: "${optimize x}") (
-        (if wad == null then [ ] else wad) ++ [ config.games.doom.wads.lights ]
-      );
+      args = [ "-file" ] ++ map (i: "${i.real}") wadInputs;
     };
 
   wadFilter = [ "regex:(.*\.(wad|WAD))" ];

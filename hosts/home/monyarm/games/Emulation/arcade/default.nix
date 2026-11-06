@@ -56,7 +56,7 @@ let
     mkSmoke (
       {
         name = core;
-        timeoutSeconds = 10;
+        timeoutSeconds = 30;
         preSetup = ''
           testRomDir="$TMPDIR/${romName}-rompath"
           mkdir -p "$testRomDir" "$TMPDIR/${core}-system"
@@ -116,6 +116,9 @@ let
           if emulator == "mame" then
             mkSmoke {
               name = "mame";
+              # -bench counts emulated seconds; under builder load a slow
+              # driver needs well over 10 real seconds for -bench 10.
+              timeoutSeconds = 120;
               preSetup = ''
                 testRomDir="$TMPDIR/${shortname}-rompath"
                 mkdir -p "$testRomDir"

@@ -30,7 +30,7 @@
           "medium"
           "--toonify"
           "--"
-          "${pkgs.codegraph}/bin/codegraph"
+          "${pkgs.llm-agents.codegraph}/bin/codegraph"
           "serve"
           "--mcp"
         ];

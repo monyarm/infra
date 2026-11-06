@@ -19,7 +19,7 @@ user-invocable: false
 
 - `nix fmt -- <file>` is this repo's formatter entrypoint (treefmt wrapping nixfmt/deadnix/statix, configured in `flake.nix`). A hook already runs this automatically after Claude edits/writes any `.nix` file — no need to run it manually.
 - New `.nix` files are invisible to `builtins.getFlake` until `git add`ed, causing confusing "attribute missing" errors on otherwise-correct code. A hook already runs `git add` automatically after Claude creates a new `.nix` file via Write.
-- Before starting any `nix build`/`nix eval`, check nothing else is already running (`ps aux | grep nix` / `pgrep -x nix`) — this machine is RAM-constrained. A PreToolUse hook already warns on this for Bash commands containing `nix build`/`nix eval`/`nix-instantiate`.
+- Before starting any `nix build`/`nix eval`, check nothing else is already running (`pgrep -af '^nix (build|eval|flake|develop)|nix-instantiate'`; `pgrep -x nix` also matches daemon workers) — this machine is RAM-constrained. A PreToolUse hook already warns on this for Bash commands containing `nix build`/`nix eval`/`nix-instantiate`.
 
 ## Dynamic derivations (`lib/optimize/`, `compressScummvmGame`, anything using `builtins.outputOf`)
 

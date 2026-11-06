@@ -10,6 +10,16 @@ let
   inherit (import ./mkGame.nix { inherit lib pkgs; }) mkRenPyGame;
 in
 {
+  options.games.renpy.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = (builtins.getEnv "LIGHT") == "";
+    description = ''
+      Whether to build, optimize, and register Ren'Py games at all. Disable
+      to skip the whole Ren'Py compile/optimization build graph entirely,
+      e.g. while setting up additional remote builders.
+    '';
+  };
+
   options.games.renpy.games = lib.mkOption {
     type = lib.types.attrsOf (
       lib.types.submodule {
@@ -43,7 +53,7 @@ in
     exclude = [ "mkGame.nix" ];
   };
 
-  config = {
+  config = lib.mkIf config.games.renpy.enable {
     _module.args = {
       inherit mkRenPyGame;
     };

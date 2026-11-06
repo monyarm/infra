@@ -33,6 +33,21 @@ let
     inputs.nur.overlays.default
     inputs.niri.overlays.niri
     inputs.steam-fetcher.overlay
+    inputs.llm-agents.overlays.shared-nixpkgs
+    (
+      _final: prev:
+      let
+        mame2010Pkgs = import inputs.nixpkgs-mame2010 {
+          system = prev.stdenv.hostPlatform.system;
+          config.allowUnfree = true;
+        };
+      in
+      {
+        libretro = prev.libretro // {
+          mame2010 = mame2010Pkgs.libretro.mame2010;
+        };
+      }
+    )
     (
       final: prev:
       import ../packages {
@@ -77,6 +92,7 @@ let
 
   homeManagerModules = [
     inputs.stylix.homeModules.stylix
+    ./modules/config/stylix
     inputs.niri.homeModules.niri
     inputs.niri.homeModules.stylix
     inputs.sops-nix.homeManagerModules.sops
@@ -177,18 +193,22 @@ let
       modules = commonModules ++ [
         (hostDir + "/configuration.nix")
         (if builtins.pathExists hardwarePath then hardwarePath else { })
+        inputs.stylix.nixosModules.stylix
+        ./modules/config/stylix
         {
           networking.hostName = hostName;
-          nixpkgs.pkgs = pkgsGen currentSystem;
+          nixpkgs.hostPlatform = currentSystem;
+          nixpkgs.overlays = overlays;
+          nixpkgs.config.allowUnfree = true;
+          # import stylix HM by hand below, so sharedModules also needs the
+          # overlay disable that autoImport would have added.
+          stylix.homeManagerIntegration.autoImport = false;
         }
         home-manager.nixosModules.home-manager
         {
           home-manager = {
-            # Reuses the NixOS-level `nixpkgs.pkgs = pkgsGen currentSystem;`
-            # above instead of home-manager building its own separate pkgs --
-            # avoids evaluating/building nixpkgs twice, and avoids the two
-            # pkgs instances' config (overlays, allowUnfree) silently
-            # drifting apart.
+            # Reuse the NixOS pkgs built from `nixpkgs.overlays` above,
+            # stylix overlays included, instead of importing nixpkgs again.
             useGlobalPkgs = true;
             useUserPackages = true;
             extraSpecialArgs = {
@@ -203,7 +223,9 @@ let
               isHomeManager = true;
               isHomeManagerInNixOS = true;
             };
-            sharedModules = homeManagerModules;
+            sharedModules = homeManagerModules ++ [
+              { stylix.overlays.enable = false; }
+            ];
             users = homeUsers;
             backupFileExtension = "hmBackup";
           };

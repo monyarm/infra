@@ -1,4 +1,17 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(nix eval *)",
+      "Bash(arm-none-eabi-nm *)",
+      "Bash(mkdir *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(magick *)",
+      "Bash(nix build *)",
+      "Bash(cp *)",
+      "Bash(curl *)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
@@ -26,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cmdline=$(jq -r '.tool_input.command // empty'); if echo \"$cmdline\" | grep -qE '(^|[; &|])nix (build|eval)([ ]|$)|nix-instantiate'; then running=$(pgrep -x nix 2>/dev/null || true); if [ -n \"$running\" ]; then reason=\"Another nix process appears to already be running (PID(s): $running) - this machine is RAM-constrained, confirm before running another.\"; printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"%s\"}}' \"$reason\"; fi; fi"
+            "command": "cmdline=$(jq -r '.tool_input.command // empty'); if echo \"$cmdline\" | grep -qE '(^|[; &|])nix (build|eval)([ ]|$)|nix-instantiate'; then running=$(pgrep -f '^nix (build|eval|flake|develop)|nix-instantiate' 2>/dev/null || true); if [ -n \"$running\" ]; then reason=\"Another nix process appears to already be running (PID(s): $running) - this machine is RAM-constrained, confirm before running another.\"; printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"ask\",\"permissionDecisionReason\":\"%s\"}}' \"$reason\"; fi; fi"
           }
         ]
       }
