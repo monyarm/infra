@@ -37,3 +37,10 @@ Broken a third time (2026-09-11, ~/.nix): piped `nix eval`/`nix build` output th
 explicitly by name ("never pipe `nix build`/`nix eval` output through `tail`/`head`"). This
 is a written, standing rule, not just a past correction to recall — check it before running
 `nix build`/`nix eval` specifically, every time, don't rely on remembering not to.
+
+Broken a fourth time (2026-11-07, ~/.nix, Strife/CFC/IHNM session): repeatedly ran
+`nix build`/`nix eval`/`nix flake check` as `2>&1 | grep -vE '^Using saved|^trace: warning…' | tail -N`
+or `| grep -E '^/nix/store|error'`, plus `2>/dev/null` on evals. Filtering with `grep`
+(include or exclude) and discarding stderr count the same as `tail`: the user can't see
+progress or the real error. Rule: run nix commands with **no pipe and no stderr redirect at
+all**. Long ones go in `run_in_background`, unfiltered.

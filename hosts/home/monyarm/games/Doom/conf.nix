@@ -84,6 +84,8 @@ let
             "."
             "$DOOMWADDIR"
             "${dirs.xdg.config}/${engine}"
+            # Doom/wad/strife.nix: SVE `Required` strife1 must be in a scanned dir
+            "${dirs.xdg.config}/${engine}/strife"
             "/usr/local/share/doom"
             "/usr/local/share/games/doom"
             "/usr/share/doom"

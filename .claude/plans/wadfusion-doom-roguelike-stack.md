@@ -1440,13 +1440,43 @@ KEX remaster ($14.99) are **purchase required**, nothing free covers
 this game pair the way freeware/idgames content covers most of the
 Doom-side plan. See "Purchase-required items" below.
 
-### Fantasy Roguelike Stack: HXDD + Heretic/Hexen (data-only, deferred)
+### Fantasy Roguelike Stack: Heretic/Hexen + free fantasy content (deferred)
 
-**Status: research placeholder. Not implemented. Purchase required for
-Heretic+Hexen before any of this becomes actionable.**
+**Status: deferred. Heretic and Hexen are not owned yet. Nothing here is
+actionable until they are.**
 
-Same architecture as the Doom stack (IWAD merge, map pool, shuffle,
-randomizers, corruption cards), but targeting Heretic/Hexen via HXDD.
+Same architecture as the Doom stack (map pool, shuffle, corruption cards),
+built with this repo's own `build_custom_maps.py` + `roguelike_shuffle.zs`.
+HXDD is a reference only, not the builder.
+
+#### Decided scope
+
+- **Strife is excluded.** It ships in the flake as a plain game
+  (`Doom/wad/strife.nix`), but its maps are quest-gated hubs with
+  dialogue-triggered transitions, so they don't survive map shuffling.
+- **Intended pool**: Heretic + Hexen (+ Deathkings), plus the free fantasy
+  content already in the repo:
+  - `blasphemer` and `lastermaul` (`Doom/wad/freedoom.nix`)
+  - `simonsdestiny` (`Doom/wad/batandy.nix`)
+  - popular Heretic/Hexen fan maps (research deferred)
+- **`corruptionCards` stays in.** The randomization is the goal.
+
+#### Builder changes needed
+
+- Take `baseFiles`/`reservedPrefixes` from the manifest, not hardcoded Doom
+  values.
+- Handle ExMy map names (Heretic), not only MAPxx.
+- Treat `ZSCRIPT` as a cumulative lump (Simon's Destiny ships one).
+- Remap editor numbers across games, and emit
+  `DoomEdNums`/`LOCKDEFS`/`SNDINFO` for Hexen-format sources under a
+  Heretic base.
+- Rewrite `Teleport_NewMap` to `Exit_Normal`, or exclude hub/ACS-gated maps.
+
+#### Prior art
+
+No released Heretic/Hexen/Strife fusion exists. HXDD (below) merges
+Heretic and Hexen only. Its MIT source is useful for the ednum and lock
+tables.
 
 #### HXDD base
 
@@ -1495,13 +1525,11 @@ without randomizers/cards.
 #### Implementation path (when unblocked)
 
 1. Purchase Heretic+Hexen
-1. Research HXDD CLI mode / from-source build
 1. Research 2025 KEX remaster format story
 1. Survey Heretic/Hexen idgames map pool
-1. Test mod compatibility against HXDD base
-1. Package HXDD derivation (or reconstruct merge)
-1. Build `HXDD_ROGUELIKE` game entry (or separate `HERETIC_ROGUELIKE`/
-   `HEXEN_ROGUELIKE` if composition differs)
+1. Apply the builder changes above to `build_custom_maps.py`
+1. Test `corruptionCards` against the merged pool
+1. Build a `FANTASY_ROGUELIKE` game entry
 
 ### Purchase-required items -- not yet registered anywhere in this repo
 

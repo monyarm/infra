@@ -16,7 +16,6 @@ export NH_SHOW_ACTIVATION_LOGS=true
 git add .
 nix fmt
 
-# target host needs work due to switch to nh
 target_args=()
 if [[ $remote_ip != "localhost" ]]; then
   target_args=(--target-host "root@$remote_ip")
@@ -26,7 +25,7 @@ nh os switch \
   "$repo_root" --hostname "$hostname" \
   --impure --accept-flake-config \
   --log-format=bar-with-logs \
-  -- --option max-call-depth 1000000 \
-  "${target_args[@]}"
+  "${target_args[@]}" \
+  -- --option max-call-depth 1000000
 
 ./wallpaper.sh

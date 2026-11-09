@@ -39,3 +39,4 @@
 - [No nix while background eval runs](feedback_no_nix_while_background_eval.md) — not even small getFlake --expr lookups; resolve input paths first
 - [No unasked config edits](feedback_no_unasked_config_edits.md) — runtime breakage: give unblock commands; config changes only on explicit yes
 - [No bulk nix copy without asking](feedback_no_bulk_copy_without_asking.md) — debugging probes stay tiny; never copy whole closures to builders unasked
+- [Steam auth via direnv](reference_steam_auth_direnv.md) — `direnv exec . <cmd>` for owned-depot fetchSteam; anonymous steamcmd for manifest gids

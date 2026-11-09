@@ -33,8 +33,13 @@ Usage:
   ./measure-compression.py --scummvm           # only ScummVM games
   ./measure-compression.py --emulation         # only games.emulation.roms.*
   ./measure-compression.py --renpy             # only games.renpy.games.*
+  ./measure-compression.py --raze              # only games.raze.grps.*
+  ./measure-compression.py --ecwolf            # only games.ecwolf.data.*
   ./measure-compression.py --list              # print available game names
   ./measure-compression.py --list --missing    # ...only those with no CSV row yet
+  ./measure-compression.py --missing           # build only games with no CSV row
+  ./measure-compression.py --measured          # build only games already in the CSV
+  ./measure-compression.py --real-only grim    # build only the real leg; no compare, no CSV write
 """
 
 import argparse
@@ -360,6 +365,8 @@ def list_names():
   scummvm = builtins.attrNames real.config.games.scummvm.games;
   emulation = builtins.attrNames real.config.games.emulation.roms;
   renpy = builtins.attrNames real.config.games.renpy.games;
+  raze = builtins.attrNames real.config.games.raze.grps;
+  ecwolf = builtins.attrNames real.config.games.ecwolf.data;
 }""",
         max_jobs=1,
         cores=1,
@@ -476,6 +483,19 @@ def build_measure_body(targets):
         mock = getDrvPath mocked.config.games.renpy.games.${{n}}.game;
       }};
     }}) names);""")
+    # registries hold raw data; optimize is applied at consumption
+    # (mkRaze / ECWolf's xdg.configFile), same as games.doom.wads
+    for cat, registry in (("raze", "raze.grps"), ("ecwolf", "ecwolf.data")):
+        if targets[cat]:
+            parts.append(f"""
+  {cat} = let names = {names_nix(targets[cat])}; in
+    builtins.listToAttrs (map (n: {{
+      name = n;
+      value = {{
+        real = getDrvPath (customLib.optimize real.config.games.{registry}.${{n}});
+        mock = getDrvPath real.config.games.{registry}.${{n}};
+      }};
+    }}) names);""")
     return "{\n" + "\n".join(parts) + "\n}"
 
 
@@ -488,6 +508,8 @@ def get_drv_paths(targets):
         "scummvm": result.get("scummvm", {}),
         "emulation": result.get("emulation", {}),
         "renpy": result.get("renpy", {}),
+        "raze": result.get("raze", {}),
+        "ecwolf": result.get("ecwolf", {}),
     }
 
 
@@ -650,7 +672,17 @@ def main():
     parser.add_argument(
         "--missing",
         action="store_true",
-        help="with --list, only show games that have no row in compression-savings.csv yet",
+        help="only games with no row in compression-savings.csv yet (also filters --list)",
+    )
+    parser.add_argument(
+        "--measured",
+        action="store_true",
+        help="only games that already have a row in compression-savings.csv (also filters --list)",
+    )
+    parser.add_argument(
+        "--real-only",
+        action="store_true",
+        help="build only the real (compressed) leg; skip the mock baseline and the CSV",
     )
     parser.add_argument("--doom", action="store_true", help="restrict to Doom wads")
     parser.add_argument(
@@ -661,6 +693,12 @@ def main():
     )
     parser.add_argument(
         "--renpy", action="store_true", help="restrict to games.renpy.games.*"
+    )
+    parser.add_argument(
+        "--raze", action="store_true", help="restrict to games.raze.grps.*"
+    )
+    parser.add_argument(
+        "--ecwolf", action="store_true", help="restrict to games.ecwolf.data.*"
     )
     parser.add_argument(
         "--sequential",
@@ -692,44 +730,66 @@ def main():
         categories.append("emulation")
     if args.renpy:
         categories.append("renpy")
+    if args.raze:
+        categories.append("raze")
+    if args.ecwolf:
+        categories.append("ecwolf")
     if not categories:
-        categories = ["doom", "scummvm", "emulation", "renpy"]
+        categories = ["doom", "scummvm", "emulation", "renpy", "raze", "ecwolf"]
 
     names = list_names()
 
-    if args.list or args.missing:
-        measured = load_csv() if args.missing else {}
+    if args.missing and args.measured:
+        sys.exit("--missing and --measured are mutually exclusive.")
+
+    rows = load_csv()
+
+    def in_csv_filter(category, n):
+        if args.missing:
+            return (category, n) not in rows
+        if args.measured:
+            return (category, n) in rows
+        return True
+
+    if args.list:
         for category in categories:
             for n in names[category]:
-                if not args.missing or (category, n) not in measured:
+                if in_csv_filter(category, n):
                     print(f"{category:8} {n}")
         return
 
     targets = {
         c: (
-            [n for n in names[c] if matches(n, args.patterns)]
+            [n for n in names[c] if matches(n, args.patterns) and in_csv_filter(c, n)]
             if c in categories
             else []
         )
-        for c in ("doom", "scummvm", "emulation", "renpy")
+        for c in ("doom", "scummvm", "emulation", "renpy", "raze", "ecwolf")
     }
 
     if not any(targets.values()):
         sys.exit("No games matched the given patterns.")
 
-    rows = load_csv()
-
     print("=== resolving derivations (1 cheap eval, no building) ===")
     drv_map = get_drv_paths(targets)
     # The eval can add targets the name filter never saw (e.g. Doom inputs
     # computed outside the wad registry), so drive both build and CSV from
-    # what it actually resolved.
-    targets = {category: list(drv_map[category]) for category in categories}
+    # what it actually resolved. Extras ("STEAMKEY:input") come from every
+    # game, so filter them by the patterns too.
+    targets = {
+        category: [
+            n
+            for n in drv_map[category]
+            if n in targets[category]
+            or (matches(n, args.patterns) and in_csv_filter(category, n))
+        ]
+        for category in categories
+    }
     drv_list = [
         (category, name, leg, drv_map[category][name][leg])
         for category in categories
         for name in targets[category]
-        for leg in ("real", "mock")
+        for leg in (("real",) if args.real_only else ("real", "mock"))
     ]
 
     if args.sequential:
@@ -748,6 +808,13 @@ def main():
         ]
     if not any(targets.values()):
         sys.exit("Every build failed, nothing to measure.")
+
+    if args.real_only:
+        for category in categories:
+            for name in targets[category]:
+                real_b = sizes[(category, name, "real")]
+                print(f"{category:8} {name:30} {real_b:>12} ({human_size(real_b)})")
+        return
 
     now = datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds")
 

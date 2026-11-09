@@ -12,6 +12,7 @@
   stdenv,
   nodejs,
   fetchNpmDeps,
+  runCommand,
   ...
 }:
 
@@ -20,11 +21,12 @@ let
 
   nodeModules = fetchNpmDeps {
     name = "glsl-optimize-npm-deps";
-    # fetchNpmDeps's own build script only ever reads package-lock.json
-    # (never package.json), and outputHash is declared, not derived from
-    # src -- verified via a real build that this single-file src produces
-    # the exact same output path as pointing at the whole containing dir.
-    src = "${glslOptimizeDir}/package-lock.json";
+    # lockfile lands in the output; hash predates prettier's trailing newline
+    src = runCommand "glsl-optimize" { } ''
+      mkdir $out
+      cp ${glslOptimizeDir}/package.json $out/
+      printf '%s' "$(cat ${glslOptimizeDir}/package-lock.json)" > $out/package-lock.json
+    '';
     hash = "sha256-PfDgD+5sAQtkBiJV2pWjRUiHvY7f+EZ5n4A399Cb/rc=";
   };
 in

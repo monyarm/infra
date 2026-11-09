@@ -46,6 +46,22 @@ let
     |> getFiles [ "MARTIAN" ]
     |> compressScummvmGame "ultima";
 
+  akalabeth =
+    fetchGOG {
+      game = "akalabeth_world_of_doom";
+      fileId = "en1installer0";
+      sha256 = "sha256-c/5DSOTJQGk6QcNTFpcZGpLGYvnOEMsBhQs/FaJzbNg=";
+    }
+    |> getFiles [
+      "AK.DAT"
+      "DUNGEON.MID"
+      "INTRO.MID"
+      "LORDBRIT.MID"
+      "OVER.MID"
+      "SHOP.MID"
+    ]
+    |> compressScummvmGame "ultima";
+
   bladeRunner =
     fetchGOG {
       game = "blade_runner";
@@ -298,6 +314,14 @@ lib.mkIf config.games.scummvm.enable {
         url = "https://cdn2.steamgriddb.com/grid/963023db12c1b269a5e1b2fcd4046352.png";
         sha256 = "sha256-qr07/u9GTcCnPgtlHP0zvBSJyR3NfpFiTIxwX/Lozi4=";
       };
+    };
+
+    akalabeth = {
+      engineid = "ultima";
+      gameid = "akalabeth";
+      description = "Akalabeth: World of Doom";
+      path = "${akalabeth}";
+      gogId = "akalabeth_world_of_doom";
     };
 
     bladeRunner = {

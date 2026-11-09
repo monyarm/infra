@@ -352,6 +352,126 @@ let
     }
     |> getFiles [ "INDY3" ]
     |> compressScummvmGame "scumm";
+
+  # main depot now Unity remaster; original CD data in english Classic/ depot
+  ihnm =
+    fetchSteam {
+      appId = 245390;
+      depotId = 245398;
+      manifestId = 4702401625100442141;
+      filelist = [ "regex:^Classic/.*\\.(RES|RE_)$" ];
+      sha256 = "sha256-rmiXcP3tcdZoY+AWNHuUq8yVYDp1dpoFAWO8oea2uLA=";
+    }
+    |> compressScummvmGame "saga";
+
+  goldenWake =
+    fetchSteam {
+      appId = 307570;
+      depotId = 307571;
+      manifestId = 4954106950919310782;
+      os = "windows";
+      filelist = [
+        "a-golden-wake.exe"
+        "acsetup.cfg"
+        "audio.vox"
+        "speech.vox"
+      ];
+      sha256 = "sha256-OHLcATC9XXOqam+L3q84fBUG3kXrBuw2ZppxXWty/ec=";
+    }
+    |> compressScummvmGame "ags";
+
+  # AGI data only, skip bundled DOSBox
+  goldRush =
+    fetchSteam {
+      appId = 308000;
+      depotId = 308001;
+      manifestId = 2744855921269945088;
+      filelist = [
+        "regex:^(AGI|AGIDATA\\.OVL|[A-Z]+_GRAF\\.OVL|GR\\.COM|GRDIR|GRVOL\\.[0-9]+|OBJECT|WORDS\\.TOK)$"
+      ];
+      sha256 = "sha256-OcouJILx3i5FhhV5SV3ZrFv583PSZ31NQsbnxUaP+hY=";
+    }
+    |> compressScummvmGame "agi";
+
+  # depot is just the CD image; bsdtar lists nothing on it, 7z reads it
+  wetlandsDl = fetchSteam {
+    appId = 1367160;
+    depotId = 1367161;
+    manifestId = 8172406555390402683;
+    filelist = [ "Wetlands.iso" ];
+    sha256 = "sha256-zVw5ZsP896hoIbVhkzjs1ln72C6+Kyi/uRRFCSvm908=";
+  };
+
+  wetlands =
+    pkgs.runCommand "wetlands-extracted"
+      {
+        nativeBuildInputs = [ pkgs.p7zip ];
+        __contentAddressed = true;
+        outputHashAlgo = "sha256";
+        outputHashMode = "recursive";
+      }
+      ''
+        7z x ${wetlandsDl}/Wetlands.iso WETLANDS
+        mv WETLANDS $out
+      ''
+    |> compressScummvmGame "hypno";
+  # DLC 580440 "Original Version"; base app is the remaster
+  brokenSword2 =
+    fetchSteam {
+      appId = 33600;
+      depotId = 580440;
+      manifestId = 2048381033559355962;
+      filelist = [ "regex:^Original/.*\\.(clu|CLU|inf|tab|smk|bmp)$" ];
+      sha256 = "sha256-V/wi8zbpiL/yoilcysiDTjMDcAxYLP4iSyQGPjZB41U=";
+    }
+    |> compressScummvmGame "sword2";
+
+  penumbraOverture =
+    fetchSteam {
+      appId = 22180;
+      depotId = 22181;
+      manifestId = 2633694780435938990;
+      os = "windows";
+      filelist = [
+        "regex:^redist/((billboards|config|core/textures|fonts|graphics|lights|maps|models|music|particles|sounds|textures)/(?!.*(Thumbs\\.db|\\.psd)$)|(materials|resources)\\.cfg$|Penumbra\\.exe$)"
+      ];
+      sha256 = "sha256-Tmmj7vvP7+B24Mor7A9xKuHI2qcKIIhrLQJLcUZ2vOA=";
+    }
+    |> compressScummvmGame "hpl1";
+
+  # SQ1: VGA remake only; EGA AGI original (2016_*/sq1) skipped
+  spaceQuestDl = fetchSteam {
+    appId = 10110;
+    depotId = 10111;
+    manifestId = 6725209980292758062;
+    filelist = [
+      "regex:^(sq1vga|sq2|sq3|sq4|sq5|sq6)/(?!(DOSBOX|DRIVERS|VFW|BITMAP|WAVE)/)(?!.*\\.(exe|EXE|dll|DLL|pdf|txt|bat|pif|PIF|DRV|COM|OVL|ERR|zip)$)"
+    ];
+    sha256 = "sha256-QmzSSDwHSPJ8BF3AVYUmPLGAAYrckPGA5I/eRxq3ijI=";
+  };
+  spaceQuestAgi = spaceQuestDl |> getFiles [ "sq2" ] |> compressScummvmGame "agi";
+  spaceQuestSci =
+    spaceQuestDl
+    |> getFiles [
+      "sq1vga"
+      "sq3"
+      "sq4"
+      "sq5"
+      "sq6"
+    ]
+    |> compressScummvmGame "sci";
+
+  eleventhHour =
+    fetchSteam {
+      appId = 255940;
+      depotId = 255942;
+      manifestId = 983756041906006545;
+      os = "windows";
+      filelist = [ "regex:^((GROOVIE|MEDIA)/|SAMPLE\\.(AD|MT|OPL)$|DISK\\.1$)" ];
+      sha256 = "sha256-nbgaCw9WVabRNtlYOXitZaE3eN4GrWWS/ANDQD2i0lI=";
+    }
+    |> compressScummvmGame "groovie";
+
 in
 lib.mkIf config.games.scummvm.enable {
   games.scummvm.games.alphaPolaris = {
@@ -666,6 +786,44 @@ lib.mkIf config.games.scummvm.enable {
     };
   };
 
+  games.scummvm.games.goldenWake = {
+    gameid = "goldenwake";
+    engineid = "ags";
+    extra = "Steam";
+    description = "A Golden Wake";
+    path = "${goldenWake}";
+    steamAppId = 307570;
+    steamCdnImagesHash = "sha256-F6wJRIEy5mZ8VOyC2uKtgDrspfU0R9NkIftbEF22mbs=";
+  };
+
+  games.scummvm.games.goldRush = {
+    gameid = "goldrush";
+    engineid = "agi";
+    extra = "3.0 1998-12-22 3.5\"";
+    description = "Gold Rush!";
+    path = "${goldRush}";
+    steamAppId = 308000;
+    steamCdnImagesHash = "sha256-q+1K3Mt4qs4BdfcH3lPb4rLilUoHPTw3FO3KzkI7VDc=";
+  };
+
+  games.scummvm.games.wetlands = {
+    gameid = "wetlands";
+    engineid = "hypno";
+    description = "Wetlands";
+    path = "${wetlands}";
+    steamAppId = 1367160;
+    steamCdnImagesHash = "sha256-Ea43Aar2Fk5tG8tiR7t7tlq1gR3ZFbN2XkAZgyNeN+c=";
+  };
+
+  games.scummvm.games.ihnm = {
+    gameid = "ihnm";
+    engineid = "saga";
+    description = "I Have No Mouth, and I Must Scream";
+    path = "${ihnm}/Classic";
+    steamAppId = 245390;
+    steamCdnImagesHash = "sha256-RoU0Hg+Jybbr40w1EUDFD5U/rORSyvAGBy2NgN89sTI=";
+  };
+
   games.scummvm.games.sanitarium = {
     engineid = "asylum";
     description = "Sanitarium";
@@ -682,5 +840,80 @@ lib.mkIf config.games.scummvm.enable {
     path = "${dott}";
     steamAppId = 388210;
     steamCdnImagesHash = "sha256-xN9rcc5XSp7V7Vusucvf9nkoYe22X5xncwyNb9WP0Es=";
+  };
+
+  games.scummvm.games.brokenSword2 = {
+    gameid = "sword2";
+    engineid = "sword2";
+    description = "Broken Sword II: The Smoking Mirror";
+    path = "${brokenSword2}/Original";
+    steamAppId = 33600;
+    steamCdnImagesHash = "sha256-ipXCRIUpZfrbLC2gpd0wfVuvWQS6k4ybDm5Ify7l1VQ=";
+  };
+
+  games.scummvm.games.penumbraOverture = {
+    gameid = "penumbraoverture";
+    engineid = "hpl1";
+    description = "Penumbra: Overture";
+    path = "${penumbraOverture}/redist";
+    steamAppId = 22180;
+    steamCdnImagesHash = "sha256-tsC/BkJxPRtiAmmN34MFmP1NP4Yr8rRoShXc/PND1qo=";
+  };
+
+  games.scummvm.games.spaceQuest1Vga = {
+    gameid = "sq1sci";
+    engineid = "sci";
+    description = "Space Quest I: Roger Wilco in the Sarien Encounter (VGA)";
+    path = "${spaceQuestSci}/sq1vga";
+  };
+
+  games.scummvm.games.spaceQuest2 = {
+    gameid = "sq2";
+    engineid = "agi";
+    description = "Space Quest II: Vohaul's Revenge";
+    path = "${spaceQuestAgi}/sq2";
+  };
+
+  games.scummvm.games.spaceQuest3 = {
+    gameid = "sq3";
+    engineid = "sci";
+    description = "Space Quest III: The Pirates of Pestulon";
+    path = "${spaceQuestSci}/sq3";
+  };
+
+  games.scummvm.games.spaceQuest4 = {
+    gameid = "sq4";
+    engineid = "sci";
+    description = "Space Quest IV: Roger Wilco and the Time Rippers";
+    path = "${spaceQuestSci}/sq4";
+  };
+
+  games.scummvm.games.spaceQuest5 = {
+    gameid = "sq5";
+    engineid = "sci";
+    description = "Space Quest V: The Next Mutation";
+    path = "${spaceQuestSci}/sq5";
+  };
+
+  games.scummvm.games.spaceQuest6 = {
+    gameid = "sq6";
+    engineid = "sci";
+    description = "Space Quest 6: Roger Wilco in the Spinal Frontier";
+    path = "${spaceQuestSci}/sq6";
+  };
+
+  # one Steam app, seven games: hide it, one shortcut each
+  programs.steam.games._spaceQuestCollection = {
+    disabled = true;
+    appId = 10110;
+  };
+
+  games.scummvm.games.eleventhHour = {
+    gameid = "11h";
+    engineid = "groovie";
+    description = "The 11th Hour";
+    path = "${eleventhHour}";
+    steamAppId = 255940;
+    steamCdnImagesHash = "sha256-HnKbL+K4WJjc2B2L/wmyCBhwi6K/bI8widQVwBzqqIo=";
   };
 }

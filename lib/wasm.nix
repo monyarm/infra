@@ -64,7 +64,14 @@ let
   };
 in
 {
-  inherit buildWasmModule;
+  inherit buildWasmModule dispatchModule;
+
+  # eval-time deps: GC'd -> every eval rebuilds them
+  modules = [
+    mathModule
+    serializeModule
+    dispatchModule
+  ];
 
   crc32 =
     str:

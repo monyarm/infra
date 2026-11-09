@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   ids =
     field:
@@ -8,6 +13,8 @@ let
     ];
 in
 {
+  home.packages = [ pkgs.game-library-scan ];
+
   xdg.dataFile."game-library-scan/already-defined.json".text = builtins.toJSON {
     steamAppIds = ids "steamAppId";
     gogIds = ids "gogId";

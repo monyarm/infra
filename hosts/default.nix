@@ -195,6 +195,7 @@ let
         (if builtins.pathExists hardwarePath then hardwarePath else { })
         inputs.stylix.nixosModules.stylix
         ./modules/config/stylix
+        ./modules/config/flake-closure.nix
         {
           networking.hostName = hostName;
           nixpkgs.hostPlatform = currentSystem;
