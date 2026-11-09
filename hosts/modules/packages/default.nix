@@ -7,7 +7,6 @@
   # so `home.packages` in this tree would never fire.
   imports = [
     ./base.nix
-    ./optimize.nix
     ./nix.nix
   ];
   environment.systemPackages = with pkgs; [

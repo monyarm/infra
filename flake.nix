@@ -141,15 +141,17 @@ rec {
       # here (rather than threaded through customLib) because this runs
       # before perSystem's pkgs/customLib exist -- both call sites below
       # share this one function instead of re-deriving the merge twice.
+      # sops from PATH (exec searches it): a nixpkgs import just for the
+      # binary costs a whole extra nixpkgs eval.
       mergeSopsSources =
-        sopsPkg: publicSources:
+        publicSources:
         let
           privPath = ./sources.sops.nix;
         in
         if builtins.pathExists privPath then
           inputs.nixpkgs.lib.recursiveUpdate publicSources (
             builtins.exec [
-              "${sopsPkg}/bin/sops"
+              "sops"
               "--decrypt"
               (toString privPath)
             ]
@@ -158,9 +160,7 @@ rec {
           publicSources;
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      _module.args.sources =
-        mergeSopsSources (import inputs.nixpkgs { system = builtins.currentSystem; }).sops
-          (import ./sources.nix);
+      _module.args.sources = mergeSopsSources (import ./sources.nix);
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -182,7 +182,7 @@ rec {
             inherit (inputs.self.lib) overlays;
             config.allowUnfree = true;
           };
-          sources = mergeSopsSources pkgs.sops (import ./sources.nix);
+          sources = mergeSopsSources (import ./sources.nix);
           legacyPackages = import ./packages {
             inherit pkgs;
             inherit (pkgs) lib;
@@ -240,81 +240,7 @@ rec {
             ./topology
             { inherit (inputs.self) nixosConfigurations; }
           ];
-          treefmt =
-            let
-              shellFiles = [
-                "*.sh"
-                "*.zsh"
-              ];
-            in
-            {
-              projectRootFile = "flake.nix";
-              settings.global.excludes = [
-                "node_modules/**"
-                ".bench/**"
-                "hosts/home/*/config/JetBrains/*/**"
-                "**/.github/**"
-                "**/*.sops.nix"
-                ".claude/skills/**"
-                ".claude/agents/**"
-                "hosts/home/monyarm/config/AI/Claude/memory/**"
-              ];
-              # nix
-              programs.nixfmt.enable = true;
-              programs.deadnix.enable = true;
-              programs.statix.enable = true;
-              # markdown
-              programs.mdformat.enable = true;
-              programs.mdsh.enable = true;
-              # css/json/js
-              programs.prettier.enable = true;
-              programs.prettier.includes = [
-                "*.json"
-                "*.css"
-                "*.js"
-              ];
-              # shell
-              programs.shellcheck.enable = true;
-              programs.shellcheck.includes = shellFiles;
-              programs.shellcheck.excludes = [
-                "hosts/home/monyarm/config/ZSH/.p10k.zsh"
-              ];
-              programs.shfmt.enable = true;
-              programs.shfmt.includes = shellFiles;
-              programs.shfmt.excludes = [
-                "hosts/home/monyarm/config/ZSH/.p10k.zsh"
-              ];
-              # py
-              programs.mypy.enable = true;
-              programs.mypy.directories = {
-                "hosts/home/monyarm/config/Bin/.local/bin" = {
-                  extraPythonPackages = with pkgs.python3.pkgs; [ ];
-                };
-              };
-              programs.ruff-check.enable = true;
-              programs.ruff-format.enable = true;
-              programs.isort.enable = true;
-              # yaml
-              programs.yamlfmt.enable = true;
-              # toml
-              programs.taplo.enable = true;
-              # rust
-              programs.rustfmt.enable = true;
-              programs.rustfmt.edition = "2021";
-              # generic text/config
-              programs.keep-sorted.enable = true;
-              # xml
-              programs.xmllint.enable = true;
-              # qml
-              settings.formatter."qmlformat" = {
-                command = "${pkgs.kdePackages.qtdeclarative}/bin/qmlformat";
-                options = [
-                  "--inplace"
-                  "--normalize"
-                ];
-                includes = [ "*.qml" ];
-              };
-            };
+          treefmt = import ./treefmt.nix;
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
               direnv

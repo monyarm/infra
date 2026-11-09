@@ -34,20 +34,34 @@ let
     inputs.niri.overlays.niri
     inputs.steam-fetcher.overlay
     inputs.llm-agents.overlays.shared-nixpkgs
-    (
-      _final: prev:
-      let
-        mame2010Pkgs = import inputs.nixpkgs-mame2010 {
-          system = prev.stdenv.hostPlatform.system;
-          config.allowUnfree = true;
-        };
-      in
-      {
-        libretro = prev.libretro // {
-          mame2010 = mame2010Pkgs.libretro.mame2010;
-        };
-      }
-    )
+    (_final: prev: {
+      libretro = prev.libretro // {
+        # Old mame2010 core (newer segfaults arcade smoke). By store path when
+        # already built: importing its nixpkgs pin costs ~2s of every eval.
+        # Bump `path` together with nixpkgs-mame2010.
+        mame2010 =
+          let
+            path = "/nix/store/11f5a9lqa103sm6hchgcadq54r6bciaq-libretro-mame2010-0-unstable-2026-04-20";
+            # derivation-shaped: launcher wiring wants isDerivation/getName/meta
+            prebuilt = rec {
+              type = "derivation";
+              name = "libretro-mame2010-0-unstable-2026-04-20";
+              pname = "libretro-mame2010";
+              outPath = builtins.storePath path;
+              outputs = [ "out" ];
+              out = prebuilt;
+              meta = { };
+            };
+          in
+          if builtins.pathExists path then
+            prebuilt
+          else
+            (import inputs.nixpkgs-mame2010 {
+              inherit (prev.stdenv.hostPlatform) system;
+              config.allowUnfree = true;
+            }).libretro.mame2010;
+      };
+    })
     (
       final: prev:
       import ../packages {
@@ -104,6 +118,7 @@ let
     ./modules/packages/media.nix
     ./modules/packages/apps.nix
     ./modules/packages/games.nix
+    ./modules/packages/optimize.nix
     ./modules/lib.nix
     "${dirs.secrets}"
   ];

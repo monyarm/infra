@@ -8,6 +8,10 @@
   ...
 }:
 let
+  inherit (config.games.doom.wads) lights;
+  # lights rides along with every game; optimize it once, not per game
+  optimizedLights = optimize lights;
+  optimizeWad = x: if x == lights then optimizedLights else optimize x;
 
   mkDoom =
     {
@@ -18,9 +22,9 @@ let
     let
       game = optimize iwad;
       wadInputs = map (x: {
-        real = optimize x;
+        real = optimizeWad x;
         mock = x;
-      }) ((if wad == null then [ ] else wad) ++ [ config.games.doom.wads.lights ]);
+      }) ((if wad == null then [ ] else wad) ++ [ lights ]);
       optimizedInputs = [
         {
           real = game;

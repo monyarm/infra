@@ -5,6 +5,11 @@
   ...
 }:
 
+let
+  # tests off: their check inputs (markitdown: every optional dep; mcp:
+  # logfire, opentelemetry, ...) are all evaluated otherwise -- eval cost only
+  noCheck = p: p.overridePythonAttrs { doCheck = false; };
+in
 python3Packages.buildPythonApplication rec {
   pname = "markitdown-mcp";
   version = "0.0.1a4";
@@ -19,8 +24,8 @@ python3Packages.buildPythonApplication rec {
   build-system = [ python3Packages.hatchling ];
 
   dependencies = [
-    python3Packages.mcp
-    python3Packages.markitdown
+    (noCheck python3Packages.mcp)
+    (noCheck python3Packages.markitdown)
   ];
 
   pythonRelaxDeps = true;

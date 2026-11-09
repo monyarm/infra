@@ -730,7 +730,14 @@ let
       [
         "div.games"
         { }
-        (parallel (map gameCard) games)
+        # cards rendered to strings in parallel; forcing
+        # the rendered strings is what parallelizes, not the node trees
+        (
+          let
+            cards = map (g: niccup.render (gameCard g)) games;
+          in
+          builtins.parallel cards (map niccup.raw cards)
+        )
       ]
     ];
 

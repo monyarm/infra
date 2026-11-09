@@ -1,17 +1,18 @@
 # Build-time tools the game pipeline needs but no output references, so GC
-# eats them and the next build refetches/rebuilds. Rooted, not on PATH: the
-# optimize pin's coreutils etc. would clash with the system's in a buildEnv.
+# eats them and the next build refetches/rebuilds. Rooted via a file in the
+# HM generation, not on PATH: the optimize pin's coreutils etc. would clash
+# with the system's in a buildEnv. HM side: optimizePkgs/customLib are
+# already built here; forcing them from NixOS evaluated them a second time.
 {
   pkgs,
   lib,
   inputs,
   optimizePkgs,
   optimizeDynamicParts,
+  wasm,
   ...
 }:
 let
-  inherit (pkgs.stdenv.hostPlatform) system;
-
   # doom + no fileList = every handler tool real, no dummies; the JSON's
   # string context is the whole tool set (incl. determinate nix, dispatch wasm)
   inherit ((optimizeDynamicParts { prime = false; } { passthru.isDoom = true; })) toolPathsJSON;
@@ -20,6 +21,14 @@ let
   optimizeToolNames = lib.attrNames (
     builtins.fromJSON (builtins.unsafeDiscardStringContext toolPathsJSON)
   );
+
+  # lib/optimize/dynamic.nix's own build, on the optimize pin
+  optimizeDispatch =
+    (import ../../../lib/wasm.nix {
+      pkgs = optimizePkgs;
+      inherit (optimizePkgs) lib;
+      nixWasmRustPath = inputs.nix-wasm-rust-optimize;
+    }).dispatchModule;
 
   # every `pkgs.<name>` in these sources that is a real derivation of pkgSet
   scanRefs =
@@ -57,18 +66,28 @@ let
   ];
 
   # all of packages/ (game extractors, fetch helpers, scan tools), minus the
-  # optimize tools: system-pin copies of those are never used
-  localPackages = lib.filter (p: p != null) (
-    map (n: pkgs.${n} or null) (
-      lib.subtractLists optimizeToolNames (lib.attrNames inputs.self.packages.${system})
+  # optimize tools: system-pin copies of those are never used. Names from
+  # the dir itself, same rule as packages/default.nix -- going through
+  # inputs.self.packages forced the flake's perSystem nixpkgs.
+  packageNames = lib.mapAttrsToList (n: _: lib.removeSuffix ".nix" n) (
+    lib.filterAttrs (n: t: n != "default.nix" && (t == "directory" || lib.hasSuffix ".nix" n)) (
+      builtins.readDir ../../../packages
     )
   );
-in
-{
-  system.extraDependencies = [
+  localPackages = lib.filter lib.isDerivation (
+    map (n: pkgs.${n} or null) (lib.subtractLists optimizeToolNames packageNames)
+  );
+
+  roots = [
     optimizeTools
+    optimizeDispatch
   ]
+  # builtins.wasm plugins: eval needs them built
+  ++ wasm.modules
   ++ optimizePinRefs
   ++ fetcherRefs
   ++ localPackages;
+in
+{
+  xdg.dataFile."nix-roots/optimize".text = lib.concatMapStrings (p: "${p}\n") roots;
 }

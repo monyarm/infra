@@ -14,6 +14,9 @@
       applications = 0.95;
     };
     image = ./wall.jpg;
+    # stylix's own palette from wall.jpg, frozen: generating it is an IFD
+    # over a Haskell build every eval. Regenerate if wall.jpg changes.
+    base16Scheme = builtins.fromJSON (builtins.readFile ./palette.json);
     cursor = {
       name = "macOS";
       package = pkgs.apple-cursor;
