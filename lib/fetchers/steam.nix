@@ -324,6 +324,10 @@ rec {
         DD_STATUS=$?
         set -e
 
+        # DD's own cache; layout changes across DD versions, breaks hash.
+        # Older hashes still include it -- update them as they mismatch.
+        rm -rf "$out/.DepotDownloader"
+
         exit $DD_STATUS
       '';
     };
