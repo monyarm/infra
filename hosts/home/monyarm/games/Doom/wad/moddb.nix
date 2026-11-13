@@ -18,6 +18,7 @@ in
 lib.mkIf config.games.doom.enable {
   games.doom.wads = {
     jazzJackrabbitDoom = fetchModDB sources.wad.jazzJackrabbitDoom |> getFile "UJJD.pk3";
+    riseOfTheWoolBall = fetchModDB sources.wad.riseOfTheWoolBall |> getFile "ROTWB.wad";
 
     zombiesAteMyNeighboursTC =
       fetchModDB sources.wad.zombiesAteMyNeighboursTC
@@ -52,6 +53,10 @@ lib.mkIf config.games.doom.enable {
           sha256 = "sha256-UflCKKZ2HaQsAfHaFJ1tvF/0PtmSVjKLJSvT5DESfEA=";
         };
       };
+    };
+    RiseOfTheWoolBall = mkDoom {
+      name = "Rise of the Wool Ball";
+      iwad = riseOfTheWoolBall;
     };
     ZombiesAteMyNeighboursTC = mkDoom {
       name = "Zombies Ate My Neighbours TC";

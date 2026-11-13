@@ -395,6 +395,12 @@ regardless of which rip strategy handles it.
   `lib/optimize/dynamic.nix`'s `instantiateDrv`/`builtins.outputOf`
   pattern, applied to naming instead of per-file optimization.
   Needs to be pinned down before a fix can be scoped correctly.
+- When the desktop (monyarm) moves fully to NixOS: move its hand-installed
+  `/etc/udev/rules.d/99-nixbld-cdrom.rules` into Nix
+  (`services.udev.extraRules`). udev recreates `/dev/sr0` with fresh
+  logind ACLs on every disc insert, dropping the `g:nixbld` ACL that
+  `.envrc` sets, so sandboxed `ripDiscContents` builds sit in
+  disc-rip-helper's `blockdev` wait loop forever.
 
 ## GIMP config is drifting from the tracked copy
 

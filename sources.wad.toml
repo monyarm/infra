@@ -37,6 +37,7 @@ wad.hocusPocusDoom = "189681"
 wad.doom64CE = "285205"
 wad.doomZero = "219272"
 wad.corruptionCards = "293793"
+wad.riseOfTheWoolBall = "125457"
 
 [idgames]
 wad.paranoid = "levels/doom2/Ports/p-r/paranoid.zip"
@@ -48,6 +49,8 @@ wad.batmandoom = "themes/batman/batman.zip"
 wad.inquisitor = "levels/doom2/Ports/g-i/inqstr.zip"
 wad.inquisitor2 = "levels/doom2/Ports/g-i/inqstr2.zip"
 wad.inquisitor3 = "levels/doom2/Ports/g-i/inqstr3e.zip"
+wad.hacx = "themes/hacx/hacx12.zip"
+wad.harmonyc = "levels/doom2/Ports/g-i/harmonyc.zip"
 # Master Levels Rejects -- WADs submitted for the 1995 Master Levels but not selected.
 wad.mlRejectCpu = "levels/doom2/a-c/cpu.zip"
 wad.mlRejectDevice1 = "levels/doom2/d-f/device_1.zip"

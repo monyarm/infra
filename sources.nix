@@ -589206,6 +589206,12 @@ in
                 path = "mods/advancementinfo-1.19.3-fabric0.68.1-1.3.1.jar";
                 url = "https://cdn.modrinth.com/data/G1epq3jN/versions/HkMtkEM2/advancementinfo-1.19.3-fabric0.68.1-1.3.1.jar";
               };
+            "sha512-5OfoJIA6m9lGMYV1yk0bVfeMtYj9CPYhAA3qqJusJXnT1zqkEOOWm7pwn6xBwVzxtxu56MIhfZBBObWEkkoEPw==" =
+              {
+                env = "required";
+                path = "mods/animatica-0.6.3+26.3.jar";
+                url = "https://cdn.modrinth.com/data/xEyZuswh/versions/doj27VCh/animatica-0.6.3%2B26.3.jar";
+              };
             "sha512-5Or3WU3gjrTz6ory6Tnz7mHQdZevtNX0IMP7rcs4HHu61LGv1ZGbMIe3Ptljb7AYscl4hYoRK9T2rNy0Lp7tqg==" =
               {
                 env = "required";
@@ -590196,6 +590202,12 @@ in
                 path = "mods/rrls-5.0.9+mc1.21.2-fabric.jar";
                 url = "https://cdn.modrinth.com/data/ZP7xHXtw/versions/xCGxTnUz/rrls-5.0.9%2Bmc1.21.2-fabric.jar";
               };
+            "sha512-9+Y8hyHCAMVshgGI0UJpnbe1EzzGNUtTZmABayY0W4M3XQ3RS5iXHkjpb6oiwmHyow6kRP5oI3Bk1y8rTEyjRQ==" =
+              {
+                env = "required";
+                path = "mods/Ixeris-4.6.11-26.3-fabric.jar";
+                url = "https://cdn.modrinth.com/data/p8RJPJIC/versions/mj30lAl8/Ixeris-4.6.11%2B26.3-fabric.jar";
+              };
             "sha512-9/HVeDLx3SZS/zd/AIII5DzqFx81Io1wyVy5P2HUKAZi3k7i600RkUOHx6LLMLPojpaNVi3/GSxtXR3h5Ow36A==" =
               {
                 env = "required";
@@ -590934,6 +590946,12 @@ in
                 path = "mods/entity_texture_features-7.2.5-26.2-fabric.jar";
                 url = "https://cdn.modrinth.com/data/BVzZfTc1/versions/b9RlCI9F/entity_texture_features-7.2.5-26.2-fabric.jar";
               };
+            "sha512-BhQEx6VG/Pl7HpXIS+ZThjTvimTDjFCrUkE7ww6zymMdcEaeyaXsbnAbv7vZd51lo6cONZ6A2MNkSf8qLShsqw==" =
+              {
+                env = "required";
+                path = "mods/bbe-fabric-1.4.0+mc26.3-mod.jar";
+                url = "https://cdn.modrinth.com/data/ONZm0H7Y/versions/FU2tstk7/bbe-fabric-1.4.0%2Bmc26.3-mod.jar";
+              };
             "sha512-BiModARznFSOJVa+3eAqE/iCETaxZ14Srzy3Ug7/p0K/lJbaE/EEWRTcGzcGPgohYPhI9BVcgm4WemQXGgwN9A==" =
               {
                 env = "required";
@@ -591137,6 +591155,12 @@ in
                 env = "required";
                 path = "mods/sodium-extra-0.4.6+mc1.19-build.47.jar";
                 url = "https://cdn.modrinth.com/data/PtjYWJkn/versions/mc1.19-0.4.6/sodium-extra-0.4.6%2Bmc1.19-build.47.jar";
+              };
+            "sha512-CkuKFOhHtxVntVe0PZBsIWf6Jj7u7zdFSoIbooaZbj2hYW3C2WR3NtKKJQ1ez0AFQcroCDWbKaYjJKim8q1eMA==" =
+              {
+                env = "required";
+                path = "mods/fabric-api-0.165.0+26.3.jar";
+                url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/EQKgpeKu/fabric-api-0.165.0%2B26.3.jar";
               };
             "sha512-Cl5lfrVzCaRKxNfqdZJ1uJMN5Av9z+8B8YvCVc5B/VZDUwZeUzUJreDg1em3dagLoA2pijpxt3NQChIoLZqSEA==" =
               {
@@ -592452,6 +592476,12 @@ in
                 path = "mods/continuity-3.0.0+1.21.4.jar";
                 url = "https://cdn.modrinth.com/data/1IjD5062/versions/esC1Vejm/continuity-3.0.0%2B1.21.4.jar";
               };
+            "sha512-H55clU9pg89jDkuQaBXSrwqBjpHKvGW0sT3ewAWJ5E4VgSRY4V18DNADtxpwMQ7woqS5HJjQaVsHA0o9yWM52A==" =
+              {
+                env = "required";
+                path = "mods/bbe-fabric-1.3.9+mc26.2-mod.jar";
+                url = "https://cdn.modrinth.com/data/ONZm0H7Y/versions/n5mL5flA/bbe-fabric-1.3.9%2Bmc26.2-mod.jar";
+              };
             "sha512-H7TfE+LyOSr2MEByQfCXtlC3ZzgGPbEMCQe7eaDgZXGk7CLd+5iUgXTNsghLtcGSQmViJSWYSirwxOeWtpXD3g==" =
               {
                 env = "required";
@@ -592818,6 +592848,12 @@ in
                 path = "mods/entity_model_features-3.3.8-26.3-fabric.jar";
                 url = "https://cdn.modrinth.com/data/4I1XuqiY/versions/kdDVwkgV/entity_model_features-3.3.8-26.3-fabric.jar";
               };
+            "sha512-IP6BXkMnulVXasIP1MaKbQWYxUn3Uq6hjcuzS6gtNCNKNLW3pjc+Wxm5dpAIoc6IcqKJ1/kE3uYY7XvOm27d9A==" =
+              {
+                env = "required";
+                path = "resourcepacks/SodiumTranslations.zip";
+                url = "https://cdn.modrinth.com/data/yfDziwn1/versions/bo4O33l6/SodiumTranslations.zip";
+              };
             "sha512-IRWV7nV8Gr9P2ZaeD3ftIlOeCR8S/od+pr2NV5xWoPr0HnTmoYH4Xcc4/wXlSeAhwCldfnFWW7VRH0ZZ5pGTLQ==" =
               {
                 env = "required";
@@ -592853,6 +592889,12 @@ in
                 env = "required";
                 path = "mods/sodium-extra-0.5.4+mc1.20.5-build.117.jar";
                 url = "https://cdn.modrinth.com/data/PtjYWJkn/versions/5c9xAlhY/sodium-extra-0.5.4%2Bmc1.20.5-build.117.jar";
+              };
+            "sha512-Ie+edkCi4eBvXboQvPgw1kECVen90gRQTwIcbjxpfRuGIDCJtbId2ZghorXxojesTHmPModWLxYHhlctZ1bE/w==" =
+              {
+                env = "required";
+                path = "mods/entity_texture_features-7.2.6-26.3-fabric.jar";
+                url = "https://cdn.modrinth.com/data/BVzZfTc1/versions/OOEycXyN/entity_texture_features-7.2.6-26.3-fabric.jar";
               };
             "sha512-IebFy+oF4uvgWwkWeyx2E9RB/1wBNWDQeSGmoSeoLlVzJh1cQAxxlVpA1S2UlB+4FsM/WQVak+GFT+1IcB3eIw==" =
               {
@@ -593634,11 +593676,23 @@ in
                 path = "mods/entity_texture_features_fabric_1.19.4-4.4.0.jar";
                 url = "https://cdn.modrinth.com/data/BVzZfTc1/versions/lUY6MJko/entity_texture_features_fabric_1.19.4-4.4.0.jar";
               };
+            "sha512-LKkvtTATXSut3wukzE+Tl2I0h2o4xKoCtIeyVSQA8AWvz77r9Tc/tDlv4gIFN6QtdZe42lpSuQQ1XvUdX+8HrQ==" =
+              {
+                env = "required";
+                path = "mods/lithium-fabric-0.26.3-mc26.3.jar";
+                url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/fWv5bnZk/lithium-fabric-0.26.3%2Bmc26.3.jar";
+              };
             "sha512-LLiJPmIwhXn3uhyiFe4VOVJwu9XBHGj3ucTQ4r9ajOSfKyNgHq6/NGURpKjNLZqYOGTJ+GhiTLRQIrJC+FtjfQ==" =
               {
                 env = "required";
                 path = "mods/skyboxify-2.8+1.21.10-fabric.jar";
                 url = "https://cdn.modrinth.com/data/DWuwk8aA/versions/NCUpxSzJ/skyboxify-2.8%2B1.21.10-fabric.jar";
+              };
+            "sha512-LOewgm91gBpW6BUOtc7KRnzfi0tE4WC1pTgeVBJWfQJPRqFsZ58pxKk0ayaH+hdA+R7WAmoxsu0fPUtQNZaNaQ==" =
+              {
+                env = "required";
+                path = "mods/fabric-api-0.164.0+26.3.jar";
+                url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/LEklt8GT/fabric-api-0.164.0%2B26.3.jar";
               };
             "sha512-LP08srHm3O+lBAvlkH0hHIBvsQTursM4GRQ7mV/bZAY7jb3LKe4ZHHpWE0/zaFLgAyhVpBwC0iirVMCHrqKKFQ==" =
               {
@@ -594221,6 +594275,12 @@ in
                 env = "required";
                 path = "mods/YetAnotherConfigLib-0.1.2.jar";
                 url = "https://cdn.modrinth.com/data/1eAoo2KR/versions/DM1biniZ/YetAnotherConfigLib-0.1.2.jar";
+              };
+            "sha512-NKg2XXjNgcs9JoxOjXArs/s+6rS56pbHmNn0V3IRChaabjeFaZDrUKgBjmi2cI8hR84JcaGYgAdRlnTml5Cc5g==" =
+              {
+                env = "required";
+                path = "mods/entity_texture_features-7.2.6-26.2-fabric.jar";
+                url = "https://cdn.modrinth.com/data/BVzZfTc1/versions/p667cMa5/entity_texture_features-7.2.6-26.2-fabric.jar";
               };
             "sha512-NMJ55/Tt8/9orY0zqMrEmnVAJjC5Wpv9ogiAiAwqQl/GTGH2PVQGoCQ75bbV3yTrdFwsV5mHH8Sm5crEri+UJg==" =
               {
@@ -595344,6 +595404,12 @@ in
                 path = "mods/modmenu-4.0.0.jar";
                 url = "https://cdn.modrinth.com/data/mOgUt4GM/versions/4.0.0/modmenu-4.0.0.jar";
               };
+            "sha512-RXL8Bl51cmSUev81qW0X1eRdS0Po44W5ogf1OAqPQ9pdv44Q8wp7x8xMDI95mXF7TdItMlZnvfig3m6Dmtge/A==" =
+              {
+                env = "required";
+                path = "mods/entity_model_features-3.3.12-26.3-fabric.jar";
+                url = "https://cdn.modrinth.com/data/4I1XuqiY/versions/vF6qLXsA/entity_model_features-3.3.12-26.3-fabric.jar";
+              };
             "sha512-RXP2mdF3sooFpfPyCLJkv5hdcwQseWyaCK1BI7eKXUr3QhzpOdDfsh/uRoAAtKaoloCU1E2sQUZ3O2k0R7/QVQ==" =
               {
                 env = "required";
@@ -595985,6 +596051,12 @@ in
                 env = "required";
                 path = "mods/indium-1.0.2+mc1.18.2.jar";
                 url = "https://edge.forgecdn.net/files/3669/436/indium-1.0.2+mc1.18.2.jar";
+              };
+            "sha512-U4lEpjwtq1850kaKfJd/ZcRe1Ta4IUl22rWjDMlEh5+gv8P5YCMwMeS4D2lA7bce2s0X6JScyn4/9rzfCXhw/w==" =
+              {
+                env = "required";
+                path = "mods/entity_model_features-3.3.12-26.2-fabric.jar";
+                url = "https://cdn.modrinth.com/data/4I1XuqiY/versions/hyDf8pNd/entity_model_features-3.3.12-26.2-fabric.jar";
               };
             "sha512-U4yqCZ6drlCdzRBvhvQVLByd2N3EWPOGDBpW6TQznwJt1Vm3BBC8x0paf80varBE5bhkiegOZ8v3sySJRWSljw==" =
               {
@@ -598668,6 +598740,12 @@ in
                 path = "mods/optigui-2.3.0-beta.9+1.21.5.jar";
                 url = "https://cdn.modrinth.com/data/JuksLGBQ/versions/zMVAxv6K/optigui-2.3.0-beta.9%2B1.21.5.jar";
               };
+            "sha512-eFYyqOAIGiBxJK1y8IYiFpArifQNQTPZG5+VU8D+NFR4aFYwUF6rov1uSf3MOIQU3RrZaUzRWgwpqPvgvsjQIg==" =
+              {
+                env = "required";
+                path = "mods/sodium-extra-fabric-0.9.5+mc26.3.jar";
+                url = "https://cdn.modrinth.com/data/PtjYWJkn/versions/fs5l9Q1U/sodium-extra-fabric-0.9.5%2Bmc26.3.jar";
+              };
             "sha512-eKniX2uL3UY3oQ1+D/6oXJcEvK6IpNq6J6hD5j4gRM8nGMSAfCR3ReKZL92gbsF2wybnyoYiAPqyEl3o+gNDbQ==" =
               {
                 env = "required";
@@ -599219,6 +599297,12 @@ in
                 env = "required";
                 path = "mods/Ixeris-4.3.0+1.21.11-fabric.jar";
                 url = "https://cdn.modrinth.com/data/p8RJPJIC/versions/BefxE54b/Ixeris-4.3.0%2B1.21.11-fabric.jar";
+              };
+            "sha512-gNcBmyNTkNoejXRaZUY/t5+pVSmC6d0+yFIYqbCzh/w6CNNxuMAMBQQIFoW4E9qt8mUz/V+Mc5m+BhLATgvfvw==" =
+              {
+                env = "required";
+                path = "mods/animatica-0.7.0+beta.3+26.3-fabric.jar";
+                url = "https://cdn.modrinth.com/data/xEyZuswh/versions/6kPLR90Q/animatica-0.7.0%2Bbeta.3%2B26.3-fabric.jar";
               };
             "sha512-gO106up69QolwqANb+nQq3oKlBR91k2wygcqo3YaFyMAbPpEXJNs0C2qcthVqBl89iNlw8riOaQ5FoCMRMFk+w==" =
               {
@@ -601554,6 +601638,12 @@ in
                 path = "mods/entity_texture_features_1.21.9-fabric-7.0.8.jar";
                 url = "https://cdn.modrinth.com/data/BVzZfTc1/versions/gXx0WqTS/entity_texture_features_1.21.9-fabric-7.0.8.jar";
               };
+            "sha512-p/LQAoDVY1Wi15rimvksW+/mDBtplp39JnTj9/W9lJ7Xm+fyav1wd9cTBJMGtkwormB/HjqrAlYahG9UUY4cDg==" =
+              {
+                env = "required";
+                path = "mods/Ixeris-4.6.10+26.3-fabric.jar";
+                url = "https://cdn.modrinth.com/data/p8RJPJIC/versions/sjqczBmY/Ixeris-4.6.10%2B26.3-fabric.jar";
+              };
             "sha512-p0L93J+hPovAQ2ygJg6okVD5bUR3Q1WrtjXUF7y0eOS7Rw2zkI1sLfIRAjPPQqscdwb3EF0SUmGyYJMKkgeG7A==" =
               {
                 env = "required";
@@ -601794,6 +601884,12 @@ in
                 path = "mods/fabric-api-0.115.0+1.21.4.jar";
                 url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/S6sAWXmr/fabric-api-0.115.0%2B1.21.4.jar";
               };
+            "sha512-q9IzhAjD5G8C74dBN50CpL805s+VLXB/bzyxRbkzPCC4C8eHwDQyopLWHoKpRTuevs0Lo8fVBFC1CHMikUwe/A==" =
+              {
+                env = "required";
+                path = "mods/cwb-5.0.0+26.3.jar";
+                url = "https://cdn.modrinth.com/data/ETlrkaYF/versions/26KCwNI9/cwb-5.0.0%2B26.3.jar";
+              };
             "sha512-qCOYxtuLvWKiQ8Vmk8Bu+diyDHUoar5pj49Md0Yo+rGT88RJ2Hd540A0sAUUlGxeu2srbL4pnTyncYh+kEwBcg==" =
               {
                 env = "required";
@@ -602009,6 +602105,12 @@ in
                 env = "required";
                 path = "resourcepacks/Chat Reporting Helper.zip";
                 url = "https://cdn.modrinth.com/data/tN4E9NfV/versions/1SHtlNIB/Chat%20Reporting%20Helper.zip";
+              };
+            "sha512-r/7U9ypHbfp3YNTOyH7/0XQ4AQPfY7fDrjphpOcq9sDsYkQyJZ8Be06v9YVacIdmAHoc5Ti9RArY/Im4U2bzug==" =
+              {
+                env = "required";
+                path = "resourcepacks/SodiumTranslations.zip";
+                url = "https://cdn.modrinth.com/data/yfDziwn1/versions/zKydr9Li/SodiumTranslations.zip";
               };
             "sha512-r0RleX2AQBAhpq78jFRyAOfA+MrhNCmb8/r7wxD6gfBVJGsGFPwOA3U49KhE5VqtMKv6PGdGBCKFPfxCbwhtAA==" =
               {
@@ -602681,6 +602783,12 @@ in
                 env = "required";
                 path = "mods/fabric-api-0.119.2+1.21.4.jar";
                 url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/bQZpGIz0/fabric-api-0.119.2%2B1.21.4.jar";
+              };
+            "sha512-u6fb2K6uDGrpsvlPKJmypr0FvkmMkJWXJ/jk/FFfhZRuvMlwSuDCn6NMVq11Wmb9eBXo0nd57dtN7MzBcjx+rg==" =
+              {
+                env = "required";
+                path = "mods/sodium-extra-fabric-0.9.5+mc26.2.jar";
+                url = "https://cdn.modrinth.com/data/PtjYWJkn/versions/GJjGKm2A/sodium-extra-fabric-0.9.5%2Bmc26.2.jar";
               };
             "sha512-u6olkXzCG8ncp0nTyz6e65KF4ADWbOMRTAYB6fRfNH3KfiegHjI2CUNa8S54RjnjScp9tDB9uULk5/9XTDJp3w==" =
               {
@@ -604056,6 +604164,12 @@ in
                 path = "mods/arrp-0.5.4.jar";
                 url = "https://edge.forgecdn.net/files/3529/149/arrp-0.5.4.jar";
               };
+            "sha512-z6tAibxbFM7YPlVcjGdcdTIXsZnMHodWDQT1rzA/sA+o+PBBZnIEVTOV+RZZY0+ZzUMJ5jWE6bqtY/8ZoNiK2w==" =
+              {
+                env = "required";
+                path = "mods/Ixeris-4.6.11-26.2-fabric.jar";
+                url = "https://cdn.modrinth.com/data/p8RJPJIC/versions/qXHd9Vb4/Ixeris-4.6.11%2B26.2-fabric.jar";
+              };
             "sha512-z7V76xc/Xh+U2LwpQCa7KWM8szY7br8dxzbFyQTJGzl1BuPXMVbzFpt/PFlUamjS6dGMSJAHjwYZ4kdT8BleSg==" =
               {
                 env = "required";
@@ -604157,6 +604271,12 @@ in
                 env = "required";
                 path = "mods/rrls-5.0.10+mc1.21.1-fabric.jar";
                 url = "https://cdn.modrinth.com/data/ZP7xHXtw/versions/FDyKvCJ2/rrls-5.0.10%2Bmc1.21.1-fabric.jar";
+              };
+            "sha512-zNhuNNwlLVnsjvW7ug+38j8E+sxAKOB7C7bo4M8ZsnyUpMNViG+a3dCkcu3gsh0Z+VYm//sLHuTOPQBbIQ5Mzg==" =
+              {
+                env = "required";
+                path = "mods/cwb-5.0.0+26.2.jar";
+                url = "https://cdn.modrinth.com/data/ETlrkaYF/versions/ZM0HUAhK/cwb-5.0.0%2B26.2.jar";
               };
             "sha512-zPCxfOBILNngAuGqWS4SRKIQKitX1Wetl3ip9ygXg+3ctGT6IsJ7Mwl2s6yFq9+/2P6Y9zo12DRCnJVswumPGg==" =
               {
@@ -618669,6 +618789,147 @@ in
               resourcePackOrder = null;
               versionId = "uQxD0ENB";
             };
+            "14.1.2" = {
+              archiveFilename = "Fabulously.Optimized-v14.1.2.mrpack";
+              archiveHash = "sha512-maSbfXqTpHHJBgsPWlNPxBKW/eBj+46G9iyOWuvTYfpTa1lElCBvU7K5ucJVbNOweQBr90muTtc48vVzSziI1Q==";
+              date = "2026-11-01T10:19:53.249961Z";
+              dependencies = {
+                fabric-loader = "0.20.1";
+                minecraft = "26.2";
+              };
+              files = expandPool "hash" pool [
+                "sha512-e3Dnls6i7lemAiEICSUXtqo51aGbjaHeJmha5TuPu0cXzZHuHSMsVO+o4hDr6bdg09q3m/ml/bWuddl7Rhofqw=="
+                "sha512-v6cN7/8lMHgPDwqg3hhF3CVtnKskQSPkhHprJNsfgSxHWF7R3cgLLekWcaraQhAnty1E6LdI4qcK5AWvVNlN4A=="
+                "sha512-6rVv9Hc4Iep0wWmHqYYDLg1BEZB47+0X9m5Nbx4Zq0Ph5GVGOwk4ZkTErnOUKQnyn/clc24uoa1t6bgxMIDeMQ=="
+                "sha512-lIuNg95hoRqtL8C7B0SotISMmy8GY8mqAVOJ2VYLP6eFGOYJxE7JAnjeDhWakuvXIcy967RTqkVcNT5c0ZQTvw=="
+                "sha512-WDawiQcsD9eWYT1Cw70Bx+QBtq1T3oAyi7nXTVhd6b4P8M/E1v+h7UEAh1BXOwUl7/jAZBYqL3JK0WgXqP2vIg=="
+                "sha512-z6tAibxbFM7YPlVcjGdcdTIXsZnMHodWDQT1rzA/sA+o+PBBZnIEVTOV+RZZY0+ZzUMJ5jWE6bqtY/8ZoNiK2w=="
+                "sha512-qhT6LRzJSAP0yWX9gXqUWCMDcje9eh/qncmgxkJwhNJbjZJz2na8Ey/mh5TSvouRVAv/8TCRJa6jeCDBK/8CaA=="
+                "sha512-MYsp+DrM7jBUfgJ6ozP6bzGFC6lZ5mLGNSNykLvooEsLR8mWZvU0y820hdXYv5yw3Ria9LmEHtiZh8Sc8/a7GQ=="
+                "sha512-H55clU9pg89jDkuQaBXSrwqBjpHKvGW0sT3ewAWJ5E4VgSRY4V18DNADtxpwMQ7woqS5HJjQaVsHA0o9yWM52A=="
+                "sha512-x//23cRjF49xVNQzqd/iFENzLR9w9FCl4Dhg9jGtsvakRdcvtZrAF/AUrdSIHt9Z2ZYOkWPW1JfRF70WqK5SlQ=="
+                "sha512-CSEozmxZbOglzU+hJwXZeZeWhL1V24MwrcF5qmZqTyiZjjNNhw1w6kUZ2DWWIY8MH94L2Sunmz3RHe8HaAHgiQ=="
+                "sha512-N7HkAvDfWjg2VuIaOO4YzdFctLo/ti++uoLvS5WaRHn8MnGKwNnRVKfZEExfcxW/pn2+ztC4/yQLgDnUhI1d8Q=="
+                "sha512-NDazn83dzof47aDzUJUGdHdjbfJmcZXfPLjq4tAC0/+KxE3pczJmjuUOE62RvlxTLLxhIYePHmyQTJjBycZ8Cw=="
+                "sha512-+lkO7r63zkvoKEVt15bdeGkZt6jGZKTlCfwcSoJBSjScWYpclo5LSXSrzbPbHTLQOn84pTLZJDCKWzgr3yhDeg=="
+                "sha512-zNhuNNwlLVnsjvW7ug+38j8E+sxAKOB7C7bo4M8ZsnyUpMNViG+a3dCkcu3gsh0Z+VYm//sLHuTOPQBbIQ5Mzg=="
+                "sha512-g6uQzavufpmUqO+Avp7elxqFCBV/F2phteE7NMs41o+NPyRZRoIr/80ywGQlfaWc7YpDjtX2geyXISVbf09DTQ=="
+                "sha512-ebE1SNfp3pq/oj4GJySoheU0HzccUA1lcAVuzqfbAML3rOWnKIF5rYuuxXW0qpkrkdzLyUDFhMtc3fC8euuJLw=="
+                "sha512-Tl2sBFjNUzNG16lXJYKhny93U3ECf/C/5EXgJcL6Fs4i2dqSTnP2SAY3P4IlfjKw4mTLDCn+qqQPsDtv8sroyQ=="
+                "sha512-U4lEpjwtq1850kaKfJd/ZcRe1Ta4IUl22rWjDMlEh5+gv8P5YCMwMeS4D2lA7bce2s0X6JScyn4/9rzfCXhw/w=="
+                "sha512-NKg2XXjNgcs9JoxOjXArs/s+6rS56pbHmNn0V3IRChaabjeFaZDrUKgBjmi2cI8hR84JcaGYgAdRlnTml5Cc5g=="
+                "sha512-GMp+pSUUTayUdKGxeOshuvPc/BgmGIEd/KU1gz+uzjtMdOuO4CbJW226vQhLizB1pR0xneUSyu3SRZXV3RDNMA=="
+                "sha512-JQL6Wt546aEgs3R7wamiFn1mcXQ76kW/EV0xdMlBIa7ah8VJRG0aYEqcEfuCjeF6VR41FM5C8+kwad0Uva7lWw=="
+                "sha512-f7R1xKfnvfjQrKS1eYpYo1TFFEPVsfvePozzTfv3GR70I4tfB9COyUkOwYCzcWJFIzJsOtRdTtKyvlQd6UB+XQ=="
+                "sha512-y241R+P9PG33XPqL+Uje015O18y4HEARhMTwLEsGlKFBxnOyOGBehxm0tI0rqQYWo7khNEzeLWi1jaPjPtykdw=="
+                "sha512-2B+pfhF4TBnUL4nC9DODHQB2A91xk87kX6F35KapxSs4SxmFhuBKD39jzZlv7XEzIleL3pqNtX4RiIVK5cvlhA=="
+                "sha512-3ulVWAl2rrySNz9cLYg5itEBmwQ8YlSkH+erimyjpf8p1Y3ysi7EOjEZi+t2noFGWO7wb7+YAGai4sIW7q/TKg=="
+                "sha512-Hnwqvxj0NkzIgCw84h+cut1iB0wc+YKcAl/g2N0Etse0fKj+Z4OyOZk5/aDkAAHUPdgra87UNUbpwmYi7zcIwg=="
+                "sha512-pS8Cdvc3vsMjdKnbgmd0EUg4VMy3AFAtuLnY2QdNR0CKjDy7RNyFixGS9Y1aWaqYAxQWh2zJHVrVrhj8A/M0aA=="
+                "sha512-FItjjzxiKfuvSHEgojRKCvXkEaWqZTPV25112gqMDYME9j60zKE/TQOyybTCPVWd10wdgyQi74owh70AXmKovQ=="
+                "sha512-XXGNuFKRShm7snxE4LQrL6M+JDX9wTfhQkS9uEqS8TQcsZlsw/D6ZoyVRgykN+8Mkw1eapSJmR08+LiKKr+Ccg=="
+                "sha512-0bR2Igi00FaxpDE9v2YaURbVYUw9j5D/ZMGXenWBpDgGeGloizS8puH4Boyker3cWZ3L1kdg4wp7M79vS1siDA=="
+                "sha512-dbGuyr2xP7YZadcwwyjPwQKxxQ+pYgxguEM9gwoZstK+oyrKSMpJNLG+mPim+1veADnv0nO0e9BdpAqH7842rA=="
+                "sha512-yCJKp6Rg0MVsy5l4oRLkrQ0+sX4nluDEaKI5LSIHSfT2AoOKEbNmYUVGLCYHioeauKL8F3qkQPWOGJySoAiNbg=="
+                "sha512-6FVY8+/+i67mOUth9ImBmJ0i4YGjuHcsD1IQIpFNTDYDeF4OI6jfSl5s6UB8aruM99cxg5AZCCJ6ViParfMNZw=="
+                "sha512-nDMbpfLOnDIsQapXfxAp80INVQfQ2UKq27Q/ub2C59pvcuOgsmxK2WOUZpqZp/61ErURmzCV/eLgpDe/aMCLQA=="
+                "sha512-QpEOtruuc13zcEGMOPAHoHXOp5zc61wNlaMMi+SdBpOEZv8QrjVOUQdVVUDBxJhzbaB0wCgIDERlbgKsKGomKw=="
+                "sha512-WT59OzDY92zGwk4Ztuo7DSLYxVi5mJJ1vcSozW3YvRvMT9aAgK7eH6enwFItRxrzRX/QXYaqpDCL0Eaq0kquSw=="
+                "sha512-B7b8gCVZ1U7GV39uJ4iSbvOR11UgbCv7BSgoCXeIXK5LwMUX2KU+tvNAkgFevmxBIQYn0lWqZQRmLa76j7djlw=="
+                "sha512-wA2k7eluMy/P4tR7upB+6tNzH7M2kq/JjvSRCODqqCLgeiyeajxNDv+l/Xke6AHyEzWZPDr6lNfnDYXvMCr5tA=="
+                "sha512-G8m6ZfQeXFl1W3jsjJM5RawDHzMGyCcNyraLAW/pIHlhfgDIaoMQsHy54kR3Jg36fJCIVDVNzH21OHb8SIhKvA=="
+                "sha512-0NMT8duPeSs7CX3LzglWacKmOOiZXyuj39xeUXr8vCTeXk1sJN13s/RFWEkOemtAj6dmGovlIRMyekpWD5hO3A=="
+                "sha512-F7KHZfouMrm3QiCMv7Hf/q2gFPlujIWAi0vEVWHmumi57LjzXvZiHAvcqia/4K3zqEpnBLn4Kpln+x1CKbPaZA=="
+                "sha512-GeXjRt5A+SqOghvaod3v00K09rVuC/UmokoI+L2474jKsfbdyJOwkr2tGW8kox0d8NAGgIotaWiXdM0uilA7WA=="
+                "sha512-QCJPbN209j8Ww5/wVDIUF3R+z3hZk1G9GJFsT5WdbIJ1yajdNv5g/s0ZhNPfsbxv7QlmJn5jfdWOalKO322TZw=="
+                "sha512-u6fb2K6uDGrpsvlPKJmypr0FvkmMkJWXJ/jk/FFfhZRuvMlwSuDCn6NMVq11Wmb9eBXo0nd57dtN7MzBcjx+rg=="
+                "sha512-m3p6reiCRUPOKoBP3f0E439X0fkcAFdOfch+VU6xg12IgxPub3FadZm9cphAzwH9dOAq6uh7Tlo8EMNKAW5AfA=="
+                "sha512-jouH9cUNDBg/+a/1u/yDNEmLb42gk95K2/GHc2AvDB3g0Ltx0fWvNee4EbPniKVdtSW2fqUroN5pNfLkbzIang=="
+                "sha512-822RqVBq2a3bqu7K6gHSsMtbBg9SSGsXaIdGy1l/DzsjqA+EQfenOpy4zeha+ICf5UglmEtWNFMlNZ1QWoDn8g=="
+                "sha512-A2ekTAz+C4HiEAV81EZCdaNNHaxGU7WPrLCEw21XcFUfufR0r2nOBcb4EJvoNzBMz2yd+oPXUt5QN7uZ/cVOsw=="
+                "sha512-qpb3THg4z2h/vRddygfrxqAS3lJXAdVcp4Z0hM/I6YMAHbmSlN4Vg0O2QCHfJeKA5WpDPzPRvBYhgQkbwzlZcA=="
+                "sha512-IP6BXkMnulVXasIP1MaKbQWYxUn3Uq6hjcuzS6gtNCNKNLW3pjc+Wxm5dpAIoc6IcqKJ1/kE3uYY7XvOm27d9A=="
+              ];
+              overridesFiles = flattenPaths {
+                config = {
+                  crash_assistant = {
+                    "config.toml" = null;
+                    crash_assistant_localization_overrides = "en_us.json";
+                    scripts = {
+                      log_analysis = "blame-mods.jexl";
+                    };
+                  };
+                  "fabric_loader_dependencies.json" = null;
+                  "isxander-main-menu-credits.json" = null;
+                  modpack_defaults = {
+                    config = {
+                      "BBEConfig.json" = null;
+                      NoChatReports = [
+                        "NCR-Client.json"
+                        "NCR-Common.json"
+                      ];
+                      "PaginatedAdvancements.json5" = null;
+                      "bettergrass.json" = null;
+                      cape-provider = "config.json";
+                      crash_assistant = {
+                        "config.toml" = null;
+                        crash_assistant_localization_overrides = expandClusters [
+                          {
+                            m = [
+                              "be_by"
+                              "en_us"
+                              "es_es"
+                              "es_ve"
+                              "et_ee"
+                              "fr_fr"
+                              "he_il"
+                              "it_it"
+                              "ms_my"
+                              "pl_pl"
+                              "ro_ro"
+                              "ru_ru"
+                              "uk_ua"
+                              "vi_vn"
+                              "zh_cn"
+                              "zh_tw"
+                              "zlm_arab"
+                            ];
+                            p = "";
+                            s = ".json";
+                          }
+                        ];
+                        scripts = {
+                          log_analysis = "blame-mods.jexl";
+                        };
+                      };
+                      "cwb.json" = null;
+                      "debugify.json" = null;
+                      "dynamic_fps.json" = null;
+                      "entity_texture_features.json" = null;
+                      "fabric_loader_dependencies.json" = null;
+                      "fastquit.toml" = null;
+                      "iris.properties" = null;
+                      "isxander-main-menu-credits.json" = null;
+                      "lambdynlights.toml" = null;
+                      "midnightlib.json" = null;
+                      "modernfix-mixins.properties" = null;
+                      "modmenu.json" = null;
+                      "moreculling.toml" = null;
+                      "reeses_sodium_options.json" = null;
+                      "renice-shot.properties" = null;
+                      "rrls.toml" = null;
+                      "sodium-extra-options.json" = null;
+                      "sodium-shadowy-path-blocks-options.json" = null;
+                    };
+                    "debug-profile.json" = null;
+                    "options.txt" = null;
+                  };
+                };
+                resourcepacks = "Mod Menu Helper.zip";
+              };
+              resourcePackOrder = null;
+              versionId = "OuZrT7BT";
+            };
             "15.0.0-alpha.1" = {
               archiveFilename = "Fabulously.Optimized-v15.0.0-alpha.1.mrpack";
               archiveHash = "sha512-X+DIVjZUD4XeT5ZYUMwH/dSeoGyUfvShoozGGdVUa1i4SpMydgkQz5ajkEkaOpsI4NybH/wrDnpUSZWDh3hbSQ==";
@@ -619488,6 +619749,283 @@ in
               };
               resourcePackOrder = null;
               versionId = "D35n5vLL";
+            };
+            "15.0.0-beta.2" = {
+              archiveFilename = "Fabulously.Optimized-v15.0.0-beta.2.mrpack";
+              archiveHash = "sha512-I48Zv5q1OkkJ550UN34dCDPxpgiqE4zWOWYdRDRxhgWhJoraBolWlGcl7dOmsuxcyKlYb9/O3lntXiOFmR5ZCg==";
+              date = "2026-10-20T19:07:32.683497Z";
+              dependencies = {
+                fabric-loader = "0.19.5";
+                minecraft = "26.3";
+              };
+              files = expandPool "hash" pool [
+                "sha512-FM02G7H1bSB6PoEaJdSvm/x21SvNe9mq1zyo8zSnIm/zy2nZiQ1Pw83YPrS2MAd7NocNyv+BSb4XggfuKp6pDQ=="
+                "sha512-v6cN7/8lMHgPDwqg3hhF3CVtnKskQSPkhHprJNsfgSxHWF7R3cgLLekWcaraQhAnty1E6LdI4qcK5AWvVNlN4A=="
+                "sha512-6rVv9Hc4Iep0wWmHqYYDLg1BEZB47+0X9m5Nbx4Zq0Ph5GVGOwk4ZkTErnOUKQnyn/clc24uoa1t6bgxMIDeMQ=="
+                "sha512-uTOcIeFL7sLq4MohUxcoS8qs73Lh0d7os9++LeDu+qdYoXJEbfhUGbZTRVfEeavpctfSH07BlPLUNvntQynLnw=="
+                "sha512-jhOVif2ZW849SFo02SoHJDlkIS9+0uT8L23luadND1mwMlLnzkDGTgBs8+Ib7V3ie4MNM+8EiyhuBB9heK2EKA=="
+                "sha512-p/LQAoDVY1Wi15rimvksW+/mDBtplp39JnTj9/W9lJ7Xm+fyav1wd9cTBJMGtkwormB/HjqrAlYahG9UUY4cDg=="
+                "sha512-5OfoJIA6m9lGMYV1yk0bVfeMtYj9CPYhAA3qqJusJXnT1zqkEOOWm7pwn6xBwVzxtxu56MIhfZBBObWEkkoEPw=="
+                "sha512-BhQEx6VG/Pl7HpXIS+ZThjTvimTDjFCrUkE7ww6zymMdcEaeyaXsbnAbv7vZd51lo6cONZ6A2MNkSf8qLShsqw=="
+                "sha512-x//23cRjF49xVNQzqd/iFENzLR9w9FCl4Dhg9jGtsvakRdcvtZrAF/AUrdSIHt9Z2ZYOkWPW1JfRF70WqK5SlQ=="
+                "sha512-Mdht8Mh8ts69PRC0FBXIq3uo7TFjRtM4PaN+P0qABNqvE1cqeKDpV/xqKsHHJ6kBuCp4mGuYyHjjt7fV27Xn3Q=="
+                "sha512-iSThnUGEUJZyT6EPNxe8UZZKDtu7ytD/Hmxhh6OYsI81bklXmmV8LcRKf5LjhQdx88pwv4wfZU3mBCUWO5HbsQ=="
+                "sha512-HsHjsvc8JrGURdZkgiqJNukHb02IVaLtX6wZeG2qjaQtqP3JUmxKU8InqCgZqHrY5z1bT8AD9lGcUEVMMwFPBA=="
+                "sha512-zU5kqWId/yADKbJJ3GP8RULOVU2xbHXEsEz6dJW/hOGkvKD4mnqdTUJfa28jyN9Sq4zjI+4YrknGzySFhpe79w=="
+                "sha512-khovMVMZkN+Tr0CZzXvs4miGt/w4AhZCrjIDLkNbhoag7iCNuk6x7QBX5uCzMy+ZD7d3eHga/M/g5S0o37B8Jg=="
+                "sha512-eXbRFBG6v6OsDDiJjybuYZLyKk9ZW2N+6uPMUYXzJsDkuf19ALPX6NAg3YYSlfDfUvmp18Z+iJRtC6n/9Kn4lA=="
+                "sha512-Tl2sBFjNUzNG16lXJYKhny93U3ECf/C/5EXgJcL6Fs4i2dqSTnP2SAY3P4IlfjKw4mTLDCn+qqQPsDtv8sroyQ=="
+                "sha512-RXL8Bl51cmSUev81qW0X1eRdS0Po44W5ogf1OAqPQ9pdv44Q8wp7x8xMDI95mXF7TdItMlZnvfig3m6Dmtge/A=="
+                "sha512-Ie+edkCi4eBvXboQvPgw1kECVen90gRQTwIcbjxpfRuGIDCJtbId2ZghorXxojesTHmPModWLxYHhlctZ1bE/w=="
+                "sha512-tiCbti1yN20/0oTaE37JOm3Tjr5f04q5GQ3ureaLW39L+RX0q8tKgHr+GMufC1nhG+eJ1G328Ob2Q4jtLtwoTQ=="
+                "sha512-LOewgm91gBpW6BUOtc7KRnzfi0tE4WC1pTgeVBJWfQJPRqFsZ58pxKk0ayaH+hdA+R7WAmoxsu0fPUtQNZaNaQ=="
+                "sha512-f7R1xKfnvfjQrKS1eYpYo1TFFEPVsfvePozzTfv3GR70I4tfB9COyUkOwYCzcWJFIzJsOtRdTtKyvlQd6UB+XQ=="
+                "sha512-y241R+P9PG33XPqL+Uje015O18y4HEARhMTwLEsGlKFBxnOyOGBehxm0tI0rqQYWo7khNEzeLWi1jaPjPtykdw=="
+                "sha512-2B+pfhF4TBnUL4nC9DODHQB2A91xk87kX6F35KapxSs4SxmFhuBKD39jzZlv7XEzIleL3pqNtX4RiIVK5cvlhA=="
+                "sha512-2NMxL3f8UqSOSmzYNv2jNmm968tN4LjA0wrcgIsoczClM+C67zVcwc5jNqJoUdl3U2moAqRma3t6YmavIAiPQg=="
+                "sha512-Z8N8p9YZvX8rDcAiFwcMIONPs7szY9TiP175ypCxtYrbIj+rc2OaNJnTZklzFvHrKX0nWfP/uXZGe0dZ94RhnQ=="
+                "sha512-Y2ZZaHXp+jO2uBGdCOXBjzUUZi4xmnNc7cit2wC/9M8xefOjNTOyBwwd3XdvI+al8itp0NoFifMJHw257q0dQw=="
+                "sha512-TX/uZhMu7ccf6rk5C5LJXXBY7b2tD+z6wdg2opULl6fKRjr77eYcfvNhzmXh+Sernond5b8uDgzkhq+1xdvuQA=="
+                "sha512-XXGNuFKRShm7snxE4LQrL6M+JDX9wTfhQkS9uEqS8TQcsZlsw/D6ZoyVRgykN+8Mkw1eapSJmR08+LiKKr+Ccg=="
+                "sha512-0bR2Igi00FaxpDE9v2YaURbVYUw9j5D/ZMGXenWBpDgGeGloizS8puH4Boyker3cWZ3L1kdg4wp7M79vS1siDA=="
+                "sha512-tYZDQFYQeqxO+G6TUdZhcNrGWkWh5fi9SPuTGzASqyQxsWR265wlZ3MznitMYPbz6QpHCRgPcAsq6ln/YH9CQw=="
+                "sha512-WIwMVXlj9HeFcu6Bv6/BkLMywm1ZJsX+fj4WFNz44U9Y47yAqXaUUh3QWQfpdTp8hXUEjqdp5Nv0Cj23Sk4mBg=="
+                "sha512-6FVY8+/+i67mOUth9ImBmJ0i4YGjuHcsD1IQIpFNTDYDeF4OI6jfSl5s6UB8aruM99cxg5AZCCJ6ViParfMNZw=="
+                "sha512-sZde9DYGo7qhyToED775ar+/Rq5qHjZMYO/9A6QlaPlF7eC94ykkHoetxqnCdp3R0TrShoacaJAYA17/Z3RCsg=="
+                "sha512-R/qwNoN7P90C+EWt6GXjZ6thwjEAND+Cc8RPc5luYc3yrzFtRTtntecw7qYjueia84DXH934adSHA1pn1uaKsw=="
+                "sha512-B7b8gCVZ1U7GV39uJ4iSbvOR11UgbCv7BSgoCXeIXK5LwMUX2KU+tvNAkgFevmxBIQYn0lWqZQRmLa76j7djlw=="
+                "sha512-9QNwVX4k9UBPF7bAVdNaPkVA9tDcm5tAavxNDx+KFKM7eZO3R7uefZL3yD2BhJOxCChYzy+FsG1HYQdXevmghw=="
+                "sha512-Z37oc262oA4+isK05g5XcdPGyj5E9zsJm3jP7yK1/8O4Ue+TH5AtimaGSMtiYe4cUx2KYH4mA+gSMMPhMtw/uA=="
+                "sha512-nG8zVhjB7APPkDDNiM3DK+VFe/T7q9Scdu1o31NTBzDPRoHsN0Lyxu+9SMsreE8kxjaXepXXjfYq8SFOxUiL4A=="
+                "sha512-VmrmMlR2iGnjtPcG+Clq3I1rXcSKeqEp7TJ3aECnx+oUNJE/E/SJmt5Xnt8gu81zfAMyv/CyVc6fOaRhKHu+JA=="
+                "sha512-ZC7qXawWLHJz8kJsvjw41yOaRjCSTOBekepDux6Lyk14BZTEvYcovZI57aaFnBZ7eebe48207T8LEYGGxOMRqQ=="
+                "sha512-tj8Lf+Yns2plQo4kEY/4YE+g+jH1z/in0qrI2Pd7vwkUM6hMO76Hzo1dg4dtRcW0FY7DRKU8UTaAJpAjDARp9g=="
+                "sha512-oujYQWpVa3o1FGCgZAcRnqumLwZjY3cAFyC72pt5fciBsrtFKPt1oEWf7jRHXbUphYYztrhrVFpy0PE888K3uw=="
+                "sha512-8/Jg8gS4zl6Hd8LHP1N5VnVexh84F7C3i15VaOiqQPFIkfFGR1B1EJdHZlx8iKRcoMqajfPGjXnFjs2qjYxLkw=="
+                "sha512-IFJccKdCQu8YLkjtFgd/dooPTWtLTKb9jP/Nk4ZsIX3n1hrwx8/mPHMw4P18ita7bGsfzDYFpZ+SKeIHGPSg7g=="
+                "sha512-85VwKN0xyuePCK7j52j2G9EsTIQjJX01e8PBohcgR8dp03kB+Zd1x///Hl7nlAJdxyc4soacqwbxwoEYQdaLJA=="
+                "sha512-HFvI5Go1dYR1hLtpkwNNvn2AYL4y7mdsRz02vUu7xN8h0DqPOz+JBOQjEmZ+lxYFDMos96CYyOv2mF1S7qTWNw=="
+                "sha512-qpb3THg4z2h/vRddygfrxqAS3lJXAdVcp4Z0hM/I6YMAHbmSlN4Vg0O2QCHfJeKA5WpDPzPRvBYhgQkbwzlZcA=="
+                "sha512-r/7U9ypHbfp3YNTOyH7/0XQ4AQPfY7fDrjphpOcq9sDsYkQyJZ8Be06v9YVacIdmAHoc5Ti9RArY/Im4U2bzug=="
+              ];
+              overridesFiles = flattenPaths {
+                config = {
+                  crash_assistant = {
+                    "config.toml" = null;
+                    crash_assistant_localization_overrides = "en_us.json";
+                    scripts = {
+                      log_analysis = "blame-mods.jexl";
+                    };
+                  };
+                  "fabric_loader_dependencies.json" = null;
+                  "isxander-main-menu-credits.json" = null;
+                  modpack_defaults = {
+                    config = {
+                      "BBEConfig.json" = null;
+                      NoChatReports = [
+                        "NCR-Client.json"
+                        "NCR-Common.json"
+                      ];
+                      "PaginatedAdvancements.json5" = null;
+                      "bettergrass.json" = null;
+                      cape-provider = "config.json";
+                      crash_assistant = {
+                        "config.toml" = null;
+                        crash_assistant_localization_overrides = expandClusters [
+                          {
+                            m = [
+                              "be_by"
+                              "en_us"
+                              "es_es"
+                              "es_ve"
+                              "et_ee"
+                              "fr_fr"
+                              "he_il"
+                              "it_it"
+                              "ms_my"
+                              "pl_pl"
+                              "ro_ro"
+                              "ru_ru"
+                              "uk_ua"
+                              "vi_vn"
+                              "zh_cn"
+                              "zh_tw"
+                              "zlm_arab"
+                            ];
+                            p = "";
+                            s = ".json";
+                          }
+                        ];
+                        scripts = {
+                          log_analysis = "blame-mods.jexl";
+                        };
+                      };
+                      "cwb.json" = null;
+                      "debugify.json" = null;
+                      "dynamic_fps.json" = null;
+                      "entity_texture_features.json" = null;
+                      "fabric_loader_dependencies.json" = null;
+                      "fastquit.toml" = null;
+                      "iris.properties" = null;
+                      "isxander-main-menu-credits.json" = null;
+                      "lambdynlights.toml" = null;
+                      "midnightlib.json" = null;
+                      "modernfix-mixins.properties" = null;
+                      "modmenu.json" = null;
+                      "moreculling.toml" = null;
+                      "reeses_sodium_options.json" = null;
+                      "renice-shot.properties" = null;
+                      "rrls.toml" = null;
+                      "sodium-extra-options.json" = null;
+                      "sodium-shadowy-path-blocks-options.json" = null;
+                    };
+                    "debug-profile.json" = null;
+                    "options.txt" = null;
+                  };
+                };
+                resourcepacks = "Mod Menu Helper.zip";
+              };
+              resourcePackOrder = null;
+              versionId = "Wo44jriL";
+            };
+            "15.0.0-beta.3" = {
+              archiveFilename = "Fabulously.Optimized-v15.0.0-beta.3.mrpack";
+              archiveHash = "sha512-fUjQ6XD5FSRtsul8fa3wA0I98e+GeWocPfDEecC0eH8mbIRNX45kN9qh8eGRJfPDRZfKoLDmVZHVwZljVO+sdA==";
+              date = "2026-11-01T10:43:19.109719Z";
+              dependencies = {
+                fabric-loader = "0.20.1";
+                minecraft = "26.3";
+              };
+              files = expandPool "hash" pool [
+                "sha512-FM02G7H1bSB6PoEaJdSvm/x21SvNe9mq1zyo8zSnIm/zy2nZiQ1Pw83YPrS2MAd7NocNyv+BSb4XggfuKp6pDQ=="
+                "sha512-v6cN7/8lMHgPDwqg3hhF3CVtnKskQSPkhHprJNsfgSxHWF7R3cgLLekWcaraQhAnty1E6LdI4qcK5AWvVNlN4A=="
+                "sha512-6rVv9Hc4Iep0wWmHqYYDLg1BEZB47+0X9m5Nbx4Zq0Ph5GVGOwk4ZkTErnOUKQnyn/clc24uoa1t6bgxMIDeMQ=="
+                "sha512-uTOcIeFL7sLq4MohUxcoS8qs73Lh0d7os9++LeDu+qdYoXJEbfhUGbZTRVfEeavpctfSH07BlPLUNvntQynLnw=="
+                "sha512-jhOVif2ZW849SFo02SoHJDlkIS9+0uT8L23luadND1mwMlLnzkDGTgBs8+Ib7V3ie4MNM+8EiyhuBB9heK2EKA=="
+                "sha512-9+Y8hyHCAMVshgGI0UJpnbe1EzzGNUtTZmABayY0W4M3XQ3RS5iXHkjpb6oiwmHyow6kRP5oI3Bk1y8rTEyjRQ=="
+                "sha512-gNcBmyNTkNoejXRaZUY/t5+pVSmC6d0+yFIYqbCzh/w6CNNxuMAMBQQIFoW4E9qt8mUz/V+Mc5m+BhLATgvfvw=="
+                "sha512-BhQEx6VG/Pl7HpXIS+ZThjTvimTDjFCrUkE7ww6zymMdcEaeyaXsbnAbv7vZd51lo6cONZ6A2MNkSf8qLShsqw=="
+                "sha512-x//23cRjF49xVNQzqd/iFENzLR9w9FCl4Dhg9jGtsvakRdcvtZrAF/AUrdSIHt9Z2ZYOkWPW1JfRF70WqK5SlQ=="
+                "sha512-Mdht8Mh8ts69PRC0FBXIq3uo7TFjRtM4PaN+P0qABNqvE1cqeKDpV/xqKsHHJ6kBuCp4mGuYyHjjt7fV27Xn3Q=="
+                "sha512-iSThnUGEUJZyT6EPNxe8UZZKDtu7ytD/Hmxhh6OYsI81bklXmmV8LcRKf5LjhQdx88pwv4wfZU3mBCUWO5HbsQ=="
+                "sha512-HsHjsvc8JrGURdZkgiqJNukHb02IVaLtX6wZeG2qjaQtqP3JUmxKU8InqCgZqHrY5z1bT8AD9lGcUEVMMwFPBA=="
+                "sha512-zU5kqWId/yADKbJJ3GP8RULOVU2xbHXEsEz6dJW/hOGkvKD4mnqdTUJfa28jyN9Sq4zjI+4YrknGzySFhpe79w=="
+                "sha512-q9IzhAjD5G8C74dBN50CpL805s+VLXB/bzyxRbkzPCC4C8eHwDQyopLWHoKpRTuevs0Lo8fVBFC1CHMikUwe/A=="
+                "sha512-khovMVMZkN+Tr0CZzXvs4miGt/w4AhZCrjIDLkNbhoag7iCNuk6x7QBX5uCzMy+ZD7d3eHga/M/g5S0o37B8Jg=="
+                "sha512-eXbRFBG6v6OsDDiJjybuYZLyKk9ZW2N+6uPMUYXzJsDkuf19ALPX6NAg3YYSlfDfUvmp18Z+iJRtC6n/9Kn4lA=="
+                "sha512-Tl2sBFjNUzNG16lXJYKhny93U3ECf/C/5EXgJcL6Fs4i2dqSTnP2SAY3P4IlfjKw4mTLDCn+qqQPsDtv8sroyQ=="
+                "sha512-RXL8Bl51cmSUev81qW0X1eRdS0Po44W5ogf1OAqPQ9pdv44Q8wp7x8xMDI95mXF7TdItMlZnvfig3m6Dmtge/A=="
+                "sha512-Ie+edkCi4eBvXboQvPgw1kECVen90gRQTwIcbjxpfRuGIDCJtbId2ZghorXxojesTHmPModWLxYHhlctZ1bE/w=="
+                "sha512-tiCbti1yN20/0oTaE37JOm3Tjr5f04q5GQ3ureaLW39L+RX0q8tKgHr+GMufC1nhG+eJ1G328Ob2Q4jtLtwoTQ=="
+                "sha512-CkuKFOhHtxVntVe0PZBsIWf6Jj7u7zdFSoIbooaZbj2hYW3C2WR3NtKKJQ1ez0AFQcroCDWbKaYjJKim8q1eMA=="
+                "sha512-f7R1xKfnvfjQrKS1eYpYo1TFFEPVsfvePozzTfv3GR70I4tfB9COyUkOwYCzcWJFIzJsOtRdTtKyvlQd6UB+XQ=="
+                "sha512-y241R+P9PG33XPqL+Uje015O18y4HEARhMTwLEsGlKFBxnOyOGBehxm0tI0rqQYWo7khNEzeLWi1jaPjPtykdw=="
+                "sha512-2B+pfhF4TBnUL4nC9DODHQB2A91xk87kX6F35KapxSs4SxmFhuBKD39jzZlv7XEzIleL3pqNtX4RiIVK5cvlhA=="
+                "sha512-2NMxL3f8UqSOSmzYNv2jNmm968tN4LjA0wrcgIsoczClM+C67zVcwc5jNqJoUdl3U2moAqRma3t6YmavIAiPQg=="
+                "sha512-Z8N8p9YZvX8rDcAiFwcMIONPs7szY9TiP175ypCxtYrbIj+rc2OaNJnTZklzFvHrKX0nWfP/uXZGe0dZ94RhnQ=="
+                "sha512-Y2ZZaHXp+jO2uBGdCOXBjzUUZi4xmnNc7cit2wC/9M8xefOjNTOyBwwd3XdvI+al8itp0NoFifMJHw257q0dQw=="
+                "sha512-LKkvtTATXSut3wukzE+Tl2I0h2o4xKoCtIeyVSQA8AWvz77r9Tc/tDlv4gIFN6QtdZe42lpSuQQ1XvUdX+8HrQ=="
+                "sha512-XXGNuFKRShm7snxE4LQrL6M+JDX9wTfhQkS9uEqS8TQcsZlsw/D6ZoyVRgykN+8Mkw1eapSJmR08+LiKKr+Ccg=="
+                "sha512-0bR2Igi00FaxpDE9v2YaURbVYUw9j5D/ZMGXenWBpDgGeGloizS8puH4Boyker3cWZ3L1kdg4wp7M79vS1siDA=="
+                "sha512-tYZDQFYQeqxO+G6TUdZhcNrGWkWh5fi9SPuTGzASqyQxsWR265wlZ3MznitMYPbz6QpHCRgPcAsq6ln/YH9CQw=="
+                "sha512-WIwMVXlj9HeFcu6Bv6/BkLMywm1ZJsX+fj4WFNz44U9Y47yAqXaUUh3QWQfpdTp8hXUEjqdp5Nv0Cj23Sk4mBg=="
+                "sha512-6FVY8+/+i67mOUth9ImBmJ0i4YGjuHcsD1IQIpFNTDYDeF4OI6jfSl5s6UB8aruM99cxg5AZCCJ6ViParfMNZw=="
+                "sha512-sZde9DYGo7qhyToED775ar+/Rq5qHjZMYO/9A6QlaPlF7eC94ykkHoetxqnCdp3R0TrShoacaJAYA17/Z3RCsg=="
+                "sha512-R/qwNoN7P90C+EWt6GXjZ6thwjEAND+Cc8RPc5luYc3yrzFtRTtntecw7qYjueia84DXH934adSHA1pn1uaKsw=="
+                "sha512-B7b8gCVZ1U7GV39uJ4iSbvOR11UgbCv7BSgoCXeIXK5LwMUX2KU+tvNAkgFevmxBIQYn0lWqZQRmLa76j7djlw=="
+                "sha512-9QNwVX4k9UBPF7bAVdNaPkVA9tDcm5tAavxNDx+KFKM7eZO3R7uefZL3yD2BhJOxCChYzy+FsG1HYQdXevmghw=="
+                "sha512-Z37oc262oA4+isK05g5XcdPGyj5E9zsJm3jP7yK1/8O4Ue+TH5AtimaGSMtiYe4cUx2KYH4mA+gSMMPhMtw/uA=="
+                "sha512-nG8zVhjB7APPkDDNiM3DK+VFe/T7q9Scdu1o31NTBzDPRoHsN0Lyxu+9SMsreE8kxjaXepXXjfYq8SFOxUiL4A=="
+                "sha512-VmrmMlR2iGnjtPcG+Clq3I1rXcSKeqEp7TJ3aECnx+oUNJE/E/SJmt5Xnt8gu81zfAMyv/CyVc6fOaRhKHu+JA=="
+                "sha512-ZC7qXawWLHJz8kJsvjw41yOaRjCSTOBekepDux6Lyk14BZTEvYcovZI57aaFnBZ7eebe48207T8LEYGGxOMRqQ=="
+                "sha512-tj8Lf+Yns2plQo4kEY/4YE+g+jH1z/in0qrI2Pd7vwkUM6hMO76Hzo1dg4dtRcW0FY7DRKU8UTaAJpAjDARp9g=="
+                "sha512-eFYyqOAIGiBxJK1y8IYiFpArifQNQTPZG5+VU8D+NFR4aFYwUF6rov1uSf3MOIQU3RrZaUzRWgwpqPvgvsjQIg=="
+                "sha512-8/Jg8gS4zl6Hd8LHP1N5VnVexh84F7C3i15VaOiqQPFIkfFGR1B1EJdHZlx8iKRcoMqajfPGjXnFjs2qjYxLkw=="
+                "sha512-IFJccKdCQu8YLkjtFgd/dooPTWtLTKb9jP/Nk4ZsIX3n1hrwx8/mPHMw4P18ita7bGsfzDYFpZ+SKeIHGPSg7g=="
+                "sha512-85VwKN0xyuePCK7j52j2G9EsTIQjJX01e8PBohcgR8dp03kB+Zd1x///Hl7nlAJdxyc4soacqwbxwoEYQdaLJA=="
+                "sha512-HFvI5Go1dYR1hLtpkwNNvn2AYL4y7mdsRz02vUu7xN8h0DqPOz+JBOQjEmZ+lxYFDMos96CYyOv2mF1S7qTWNw=="
+                "sha512-qpb3THg4z2h/vRddygfrxqAS3lJXAdVcp4Z0hM/I6YMAHbmSlN4Vg0O2QCHfJeKA5WpDPzPRvBYhgQkbwzlZcA=="
+                "sha512-IP6BXkMnulVXasIP1MaKbQWYxUn3Uq6hjcuzS6gtNCNKNLW3pjc+Wxm5dpAIoc6IcqKJ1/kE3uYY7XvOm27d9A=="
+              ];
+              overridesFiles = flattenPaths {
+                config = {
+                  crash_assistant = {
+                    "config.toml" = null;
+                    crash_assistant_localization_overrides = "en_us.json";
+                    scripts = {
+                      log_analysis = "blame-mods.jexl";
+                    };
+                  };
+                  "fabric_loader_dependencies.json" = null;
+                  "isxander-main-menu-credits.json" = null;
+                  modpack_defaults = {
+                    config = {
+                      "BBEConfig.json" = null;
+                      NoChatReports = [
+                        "NCR-Client.json"
+                        "NCR-Common.json"
+                      ];
+                      "PaginatedAdvancements.json5" = null;
+                      "bettergrass.json" = null;
+                      cape-provider = "config.json";
+                      crash_assistant = {
+                        "config.toml" = null;
+                        crash_assistant_localization_overrides = expandClusters [
+                          {
+                            m = [
+                              "be_by"
+                              "en_us"
+                              "es_es"
+                              "es_ve"
+                              "et_ee"
+                              "fr_fr"
+                              "he_il"
+                              "it_it"
+                              "ms_my"
+                              "pl_pl"
+                              "ro_ro"
+                              "ru_ru"
+                              "uk_ua"
+                              "vi_vn"
+                              "zh_cn"
+                              "zh_tw"
+                              "zlm_arab"
+                            ];
+                            p = "";
+                            s = ".json";
+                          }
+                        ];
+                        scripts = {
+                          log_analysis = "blame-mods.jexl";
+                        };
+                      };
+                      "cwb.json" = null;
+                      "debugify.json" = null;
+                      "dynamic_fps.json" = null;
+                      "entity_texture_features.json" = null;
+                      "fabric_loader_dependencies.json" = null;
+                      "fastquit.toml" = null;
+                      "iris.properties" = null;
+                      "isxander-main-menu-credits.json" = null;
+                      "lambdynlights.toml" = null;
+                      "midnightlib.json" = null;
+                      "modernfix-mixins.properties" = null;
+                      "modmenu.json" = null;
+                      "moreculling.toml" = null;
+                      "reeses_sodium_options.json" = null;
+                      "renice-shot.properties" = null;
+                      "rrls.toml" = null;
+                      "sodium-extra-options.json" = null;
+                      "sodium-shadowy-path-blocks-options.json" = null;
+                    };
+                    "debug-profile.json" = null;
+                    "options.txt" = null;
+                  };
+                };
+                resourcepacks = "Mod Menu Helper.zip";
+              };
+              resourcePackOrder = null;
+              versionId = "FLkaba1E";
             };
             "2.7.1" = {
               archiveFilename = "Fabulously Optimized-2.7.1.mrpack";
@@ -844532,7 +845070,7 @@ in
             versionId = "2BOGGzhf";
           };
           "11.14.0.1046-fabric" = {
-            date = "2026-08-05T13:25:22.930742Z";
+            date = "2026-08-05T13:23:06.738997Z";
             filename = "jei-1.19.2-fabric-11.14.0.1046.jar";
             gameVersions = [
               "1.19.2"
@@ -844541,7 +845079,7 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "rPttgeeC";
+            versionId = "RlFScbCR";
           };
           "11.15.0.1047" = {
             date = "2026-08-05T13:30:35.028495Z";
@@ -846439,6 +846977,54 @@ in
             ];
             versionId = "IrF3jm5V";
           };
+          "11.68.0.1088" = {
+            date = "2026-10-20T15:05:49.979262Z";
+            filename = "jei-1.19.2-fabric-11.68.0.1088.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-F0+uB9j4+f/5rX4xDN63OguCEsDcATVLUPdmVjZeUCYTGJnKg/vfO1DZ6dqIJvSUk2RW3+Uew2WjuFRZqhhJBA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "AjXk0ccW";
+          };
+          "11.68.0.1088-forge" = {
+            date = "2026-10-20T15:05:43.193280Z";
+            filename = "jei-1.19.2-forge-11.68.0.1088.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-Bicb6mGGAF0sKwLT6cDHKfeFYIFCJuUxlCzaFx68ClC5Z8uNAUnka+CSHgdxOMnO7vtGoD1QVnvTpVDNzTzA1A==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "Z6lfcc5g";
+          };
+          "11.68.0.1089" = {
+            date = "2026-10-23T13:55:18.492710Z";
+            filename = "jei-1.19.2-fabric-11.68.0.1089.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-jMHj5eeXjYQUDYWcn+5+3UGEYSacNzZS8kfCFF+OFKAKRvwBaOP2JNXhpkLKEZWcptSc6IMqXiaETNiZrqAWmg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "l9pG4f2C";
+          };
+          "11.68.0.1089-forge" = {
+            date = "2026-10-23T13:55:11.452119Z";
+            filename = "jei-1.19.2-forge-11.68.0.1089.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-MMElomTYOZqG+wljcgqkEdkko7mKmOk6ShaA+DTlrhjR7RxT2U0CYBWt77DGHoDsMJWV8DpyjesanV6JR2Wc7Q==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "XhOviuSf";
+          };
           "11.7.0.1025" = {
             date = "2024-09-18T02:32:33.165807Z";
             filename = "jei-1.19.2-forge-11.7.0.1025.jar";
@@ -846702,6 +847288,126 @@ in
               "fabric"
             ];
             versionId = "b6hpbBC6";
+          };
+          "11.80.0.1090" = {
+            date = "2026-10-26T12:47:23.087395Z";
+            filename = "jei-1.19.2-fabric-11.80.0.1090.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-K0DO9T3O/McEQKIXVN7PGuC3rMYxuE5S+K1j9DHwAVCopy86fs0zamBLVjsh+bCnvISZ1BYv2o+wVNlBwVgJNQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "HMmXt1yu";
+          };
+          "11.80.0.1090-forge" = {
+            date = "2026-10-26T12:47:16.666716Z";
+            filename = "jei-1.19.2-forge-11.80.0.1090.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-16azV9w+EJMR2v/xiRfARoX2ZB7ponZ7PdI0hp7NeE4ILV1GT4x1i2L1oH7gUdGYX5FGQHVTGhYqmv7E8mxIdA==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "SRozR6O9";
+          };
+          "11.80.0.1091" = {
+            date = "2026-10-28T12:54:10.743215Z";
+            filename = "jei-1.19.2-fabric-11.80.0.1091.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-IquzEJP5nba98SpMMpIcOtM+WhVJhJIPK/SUR01se04F1ihnnuXWOLrz4R2YeebpHgy+7iE3h5evxzGd4MDpAg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "MA4tBR42";
+          };
+          "11.80.0.1091-forge" = {
+            date = "2026-10-28T12:54:03.706790Z";
+            filename = "jei-1.19.2-forge-11.80.0.1091.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-UEPQOz4E3npHmpZ3rQLz45p1fQgi4ZCPYPHDT7/qIn3D4u5IU74+JHqUhhFxEueyv0o/7yfKP0sH3kH6cKPcsg==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "KfKuE6zn";
+          };
+          "11.80.0.1092" = {
+            date = "2026-10-28T15:35:43.337698Z";
+            filename = "jei-1.19.2-fabric-11.80.0.1092.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-4X6Ebr47fbZq5q8jIDqhY7HJacF1H7r/7Rv8c0UAm5Q6YNSnT/h8GnlHL32Nq4X64AnRBGJ83k5yq74O7DEagQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "M4QL0VjX";
+          };
+          "11.80.0.1092-forge" = {
+            date = "2026-10-28T15:35:36.028743Z";
+            filename = "jei-1.19.2-forge-11.80.0.1092.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-q/mOO6tLvGYpz/Mels9Qh7M+aKEm5ozhMvlFu1dEYZI7mv6D06sj3xxC6+wjKoQGwRIkQFrQ0+lMfE8EmLWsVQ==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "BoJT4oV0";
+          };
+          "11.80.0.1093" = {
+            date = "2026-10-29T14:04:30.976545Z";
+            filename = "jei-1.19.2-fabric-11.80.0.1093.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-rEwYtTlF/kyA32c9fWdfMW21lgjITqJIyDbUKp3jxikgb4IGHBZGJVd+iIJyutR2CW2Nyj7PWeZfNGz2rtqrew==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "8nmcTAMR";
+          };
+          "11.80.0.1093-forge" = {
+            date = "2026-10-29T14:04:22.780713Z";
+            filename = "jei-1.19.2-forge-11.80.0.1093.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-CIgR6lPfwspgySprg+w7RJ4kZF6t3M3YRJFXvOWHLLji1hHSExEgmd0Sxvfo9hQdr64hW6gOjzYKCYVRBQSPEw==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "ulJsFBtS";
+          };
+          "11.80.0.1094" = {
+            date = "2026-11-01T15:05:12.021920Z";
+            filename = "jei-1.19.2-fabric-11.80.0.1094.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-NXNIKSYgYeamQH5tjqL5UhuWYZcJxz9p7SxSdJfP4VwCCblc/Rjel75YhnOkDbMAgxUfZfUvFgiBAFPzMHR8Sw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Dg8WjCzI";
+          };
+          "11.80.0.1094-forge" = {
+            date = "2026-11-01T15:04:56.348944Z";
+            filename = "jei-1.19.2-forge-11.80.0.1094.jar";
+            gameVersions = [
+              "1.19.2"
+            ];
+            hash = "sha512-Km8l0cBfg5QFrYPVgvk9gwwv0kzTRl1xkNR0bo4kHgLsZl7k7zIS0q0H6ufvFhIbOBhHp8XnHbjLbtUBB3QpYw==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "csoSOse9";
           };
           "12.0.2.2" = {
             date = "2023-01-27T06:00:48.613761Z";
@@ -852294,6 +853000,222 @@ in
               "forge"
             ];
             versionId = "gwEKpCDU";
+          };
+          "15.74.0.225" = {
+            date = "2026-10-19T13:08:41.705499Z";
+            filename = "jei-1.20.1-fabric-15.74.0.225.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-k6QZ+0hDzuuKQ5aZygzoNSKAAV0owXu0kXW5EACLs6KAj5j8a1AUFblgalg1JZaDMsXWsZS3mBxHftlsW0vjyA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "URCP0LiD";
+          };
+          "15.74.0.225-forge" = {
+            date = "2026-10-19T13:08:34.621077Z";
+            filename = "jei-1.20.1-forge-15.74.0.225.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-qnoBXhZtAOkix0H7FBoAvAHxcyc+Asn5Fm8vnzhgtECnaiFpQEBJ6YHZfrtZe29o8NqCZY4VFlm2owJ/Fq5b5w==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "zn2vhfnI";
+          };
+          "15.74.0.226" = {
+            date = "2026-10-20T15:02:36.054590Z";
+            filename = "jei-1.20.1-fabric-15.74.0.226.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-K9pGSdDNOnJ//Hzg3T2iooNtRSVqACiCpFEpluzYZl+PRurVBlx0a6YQk48gVLn4RCJfQ0sEHYjPqn4XYN1egw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "o9RMMM8w";
+          };
+          "15.74.0.226-forge" = {
+            date = "2026-10-20T15:02:29.251757Z";
+            filename = "jei-1.20.1-forge-15.74.0.226.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-AeEttVLxnC4wMsB75qTeDjwbqeauZn3LZtSD/FdmUwIWapwOrZer9zWq0eDz5x/2vaurT9kfH5zddxIBEGoRxQ==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "Vn5ZrZMY";
+          };
+          "15.74.0.227" = {
+            date = "2026-10-20T17:05:14.257180Z";
+            filename = "jei-1.20.1-fabric-15.74.0.227.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-UEov+SxofLLRLcb5fFkqEHcgFDi+wGEKsmcaGzsbWMh+GdYjKeH0O+/Gs7TdHMQamjA5+p49bj0yHjtg3XkIJQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "F2JRIgT7";
+          };
+          "15.74.0.227-forge" = {
+            date = "2026-10-20T17:05:06.754742Z";
+            filename = "jei-1.20.1-forge-15.74.0.227.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-+L7TBXnFCTKSgJrmCAZYbeJONFlDhKB+P74u2NN/1zPVyA2k8l96Rf7UpY6u+4V7bmGmoC+v2k2s7JWT0wUoHw==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "TrKZlZ0b";
+          };
+          "15.74.0.228" = {
+            date = "2026-10-21T14:31:38.089113Z";
+            filename = "jei-1.20.1-fabric-15.74.0.228.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-laoTaIx3+/C8TaJ9Ad3xKqkkUuH/MhzspSMbzutQl7vCqWWE39GkxBsQf/YPB7kNwOoxm8gSZZdfyTa7OJewYg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "oC8SAEUG";
+          };
+          "15.74.0.228-forge" = {
+            date = "2026-10-21T14:31:31.692885Z";
+            filename = "jei-1.20.1-forge-15.74.0.228.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-sYV3E+nV+iojJFJIDJ7WYavZiMA9iXu2Mx1HEXL5+HPLUjT/ljmIDQvFSDQjMj77NQpc2Lp82gAGYyfDeUowGg==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "MoqLPMQn";
+          };
+          "15.74.0.229" = {
+            date = "2026-10-23T14:04:10.684587Z";
+            filename = "jei-1.20.1-fabric-15.74.0.229.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-2CGw6vHveoba97wfciSx63/c3NA8Km0+B6GbDhy7g/tTJOKO/Gi+1+nwpjVm52VN8D7GRFQBTh5Ut6FoyjlLFw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Yn9MB1XF";
+          };
+          "15.74.0.229-forge" = {
+            date = "2026-10-23T14:04:03.464976Z";
+            filename = "jei-1.20.1-forge-15.74.0.229.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-shpetdYev4tKgaQ6clkfjHAn+sJQJuPOyJiiVA6H5Dc5/IIj75guzFESjca2DItFDCk9ZIMlh6Yb9YKhG076zg==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "Dd0gxTsG";
+          };
+          "15.74.0.230" = {
+            date = "2026-10-25T15:32:55.979402Z";
+            filename = "jei-1.20.1-fabric-15.74.0.230.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-RGoH4UWBJb+whyhXqkxySS1ljMqIuVXHXq9m/5Yp1FHDB8U8wC+v8B0HrLDiLLQ7EA9DoYyTwEKFJ5XMP2WBZw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "NKdcms4C";
+          };
+          "15.74.0.230-forge" = {
+            date = "2026-10-25T15:32:47.907758Z";
+            filename = "jei-1.20.1-forge-15.74.0.230.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-pH7EIzX6TFuTOF8yugtj54Z2QAQ+JK7PD3D3XQ6UYO1o+hzGUm24lB4mUsXzIuHCGB1jtmM8JdPy4VapjMRTlA==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "SOmd9h8c";
+          };
+          "15.74.0.232" = {
+            date = "2026-10-28T14:10:46.635771Z";
+            filename = "jei-1.20.1-fabric-15.74.0.232.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-I+wtTRMe61uXJGDmtYqqLFC7CNNQ/UmOOpLCy0gQvQ+XH8Rj9CwqTTfYE13LhFJ62gA+Q5vow0dkPXhFRSGQ3g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "OD2nKmIh";
+          };
+          "15.74.0.232-forge" = {
+            date = "2026-10-28T14:10:38.166089Z";
+            filename = "jei-1.20.1-forge-15.74.0.232.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-QThjT7Ck+WKlf23RDIdaqq4zLKMIRnGbnpT9+TQvGa5PNqaoPD1JtglaCjqFm7ZRdfYUM6KjBKt5GqjJGfZZBg==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "hH9lasoK";
+          };
+          "15.74.0.233" = {
+            date = "2026-10-29T13:55:56.913846Z";
+            filename = "jei-1.20.1-fabric-15.74.0.233.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-m/Y7uE9KRtw3dnvclvjju9xLnekvW4XfV4AKi4w54QYdRMUCt88ZHKPV723PwbUhvNn0Db5IXlTlkQtyz9FD0w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "qrP02aGf";
+          };
+          "15.74.0.233-forge" = {
+            date = "2026-10-29T13:55:50.238892Z";
+            filename = "jei-1.20.1-forge-15.74.0.233.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-THVhovXsvNaT9eN4E52j9Fj9BJAR+tS+kTIG1CxwfA9UsUc3ytkAyRB6xst7Tu1an7PeQ8FjQZulu7mTklexhQ==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "AsHUo8tY";
+          };
+          "15.74.0.234" = {
+            date = "2026-11-01T12:21:19.707215Z";
+            filename = "jei-1.20.1-fabric-15.74.0.234.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-QMoF4aHP5b2feapj5qWOwOQo/m9BMo1un16QGVCosRxh13NtVPOZpHBLmXQBAUe+4OOpqVZ6Og7OScWkMRlS5g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "bTwbXhIB";
+          };
+          "15.74.0.234-forge" = {
+            date = "2026-11-01T12:21:01.304590Z";
+            filename = "jei-1.20.1-forge-15.74.0.234.jar";
+            gameVersions = [
+              "1.20.1"
+            ];
+            hash = "sha512-6l8ri/5gLjP7isgmM8yx0CFM3yfxJNDDlb+NKi5pHfdYlIkw5k0jFxq5GeJUK52WsWsGt+QpNkifumJA1DY0JA==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "6E4ps2ER";
           };
           "15.8.0.10" = {
             date = "2024-07-14T14:20:26.437213Z";
@@ -860514,7 +861436,7 @@ in
             versionId = "an8XUVeu";
           };
           "19.37.0.363-fabric" = {
-            date = "2026-07-12T07:01:01.477335Z";
+            date = "2026-07-12T07:00:59.966131Z";
             filename = "jei-1.21.1-fabric-19.37.0.363.jar";
             gameVersions = [
               "1.21"
@@ -860524,7 +861446,7 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "pj3TahPU";
+            versionId = "Tau8bULq";
           };
           "19.37.0.363-forge" = {
             date = "2026-07-12T07:01:21.778520Z";
@@ -864684,6 +865606,84 @@ in
             ];
             versionId = "qVF5T46z";
           };
+          "19.69.0.456" = {
+            date = "2026-10-19T11:36:21.411063Z";
+            filename = "jei-1.21.1-neoforge-19.69.0.456.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-xQGkE4HKDN/NJinydQpADyfcxtfYKWNtA8emCOsq4qOWrUaXF2NJQX6zmV09kA2hBB6VmOIkzq8PNPsFSTtM2w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "FLLyiWf8";
+          };
+          "19.69.0.456-fabric" = {
+            date = "2026-10-19T11:36:18.230827Z";
+            filename = "jei-1.21.1-fabric-19.69.0.456.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-R9iXQ5YzDwH9q/K58cej09WtBM6WhYiFSzEANpP7Zt70XPs/PvD0Z53+QYfh92iearh5CS5o2Et3cOQCa8T+9w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "XNRMMwd2";
+          };
+          "19.69.0.456-forge" = {
+            date = "2026-10-19T11:36:13.294190Z";
+            filename = "jei-1.21.1-forge-19.69.0.456.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-iyPrlq/434piy7q+5DbdaBn/QOFInGjhWhyX5ST3nn6LkQs3KD2IW3jfS4/acCm3o0MZHuNSmZkYaCvoEAFi7g==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "mbWhMRMT";
+          };
+          "19.69.0.457" = {
+            date = "2026-10-20T14:44:00.364337Z";
+            filename = "jei-1.21.1-neoforge-19.69.0.457.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-HY1R+EXmgGb0jv1PiN1R18FhbTFFJNwV/6KGq5kwycygHP0lkUqx4OToounRNfXELuLG531u03LINsTTQsZjHw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "rsnYBmN3";
+          };
+          "19.69.0.457-fabric" = {
+            date = "2026-10-20T14:43:53.775538Z";
+            filename = "jei-1.21.1-fabric-19.69.0.457.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-T5F2CZFlBSk+A7CeDp4U5pttE9YmLwy8rPJqAWyRRz7UC2T13mtbqEgcmtxJsk9mFn/+6DOGFUw+BVH8CQIXcg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "RkwKMTOv";
+          };
+          "19.69.0.457-forge" = {
+            date = "2026-10-20T14:43:47.047387Z";
+            filename = "jei-1.21.1-forge-19.69.0.457.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-nLWEPDLjBHb8HXK6bJZyGEqGUqsHcGBnnTCkFW9gjdem+saXuXarQmkxFrVdiLfcBIMp4hTEfSrGPz9kcUgd1g==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "LUkyn3Pd";
+          };
           "19.7.0.76" = {
             date = "2024-08-05T11:32:59.231535Z";
             filename = "jei-1.21-neoforge-19.7.0.76.jar";
@@ -865211,6 +866211,396 @@ in
               "forge"
             ];
             versionId = "d0OLLRm6";
+          };
+          "19.70.0.458" = {
+            date = "2026-10-25T08:05:27.476540Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.458.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-Pn3QzUmz1fFNKfTTlXqcRy9HHYvATmKuDvzdTjPu4T4+lMNY239hVsuL/LmNC22cGq+7RXfKRG41al6rkGPS1Q==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "IDDZffPi";
+          };
+          "19.70.0.458-fabric" = {
+            date = "2026-10-25T08:05:19.836121Z";
+            filename = "jei-1.21.1-fabric-19.70.0.458.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-VZt1nuog/CLiz/Xuj9fKIGiF6p9jnJMB7/Rj3zgAqbVqoR45cjKsDFn4ube+IarNRWSt/CMqb9QVO3pwjs3FSg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "vR2QZIxy";
+          };
+          "19.70.0.458-forge" = {
+            date = "2026-10-25T08:05:12.253721Z";
+            filename = "jei-1.21.1-forge-19.70.0.458.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-RSWnmxo8G6OoVWFQ3cyLjpRLS8aWD18bZaWdSu2SHs4Md91qzPlWys7pqybgQUZvNe+Qzkz/d0NVZBCGiVSznQ==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "GISG2skr";
+          };
+          "19.70.0.460" = {
+            date = "2026-10-25T14:13:50.873633Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.460.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-LiIhs5edvaMTvWGwmmJdbt+mx2RKDpp6eR0liWobYMEv3Wmt7RUGCcsbeJRruRUwEbjkIY+x1TU5hQPgD0KaMw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "u8LQk1jf";
+          };
+          "19.70.0.460-fabric" = {
+            date = "2026-10-25T14:13:45.065781Z";
+            filename = "jei-1.21.1-fabric-19.70.0.460.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-cRPA5JxZNRaWJF9xkXQoWjB03ZJs4ia8JenhHWvuddOj7Fvi8yJoqGVP+xwJ2oOkRCyDpzrZJVF746mIoJ1Inw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "SfKZj4xx";
+          };
+          "19.70.0.460-forge" = {
+            date = "2026-10-25T14:13:38.417173Z";
+            filename = "jei-1.21.1-forge-19.70.0.460.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-Ci0kQS2SrRP87bdkbw+ymWX4eNCbKGQ6jYY+TqajaQNZzmqJi0OrkRez74YwufDhGGykAAbg51+LOwt1rKtKwg==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "u9fZzdX0";
+          };
+          "19.70.0.461" = {
+            date = "2026-10-27T15:20:45.397272Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.461.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-yWm80nzfrody/3ixOL3GP3JWACQCAg8dS3FXain2jrzrx8mWeMHKZNPBviUXvKogtkSmT8RegbPFYFG1LCQDVA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "pWGmsnGm";
+          };
+          "19.70.0.461-fabric" = {
+            date = "2026-10-27T15:20:37.759249Z";
+            filename = "jei-1.21.1-fabric-19.70.0.461.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-NuuqmDBPtAEb70BRI98mHzuAkBhoGeF3DJFOTc4yS7MFTxLdPuksGs6igkakUQkTnx6Eu8BZwroEgfdXj63InQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "kFIMjB8H";
+          };
+          "19.70.0.461-forge" = {
+            date = "2026-10-27T15:20:30.686058Z";
+            filename = "jei-1.21.1-forge-19.70.0.461.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-zWszZYJdI+8SpPUSgYtZm73FIASAmRRiVvDLoYFdI7VJh4zmYlor2GY8qbQm87QoRZ7mE7K9ebh6TXy23Kifpg==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "1rvwFzhL";
+          };
+          "19.70.0.462" = {
+            date = "2026-10-28T10:48:23.023737Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.462.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-OYgw6czps8Ihv5E6ZCtbSKs9pq03qXZOFj+v/3cryyjNJuxSQAsBB7h60nNQgRrt2MWh0XNMkJ/ev4GtIlYEMQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "FU9u6h9h";
+          };
+          "19.70.0.462-fabric" = {
+            date = "2026-10-28T10:48:16.679873Z";
+            filename = "jei-1.21.1-fabric-19.70.0.462.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-3z3slCu+e8/RyWCXvq0hn42B97OCEHbtui/bXnAvY8hnzN2oHyKiG7bOSxtVb/+M8abZdIwLy7WeuvKLy23R1w==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "lYiNAgYZ";
+          };
+          "19.70.0.462-forge" = {
+            date = "2026-10-28T10:48:09.753555Z";
+            filename = "jei-1.21.1-forge-19.70.0.462.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-866AgyNSjlIY4WgA+L590I8riVQM380r02LDj7M3EyoN/gOE5XNUVo6cDYaofeyFyrg5VSHHO+8edS5Z09nI2A==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "3VFnjOee";
+          };
+          "19.70.0.463" = {
+            date = "2026-10-28T13:14:12.234481Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.463.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-RlINOViMST3e2nlKoiwGZl5nhigl+lJYENfZsaqxxBb0TmljCE/psgdpOoCyqEzC+o2CNySEZpkX/WjHHVIxUg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "SJVrzht0";
+          };
+          "19.70.0.463-fabric" = {
+            date = "2026-10-28T13:14:05.632357Z";
+            filename = "jei-1.21.1-fabric-19.70.0.463.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-NKd36+pFRi5WebPZqeR733l6HXs33n34q9HJh0E86lnmEHcLeXN8WQ20GmCQhCk8gIqwazBZvYmEUZHuf7nkxQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "T2vE6ni4";
+          };
+          "19.70.0.463-forge" = {
+            date = "2026-10-28T13:13:59.131337Z";
+            filename = "jei-1.21.1-forge-19.70.0.463.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-8eEgAzJrkiZIMJr8LSgbpj7UeHD1YGSMldr34Zn95YA2cQcTyNcs1oS+Ms2dFnuL/330Dgb5Wl87oiBZ6593nA==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "Gliu6kNn";
+          };
+          "19.70.0.464" = {
+            date = "2026-10-28T15:27:11.927378Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.464.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-65uZcBfeDZzdCoSYKetOzLAXu22JAmCRXl97jGrudS24jrFE1aM3xdnPddwOXOL6P6a/IIVQuzt39RDg3DbFvQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "ufAsQKnC";
+          };
+          "19.70.0.464-fabric" = {
+            date = "2026-10-28T15:27:03.783989Z";
+            filename = "jei-1.21.1-fabric-19.70.0.464.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-bzzRbJ01JTdaO4cP3MdQbn5Y+h71dQwTNN+zItzaQLIEFR7REsboI/0apSpFtYpy21GDypPz0/QADGGh1mVCzw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "PjqbPgRF";
+          };
+          "19.70.0.464-forge" = {
+            date = "2026-10-28T15:26:56.349031Z";
+            filename = "jei-1.21.1-forge-19.70.0.464.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-VpwCb5uWFTX9CpjH15gg//japxOUF2jFY33AuSZB/33DjvfOHH1bpUlS2h3e3o7fnLhhC92uLjwXMr7hmFR/ng==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "So0vg28C";
+          };
+          "19.70.0.465" = {
+            date = "2026-10-29T14:10:44.577057Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.465.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-VRt+oEqrEabtd+3DXkv8UqdadNEYUZeIKbhp4SqwFlFuj5NnuUvHKfybympieVL5GdHEFdgCOAa4oY5wQ4Fmlg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "I4sK2bv4";
+          };
+          "19.70.0.465-fabric" = {
+            date = "2026-10-29T14:10:37.336866Z";
+            filename = "jei-1.21.1-fabric-19.70.0.465.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-54WdFc8/bLT1owxl31Cm6HxDMUYEzKTTYx9KQQPyV5yJ6Rz1IqDkU0ciJxYNE0bvLaz2gGgRDpOpxktiBgorxQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "KgvIGi63";
+          };
+          "19.70.0.465-forge" = {
+            date = "2026-10-29T14:10:29.882607Z";
+            filename = "jei-1.21.1-forge-19.70.0.465.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-7CD3rmLD0/dFJwxbrX/IFn8RHov+WG3tZi87Ldhq0lNbuOjCsa4FRJav5utLNO8nc43+MTlwxskESuo+C/kqAQ==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "v7iviD7F";
+          };
+          "19.70.0.467" = {
+            date = "2026-10-29T16:14:27.903501Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.467.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-1VUuDbw0L3EKECvGkfJMInbPp02TQrJ4uJj5r4EzAr9WHcTXpj6+zbW0NzBHD9c3ghpduOMIfUgPZT8HF1iF/w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "4SbkkJ5m";
+          };
+          "19.70.0.467-fabric" = {
+            date = "2026-10-29T16:14:21.051989Z";
+            filename = "jei-1.21.1-fabric-19.70.0.467.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-k6plk5c0Mbt2FP47D1SL+xl/sicewoU5IdjoWtpYnKVYCM3FZcPT5EIwoV/n8kJK9t4Q/eQIetjtttQj4sNUag==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "5FVHOif2";
+          };
+          "19.70.0.467-forge" = {
+            date = "2026-10-29T16:14:13.943508Z";
+            filename = "jei-1.21.1-forge-19.70.0.467.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-MObljzfFK7ivuCcbXIq+a8LCHG2bXNIm/KKnHPmcQtU/8Eed+AEFnzBYFSK6lbesdfE+zLg9Lve5ch39TS6olw==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "57sJxM7a";
+          };
+          "19.70.0.468" = {
+            date = "2026-10-30T15:49:42.016981Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.468.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-gqA3dI/cldHV5HJH9jyKR81Dyefvc2jDGqXiTajOQGi6xUlSmzbX6vFBMa/HgD3+nGrAXK4sF3y70C/412tYqQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "j41QZiGx";
+          };
+          "19.70.0.468-fabric" = {
+            date = "2026-10-30T15:49:34.092328Z";
+            filename = "jei-1.21.1-fabric-19.70.0.468.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-KpZQWmpx/YwmPthdd1ZfZ0FBjnOkjX+J9b9BzLCo7hzo4gygvkVuSZZuh595RNRc1kbdECTrAvtjZitRDFreJA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "hzx1HVut";
+          };
+          "19.70.0.468-forge" = {
+            date = "2026-10-30T15:49:25.530938Z";
+            filename = "jei-1.21.1-forge-19.70.0.468.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-ufdWVD/+8FO4Cy7YX9eTIH3e3fehH2umEizBzaGv3tjzFbq1mBot9OXjdsPL6foVzHm0pD+G2RhDoARxcOCvTw==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "zYJoUSai";
+          };
+          "19.70.0.469" = {
+            date = "2026-11-01T09:41:58.129093Z";
+            filename = "jei-1.21.1-neoforge-19.70.0.469.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-ZentXQMubyhNvcf1pBykPzX/ueCGQZEF7ms2AzOxNJ3Flnv2yiUPjwKt9zMmMYlFtsTldiTA4KCfxWZzHjKLwQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "1vC6z8wV";
+          };
+          "19.70.0.469-fabric" = {
+            date = "2026-11-01T09:41:43.803565Z";
+            filename = "jei-1.21.1-fabric-19.70.0.469.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-owws/+geSPZhvtHQQ/T2cRQbXJXrRR7y9M9vKnlzgv8jwZZdksDvet+5Gl3W+nH+RDlFTJOzgwi8Q81Kr5mMOA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "WkRLMWAY";
+          };
+          "19.70.0.469-forge" = {
+            date = "2026-11-01T09:41:26.943037Z";
+            filename = "jei-1.21.1-forge-19.70.0.469.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-i9Donso/+fIhocy//ttcoiA/vKKbW0N0l9FQrcD2EYbW4v75l+VIqUjd22QK42+AHB2hpwaS24ZvJRChBzEY3w==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "fhFT6u04";
           };
           "19.8.0.95" = {
             date = "2024-08-08T04:51:07.608139Z";
@@ -870117,6 +871507,222 @@ in
             ];
             versionId = "Zm6O3cMX";
           };
+          "27.53.0.108" = {
+            date = "2026-10-18T16:59:28.538096Z";
+            filename = "jei-1.21.11-neoforge-27.53.0.108.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-3caInLcuYNMXWcUDV4+qR/qrVbmvpBN2DhP0PegoA2UYbcDkMRug5ezDzqARW3N0ssb8F5IpDjJ5Jo8pu5Y9Bg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Sb3olMoE";
+          };
+          "27.53.0.108-fabric" = {
+            date = "2026-10-18T16:59:24.266337Z";
+            filename = "jei-1.21.11-fabric-27.53.0.108.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-8yfPLeSjrQXZbEltNcp0+KjGR6uz2JeQ+Oab10wf9/W36lzO/nxgD3JYX3SFtkRstZfxFGT3CydSEPOrg0R6+Q==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "wRFFd6fl";
+          };
+          "27.53.0.109" = {
+            date = "2026-10-20T14:48:55.841749Z";
+            filename = "jei-1.21.11-neoforge-27.53.0.109.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-UjSIoStoYvbHS089UlAXGUt7y2M4DKYm7DYuwLBMxSm22UlnAoMyIsU7VGtZ1oyWXnHc5S8UpIZY55G0F8PlgQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "CcAHXOgG";
+          };
+          "27.53.0.109-fabric" = {
+            date = "2026-10-20T14:48:49.454738Z";
+            filename = "jei-1.21.11-fabric-27.53.0.109.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-+b4bKT39WODeKoEQmk6EnHnDTLzjaioKl3iYa3D7IDn8+PFFlk+EMFBrh9h3RCj0c+PQA5mPmb4e5zbc5sS8MQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "y1QHZ60Q";
+          };
+          "27.53.0.110" = {
+            date = "2026-10-23T13:51:56.711614Z";
+            filename = "jei-1.21.11-neoforge-27.53.0.110.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-JN700P7SspwYNU8rraCWLDQ1M48jrRlhng3LUz86UvqGQhNb7B5/Rctb1rcSS8DUqu+715JApo2ZxczGfoPJPA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "qQmDtYyg";
+          };
+          "27.53.0.110-fabric" = {
+            date = "2026-10-23T13:51:49.580806Z";
+            filename = "jei-1.21.11-fabric-27.53.0.110.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-Bvpg8kYlPX/RIe9bDqLCEw6qyUz3xxyVADI5qC/pP1L0QD/1o+0dQSoW+m5dSYMVe9ierxMxfITKAsHaRJ4Nyg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "SSgIBCFq";
+          };
+          "27.54.0.111" = {
+            date = "2026-10-25T10:17:52.731864Z";
+            filename = "jei-1.21.11-neoforge-27.54.0.111.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-D98RUz3GGZhySipOgRF5TyXVER5dYcZ+ZPIA+NnC2ApMHnbh/vPloNEz5uc6G9tVv0XeyUhY3wXh0gOIehNQdg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "5jMaFUEO";
+          };
+          "27.54.0.111-fabric" = {
+            date = "2026-10-25T10:17:45.614678Z";
+            filename = "jei-1.21.11-fabric-27.54.0.111.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-IXQlFhWEksP8NWoZpurW+hx7+NX9s2YW9IjzCaicfvZIPh3ot3JOmyuc5pTwI2aekszZEbv9n6qaqGXLFvyphA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "23FCM1CI";
+          };
+          "27.54.0.112" = {
+            date = "2026-10-25T15:00:21.168006Z";
+            filename = "jei-1.21.11-neoforge-27.54.0.112.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-hSIiwCtyd5CM07dhrCIuAqs+QUIiGejiKXYEHvEsTqcORnVRa/cZWWO5iqJO+opNKNZt2irtUV96OeKj+GDj/A==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "6MHwW9vE";
+          };
+          "27.54.0.112-fabric" = {
+            date = "2026-10-25T15:00:13.512022Z";
+            filename = "jei-1.21.11-fabric-27.54.0.112.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-qVacmLBDmXnhS0harolHEGFvEGPX5Yxd4zt+F8EBeKoV0IpQX1ZT/vNDlg8q5QAsWUzm8/Isnc/mJs+PIcacwg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "jv98kc5z";
+          };
+          "27.54.0.113" = {
+            date = "2026-10-28T12:59:31.999816Z";
+            filename = "jei-1.21.11-neoforge-27.54.0.113.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-LhArv0ad0yHb9c2YuBuCJMw8JfD9kmos/iTGSvnG9dseDrQ0g59KeeR6ywL92cXGhT5A5jDQF9S2wtWF2sCiow==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "DoVBvAaa";
+          };
+          "27.54.0.113-fabric" = {
+            date = "2026-10-28T12:59:20.469618Z";
+            filename = "jei-1.21.11-fabric-27.54.0.113.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-UEtPum1FFke7a/zQEMqir+aMb9Y7CN9MoUuNY/jLQMpvaUBv4aDuPkwxDSeg//eLSa5u61sbSCI1pKQFkYXRkQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "1MYoCSWP";
+          };
+          "27.54.0.114" = {
+            date = "2026-10-29T13:40:52.031604Z";
+            filename = "jei-1.21.11-neoforge-27.54.0.114.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-E6wuaKDHSVt064d9MvFjsGKvXWRZ21ljfcmF7Ti6YTgM53Qq1AdrmM1KrkCFuW+xfGZ506bpdnnoNvE2XGWpHg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "BaMmBgdR";
+          };
+          "27.54.0.114-fabric" = {
+            date = "2026-10-29T13:40:44.978019Z";
+            filename = "jei-1.21.11-fabric-27.54.0.114.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-Nb4Om/Yb9L2RswzMgFAKkDRgPuJ+kZEsQR1uBYhH0kBMr5XyXWvG7Nvh92jHQi0qE+P4M7IcRYCL6ZF5ZJH+Zw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "ZCc58CcD";
+          };
+          "27.54.0.115" = {
+            date = "2026-10-29T14:49:17.171317Z";
+            filename = "jei-1.21.11-neoforge-27.54.0.115.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-Uh1gnxpjL5ZAGKCASnxmI2HN7TOSON+egFXekXYnXiaXm1bsIKXAAIjV9DOMmhyJ0Q5hIoxXwtSDXBBhptCVdQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "n8kwyK88";
+          };
+          "27.54.0.115-fabric" = {
+            date = "2026-10-29T14:49:11.002878Z";
+            filename = "jei-1.21.11-fabric-27.54.0.115.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-2BQn1/RnNoZXEIEuzN0A/GdHWeeIimanBkFONPzXcL3+G7/+p0/f4IXR957Tenk2oxWSv9z7M6SvePbh63Af5Q==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Y0aQ5C6Y";
+          };
+          "27.54.0.116" = {
+            date = "2026-10-31T15:09:48.538752Z";
+            filename = "jei-1.21.11-neoforge-27.54.0.116.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-gg1c/Fp0765kLcT1o+qV24zmxskJ4/+gdC99Py4NL/CXbsakvgnHJ9oEKy53ntUqz5gWpZLlNJMDwf67XhXblA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "tqj8DTrA";
+          };
+          "27.54.0.116-fabric" = {
+            date = "2026-10-31T15:09:32.831093Z";
+            filename = "jei-1.21.11-fabric-27.54.0.116.jar";
+            gameVersions = [
+              "1.21.11"
+            ];
+            hash = "sha512-lsUIqJ77LFGSyjQWOeRoHKDbhrC2Lujpjbz5CnonHCz9kE5WTXzoNv96AFOhNAQJfWih+fpytfXYu3jcGbPcjQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "e56U66Sq";
+          };
           "27.6.0.26" = {
             date = "2026-07-05T03:56:26.805784Z";
             filename = "jei-1.21.11-neoforge-27.6.0.26.jar";
@@ -872462,7 +874068,7 @@ in
             versionId = "eT3qF2HL";
           };
           "29.5.0.28-fabric" = {
-            date = "2026-04-30T13:04:24.776953Z";
+            date = "2026-04-30T13:04:24.167140Z";
             filename = "jei-26.1.2-fabric-29.5.0.28.jar";
             gameVersions = [
               "26.1"
@@ -872473,7 +874079,119 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "A7vaQAvf";
+            versionId = "gTohJjh7";
+          };
+          "29.53.0.112" = {
+            date = "2026-10-28T13:29:43.602717Z";
+            filename = "jei-26.1.2-neoforge-29.53.0.112.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-ykp4BjnOzdymwX4rE0RgONn0N/zcO5TlR/1ySuxyvMczErIfbmyJk+GBID2S6nsa6WHLRQ4Khg4agT/xVbOHrw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "DkThsUkw";
+          };
+          "29.53.0.112-fabric" = {
+            date = "2026-10-28T13:29:36.473133Z";
+            filename = "jei-26.1.2-fabric-29.53.0.112.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-ZJ3Y3jChBduF+MMjtfvPbIWvELclrgFo4iSts3c6KWRnO9xRUTzREVywH8yFaO2c7EsVPsmwPkJMMOZ4q7vgzg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "S1yWbjZ3";
+          };
+          "29.53.0.113" = {
+            date = "2026-10-29T13:45:55.953020Z";
+            filename = "jei-26.1.2-neoforge-29.53.0.113.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-SXG4hEHPxg0+SGEmoCfgOZOaLQyv6WiWs5NJSyM0r7jUa1092c+pS1DVMakE9MD0k6ifkAEdI7NO8JVf0UOLyg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "GBMy9brJ";
+          };
+          "29.53.0.113-fabric" = {
+            date = "2026-10-29T13:45:49.644357Z";
+            filename = "jei-26.1.2-fabric-29.53.0.113.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-LPwojyFIVOCNcZLojZELgXn0dn1Q0hyvvwOBFFsX6UoPEtOWwObadsXZ6bH+NBN4GefKrmB2Fj/LdDRemNbdhw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "U70QU6Us";
+          };
+          "29.53.0.114" = {
+            date = "2026-10-29T14:38:17.842942Z";
+            filename = "jei-26.1.2-neoforge-29.53.0.114.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-ece/digPpLfcNi0ajp5dO8+LbvZ+wa2xfioD46Vh16sARAA+92MH4SaaYhjn2w1SIcYamGp6fd/FivZ6p9J9FA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "z7G0bDJT";
+          };
+          "29.53.0.114-fabric" = {
+            date = "2026-10-29T14:38:10.739336Z";
+            filename = "jei-26.1.2-fabric-29.53.0.114.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-nAhD/bBk8fLx/4vZ3KWqROOwec8WgQeZpzADSfe2435UkzlNKYY/GggTQp2CR2SgUb6is0eD6wVIES0PrJObBQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "DJdKi2Zw";
+          };
+          "29.53.0.115" = {
+            date = "2026-10-31T14:43:39.578900Z";
+            filename = "jei-26.1.2-neoforge-29.53.0.115.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-+uWPR1FRsVT2bNPcJqicJJWcLbQSGGJ/7OtblSJsnH2utYuxyK/Nds2fNcAkXGvlLxEep55VVwAGGmutPjF/QA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "60HrmNPh";
+          };
+          "29.53.0.115-fabric" = {
+            date = "2026-10-31T14:43:25.458252Z";
+            filename = "jei-26.1.2-fabric-29.53.0.115.jar";
+            gameVersions = [
+              "26.1"
+              "26.1.1"
+              "26.1.2"
+            ];
+            hash = "sha512-4K5A3+awOaJXs5qoAyP9+25YsP/2XQdskSCFsknkM/zFOvl9W6mnfD+ot0DQW5ULyud6TEe5cFw6FitUqxi1oA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "j5HrJ8M2";
           };
           "29.6.0.29" = {
             date = "2026-05-17T12:29:15.553556Z";
@@ -879612,6 +881330,174 @@ in
             ];
             versionId = "UthTNlbm";
           };
+          "30.47.0.238" = {
+            date = "2026-10-18T16:25:49.108504Z";
+            filename = "jei-26.2-neoforge-30.47.0.238.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-dfCGUGk/GWjxZW9aMvwk3eiBzeZD6bI9APkR9KecLxy5AuNy6hd0dM6SGQlt/NDTwgAFVWaXfcwqRpHGQV23bQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "JMEYi0NN";
+          };
+          "30.47.0.238-fabric" = {
+            date = "2026-10-18T16:25:45.080620Z";
+            filename = "jei-26.2-fabric-30.47.0.238.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-g2POX1pdMvUaUErXX2EGpobsJR+DOO48cDz4vkuzg8jwVMMK5zMtTpbRuhcC6qGvMfLe6TqkZ5VUU9zLmFNrcA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "xnMcPkoC";
+          };
+          "30.47.0.239" = {
+            date = "2026-10-20T14:53:37.373047Z";
+            filename = "jei-26.2-neoforge-30.47.0.239.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-jzdNFebap1XzowoKrrewDKGRjjw+MbCq04T/wuOduIJZ+QojElwofwbKHignHdv+LjMOWvT/a/+PZTjRQ2B+LA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "LzppbiWf";
+          };
+          "30.47.0.239-fabric" = {
+            date = "2026-10-20T14:53:30.615133Z";
+            filename = "jei-26.2-fabric-30.47.0.239.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-CkhulPtcog+8hRLyjYibzXvm0OuxMU9f9j1lWVQYEJQeeos/r7X6goUIaWk+vs6o31dv+A1qYEcssE4rFXPtqw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "lQMX3CrO";
+          };
+          "30.47.0.240" = {
+            date = "2026-10-23T13:42:34.320702Z";
+            filename = "jei-26.2-neoforge-30.47.0.240.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-r8Ttli6P9vCGiVwGx+s8413Tbg9oLogKUJmUNQm1fmSLFQxfTvS+/1V8wBvzsrHvbLRUGibrpGjt0mwQgiB1iw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "QbLJhOsi";
+          };
+          "30.47.0.240-fabric" = {
+            date = "2026-10-23T13:42:25.913587Z";
+            filename = "jei-26.2-fabric-30.47.0.240.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-IqiedUKuRxEr8Aidcjxtvl0fpHyYJ627IWq0/H4r7UOOA7X7Nkwm8Ma5yTYjQCJ4ZuNl1wTSERhMP8RknICtTQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "sJGzYkKd";
+          };
+          "30.48.0.241" = {
+            date = "2026-10-25T08:32:48.328844Z";
+            filename = "jei-26.2-neoforge-30.48.0.241.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-GiJ3IkN7dWgQRwO6A4o4GX/E+Hn+poIo9o6b1BnC43wmU5mXWKFxMuobRb+6uLOuR3zEqCg6dhNBIfg6Gtn9Zw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "6dong2W3";
+          };
+          "30.48.0.241-fabric" = {
+            date = "2026-10-25T08:32:40.939056Z";
+            filename = "jei-26.2-fabric-30.48.0.241.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-rYlNQUbLJvLtlXpuXGFeiyXuITFLSu6pXS/DifpGHjSfISZ0GDZBipHAFsnEaabQiyHe/5vJdyCqNH7mhq3byQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "eGDoGxk3";
+          };
+          "30.48.0.242" = {
+            date = "2026-10-25T14:55:01.351796Z";
+            filename = "jei-26.2-neoforge-30.48.0.242.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-NkyQjZED+ZrC3HmjtbDV6rAMk8JkSME57LHMP7jXvCaazlbZo8ps4Jr1Hg9Ah/AcxTCn2swIlycW1EFaAkFsgQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "9yIhrfyY";
+          };
+          "30.48.0.242-fabric" = {
+            date = "2026-10-25T14:54:54.400313Z";
+            filename = "jei-26.2-fabric-30.48.0.242.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-xFVqa9GPKUomLsxQ+ZOH7+z550/0dSmqBP03sljRZTOt3t7YajEJ2mBIJDPoYBnjhJHEk8ifxNy5hPGCm4dBrQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "dXcNHWfE";
+          };
+          "30.48.0.243" = {
+            date = "2026-10-28T12:41:35.953877Z";
+            filename = "jei-26.2-neoforge-30.48.0.243.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-f4clfitD9jb/uQ8CmiK9FvazRzrGFZsVh1fQ8K23jfJ9A22WWTpf0zoZyYEdS56Vitcskntd/7qadB59n9r3Nw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "YpBNXTff";
+          };
+          "30.48.0.243-fabric" = {
+            date = "2026-10-28T12:41:29.779377Z";
+            filename = "jei-26.2-fabric-30.48.0.243.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-mDx+gWwyyLnIl3rx/0kmmJxiyAAlhDp0ewQpz+f+pjTRetzBSTlIOya92zft8j2cdaW1hoCb8wayPY4nBohJHw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "zoBEyEv0";
+          };
+          "30.48.0.244" = {
+            date = "2026-10-28T13:24:23.707849Z";
+            filename = "jei-26.2-neoforge-30.48.0.244.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-65xmgIUYtfeOYk39OMilQdqhmUjwJp5Cw9nmwk9yqPQBEkVywfa+jHEcSRMB33pEHH2dsS2hlDuHF5cec+3lqQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "lU7Sz0zI";
+          };
+          "30.48.0.244-fabric" = {
+            date = "2026-10-28T13:24:17.153926Z";
+            filename = "jei-26.2-fabric-30.48.0.244.jar";
+            gameVersions = [
+              "26.2"
+            ];
+            hash = "sha512-q269huX4avxUhsv3QRPbY+Qg+2vKKG4D5h6ahGNXZYLnEOUtv2VTpK8ptenrF+ssqFqf4BvsVX21PLBDlQSxPg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "j62WSkzi";
+          };
           "30.6.0.31" = {
             date = "2026-07-04T09:50:28.546121Z";
             filename = "jei-26.2-neoforge-30.6.0.31.jar";
@@ -880501,7 +882387,7 @@ in
             versionId = "ThnvuABz";
           };
           "31.15.0.77-fabric" = {
-            date = "2026-10-17T09:37:58.997003Z";
+            date = "2026-10-17T09:37:59.183594Z";
             filename = "jei-26.3-fabric-31.15.0.77.jar";
             gameVersions = [
               "26.3"
@@ -880510,7 +882396,7 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "wJgyN5n1";
+            versionId = "mEglbjN9";
           };
           "31.15.0.78" = {
             date = "2026-10-17T09:47:13.400651Z";
@@ -880559,6 +882445,606 @@ in
               "fabric"
             ];
             versionId = "9l0HTgBg";
+          };
+          "31.15.0.81" = {
+            date = "2026-10-18T00:48:48.411196Z";
+            filename = "jei-26.3-neoforge-31.15.0.81.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-qTGamRdYhKt5ePiJzeZuPO1oaKpFoGVPgkmNIBhBbM6AUf5oECc/l+hdioaLnJwH0DP6u6PMT8LP72VnyZL7+Q==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "mASEldsb";
+          };
+          "31.15.0.81-fabric" = {
+            date = "2026-10-18T00:48:44.337388Z";
+            filename = "jei-26.3-fabric-31.15.0.81.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-BMNtp+acgRAoqWhHZTPExP3zqw7RWCu99SQas9tloUwEhQW4ukLRfwe9cQbQ4PvkEDreGlzmg/dwtTfhRhiGyw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "6C5ANLvN";
+          };
+          "31.15.0.82" = {
+            date = "2026-10-18T02:56:17.618866Z";
+            filename = "jei-26.3-neoforge-31.15.0.82.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-Z47r4DTyJBQ2ifPERXA/7te458OYmvxc2J0mKiKfFNGCEw86ydXt9mdzuBXMQTxIgvvtRgiQVFCTKRTZz7oUyw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "VGsfqPfT";
+          };
+          "31.15.0.82-fabric" = {
+            date = "2026-10-18T02:56:13.530822Z";
+            filename = "jei-26.3-fabric-31.15.0.82.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-YqIaj6E+WRobW0hqge54ZCDaCSQwzkK7mRw39omZmH/Wchjxc3nyjCbDp2bIW+jkI63rd4CGp4qE+kAJkt0sUQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "f58Zbel1";
+          };
+          "31.16.0.83" = {
+            date = "2026-10-18T13:10:59.710693Z";
+            filename = "jei-26.3-neoforge-31.16.0.83.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-EtUwWP5NPns+Z9izenfe2zYM5mvsJeRU8DGJMe9FjcYDNBSmoVY8mH56b2P7sxDV3uJ6SWsnC8IrhIAI1Trgjg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "vDGgPeeo";
+          };
+          "31.16.0.83-fabric" = {
+            date = "2026-10-18T13:10:55.750816Z";
+            filename = "jei-26.3-fabric-31.16.0.83.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-rkYaWAC2GkDoieRjrjJ7p0QoKRjvB5HmBHuJNHrVf1FbrWlivGU9mwDIn0JGiExAonDyUncgVc8ZHUVdHdUjWg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "sdbLsn9E";
+          };
+          "31.16.0.84" = {
+            date = "2026-10-18T16:19:37.554805Z";
+            filename = "jei-26.3-neoforge-31.16.0.84.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-tIW3BkZKpL8x8WHmNfIKJqSRPYSFX15nloV3dwsQfOaLutv79qVJABxrceGj//v7TJly049FxRLAZaEGi2EgiA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "wSzwAzVB";
+          };
+          "31.16.0.84-fabric" = {
+            date = "2026-10-18T16:19:33.114425Z";
+            filename = "jei-26.3-fabric-31.16.0.84.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-cUUei+MTXXwh/6jfEE9uRvZLIpQOT0kg7l9uZRvOuj3nHVxxSUiTBAjg2v3vn1eyMZXM//F6IjoT6vfwTRzmFg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "G8Pw3LAj";
+          };
+          "31.16.0.85" = {
+            date = "2026-10-19T12:23:36.716512Z";
+            filename = "jei-26.3-neoforge-31.16.0.85.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-+DO2UXWu5rN3z/sV7XRGPydEW5m4IzNVD43KInSwoVtCgmN2Q+PuK2waGbXVJ/zlZyYNTt5RXPq1HLzXAKR6eA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Lp266xZl";
+          };
+          "31.16.0.85-fabric" = {
+            date = "2026-10-19T12:23:28.826165Z";
+            filename = "jei-26.3-fabric-31.16.0.85.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-Ut64780ecRS4I6W0ITlDhtoBxwIAEkfPkWPdtdMGLAtq/AOQLeUNTK0vQoT49U1GLmC98+KKtgeROgKjqNh0Gg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "wQJNj1C5";
+          };
+          "31.16.0.86" = {
+            date = "2026-10-19T15:19:49.989822Z";
+            filename = "jei-26.3-neoforge-31.16.0.86.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-QKxcLdINSLzKwgxeQi4bjljLW9hf0cWLiBVdKymUOX53G659IcPmVaLt9Z4ckui6/4mNiwzvNa1uK/QFDxFfwQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "3EynCW85";
+          };
+          "31.16.0.86-fabric" = {
+            date = "2026-10-19T15:19:43.586632Z";
+            filename = "jei-26.3-fabric-31.16.0.86.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-KtClu6qmLmhLdPxBU2tCTe1InbKN1HtmitLVNeawoVjqcMa1IiEaNdedDdc5jyVV87qGJk/Yan2gavzSOwTrKg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "FZo1k4Vx";
+          };
+          "31.16.0.87" = {
+            date = "2026-10-20T14:34:31.078824Z";
+            filename = "jei-26.3-neoforge-31.16.0.87.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-BQAXPEs5vLgH8Lv4COdZgLpc8r7W52gB/ebUx0D9M22AnSFMtxln3cGxNckP3Cs//NBeuB2bYI+i7DE6odCKpw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "UpgUiEy4";
+          };
+          "31.16.0.87-fabric" = {
+            date = "2026-10-20T14:34:23.570651Z";
+            filename = "jei-26.3-fabric-31.16.0.87.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-X/JJHtLb2MytRS+/BJJCa12Xw2vXrX3+LTZXOboq1D5/Z/n+SXihi6PDoiaD8LcX2e9CoX37YUKxGXZUqaih6g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "YO1qWjF9";
+          };
+          "31.16.0.88" = {
+            date = "2026-10-22T08:26:28.137977Z";
+            filename = "jei-26.3-neoforge-31.16.0.88.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-X+eaRx8WmhNvMy6DFXd1a35Af98ylMZQ1iNkKby2cmLQJwJfNqxP7HRvgPa20N2usCWdeST49WjS8Y8Ds35wfw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "zebBMGcX";
+          };
+          "31.16.0.88-fabric" = {
+            date = "2026-10-22T08:26:19.655996Z";
+            filename = "jei-26.3-fabric-31.16.0.88.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-4770PF/bzv5nruNQqTWFUQs9mC9nRotpoqXyohLMxHHL5Uui0n+f/4P81NMp5pIe0motJNfo48SYR8HpX+hmeQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "z8okfInj";
+          };
+          "31.16.0.89" = {
+            date = "2026-10-22T09:30:10.901266Z";
+            filename = "jei-26.3-neoforge-31.16.0.89.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-dBgO1FdDfIbRGl6xWGjI51XzpQqTK3kzBjJpbAuzzyyyQ04G6SKpwpK/waf4kq/1uT4HiR9NoODBt4NVKZYz5w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "P9sPjaao";
+          };
+          "31.16.0.89-fabric" = {
+            date = "2026-10-22T09:30:03.108711Z";
+            filename = "jei-26.3-fabric-31.16.0.89.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-z6FDiUqhoWRYEHrwJ7nasBAKa7r7UYMAm1d6WdGhHtYHC05BjTcMfTJUJcrRLdzsKq+RAC5cXAPBwhInS75Cmg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "Nfv71T5d";
+          };
+          "31.16.0.90" = {
+            date = "2026-10-23T13:46:56.653805Z";
+            filename = "jei-26.3-neoforge-31.16.0.90.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-bXYj2UK+gT4RoP05Fe2eOZLr2mGT/cYB6rbG/NnNRL3p4v0TUak4edEXljCDf5g4JABulqHFRxQPuURpn7Lgfg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "UGnL1gWS";
+          };
+          "31.16.0.90-fabric" = {
+            date = "2026-10-23T13:46:49.485401Z";
+            filename = "jei-26.3-fabric-31.16.0.90.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-2rthGB8sVlbIaATLFi8LZIa9c/JHtMy2/wvTmZxJIo2Bv6QFX2rEprZqy8KtZYVJsITPCQkx7ZQN8XZa9xOdSg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "aSjVJwgD";
+          };
+          "31.17.0.100" = {
+            date = "2026-10-29T14:33:13.939617Z";
+            filename = "jei-26.3-neoforge-31.17.0.100.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-ve373XKEDo+t1n1ACqTWqRlg3thcCs9+xNSC7btMVhiw7Aig0Gj7XjiqmjJ2nK5Hn0wzNxexBJQIeG8yWIcFHA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "eMq0i33u";
+          };
+          "31.17.0.100-fabric" = {
+            date = "2026-10-29T14:32:58.451267Z";
+            filename = "jei-26.3-fabric-31.17.0.100.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-tOtJDZGYNthrEf3T8StN+xTh7ksPy4Izqh1tVFbaohbvKzKw3uDADW7GnImJS7C7qQ5Ijki0huXqejlj1cnoYA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "D3NcSbIW";
+          };
+          "31.17.0.103" = {
+            date = "2026-10-30T15:40:29.281803Z";
+            filename = "jei-26.3-neoforge-31.17.0.103.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-KdAs0jvLU9GogD8N6BsWNGVHfjl5BvKH+7unFm+RvVQAzW+p+A0/KgdnVbjdw5pnyRt30bXTfSVU4MQryA8uVQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "XrreuPQQ";
+          };
+          "31.17.0.103-fabric" = {
+            date = "2026-10-30T15:40:14.390528Z";
+            filename = "jei-26.3-fabric-31.17.0.103.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-mCsm91q/XMUGBoEeoQYImP3zf3xCTmTZQARX6lMqOGwT5GNu36FmDugdxN6Nb0a6CIxiAvrW6SWFKWPshQgzvA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "vTUGpicg";
+          };
+          "31.17.0.104" = {
+            date = "2026-10-31T01:33:07.976675Z";
+            filename = "jei-26.3-neoforge-31.17.0.104.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-3JSQwbTHOQZY5YwjKg0wK5UQK2UOzSSqKH8LVxAtBl39pRv5eF7RiV1TSASCtjk+SCFfXUDPgmdPaGrAby0ZhA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "3rYqhhPS";
+          };
+          "31.17.0.104-fabric" = {
+            date = "2026-10-31T01:32:53.116048Z";
+            filename = "jei-26.3-fabric-31.17.0.104.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-dCQ82CKPTwCet8Y664bdA0JNIw3s/GsFzat+B6LKwROxDKTuhemqXc59N6QgQBkl11IDkJi6Ktn9vRPYjds5rA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "VSvkkNna";
+          };
+          "31.17.0.105" = {
+            date = "2026-10-31T01:59:06.679936Z";
+            filename = "jei-26.3-neoforge-31.17.0.105.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-DyAOQkqsNKjLP3AzlopA3SyyHdMrdmbPRbPbXM6p2FkQrTWe2/DrjYEAYnMeGN6PAxj/uouWPDGPMT2QCamWNA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "JKrBQSAT";
+          };
+          "31.17.0.105-fabric" = {
+            date = "2026-10-31T01:58:51.861928Z";
+            filename = "jei-26.3-fabric-31.17.0.105.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-I2GSmkffVv6DRysk3mS83XOLq6QYsxlHjXT5kSwYvQUnnOAaJ/s/fHBiNU4K9/OEIY/S4fVp4UZAlT9wZyYhvQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "shA1YZgo";
+          };
+          "31.17.0.106" = {
+            date = "2026-10-31T05:19:10.730591Z";
+            filename = "jei-26.3-neoforge-31.17.0.106.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-MWr7Rq7zJi9w1L5ffqJW/1bkmP5nz2HZ48fVtwfRVQMXcN8g4sVroGrDK6uh8F7ciof+ZAszZaCln4F264PjUQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "3SXVh0vk";
+          };
+          "31.17.0.106-fabric" = {
+            date = "2026-10-31T05:18:55.637218Z";
+            filename = "jei-26.3-fabric-31.17.0.106.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-E4AB9vm7vxM6mYFb0VzOwU0Xc1wAF/oXx2AqRobO8k4KrHNaucyPsvj0hGb9zQUUZyBCl3e761y4yAaldOHXHw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "nkWsE8Hn";
+          };
+          "31.17.0.107" = {
+            date = "2026-10-31T09:48:12.631946Z";
+            filename = "jei-26.3-neoforge-31.17.0.107.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-27IQYuWTo2h1tRgrCiwIVd7P+Dm9odaknO3HAL6t7CBE76MkTgi9wXwrvqQvq9o+haQXeHBN32AIG4y2mliXOA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "97lih6at";
+          };
+          "31.17.0.107-fabric" = {
+            date = "2026-10-31T09:47:53.307460Z";
+            filename = "jei-26.3-fabric-31.17.0.107.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-OeEkk6FDCSI2vUerVjqV22znE28/KxqOba7YJ7AUXwbO/oxuWuiHinawXCu73ztfcbTmN3ldlUmOza6Hz8oX0g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "TLfNHk5G";
+          };
+          "31.17.0.108" = {
+            date = "2026-10-31T14:03:09.186407Z";
+            filename = "jei-26.3-neoforge-31.17.0.108.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-0gpjQMavMaX51fDk6kdKFJgy7toaMR9D0uzVRJv0p9siYbbPySNwgYJXQuxvIyk9eWYyxM9JEk7U7O33VShIiw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "hGAWEBN8";
+          };
+          "31.17.0.108-fabric" = {
+            date = "2026-10-31T14:02:53.468662Z";
+            filename = "jei-26.3-fabric-31.17.0.108.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-I8sLJDq1mTShTam4tVQX+OEsNlIYKggpqeVKXeXkXrY8JAmWfzymR+N91a4qWJTeXuf/ij85QhdkmecmuIuRdg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "1Uzmw8Mr";
+          };
+          "31.17.0.109" = {
+            date = "2026-11-05T12:32:58.197286Z";
+            filename = "jei-26.3-neoforge-31.17.0.109.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-PrineiVdWqoUKZqLkJg41kalJHdifPOyqEyesoX620zOD0bW2fvKrycp30YG/5cAxeaq0H1+oysTnLT3x2tNfQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "TAqAED7H";
+          };
+          "31.17.0.109-fabric" = {
+            date = "2026-11-05T12:32:45.201774Z";
+            filename = "jei-26.3-fabric-31.17.0.109.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-JuFLNc2KxqJg50t5Msb0gWcUYF2VPgoYlDdh7Z8uL/LGKQ5T9aWBgRgJ5stdzoHI2Jt8oq9B+sDNeAB2hAN7sw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "hif1VmML";
+          };
+          "31.17.0.93" = {
+            date = "2026-10-25T08:27:18.757110Z";
+            filename = "jei-26.3-neoforge-31.17.0.93.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-XoicqyTTYiIR2LJ/H5HEtqwy9bnSNAEaNom71sy3bLCwhmB/KDujKuAqZ3Kc8hpj7075ejBb7Pq77VCzUcOy+g==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "PpEgcH7U";
+          };
+          "31.17.0.93-fabric" = {
+            date = "2026-10-25T08:27:11.072655Z";
+            filename = "jei-26.3-fabric-31.17.0.93.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-ytE4CMqQOJijiDmBkF/qpyWbcLCh5MxMM8wFwnjLuSs6Y5HIQxT9Acdt5NDM5l86JkEnAlWmqohrSCiEtOrh7Q==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "b6JCG7a3";
+          };
+          "31.17.0.94" = {
+            date = "2026-10-26T13:20:00.964989Z";
+            filename = "jei-26.3-neoforge-31.17.0.94.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-+sNTUchADytpYcfw5ODUZIMUwoXrF70uJ+krkAui9qv8YwaVyQYcjnLyrq4jV34PkjYEbFKOYBqQtV05eU/oog==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "E9U1GVrH";
+          };
+          "31.17.0.94-fabric" = {
+            date = "2026-10-26T13:19:46.073617Z";
+            filename = "jei-26.3-fabric-31.17.0.94.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-KqxsgpmPTKqMtuSOrP0C/Wdiomz5aZabEZUT7nWwVOfzuKoWrhPUHOVeORD2dXq1vQa3wTtC6ZeHjHf1jhJ7jQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "BHDdN3A7";
+          };
+          "31.17.0.95" = {
+            date = "2026-10-27T15:25:58.816856Z";
+            filename = "jei-26.3-neoforge-31.17.0.95.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-F4y07zGBoiTPci3ZMc4I0IjT2Af8dq0+xUOkjBdIL5wYEYnjECq4Sv525RYDv43N6Xokj6S8FtS3c5stYGZMXA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Oy9b6XoK";
+          };
+          "31.17.0.95-fabric" = {
+            date = "2026-10-27T15:25:43.107979Z";
+            filename = "jei-26.3-fabric-31.17.0.95.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-3MqHHVzG94c9iYB+x8OLtDjEAvZJuM5AzFwuigQkegWRNNXnCXp+iv0zUKi6TgTu2cQsDIPKVTJs4VZKfwXp/A==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "8F0DZdvW";
+          };
+          "31.17.0.96" = {
+            date = "2026-10-28T12:36:30.650105Z";
+            filename = "jei-26.3-neoforge-31.17.0.96.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-pokIuZvtosD7miUW7IIFc6oXHT4mVj3t0oiUFJJZSGI8qrT7G+kE4ZdJePka4S37XdipKZhkPL/DrLpxmfUxhA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Bm9iAmkh";
+          };
+          "31.17.0.96-fabric" = {
+            date = "2026-10-28T12:36:15.651394Z";
+            filename = "jei-26.3-fabric-31.17.0.96.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-CrKsabFDutkD2QkURPn4r4OcDra7B8PCfLtHFL63ncPv6wccFm8Lnrp8bpMD/lbiyQiOzFNR3ucogjP2C+0z7g==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "XmEmssUX";
+          };
+          "31.17.0.97" = {
+            date = "2026-10-28T13:19:23.519567Z";
+            filename = "jei-26.3-neoforge-31.17.0.97.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-oNb4FlmrLV4+ar/uA1hLVxfcaxTldhnmg2p+aNf+EAdK7lntfbAY6aIgtbCymEBooyIahwk0gERmZM4rEL8ePg==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "F8dQutgc";
+          };
+          "31.17.0.97-fabric" = {
+            date = "2026-10-28T13:19:09.338357Z";
+            filename = "jei-26.3-fabric-31.17.0.97.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-zwvzaJKinIADJWee4/bbtsaKmV6gK/QIydqfQ90AD23C7jfc8WtS2JL6gJxjxPh1YHTmKKFOv0W7Gc2/I4h9Kw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "EeJIPO8P";
+          };
+          "31.17.0.98" = {
+            date = "2026-10-28T15:03:49.689874Z";
+            filename = "jei-26.3-neoforge-31.17.0.98.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-3Wj89JZpJYwoULxUg9Mrl40QEkQEV3CntIYyF61m0+sz7OlFvDy2T3S5ARQ0RCAjqZT++9+07X+L030b29CBDw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "qOH7oN21";
+          };
+          "31.17.0.98-fabric" = {
+            date = "2026-10-28T15:03:34.359809Z";
+            filename = "jei-26.3-fabric-31.17.0.98.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-Zq+R+f9W1viNQVzIrrcmAb6DlAsymgWih9ucO9jwPEbd0LXQsO5RWhfdt9guh3qJhdjebkSfqH7drYHP4iiaQw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "xdRCAhOr";
+          };
+          "31.17.0.99" = {
+            date = "2026-10-29T13:35:25.688368Z";
+            filename = "jei-26.3-neoforge-31.17.0.99.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-uKDtaLfXVoTs/W3ut+f3t/lN198ifG+AuXots3Ds99gjAvfopIpZCjZOkXc5rrtVRjSrjwiZ+MFeZKHGd+U/ew==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "rWie616c";
+          };
+          "31.17.0.99-fabric" = {
+            date = "2026-10-29T13:35:10.288035Z";
+            filename = "jei-26.3-fabric-31.17.0.99.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-+9eGtuOkxtsm/GRNwJ/KCaKYJ32vY3HpOot2V+BU3TegAh/QEnAF9xnG3UBRYbWi9X7PpFzBkeQRWeeQJUcngQ==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "NhpDJdwi";
           };
           "31.3.0.15" = {
             date = "2026-09-20T16:46:26.389822Z";
@@ -883643,6 +886129,66 @@ in
               "forge"
             ];
             versionId = "r2B1uCFV";
+          };
+          "4.22.0.1037" = {
+            date = "2026-10-19T14:15:02.819452Z";
+            filename = "jei_1.12.2-4.22.0.1037.jar";
+            gameVersions = [
+              "1.12.2"
+            ];
+            hash = "sha512-P94GhQMI7kiOquGzawTkbtI2EvidzwSFhmSIxyzJ7qVS87bl40DYT4ZQQ+6kqmHA020dI1jwcSx8lEWL0+15yw==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "fktQZbF6";
+          };
+          "4.22.0.1038" = {
+            date = "2026-10-23T14:05:18.727073Z";
+            filename = "jei_1.12.2-4.22.0.1038.jar";
+            gameVersions = [
+              "1.12.2"
+            ];
+            hash = "sha512-3pU7MxwhnRxuXKZsCC0TSmoAO+JQcYnniObPPjeVV0669McIwF8MdS0xRHyizRJPrLjSgQXNJ1tONWkpTV5BPw==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "RGXvmk9m";
+          };
+          "4.24.0.1040" = {
+            date = "2026-10-26T15:46:15.739844Z";
+            filename = "jei_1.12.2-4.24.0.1040.jar";
+            gameVersions = [
+              "1.12.2"
+            ];
+            hash = "sha512-UaZrSnP+Y0Y4QjLbM0gNqAt20j00M597WeYVPl6yTiKXAJ7wXLavb2ekiLKg0omVHLbsOaFRzih9tzVwkRCriA==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "Wf5aieqQ";
+          };
+          "4.24.0.1041" = {
+            date = "2026-11-02T14:07:00.834874Z";
+            filename = "jei_1.12.2-4.24.0.1041.jar";
+            gameVersions = [
+              "1.12.2"
+            ];
+            hash = "sha512-UAM5ZNcqivT7Dj+B3z6Tp7dbx5wCuABNv3PgzJEvt7Sdon7DwzgrijVhkzcqItI1gm39L6fegCGeS/oyxLbEOA==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "88yPJJHC";
+          };
+          "4.24.0.1042" = {
+            date = "2026-11-02T15:11:38.507211Z";
+            filename = "jei_1.12.2-4.24.0.1042.jar";
+            gameVersions = [
+              "1.12.2"
+            ];
+            hash = "sha512-Qt1dlqitGnIXJuThL/EWqTLn4vMyCBtMEdGfIerBn5nurcf452kpA5joIPPwY5z1jknI7EChziFbBbcVzhD0aA==";
+            loaders = [
+              "forge"
+            ];
+            versionId = "8tsUhdvL";
           };
           "4.3.0.252" = {
             date = "2023-01-27T05:31:51.424920Z";
@@ -893189,6 +895735,78 @@ in
               "neoforge"
             ];
             versionId = "SS023RVV";
+          };
+          "mc26.3-0.9.3-beta.2-fabric" = {
+            date = "2026-11-07T01:34:13.438886Z";
+            filename = "sodium-fabric-0.9.3-beta.2+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-5y225HlXuT0ZAq3WvD9kbr/GDcjP89Oc80JCYlZOjH6mrE8J7/gDQzhtZsgvNuOj9dKLSs8q8+7YeHPpR/KXcw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "RlRgB5qP";
+          };
+          "mc26.3-0.9.3-beta.2-neoforge" = {
+            date = "2026-11-07T01:34:13.436565Z";
+            filename = "sodium-neoforge-0.9.3-beta.2+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-24rJFhoYeosnTCOJ2rNfKvGyFtBhMoI/mONMT2KuVggKgVl2iNXi9Nr788dftu31vSul2WvlA5YHHRvhLX1P8w==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "V4VWv3Mk";
+          };
+          "mc26.3-0.9.3-beta.3-fabric" = {
+            date = "2026-11-07T02:07:28.269034Z";
+            filename = "sodium-fabric-0.9.3-beta.3+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-xa6Pw5+zbuLkt0/Y2ucSszQFLM9r55CNm3kjPZp3KgcNkpbxu0OeedCGOimKloTpSuGOPUUXS47HebH2O3ypZA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "aFVpk3tG";
+          };
+          "mc26.3-0.9.3-beta.3-neoforge" = {
+            date = "2026-11-07T02:07:28.204186Z";
+            filename = "sodium-neoforge-0.9.3-beta.3+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-/zGk/UXiW7BeCY/lbbh+u6Pv03MfH2k00/mhsZ47q5uuq5SGqe7n6Fpb4LKwiLG4HetiM8SyJCsSzzB5kp5HXA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "Sx1xfT5Y";
+          };
+          "mc26.3-0.9.3-beta.4-fabric" = {
+            date = "2026-11-08T03:54:24.496862Z";
+            filename = "sodium-fabric-0.9.3-beta.4+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-uYmjWKBw9U2fEKaLApqIa2UwUP6UpBeco0mmcPGqSYWvST0WFrzQYw/JCOjZb5O6b0c6aLyjQovAfsrKMkGwMA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "2MZWfUts";
+          };
+          "mc26.3-0.9.3-beta.4-neoforge" = {
+            date = "2026-11-08T03:54:24.510506Z";
+            filename = "sodium-neoforge-0.9.3-beta.4+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-/Odj+sCo/rA1J1WFx6n6zTrqitGB0KCRBtk9K+ScIKkw1klDQ3m7iHLH6UdfPbcgaKq+mJCEZZLPUEQKkA3sHw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "zqgcaQxE";
           };
           "mc26.3r1-0.9.2-beta.1-fabric" = {
             date = "2026-09-12T02:41:27.619084Z";
@@ -906935,6 +909553,7 @@ in
 }
 ";
     npmNormalize = "remove-optional:fsevents,platform-optional:esbuild,platform-optional:rollup";
+    npmNormalizeVersion = 9;
     ref = "refs/tags/v0.33.4";
     rev = "5f4365700d4dcc51ab2a3d90eb2d05592bf84c7a";
     tag = "v0.33.4";
@@ -970701,6 +973320,33 @@ dependencies = [
       url = "https://batandy.itch.io/gz-pt";
       version = "11677370:52ed8731fe0a9e032b63afcda0b64a65:2024-10-08T09:43:09Z";
     };
+    hacx = {
+      files = [
+        "HACX.TXT"
+        "HACX.WAD"
+      ];
+      game = "themes/hacx/hacx12.zip";
+      hash = "sha256-Ly7bmMDwi5znRgecW1oHk9VtQ6oI9nT/TgrtlEa1wz0=";
+      type = "idgames";
+      version = "Fri, 22 Oct 2010 01:40:05 GMT";
+    };
+    harmonyc = {
+      files = flattenPaths {
+        Extra = [
+          "Harm-WS.txt"
+          "Harm-WS.wad"
+          "HarmonyC.ico"
+          "Overview.txt"
+        ];
+        "HarmonyC.deh" = null;
+        "HarmonyC.txt" = null;
+        "HarmonyC.wad" = null;
+      };
+      game = "levels/doom2/Ports/g-i/harmonyc.zip";
+      hash = "sha256-38WMsIhxZ2SSVpLgR4YRJ/4nv8kHDJIMYNAqE7CXALU=";
+      type = "idgames";
+      version = "Thu, 02 Nov 2023 00:43:04 GMT";
+    };
     hdoom = {
       archiveContent = {
         "HDoom.pk3" = flattenPaths {
@@ -1015074,6 +1017720,16 @@ dependencies = [
       hash = "sha256-AeOZaseUKUSdYKujXjKMDrANWkHdT1hh5dog/WYZkpQ=";
       type = "idgames";
       version = "Tue, 19 Apr 2011 08:01:57 GMT";
+    };
+    riseOfTheWoolBall = {
+      files = [
+        "ROTWB.wad"
+        "Readme.txt"
+      ];
+      hash = "sha256-VKwLPe59p8N9GIvYS3nWA9U6hBw60rsdtxQ8QSe9LJg=";
+      id = "125457";
+      resolvedUrl = "/dl/2017/07/21/ROTWB_v1.3.zip";
+      type = "moddb";
     };
     seriousSamRetroEncounter = {
       archiveContent = {

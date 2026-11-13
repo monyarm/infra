@@ -172,9 +172,13 @@ lib.mkIf config.games.doom.enable (
         outputDir = "out";
         # Freedoom reuses vanilla doomednums by design; its only real
         # conflict is texture names colliding with real Doom's.
+        # Hacx/Harmony reskin vanilla actors via DEHACKED; only their maps/
+        # textures come along, so their things play as stock Doom ones.
         renameAssets = [
           "freedoom1"
           "freedoom2"
+          "HACX"
+          "HarmonyC"
         ];
         sources =
           map (d: "${d}") (
@@ -192,6 +196,8 @@ lib.mkIf config.games.doom.enable (
               jptrV40
               freedoom1
               freedoom2
+              hacx
+              harmonyC
             ]
           )
           ++ [

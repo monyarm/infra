@@ -41,3 +41,4 @@
 - [No bulk nix copy without asking](feedback_no_bulk_copy_without_asking.md) — debugging probes stay tiny; never copy whole closures to builders unasked
 - [Steam auth via direnv](reference_steam_auth_direnv.md) — `direnv exec . <cmd>` for owned-depot fetchSteam; anonymous steamcmd for manifest gids
 - [Run locally by default](feedback_run_locally_by_default.md) — never ssh to the desktop to build/run scripts unless explicitly told
+- [Don't build WadFusion merge](feedback_dont_build_wadfusion_merge.md) — custom_maps pk3 build optimizes everything, takes forever; build only the new source wad

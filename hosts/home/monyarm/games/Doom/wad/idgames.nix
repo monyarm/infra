@@ -23,6 +23,9 @@ lib.mkIf config.games.doom.enable {
     inquisitor2 = fetchIdGames sources.wad.inquisitor2 |> getFile "inqstr2e.wad";
     inquisitor3Res = fetchIdGames sources.wad.inquisitor3 |> getFile "inq3resE.pk3";
     inquisitor3Wad = fetchIdGames sources.wad.inquisitor3 |> getFile "inqstr3e.wad";
+    hacx = fetchIdGames sources.wad.hacx |> getFile "HACX.WAD";
+    harmonyC = fetchIdGames sources.wad.harmonyc |> getFile "HarmonyC.wad";
+    harmonyWS = fetchIdGames sources.wad.harmonyc |> getFile "Extra/Harm-WS.wad";
   };
 
   programs.steam.games = with config.games.doom.wads; {
@@ -67,6 +70,20 @@ lib.mkIf config.games.doom.enable {
           sha256 = "sha256-1ZxoTzXL/Ke5JKfWrl48TW77gLeanZCZme/FqIvVpS0=";
         };
       };
+    };
+
+    Hacx = mkDoom {
+      name = "Hacx: Twitch 'n Kill";
+      iwad = hacx;
+    };
+    # Harmony Compatible: Doom II pwad, supersedes standalone harm1.wad
+    Harmony = mkDoom {
+      name = "Harmony";
+      iwad = doom2;
+      wad = [
+        harmonyC
+        harmonyWS
+      ];
     };
 
     ActionDoom2 = mkDoom {
