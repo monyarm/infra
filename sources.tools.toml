@@ -16,6 +16,10 @@ tools.untangle = "https://github.com/fleger/untangle"
 tools.minijson-despacer = "https://github.com/aminya/despacer#6e501899eeb7686b1b04de40f02f9792a4e3e8b9"
 # No tags upstream (pre-alpha) -- HEAD pin, same as claude.plugins.caveman.
 tools.maxima = "https://github.com/ArmchairDevelopers/Maxima"
+# Default branch is already oxce-plus, so no branch override needed.
+tools.openxcomExtended = "https://github.com/MeridianOXC/OpenXcom"
+# Tag list has non-version tags (LevelsCompletable) that sort above v.1.30.000.
+tools.theforceengine = "https://github.com/TheForceEngine/TheForceEngine"
 
 [cargo]
 tools.maxima = "true"

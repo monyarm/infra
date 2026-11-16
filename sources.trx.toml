@@ -1,0 +1,10 @@
+# TRX (Tomb Raider I-III engine) and its runtime art zips.
+[git-tag]
+trx.engine = "https://github.com/LostArtefacts/TRX"
+
+# Untracked binary assets the release build downloads; URLs are unversioned,
+# so a release means re-running ./update-sources.py trx.
+[zip]
+trx.assets.tr1 = "https://lostartefacts.dev/aux/trx/tr1.zip"
+trx.assets.tr2 = "https://lostartefacts.dev/aux/trx/tr2.zip"
+trx.assets.tr3 = "https://lostartefacts.dev/aux/trx/tr3.zip"

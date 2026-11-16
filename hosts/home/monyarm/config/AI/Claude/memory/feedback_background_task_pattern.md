@@ -1,10 +1,12 @@
 ---
 name: feedback-background-task-pattern
-description: "Avoid nohup+redirect-to-logfile+poll-until-string wrapper scripts for long-running Bash commands; use the Bash tool's own run_in_background instead."
+description: Avoid nohup+redirect-to-logfile+poll-until-string wrapper scripts for long-running Bash commands; use the Bash tool's own run_in_background instead, and keep any polling sleeps short
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: 5ac9d091-64cb-4c8b-bf5a-bdba0522e8d0
+  modified: 2026-11-13T21:29:28.947Z
+  updatedBy: opencode
 ---
 
 Don't wrap long-running shell commands in `nohup ... > logfile 2>&1 &; disown` (or
@@ -30,3 +32,7 @@ redirecting to a file in the repo when a command's own output would otherwise be
 lost (e.g. because it must run detached from the tool's stdout capture) — not as a
 default habit, and never as a substitute for `run_in_background: true` just because
 the command might run long.
+
+If waiting/polling is unavoidable, keep sleeps short: a `sleep 150` was called out
+(2026-11-13) as "too long" — long sleeps just stall without adding information, and
+lose time when the work finished early.

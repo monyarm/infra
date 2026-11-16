@@ -113117,6 +113117,3389 @@ in
       };
     };
   };
+  hl = {
+    hlsdk = {
+      bshift = {
+        date = "2026-11-08";
+        files = flattenPaths {
+          ".github" = {
+            workflows = [
+              "build.yml"
+              "manual.yml"
+            ];
+          };
+          ".gitignore" = null;
+          ".gitmodules" = null;
+          "CMakeLists.txt" = null;
+          LICENSE = null;
+          "README.md" = null;
+          android = {
+            app = {
+              "build.gradle" = null;
+              src = {
+                main = {
+                  "AndroidManifest.xml" = null;
+                  java = {
+                    su = {
+                      xash = {
+                        hlsdk = "MainActivity.java";
+                      };
+                    };
+                  };
+                };
+              };
+            };
+            "build.gradle" = null;
+            gradle = {
+              wrapper = [
+                "gradle-wrapper.jar"
+                "gradle-wrapper.properties"
+              ];
+            };
+            "gradle.properties" = null;
+            gradlew = null;
+            "gradlew.bat" = null;
+            "settings.gradle" = null;
+          };
+          "appveyor.yml" = null;
+          cl_dll = {
+            "CMakeLists.txt" = null;
+            "GameStudioModelRenderer.cpp" = null;
+            "GameStudioModelRenderer.h" = null;
+            "GameStudioModelRenderer_Sample.cpp" = null;
+            "GameStudioModelRenderer_Sample.h" = null;
+            "MOTD.cpp" = null;
+            "StudioModelRenderer.cpp" = null;
+            "StudioModelRenderer.h" = null;
+            "ammo.cpp" = null;
+            "ammo.h" = null;
+            "ammo_secondary.cpp" = null;
+            "ammohistory.cpp" = null;
+            "ammohistory.h" = null;
+            "battery.cpp" = null;
+            "camera.h" = null;
+            "cdll_int.cpp" = null;
+            "cl_dll.h" = null;
+            "cl_util.h" = null;
+            "com_weapons.cpp" = null;
+            "com_weapons.h" = null;
+            "death.cpp" = null;
+            "demo.cpp" = null;
+            "demo.h" = null;
+            "entity.cpp" = null;
+            "ev_common.cpp" = null;
+            "ev_hldm.cpp" = null;
+            "ev_hldm.h" = null;
+            "events.cpp" = null;
+            "eventscripts.h" = null;
+            "flashlight.cpp" = null;
+            "geiger.cpp" = null;
+            "health.cpp" = null;
+            "health.h" = null;
+            hl = expandClusters [
+              {
+                m = [
+                  "baseentity"
+                  "events"
+                  "objects"
+                  "weapons"
+                ];
+                p = "hl_";
+                s = ".cpp";
+              }
+            ];
+            "hud.cpp" = null;
+            "hud.h" = null;
+            "hud_iface.h" = null;
+            "hud_msg.cpp" = null;
+            "hud_redraw.cpp" = null;
+            "hud_servers_priv.h" = null;
+            "hud_spectator.cpp" = null;
+            "hud_spectator.h" = null;
+            "hud_update.cpp" = null;
+            "in_camera.cpp" = null;
+            "in_defs.h" = null;
+            "input.cpp" = null;
+            "input_goldsource.cpp" = null;
+            "input_mouse.cpp" = null;
+            "input_mouse.h" = null;
+            "input_xash3d.cpp" = null;
+            "interpolation.cpp" = null;
+            "interpolation.h" = null;
+            "kbutton.h" = null;
+            "menu.cpp" = null;
+            "message.cpp" = null;
+            "parsemsg.cpp" = null;
+            "parsemsg.h" = null;
+            "readme.txt" = null;
+            "saytext.cpp" = null;
+            "scoreboard.cpp" = null;
+            "status_icons.cpp" = null;
+            "statusbar.cpp" = null;
+            "studio_util.cpp" = null;
+            "studio_util.h" = null;
+            "text_message.cpp" = null;
+            "tf_defs.h" = null;
+            "train.cpp" = null;
+            "tri.cpp" = null;
+            "util.cpp" = null;
+            "util_vector.h" = null;
+            "vgui_ClassMenu.cpp" = null;
+            "vgui_ConsolePanel.cpp" = null;
+            "vgui_ConsolePanel.h" = null;
+            "vgui_ControlConfigPanel.cpp" = null;
+            "vgui_ControlConfigPanel.h" = null;
+            "vgui_CustomObjects.cpp" = null;
+            "vgui_MOTDWindow.cpp" = null;
+            "vgui_SchemeManager.cpp" = null;
+            "vgui_SchemeManager.h" = null;
+            "vgui_ScorePanel.cpp" = null;
+            "vgui_ScorePanel.h" = null;
+            "vgui_SpectatorPanel.cpp" = null;
+            "vgui_SpectatorPanel.h" = null;
+            "vgui_TeamFortressViewport.cpp" = null;
+            "vgui_TeamFortressViewport.h" = null;
+            "vgui_int.cpp" = null;
+            "vgui_int.h" = null;
+            "vgui_teammenu.cpp" = null;
+            "view.cpp" = null;
+            "view.h" = null;
+            "voice_status.cpp" = null;
+            "voice_status.h" = null;
+            "wrect.h" = null;
+            wscript = null;
+          };
+          cmake = expandClusters [
+            {
+              m = [
+                "LibraryNaming"
+                "PS4"
+                "PS4MakeSymbols"
+                "PS4Toolchain"
+                "VSForceXPToolchain"
+              ];
+              p = "";
+              s = ".cmake";
+            }
+          ];
+          common = expandClusters [
+            {
+              m = [
+                "api"
+                "args"
+                "flags"
+              ];
+              p = "event_";
+              s = ".h";
+            }
+            "beamdef.h"
+            "byteswap.h"
+            "cl_entity.h"
+            "com_model.h"
+            "con_nprint.h"
+            "const.h"
+            "cvardef.h"
+            "demo_api.h"
+            "dlight.h"
+            "entity_state.h"
+            "entity_types.h"
+            "hltv.h"
+            "ivoicetweak.h"
+            "mathlib.h"
+            "net_api.h"
+            "netadr.h"
+            "particledef.h"
+            "pmtrace.h"
+            "qfont.h"
+            "r_efx.h"
+            "r_studioint.h"
+            "ref_params.h"
+            "screenfade.h"
+            "studio_event.h"
+            "triangleapi.h"
+            "usercmd.h"
+            "wadfile.h"
+            "weaponinfo.h"
+            "winsani_in.h"
+            "winsani_out.h"
+          ];
+          dlls = expandClusters [
+            {
+              m = [
+                "flock"
+                "grunt"
+                "irtank"
+                "nimating"
+                "nimation"
+              ];
+              p = "a";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "igmomma"
+                "loater"
+                "models"
+                "ullsquid"
+                "uttons"
+              ];
+              p = "b";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "ombat"
+                "ontroller"
+                "rossbow"
+                "rowbar"
+              ];
+              p = "c";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "break.cpp"
+                "break.h"
+                "tank.cpp"
+              ];
+              p = "func_";
+              s = "";
+            }
+            {
+              m = [
+                "argantua"
+                "auss"
+                "enericmonster"
+                "grenade"
+                "lobals"
+                "lock"
+                "man"
+              ];
+              p = "g";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "_ai"
+                "_battery"
+                "_cine"
+                "_cycler"
+                "_export"
+                "andgrenade"
+                "assassin"
+                "eadcrab"
+                "ealthkit"
+                "grunt"
+              ];
+              p = "h";
+              s = ".cpp";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "gun.cpp"
+              ];
+              p = "hornet";
+              s = "";
+            }
+            {
+              m = [
+                "chthyosaur"
+                "slave"
+                "tems"
+              ];
+              p = "i";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "event.h"
+                "maker.cpp"
+                "s.cpp"
+                "s.h"
+                "state.cpp"
+              ];
+              p = "monster";
+              s = "";
+            }
+            {
+              m = [
+                "ortar"
+                "p5"
+                "pstubb"
+                "ultiplay_gamerules"
+              ];
+              p = "m";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "hotgun"
+                "ingleplay_gamerules"
+                "kill"
+              ];
+              p = "s";
+              s = ".cpp";
+            }
+            {
+              m = [
+                ".cpp"
+                "ent.cpp"
+                "ent.h"
+              ];
+              p = "sound";
+              s = "";
+            }
+            {
+              m = [
+                ".h"
+                "monster.cpp"
+                "monster.h"
+              ];
+              p = "squad";
+              s = "";
+            }
+            {
+              m = [
+                "queakgrenade"
+                "tats"
+                "ubs"
+              ];
+              p = "s";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "riggers"
+                "ripmine"
+                "urret"
+              ];
+              p = "t";
+              s = ".cpp";
+            }
+            "CMakeLists.txt"
+            "Wxdebug.cpp"
+            "activity.h"
+            "activitymap.h"
+            "animation.h"
+            "apache.cpp"
+            "barnacle.cpp"
+            "barney.cpp"
+            "basemonster.h"
+            "cbase.cpp"
+            "cbase.h"
+            "cdll_dll.h"
+            "client.cpp"
+            "client.h"
+            "decals.h"
+            "defaultai.cpp"
+            "defaultai.h"
+            "doors.cpp"
+            "doors.h"
+            "effects.cpp"
+            "effects.h"
+            "egon.cpp"
+            "enginecallback.h"
+            "explode.cpp"
+            "explode.h"
+            "exportdef.h"
+            "extdll.h"
+            "flyingmonster.cpp"
+            "flyingmonster.h"
+            "game.cpp"
+            "game.h"
+            "gamerules.cpp"
+            "gamerules.h"
+            "hl.def"
+            "houndeye.cpp"
+            "items.h"
+            "leech.cpp"
+            "lights.cpp"
+            "maprules.cpp"
+            "maprules.h"
+            "nihilanth.cpp"
+            "nodes.cpp"
+            "nodes.h"
+            "nodes_compat.h"
+            "observer.cpp"
+            "osprey.cpp"
+            "pathcorner.cpp"
+            "plane.cpp"
+            "plane.h"
+            "plats.cpp"
+            "player.cpp"
+            "player.h"
+            "playermonster.cpp"
+            "python.cpp"
+            "rat.cpp"
+            "replace.sh"
+            "roach.cpp"
+            "rpg.cpp"
+            "satchel.cpp"
+            "saverestore.h"
+            "schedule.cpp"
+            "schedule.h"
+            "scientist.cpp"
+            "scripted.cpp"
+            "scripted.h"
+            "scriptevent.h"
+            "skill.h"
+            "spectator.cpp"
+            "spectator.h"
+            "talkmonster.cpp"
+            "talkmonster.h"
+            "teamplay_gamerules.cpp"
+            "teamplay_gamerules.h"
+            "tempmonster.cpp"
+            "tentacle.cpp"
+            "trains.h"
+            "util.cpp"
+            "util.h"
+            "vector.h"
+            "vehicle.cpp"
+            "weapons.cpp"
+            "weapons.h"
+            "world.cpp"
+            "wscript"
+            "wxdebug.h"
+            "xen.cpp"
+            "zombie.cpp"
+          ];
+          engine = [
+            "anorms.h"
+            "cdll_int.h"
+            "cursor_type.h"
+            "custom.h"
+            "customentity.h"
+            "edict.h"
+            "eiface.h"
+            "key_modifiers.h"
+            "keydefs.h"
+            "mobility_int.h"
+            "progdefs.h"
+            "shake.h"
+            "sprite.h"
+            "studio.h"
+            "vgui_api.h"
+          ];
+          external = {
+            SDL2 = expandClusters [
+              {
+                m = [
+                  "blendmode"
+                  "config"
+                  "config_macosx"
+                  "config_minimal"
+                  "config_windows"
+                  "error"
+                  "gamecontroller"
+                  "joystick"
+                  "mouse"
+                  "pixels"
+                  "platform"
+                  "rect"
+                  "rwops"
+                  "stdinc"
+                  "surface"
+                  "video"
+                ];
+                p = "SDL_";
+                s = ".h";
+              }
+              "begin_code.h"
+              "close_code.h"
+            ];
+            openbsd = [
+              "strlcat.c"
+              "strlcpy.c"
+            ];
+            ps4compat = expandClusters [
+              {
+                m = [
+                  "crtlib"
+                  "cwd"
+                  "malloc"
+                  "stdio"
+                ];
+                p = "ps4_";
+                s = ".c";
+              }
+              "wscript"
+            ];
+          };
+          freevgui = null;
+          game_shared = expandClusters [
+            {
+              m = [
+                "checkbutton2.cpp"
+                "checkbutton2.h"
+                "defaultinputsignal.h"
+                "grid.cpp"
+                "grid.h"
+                "helpers.cpp"
+                "helpers.h"
+                "listbox.cpp"
+                "listbox.h"
+                "loadtga.cpp"
+                "loadtga.h"
+                "scrollbar2.cpp"
+                "scrollbar2.h"
+                "slider2.cpp"
+                "slider2.h"
+              ];
+              p = "vgui_";
+              s = "";
+            }
+            {
+              m = [
+                "banmgr.cpp"
+                "banmgr.h"
+                "common.h"
+                "gamemgr.cpp"
+                "gamemgr.h"
+              ];
+              p = "voice_";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "bitvec.h"
+            "neon_mathfun.h"
+            "vcs_info.c"
+            "vcs_info.h"
+            "wscript"
+          ];
+          "mod_options.txt" = null;
+          pm_shared = expandClusters [
+            {
+              m = [
+                "bug.c"
+                "bug.h"
+                "fs.h"
+              ];
+              p = "pm_de";
+              s = "";
+            }
+            "pm_info.h"
+            "pm_materials.h"
+            "pm_math.c"
+            "pm_movevars.h"
+            "pm_shared.c"
+            "pm_shared.h"
+          ];
+          public = [
+            "build.h"
+            "safe_snprintf.c"
+            "safe_snprintf.h"
+          ];
+          scripts = {
+            waifulib = [
+              "c_emscripten.py"
+              "compiler_optimizations.py"
+              "library_naming.py"
+              "ps4.py"
+              "strip_on_install.py"
+              "xcompile.py"
+            ];
+          };
+          utils = {
+            makefont = [
+              "CreateFont.bat"
+              "makefont.cpp"
+              "makefont.dsp"
+              "winebuild.sh"
+            ];
+            vgui = {
+              include = expandClusters [
+                {
+                  m = [
+                    ""
+                    "_ActionSignal"
+                    "_App"
+                    "_Bitmap"
+                    "_BitmapTGA"
+                    "_Border"
+                    "_BorderLayout"
+                    "_BorderPair"
+                    "_BuildGroup"
+                    "_Button"
+                    "_ButtonController"
+                    "_ButtonGroup"
+                    "_ChangeSignal"
+                    "_CheckButton"
+                    "_Color"
+                    "_ComboKey"
+                    "_ConfigWizard"
+                    "_Cursor"
+                    "_Dar"
+                    "_DataInputStream"
+                    "_Desktop"
+                    "_DesktopIcon"
+                    "_EditPanel"
+                    "_EtchedBorder"
+                    "_FileInputStream"
+                    "_FlowLayout"
+                    "_FocusChangeSignal"
+                    "_FocusNavGroup"
+                    "_Font"
+                    "_Frame"
+                    "_FrameSignal"
+                    "_GridLayout"
+                    "_HeaderPanel"
+                    "_Image"
+                    "_ImagePanel"
+                    "_InputSignal"
+                    "_InputStream"
+                    "_IntChangeSignal"
+                    "_IntLabel"
+                    "_KeyCode"
+                    "_Label"
+                    "_Layout"
+                    "_LayoutInfo"
+                    "_LineBorder"
+                    "_ListPanel"
+                    "_LoweredBorder"
+                    "_Menu"
+                    "_MenuItem"
+                    "_MenuSeparator"
+                    "_MessageBox"
+                    "_MiniApp"
+                    "_MouseCode"
+                    "_Panel"
+                    "_Point"
+                    "_PopupMenu"
+                    "_ProgressBar"
+                    "_RadioButton"
+                    "_RaisedBorder"
+                    "_RepaintSignal"
+                    "_Scheme"
+                    "_ScrollBar"
+                    "_ScrollPanel"
+                    "_Slider"
+                    "_StackLayout"
+                    "_String"
+                    "_Surface"
+                    "_SurfaceBase"
+                    "_SurfaceGL"
+                    "_TabPanel"
+                    "_TablePanel"
+                    "_TaskBar"
+                    "_TextEntry"
+                    "_TextGrid"
+                    "_TextImage"
+                    "_TextPanel"
+                    "_TickSignal"
+                    "_ToggleButton"
+                    "_TreeFolder"
+                    "_WizardPanel"
+                  ];
+                  p = "VGUI";
+                  s = ".h";
+                }
+              ];
+            };
+          };
+          waf = null;
+          "waf.bat" = null;
+          wscript = null;
+        };
+        hash = "sha1-US7CckAsCQmf7MZpN0Vl3zrF8C0=";
+        ref = "refs/heads/bshift";
+        rev = "d071f318e6271168efc330c8186f4e8bd5222418";
+        type = "git";
+        url = "https://github.com/FWGS/hlsdk-portable.git";
+      };
+      opfor = {
+        date = "2026-11-08";
+        files = flattenPaths {
+          ".github" = {
+            workflows = [
+              "build.yml"
+              "manual.yml"
+            ];
+          };
+          ".gitignore" = null;
+          ".gitmodules" = null;
+          "CMakeLists.txt" = null;
+          LICENSE = null;
+          "README.md" = null;
+          android = {
+            app = {
+              "build.gradle" = null;
+              src = {
+                main = {
+                  "AndroidManifest.xml" = null;
+                  java = {
+                    su = {
+                      xash = {
+                        hlsdk = "MainActivity.java";
+                      };
+                    };
+                  };
+                };
+              };
+            };
+            "build.gradle" = null;
+            gradle = {
+              wrapper = [
+                "gradle-wrapper.jar"
+                "gradle-wrapper.properties"
+              ];
+            };
+            "gradle.properties" = null;
+            gradlew = null;
+            "gradlew.bat" = null;
+            "settings.gradle" = null;
+          };
+          "appveyor.yml" = null;
+          cl_dll = {
+            "CMakeLists.txt" = null;
+            "GameStudioModelRenderer.cpp" = null;
+            "GameStudioModelRenderer.h" = null;
+            "GameStudioModelRenderer_Sample.cpp" = null;
+            "GameStudioModelRenderer_Sample.h" = null;
+            "MOTD.cpp" = null;
+            "StudioModelRenderer.cpp" = null;
+            "StudioModelRenderer.h" = null;
+            "ammo.cpp" = null;
+            "ammo.h" = null;
+            "ammo_secondary.cpp" = null;
+            "ammohistory.cpp" = null;
+            "ammohistory.h" = null;
+            "battery.cpp" = null;
+            "camera.h" = null;
+            "cdll_int.cpp" = null;
+            "cl_dll.h" = null;
+            "cl_util.h" = null;
+            "com_weapons.cpp" = null;
+            "com_weapons.h" = null;
+            "death.cpp" = null;
+            "demo.cpp" = null;
+            "demo.h" = null;
+            "entity.cpp" = null;
+            "ev_common.cpp" = null;
+            "ev_hldm.cpp" = null;
+            "ev_hldm.h" = null;
+            "events.cpp" = null;
+            "eventscripts.h" = null;
+            "flashlight.cpp" = null;
+            gearbox = "hud_nightvision.cpp";
+            "geiger.cpp" = null;
+            "health.cpp" = null;
+            "health.h" = null;
+            hl = expandClusters [
+              {
+                m = [
+                  "baseentity"
+                  "events"
+                  "objects"
+                  "weapons"
+                ];
+                p = "hl_";
+                s = ".cpp";
+              }
+            ];
+            "hud.cpp" = null;
+            "hud.h" = null;
+            "hud_iface.h" = null;
+            "hud_msg.cpp" = null;
+            "hud_redraw.cpp" = null;
+            "hud_servers_priv.h" = null;
+            "hud_spectator.cpp" = null;
+            "hud_spectator.h" = null;
+            "hud_update.cpp" = null;
+            "in_camera.cpp" = null;
+            "in_defs.h" = null;
+            "input.cpp" = null;
+            "input_goldsource.cpp" = null;
+            "input_mouse.cpp" = null;
+            "input_mouse.h" = null;
+            "input_xash3d.cpp" = null;
+            "interpolation.cpp" = null;
+            "interpolation.h" = null;
+            "kbutton.h" = null;
+            "menu.cpp" = null;
+            "message.cpp" = null;
+            "parsemsg.cpp" = null;
+            "parsemsg.h" = null;
+            "readme.txt" = null;
+            "saytext.cpp" = null;
+            "scoreboard.cpp" = null;
+            "status_icons.cpp" = null;
+            "statusbar.cpp" = null;
+            "studio_util.cpp" = null;
+            "studio_util.h" = null;
+            "text_message.cpp" = null;
+            "tf_defs.h" = null;
+            "train.cpp" = null;
+            "tri.cpp" = null;
+            "util.cpp" = null;
+            "util_vector.h" = null;
+            "vgui_ClassMenu.cpp" = null;
+            "vgui_ConsolePanel.cpp" = null;
+            "vgui_ConsolePanel.h" = null;
+            "vgui_ControlConfigPanel.cpp" = null;
+            "vgui_ControlConfigPanel.h" = null;
+            "vgui_CustomObjects.cpp" = null;
+            "vgui_MOTDWindow.cpp" = null;
+            "vgui_SchemeManager.cpp" = null;
+            "vgui_SchemeManager.h" = null;
+            "vgui_ScorePanel.cpp" = null;
+            "vgui_ScorePanel.h" = null;
+            "vgui_SpectatorPanel.cpp" = null;
+            "vgui_SpectatorPanel.h" = null;
+            "vgui_TeamFortressViewport.cpp" = null;
+            "vgui_TeamFortressViewport.h" = null;
+            "vgui_int.cpp" = null;
+            "vgui_int.h" = null;
+            "vgui_teammenu.cpp" = null;
+            "view.cpp" = null;
+            "view.h" = null;
+            "voice_status.cpp" = null;
+            "voice_status.h" = null;
+            "wrect.h" = null;
+            wscript = null;
+          };
+          cmake = expandClusters [
+            {
+              m = [
+                "LibraryNaming"
+                "PS4"
+                "PS4MakeSymbols"
+                "PS4Toolchain"
+                "VSForceXPToolchain"
+              ];
+              p = "";
+              s = ".cmake";
+            }
+          ];
+          common = expandClusters [
+            {
+              m = [
+                "api"
+                "args"
+                "flags"
+              ];
+              p = "event_";
+              s = ".h";
+            }
+            "beamdef.h"
+            "byteswap.h"
+            "cl_entity.h"
+            "com_model.h"
+            "con_nprint.h"
+            "const.h"
+            "cvardef.h"
+            "demo_api.h"
+            "dlight.h"
+            "entity_state.h"
+            "entity_types.h"
+            "hltv.h"
+            "ivoicetweak.h"
+            "mathlib.h"
+            "net_api.h"
+            "netadr.h"
+            "particledef.h"
+            "pmtrace.h"
+            "qfont.h"
+            "r_efx.h"
+            "r_studioint.h"
+            "ref_params.h"
+            "screenfade.h"
+            "studio_event.h"
+            "triangleapi.h"
+            "usercmd.h"
+            "wadfile.h"
+            "weaponinfo.h"
+            "winsani_in.h"
+            "winsani_out.h"
+          ];
+          dlls = {
+            "CMakeLists.txt" = null;
+            "Wxdebug.cpp" = null;
+            "activity.h" = null;
+            "activitymap.h" = null;
+            "aflock.cpp" = null;
+            "agrunt.cpp" = null;
+            "airtank.cpp" = null;
+            "animating.cpp" = null;
+            "animation.cpp" = null;
+            "animation.h" = null;
+            "apache.cpp" = null;
+            "apache.h" = null;
+            "barnacle.cpp" = null;
+            "barney.cpp" = null;
+            "barney.h" = null;
+            "basemonster.h" = null;
+            "bigmomma.cpp" = null;
+            "bloater.cpp" = null;
+            "bmodels.cpp" = null;
+            "bullsquid.cpp" = null;
+            "bullsquid.h" = null;
+            "buttons.cpp" = null;
+            "cbase.cpp" = null;
+            "cbase.h" = null;
+            "cdll_dll.h" = null;
+            "client.cpp" = null;
+            "client.h" = null;
+            "combat.cpp" = null;
+            "controller.cpp" = null;
+            "crossbow.cpp" = null;
+            "crowbar.cpp" = null;
+            "decals.h" = null;
+            "defaultai.cpp" = null;
+            "defaultai.h" = null;
+            "doors.cpp" = null;
+            "doors.h" = null;
+            "effects.cpp" = null;
+            "effects.h" = null;
+            "egon.cpp" = null;
+            "enginecallback.h" = null;
+            "explode.cpp" = null;
+            "explode.h" = null;
+            "exportdef.h" = null;
+            "extdll.h" = null;
+            "flyingmonster.cpp" = null;
+            "flyingmonster.h" = null;
+            "func_break.cpp" = null;
+            "func_break.h" = null;
+            "func_tank.cpp" = null;
+            "func_tank.h" = null;
+            "game.cpp" = null;
+            "game.h" = null;
+            "gamerules.cpp" = null;
+            "gamerules.h" = null;
+            "gargantua.cpp" = null;
+            "gauss.cpp" = null;
+            gearbox = expandClusters [
+              {
+                m = [
+                  "effects.cpp"
+                  "triggers.cpp"
+                  "utils.cpp"
+                  "utils.h"
+                ];
+                p = "gearbox_";
+                s = "";
+              }
+              {
+                m = [
+                  "eneric_items"
+                  "eneworm"
+                  "onome"
+                  "rapple"
+                  "rapple_tonguetip"
+                ];
+                p = "g";
+                s = ".cpp";
+              }
+              {
+                m = [
+                  "enguin"
+                  "ipewrench"
+                  "itdrone"
+                  "itworm"
+                ];
+                p = "p";
+                s = ".cpp";
+              }
+              {
+                m = [
+                  ".cpp"
+                  ".h"
+                  "rifle.cpp"
+                  "roach.cpp"
+                  "roach.h"
+                ];
+                p = "shock";
+                s = "";
+              }
+              {
+                m = [
+                  "keleton"
+                  "niperrifle"
+                  "pore_ammo"
+                  "poregrenade"
+                ];
+                p = "s";
+                s = ".cpp";
+              }
+              "blkop_apache.cpp"
+              "blkop_osprey.cpp"
+              "cleansuit_scientist.cpp"
+              "ctf_gamerules.cpp"
+              "ctf_gamerules.h"
+              "ctf_items.cpp"
+              "ctf_items.h"
+              "ctf_powerups.cpp"
+              "ctf_powerups.h"
+              "displacer.cpp"
+              "displacerball.h"
+              "drillsergeant.cpp"
+              "eagle.cpp"
+              "fgrunt.cpp"
+              "func_tank_of.cpp"
+              "grapple_tonguetip.h"
+              "houndeye_dead.cpp"
+              "islave_dead.cpp"
+              "knife.cpp"
+              "loader.cpp"
+              "m249.cpp"
+              "massn.cpp"
+              "nuclearbomb.cpp"
+              "op4mortar.cpp"
+              "otis.cpp"
+              "recruit.cpp"
+              "ropes.cpp"
+              "ropes.h"
+              "sporegrenade.h"
+              "sporelauncher.cpp"
+              "strooper.cpp"
+              "voltigore.cpp"
+              "zombie_barney.cpp"
+              "zombie_soldier.cpp"
+            ];
+            "genericmonster.cpp" = null;
+            "genericmonster.h" = null;
+            "ggrenade.cpp" = null;
+            "globals.cpp" = null;
+            "glock.cpp" = null;
+            "gman.cpp" = null;
+            "gman.h" = null;
+            "h_ai.cpp" = null;
+            "h_battery.cpp" = null;
+            "h_cine.cpp" = null;
+            "h_cycler.cpp" = null;
+            "h_export.cpp" = null;
+            "handgrenade.cpp" = null;
+            "hassassin.cpp" = null;
+            "headcrab.cpp" = null;
+            "headcrab.h" = null;
+            "healthkit.cpp" = null;
+            "hgrunt.cpp" = null;
+            "hgrunt.h" = null;
+            "hl.def" = null;
+            "hornet.cpp" = null;
+            "hornet.h" = null;
+            "hornetgun.cpp" = null;
+            "houndeye.cpp" = null;
+            "ichthyosaur.cpp" = null;
+            "islave.cpp" = null;
+            "items.cpp" = null;
+            "items.h" = null;
+            "leech.cpp" = null;
+            "lights.cpp" = null;
+            "maprules.cpp" = null;
+            "maprules.h" = null;
+            "monsterevent.h" = null;
+            "monstermaker.cpp" = null;
+            "monsters.cpp" = null;
+            "monsters.h" = null;
+            "monsterstate.cpp" = null;
+            "mortar.cpp" = null;
+            "mp5.cpp" = null;
+            "mpstubb.cpp" = null;
+            "multiplay_gamerules.cpp" = null;
+            "nihilanth.cpp" = null;
+            "nodes.cpp" = null;
+            "nodes.h" = null;
+            "nodes_compat.h" = null;
+            "observer.cpp" = null;
+            "osprey.cpp" = null;
+            "osprey.h" = null;
+            "pathcorner.cpp" = null;
+            "plane.cpp" = null;
+            "plane.h" = null;
+            "plats.cpp" = null;
+            "player.cpp" = null;
+            "player.h" = null;
+            "playermonster.cpp" = null;
+            "python.cpp" = null;
+            "rat.cpp" = null;
+            "replace.sh" = null;
+            "roach.cpp" = null;
+            "rpg.cpp" = null;
+            "satchel.cpp" = null;
+            "saverestore.h" = null;
+            "schedule.cpp" = null;
+            "schedule.h" = null;
+            "scientist.cpp" = null;
+            "scientist.h" = null;
+            "scripted.cpp" = null;
+            "scripted.h" = null;
+            "scriptevent.h" = null;
+            "shotgun.cpp" = null;
+            "singleplay_gamerules.cpp" = null;
+            "skill.cpp" = null;
+            "skill.h" = null;
+            "sound.cpp" = null;
+            "soundent.cpp" = null;
+            "soundent.h" = null;
+            "spectator.cpp" = null;
+            "spectator.h" = null;
+            "squad.h" = null;
+            "squadmonster.cpp" = null;
+            "squadmonster.h" = null;
+            "squeakgrenade.cpp" = null;
+            "stats.cpp" = null;
+            "subs.cpp" = null;
+            "talkmonster.cpp" = null;
+            "talkmonster.h" = null;
+            "teamplay_gamerules.cpp" = null;
+            "teamplay_gamerules.h" = null;
+            "tempmonster.cpp" = null;
+            "tentacle.cpp" = null;
+            "trains.h" = null;
+            "triggers.cpp" = null;
+            "triggers.h" = null;
+            "tripmine.cpp" = null;
+            "turret.cpp" = null;
+            "util.cpp" = null;
+            "util.h" = null;
+            "vector.h" = null;
+            "vehicle.cpp" = null;
+            "weapons.cpp" = null;
+            "weapons.h" = null;
+            "world.cpp" = null;
+            wscript = null;
+            "wxdebug.h" = null;
+            "xen.cpp" = null;
+            "xen.h" = null;
+            "zombie.cpp" = null;
+            "zombie.h" = null;
+          };
+          engine = [
+            "anorms.h"
+            "cdll_int.h"
+            "cursor_type.h"
+            "custom.h"
+            "customentity.h"
+            "edict.h"
+            "eiface.h"
+            "key_modifiers.h"
+            "keydefs.h"
+            "mobility_int.h"
+            "progdefs.h"
+            "shake.h"
+            "sprite.h"
+            "studio.h"
+            "vgui_api.h"
+          ];
+          external = {
+            SDL2 = expandClusters [
+              {
+                m = [
+                  "blendmode"
+                  "config"
+                  "config_macosx"
+                  "config_minimal"
+                  "config_windows"
+                  "error"
+                  "gamecontroller"
+                  "joystick"
+                  "mouse"
+                  "pixels"
+                  "platform"
+                  "rect"
+                  "rwops"
+                  "stdinc"
+                  "surface"
+                  "video"
+                ];
+                p = "SDL_";
+                s = ".h";
+              }
+              "begin_code.h"
+              "close_code.h"
+            ];
+            openbsd = [
+              "strlcat.c"
+              "strlcpy.c"
+            ];
+            ps4compat = expandClusters [
+              {
+                m = [
+                  "crtlib"
+                  "cwd"
+                  "malloc"
+                  "stdio"
+                ];
+                p = "ps4_";
+                s = ".c";
+              }
+              "wscript"
+            ];
+          };
+          freevgui = null;
+          game_shared = expandClusters [
+            {
+              m = [
+                "checkbutton2.cpp"
+                "checkbutton2.h"
+                "defaultinputsignal.h"
+                "grid.cpp"
+                "grid.h"
+                "helpers.cpp"
+                "helpers.h"
+                "listbox.cpp"
+                "listbox.h"
+                "loadtga.cpp"
+                "loadtga.h"
+                "scrollbar2.cpp"
+                "scrollbar2.h"
+                "slider2.cpp"
+                "slider2.h"
+              ];
+              p = "vgui_";
+              s = "";
+            }
+            {
+              m = [
+                "banmgr.cpp"
+                "banmgr.h"
+                "common.h"
+                "gamemgr.cpp"
+                "gamemgr.h"
+              ];
+              p = "voice_";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "bitvec.h"
+            "neon_mathfun.h"
+            "vcs_info.c"
+            "vcs_info.h"
+            "wscript"
+          ];
+          "mod_options.txt" = null;
+          pm_shared = expandClusters [
+            {
+              m = [
+                "bug.c"
+                "bug.h"
+                "fs.h"
+              ];
+              p = "pm_de";
+              s = "";
+            }
+            "pm_info.h"
+            "pm_materials.h"
+            "pm_math.c"
+            "pm_movevars.h"
+            "pm_shared.c"
+            "pm_shared.h"
+          ];
+          public = [
+            "build.h"
+            "safe_snprintf.c"
+            "safe_snprintf.h"
+          ];
+          scripts = {
+            waifulib = [
+              "c_emscripten.py"
+              "compiler_optimizations.py"
+              "library_naming.py"
+              "ps4.py"
+              "strip_on_install.py"
+              "xcompile.py"
+            ];
+          };
+          utils = {
+            makefont = [
+              "CreateFont.bat"
+              "makefont.cpp"
+              "makefont.dsp"
+              "winebuild.sh"
+            ];
+            vgui = {
+              include = expandClusters [
+                {
+                  m = [
+                    ""
+                    "_ActionSignal"
+                    "_App"
+                    "_Bitmap"
+                    "_BitmapTGA"
+                    "_Border"
+                    "_BorderLayout"
+                    "_BorderPair"
+                    "_BuildGroup"
+                    "_Button"
+                    "_ButtonController"
+                    "_ButtonGroup"
+                    "_ChangeSignal"
+                    "_CheckButton"
+                    "_Color"
+                    "_ComboKey"
+                    "_ConfigWizard"
+                    "_Cursor"
+                    "_Dar"
+                    "_DataInputStream"
+                    "_Desktop"
+                    "_DesktopIcon"
+                    "_EditPanel"
+                    "_EtchedBorder"
+                    "_FileInputStream"
+                    "_FlowLayout"
+                    "_FocusChangeSignal"
+                    "_FocusNavGroup"
+                    "_Font"
+                    "_Frame"
+                    "_FrameSignal"
+                    "_GridLayout"
+                    "_HeaderPanel"
+                    "_Image"
+                    "_ImagePanel"
+                    "_InputSignal"
+                    "_InputStream"
+                    "_IntChangeSignal"
+                    "_IntLabel"
+                    "_KeyCode"
+                    "_Label"
+                    "_Layout"
+                    "_LayoutInfo"
+                    "_LineBorder"
+                    "_ListPanel"
+                    "_LoweredBorder"
+                    "_Menu"
+                    "_MenuItem"
+                    "_MenuSeparator"
+                    "_MessageBox"
+                    "_MiniApp"
+                    "_MouseCode"
+                    "_Panel"
+                    "_Point"
+                    "_PopupMenu"
+                    "_ProgressBar"
+                    "_RadioButton"
+                    "_RaisedBorder"
+                    "_RepaintSignal"
+                    "_Scheme"
+                    "_ScrollBar"
+                    "_ScrollPanel"
+                    "_Slider"
+                    "_StackLayout"
+                    "_String"
+                    "_Surface"
+                    "_SurfaceBase"
+                    "_SurfaceGL"
+                    "_TabPanel"
+                    "_TablePanel"
+                    "_TaskBar"
+                    "_TextEntry"
+                    "_TextGrid"
+                    "_TextImage"
+                    "_TextPanel"
+                    "_TickSignal"
+                    "_ToggleButton"
+                    "_TreeFolder"
+                    "_WizardPanel"
+                  ];
+                  p = "VGUI";
+                  s = ".h";
+                }
+              ];
+            };
+          };
+          waf = null;
+          "waf.bat" = null;
+          wscript = null;
+        };
+        hash = "sha1-sejSuw+q7wGthSW3iE78s8Km6Vk=";
+        ref = "refs/heads/opfor";
+        rev = "7d618678a9c9e5c398c3c4039a4702576a86a6e6";
+        type = "git";
+        url = "https://github.com/FWGS/hlsdk-portable.git";
+      };
+      valve = {
+        date = "2026-11-08";
+        files = flattenPaths {
+          ".github" = {
+            workflows = [
+              "build.yml"
+              "manual.yml"
+            ];
+          };
+          ".gitignore" = null;
+          ".gitmodules" = null;
+          "CMakeLists.txt" = null;
+          LICENSE = null;
+          "README.md" = null;
+          android = {
+            app = {
+              "build.gradle" = null;
+              src = {
+                main = {
+                  "AndroidManifest.xml" = null;
+                  java = {
+                    su = {
+                      xash = {
+                        hlsdk = "MainActivity.java";
+                      };
+                    };
+                  };
+                };
+              };
+            };
+            "build.gradle" = null;
+            gradle = {
+              wrapper = [
+                "gradle-wrapper.jar"
+                "gradle-wrapper.properties"
+              ];
+            };
+            "gradle.properties" = null;
+            gradlew = null;
+            "gradlew.bat" = null;
+            "settings.gradle" = null;
+          };
+          "appveyor.yml" = null;
+          cl_dll = {
+            "CMakeLists.txt" = null;
+            "GameStudioModelRenderer.cpp" = null;
+            "GameStudioModelRenderer.h" = null;
+            "GameStudioModelRenderer_Sample.cpp" = null;
+            "GameStudioModelRenderer_Sample.h" = null;
+            "MOTD.cpp" = null;
+            "StudioModelRenderer.cpp" = null;
+            "StudioModelRenderer.h" = null;
+            "ammo.cpp" = null;
+            "ammo.h" = null;
+            "ammo_secondary.cpp" = null;
+            "ammohistory.cpp" = null;
+            "ammohistory.h" = null;
+            "battery.cpp" = null;
+            "camera.h" = null;
+            "cdll_int.cpp" = null;
+            "cl_dll.h" = null;
+            "cl_util.h" = null;
+            "com_weapons.cpp" = null;
+            "com_weapons.h" = null;
+            "death.cpp" = null;
+            "demo.cpp" = null;
+            "demo.h" = null;
+            "entity.cpp" = null;
+            "ev_common.cpp" = null;
+            "ev_hldm.cpp" = null;
+            "ev_hldm.h" = null;
+            "events.cpp" = null;
+            "eventscripts.h" = null;
+            "flashlight.cpp" = null;
+            "geiger.cpp" = null;
+            "health.cpp" = null;
+            "health.h" = null;
+            hl = expandClusters [
+              {
+                m = [
+                  "baseentity"
+                  "events"
+                  "objects"
+                  "weapons"
+                ];
+                p = "hl_";
+                s = ".cpp";
+              }
+            ];
+            "hud.cpp" = null;
+            "hud.h" = null;
+            "hud_iface.h" = null;
+            "hud_msg.cpp" = null;
+            "hud_redraw.cpp" = null;
+            "hud_servers_priv.h" = null;
+            "hud_spectator.cpp" = null;
+            "hud_spectator.h" = null;
+            "hud_update.cpp" = null;
+            "in_camera.cpp" = null;
+            "in_defs.h" = null;
+            "input.cpp" = null;
+            "input_goldsource.cpp" = null;
+            "input_mouse.cpp" = null;
+            "input_mouse.h" = null;
+            "input_xash3d.cpp" = null;
+            "interpolation.cpp" = null;
+            "interpolation.h" = null;
+            "kbutton.h" = null;
+            "menu.cpp" = null;
+            "message.cpp" = null;
+            "parsemsg.cpp" = null;
+            "parsemsg.h" = null;
+            "readme.txt" = null;
+            "saytext.cpp" = null;
+            "scoreboard.cpp" = null;
+            "status_icons.cpp" = null;
+            "statusbar.cpp" = null;
+            "studio_util.cpp" = null;
+            "studio_util.h" = null;
+            "text_message.cpp" = null;
+            "tf_defs.h" = null;
+            "train.cpp" = null;
+            "tri.cpp" = null;
+            "util.cpp" = null;
+            "util_vector.h" = null;
+            "vgui_ClassMenu.cpp" = null;
+            "vgui_ConsolePanel.cpp" = null;
+            "vgui_ConsolePanel.h" = null;
+            "vgui_ControlConfigPanel.cpp" = null;
+            "vgui_ControlConfigPanel.h" = null;
+            "vgui_CustomObjects.cpp" = null;
+            "vgui_MOTDWindow.cpp" = null;
+            "vgui_SchemeManager.cpp" = null;
+            "vgui_SchemeManager.h" = null;
+            "vgui_ScorePanel.cpp" = null;
+            "vgui_ScorePanel.h" = null;
+            "vgui_SpectatorPanel.cpp" = null;
+            "vgui_SpectatorPanel.h" = null;
+            "vgui_TeamFortressViewport.cpp" = null;
+            "vgui_TeamFortressViewport.h" = null;
+            "vgui_int.cpp" = null;
+            "vgui_int.h" = null;
+            "vgui_teammenu.cpp" = null;
+            "view.cpp" = null;
+            "view.h" = null;
+            "voice_status.cpp" = null;
+            "voice_status.h" = null;
+            "wrect.h" = null;
+            wscript = null;
+          };
+          cmake = expandClusters [
+            {
+              m = [
+                "LibraryNaming"
+                "PS4"
+                "PS4MakeSymbols"
+                "PS4Toolchain"
+                "VSForceXPToolchain"
+              ];
+              p = "";
+              s = ".cmake";
+            }
+          ];
+          common = expandClusters [
+            {
+              m = [
+                "api"
+                "args"
+                "flags"
+              ];
+              p = "event_";
+              s = ".h";
+            }
+            "beamdef.h"
+            "byteswap.h"
+            "cl_entity.h"
+            "com_model.h"
+            "con_nprint.h"
+            "const.h"
+            "cvardef.h"
+            "demo_api.h"
+            "dlight.h"
+            "entity_state.h"
+            "entity_types.h"
+            "hltv.h"
+            "ivoicetweak.h"
+            "mathlib.h"
+            "net_api.h"
+            "netadr.h"
+            "particledef.h"
+            "pmtrace.h"
+            "qfont.h"
+            "r_efx.h"
+            "r_studioint.h"
+            "ref_params.h"
+            "screenfade.h"
+            "studio_event.h"
+            "triangleapi.h"
+            "usercmd.h"
+            "wadfile.h"
+            "weaponinfo.h"
+            "winsani_in.h"
+            "winsani_out.h"
+          ];
+          dlls = expandClusters [
+            {
+              m = [
+                "flock"
+                "grunt"
+                "irtank"
+                "nimating"
+                "nimation"
+              ];
+              p = "a";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "igmomma"
+                "loater"
+                "models"
+                "ullsquid"
+                "uttons"
+              ];
+              p = "b";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "ombat"
+                "ontroller"
+                "rossbow"
+                "rowbar"
+              ];
+              p = "c";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "break.cpp"
+                "break.h"
+                "tank.cpp"
+              ];
+              p = "func_";
+              s = "";
+            }
+            {
+              m = [
+                "argantua"
+                "auss"
+                "enericmonster"
+                "grenade"
+                "lobals"
+                "lock"
+                "man"
+              ];
+              p = "g";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "_ai"
+                "_battery"
+                "_cine"
+                "_cycler"
+                "_export"
+                "andgrenade"
+                "assassin"
+                "eadcrab"
+                "ealthkit"
+                "grunt"
+              ];
+              p = "h";
+              s = ".cpp";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "gun.cpp"
+              ];
+              p = "hornet";
+              s = "";
+            }
+            {
+              m = [
+                "chthyosaur"
+                "slave"
+                "tems"
+              ];
+              p = "i";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "event.h"
+                "maker.cpp"
+                "s.cpp"
+                "s.h"
+                "state.cpp"
+              ];
+              p = "monster";
+              s = "";
+            }
+            {
+              m = [
+                "ortar"
+                "p5"
+                "pstubb"
+                "ultiplay_gamerules"
+              ];
+              p = "m";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "hotgun"
+                "ingleplay_gamerules"
+                "kill"
+              ];
+              p = "s";
+              s = ".cpp";
+            }
+            {
+              m = [
+                ".cpp"
+                "ent.cpp"
+                "ent.h"
+              ];
+              p = "sound";
+              s = "";
+            }
+            {
+              m = [
+                ".h"
+                "monster.cpp"
+                "monster.h"
+              ];
+              p = "squad";
+              s = "";
+            }
+            {
+              m = [
+                "queakgrenade"
+                "tats"
+                "ubs"
+              ];
+              p = "s";
+              s = ".cpp";
+            }
+            {
+              m = [
+                "riggers"
+                "ripmine"
+                "urret"
+              ];
+              p = "t";
+              s = ".cpp";
+            }
+            "CMakeLists.txt"
+            "Wxdebug.cpp"
+            "activity.h"
+            "activitymap.h"
+            "animation.h"
+            "apache.cpp"
+            "barnacle.cpp"
+            "barney.cpp"
+            "basemonster.h"
+            "cbase.cpp"
+            "cbase.h"
+            "cdll_dll.h"
+            "client.cpp"
+            "client.h"
+            "decals.h"
+            "defaultai.cpp"
+            "defaultai.h"
+            "doors.cpp"
+            "doors.h"
+            "effects.cpp"
+            "effects.h"
+            "egon.cpp"
+            "enginecallback.h"
+            "explode.cpp"
+            "explode.h"
+            "exportdef.h"
+            "extdll.h"
+            "flyingmonster.cpp"
+            "flyingmonster.h"
+            "game.cpp"
+            "game.h"
+            "gamerules.cpp"
+            "gamerules.h"
+            "hl.def"
+            "houndeye.cpp"
+            "items.h"
+            "leech.cpp"
+            "lights.cpp"
+            "maprules.cpp"
+            "maprules.h"
+            "nihilanth.cpp"
+            "nodes.cpp"
+            "nodes.h"
+            "nodes_compat.h"
+            "observer.cpp"
+            "osprey.cpp"
+            "pathcorner.cpp"
+            "plane.cpp"
+            "plane.h"
+            "plats.cpp"
+            "player.cpp"
+            "player.h"
+            "playermonster.cpp"
+            "python.cpp"
+            "rat.cpp"
+            "replace.sh"
+            "roach.cpp"
+            "rpg.cpp"
+            "satchel.cpp"
+            "saverestore.h"
+            "schedule.cpp"
+            "schedule.h"
+            "scientist.cpp"
+            "scripted.cpp"
+            "scripted.h"
+            "scriptevent.h"
+            "skill.h"
+            "spectator.cpp"
+            "spectator.h"
+            "talkmonster.cpp"
+            "talkmonster.h"
+            "teamplay_gamerules.cpp"
+            "teamplay_gamerules.h"
+            "tempmonster.cpp"
+            "tentacle.cpp"
+            "trains.h"
+            "util.cpp"
+            "util.h"
+            "vector.h"
+            "vehicle.cpp"
+            "weapons.cpp"
+            "weapons.h"
+            "world.cpp"
+            "wscript"
+            "wxdebug.h"
+            "xen.cpp"
+            "zombie.cpp"
+          ];
+          engine = [
+            "anorms.h"
+            "cdll_int.h"
+            "cursor_type.h"
+            "custom.h"
+            "customentity.h"
+            "edict.h"
+            "eiface.h"
+            "key_modifiers.h"
+            "keydefs.h"
+            "mobility_int.h"
+            "progdefs.h"
+            "shake.h"
+            "sprite.h"
+            "studio.h"
+            "vgui_api.h"
+          ];
+          external = {
+            SDL2 = expandClusters [
+              {
+                m = [
+                  "blendmode"
+                  "config"
+                  "config_macosx"
+                  "config_minimal"
+                  "config_windows"
+                  "error"
+                  "gamecontroller"
+                  "joystick"
+                  "mouse"
+                  "pixels"
+                  "platform"
+                  "rect"
+                  "rwops"
+                  "stdinc"
+                  "surface"
+                  "video"
+                ];
+                p = "SDL_";
+                s = ".h";
+              }
+              "begin_code.h"
+              "close_code.h"
+            ];
+            openbsd = [
+              "strlcat.c"
+              "strlcpy.c"
+            ];
+            ps4compat = expandClusters [
+              {
+                m = [
+                  "crtlib"
+                  "cwd"
+                  "malloc"
+                  "stdio"
+                ];
+                p = "ps4_";
+                s = ".c";
+              }
+              "wscript"
+            ];
+          };
+          freevgui = null;
+          game_shared = expandClusters [
+            {
+              m = [
+                "checkbutton2.cpp"
+                "checkbutton2.h"
+                "defaultinputsignal.h"
+                "grid.cpp"
+                "grid.h"
+                "helpers.cpp"
+                "helpers.h"
+                "listbox.cpp"
+                "listbox.h"
+                "loadtga.cpp"
+                "loadtga.h"
+                "scrollbar2.cpp"
+                "scrollbar2.h"
+                "slider2.cpp"
+                "slider2.h"
+              ];
+              p = "vgui_";
+              s = "";
+            }
+            {
+              m = [
+                "banmgr.cpp"
+                "banmgr.h"
+                "common.h"
+                "gamemgr.cpp"
+                "gamemgr.h"
+              ];
+              p = "voice_";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "bitvec.h"
+            "neon_mathfun.h"
+            "vcs_info.c"
+            "vcs_info.h"
+            "wscript"
+          ];
+          "mod_options.txt" = null;
+          pm_shared = expandClusters [
+            {
+              m = [
+                "bug.c"
+                "bug.h"
+                "fs.h"
+              ];
+              p = "pm_de";
+              s = "";
+            }
+            "pm_info.h"
+            "pm_materials.h"
+            "pm_math.c"
+            "pm_movevars.h"
+            "pm_shared.c"
+            "pm_shared.h"
+          ];
+          public = [
+            "build.h"
+            "safe_snprintf.c"
+            "safe_snprintf.h"
+          ];
+          scripts = {
+            waifulib = [
+              "c_emscripten.py"
+              "compiler_optimizations.py"
+              "library_naming.py"
+              "ps4.py"
+              "strip_on_install.py"
+              "xcompile.py"
+            ];
+          };
+          utils = {
+            makefont = [
+              "CreateFont.bat"
+              "makefont.cpp"
+              "makefont.dsp"
+              "winebuild.sh"
+            ];
+            vgui = {
+              include = expandClusters [
+                {
+                  m = [
+                    ""
+                    "_ActionSignal"
+                    "_App"
+                    "_Bitmap"
+                    "_BitmapTGA"
+                    "_Border"
+                    "_BorderLayout"
+                    "_BorderPair"
+                    "_BuildGroup"
+                    "_Button"
+                    "_ButtonController"
+                    "_ButtonGroup"
+                    "_ChangeSignal"
+                    "_CheckButton"
+                    "_Color"
+                    "_ComboKey"
+                    "_ConfigWizard"
+                    "_Cursor"
+                    "_Dar"
+                    "_DataInputStream"
+                    "_Desktop"
+                    "_DesktopIcon"
+                    "_EditPanel"
+                    "_EtchedBorder"
+                    "_FileInputStream"
+                    "_FlowLayout"
+                    "_FocusChangeSignal"
+                    "_FocusNavGroup"
+                    "_Font"
+                    "_Frame"
+                    "_FrameSignal"
+                    "_GridLayout"
+                    "_HeaderPanel"
+                    "_Image"
+                    "_ImagePanel"
+                    "_InputSignal"
+                    "_InputStream"
+                    "_IntChangeSignal"
+                    "_IntLabel"
+                    "_KeyCode"
+                    "_Label"
+                    "_Layout"
+                    "_LayoutInfo"
+                    "_LineBorder"
+                    "_ListPanel"
+                    "_LoweredBorder"
+                    "_Menu"
+                    "_MenuItem"
+                    "_MenuSeparator"
+                    "_MessageBox"
+                    "_MiniApp"
+                    "_MouseCode"
+                    "_Panel"
+                    "_Point"
+                    "_PopupMenu"
+                    "_ProgressBar"
+                    "_RadioButton"
+                    "_RaisedBorder"
+                    "_RepaintSignal"
+                    "_Scheme"
+                    "_ScrollBar"
+                    "_ScrollPanel"
+                    "_Slider"
+                    "_StackLayout"
+                    "_String"
+                    "_Surface"
+                    "_SurfaceBase"
+                    "_SurfaceGL"
+                    "_TabPanel"
+                    "_TablePanel"
+                    "_TaskBar"
+                    "_TextEntry"
+                    "_TextGrid"
+                    "_TextImage"
+                    "_TextPanel"
+                    "_TickSignal"
+                    "_ToggleButton"
+                    "_TreeFolder"
+                    "_WizardPanel"
+                  ];
+                  p = "VGUI";
+                  s = ".h";
+                }
+              ];
+            };
+          };
+          waf = null;
+          "waf.bat" = null;
+          wscript = null;
+        };
+        hash = "sha1-xiV0HzxJvSj+u/Q/pfGfbXxAgyo=";
+        ref = "refs/heads/master";
+        rev = "89e83b92d561f5ceb11594c2f15e2e1519bc6c36";
+        type = "git";
+        url = "https://github.com/FWGS/hlsdk-portable.git";
+      };
+    };
+    xash3d = {
+      date = "2026-11-10";
+      files = flattenPaths {
+        ".builds" = expandClusters [
+          {
+            m = [
+              "free"
+              "net"
+              "open"
+            ];
+            p = "";
+            s = "bsd.yml";
+          }
+          "alpine.yml"
+          "debian-arm64.yml"
+          "debian.yml"
+        ];
+        ".clang-format" = null;
+        ".editorconfig" = null;
+        ".gitattributes" = null;
+        ".github" = {
+          "FUNDING.yml" = null;
+          workflows = "c-cpp.yml";
+        };
+        ".gitignore" = null;
+        ".gitmodules" = null;
+        "3rdparty" = {
+          MultiEmulator = null;
+          bzip2 = [
+            "bzip2"
+            "wscript"
+          ];
+          extras = [
+            "wscript"
+            "xash-extras"
+          ];
+          freetype = [
+            "ftmodule.h"
+            "wscript"
+          ];
+          freevgui = null;
+          gl-wes-v2 = null;
+          gl4es = [
+            "gl4es"
+            "wscript"
+          ];
+          glslang = [
+            "glslang"
+            "wscript"
+          ];
+          libbacktrace = [
+            "libbacktrace"
+            "wscript"
+          ];
+          libogg = [
+            "libogg"
+            "wscript"
+          ];
+          library_suffix = null;
+          maintui = null;
+          mainui = null;
+          mbedtls = [
+            "compat.c"
+            "mbedtls"
+            "wscript"
+            "xash_mbedtls_config.h"
+            "xash_psa_config.h"
+          ];
+          miniz = [
+            "miniz.c"
+            "miniz.h"
+            "wscript"
+          ];
+          mpg123 = [
+            "mpg123"
+            "stub.c"
+            "wscript"
+          ];
+          nanogl = null;
+          opengnm = [
+            "opengnm"
+            "wscript"
+          ];
+          opengnm-psbc = [
+            "Vulkan-Headers"
+            "opengnm-psbc"
+            "wscript"
+          ];
+          opus = [
+            "opus"
+            "wscript"
+          ];
+          opusfile = [
+            "opusfile"
+            "wscript"
+          ];
+          ps4compat = expandClusters [
+            {
+              m = [
+                "crtlib"
+                "cwd"
+                "malloc"
+              ];
+              p = "ps4_";
+              s = ".c";
+            }
+            "LICENSE"
+            "README.md"
+            "ps4_sockaddr.h"
+            "ps4_stdio.c"
+            "wscript"
+          ];
+          vorbis = [
+            "vorbis-src"
+            "wscript"
+          ];
+          yy-thunks = "wscript";
+        };
+        "CONTRIBUTING.md" = null;
+        Documentation = {
+          "bug-compatibility.md" = null;
+          "compatibility-policy.md" = null;
+          development = [
+            "cross-compiling-for-windows-with-wine.md"
+            "debugging-using-minidumps.md"
+            "engine-porting-guide.md"
+            "mod-porting-guide.md"
+            "setting-up-qt-creator.md"
+          ];
+          "donate.md" = null;
+          "environment-variables.md" = null;
+          extensions = [
+            "addon-folders.md"
+            "console-scripting.md"
+            "entity-tools.md"
+            "expanded-common-structures.md"
+            "input-interface-ru.md"
+            "input-interface.md"
+            "library-naming.md"
+            "litwater.md"
+            "mp3-loops.md"
+            "native-object.md"
+            "sounds.lst.md"
+            "steam-broker.md"
+            "xrcon-protocol.md"
+          ];
+          "gameinfo.md" = null;
+          "goldsrc-protocol-support.md" = null;
+          "gpl_copyright_header.h" = null;
+          "hd-textures.md" = null;
+          images = expandClusters [
+            {
+              m = [
+                "ditor"
+                "xample1"
+                "xample2"
+                "xample3"
+                "xample4"
+                "xample5"
+              ];
+              p = "e";
+              s = ".jpg";
+            }
+            "ios-touch-ingame.jpg"
+            "touch-buttons.jpg"
+            "touch-profiles.jpg"
+          ];
+          "musl.md" = null;
+          "nat-bypass-usage.md" = null;
+          "not-supported-mod-list-and-reasons-why.md" = null;
+          "opensource-mods.md" = null;
+          "ports.md" = null;
+          protocol = [
+            "01-introduction.md"
+            "02-connectionless.md"
+            "03-netchan.md"
+            "http-server-list.md"
+          ];
+          "ps4.md" = null;
+          "psvita.md" = null;
+          "sailfish.md" = null;
+          "supported-mod-list.md" = null;
+          "touch-controls.md" = null;
+        };
+        "README.md" = null;
+        "SECURITY.md" = null;
+        android = {
+          ".gitignore" = null;
+          app = {
+            "build.gradle.kts" = null;
+            "proguard-rules.pro" = null;
+            run-python = null;
+            "run-python.bat" = null;
+            src = {
+              asan = {
+                jniLibs = {
+                  arm64-v8a = "libclang_rt.asan-aarch64-android.so";
+                  armeabi-v7a = "libclang_rt.asan-arm-android.so";
+                  x86 = "libclang_rt.asan-i686-android.so";
+                  x86_64 = "libclang_rt.asan-x86_64-android.so";
+                };
+                res = {
+                  values = "strings.xml";
+                };
+                resources = {
+                  lib = {
+                    arm64-v8a = "wrap.sh";
+                    armeabi-v7a = "wrap.sh";
+                    x86 = "wrap.sh";
+                    x86_64 = "wrap.sh";
+                  };
+                };
+              };
+              continuous = {
+                res = {
+                  values = "strings.xml";
+                };
+              };
+              debug = {
+                res = {
+                  values = "strings.xml";
+                };
+              };
+              main = {
+                "AndroidManifest.xml" = null;
+                java = {
+                  su = {
+                    xash = {
+                      engine = {
+                        "DedicatedActivity.kt" = null;
+                        "DedicatedService.kt" = null;
+                        "MainActivity.kt" = null;
+                        "MainApplication.kt" = null;
+                        "XashActivity.java" = null;
+                        adapters = "GameAdapter.kt";
+                        model = [
+                          "AppUpdater.kt"
+                          "BackgroundBitmap.kt"
+                          "Game.kt"
+                          "GameLibDownloader.kt"
+                          "InstallStatusReceiver.kt"
+                        ];
+                        ui = {
+                          library = [
+                            "LibraryFragment.kt"
+                            "LibraryViewModel.kt"
+                          ];
+                          settings = expandClusters [
+                            {
+                              m = [
+                                "AppSettings"
+                                "AppSettingsPreference"
+                                "CrashLogs"
+                              ];
+                              p = "";
+                              s = "Fragment.kt";
+                            }
+                            {
+                              m = [
+                                "PathPreference"
+                                "SettingsFragment"
+                                "SettingsPreferenceFragment"
+                              ];
+                              p = "Game";
+                              s = ".kt";
+                            }
+                          ];
+                        };
+                        util = [
+                          "CrashReports.kt"
+                          "DownloadProgress.kt"
+                          "GameDataDirectory.kt"
+                          "MonospaceText.kt"
+                          "Nomedia.kt"
+                          "Prefs.kt"
+                          "SoftKeyboardPan.java"
+                          "TGAReader.java"
+                        ];
+                      };
+                    };
+                  };
+                };
+                res = {
+                  drawable = expandClusters [
+                    {
+                      m = [
+                        "add"
+                        "delete"
+                        "folder_open"
+                        "play_arrow"
+                        "restart_alt"
+                        "settings"
+                        "terminal"
+                      ];
+                      p = "ic_baseline_";
+                      s = "_24.xml";
+                    }
+                  ];
+                  layout = expandClusters [
+                    {
+                      m = [
+                        "app_settings"
+                        "game_settings"
+                        "library"
+                      ];
+                      p = "fragment_";
+                      s = ".xml";
+                    }
+                    "activity_main.xml"
+                    "card_game.xml"
+                    "dialog_download_progress.xml"
+                    "edit_text_preference.xml"
+                    "list_preference.xml"
+                    "preference_game_path.xml"
+                    "switch_preference.xml"
+                  ];
+                  menu = [
+                    "menu_game_settings.xml"
+                    "menu_library.xml"
+                  ];
+                  mipmap-anydpi-v26 = expandClusters [
+                    {
+                      m = [
+                        ""
+                        "_foreground"
+                        "_monochrome"
+                        "_round"
+                      ];
+                      p = "ic_launcher";
+                      s = ".xml";
+                    }
+                  ];
+                  mipmap-hdpi = [
+                    "ic_launcher.png"
+                    "ic_launcher_foreground.png"
+                  ];
+                  mipmap-mdpi = [
+                    "ic_launcher.png"
+                    "ic_launcher_foreground.png"
+                  ];
+                  mipmap-xhdpi = [
+                    "ic_launcher.png"
+                    "ic_launcher_foreground.png"
+                  ];
+                  mipmap-xxhdpi = [
+                    "ic_launcher.png"
+                    "ic_launcher_foreground.png"
+                  ];
+                  mipmap-xxxhdpi = [
+                    "ic_launcher.png"
+                    "ic_launcher_foreground.png"
+                  ];
+                  navigation = "nav_graph.xml";
+                  raw = "isrgrootx1.pem";
+                  values = expandClusters [
+                    {
+                      m = [
+                        "string"
+                        "style"
+                        "theme"
+                      ];
+                      p = "";
+                      s = "s.xml";
+                    }
+                    "colors.xml"
+                    "ic_launcher_background.xml"
+                  ];
+                  values-es = "strings.xml";
+                  values-fr = "strings.xml";
+                  values-pt-rBR = "strings.xml";
+                  values-ru = "strings.xml";
+                  values-zh-rCN = "strings.xml";
+                  xml = [
+                    "app_preferences.xml"
+                    "game_preferences.xml"
+                    "network_security_config.xml"
+                    "paths.xml"
+                  ];
+                };
+              };
+            };
+          };
+          "build.gradle.kts" = null;
+          "debug.keystore" = null;
+          gradle = {
+            "gradle-daemon-jvm.properties" = null;
+            "libs.versions.toml" = null;
+            wrapper = [
+              "gradle-wrapper.jar"
+              "gradle-wrapper.properties"
+            ];
+          };
+          "gradle.properties" = null;
+          gradlew = null;
+          "gradlew.bat" = null;
+          "settings.gradle.kts" = null;
+        };
+        common = expandClusters [
+          {
+            m = [
+              "api"
+              "args"
+              "flags"
+            ];
+            p = "event_";
+            s = ".h";
+          }
+          "backends.h"
+          "beamdef.h"
+          "bspfile.h"
+          "cl_entity.h"
+          "com_image.h"
+          "com_model.h"
+          "con_nprint.h"
+          "const.h"
+          "cvardef.h"
+          "defaults.h"
+          "demo_api.h"
+          "enginefeatures.h"
+          "entity_state.h"
+          "entity_types.h"
+          "gameinfo.h"
+          "ivoicetweak.h"
+          "lightstyle.h"
+          "net_api.h"
+          "netadr.h"
+          "pmove.h"
+          "port.h"
+          "q_client.h"
+          "qfont.h"
+          "r_efx.h"
+          "r_studioint.h"
+          "ref_params.h"
+          "render_api.h"
+          "screenfade.h"
+          "sound_api.h"
+          "studio_event.h"
+          "synctype.h"
+          "triangleapi.h"
+          "wadfile.h"
+          "weaponinfo.h"
+          "wrect.h"
+          "xash3d_types.h"
+          "xrcon_protocol.h"
+        ];
+        engine = {
+          "alias.h" = null;
+          "anorms.h" = null;
+          "cdll_exp.h" = null;
+          "cdll_int.h" = null;
+          client = {
+            avi = [
+              "avi.h"
+              "avi_ffmpeg.c"
+              "avi_ffmpeg.h"
+            ];
+            "cl_cmds.c" = null;
+            "cl_custom.c" = null;
+            "cl_debug.c" = null;
+            "cl_demo.c" = null;
+            "cl_efrag.c" = null;
+            "cl_efx.c" = null;
+            "cl_events.c" = null;
+            "cl_font.c" = null;
+            "cl_frame.c" = null;
+            "cl_main.c" = null;
+            "cl_netgraph.c" = null;
+            "cl_remap.c" = null;
+            "cl_scrn.c" = null;
+            "cl_spray.c" = null;
+            "cl_sprite.c" = null;
+            "cl_steam.c" = null;
+            "cl_tent.c" = null;
+            "cl_tent.h" = null;
+            "cl_video.c" = null;
+            "cl_view.c" = null;
+            "client.h" = null;
+            "console.c" = null;
+            dll_int = expandClusters [
+              {
+                m = [
+                  "game"
+                  "gameui"
+                  "mobile"
+                  "pmove"
+                  "render"
+                  "securedstub"
+                ];
+                p = "cl_";
+                s = ".c";
+              }
+              "ref_common.c"
+            ];
+            "gamma.c" = null;
+            "identification.c" = null;
+            input = expandClusters [
+              {
+                m = [
+                  "gyro"
+                  "joy"
+                  "keys"
+                  "osk"
+                  "touch"
+                ];
+                p = "in_";
+                s = ".c";
+              }
+              "input.c"
+            ];
+            "input.h" = null;
+            "mod_dbghulls.c" = null;
+            parse = expandClusters [
+              {
+                m = [
+                  "parse"
+                  "parse_gs"
+                  "qparse"
+                ];
+                p = "cl_";
+                s = ".c";
+              }
+            ];
+            "ref_common.h" = null;
+            sound = expandClusters [
+              {
+                m = [
+                  "ain"
+                  "ix"
+                  "outh"
+                ];
+                p = "s_m";
+                s = ".c";
+              }
+              "s_dsp.c"
+              "s_load.c"
+              "s_stream.c"
+              "s_vox.c"
+              "voice.c"
+            ];
+            "sound.h" = null;
+            soundlib = expandClusters [
+              {
+                m = [
+                  "main"
+                  "mp3"
+                  "ogg_opus"
+                  "ogg_vorbis"
+                  "wav"
+                ];
+                p = "snd_";
+                s = ".c";
+              }
+              "ogg_filestream.c"
+              "ogg_filestream.h"
+            ];
+            "titles.c" = null;
+            vgui = [
+              "vgui_draw.c"
+              "vgui_draw.h"
+            ];
+            "vid_common.c" = null;
+            "vid_common.h" = null;
+            "voice.h" = null;
+          };
+          common = {
+            "base_cmd.c" = null;
+            "base_cmd.h" = null;
+            "cfgscript.c" = null;
+            "cmd.c" = null;
+            "com_strings.h" = null;
+            "common.c" = null;
+            "common.h" = null;
+            "con_utils.c" = null;
+            "custom.c" = null;
+            "cvar.c" = null;
+            "cvar.h" = null;
+            "dedicated.c" = null;
+            "filesystem_engine.c" = null;
+            "host.c" = null;
+            "host_state.c" = null;
+            "hpak.c" = null;
+            "hpak.h" = null;
+            http = expandClusters [
+              {
+                m = [
+                  "tls.c"
+                  "tls.h"
+                  "xash.c"
+                ];
+                p = "net_http_";
+                s = "";
+              }
+            ];
+            imagelib = [
+              "imagelib.h"
+              "img_bmp.c"
+              "img_bmp.h"
+              "img_dds.c"
+              "img_dds.h"
+              "img_ktx2.c"
+              "img_ktx2.h"
+              "img_main.c"
+              "img_png.c"
+              "img_png.h"
+              "img_quant.c"
+              "img_tga.c"
+              "img_tga.h"
+              "img_utils.c"
+              "img_wad.c"
+            ];
+            "infostring.c" = null;
+            "ipv6text.c" = null;
+            "ipv6text.h" = null;
+            "launcher.c" = null;
+            "lib_common.c" = null;
+            "library.h" = null;
+            "masterlist.c" = null;
+            "mod_alias.c" = null;
+            "mod_bmodel.c" = null;
+            "mod_local.h" = null;
+            "mod_sprite.c" = null;
+            "mod_studio.c" = null;
+            "model.c" = null;
+            "munge.c" = null;
+            "net_buffer.c" = null;
+            "net_buffer.h" = null;
+            "net_chan.c" = null;
+            "net_encode.c" = null;
+            "net_encode.h" = null;
+            "net_ws.c" = null;
+            "net_ws.h" = null;
+            "net_ws_private.h" = null;
+            "netchan.h" = null;
+            "pm_local.h" = null;
+            "pm_surface.c" = null;
+            "pm_trace.c" = null;
+            "protocol.h" = null;
+            soundlib = [
+              "snd_utils.c"
+              "soundlib.h"
+            ];
+            "sounds.c" = null;
+            "sys_con.c" = null;
+            "system.c" = null;
+            "system.h" = null;
+            "tests.h" = null;
+            "whereami.c" = null;
+            "whereami.h" = null;
+            "world.c" = null;
+            "world.h" = null;
+            "xrcon.c" = null;
+            "zone.c" = null;
+          };
+          "cursor_type.h" = null;
+          "custom.h" = null;
+          "customentity.h" = null;
+          "edict.h" = null;
+          "eiface.h" = null;
+          "key_modifiers.h" = null;
+          "keydefs.h" = null;
+          "menu_int.h" = null;
+          "mobility_int.h" = null;
+          "physint.h" = null;
+          platform = {
+            android = [
+              "android.c"
+              "dlsym-weak.c"
+              "dlsym-weak.h"
+              "lib_android.c"
+              "lib_android.h"
+              "linker.h"
+            ];
+            apple = [
+              "id_apple.c"
+              "lib_apple.c"
+            ];
+            dos = [
+              "in_dos.c"
+              "ld.sh"
+              "objcopy.sh"
+              "sys_dos.c"
+              "vid_dos.c"
+            ];
+            ios = {
+              "SDL_uikit_main.c" = null;
+              bundle = [
+                "Info.plist"
+                "entitlements.plist"
+              ];
+              "launchdialog.m" = null;
+              "window_insets.m" = null;
+            };
+            irix = [
+              "dladdr.c"
+              "dladdr.h"
+              "xash-exec"
+            ];
+            linux = [
+              "in_evdev.c"
+              "s_alsa.c"
+              "sys_linux.c"
+              "vid_fbdev.c"
+            ];
+            misc = [
+              "kmalloc.c"
+              "lib_static.c"
+              "sbrk.c"
+              "swap.h"
+            ];
+            nswitch = [
+              "icon.jpg"
+              "sys_nswitch.c"
+              "xash3d-fwgs.nacp"
+            ];
+            "platform.h" = null;
+            posix = expandClusters [
+              {
+                m = [
+                  ".h"
+                  "_libbacktrace.c"
+                  "_posix.c"
+                ];
+                p = "crash";
+                s = "";
+              }
+              "con_posix.c"
+              "id_posix.c"
+              "lib_posix.c"
+              "net.h"
+              "sys_posix.c"
+            ];
+            ps4 = {
+              "crash_ps4.c" = null;
+              "crash_ps4.h" = null;
+              gnm = [
+                "gnm_dev.c"
+                "gnm_dev.h"
+                "gnm_engine.h"
+              ];
+              "in_ps4.c" = null;
+              "kbm_ps4.c" = null;
+              "lib_ps4.c" = null;
+              "s_ps4.c" = null;
+              sce_sys = [
+                "icon0.png"
+                "pic0.png"
+              ];
+              "sys_ps4.c" = null;
+              "vid_gnm.c" = null;
+              "voice_ps4.c" = null;
+            };
+            psvita = {
+              "in_psvita.c" = null;
+              "net_psvita.h" = null;
+              sce_sys = {
+                "icon0.png" = null;
+                livearea = {
+                  contents = [
+                    "bg.png"
+                    "startup.png"
+                    "template.xml"
+                  ];
+                };
+              };
+              "sys_psvita.c" = null;
+            };
+            sailfish = expandClusters [
+              {
+                m = [
+                  "in"
+                  "sys"
+                  "vid"
+                ];
+                p = "";
+                s = "_sailfish.c";
+              }
+            ];
+            sdl1 = expandClusters [
+              {
+                m = [
+                  "s"
+                  "sys"
+                  "vid"
+                ];
+                p = "";
+                s = "_sdl1.c";
+              }
+              "host_sdl1.c"
+              "in_sdl1.c"
+              "platform_sdl1.h"
+            ];
+            sdl2 = expandClusters [
+              {
+                m = [
+                  "host"
+                  "in"
+                  "joy"
+                ];
+                p = "";
+                s = "_sdl2.c";
+              }
+              {
+                m = [
+                  "s"
+                  "sensor"
+                  "sys"
+                  "vid"
+                ];
+                p = "";
+                s = "_sdl2.c";
+              }
+              "platform_sdl2.h"
+            ];
+            sdl3 = expandClusters [
+              {
+                m = [
+                  "host"
+                  "in"
+                  "joy"
+                ];
+                p = "";
+                s = "_sdl3.c";
+              }
+              {
+                m = [
+                  "s"
+                  "sensor"
+                  "sys"
+                  "vid"
+                ];
+                p = "";
+                s = "_sdl3.c";
+              }
+              "platform_sdl3.h"
+            ];
+            stub = [
+              "net_stub.h"
+              "s_stub.c"
+            ];
+            win32 = expandClusters [
+              {
+                m = [
+                  "con"
+                  "crash"
+                  "lib_custom"
+                  "lib"
+                ];
+                p = "";
+                s = "_win.c";
+              }
+              "lib_win.h"
+              "net.h"
+              "sys_win.c"
+            ];
+          };
+          "progdefs.h" = null;
+          "ref_api.h" = null;
+          server = expandClusters [
+            {
+              m = [
+                "client"
+                "cmds"
+                "custom"
+                "filter"
+                "frame"
+                "game"
+                "init"
+                "log"
+                "main"
+                "move"
+                "phys"
+                "pmove"
+                "query"
+                "save"
+                "world"
+              ];
+              p = "sv_";
+              s = ".c";
+            }
+            "server.h"
+          ];
+          "shake.h" = null;
+          "sprite.h" = null;
+          "studio.h" = null;
+          "vgui_api.h" = null;
+          "warpsin.h" = null;
+          wscript = null;
+        };
+        filesystem = {
+          "VFileSystem009.cpp" = null;
+          "VFileSystem009.h" = null;
+          "android.c" = null;
+          "dir.c" = null;
+          "dll.c" = null;
+          "exports.txt" = null;
+          "filesystem.c" = null;
+          "filesystem.h" = null;
+          "filesystem_internal.h" = null;
+          "fscallback.h" = null;
+          "gameinfo.c" = null;
+          "io.c" = null;
+          "pak.c" = null;
+          "searchpath.c" = null;
+          "sys.c" = null;
+          tests = [
+            "caseinsensitive.c"
+            "filecopy.c"
+            "filesystem_test_common.h"
+            "interface.cpp"
+            "no-init.c"
+          ];
+          "wad.c" = null;
+          wscript = null;
+          "zip.c" = null;
+        };
+        game_launch = [
+          "game.cpp"
+          "game.rc"
+          "icon-xash-material.ico"
+          "icon-xash-material.png"
+          "wscript"
+        ];
+        pm_shared = [
+          "pm_defs.h"
+          "pm_info.h"
+        ];
+        public = {
+          "atlas.c" = null;
+          "atlas.h" = null;
+          "build.c" = null;
+          "build_vcs.c" = null;
+          "crclib.c" = null;
+          "crclib.h" = null;
+          "crtlib.c" = null;
+          "crtlib.h" = null;
+          "dllhelpers.c" = null;
+          "getopt.c" = null;
+          "getopt.h" = null;
+          "matrixlib.c" = null;
+          "swaplib.h" = null;
+          tests = expandClusters [
+            {
+              m = [
+                "atlas"
+                "atoi"
+                "build"
+                "efp"
+                "filebase"
+                "fileext"
+                "hullsize"
+                "parsefile"
+                "siphash"
+                "strings"
+                "swapstruct"
+                "utflib"
+              ];
+              p = "test_";
+              s = ".c";
+            }
+          ];
+          "utflib.c" = null;
+          "utflib.h" = null;
+          wscript = null;
+          "xash3d_mathlib.c" = null;
+          "xash3d_mathlib.h" = null;
+          "zlib_wrapper.h" = null;
+        };
+        ref = {
+          common = expandClusters [
+            {
+              m = [
+                "image"
+                "light"
+                "math"
+                "skybox"
+              ];
+              p = "ref_";
+              s = ".c";
+            }
+            "ref_common.h"
+            "ref_context.c"
+            "wscript"
+          ];
+          gl = {
+            "exports.txt" = null;
+            gl2_shim = [
+              "fragment.glsl.inc"
+              "gl2_shim.c"
+              "gl2_shim.h"
+              "vertex.glsl.inc"
+            ];
+            "gl_alias.c" = null;
+            "gl_backend.c" = null;
+            "gl_beams.c" = null;
+            "gl_context.c" = null;
+            "gl_cull.c" = null;
+            "gl_decals.c" = null;
+            "gl_draw.c" = null;
+            "gl_export.h" = null;
+            "gl_fbo.c" = null;
+            "gl_frustum.c" = null;
+            "gl_frustum.h" = null;
+            "gl_image.c" = null;
+            "gl_local.h" = null;
+            "gl_opengl.c" = null;
+            "gl_rmain.c" = null;
+            "gl_rpart.c" = null;
+            "gl_rsurf.c" = null;
+            "gl_sprite.c" = null;
+            "gl_studio.c" = null;
+            "gl_triapi.c" = null;
+            "gl_warp.c" = null;
+            gnm_shim = {
+              "gnm_shaders.h" = null;
+              "gnm_shim.c" = null;
+              "gnm_shim.h" = null;
+              shaders = expandClusters [
+                {
+                  m = [
+                    "clear.frag"
+                    "clear.vert"
+                    "ff.frag"
+                    "ff.vert"
+                  ];
+                  p = "";
+                  s = ".glsl";
+                }
+              ];
+              wscript = null;
+            };
+            vgl_shim = {
+              vgl_shaders = [
+                "fragment.cg.inc"
+                "vertex.cg.inc"
+              ];
+              "vgl_shim.c" = null;
+              "vgl_shim.h" = null;
+              wscript = null;
+            };
+            wscript = null;
+          };
+          null = [
+            "r_context.c"
+            "wscript"
+          ];
+          soft = expandClusters [
+            {
+              m = [
+                "can"
+                "prite"
+                "tudio"
+                "urf"
+              ];
+              p = "r_s";
+              s = ".c";
+            }
+            "adivtab.h"
+            "r_aclip.c"
+            "r_beams.c"
+            "r_bsp.c"
+            "r_context.c"
+            "r_decals.c"
+            "r_draw.c"
+            "r_edge.c"
+            "r_glblit.c"
+            "r_image.c"
+            "r_local.h"
+            "r_main.c"
+            "r_misc.c"
+            "r_part.c"
+            "r_polyse.c"
+            "r_rast.c"
+            "r_trialias.c"
+            "r_triapi.c"
+            "wscript"
+          ];
+        };
+        sailfish = {
+          "harbour-xash3d-fwgs.desktop" = null;
+          "harbour-xash3d-fwgs.spec" = null;
+          icons = {
+            "108x108" = "harbour-xash3d-fwgs.png";
+            "128x128" = "harbour-xash3d-fwgs.png";
+            "172x172" = "harbour-xash3d-fwgs.png";
+            "86x86" = "harbour-xash3d-fwgs.png";
+            "single-shape1.svg" = null;
+          };
+          qml = {
+            "MessageBox.qml" = null;
+            cover = "CoverPage.qml";
+            "harbour-xash3d-fwgs.qml" = null;
+            pages = expandClusters [
+              {
+                m = [
+                  "About"
+                  "CrashLogs"
+                  "Crash"
+                  "Download"
+                  "Game"
+                  "Games"
+                  "License"
+                  "Licenses"
+                  "Settings"
+                ];
+                p = "";
+                s = "Page.qml";
+              }
+              "UpdateDialog.qml"
+            ];
+          };
+          src = [
+            "crashreports.cpp"
+            "crashreports.h"
+            "engine.cpp"
+            "engine.h"
+            "gamecover.cpp"
+            "gamecover.h"
+            "launcher.cpp"
+            "launcher.h"
+            "main.cpp"
+            "megabuild.cpp"
+            "megabuild.h"
+            "messagebox.cpp"
+            "messagebox.h"
+            "settings.h"
+            "updater.cpp"
+            "updater.h"
+          ];
+          translations = [
+            "harbour-xash3d-fwgs-ru.ts"
+            "harbour-xash3d-fwgs.ts"
+          ];
+          wscript = null;
+        };
+        scripts = {
+          "build-ninja.py" = null;
+          cirrus = "build_freebsd.sh";
+          "configure-ninja.py" = null;
+          flatpak = [
+            "run.sh"
+            "su.xash.Engine.Compat.i386.desktop"
+            "su.xash.Engine.Compat.i386.yml"
+          ];
+          "fwgs.pfx" = null;
+          gha = {
+            "build_android.sh" = null;
+            "build_apple.sh" = null;
+            "build_ios.sh" = null;
+            "build_linux-e2k.sh" = null;
+            "build_linux.sh" = null;
+            "build_motomagx.sh" = null;
+            "build_nswitch.sh" = null;
+            "build_nswitch_docker.sh" = null;
+            "build_ps4.sh" = null;
+            "build_psvita.sh" = null;
+            "build_sailfish.sh" = null;
+            "build_win32.sh" = null;
+            "deps_android.sh" = null;
+            "deps_apple.sh" = null;
+            "deps_ios.sh" = null;
+            "deps_linux-e2k.sh" = null;
+            "deps_linux.sh" = null;
+            "deps_motomagx.sh" = null;
+            "deps_nswitch.sh" = null;
+            "deps_ps4.sh" = null;
+            "deps_psvita.sh" = null;
+            "deps_sailfish.sh" = null;
+            "deps_win32.sh" = null;
+            linux = [
+              "AppRun"
+              "xash3d-fwgs.desktop"
+            ];
+            "make_release.sh" = null;
+            "validate_sailfish.sh" = null;
+          };
+          ios = expandClusters [
+            {
+              m = [
+                "allmods"
+                "cs16"
+                "hlsdk"
+              ];
+              p = "build";
+              s = ".sh";
+            }
+            "createipa.sh"
+          ];
+          "lib-e2k.sh" = null;
+          "lib.sh" = null;
+          "makepak.py" = null;
+          ps4 = "symbolize.sh";
+          waifulib = expandClusters [
+            {
+              m = [
+                "4"
+                "p"
+                "vita"
+              ];
+              p = "ps";
+              s = ".py";
+            }
+            "clang_format.py"
+            "compiler_optimizations.py"
+            "host_tool_compiler.py"
+            "ninja.py"
+            "ninja_syntax.py"
+            "nswitch.py"
+            "owcc.py"
+            "sdl2.py"
+            "xcompile.py"
+            "xshlib.py"
+            "zip.py"
+          ];
+          "xashds@.service" = null;
+        };
+        "uncrustify.cfg" = null;
+        utils = {
+          bshift-swap = "bshift-swap.py";
+          mdldec = {
+            Makefile = null;
+            "mdldec.c" = null;
+            "mdldec.h" = null;
+            "qc.c" = null;
+            "qc.h" = null;
+            res = "activities.txt";
+            "settings.h" = null;
+            "smd.c" = null;
+            "smd.h" = null;
+            "texture.c" = null;
+            "texture.h" = null;
+            "utils.c" = null;
+            "utils.h" = null;
+            "version.h" = null;
+            wscript = null;
+          };
+          run-fuzzer = [
+            "run-fuzzer.c"
+            "wscript"
+          ];
+          xar = [
+            "wscript"
+            "xar.c"
+          ];
+          xash-clang-format = {
+            "config.c" = null;
+            "main.c" = null;
+            "proc.c" = null;
+            tests = expandClusters [
+              {
+                m = [
+                  "config"
+                  "transform"
+                  "version"
+                ];
+                p = "test_";
+                s = ".c";
+              }
+            ];
+            "transform.c" = null;
+            "version.c" = null;
+            wscript = null;
+            "xcf.h" = null;
+          };
+          xrcon-tui = [
+            "edit.c"
+            "edit.h"
+            "json.c"
+            "json.h"
+            "log_buf.c"
+            "log_buf.h"
+            "main.c"
+            "mcp.c"
+            "mcp.h"
+            "net.c"
+            "net.h"
+            "scrollback.c"
+            "scrollback.h"
+            "sys.h"
+            "sys_posix.c"
+            "sys_win32.c"
+            "text.c"
+            "text.h"
+            "ui.c"
+            "ui.h"
+            "wscript"
+          ];
+        };
+        waf = null;
+        "waf.bat" = null;
+        wscript = null;
+      };
+      hash = "sha1-9JnCUEz/rnIp0yd+UcBysy98GDk=";
+      ref = "refs/tags/continuous";
+      rev = "707596f4905689ec224e993fcaa4d4ad66aa67d6";
+      type = "git";
+      url = "https://github.com/FWGS/xash3d-fwgs.git";
+    };
+  };
   minecraft = {
     libraries = {
       fabric =
@@ -845070,7 +848453,7 @@ in
             versionId = "2BOGGzhf";
           };
           "11.14.0.1046-fabric" = {
-            date = "2026-08-05T13:23:06.738997Z";
+            date = "2026-08-05T13:25:22.930742Z";
             filename = "jei-1.19.2-fabric-11.14.0.1046.jar";
             gameVersions = [
               "1.19.2"
@@ -845079,7 +848462,7 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "RlFScbCR";
+            versionId = "rPttgeeC";
           };
           "11.15.0.1047" = {
             date = "2026-08-05T13:30:35.028495Z";
@@ -861436,7 +864819,7 @@ in
             versionId = "an8XUVeu";
           };
           "19.37.0.363-fabric" = {
-            date = "2026-07-12T07:00:59.966131Z";
+            date = "2026-07-12T07:01:01.477335Z";
             filename = "jei-1.21.1-fabric-19.37.0.363.jar";
             gameVersions = [
               "1.21"
@@ -861446,7 +864829,7 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "Tau8bULq";
+            versionId = "pj3TahPU";
           };
           "19.37.0.363-forge" = {
             date = "2026-07-12T07:01:21.778520Z";
@@ -874068,7 +877451,7 @@ in
             versionId = "eT3qF2HL";
           };
           "29.5.0.28-fabric" = {
-            date = "2026-04-30T13:04:24.167140Z";
+            date = "2026-04-30T13:04:24.776953Z";
             filename = "jei-26.1.2-fabric-29.5.0.28.jar";
             gameVersions = [
               "26.1"
@@ -874079,7 +877462,7 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "gTohJjh7";
+            versionId = "A7vaQAvf";
           };
           "29.53.0.112" = {
             date = "2026-10-28T13:29:43.602717Z";
@@ -882387,7 +885770,7 @@ in
             versionId = "ThnvuABz";
           };
           "31.15.0.77-fabric" = {
-            date = "2026-10-17T09:37:59.183594Z";
+            date = "2026-10-17T09:37:58.997003Z";
             filename = "jei-26.3-fabric-31.15.0.77.jar";
             gameVersions = [
               "26.3"
@@ -882396,7 +885779,7 @@ in
             loaders = [
               "fabric"
             ];
-            versionId = "mEglbjN9";
+            versionId = "wJgyN5n1";
           };
           "31.15.0.78" = {
             date = "2026-10-17T09:47:13.400651Z";
@@ -882877,6 +886260,30 @@ in
               "fabric"
             ];
             versionId = "hif1VmML";
+          };
+          "31.17.0.113" = {
+            date = "2026-11-12T15:13:49.602784Z";
+            filename = "jei-26.3-neoforge-31.17.0.113.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-/cn6ZaaZ/vEF8OMlEN5EtE1oNnoHEm+9GeZrO1SRy8HHtkmKU6WK1ihQHcYTQ0skzTvAQHvU8MA3v8SYq0ZsKw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "hvy9mHtw";
+          };
+          "31.17.0.113-fabric" = {
+            date = "2026-11-12T15:13:37.663826Z";
+            filename = "jei-26.3-fabric-31.17.0.113.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-k9jLOM1VXD+kduyP5DnT9B+9Hab5QsghOEw6zDUFnbMUD+MldiLqEJcDPjnADBIR3VniCdtOCQaOl54zbwy0IA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "zX75GFgt";
           };
           "31.17.0.93" = {
             date = "2026-10-25T08:27:18.757110Z";
@@ -893377,6 +896784,31 @@ in
             ];
             versionId = "rS9B5M5H";
           };
+          "mc1.21.1-0.6.4-fabric" = {
+            date = "2024-12-17T20:58:11.696561Z";
+            filename = "sodium-fabric-0.6.4+mc1.21.1.jar";
+            gameVersions = [
+              "1.21"
+              "1.21.1"
+            ];
+            hash = "sha512-ZN3+Dfw7WUBiTms86+uXlIK+AEYuS/SdZpcaZPVwtnWT1s0hH2DbE5tz438WVDvFZgUYJsvYjLaiBNwMJd7LRA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "lzNrocQS";
+          };
+          "mc1.21.1-0.6.4-neoforge" = {
+            date = "2024-12-17T20:58:35.458981Z";
+            filename = "sodium-neoforge-0.6.4+mc1.21.1.jar";
+            gameVersions = [
+              "1.21.1"
+            ];
+            hash = "sha512-1nsT0uCByRCWjQN8txmUMGYpdcUFvYpsN0zir+ja2BiH1jt1hQ7JqkCSOMZTE6ledVEH0W1S/Ruj1YmtSnrwUQ==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "yh7wTLt0";
+          };
           "mc1.21.1-0.6.5-fabric" = {
             date = "2024-12-17T22:10:57.615075Z";
             filename = "sodium-fabric-0.6.5+mc1.21.1.jar";
@@ -894413,6 +897845,31 @@ in
             ];
             versionId = "PoLJlR6Z";
           };
+          "mc1.21.3-0.6.4-fabric" = {
+            date = "2024-12-17T20:59:03.377266Z";
+            filename = "sodium-fabric-0.6.4+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.2"
+              "1.21.3"
+            ];
+            hash = "sha512-FuSRvNXBpBUUQJAD9l2ZYK9tOni8gsQRen6YZRYMnX88iEUuh/lJP/GFSFTmYKN4YhNZE5NAKYSa7HKCo78hsg==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "8gvU5X0Y";
+          };
+          "mc1.21.3-0.6.4-neoforge" = {
+            date = "2024-12-17T20:59:24.062784Z";
+            filename = "sodium-neoforge-0.6.4+mc1.21.3.jar";
+            gameVersions = [
+              "1.21.3"
+            ];
+            hash = "sha512-R+ZX4hByHdgkTeN8RqjlOprp8RzWSUjU4oabxHX5V2fq3SVCm46sNf/0teHwXBat7Yb4BQ629lyZl3xWN0jNtw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "ldExj4cr";
+          };
           "mc1.21.3-0.6.5-fabric" = {
             date = "2024-12-17T22:15:19.396605Z";
             filename = "sodium-fabric-0.6.5+mc1.21.3.jar";
@@ -894608,6 +898065,30 @@ in
               "neoforge"
             ];
             versionId = "cQxHrxZR";
+          };
+          "mc1.21.4-0.6.4-fabric" = {
+            date = "2024-12-17T20:59:57.275713Z";
+            filename = "sodium-fabric-0.6.4+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-NpVoMo25E5xe4v7/ckc62D7kXIPrPnPQCQcjTdHaI9gzejyJGGTVdGmQWtzy+ZYwor7Z61y76ndcGmZa5kIKsw==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "8yyQEk3d";
+          };
+          "mc1.21.4-0.6.4-neoforge" = {
+            date = "2024-12-17T21:00:16.028430Z";
+            filename = "sodium-neoforge-0.6.4+mc1.21.4.jar";
+            gameVersions = [
+              "1.21.4"
+            ];
+            hash = "sha512-SbGjX5rcI9KVSFM1ORB80dEIp1TDRoKmDx0JwL2xEVg1WkEvEnUmvMx7K9Z5cOAyx64pB5b4zG4Ys+uLcEzHOA==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "WhPNIBJU";
           };
           "mc1.21.4-0.6.5-fabric" = {
             date = "2024-12-17T22:16:12.429427Z";
@@ -895807,6 +899288,30 @@ in
               "neoforge"
             ];
             versionId = "zqgcaQxE";
+          };
+          "mc26.3-0.9.3-beta.5-fabric" = {
+            date = "2026-11-12T01:12:30.154674Z";
+            filename = "sodium-fabric-0.9.3-beta.5+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-ND5jlY44Zwd+y/p1LbwM4HnhJE16ElMJJYreYrwTrsuVxHN41PQudjaclXwfl8Kd11FVEVG2UTaDA3TVU80nXA==";
+            loaders = [
+              "fabric"
+            ];
+            versionId = "v7Lw0h1m";
+          };
+          "mc26.3-0.9.3-beta.5-neoforge" = {
+            date = "2026-11-12T01:12:30.162066Z";
+            filename = "sodium-neoforge-0.9.3-beta.5+mc26.3.jar";
+            gameVersions = [
+              "26.3"
+            ];
+            hash = "sha512-pGDXVC3KjqRh0W0vFyv96Tvt6VUPwHbUkQQZuKYsHcbBV69zyCd1/3zIlZBLqD7qwWCJJAvuxrretTzw/aRfZw==";
+            loaders = [
+              "neoforge"
+            ];
+            versionId = "CT6qQx01";
           };
           "mc26.3r1-0.9.2-beta.1-fabric" = {
             date = "2026-09-12T02:41:27.619084Z";
@@ -910167,6 +913672,3968 @@ in
       url = "http://redump.org/datfile/xbox360/";
     };
   };
+  rtcw = {
+    realrtcw = {
+      date = "2026-08-29";
+      files = flattenPaths {
+        ".code" = null;
+        ".gitattributes" = null;
+        ".gitignore" = null;
+        "COPYING.txt" = null;
+        "HOWTO-Build (cygwin).txt" = null;
+        "HOWTO-Build (linux).md" = null;
+        "HOWTO-Build (msys2).txt" = null;
+        Makefile = null;
+        "README.md" = null;
+        "README.txt" = null;
+        README_RASPBERRYPI = null;
+        code = {
+          AL = expandClusters [
+            {
+              m = [
+                "-creative"
+                "-presets"
+                ""
+              ];
+              p = "efx";
+              s = ".h";
+            }
+            "al.h"
+            "alc.h"
+            "alext.h"
+          ];
+          SDL3 = {
+            include = {
+              SDL3 = expandClusters [
+                {
+                  m = [
+                    ""
+                    "_assert"
+                    "_asyncio"
+                    "_atomic"
+                    "_audio"
+                    "_begin_code"
+                    "_bits"
+                    "_blendmode"
+                    "_camera"
+                    "_clipboard"
+                    "_close_code"
+                    "_copying"
+                    "_cpuinfo"
+                    "_dialog"
+                    "_dlopennote"
+                    "_egl"
+                    "_endian"
+                    "_error"
+                    "_events"
+                    "_filesystem"
+                    "_gamepad"
+                    "_gpu"
+                    "_guid"
+                    "_haptic"
+                    "_hidapi"
+                    "_hints"
+                    "_init"
+                    "_intrin"
+                    "_iostream"
+                    "_joystick"
+                    "_keyboard"
+                    "_keycode"
+                    "_loadso"
+                    "_locale"
+                    "_log"
+                    "_main"
+                    "_main_impl"
+                    "_messagebox"
+                    "_metal"
+                    "_misc"
+                    "_mouse"
+                    "_mutex"
+                    "_oldnames"
+                    "_opengl"
+                    "_opengl_glext"
+                    "_opengles"
+                    "_opengles2"
+                    "_opengles2_gl2"
+                    "_opengles2_gl2ext"
+                    "_opengles2_gl2platform"
+                    "_opengles2_khrplatform"
+                    "_pen"
+                    "_pixels"
+                    "_platform"
+                    "_platform_defines"
+                    "_power"
+                    "_process"
+                    "_properties"
+                    "_rect"
+                    "_render"
+                    "_revision"
+                    "_scancode"
+                    "_sensor"
+                    "_stdinc"
+                    "_storage"
+                    "_surface"
+                    "_system"
+                    "_test"
+                    "_test_assert"
+                    "_test_common"
+                    "_test_compare"
+                    "_test_crc32"
+                    "_test_font"
+                    "_test_fuzzer"
+                    "_test_harness"
+                    "_test_log"
+                    "_test_md5"
+                    "_test_memory"
+                    "_thread"
+                    "_time"
+                    "_timer"
+                    "_touch"
+                    "_tray"
+                    "_version"
+                    "_video"
+                    "_vulkan"
+                  ];
+                  p = "SDL";
+                  s = ".h";
+                }
+              ];
+            };
+          };
+          asm = [
+            "ftola.asm"
+            "ftola.c"
+            "matha.s"
+            "qasm-inline.h"
+            "qasm.h"
+            "snapvector.asm"
+            "snapvector.c"
+            "snd_mixa.s"
+            "vm_x86_64.asm"
+          ];
+          botlib = expandClusters [
+            {
+              m = [
+                ".h"
+                "_bsp.h"
+                "_bspq3.c"
+                "_cluster.c"
+                "_cluster.h"
+                "_debug.c"
+                "_debug.h"
+                "_def.h"
+                "_entity.c"
+                "_entity.h"
+                "_file.c"
+                "_file.h"
+                "_funcs.h"
+                "_main.c"
+                "_main.h"
+                "_move.c"
+                "_move.h"
+                "_optimize.c"
+                "_optimize.h"
+                "_reach.c"
+                "_reach.h"
+                "_route.c"
+                "_route.h"
+                "_routealt.c"
+                "_routealt.h"
+                "_routetable.c"
+                "_routetable.h"
+                "_sample.c"
+                "_sample.h"
+              ];
+              p = "be_aas";
+              s = "";
+            }
+            {
+              m = [
+                "char.c"
+                "char.h"
+                "chat.c"
+                "chat.h"
+                "gen.c"
+                "gen.h"
+                "goal.c"
+                "goal.h"
+                "move.c"
+                "move.h"
+                "weap.c"
+                "weap.h"
+                "weight.c"
+                "weight.h"
+              ];
+              p = "be_ai_";
+              s = "";
+            }
+            "aasfile.h"
+            "be_ea.c"
+            "be_ea.h"
+            "be_interface.c"
+            "be_interface.h"
+            "botai.h"
+            "botlib.h"
+            "l_crc.c"
+            "l_crc.h"
+            "l_libvar.c"
+            "l_libvar.h"
+            "l_log.c"
+            "l_log.h"
+            "l_memory.c"
+            "l_memory.h"
+            "l_precomp.c"
+            "l_precomp.h"
+            "l_script.c"
+            "l_script.h"
+            "l_struct.c"
+            "l_struct.h"
+            "l_utils.h"
+          ];
+          cgame = expandClusters [
+            {
+              m = [
+                "atmospheric"
+                "consolecmds"
+                "draw"
+                "drawtools"
+                "effects"
+                "ents"
+                "event"
+                "flamethrower"
+                "info"
+              ];
+              p = "cg_";
+              s = ".c";
+            }
+            {
+              m = [
+                "main"
+                "marks"
+                "newdraw"
+                "particles"
+                "players"
+                "playerstate"
+                "predict"
+              ];
+              p = "cg_";
+              s = ".c";
+            }
+            {
+              m = [
+                "coreboard"
+                "ervercmds"
+                "napshot"
+                "ound"
+                "peakerscript"
+              ];
+              p = "cg_s";
+              s = ".c";
+            }
+            {
+              m = [
+                "trails"
+                "view"
+                "weapons"
+              ];
+              p = "cg_";
+              s = ".c";
+            }
+            "cg_local.h"
+            "cg_localents.c"
+            "cg_public.h"
+            "cg_syscalls.asm"
+            "cg_syscalls.c"
+          ];
+          client = expandClusters [
+            {
+              m = [
+                "avi"
+                "cgame"
+                "cin"
+                "console"
+                "curl"
+              ];
+              p = "cl_";
+              s = ".c";
+            }
+            {
+              m = [
+                "input"
+                "keys"
+                "main"
+                "net_chan"
+                "parse"
+                "scrn"
+                "ui"
+              ];
+              p = "cl_";
+              s = ".c";
+            }
+            {
+              m = [
+                "adpcm"
+                "altivec"
+                "codec"
+              ];
+              p = "snd_";
+              s = ".c";
+            }
+            {
+              m = [
+                ".h"
+                "_ogg.c"
+                "_opus.c"
+                "_wav.c"
+              ];
+              p = "snd_codec";
+              s = "";
+            }
+            {
+              m = [
+                "main"
+                "mem"
+                "mix"
+                "openal"
+              ];
+              p = "snd_";
+              s = ".c";
+            }
+            "cl_curl.h"
+            "client.h"
+            "keycodes.h"
+            "keys.h"
+            "libmumblelink.c"
+            "libmumblelink.h"
+            "qal.c"
+            "qal.h"
+            "snd_dma.c"
+            "snd_local.h"
+            "snd_public.h"
+            "snd_wavelet.c"
+          ];
+          "curl-7.60.0" = {
+            include = {
+              README = null;
+              curl = [
+                "curl.h"
+                "curlver.h"
+                "easy.h"
+                "mprintf.h"
+                "multi.h"
+                "stdcheaders.h"
+                "system.h"
+                "typecheck-gcc.h"
+              ];
+            };
+          };
+          "freetype-2.9" = {
+            include = {
+              freetype = {
+                config = [
+                  "ftconfig.h"
+                  "ftheader.h"
+                  "ftmodule.h"
+                  "ftoption.h"
+                  "ftstdlib.h"
+                ];
+                "freetype.h" = null;
+                "ftadvanc.h" = null;
+                "ftbbox.h" = null;
+                "ftbdf.h" = null;
+                "ftbitmap.h" = null;
+                "ftbzip2.h" = null;
+                "ftcache.h" = null;
+                "ftchapters.h" = null;
+                "ftcid.h" = null;
+                "ftdriver.h" = null;
+                "fterrdef.h" = null;
+                "fterrors.h" = null;
+                "ftfntfmt.h" = null;
+                "ftgasp.h" = null;
+                "ftglyph.h" = null;
+                "ftgxval.h" = null;
+                "ftgzip.h" = null;
+                "ftimage.h" = null;
+                "ftincrem.h" = null;
+                "ftlcdfil.h" = null;
+                "ftlist.h" = null;
+                "ftlzw.h" = null;
+                "ftmac.h" = null;
+                "ftmm.h" = null;
+                "ftmodapi.h" = null;
+                "ftmoderr.h" = null;
+                "ftotval.h" = null;
+                "ftoutln.h" = null;
+                "ftparams.h" = null;
+                "ftpfr.h" = null;
+                "ftrender.h" = null;
+                "ftsizes.h" = null;
+                "ftsnames.h" = null;
+                "ftstroke.h" = null;
+                "ftsynth.h" = null;
+                "ftsystem.h" = null;
+                "fttrigon.h" = null;
+                "fttypes.h" = null;
+                "ftwinfnt.h" = null;
+                internal = {
+                  "autohint.h" = null;
+                  "cffotypes.h" = null;
+                  "cfftypes.h" = null;
+                  "ftcalc.h" = null;
+                  "ftdebug.h" = null;
+                  "ftdrv.h" = null;
+                  "ftgloadr.h" = null;
+                  "fthash.h" = null;
+                  "ftmemory.h" = null;
+                  "ftobjs.h" = null;
+                  "ftpic.h" = null;
+                  "ftpsprop.h" = null;
+                  "ftrfork.h" = null;
+                  "ftserv.h" = null;
+                  "ftstream.h" = null;
+                  "fttrace.h" = null;
+                  "ftvalid.h" = null;
+                  "internal.h" = null;
+                  "psaux.h" = null;
+                  "pshints.h" = null;
+                  services = expandClusters [
+                    {
+                      m = [
+                        "fr"
+                        "ostnm"
+                        "rop"
+                        "scmap"
+                        "sinfo"
+                      ];
+                      p = "svp";
+                      s = ".h";
+                    }
+                    {
+                      m = [
+                        "cmap"
+                        "eng"
+                        "glyf"
+                      ];
+                      p = "svtt";
+                      s = ".h";
+                    }
+                    "svbdf.h"
+                    "svcfftl.h"
+                    "svcid.h"
+                    "svfntfmt.h"
+                    "svgldict.h"
+                    "svgxval.h"
+                    "svkern.h"
+                    "svmetric.h"
+                    "svmm.h"
+                    "svotval.h"
+                    "svsfnt.h"
+                    "svwinfnt.h"
+                  ];
+                  "sfnt.h" = null;
+                  "t1types.h" = null;
+                  "tttypes.h" = null;
+                };
+                "t1tables.h" = null;
+                "ttnameid.h" = null;
+                "tttables.h" = null;
+                "tttags.h" = null;
+              };
+              "ft2build.h" = null;
+            };
+            src = {
+              autofit = expandClusters [
+                {
+                  m = [
+                    "c"
+                    "cin"
+                    "dat"
+                    "h"
+                    "hin"
+                  ];
+                  p = "afblue.";
+                  s = "";
+                }
+                {
+                  m = [
+                    ".c"
+                    ".h"
+                    "2.c"
+                    "2.h"
+                  ];
+                  p = "aflatin";
+                  s = "";
+                }
+                "afangles.c"
+                "afangles.h"
+                "afcjk.c"
+                "afcjk.h"
+                "afcover.h"
+                "afdummy.c"
+                "afdummy.h"
+                "aferrors.h"
+                "afglobal.c"
+                "afglobal.h"
+                "afhints.c"
+                "afhints.h"
+                "afindic.c"
+                "afindic.h"
+                "afloader.c"
+                "afloader.h"
+                "afmodule.c"
+                "afmodule.h"
+                "afpic.c"
+                "afpic.h"
+                "afranges.c"
+                "afranges.h"
+                "afscript.h"
+                "afshaper.c"
+                "afshaper.h"
+                "afstyles.h"
+                "aftypes.h"
+                "afwarp.c"
+                "afwarp.h"
+                "afwrtsys.h"
+                "autofit.c"
+              ];
+              base = expandClusters [
+                {
+                  m = [
+                    "box"
+                    "df"
+                    "itmap"
+                  ];
+                  p = "ftb";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "asp"
+                    "loadr"
+                    "lyph"
+                    "xval"
+                  ];
+                  p = "ftg";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "bjs"
+                    "tval"
+                    "utln"
+                  ];
+                  p = "fto";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "atent"
+                    "fr"
+                    "ic"
+                    "sprop"
+                  ];
+                  p = "ftp";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "names"
+                    "tream"
+                    "troke"
+                    "ynth"
+                    "ystem"
+                  ];
+                  p = "fts";
+                  s = ".c";
+                }
+                "basepic.c"
+                "basepic.h"
+                "ftadvanc.c"
+                "ftapi.c"
+                "ftbase.c"
+                "ftbase.h"
+                "ftcalc.c"
+                "ftcid.c"
+                "ftdbgmem.c"
+                "ftdebug.c"
+                "ftfntfmt.c"
+                "ftfstype.c"
+                "fthash.c"
+                "ftinit.c"
+                "ftlcdfil.c"
+                "ftmac.c"
+                "ftmm.c"
+                "ftrfork.c"
+                "fttrigon.c"
+                "fttype1.c"
+                "ftutil.c"
+                "ftwinfnt.c"
+                "md5.c"
+                "md5.h"
+              ];
+              bdf = [
+                "README"
+                "bdf.c"
+                "bdf.h"
+                "bdfdrivr.c"
+                "bdfdrivr.h"
+                "bdferror.h"
+                "bdflib.c"
+              ];
+              bzip2 = "ftbzip2.c";
+              cache = expandClusters [
+                {
+                  m = [
+                    "ache"
+                    "basic"
+                    "cache"
+                  ];
+                  p = "ftc";
+                  s = ".c";
+                }
+                "ftccache.h"
+                "ftccback.h"
+                "ftccmap.c"
+                "ftcerror.h"
+                "ftcglyph.c"
+                "ftcglyph.h"
+                "ftcimage.c"
+                "ftcimage.h"
+                "ftcmanag.c"
+                "ftcmanag.h"
+                "ftcmru.c"
+                "ftcmru.h"
+                "ftcsbits.c"
+                "ftcsbits.h"
+              ];
+              cff = [
+                "cff.c"
+                "cffcmap.c"
+                "cffcmap.h"
+                "cffdrivr.c"
+                "cffdrivr.h"
+                "cfferrs.h"
+                "cffgload.c"
+                "cffgload.h"
+                "cffload.c"
+                "cffload.h"
+                "cffobjs.c"
+                "cffobjs.h"
+                "cffparse.c"
+                "cffparse.h"
+                "cffpic.c"
+                "cffpic.h"
+                "cfftoken.h"
+              ];
+              cid = [
+                "ciderrs.h"
+                "cidgload.c"
+                "cidgload.h"
+                "cidload.c"
+                "cidload.h"
+                "cidobjs.c"
+                "cidobjs.h"
+                "cidparse.c"
+                "cidparse.h"
+                "cidriver.c"
+                "cidriver.h"
+                "cidtoken.h"
+                "type1cid.c"
+              ];
+              gxvalid = expandClusters [
+                {
+                  m = [
+                    "fgen"
+                    "just"
+                    "kern"
+                    "lcar"
+                    "mod"
+                  ];
+                  p = "gxv";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "d.h"
+                    "rt.c"
+                    "rt.h"
+                    "rt0.c"
+                    "rt1.c"
+                    "rt2.c"
+                    "rt4.c"
+                    "rt5.c"
+                    "rx.c"
+                    "rx.h"
+                    "rx0.c"
+                    "rx1.c"
+                    "rx2.c"
+                    "rx4.c"
+                    "rx5.c"
+                  ];
+                  p = "gxvmo";
+                  s = "";
+                }
+                {
+                  m = [
+                    "opbd"
+                    "prop"
+                    "trak"
+                  ];
+                  p = "gxv";
+                  s = ".c";
+                }
+                "README"
+                "gxvalid.c"
+                "gxvalid.h"
+                "gxvbsln.c"
+                "gxvcommn.c"
+                "gxvcommn.h"
+                "gxverror.h"
+                "gxvfeat.c"
+                "gxvfeat.h"
+              ];
+              gzip = [
+                "adler32.c"
+                "ftgzip.c"
+                "ftzconf.h"
+                "infblock.c"
+                "infblock.h"
+                "infcodes.c"
+                "infcodes.h"
+                "inffixed.h"
+                "inflate.c"
+                "inftrees.c"
+                "inftrees.h"
+                "infutil.c"
+                "infutil.h"
+                "zlib.h"
+                "zutil.c"
+                "zutil.h"
+              ];
+              lzw = [
+                "ftlzw.c"
+                "ftzopen.c"
+                "ftzopen.h"
+              ];
+              otvalid = expandClusters [
+                {
+                  m = [
+                    "gsub"
+                    "jstf"
+                    "math"
+                    "mod"
+                  ];
+                  p = "otv";
+                  s = ".c";
+                }
+                "otvalid.c"
+                "otvalid.h"
+                "otvbase.c"
+                "otvcommn.c"
+                "otvcommn.h"
+                "otverror.h"
+                "otvgdef.c"
+                "otvgpos.c"
+                "otvgpos.h"
+                "otvmod.h"
+              ];
+              pcf = [
+                "README"
+                "pcf.c"
+                "pcf.h"
+                "pcfdrivr.c"
+                "pcfdrivr.h"
+                "pcferror.h"
+                "pcfread.c"
+                "pcfread.h"
+                "pcfutil.c"
+                "pcfutil.h"
+              ];
+              pfr = [
+                "pfr.c"
+                "pfrcmap.c"
+                "pfrcmap.h"
+                "pfrdrivr.c"
+                "pfrdrivr.h"
+                "pfrerror.h"
+                "pfrgload.c"
+                "pfrgload.h"
+                "pfrload.c"
+                "pfrload.h"
+                "pfrobjs.c"
+                "pfrobjs.h"
+                "pfrsbit.c"
+                "pfrsbit.h"
+                "pfrtypes.h"
+              ];
+              psaux = expandClusters [
+                {
+                  m = [
+                    ".c"
+                    "err.h"
+                    "mod.c"
+                    "mod.h"
+                  ];
+                  p = "psaux";
+                  s = "";
+                }
+                "afmparse.c"
+                "afmparse.h"
+                "cffdecode.c"
+                "cffdecode.h"
+                "psarrst.c"
+                "psarrst.h"
+                "psblues.c"
+                "psblues.h"
+                "psconv.c"
+                "psconv.h"
+                "pserror.c"
+                "pserror.h"
+                "psfixed.h"
+                "psfont.c"
+                "psfont.h"
+                "psft.c"
+                "psft.h"
+                "psglue.h"
+                "pshints.c"
+                "pshints.h"
+                "psintrp.c"
+                "psintrp.h"
+                "psobjs.c"
+                "psobjs.h"
+                "psread.c"
+                "psread.h"
+                "psstack.c"
+                "psstack.h"
+                "pstypes.h"
+                "t1cmap.c"
+                "t1cmap.h"
+                "t1decode.c"
+                "t1decode.h"
+              ];
+              pshinter = [
+                "pshalgo.c"
+                "pshalgo.h"
+                "pshglob.c"
+                "pshglob.h"
+                "pshinter.c"
+                "pshmod.c"
+                "pshmod.h"
+                "pshnterr.h"
+                "pshpic.c"
+                "pshpic.h"
+                "pshrec.c"
+                "pshrec.h"
+              ];
+              psnames = [
+                "psmodule.c"
+                "psmodule.h"
+                "psnamerr.h"
+                "psnames.c"
+                "pspic.c"
+                "pspic.h"
+                "pstables.h"
+              ];
+              raster = [
+                "ftmisc.h"
+                "ftraster.c"
+                "ftraster.h"
+                "ftrend1.c"
+                "ftrend1.h"
+                "raster.c"
+                "rasterrs.h"
+                "rastpic.c"
+                "rastpic.h"
+              ];
+              sfnt = expandClusters [
+                {
+                  m = [
+                    ".c"
+                    ".h"
+                    "c.h"
+                  ];
+                  p = "ttcmap";
+                  s = "";
+                }
+                "pngshim.c"
+                "pngshim.h"
+                "sfdriver.c"
+                "sfdriver.h"
+                "sferrors.h"
+                "sfnt.c"
+                "sfntpic.c"
+                "sfntpic.h"
+                "sfobjs.c"
+                "sfobjs.h"
+                "ttbdf.c"
+                "ttbdf.h"
+                "ttkern.c"
+                "ttkern.h"
+                "ttload.c"
+                "ttload.h"
+                "ttmtx.c"
+                "ttmtx.h"
+                "ttpost.c"
+                "ttpost.h"
+                "ttsbit.c"
+                "ttsbit.h"
+              ];
+              smooth = [
+                "ftgrays.c"
+                "ftgrays.h"
+                "ftsmerrs.h"
+                "ftsmooth.c"
+                "ftsmooth.h"
+                "ftspic.c"
+                "ftspic.h"
+                "smooth.c"
+              ];
+              tools = {
+                "afblue.pl" = null;
+                "apinames.c" = null;
+                "chktrcmp.py" = null;
+                "cordic.py" = null;
+                docmaker = [
+                  "content.py"
+                  "docbeauty.py"
+                  "docmaker.py"
+                  "formatter.py"
+                  "sources.py"
+                  "tohtml.py"
+                  "utils.py"
+                ];
+                ftfuzzer = [
+                  "README"
+                  "ftfuzzer.cc"
+                  "ftmutator.cc"
+                  "rasterfuzzer.cc"
+                  "runinput.cc"
+                ];
+                ftrandom = [
+                  "Makefile"
+                  "README"
+                  "ftrandom.c"
+                ];
+                "glnames.py" = null;
+                no-copyright = null;
+                "test_afm.c" = null;
+                "test_bbox.c" = null;
+                "test_trig.c" = null;
+                update-copyright = null;
+                update-copyright-year = null;
+              };
+              truetype = [
+                "truetype.c"
+                "ttdriver.c"
+                "ttdriver.h"
+                "tterrors.h"
+                "ttgload.c"
+                "ttgload.h"
+                "ttgxvar.c"
+                "ttgxvar.h"
+                "ttinterp.c"
+                "ttinterp.h"
+                "ttobjs.c"
+                "ttobjs.h"
+                "ttpic.c"
+                "ttpic.h"
+                "ttpload.c"
+                "ttpload.h"
+                "ttsubpix.c"
+                "ttsubpix.h"
+              ];
+              type1 = [
+                "t1afm.c"
+                "t1afm.h"
+                "t1driver.c"
+                "t1driver.h"
+                "t1errors.h"
+                "t1gload.c"
+                "t1gload.h"
+                "t1load.c"
+                "t1load.h"
+                "t1objs.c"
+                "t1objs.h"
+                "t1parse.c"
+                "t1parse.h"
+                "t1tokens.h"
+                "type1.c"
+              ];
+              type42 = [
+                "t42drivr.c"
+                "t42drivr.h"
+                "t42error.h"
+                "t42objs.c"
+                "t42objs.h"
+                "t42parse.c"
+                "t42parse.h"
+                "t42types.h"
+                "type42.c"
+              ];
+              winfonts = [
+                "fnterrs.h"
+                "winfnt.c"
+                "winfnt.h"
+              ];
+            };
+          };
+          game = expandClusters [
+            {
+              m = [
+                ".c"
+                ".h"
+                "_characters.c"
+                "_debug.c"
+                "_events.c"
+                "_fight.c"
+                "_fight.h"
+                "_func_attack.c"
+                "_func_boss1.c"
+                "_func_hein.c"
+                "_funcs.c"
+                "_global.h"
+                "_loadouts.c"
+                "_script.c"
+                "_script_actions.c"
+                "_script_ents.c"
+                "_sight.c"
+                "_survival.c"
+                "_think.c"
+              ];
+              p = "ai_cast";
+              s = "";
+            }
+            {
+              m = [
+                "net.c"
+                "net.h"
+                "q3.c"
+                "q3.h"
+              ];
+              p = "ai_dm";
+              s = "";
+            }
+            {
+              m = [
+                "_decs.h"
+                "_decs.h.orig"
+                "s.h"
+                "s.h.orig"
+              ];
+              p = "g_func";
+              s = "";
+            }
+            {
+              m = [
+                "ain"
+                "em"
+                "isc"
+                "issile"
+                "over"
+              ];
+              p = "g_m";
+              s = ".c";
+            }
+            {
+              m = [
+                "ave"
+                "cript"
+                "cript_actions"
+                "ession"
+                "pawn"
+              ];
+              p = "g_s";
+              s = ".c";
+            }
+            {
+              m = [
+                ".h"
+                "_buy.c"
+                "_misc.c"
+                "_score.c"
+              ];
+              p = "g_survival";
+              s = "";
+            }
+            "ai_chat.c"
+            "ai_chat.h"
+            "ai_cmd.c"
+            "ai_cmd.h"
+            "ai_main.c"
+            "ai_main.h"
+            "ai_team.c"
+            "ai_team.h"
+            "bg_animation.c"
+            "bg_jaymod.h"
+            "bg_lib.c"
+            "bg_lib.h"
+            "bg_local.h"
+            "bg_misc.c"
+            "bg_pmove.c"
+            "bg_public.h"
+            "bg_slidemove.c"
+            "chars.h"
+            "g_active.c"
+            "g_alarm.c"
+            "g_bot.c"
+            "g_client.c"
+            "g_cmds.c"
+            "g_combat.c"
+            "g_items.c"
+            "g_local.h"
+            "g_props.c"
+            "g_public.h"
+            "g_svcmds.c"
+            "g_syscalls.asm"
+            "g_syscalls.c"
+            "g_target.c"
+            "g_team.c"
+            "g_team.h"
+            "g_tramcar.c"
+            "g_trigger.c"
+            "g_utils.c"
+            "g_weapon.c"
+            "inv.h"
+            "match.h"
+            "syn.h"
+          ];
+          jpeg-8c = expandClusters [
+            {
+              m = [
+                "pimin"
+                "pistd"
+                "rith"
+              ];
+              p = "jca";
+              s = ".c";
+            }
+            {
+              m = [
+                "pimin"
+                "pistd"
+                "rith"
+                "tadst"
+                "tasrc"
+              ];
+              p = "jda";
+              s = ".c";
+            }
+            {
+              m = [
+                "arker"
+                "aster"
+                "erge"
+              ];
+              p = "jdm";
+              s = ".c";
+            }
+            {
+              m = [
+                "fl"
+                "fs"
+                "in"
+              ];
+              p = "jfdct";
+              s = "t.c";
+            }
+            {
+              m = [
+                "fl"
+                "fs"
+                "in"
+              ];
+              p = "jidct";
+              s = "t.c";
+            }
+            "README"
+            "ioquake3-changes.diff"
+            "jaricom.c"
+            "jccoefct.c"
+            "jccolor.c"
+            "jcdctmgr.c"
+            "jchuff.c"
+            "jcinit.c"
+            "jcmainct.c"
+            "jcmarker.c"
+            "jcmaster.c"
+            "jcomapi.c"
+            "jconfig.h"
+            "jcparam.c"
+            "jcprepct.c"
+            "jcsample.c"
+            "jctrans.c"
+            "jdcoefct.c"
+            "jdcolor.c"
+            "jdct.h"
+            "jddctmgr.c"
+            "jdhuff.c"
+            "jdinput.c"
+            "jdmainct.c"
+            "jdpostct.c"
+            "jdsample.c"
+            "jdtrans.c"
+            "jerror.c"
+            "jerror.h"
+            "jinclude.h"
+            "jmemmgr.c"
+            "jmemnobs.c"
+            "jmemsys.h"
+            "jmorecfg.h"
+            "jpegint.h"
+            "jpeglib.h"
+            "jquant1.c"
+            "jquant2.c"
+            "jutils.c"
+            "jversion.h"
+          ];
+          "libogg-1.3.3" = {
+            include = {
+              ogg = [
+                "config_types.h"
+                "ogg.h"
+                "os_types.h"
+              ];
+            };
+            src = [
+              "bitwise.c"
+              "framing.c"
+            ];
+          };
+          libs = {
+            linux32 = expandClusters [
+              {
+                m = [
+                  "-2.0.so.0.12.0"
+                  "-2.0.so.0.18.0"
+                  "-2.0.so.0.4.1"
+                  "-2.0.so.0.9.0"
+                  "main.a"
+                ];
+                p = "libSDL2";
+                s = "";
+              }
+            ];
+            linux64 = expandClusters [
+              {
+                m = [
+                  "-2.0.so.0.12.0"
+                  "-2.0.so.0.18.0"
+                  "-2.0.so.0.4.1"
+                  "-2.0.so.0.9.0"
+                  "main.a"
+                ];
+                p = "libSDL2";
+                s = "";
+              }
+            ];
+            macosx = [
+              "libSDL2-2.0.0.dylib"
+              "libSDL2main.a"
+              "libopenal.dylib"
+            ];
+            win32 = [
+              "OpenAL32.dll"
+              "SDL3.dll"
+              "SDL3.lib"
+              "libSDL3.dll.a"
+              "libcurl.a"
+            ];
+            win64 = [
+              "OpenAL64.dll"
+              "SDL3.dll"
+              "SDL3.lib"
+              "libSDL3.dll.a"
+              "libcurl.a"
+            ];
+          };
+          "libvorbis-1.3.6" = {
+            include = {
+              vorbis = [
+                "codec.h"
+                "vorbisenc.h"
+                "vorbisfile.h"
+              ];
+            };
+            lib = {
+              "analysis.c" = null;
+              "backends.h" = null;
+              "barkmel.c" = null;
+              "bitrate.c" = null;
+              "bitrate.h" = null;
+              "block.c" = null;
+              books = {
+                coupled = [
+                  "res_books_51.h"
+                  "res_books_stereo.h"
+                ];
+                floor = "floor_books.h";
+                uncoupled = "res_books_uncoupled.h";
+              };
+              "codebook.c" = null;
+              "codebook.h" = null;
+              "codec_internal.h" = null;
+              "envelope.c" = null;
+              "envelope.h" = null;
+              "floor0.c" = null;
+              "floor1.c" = null;
+              "highlevel.h" = null;
+              "info.c" = null;
+              "lookup.c" = null;
+              "lookup.h" = null;
+              "lookup_data.h" = null;
+              "lpc.c" = null;
+              "lpc.h" = null;
+              "lsp.c" = null;
+              "lsp.h" = null;
+              "mapping0.c" = null;
+              "masking.h" = null;
+              "mdct.c" = null;
+              "mdct.h" = null;
+              "misc.h" = null;
+              modes = expandClusters [
+                {
+                  m = [
+                    "11"
+                    "16"
+                    "44"
+                    "8"
+                  ];
+                  p = "psych_";
+                  s = ".h";
+                }
+                {
+                  m = [
+                    "16"
+                    "44"
+                    "44p51"
+                    "44u"
+                    "8"
+                  ];
+                  p = "residue_";
+                  s = ".h";
+                }
+                {
+                  m = [
+                    "11"
+                    "16"
+                    "22"
+                    "32"
+                    "44"
+                    "44p51"
+                    "44u"
+                    "8"
+                    "X"
+                  ];
+                  p = "setup_";
+                  s = ".h";
+                }
+                "floor_all.h"
+              ];
+              "os.h" = null;
+              "psy.c" = null;
+              "psy.h" = null;
+              "psytune.c" = null;
+              "registry.c" = null;
+              "registry.h" = null;
+              "res0.c" = null;
+              "scales.h" = null;
+              "sharedbook.c" = null;
+              "smallft.c" = null;
+              "smallft.h" = null;
+              "synthesis.c" = null;
+              "tone.c" = null;
+              "vorbisenc.c" = null;
+              "vorbisfile.c" = null;
+              "window.c" = null;
+              "window.h" = null;
+            };
+          };
+          null = expandClusters [
+            {
+              m = [
+                "client"
+                "glimp"
+                "input"
+                "main"
+                "net"
+                "snddma"
+              ];
+              p = "null_";
+              s = ".c";
+            }
+            "mac_net.c"
+          ];
+          "opus-1.2.1" = {
+            celt = {
+              "_kiss_fft_guts.h" = null;
+              "arch.h" = null;
+              arm = expandClusters [
+                {
+                  m = [
+                    "ne10_fft.c"
+                    "ne10_mdct.c"
+                    "neon_intr.c"
+                    "pitch_xcorr_arm-gnu.S"
+                    "pitch_xcorr_arm.s"
+                  ];
+                  p = "celt_";
+                  s = "";
+                }
+                {
+                  m = [
+                    "64"
+                    "v4"
+                    "v5e"
+                  ];
+                  p = "fixed_arm";
+                  s = ".h";
+                }
+                "arm2gnu.pl"
+                "arm_celt_map.c"
+                "armcpu.c"
+                "armcpu.h"
+                "armopts.s.in"
+                "fft_arm.h"
+                "kiss_fft_armv4.h"
+                "kiss_fft_armv5e.h"
+                "mdct_arm.h"
+                "pitch_arm.h"
+                "pitch_neon_intr.c"
+              ];
+              "bands.c" = null;
+              "bands.h" = null;
+              "celt.c" = null;
+              "celt.h" = null;
+              "celt_decoder.c" = null;
+              "celt_encoder.c" = null;
+              "celt_lpc.c" = null;
+              "celt_lpc.h" = null;
+              "cpu_support.h" = null;
+              "cwrs.c" = null;
+              "cwrs.h" = null;
+              "ecintrin.h" = null;
+              "entcode.c" = null;
+              "entcode.h" = null;
+              "entdec.c" = null;
+              "entdec.h" = null;
+              "entenc.c" = null;
+              "entenc.h" = null;
+              "fixed_debug.h" = null;
+              "fixed_generic.h" = null;
+              "float_cast.h" = null;
+              "kiss_fft.c" = null;
+              "kiss_fft.h" = null;
+              "laplace.c" = null;
+              "laplace.h" = null;
+              "mathops.c" = null;
+              "mathops.h" = null;
+              "mdct.c" = null;
+              "mdct.h" = null;
+              "mfrngcod.h" = null;
+              mips = expandClusters [
+                {
+                  m = [
+                    "celt"
+                    "fixed_generic"
+                    "kiss_fft"
+                    "mdct"
+                    "pitch"
+                    "vq"
+                  ];
+                  p = "";
+                  s = "_mipsr1.h";
+                }
+              ];
+              "modes.c" = null;
+              "modes.h" = null;
+              "opus_custom_demo.c" = null;
+              "os_support.h" = null;
+              "pitch.c" = null;
+              "pitch.h" = null;
+              "quant_bands.c" = null;
+              "quant_bands.h" = null;
+              "rate.c" = null;
+              "rate.h" = null;
+              "stack_alloc.h" = null;
+              "static_modes_fixed.h" = null;
+              "static_modes_fixed_arm_ne10.h" = null;
+              "static_modes_float.h" = null;
+              "static_modes_float_arm_ne10.h" = null;
+              "vq.c" = null;
+              "vq.h" = null;
+              x86 = expandClusters [
+                {
+                  m = [
+                    ".c"
+                    ".h"
+                    "2.c"
+                    "4_1.c"
+                  ];
+                  p = "pitch_sse";
+                  s = "";
+                }
+                "celt_lpc_sse.c"
+                "celt_lpc_sse.h"
+                "vq_sse.h"
+                "vq_sse2.c"
+                "x86_celt_map.c"
+                "x86cpu.c"
+                "x86cpu.h"
+              ];
+            };
+            include = expandClusters [
+              {
+                m = [
+                  ""
+                  "_custom"
+                  "_defines"
+                  "_multistream"
+                  "_types"
+                ];
+                p = "opus";
+                s = ".h";
+              }
+            ];
+            silk = {
+              "A2NLSF.c" = null;
+              "API.h" = null;
+              "CNG.c" = null;
+              "HP_variable_cutoff.c" = null;
+              "Inlines.h" = null;
+              "LPC_analysis_filter.c" = null;
+              "LPC_fit.c" = null;
+              "LPC_inv_pred_gain.c" = null;
+              "LP_variable_cutoff.c" = null;
+              "MacroCount.h" = null;
+              "MacroDebug.h" = null;
+              "NLSF2A.c" = null;
+              "NLSF_VQ.c" = null;
+              "NLSF_VQ_weights_laroia.c" = null;
+              "NLSF_decode.c" = null;
+              "NLSF_del_dec_quant.c" = null;
+              "NLSF_encode.c" = null;
+              "NLSF_stabilize.c" = null;
+              "NLSF_unpack.c" = null;
+              "NSQ.c" = null;
+              "NSQ.h" = null;
+              "NSQ_del_dec.c" = null;
+              "PLC.c" = null;
+              "PLC.h" = null;
+              "SigProc_FIX.h" = null;
+              "VAD.c" = null;
+              "VQ_WMat_EC.c" = null;
+              "ana_filt_bank_1.c" = null;
+              arm = expandClusters [
+                {
+                  m = [
+                    "64"
+                    "v4"
+                    "v5e"
+                  ];
+                  p = "macros_arm";
+                  s = ".h";
+                }
+                "LPC_inv_pred_gain_arm.h"
+                "LPC_inv_pred_gain_neon_intr.c"
+                "NSQ_del_dec_arm.h"
+                "NSQ_del_dec_neon_intr.c"
+                "NSQ_neon.c"
+                "NSQ_neon.h"
+                "SigProc_FIX_armv4.h"
+                "SigProc_FIX_armv5e.h"
+                "arm_silk_map.c"
+                "biquad_alt_arm.h"
+                "biquad_alt_neon_intr.c"
+              ];
+              "biquad_alt.c" = null;
+              "bwexpander.c" = null;
+              "bwexpander_32.c" = null;
+              "check_control_input.c" = null;
+              "code_signs.c" = null;
+              "control.h" = null;
+              "control_SNR.c" = null;
+              "control_audio_bandwidth.c" = null;
+              "control_codec.c" = null;
+              "debug.c" = null;
+              "debug.h" = null;
+              "dec_API.c" = null;
+              "decode_core.c" = null;
+              "decode_frame.c" = null;
+              "decode_indices.c" = null;
+              "decode_parameters.c" = null;
+              "decode_pitch.c" = null;
+              "decode_pulses.c" = null;
+              "decoder_set_fs.c" = null;
+              "define.h" = null;
+              "enc_API.c" = null;
+              "encode_indices.c" = null;
+              "encode_pulses.c" = null;
+              "errors.h" = null;
+              fixed = {
+                "LTP_analysis_filter_FIX.c" = null;
+                "LTP_scale_ctrl_FIX.c" = null;
+                "apply_sine_window_FIX.c" = null;
+                arm = [
+                  "warped_autocorrelation_FIX_arm.h"
+                  "warped_autocorrelation_FIX_neon_intr.c"
+                ];
+                "autocorr_FIX.c" = null;
+                "burg_modified_FIX.c" = null;
+                "corrMatrix_FIX.c" = null;
+                "encode_frame_FIX.c" = null;
+                "find_LPC_FIX.c" = null;
+                "find_LTP_FIX.c" = null;
+                "find_pitch_lags_FIX.c" = null;
+                "find_pred_coefs_FIX.c" = null;
+                "k2a_FIX.c" = null;
+                "k2a_Q16_FIX.c" = null;
+                "main_FIX.h" = null;
+                mips = [
+                  "noise_shape_analysis_FIX_mipsr1.h"
+                  "warped_autocorrelation_FIX_mipsr1.h"
+                ];
+                "noise_shape_analysis_FIX.c" = null;
+                "pitch_analysis_core_FIX.c" = null;
+                "process_gains_FIX.c" = null;
+                "regularize_correlations_FIX.c" = null;
+                "residual_energy16_FIX.c" = null;
+                "residual_energy_FIX.c" = null;
+                "schur64_FIX.c" = null;
+                "schur_FIX.c" = null;
+                "structs_FIX.h" = null;
+                "vector_ops_FIX.c" = null;
+                "warped_autocorrelation_FIX.c" = null;
+                x86 = [
+                  "burg_modified_FIX_sse.c"
+                  "vector_ops_FIX_sse.c"
+                ];
+              };
+              float = expandClusters [
+                {
+                  m = [
+                    "PC_analysis_filter"
+                    "PC_inv_pred_gain"
+                    "TP_analysis_filter"
+                    "TP_scale_ctrl"
+                  ];
+                  p = "L";
+                  s = "_FLP.c";
+                }
+                {
+                  m = [
+                    "apply_sine_window"
+                    "autocorrelation"
+                    "burg_modified"
+                    "bwexpander"
+                    "corrMatrix"
+                    "encode_frame"
+                    "energy"
+                    "find_LPC"
+                    "find_LTP"
+                    "find_pitch_lags"
+                    "find_pred_coefs"
+                    "inner_product"
+                    "k2a"
+                  ];
+                  p = "";
+                  s = "_FLP.c";
+                }
+                {
+                  m = [
+                    "noise_shape_analysis"
+                    "pitch_analysis_core"
+                    "process_gains"
+                    "regularize_correlations"
+                    "residual_energy"
+                    "scale_copy_vector"
+                    "scale_vector"
+                    "schur"
+                    "sort"
+                  ];
+                  p = "";
+                  s = "_FLP.c";
+                }
+                "SigProc_FLP.h"
+                "main_FLP.h"
+                "structs_FLP.h"
+                "warped_autocorrelation_FLP.c"
+                "wrappers_FLP.c"
+              ];
+              "gain_quant.c" = null;
+              "init_decoder.c" = null;
+              "init_encoder.c" = null;
+              "inner_prod_aligned.c" = null;
+              "interpolate.c" = null;
+              "lin2log.c" = null;
+              "log2lin.c" = null;
+              "macros.h" = null;
+              "main.h" = null;
+              mips = expandClusters [
+                {
+                  m = [
+                    "NSQ_del_dec"
+                    "macros"
+                    "sigproc_fix"
+                  ];
+                  p = "";
+                  s = "_mipsr1.h";
+                }
+              ];
+              "pitch_est_defines.h" = null;
+              "pitch_est_tables.c" = null;
+              "process_NLSFs.c" = null;
+              "quant_LTP_gains.c" = null;
+              "resampler.c" = null;
+              "resampler_down2.c" = null;
+              "resampler_down2_3.c" = null;
+              "resampler_private.h" = null;
+              "resampler_private_AR2.c" = null;
+              "resampler_private_IIR_FIR.c" = null;
+              "resampler_private_down_FIR.c" = null;
+              "resampler_private_up2_HQ.c" = null;
+              "resampler_rom.c" = null;
+              "resampler_rom.h" = null;
+              "resampler_structs.h" = null;
+              "shell_coder.c" = null;
+              "sigm_Q15.c" = null;
+              "sort.c" = null;
+              "stereo_LR_to_MS.c" = null;
+              "stereo_MS_to_LR.c" = null;
+              "stereo_decode_pred.c" = null;
+              "stereo_encode_pred.c" = null;
+              "stereo_find_predictor.c" = null;
+              "stereo_quant_pred.c" = null;
+              "structs.h" = null;
+              "sum_sqr_shift.c" = null;
+              "table_LSF_cos.c" = null;
+              "tables.h" = null;
+              "tables_LTP.c" = null;
+              "tables_NLSF_CB_NB_MB.c" = null;
+              "tables_NLSF_CB_WB.c" = null;
+              "tables_gain.c" = null;
+              "tables_other.c" = null;
+              "tables_pitch_lag.c" = null;
+              "tables_pulses_per_block.c" = null;
+              "tuning_parameters.h" = null;
+              "typedef.h" = null;
+              x86 = [
+                "NSQ_del_dec_sse.c"
+                "NSQ_sse.c"
+                "SigProc_FIX_sse.h"
+                "VAD_sse.c"
+                "VQ_WMat_EC_sse.c"
+                "main_sse.h"
+                "x86_silk_map.c"
+              ];
+            };
+            src = expandClusters [
+              {
+                m = [
+                  ""
+                  "_compare"
+                  "_decoder"
+                  "_demo"
+                  "_encoder"
+                  "_multistream"
+                  "_multistream_decoder"
+                  "_multistream_encoder"
+                ];
+                p = "opus";
+                s = ".c";
+              }
+              "analysis.c"
+              "analysis.h"
+              "mlp.c"
+              "mlp.h"
+              "mlp_data.c"
+              "opus_private.h"
+              "repacketizer.c"
+              "repacketizer_demo.c"
+              "tansig_table.h"
+            ];
+          };
+          "opusfile-0.9" = {
+            include = "opusfile.h";
+            src = [
+              "http.c"
+              "info.c"
+              "internal.c"
+              "internal.h"
+              "opusfile.c"
+              "stream.c"
+              "wincerts.c"
+              "winerrno.h"
+            ];
+          };
+          qcommon = expandClusters [
+            {
+              m = [
+                "none"
+                "powerpc"
+                "powerpc_asm"
+              ];
+              p = "vm_";
+              s = ".c";
+            }
+            "cm_load.c"
+            "cm_local.h"
+            "cm_patch.c"
+            "cm_patch.h"
+            "cm_polylib.c"
+            "cm_polylib.h"
+            "cm_public.h"
+            "cm_test.c"
+            "cm_trace.c"
+            "cmd.c"
+            "common.c"
+            "cvar.c"
+            "files.c"
+            "huffman.c"
+            "json.h"
+            "md4.c"
+            "md5.c"
+            "msg.c"
+            "net_chan.c"
+            "net_ip.c"
+            "puff.c"
+            "puff.h"
+            "q_math.c"
+            "q_platform.h"
+            "q_shared.c"
+            "q_shared.h"
+            "qcommon.h"
+            "qfiles.h"
+            "surfaceflags.h"
+            "vm.c"
+            "vm_armv7l.c"
+            "vm_interpreted.c"
+            "vm_local.h"
+            "vm_powerpc_asm.h"
+            "vm_sparc.c"
+            "vm_sparc.h"
+            "vm_x86.c"
+          ];
+          renderer = expandClusters [
+            {
+              m = [
+                "altivec"
+                "animation"
+                "arb"
+                "backend"
+                "bloom"
+                "bsp"
+                "cmds"
+                "cmesh"
+                "curve"
+                "extensions"
+                "fbo"
+              ];
+              p = "tr_";
+              s = ".c";
+            }
+            {
+              m = [
+                "flares"
+                "font"
+                "image"
+                "image_bmp"
+                "image_jpg"
+                "image_pcx"
+                "image_png"
+                "image_tga"
+                "init"
+                "light"
+              ];
+              p = "tr_";
+              s = ".c";
+            }
+            {
+              m = [
+                "main"
+                "marks"
+                "mesh"
+                "model"
+                "model_iqm"
+                "noise"
+              ];
+              p = "tr_";
+              s = ".c";
+            }
+            {
+              m = [
+                "cene"
+                "hade"
+                "hade_calc"
+                "hader"
+                "hadows"
+                "ky"
+                "ubs"
+                "urface"
+              ];
+              p = "tr_s";
+              s = ".c";
+            }
+            "anorms256.h"
+            "iqm.h"
+            "qgl.h"
+            "tr_fbo.h"
+            "tr_local.h"
+            "tr_public.h"
+            "tr_types.h"
+            "tr_world.c"
+          ];
+          sdl = [
+            "sdl_gamma.c"
+            "sdl_glimp.c"
+            "sdl_icon.h"
+            "sdl_input.c"
+            "sdl_snd.c"
+          ];
+          server = expandClusters [
+            {
+              m = [
+                "bot"
+                "ccmds"
+                "client"
+                "game"
+                "init"
+                "main"
+                "net_chan"
+                "snapshot"
+                "world"
+              ];
+              p = "sv_";
+              s = ".c";
+            }
+            "server.h"
+          ];
+          splines = expandClusters [
+            {
+              m = [
+                "angles.cpp"
+                "angles.h"
+                "matrix.cpp"
+                "matrix.h"
+                "quaternion.cpp"
+                "quaternion.h"
+                "vector.cpp"
+                "vector.h"
+              ];
+              p = "math_";
+              s = "";
+            }
+            {
+              m = [
+                "list.h"
+                "str.cpp"
+                "str.h"
+              ];
+              p = "util_";
+              s = "";
+            }
+            "q_parse.cpp"
+            "q_shared.cpp"
+            "q_splineshared.h"
+            "splines.cpp"
+            "splines.h"
+          ];
+          steam = [
+            "steam.c"
+            "steam.h"
+          ];
+          steamshim = {
+            "LICENSE.txt" = null;
+            launcher = {
+              ".vs" = {
+                LaunchRTCW = {
+                  FileContentIndex = [
+                    "dfd34d53-8d8a-4dd3-a595-4139ee88529a.vsidx"
+                    "read.lock"
+                  ];
+                  v17 = "Browse.VC.db";
+                };
+              };
+              "LaunchRTCW.sln" = null;
+              "LaunchRTCW.vcxproj" = null;
+              "LaunchRTCW.vcxproj.filters" = null;
+              "make.sh" = null;
+              "steamshim_parent.cpp" = null;
+              win64 = [
+                "launcher.exe"
+                "launcher.pdb"
+              ];
+              x64 = {
+                Release = {
+                  "LaunchRTCW.log" = null;
+                  "LaunchRTCW.tlog" = expandClusters [
+                    {
+                      m = [
+                        "command"
+                        "read"
+                        "write"
+                      ];
+                      p = "CL.";
+                      s = ".1.tlog";
+                    }
+                    {
+                      m = [
+                        "command"
+                        "read"
+                        "write"
+                      ];
+                      p = "link.";
+                      s = ".1.tlog";
+                    }
+                    "LaunchRTCW.lastbuildstate"
+                    "LaunchRTCW.write.1u.tlog"
+                  ];
+                  "LaunchRTCW.vcxproj.FileListAbsolute.txt" = null;
+                  "launcher.exe" = null;
+                  "launcher.exe.recipe" = null;
+                  "launcher.iobj" = null;
+                  "launcher.ipdb" = null;
+                  "launcher.pdb" = null;
+                  "steamshim_parent.obj" = null;
+                  "vc143.pdb" = null;
+                };
+              };
+            };
+            "steam_appid.txt" = null;
+            "steamshim_child.c" = null;
+            "steamshim_child.h" = null;
+          };
+          sys = expandClusters [
+            {
+              m = [
+                "log"
+                "passive"
+                "tty"
+                "win32"
+              ];
+              p = "con_";
+              s = ".c";
+            }
+            "sys_loadlib.h"
+            "sys_local.h"
+            "sys_main.c"
+            "sys_osx.m"
+            "sys_unix.c"
+            "sys_win32.c"
+            "win_manifest.xml"
+            "win_resource.h"
+            "win_resource.rc"
+          ];
+          tools = {
+            asm = [
+              "README.Id"
+              "cmdlib.c"
+              "cmdlib.h"
+              "lib.txt"
+              "mathlib.h"
+              "notes.txt"
+              "ops.txt"
+              "opstrings.h"
+              "q3asm.c"
+            ];
+            lcc = {
+              COPYRIGHT = null;
+              LOG = null;
+              README = null;
+              "README.id" = null;
+              cpp = [
+                "cpp.c"
+                "cpp.h"
+                "eval.c"
+                "getopt.c"
+                "hideset.c"
+                "include.c"
+                "lex.c"
+                "macro.c"
+                "nlist.c"
+                "tokens.c"
+                "unix.c"
+              ];
+              doc = [
+                "4.html"
+                "bprint.1"
+                "bprint.pdf"
+                "install.html"
+                "lcc.1"
+                "lcc.pdf"
+              ];
+              etc = [
+                "bytecode.c"
+                "lcc.c"
+              ];
+              lburg = expandClusters [
+                {
+                  m = [
+                    "1"
+                    "c"
+                    "h"
+                  ];
+                  p = "lburg.";
+                  s = "";
+                }
+                "gram.c"
+                "gram.y"
+              ];
+              src = [
+                "alloc.c"
+                "bind.c"
+                "bytecode.c"
+                "c.h"
+                "config.h"
+                "dag.c"
+                "dagcheck.md"
+                "decl.c"
+                "enode.c"
+                "error.c"
+                "event.c"
+                "expr.c"
+                "gen.c"
+                "init.c"
+                "inits.c"
+                "input.c"
+                "lex.c"
+                "list.c"
+                "main.c"
+                "null.c"
+                "output.c"
+                "prof.c"
+                "profio.c"
+                "simp.c"
+                "stmt.c"
+                "string.c"
+                "sym.c"
+                "symbolic.c"
+                "token.h"
+                "trace.c"
+                "tree.c"
+                "types.c"
+              ];
+            };
+            "stringify.c" = null;
+          };
+          ui = [
+            "ui_atoms.c"
+            "ui_gameinfo.c"
+            "ui_local.h"
+            "ui_main.c"
+            "ui_players.c"
+            "ui_public.h"
+            "ui_shared.c"
+            "ui_shared.h"
+            "ui_syscalls.asm"
+            "ui_syscalls.c"
+          ];
+          "zlib-1.2.11" = [
+            "adler32.c"
+            "crc32.c"
+            "crc32.h"
+            "crypt.h"
+            "gzguts.h"
+            "inffast.c"
+            "inffast.h"
+            "inffixed.h"
+            "inflate.c"
+            "inflate.h"
+            "inftrees.c"
+            "inftrees.h"
+            "ioapi.c"
+            "ioapi.h"
+            "unzip.c"
+            "unzip.h"
+            "zconf.h"
+            "zlib.h"
+            "zutil.c"
+            "zutil.h"
+          ];
+        };
+        "cross-make-mingw.sh" = null;
+        "cross-make-mingw64.sh" = null;
+        main = {
+          loadouts = expandClusters [
+            {
+              m = [
+                ".cfg"
+                "_campaign.loadout"
+                "_survival.loadout"
+              ];
+              p = "loadouts";
+              s = "";
+            }
+          ];
+          maps = expandClusters [
+            {
+              m = [
+                "ai"
+                "ents"
+                "script"
+              ];
+              p = "baseout.";
+              s = "";
+            }
+            {
+              m = [
+                "ai"
+                "ents"
+                "script"
+              ];
+              p = "boss1.";
+              s = "";
+            }
+            {
+              m = [
+                "ai"
+                "ents"
+                "script"
+              ];
+              p = "boss2.";
+              s = "";
+            }
+            {
+              m = [
+                "ai"
+                "ents"
+                "script"
+              ];
+              p = "chateau.";
+              s = "";
+            }
+            {
+              m = [
+                "ai"
+                "ents"
+                "script"
+              ];
+              p = "church.";
+              s = "";
+            }
+            {
+              m = [
+                "1.ai"
+                "1.ents"
+                "1.script"
+                "2.ai"
+                "2.ents"
+                "2.script"
+              ];
+              p = "crypt";
+              s = "";
+            }
+            {
+              m = [
+                "1"
+                "11"
+                "14"
+                "19"
+                "6"
+                "9"
+              ];
+              p = "cutscene";
+              s = ".ai";
+            }
+            {
+              m = [
+                "ai"
+                "ents"
+                "script"
+              ];
+              p = "dark.";
+              s = "";
+            }
+            {
+              m = [
+                "1.ai"
+                "1.ents"
+                "2.ai"
+                "2.ents"
+              ];
+              p = "escape";
+              s = "";
+            }
+            {
+              m = [
+                "ai"
+                "ents"
+                "script"
+              ];
+              p = "factory.";
+              s = "";
+            }
+            {
+              m = [
+                "1.ai"
+                "1.script"
+                "2.ai"
+                "2.script"
+                "3.ai"
+                "3.script"
+                "4.ai"
+                "4.script"
+                "5.ai"
+                "5.script"
+                "menu.ai"
+                "menu.script"
+              ];
+              p = "malta_";
+              s = "";
+            }
+            {
+              m = [
+                "1.ai"
+                "2.ai"
+                "2.ents"
+              ];
+              p = "village";
+              s = "";
+            }
+            "assault.ai"
+            "assault.ents"
+            "castle.ai"
+            "castle.ents"
+            "dam.ai"
+            "dam.ents"
+            "dig.ai"
+            "dig.ents"
+            "end.ai"
+            "end.ents"
+            "forest.ai"
+            "forest.ents"
+            "norway.ai"
+            "norway.ents"
+            "rocket.ai"
+            "rocket.ents"
+            "sfm.ai"
+            "sfm.ents"
+            "sfm.script"
+            "swf.ai"
+            "swf.ents"
+            "trainyard.ai"
+            "trainyard.ents"
+            "tram.ai"
+            "tram.ents"
+            "w3d.ai"
+            "w3d.script"
+            "w3d_sec.ai"
+            "w3d_sec.script"
+            "xlabs.ai"
+            "xlabs.ents"
+          ];
+          scripts = [
+            "arenas.txt"
+            "campaign.arena"
+          ];
+          text = [
+            "bonus_strings.txt"
+            "text.txt"
+          ];
+          ui = expandClusters [
+            {
+              m = [
+                "briefing"
+                "campaign_menu"
+                "clipboard"
+                "connect"
+                "default"
+                "error"
+                "ingame"
+                "ingame_controls"
+                "ingame_load"
+                "ingame_options"
+                "ingame_save"
+                "ingame_system"
+                "load"
+                "main"
+              ];
+              p = "";
+              s = ".menu";
+            }
+            {
+              m = [
+                "notebook"
+                "play"
+                "pregame"
+                "survival_menu"
+              ];
+              p = "";
+              s = ".menu";
+            }
+            "menudef.h"
+            "menus.txt"
+          ];
+        };
+        main_custom_maps = {
+          aaw = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_aaw.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  "ai"
+                  "ents"
+                  "script"
+                ];
+                p = "aaw5.";
+                s = "";
+              }
+              "aaw.ai"
+              "aaw.ents"
+              "aaw2.ai"
+              "aaw2.ents"
+              "aaw3.ai"
+              "aaw3.ents"
+              "aaw4.ai"
+              "aaw4.ents"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          arcot = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_arcot.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  ".ai"
+                  ".script"
+                  "_2.ai"
+                  "_2.script"
+                ];
+                p = "arcot";
+                s = "";
+              }
+              "bunker.ai"
+              "bunker.script"
+              "rts.ai"
+              "rts.script"
+              "run.ai"
+              "run.script"
+              "scene.ai"
+              "scene.script"
+              "station.ai"
+              "station.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          capuzzo = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_capuzzo.loadout"
+            ];
+            maps = [
+              "airport.ai"
+              "airport.script"
+              "city.ai"
+              "city.script"
+              "road.ai"
+              "road.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          flying_saucers = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_saucers.loadout"
+            ];
+            maps = [
+              "antarktida.ai"
+              "antarktida.script"
+              "darkles.ai"
+              "darkles.script"
+              "dep_castle.ai"
+              "dep_castle.script"
+              "dep_lab.ai"
+              "dep_lab.script"
+              "fourmis.ai"
+              "fourmis.script"
+              "fstmis.ai"
+              "fstmis.script"
+              "karyer.ai"
+              "karyer.script"
+              "kreml.ai"
+              "kreml.script"
+              "les.ai"
+              "les.script"
+              "railhead.ai"
+              "railhead.script"
+              "secmis.ai"
+              "secmis.script"
+              "thirdmis.ai"
+              "thirdmis.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          ghosts_of_war = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_ghosts.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  "castle"
+                  "church"
+                  "crypt1"
+                  "crypt2"
+                  "end"
+                  "forest"
+                ];
+                p = "dark";
+                s = ".ai";
+              }
+              "cutscene1.ai"
+              "roadtobase2.ai"
+              "statement.ai"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          opervors = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_opervors.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  "1.ai"
+                  "1.script"
+                  "2.ai"
+                  "2.script"
+                  "3.ai"
+                  "3.script"
+                  "4.ai"
+                  "4.script"
+                ];
+                p = "tefcw";
+                s = "";
+              }
+              "exit.ai"
+              "exit.script"
+              "intro.ai"
+              "intro.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          pharaohs_curse = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_pharaoh.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  "1.ai"
+                  "2.ai"
+                  "2.ents"
+                  "2.script"
+                  "3.ai"
+                  "4.ai"
+                  "4.ents"
+                  "4.script"
+                  "5.ai"
+                  "5.script"
+                ];
+                p = "level";
+                s = "";
+              }
+              "intro_grobnica.ai"
+              "intro_grobnica.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          pro51 = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_pro51.loadout"
+            ];
+            maps = [
+              "pro1.ai"
+              "pro1.script"
+              "pro10.ai"
+              "pro10.script"
+              "pro11.ai"
+              "pro12.ai"
+              "pro12.script"
+              "pro2.ai"
+              "pro2.script"
+              "pro3.ai"
+              "pro3.script"
+              "pro4.ai"
+              "pro4.script"
+              "pro5.ai"
+              "pro5.script"
+              "pro6.ai"
+              "pro6.script"
+              "pro7.ai"
+              "pro7.script"
+              "pro8.ai"
+              "pro8.script"
+              "pro9.ai"
+              "pro9.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          saboteur = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_saboteur.loadout"
+            ];
+            maps = [
+              "EndMission.ai"
+              "SecretWeapon.ai"
+              "SecretWeapon2.ai"
+              "UnderBase.ai"
+              "UnderBase2.ai"
+              "normandy.ai"
+              "seabase.ai"
+              "support.ai"
+              "techicalbunker.ai"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          stalingrad = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_stalingrad.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  "2"
+                  "5"
+                  "8"
+                  "9"
+                ];
+                p = "cine";
+                s = ".ai";
+              }
+              {
+                m = [
+                  ".ai"
+                  ".ents"
+                  ".script"
+                  "0.ai"
+                ];
+                p = "demo1";
+                s = "";
+              }
+              {
+                m = [
+                  "ai"
+                  "ents"
+                  "script"
+                ];
+                p = "demo2.";
+                s = "";
+              }
+              {
+                m = [
+                  "ai"
+                  "ents"
+                  "script"
+                ];
+                p = "demo3.";
+                s = "";
+              }
+              {
+                m = [
+                  ".ai"
+                  ".script"
+                  "5a.ai"
+                  "5a.script"
+                ];
+                p = "demo5";
+                s = "";
+              }
+              {
+                m = [
+                  "ai"
+                  "ents"
+                  "script"
+                ];
+                p = "demo6.";
+                s = "";
+              }
+              "cutscene1.ai"
+              "demo4.ai"
+              "demo4.ents"
+              "demo7.ai"
+              "demo7.ents"
+              "demo8.ai"
+              "demo8.script"
+              "demo9.ai"
+              "demo9.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          time_gate = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_timegate.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  "1.ai"
+                  "1.script"
+                  "1a.ai"
+                  "1a.script"
+                  "2.ai"
+                  "2.script"
+                  "3.ai"
+                  "3.script"
+                ];
+                p = "labor";
+                s = "";
+              }
+              {
+                m = [
+                  "2"
+                  "3"
+                  "4"
+                ];
+                p = "tomb";
+                s = ".ai";
+              }
+              "ber.ai"
+              "ber.script"
+              "berg.ai"
+              "berg.script"
+              "bergwerk.ai"
+              "fin.ai"
+              "fin.script"
+              "tomb1.ai"
+              "tomb1.script"
+              "vil01.ai"
+              "vil01.script"
+              "vil02.ai"
+              "vil02.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+          trondheim = {
+            loadouts = [
+              "loadouts.cfg"
+              "loadouts_trondheim.loadout"
+            ];
+            maps = expandClusters [
+              {
+                m = [
+                  ""
+                  "a"
+                  "b"
+                  "c"
+                  "d"
+                  "f"
+                  "j"
+                  "s"
+                ];
+                p = "30";
+                s = ".ai";
+              }
+              {
+                m = [
+                  "a"
+                  "b"
+                  "b_1"
+                  "c"
+                ];
+                p = "50";
+                s = ".ai";
+              }
+              {
+                m = [
+                  "c"
+                  "c_1"
+                  "j"
+                  "j_1"
+                  "j_2"
+                ];
+                p = "70";
+                s = ".ai";
+              }
+              {
+                m = [
+                  "1.ai"
+                  "2.ai"
+                  "3.ai"
+                  "3.script"
+                ];
+                p = "cutscene";
+                s = "";
+              }
+              "505.ai"
+              "506.ai"
+              "506.script"
+              "50c.script"
+              "50d.ai"
+              "50e.ai"
+              "50e.script"
+              "50e_1.ai"
+              "50e_1.script"
+              "50f.ai"
+              "50j.ai"
+              "70.ai"
+              "70.script"
+              "70a.ai"
+              "70a.script"
+              "70j_2.script"
+              "70m.ai"
+              "70m.script"
+              "70p.ai"
+              "70p_1.ai"
+              "cine1.script"
+              "cine2.ai"
+              "cine3.ai"
+              "cine3.script"
+            ];
+            scripts = "campaign.arena";
+            ui = [
+              "campaign_menu.menu"
+              "play.menu"
+            ];
+          };
+        };
+        "make-macosx-app.sh" = null;
+        "make-macosx-ub.sh" = null;
+        "make-macosx.sh" = null;
+        "make-macosx_xcode3.sh" = null;
+        "make-macosx_xcode4.sh" = null;
+        "make-macosx_xcode5.sh" = null;
+        "make-raspberrypi.sh" = null;
+        media = {
+          scripts = [
+            "characters.mtr"
+            "models.mtr"
+            "particle.mtr"
+            "terrain.mtr"
+          ];
+        };
+        misc = [
+          "iortcw.icns"
+          "iortcw.svg"
+          "wolf.ico"
+          "wolf.svg"
+          "wolf512.png"
+        ];
+        sdk = {
+          ".map sources" = expandClusters [
+            {
+              m = [
+                "1"
+                "2"
+                "3"
+                "4"
+                "5"
+                "menu"
+              ];
+              p = "malta_";
+              s = ".map";
+            }
+            {
+              m = [
+                "barn"
+                "boss1"
+                "castle"
+                "crypt1"
+                "dig"
+                "escape2"
+                "karsiah"
+                "kugelstadt"
+                "norway"
+                "river_outpost"
+                "safe"
+              ];
+              p = "sv_";
+              s = ".map";
+            }
+            "boss1.map"
+            "boss2.map"
+            "end.map"
+            "factory.map"
+            "karsiah.map"
+            "village1.map"
+          ];
+          BSPCUI = expandClusters [
+            {
+              m = [
+                "csproj"
+                "ico"
+                "sln"
+              ];
+              p = "BSPCUI.";
+              s = "";
+            }
+            {
+              m = [
+                "Designer.cs"
+                "cs"
+                "resx"
+              ];
+              p = "MainForm.";
+              s = "";
+            }
+            ".gitattributes"
+            ".gitignore"
+            "Program.cs"
+          ];
+          "buttons templates" = expandClusters [
+            {
+              m = [
+                "999"
+                "bonus_back"
+                "chapter1"
+                "chapter2"
+                "chapter3"
+                "chapter4"
+                "chapter5"
+                "chapter6"
+                "chapter7"
+                "chapters"
+                "chapters_back"
+                "hardcore"
+                "ingame"
+                "ingame_controls"
+                "ingame_game"
+                "ingame_load"
+                "ingame_main"
+                "ingame_quit"
+                "ingame_save"
+                "ingame_system"
+                "ironman"
+                "load"
+                "load_back"
+                "load_load"
+                "logo"
+                "main"
+                "main_addons"
+                "main_credits"
+                "main_loadgame"
+                "main_newgame"
+                "main_options"
+                "main_quit"
+                "main_training"
+                "nightmare"
+                "options"
+                "options_back"
+                "options_controls"
+                "options_defaults"
+                "options_game"
+                "options_system"
+                "play"
+                "play_2"
+                "play_back"
+                "play_bonus"
+                "play_skill0"
+                "play_skill1"
+                "play_skill2"
+                "play_skill3"
+                "play_skill4"
+                "skills_bonus"
+                "walkpark"
+              ];
+              p = "realrtcw_";
+              s = ".png";
+            }
+          ];
+          "levelshots templates" = expandClusters [
+            {
+              m = [
+                "astle"
+                "hateau"
+                "hurch"
+                "rypt1"
+                "rypt2"
+              ];
+              p = "c";
+              s = ".jpg";
+            }
+            {
+              m = [
+                "am"
+                "ark"
+                "ig"
+                "ig_s"
+              ];
+              p = "d";
+              s = ".jpg";
+            }
+            {
+              m = [
+                "nd"
+                "scape1"
+                "scape2"
+              ];
+              p = "e";
+              s = ".jpg";
+            }
+            {
+              m = [
+                "1"
+                "1_s"
+                "2"
+              ];
+              p = "village";
+              s = ".jpg";
+            }
+            "assault.jpg"
+            "baseout.jpg"
+            "boss1.jpg"
+            "boss2.jpg"
+            "factory.jpg"
+            "forest.jpg"
+            "norway.jpg"
+            "rocket.jpg"
+            "sfm.jpg"
+            "swf.jpg"
+            "trainyard.jpg"
+            "tram.jpg"
+            "xlabs.jpg"
+          ];
+          "realrtcw-devguide.md" = null;
+          "realrtcw-itemslist.md" = null;
+          "realrtcw-script-speakers.md" = null;
+          rtcw-bspc-custom = {
+            ".gitignore" = null;
+            "COPYING.txt" = null;
+            "README.txt" = null;
+            main = {
+              ui = "menudef.h";
+            };
+            src = {
+              Makefile = null;
+              botai = expandClusters [
+                {
+                  m = [
+                    "net.c"
+                    "net.h"
+                    "q3.c"
+                    "q3.h"
+                  ];
+                  p = "ai_dm";
+                  s = "";
+                }
+                "ai_chat.c"
+                "ai_chat.h"
+                "ai_cmd.c"
+                "ai_cmd.h"
+                "ai_main.c"
+                "ai_main.h"
+                "ai_team.c"
+                "ai_team.h"
+                "botai.h"
+                "chars.h"
+                "inv.h"
+                "match.h"
+                "syn.h"
+              ];
+              botlib = expandClusters [
+                {
+                  m = [
+                    ".h"
+                    "_bsp.h"
+                    "_bspq3.c"
+                    "_cluster.c"
+                    "_cluster.h"
+                    "_debug.c"
+                    "_debug.h"
+                    "_def.h"
+                    "_entity.c"
+                    "_entity.h"
+                    "_file.c"
+                    "_file.h"
+                    "_funcs.h"
+                    "_main.c"
+                    "_main.h"
+                    "_move.c"
+                    "_move.h"
+                    "_optimize.c"
+                    "_optimize.h"
+                    "_reach.c"
+                    "_reach.h"
+                    "_route.c"
+                    "_route.h"
+                    "_routealt.c"
+                    "_routealt.h"
+                    "_routetable.c"
+                    "_routetable.h"
+                    "_sample.c"
+                    "_sample.h"
+                  ];
+                  p = "be_aas";
+                  s = "";
+                }
+                {
+                  m = [
+                    "char.c"
+                    "chat.c"
+                    "gen.c"
+                    "goal.c"
+                    "move.c"
+                    "weap.c"
+                    "weight.c"
+                    "weight.h"
+                  ];
+                  p = "be_ai_";
+                  s = "";
+                }
+                {
+                  m = [
+                    "h"
+                    "vcproj"
+                    "vcxproj"
+                    "vcxproj.filters"
+                  ];
+                  p = "botlib.";
+                  s = "";
+                }
+                "aasfile.h"
+                "be_ea.c"
+                "be_interface.c"
+                "be_interface.h"
+                "l_crc.c"
+                "l_crc.h"
+                "l_libvar.c"
+                "l_libvar.h"
+                "l_log.c"
+                "l_log.h"
+                "l_memory.c"
+                "l_memory.h"
+                "l_precomp.c"
+                "l_precomp.h"
+                "l_script.c"
+                "l_script.h"
+                "l_struct.c"
+                "l_struct.h"
+                "l_utils.h"
+              ];
+              bspc = expandClusters [
+                {
+                  m = [
+                    "fg.c"
+                    "fg.h"
+                    "reate.c"
+                    "reate.h"
+                  ];
+                  p = "aas_c";
+                  s = "";
+                }
+                {
+                  m = [
+                    "acemerging.c"
+                    "acemerging.h"
+                    "ile.c"
+                    "ile.h"
+                  ];
+                  p = "aas_f";
+                  s = "";
+                }
+                {
+                  m = [
+                    "c"
+                    "vcxproj"
+                    "vcxproj.filters"
+                  ];
+                  p = "bspc.";
+                  s = "";
+                }
+                {
+                  m = [
+                    "ent.c"
+                    "ent.h"
+                    "hl.c"
+                    "hl.h"
+                    "q1.c"
+                    "q1.h"
+                    "q2.c"
+                    "q2.h"
+                    "q3.c"
+                    "q3.h"
+                    "sin.c"
+                    "sin.h"
+                  ];
+                  p = "l_bsp_";
+                  s = "";
+                }
+                {
+                  m = [
+                    ""
+                    "_hl"
+                    "_q1"
+                    "_q2"
+                    "_q3"
+                    "_sin"
+                  ];
+                  p = "map";
+                  s = ".c";
+                }
+                "_files.c"
+                "aas_areamerging.c"
+                "aas_areamerging.h"
+                "aas_edgemelting.c"
+                "aas_edgemelting.h"
+                "aas_gsubdiv.c"
+                "aas_gsubdiv.h"
+                "aas_map.c"
+                "aas_map.h"
+                "aas_prunenodes.c"
+                "aas_prunenodes.h"
+                "aas_store.c"
+                "aas_store.h"
+                "be_aas_bspc.c"
+                "be_aas_bspc.h"
+                "brushbsp.c"
+                "csg.c"
+                "faces.c"
+                "glfile.c"
+                "l_cmd.c"
+                "l_cmd.h"
+                "l_log.c"
+                "l_log.h"
+                "l_math.c"
+                "l_math.h"
+                "l_mem.c"
+                "l_mem.h"
+                "l_poly.c"
+                "l_poly.h"
+                "l_qfiles.c"
+                "l_qfiles.h"
+                "l_threads.c"
+                "l_threads.h"
+                "l_utils.c"
+                "l_utils.h"
+                "leakfile.c"
+                "nodraw.c"
+                "portals.c"
+                "prtfile.c"
+                "q2files.h"
+                "q3files.h"
+                "qbsp.h"
+                "qfiles.h"
+                "sinfiles.h"
+                "textures.c"
+                "tree.c"
+                "writebsp.c"
+              ];
+              cgame = expandClusters [
+                {
+                  m = [
+                    "consolecmds"
+                    "draw"
+                    "drawtools"
+                    "effects"
+                    "ents"
+                    "event"
+                    "flamethrower"
+                    "info"
+                  ];
+                  p = "cg_";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "main"
+                    "marks"
+                    "newDraw"
+                    "particles"
+                    "players"
+                    "playerstate"
+                    "predict"
+                  ];
+                  p = "cg_";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "scoreboard"
+                    "servercmds"
+                    "snapshot"
+                    "sound"
+                    "syscalls"
+                    "trails"
+                    "view"
+                    "weapons"
+                  ];
+                  p = "cg_";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "def"
+                    "vcproj"
+                    "vcxproj"
+                    "vcxproj.filters"
+                  ];
+                  p = "cgame.";
+                  s = "";
+                }
+                "cg_local.h"
+                "cg_localents.c"
+                "cg_public.h"
+                "tr_types.h"
+              ];
+              client = expandClusters [
+                {
+                  m = [
+                    "cgame"
+                    "cin"
+                    "console"
+                    "input"
+                    "keys"
+                    "main"
+                    "net_chan"
+                    "parse"
+                    "scrn"
+                    "ui"
+                  ];
+                  p = "cl_";
+                  s = ".c";
+                }
+                "client.h"
+                "keys.h"
+                "snd_adpcm.c"
+                "snd_dma.c"
+                "snd_local.h"
+                "snd_mem.c"
+                "snd_mix.c"
+                "snd_public.h"
+                "snd_wavelet.c"
+              ];
+              extractfuncs = expandClusters [
+                {
+                  m = [
+                    "bat"
+                    "c"
+                    "exe"
+                    "vcproj"
+                    "vcxproj"
+                    "vcxproj.filters"
+                  ];
+                  p = "extractfuncs.";
+                  s = "";
+                }
+                "ChangeLog"
+                "Conscript"
+                "l_log.c"
+                "l_log.h"
+                "l_memory.c"
+                "l_memory.h"
+                "l_precomp.c"
+                "l_precomp.h"
+                "l_script.c"
+                "l_script.h"
+              ];
+              ft2 = expandClusters [
+                {
+                  m = [
+                    "1.c"
+                    "1.h"
+                    "er.h"
+                  ];
+                  p = "ftrend";
+                  s = "";
+                }
+                {
+                  m = [
+                    "able"
+                    "ag"
+                    "ype"
+                  ];
+                  p = "ttt";
+                  s = "s.h";
+                }
+                "ahangles.c"
+                "ahangles.h"
+                "ahglobal.c"
+                "ahglobal.h"
+                "ahglyph.c"
+                "ahglyph.h"
+                "ahhint.c"
+                "ahhint.h"
+                "ahloader.h"
+                "ahmodule.c"
+                "ahmodule.h"
+                "ahoptim.c"
+                "ahoptim.h"
+                "ahtypes.h"
+                "autohint.h"
+                "freetype.h"
+                "ftcalc.c"
+                "ftcalc.h"
+                "ftconfig.h"
+                "ftdebug.c"
+                "ftdebug.h"
+                "ftdriver.h"
+                "fterrors.h"
+                "ftextend.c"
+                "ftextend.h"
+                "ftglyph.c"
+                "ftglyph.h"
+                "ftgrays.c"
+                "ftgrays.h"
+                "ftimage.h"
+                "ftinit.c"
+                "ftlist.c"
+                "ftlist.h"
+                "ftmemory.h"
+                "ftmm.c"
+                "ftmm.h"
+                "ftmodule.h"
+                "ftnames.c"
+                "ftnames.h"
+                "ftobjs.c"
+                "ftobjs.h"
+                "ftoption.h"
+                "ftoutln.c"
+                "ftoutln.h"
+                "ftraster.c"
+                "ftraster.h"
+                "ftsmooth.c"
+                "ftsmooth.h"
+                "ftstream.c"
+                "ftstream.h"
+                "ftsystem.c"
+                "ftsystem.h"
+                "fttypes.h"
+                "psnames.h"
+                "sfdriver.c"
+                "sfdriver.h"
+                "sfnt.h"
+                "sfobjs.c"
+                "sfobjs.h"
+                "t1tables.h"
+                "ttcmap.c"
+                "ttcmap.h"
+                "ttdriver.c"
+                "ttdriver.h"
+                "tterrors.h"
+                "ttgload.c"
+                "ttgload.h"
+                "ttinterp.c"
+                "ttinterp.h"
+                "ttload.c"
+                "ttload.h"
+                "ttnameid.h"
+                "ttobjs.c"
+                "ttobjs.h"
+                "ttpload.c"
+                "ttpload.h"
+                "ttpost.c"
+                "ttpost.h"
+                "ttsbit.c"
+                "ttsbit.h"
+              ];
+              game = expandClusters [
+                {
+                  m = [
+                    ".c"
+                    ".h"
+                    "_characters.c"
+                    "_debug.c"
+                    "_events.c"
+                    "_fight.c"
+                    "_fight.h"
+                    "_func_attack.c"
+                    "_func_boss1.c"
+                    "_funcs.c"
+                    "_global.h"
+                    "_script.c"
+                    "_script_actions.c"
+                    "_script_ents.c"
+                    "_sight.c"
+                    "_think.c"
+                  ];
+                  p = "ai_cast";
+                  s = "";
+                }
+                {
+                  m = [
+                    "aas"
+                    "ai_char"
+                    "ai_chat"
+                    "ai_gen"
+                    "ai_goal"
+                    "ai_move"
+                    "ai_weap"
+                    "ea"
+                  ];
+                  p = "be_";
+                  s = ".h";
+                }
+                {
+                  m = [
+                    "ain"
+                    "em"
+                    "isc"
+                    "issile"
+                    "over"
+                  ];
+                  p = "g_m";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "ave"
+                    "cript"
+                    "cript_actions"
+                    "ession"
+                    "pawn"
+                    "vcmds"
+                    "yscalls"
+                  ];
+                  p = "g_s";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "def"
+                    "vcproj"
+                    "vcxproj"
+                    "vcxproj.filters"
+                  ];
+                  p = "game.";
+                  s = "";
+                }
+                "bg_animation.c"
+                "bg_lib.c"
+                "bg_local.h"
+                "bg_misc.c"
+                "bg_pmove.c"
+                "bg_public.h"
+                "bg_slidemove.c"
+                "botlib.h"
+                "g_active.c"
+                "g_alarm.c"
+                "g_bot.c"
+                "g_client.c"
+                "g_cmds.c"
+                "g_combat.c"
+                "g_func_decs.h"
+                "g_funcs.h"
+                "g_items.c"
+                "g_local.h"
+                "g_props.c"
+                "g_public.h"
+                "g_target.c"
+                "g_team.c"
+                "g_team.h"
+                "g_tramcar.c"
+                "g_trigger.c"
+                "g_utils.c"
+                "g_weapon.c"
+                "q_math.c"
+                "q_shared.c"
+                "q_shared.h"
+                "surfaceflags.h"
+              ];
+              idLib = [
+                "idAudio.h"
+                "idAudioHardware.h"
+                "idLib.h"
+                "idQ3Asnd.cpp"
+                "idSound.cpp"
+                "idSound.h"
+                "idSpeaker.cpp"
+                "idSpeaker.h"
+              ];
+              jpeg-6 = expandClusters [
+                {
+                  m = [
+                    "aram"
+                    "huff"
+                    "repct"
+                  ];
+                  p = "jcp";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "pimin"
+                    "pistd"
+                    "tadst"
+                    "tasrc"
+                  ];
+                  p = "jda";
+                  s = ".c";
+                }
+                "jcapimin.c"
+                "jccoefct.c"
+                "jccolor.c"
+                "jcdctmgr.c"
+                "jchuff.c"
+                "jchuff.h"
+                "jcinit.c"
+                "jcmainct.c"
+                "jcmarker.c"
+                "jcmaster.c"
+                "jcomapi.c"
+                "jconfig.h"
+                "jcsample.c"
+                "jctrans.c"
+                "jdcoefct.c"
+                "jdcolor.c"
+                "jdct.h"
+                "jddctmgr.c"
+                "jdhuff.c"
+                "jdhuff.h"
+                "jdinput.c"
+                "jdmainct.c"
+                "jdmarker.c"
+                "jdmaster.c"
+                "jdpostct.c"
+                "jdsample.c"
+                "jdtrans.c"
+                "jerror.c"
+                "jerror.h"
+                "jfdctflt.c"
+                "jidctflt.c"
+                "jinclude.h"
+                "jmemmgr.c"
+                "jmemnobs.c"
+                "jmemsys.h"
+                "jmorecfg.h"
+                "jpegint.h"
+                "jpeglib.h"
+                "jutils.c"
+                "jversion.h"
+              ];
+              macosx = {
+                BuildRelease = null;
+                "CGMouseDeltaFix.h" = null;
+                "CGMouseDeltaFix.m" = null;
+                "CGPrivateAPI.h" = null;
+                "GenerateQGL.pl" = null;
+                "Performance.rtf" = null;
+                "Q3Controller.h" = null;
+                "Q3Controller.m" = null;
+                "Quake3.icns" = null;
+                "Quake3.nib" = [
+                  "classes.nib"
+                  "info.nib"
+                  "objects.nib"
+                ];
+                "RecordDemo.zsh" = null;
+                "WolfSP.pbproj" = "project.pbxproj";
+                "banner.jpg" = null;
+                "macosx_display.h" = null;
+                "macosx_display.m" = null;
+                "macosx_glimp.h" = null;
+                "macosx_glimp.m" = null;
+                "macosx_glsmp_mutex.m" = null;
+                "macosx_glsmp_null.m" = null;
+                "macosx_glsmp_ports.m" = null;
+                "macosx_input.m" = null;
+                "macosx_local.h" = null;
+                "macosx_qgl.h" = null;
+                "macosx_sndcore.m" = null;
+                "macosx_snddma.m" = null;
+                "macosx_sys.m" = null;
+                "macosx_timers.h" = null;
+                "macosx_timers.m" = null;
+                "timedemo.zsh" = null;
+              };
+              qcommon = [
+                "cm_load.c"
+                "cm_local.h"
+                "cm_patch.c"
+                "cm_patch.h"
+                "cm_polylib.c"
+                "cm_polylib.h"
+                "cm_public.h"
+                "cm_test.c"
+                "cm_trace.c"
+                "cmd.c"
+                "common.c"
+                "cvar.c"
+                "files.c"
+                "huffman.c"
+                "md4.c"
+                "msg.c"
+                "net_chan.c"
+                "qcommon.h"
+                "qfiles.h"
+                "unzip.c"
+                "unzip.h"
+                "vm.c"
+                "vm_interpreted.c"
+                "vm_local.h"
+                "vm_x86.c"
+              ];
+              renderer = expandClusters [
+                {
+                  m = [
+                    "proj"
+                    "xproj"
+                    "xproj.filters"
+                  ];
+                  p = "renderer.vc";
+                  s = "";
+                }
+                {
+                  m = [
+                    "animation"
+                    "backend"
+                    "bsp"
+                    "cmds"
+                    "cmesh"
+                    "curve"
+                    "flares"
+                    "font"
+                    "image"
+                    "init"
+                    "light"
+                  ];
+                  p = "tr_";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "main"
+                    "marks"
+                    "mesh"
+                    "model"
+                    "noise"
+                  ];
+                  p = "tr_";
+                  s = ".c";
+                }
+                {
+                  m = [
+                    "scene"
+                    "shade"
+                    "shade_calc"
+                    "shader"
+                    "shadows"
+                    "sky"
+                    "surface"
+                    "world"
+                  ];
+                  p = "tr_";
+                  s = ".c";
+                }
+                "anorms256.h"
+                "qgl.h"
+                "qgl_linked.h"
+                "ref_trin.def"
+                "tr_local.h"
+                "tr_public.h"
+              ];
+              server = expandClusters [
+                {
+                  m = [
+                    "bot"
+                    "ccmds"
+                    "client"
+                    "game"
+                    "init"
+                    "main"
+                    "net_chan"
+                    "snapshot"
+                    "world"
+                  ];
+                  p = "sv_";
+                  s = ".c";
+                }
+                "server.h"
+              ];
+              splines = expandClusters [
+                {
+                  m = [
+                    "proj"
+                    "xproj"
+                    "xproj.filters"
+                  ];
+                  p = "Splines.vc";
+                  s = "";
+                }
+                {
+                  m = [
+                    "angles.cpp"
+                    "angles.h"
+                    "matrix.cpp"
+                    "matrix.h"
+                    "quaternion.cpp"
+                    "quaternion.h"
+                    "vector.cpp"
+                    "vector.h"
+                  ];
+                  p = "math_";
+                  s = "";
+                }
+                {
+                  m = [
+                    "list.h"
+                    "str.cpp"
+                    "str.h"
+                  ];
+                  p = "util_";
+                  s = "";
+                }
+                "q_parse.cpp"
+                "q_shared.cpp"
+                "q_splineshared.h"
+                "splines.cpp"
+                "splines.h"
+              ];
+              ui = expandClusters [
+                {
+                  m = [
+                    "proj"
+                    "xproj"
+                    "xproj.filters"
+                  ];
+                  p = "ui.vc";
+                  s = "";
+                }
+                "keycodes.h"
+                "ui.def"
+                "ui_atoms.c"
+                "ui_gameinfo.c"
+                "ui_local.h"
+                "ui_main.c"
+                "ui_players.c"
+                "ui_public.h"
+                "ui_shared.c"
+                "ui_shared.h"
+                "ui_syscalls.c"
+                "ui_util.c"
+              ];
+              unix = expandClusters [
+                {
+                  m = [
+                    "bspc"
+                    "cgame"
+                    "client"
+                    "game"
+                    "setup"
+                    "ui"
+                  ];
+                  p = "Conscript-";
+                  s = "";
+                }
+                {
+                  m = [
+                    "EULA"
+                    "Linux"
+                    "Q3Test"
+                  ];
+                  p = "README.";
+                  s = "";
+                }
+                {
+                  m = [
+                    "common.c"
+                    "glimp.c"
+                    "joystick.c"
+                    "local.h"
+                    "qgl.c"
+                    "snd.c"
+                  ];
+                  p = "linux_";
+                  s = "";
+                }
+                {
+                  m = [
+                    "glw.h"
+                    "main.c"
+                    "net.c"
+                    "shared.c"
+                  ];
+                  p = "unix_";
+                  s = "";
+                }
+                "ChangeLog"
+                "Construct"
+                "bspc.vpj"
+                "build_setup.sh"
+                "build_tarball.sh"
+                "cgame.vpj"
+                "client.vpj"
+                "cons"
+                "extractfuncs.vpj"
+                "ftol.nasm"
+                "game.vpj"
+                "matha.s"
+                "pcons-2.3.1"
+                "qasm.h"
+                "quake3.xpm"
+                "snapvector.nasm"
+                "snd_mixa.s"
+                "sys_dosa.s"
+                "ui.vpj"
+                "vm_x86.c"
+                "vm_x86a.s"
+                "wolf.vpw"
+              ];
+              "wolf.sln" = null;
+              "wolf.vcproj" = null;
+              "wolf.vcxproj" = null;
+              "wolf.vcxproj.filters" = null;
+            };
+            "uncrustify.cfg" = null;
+          };
+        };
+        "uncrustify.cfg" = null;
+        "voip-readme.txt" = null;
+      };
+      hash = "sha1-OALto3OXlEwUQgFObYwcA8cN06E=";
+      ref = "refs/tags/5.44c";
+      rev = "0c95c05fd10335b2b1e66806e35d8c0059bd6684";
+      tag = "5.44c";
+      type = "git-tag";
+      url = "https://github.com/wolfetplayer/RealRTCW.git";
+    };
+  };
   scummvm = {
     abovethewaves = {
       files = flattenPaths {
@@ -923481,6 +930948,2960 @@ dependencies = [
       type = "git";
       url = "https://github.com/DrRetroMod/neogeo-rom-extractor.git";
     };
+    openxcomExtended = {
+      date = "2026-09-29";
+      files = flattenPaths {
+        ".astylerc" = null;
+        ".clang-format" = null;
+        ".editorconfig" = null;
+        ".gitattributes" = null;
+        ".github" = {
+          "issue_template.md" = null;
+          "pull_request_template.md" = null;
+          workflows = "nightly.test";
+        };
+        ".gitignore" = null;
+        ".tx" = "config";
+        "CHANGELOG.txt" = null;
+        "CMakeLists.txt" = null;
+        "Extended.txt" = null;
+        "LICENSE.txt" = null;
+        "README-macOS.md" = null;
+        "README.md" = null;
+        bin = {
+          TFTD = "README.txt";
+          UFO = "README.txt";
+          common = {
+            Language = {
+              Android = expandClusters [
+                {
+                  m = [
+                    "l"
+                    "n-GB"
+                    "n-US"
+                    "s-419"
+                  ];
+                  p = "e";
+                  s = ".yml";
+                }
+                {
+                  m = [
+                    "l"
+                    "t-BR"
+                    "t-PT"
+                  ];
+                  p = "p";
+                  s = ".yml";
+                }
+                "cs.yml"
+                "de.yml"
+                "fi.yml"
+                "fr.yml"
+                "hu.yml"
+                "it.yml"
+                "ja.yml"
+                "ko.yml"
+                "no.yml"
+                "ro.yml"
+                "ru.yml"
+                "sk.yml"
+                "sv.yml"
+                "uk.yml"
+              ];
+              "Font.dat" = null;
+              "FontBig.png" = null;
+              "FontBig_jp.png" = null;
+              "FontBig_ko.png" = null;
+              "FontBig_zh-TW.png" = null;
+              "FontGeoBig.png" = null;
+              "FontGeoBig_jp.png" = null;
+              "FontGeoBig_ko.png" = null;
+              "FontGeoSmall.png" = null;
+              "FontGeoSmall_jp.png" = null;
+              "FontGeoSmall_ko.png" = null;
+              "FontGeoSmall_zh-TW.png" = null;
+              "FontSmall.png" = null;
+              "FontSmall_jp.png" = null;
+              "FontSmall_ko.png" = null;
+              "FontSmall_zh-TW.png" = null;
+              OXCE = expandClusters [
+                {
+                  m = [
+                    "l"
+                    "n-GB"
+                    "n-US"
+                    "s-419"
+                    "s-ES"
+                    "t"
+                  ];
+                  p = "e";
+                  s = ".yml";
+                }
+                "cs.yml"
+                "de.yml"
+                "fi.yml"
+                "fr.yml"
+                "hu.yml"
+                "it.yml"
+                "ja.yml"
+                "ko.yml"
+                "no.yml"
+                "pl.yml"
+                "pt-BR.yml"
+                "ro.yml"
+                "ru.yml"
+                "sk.yml"
+                "sv.yml"
+                "uk.yml"
+              ];
+              Technical = expandClusters [
+                {
+                  m = [
+                    "l"
+                    "n-GB"
+                    "n-US"
+                    "s-419"
+                  ];
+                  p = "e";
+                  s = ".yml";
+                }
+                "cs.yml"
+                "de.yml"
+                "fi.yml"
+                "fr.yml"
+                "hu.yml"
+                "it.yml"
+                "ja.yml"
+                "ko.yml"
+                "pl.yml"
+                "pt-BR.yml"
+                "ro.yml"
+                "ru.yml"
+                "sk.yml"
+                "sv.yml"
+                "uk.yml"
+              ];
+              "bg.yml" = null;
+              "cs.yml" = null;
+              "da.yml" = null;
+              "de.yml" = null;
+              "el.yml" = null;
+              "en-GB.yml" = null;
+              "en-US.yml" = null;
+              "es-419.yml" = null;
+              "es-ES.yml" = null;
+              "et.yml" = null;
+              "fi.yml" = null;
+              "fr-CA.yml" = null;
+              "fr.yml" = null;
+              "hr.yml" = null;
+              "hu.yml" = null;
+              "it.yml" = null;
+              "ja.yml" = null;
+              "ko.yml" = null;
+              "lb.yml" = null;
+              "lv.yml" = null;
+              "nl.yml" = null;
+              "no.yml" = null;
+              "pl.yml" = null;
+              "pt-BR.yml" = null;
+              "pt-PT.yml" = null;
+              "ro.yml" = null;
+              "ru.yml" = null;
+              "sk.yml" = null;
+              "sv.yml" = null;
+              "tr.yml" = null;
+              "uk.yml" = null;
+              "zh-CN.yml" = null;
+              "zh-TW.yml" = null;
+            };
+            Palettes = {
+              TFTD-ACT-SAFE = expandClusters [
+                {
+                  m = [
+                    "BACKGROUND"
+                    "BASESCAPE"
+                    "BATTLESCAPE_1"
+                    "BATTLESCAPE_2"
+                    "BATTLESCAPE_3"
+                    "BATTLESCAPE"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                  ];
+                  p = "PAL_";
+                  s = "_SAFE.act";
+                }
+              ];
+              TFTD-JASC = expandClusters [
+                {
+                  m = [
+                    "BASESCAPE"
+                    "BATTLESCAPE"
+                    "BATTLESCAPE_1"
+                    "BATTLESCAPE_2"
+                    "BATTLESCAPE_3"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                  ];
+                  p = "PAL_";
+                  s = ".pal";
+                }
+                "BACKPALS.DAT.pal"
+              ];
+              TFTD-JASC-SAFE = expandClusters [
+                {
+                  m = [
+                    "BACKGROUND"
+                    "BASESCAPE"
+                    "BATTLESCAPE_1"
+                    "BATTLESCAPE_2"
+                    "BATTLESCAPE_3"
+                    "BATTLESCAPE"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                  ];
+                  p = "PAL_";
+                  s = "_SAFE.pal";
+                }
+              ];
+              TFTD-RIFF-SAFE = expandClusters [
+                {
+                  m = [
+                    "BACKGROUND"
+                    "BASESCAPE"
+                    "BATTLESCAPE_1"
+                    "BATTLESCAPE_2"
+                    "BATTLESCAPE_3"
+                    "BATTLESCAPE"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                  ];
+                  p = "PAL_";
+                  s = "_SAFE.pal";
+                }
+              ];
+              UFO-ACT-SAFE = expandClusters [
+                {
+                  m = [
+                    "BACKGROUND"
+                    "BASESCAPE"
+                    "BATTLEPEDIA"
+                    "BATTLESCAPE"
+                    "BATTLE_COMMON"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                    "UFOPAEDIA"
+                  ];
+                  p = "PAL_";
+                  s = "_SAFE.act";
+                }
+              ];
+              UFO-JASC = expandClusters [
+                {
+                  m = [
+                    "BASESCAPE"
+                    "BATTLEPEDIA"
+                    "BATTLESCAPE"
+                    "BATTLE_COMMON"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                    "UFOPAEDIA"
+                  ];
+                  p = "PAL_";
+                  s = ".pal";
+                }
+                "BACKPALS.DAT.pal"
+              ];
+              UFO-JASC-SAFE = expandClusters [
+                {
+                  m = [
+                    "BACKGROUND"
+                    "BASESCAPE"
+                    "BATTLEPEDIA"
+                    "BATTLESCAPE"
+                    "BATTLE_COMMON"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                    "UFOPAEDIA"
+                  ];
+                  p = "PAL_";
+                  s = "_SAFE.pal";
+                }
+              ];
+              UFO-RIFF-SAFE = expandClusters [
+                {
+                  m = [
+                    "BACKGROUND"
+                    "BASESCAPE"
+                    "BATTLEPEDIA"
+                    "BATTLESCAPE"
+                    "BATTLE_COMMON"
+                    "GEOSCAPE"
+                    "GRAPHS"
+                    "UFOPAEDIA"
+                  ];
+                  p = "PAL_";
+                  s = "_SAFE.pal";
+                }
+              ];
+            };
+            Resources = {
+              Extended = "TinyRanks.png";
+              Pathfinding = "Pathfinding.png";
+              UI = "WpnActive.png";
+            };
+            Shaders = expandClusters [
+              {
+                m = [
+                  "5xBR_Rounded"
+                  "5xBR_Semi-Rounded"
+                  "5xBR_Squared"
+                  "CRT-Lottes-Warp"
+                  "CRT-Lottes"
+                  "CRT-interlaced"
+                  "CRT-simple"
+                  "CRT"
+                  "Curvature"
+                  "HQ2x"
+                  "Openxcom"
+                  "Phosphor-simple"
+                  "Pixellate"
+                  "Quilez"
+                  "Raw"
+                  "SABR-XCOMified"
+                  "SABR"
+                  "Scale2x"
+                  "Scale4xHQ"
+                  "dot_n_bloom"
+                  "heavybloom"
+                  "scanline-3x"
+                  "scanline-4x"
+                  "simplebloom"
+                ];
+                p = "";
+                s = ".OpenGL.shader";
+              }
+            ];
+            SoldierName = expandClusters [
+              {
+                m = [
+                  "merican"
+                  "rabic"
+                  "rgentina"
+                ];
+                p = "A";
+                s = ".nam";
+              }
+              {
+                m = [
+                  "elgium"
+                  "ritish"
+                  "ulgarian"
+                ];
+                p = "B";
+                s = ".nam";
+              }
+              {
+                m = [
+                  "hinese"
+                  "ongolese"
+                  "zech"
+                ];
+                p = "C";
+                s = ".nam";
+              }
+              {
+                m = [
+                  "Keny"
+                  "Kore"
+                  "Nigeri"
+                  "Norwegi"
+                ];
+                p = "";
+                s = "an.nam";
+              }
+              {
+                m = [
+                  "lish"
+                  "lynesia"
+                  "rtuguese"
+                ];
+                p = "Po";
+                s = ".nam";
+              }
+              {
+                m = [
+                  "lovak"
+                  "panish"
+                  "wedish"
+                ];
+                p = "S";
+                s = ".nam";
+              }
+              "Danish.nam"
+              "Dutch.nam"
+              "Ethiopian.nam"
+              "Finnish.nam"
+              "French.nam"
+              "German.nam"
+              "Greek.nam"
+              "Hindi.nam"
+              "Hungarian.nam"
+              "Irish.nam"
+              "Italian.nam"
+              "Japanese.nam"
+              "Romanian.nam"
+              "Russian.nam"
+              "Turkish.nam"
+            ];
+            "dont-touch.me" = null;
+            "openxcom.png" = null;
+          };
+          standard = {
+            Aliens_Pick_Up_Weapons = [
+              "Aliens_Pick_Up_Weapons.rul"
+              "metadata.yml"
+            ];
+            Aliens_Pick_Up_Weapons_TFTD = [
+              "Aliens_Pick_Up_Weapons.rul"
+              "metadata.yml"
+            ];
+            Demigod_Difficulty = [
+              "demigod.rul"
+              "metadata.yml"
+            ];
+            Demigod_Difficulty_TFTD = [
+              "demigod.rul"
+              "metadata.yml"
+            ];
+            Limit_Craft_Item_Capacities = [
+              "Limit_Craft_Item_Capacities.rul"
+              "metadata.yml"
+            ];
+            Limit_Craft_Item_Capacities_TFTD = [
+              "Limit_Craft_Item_Capacities.rul"
+              "metadata.yml"
+            ];
+            OpenXCom_Unlimited_Waypoints = [
+              "OpenXCom_Unlimited_Waypoints.rul"
+              "metadata.yml"
+            ];
+            OpenXCom_Unlimited_Waypoints_TFTD = [
+              "OpenXCom_Unlimited_Waypoints.rul"
+              "metadata.yml"
+            ];
+            PSX_Static_Cydonia_Map = [
+              "PSX_Static_Cydonia_Map.rul"
+              "metadata.yml"
+            ];
+            Smarter_Equip = {
+              "1_Smarter_Equip.rul" = null;
+              "2_Smarter_Equip_Item_Categorization.rul" = null;
+              Language = [
+                "cs.yml"
+                "de.yml"
+                "en-GB.yml"
+                "en-US.yml"
+                "it.yml"
+                "pl.yml"
+                "ru.yml"
+                "uk.yml"
+              ];
+              "metadata.yml" = null;
+            };
+            Smarter_Equip_TFTD = {
+              "1_Smarter_Equip.rul" = null;
+              "2_Smarter_Equip_Item_Categorization.rul" = null;
+              Language = [
+                "cs.yml"
+                "de.yml"
+                "en-GB.yml"
+                "en-US.yml"
+                "it.yml"
+                "pl.yml"
+                "ru.yml"
+                "uk.yml"
+              ];
+              "metadata.yml" = null;
+            };
+            StrategyCore_Swap_Small_USOs_TFTD = [
+              "StrategyCore_Swap_Small_USOs_TFTD.rul"
+              "metadata.yml"
+            ];
+            TFTD_Damage = [
+              "TFTD_Damage.rul"
+              "metadata.yml"
+            ];
+            UFOextender_Gun_Melee = [
+              "UFOextender_Gun_Melee.rul"
+              "metadata.yml"
+            ];
+            UFOextender_Gun_Melee_TFTD = [
+              "UFOextender_Gun_Melee.rul"
+              "metadata.yml"
+            ];
+            UFOextender_Psionic_Line_Of_Fire = [
+              "UFOextender_Psionic_Line_Of_Fire.rul"
+              "metadata.yml"
+            ];
+            UFOextender_Psionic_Line_Of_Fire_TFTD = [
+              "UFOextender_Psionic_Line_Of_Fire.rul"
+              "metadata.yml"
+            ];
+            UFOextender_Starting_Avalanches = [
+              "UFOextender_Starting_Avalanches.rul"
+              "metadata.yml"
+            ];
+            XCOM_Damage = [
+              "XCOM_Damage.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Always_Daytime = [
+              "XcomUtil_Always_Daytime.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Always_Daytime_TFTD = [
+              "XcomUtil_Always_Daytime.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Always_Nighttime = [
+              "XcomUtil_Always_Nighttime.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Always_Nighttime_TFTD = [
+              "XcomUtil_Always_Nighttime.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Fighter_Transports = [
+              "XcomUtil_Fighter_Transports.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Fighter_Transports_TFTD = [
+              "XcomUtil_Fighter_Transports_TFTD.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_High_Explosive_Damage = [
+              "XcomUtil_High_Explosive_Damage.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_High_Explosive_Damage_TFTD = [
+              "XcomUtil_High_Explosive_Damage.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Improved_Gauss = [
+              "TFTD_Improved_Gauss.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Improved_Ground_Tanks = [
+              "XcomUtil_Improved_Ground_Tanks.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Improved_Heavy_Laser = [
+              "XcomUtil_Improved_Heavy_Laser.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Infinite_Gauss = [
+              "TFTD_Infinite_Gauss.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_No_Psionics = [
+              "XcomUtil_No_Psionics.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_No_Psionics_TFTD = [
+              "XcomUtil_No_Psionics.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Pistol_Auto_Shot = [
+              "XcomUtil_Pistol_Auto_Shot.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Pistol_Auto_Shot_TFTD = [
+              "XcomUtil_Pistol_Auto_Shot.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Skyranger_Weapon_Slot = [
+              "XcomUtil_Skyranger_Weapon_Slot.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Starting_Defensive_Base = [
+              "XcomUtil_Starting_Defensive_Base.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Starting_Defensive_Base_TFTD = [
+              "XcomUtil_Starting_Defensive_Base.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Starting_Defensive_Improved_Base = [
+              "XcomUtil_Starting_Defensive_Improved_Base.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Starting_Defensive_Improved_Base_TFTD = [
+              "XcomUtil_Starting_Defensive_Improved_Base.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Starting_Improved_Base = [
+              "XcomUtil_Starting_Improved_Base.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Starting_Improved_Base_TFTD = [
+              "XcomUtil_Starting_Improved_Base.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Statstrings = [
+              "XcomUtil_Statstrings.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Statstrings_TFTD = [
+              "XcomUtil_Statstrings.rul"
+              "metadata.yml"
+            ];
+            XcomUtil_Triton_Weapon_Slot = [
+              "XcomUtil_Triton_Weapon_Slot.rul"
+              "metadata.yml"
+            ];
+            xcom1 = {
+              Language = {
+                OXCE = expandClusters [
+                  {
+                    m = [
+                      "l"
+                      "n-GB"
+                      "n-US"
+                      "s-419"
+                      "s-ES"
+                      "t"
+                    ];
+                    p = "e";
+                    s = ".yml";
+                  }
+                  "cs.yml"
+                  "da.yml"
+                  "de.yml"
+                  "fi.yml"
+                  "fr.yml"
+                  "hu.yml"
+                  "it.yml"
+                  "ja.yml"
+                  "ko.yml"
+                  "nl.yml"
+                  "pl.yml"
+                  "pt-BR.yml"
+                  "ro.yml"
+                  "ru.yml"
+                  "sk.yml"
+                  "sv.yml"
+                  "uk.yml"
+                ];
+                "bg.yml" = null;
+                "cs.yml" = null;
+                "da.yml" = null;
+                "de.yml" = null;
+                "el.yml" = null;
+                "en-GB.yml" = null;
+                "en-US.yml" = null;
+                "es-419.yml" = null;
+                "es-ES.yml" = null;
+                "et.yml" = null;
+                "fi.yml" = null;
+                "fr-CA.yml" = null;
+                "fr.yml" = null;
+                "hr.yml" = null;
+                "hu.yml" = null;
+                "it.yml" = null;
+                "ja.yml" = null;
+                "ko.yml" = null;
+                "lb.yml" = null;
+                "lv.yml" = null;
+                "nl.yml" = null;
+                "no.yml" = null;
+                "pl.yml" = null;
+                "pt-BR.yml" = null;
+                "pt-PT.yml" = null;
+                "ro.yml" = null;
+                "ru.yml" = null;
+                "sk.yml" = null;
+                "sv.yml" = null;
+                "tr.yml" = null;
+                "uk.yml" = null;
+                "zh-CN.yml" = null;
+                "zh-TW.yml" = null;
+              };
+              MAPS = expandClusters [
+                {
+                  m = [
+                    "00"
+                    "01"
+                    "02"
+                    "03"
+                    "04"
+                    "05"
+                    "06"
+                    "07"
+                    "08"
+                    "09"
+                    "10"
+                    "11"
+                    "12"
+                    "13"
+                    "14"
+                    "15"
+                    "16"
+                    "17"
+                    "18"
+                  ];
+                  p = "CULTA";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    "00"
+                    "01"
+                    "02"
+                    "03"
+                    "04"
+                    "05"
+                    "06"
+                    "07"
+                    "08"
+                    "09"
+                    "10"
+                    "11"
+                  ];
+                  p = "DESERT";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    "IRES"
+                    "OREST00"
+                    "OREST01"
+                    "OREST02"
+                    "OREST03"
+                    "OREST04"
+                    "OREST05"
+                    "OREST06"
+                    "OREST07"
+                    "OREST08"
+                    "OREST09"
+                    "OREST10"
+                    "OREST11"
+                  ];
+                  p = "F";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    "00"
+                    "01"
+                    "02"
+                    "03"
+                    "04"
+                    "05"
+                    "06"
+                    "07"
+                    "08"
+                    "09"
+                    "10"
+                    "11"
+                  ];
+                  p = "JUNGLE";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    "AP3"
+                    "AP4"
+                    "ARS00"
+                    "ARS01"
+                    "ARS02"
+                    "ARS03"
+                    "ARS04"
+                    "ARS05"
+                    "ARS06"
+                    "ARS07"
+                    "ARS08"
+                    "ARS09"
+                    "ARS10"
+                    "OUNT00"
+                    "OUNT01"
+                    "OUNT02"
+                    "OUNT03"
+                    "OUNT04"
+                    "OUNT05"
+                    "OUNT06"
+                    "OUNT07"
+                    "OUNT08"
+                    "OUNT09"
+                    "OUNT10"
+                    "OUNT11"
+                    "OUNT12"
+                  ];
+                  p = "M";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    "ABDUCT"
+                    "HARVEST"
+                    "LANE"
+                    "OLAR00"
+                    "OLAR01"
+                    "OLAR02"
+                    "OLAR03"
+                    "OLAR04"
+                    "OLAR05"
+                    "OLAR06"
+                    "OLAR07"
+                    "OLAR08"
+                    "OLAR09"
+                    "OLAR10"
+                    "OLAR11"
+                    "OLAR12"
+                    "OLAR13"
+                    "SCOUT"
+                  ];
+                  p = "P";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    ""
+                    "1"
+                    "2"
+                    "3"
+                  ];
+                  p = "TEMP";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    "00.MA"
+                    "00.RM"
+                    "01.MA"
+                    "01.RM"
+                    "02.MA"
+                    "02.RM"
+                    "03.MA"
+                    "03.RM"
+                    "04.MA"
+                    "04.RM"
+                    "05.MA"
+                    "05.RM"
+                    "06.MA"
+                    "06.RM"
+                    "07.MA"
+                    "07.RM"
+                    "08.MA"
+                    "08.RM"
+                    "09.MA"
+                    "09.RM"
+                    "10.MA"
+                    "10.RM"
+                    "11.MA"
+                    "11.RM"
+                    "12.MA"
+                    "12.RM"
+                    "13.MA"
+                    "13.RM"
+                    "14.MA"
+                    "14.RM"
+                    "15.MA"
+                    "15.RM"
+                  ];
+                  p = "UBASE_";
+                  s = "P";
+                }
+                {
+                  m = [
+                    "FO1A"
+                    "FO1B"
+                    "FO_000"
+                    "FO_010"
+                    "FO_110"
+                    "FO_120"
+                    "FO_130"
+                    "FO_140"
+                    "FO_150"
+                    "FO_160"
+                    "FO_170"
+                    "RBAN00"
+                    "RBAN01"
+                    "RBAN02"
+                    "RBAN03"
+                    "RBAN04"
+                    "RBAN05"
+                    "RBAN06"
+                    "RBAN07"
+                    "RBAN08"
+                    "RBAN09"
+                    "RBAN14"
+                    "RBAN15"
+                    "RBAN16"
+                    "RBAN17"
+                    "RBAN18"
+                  ];
+                  p = "U";
+                  s = ".MAP";
+                }
+                {
+                  m = [
+                    "00.MA"
+                    "00.RM"
+                    "01.MA"
+                    "01.RM"
+                    "02.MA"
+                    "02.RM"
+                    "03.MA"
+                    "03.RM"
+                    "04.MA"
+                    "04.RM"
+                    "05.MA"
+                    "05.RM"
+                    "06.MA"
+                    "06.RM"
+                    "07.MA"
+                    "07.RM"
+                    "08.MA"
+                    "08.RM"
+                    "09.MA"
+                    "09.RM"
+                    "10.MA"
+                    "10.RM"
+                    "11.MA"
+                    "11.RM"
+                    "12.MA"
+                    "12.RM"
+                    "13.MA"
+                    "13.RM"
+                    "14.MA"
+                    "14.RM"
+                    "15.MA"
+                    "15.RM"
+                    "16.MA"
+                    "16.RM"
+                    "17.MA"
+                    "17.RM"
+                    "18.MA"
+                    "18.RM"
+                    "19.MA"
+                    "19.RM"
+                    "20.MA"
+                    "20.RM"
+                  ];
+                  p = "XBASE_";
+                  s = "P";
+                }
+                "AVENGER.MAP"
+                "INTERC.MAP"
+                "LIGHTNIN.MAP"
+              ];
+              ROUTES = expandClusters [
+                {
+                  m = [
+                    "05"
+                    "06"
+                    "13"
+                    "18"
+                  ];
+                  p = "CULTA";
+                  s = ".RMP";
+                }
+                {
+                  m = [
+                    "ARS08"
+                    "ARS09"
+                    "OUNT05"
+                  ];
+                  p = "M";
+                  s = ".RMP";
+                }
+                {
+                  m = [
+                    "BASE_00"
+                    "BASE_01"
+                    "BASE_04"
+                    "BASE_11"
+                    "FO1A"
+                    "FO_110"
+                    "FO_120"
+                    "FO_130"
+                    "FO_140"
+                    "FO_150"
+                    "FO_160"
+                    "FO_170"
+                  ];
+                  p = "U";
+                  s = ".RMP";
+                }
+                {
+                  m = [
+                    "00"
+                    "02"
+                    "03"
+                    "04"
+                    "05"
+                    "06"
+                    "07"
+                    "09"
+                    "10"
+                    "11"
+                    "12"
+                    "13"
+                    "15"
+                    "17"
+                    "18"
+                    "19"
+                  ];
+                  p = "XBASE_";
+                  s = ".RMP";
+                }
+                "DESERT03.RMP"
+                "DESERT11.RMP"
+                "FIRES.RMP"
+                "INTERC.RMP"
+                "LIGHTNIN.RMP"
+                "POLAR08.RMP"
+              ];
+              Resources = {
+                BulletSprites = "BulletSprites.png";
+                Extended = {
+                  Pedia = {
+                    PAL_BASESCAPE = [
+                      "background-ufo.png"
+                      "info-button-ufo.png"
+                    ];
+                    PAL_BATTLEPEDIA = [
+                      "background-ufo.png"
+                      "info-button-ufo.png"
+                    ];
+                    PAL_GEOSCAPE = [
+                      "background-ufo.png"
+                      "info-button-ufo.png"
+                    ];
+                    PAL_UFOPAEDIA = [
+                      "background-ufo.png"
+                      "info-button-ufo.png"
+                    ];
+                  };
+                  Touch = [
+                    "Touch_UFOEU.png"
+                    "license.txt"
+                  ];
+                  "oxceLinks.png" = null;
+                  "oxceLinksInv.png" = null;
+                };
+                UI = expandClusters [
+                  {
+                    m = [
+                      "copy"
+                      "copy_active"
+                      "paste"
+                      "paste_empty"
+                    ];
+                    p = "inv";
+                    s = ".png";
+                  }
+                  "globe_ufo.png"
+                  "kneelButton.png"
+                  "reserve.png"
+                ];
+                Weapons = [
+                  "Terror.png"
+                  "Zombie.png"
+                  "license.txt"
+                ];
+              };
+              TERRAIN = expandClusters [
+                {
+                  m = [
+                    "MCD"
+                    "PCK"
+                    "TAB"
+                  ];
+                  p = "LIGHTNIN.";
+                  s = "";
+                }
+                {
+                  m = [
+                    "RBAN"
+                    "RBITS"
+                    "_BASE"
+                    "_BITS"
+                    "_EXT02"
+                    "_PODS"
+                    "_WALL02"
+                  ];
+                  p = "U";
+                  s = ".MCD";
+                }
+                {
+                  m = [
+                    "MCD"
+                    "PCK"
+                    "TAB"
+                  ];
+                  p = "XBASE2.";
+                  s = "";
+                }
+                "AVENGER.MCD"
+                "BARN.MCD"
+                "CULTIVAT.MCD"
+                "FOREST.MCD"
+                "MOUNT.MCD"
+                "PLANE.MCD"
+              ];
+              UFOGRAPH = "TAC01.SCR";
+              UNITS = [
+                "CHRYS.PCK"
+                "CHRYS.TAB"
+              ];
+              "alienDeployments.rul" = null;
+              "alienItemLevels.rul" = null;
+              "alienMissions.rul" = null;
+              "alienRaces.rul" = null;
+              "armors.rul" = null;
+              "converter.rul" = null;
+              "countries.rul" = null;
+              "craftWeapons.rul" = null;
+              "crafts.rul" = null;
+              "cutscenes.rul" = null;
+              "difficulty.rul" = null;
+              "extraSprites.rul" = null;
+              "facilities.rul" = null;
+              "globe.rul" = null;
+              "interfaces.rul" = null;
+              "inventories.rul" = null;
+              "items.rul" = null;
+              "manufacture.rul" = null;
+              "mapScripts.rul" = null;
+              "mcdPatches.rul" = null;
+              "metadata.yml" = null;
+              "missionScripts.rul" = null;
+              "music.rul" = null;
+              "regions.rul" = null;
+              "research.rul" = null;
+              "soldiers.rul" = null;
+              "startingBase.rul" = null;
+              "terrains.rul" = null;
+              "ufoTrajectories.rul" = null;
+              "ufopaedia.rul" = null;
+              "ufos.rul" = null;
+              "units.rul" = null;
+              "vars.rul" = null;
+            };
+            xcom2 = {
+              Language = {
+                OXCE = expandClusters [
+                  {
+                    m = [
+                      "l"
+                      "n-GB"
+                      "n-US"
+                      "s-419"
+                      "s-ES"
+                      "t"
+                    ];
+                    p = "e";
+                    s = ".yml";
+                  }
+                  "cs.yml"
+                  "da.yml"
+                  "de.yml"
+                  "fi.yml"
+                  "fr.yml"
+                  "hu.yml"
+                  "it.yml"
+                  "ja.yml"
+                  "ko.yml"
+                  "nl.yml"
+                  "pl.yml"
+                  "pt-BR.yml"
+                  "ro.yml"
+                  "ru.yml"
+                  "sk.yml"
+                  "sv.yml"
+                  "uk.yml"
+                ];
+                "bg.yml" = null;
+                "cs.yml" = null;
+                "da.yml" = null;
+                "de.yml" = null;
+                "el.yml" = null;
+                "en-GB.yml" = null;
+                "en-US.yml" = null;
+                "es-419.yml" = null;
+                "es-ES.yml" = null;
+                "et.yml" = null;
+                "fi.yml" = null;
+                "fr-CA.yml" = null;
+                "fr.yml" = null;
+                "hr.yml" = null;
+                "hu.yml" = null;
+                "it.yml" = null;
+                "ja.yml" = null;
+                "ko.yml" = null;
+                "lb.yml" = null;
+                "lv.yml" = null;
+                "nl.yml" = null;
+                "no.yml" = null;
+                "pl.yml" = null;
+                "pt-BR.yml" = null;
+                "pt-PT.yml" = null;
+                "ro.yml" = null;
+                "ru.yml" = null;
+                "sk.yml" = null;
+                "sv.yml" = null;
+                "tr.yml" = null;
+                "uk.yml" = null;
+                "zh-CN.yml" = null;
+                "zh-TW.yml" = null;
+              };
+              MAPS = expandClusters [
+                {
+                  m = [
+                    "04"
+                    "05"
+                    "06"
+                    "07"
+                    "08"
+                    "09"
+                    "10"
+                    "11"
+                  ];
+                  p = "PLANE";
+                  s = ".MAP";
+                }
+                "BARRACUD.MAP"
+                "ENTRY03.MAP"
+                "GRUNGE08.MAP"
+                "GRUNGE09.MAP"
+                "MANTA.MAP"
+                "TRITON.MAP"
+              ];
+              ROUTES = expandClusters [
+                {
+                  m = [
+                    "01"
+                    "06"
+                    "08"
+                    "10"
+                    "12"
+                  ];
+                  p = "XBASES";
+                  s = ".RMP";
+                }
+                "BARRACUD.RMP"
+                "MANTA.RMP"
+                "TRITON.RMP"
+              ];
+              Resources = {
+                BulletSprites = [
+                  "TFTD-LAND.png"
+                  "TFTD-UNDERWATER.png"
+                ];
+                Extended = {
+                  Pedia = "info-button-tftd.png";
+                  Touch = [
+                    "Touch_TFTD.png"
+                    "license.txt"
+                  ];
+                  "oxceLinks.png" = null;
+                  "oxceLinksInv.png" = null;
+                };
+                Sprite = "missing_arm.png";
+                UI = expandClusters [
+                  {
+                    m = [
+                      "copy"
+                      "copy_active"
+                      "paste"
+                      "paste_empty"
+                    ];
+                    p = "inv";
+                    s = "_TFTD.png";
+                  }
+                  "globe_tftd.png"
+                ];
+                Weapons = [
+                  "Terror.png"
+                  "license.txt"
+                ];
+              };
+              "alienDeployments.rul" = null;
+              "alienItemLevels.rul" = null;
+              "alienMissions.rul" = null;
+              "alienRaces.rul" = null;
+              "armors.rul" = null;
+              "converter.rul" = null;
+              "countries.rul" = null;
+              "craftWeapons.rul" = null;
+              "crafts.rul" = null;
+              "cutscenes.rul" = null;
+              "difficulty.rul" = null;
+              "extraSprites.rul" = null;
+              "facilities.rul" = null;
+              "globe.rul" = null;
+              "interfaces.rul" = null;
+              "inventories.rul" = null;
+              "items.rul" = null;
+              "manufacture.rul" = null;
+              "mapScripts.rul" = null;
+              "mcdPatches.rul" = null;
+              "metadata.yml" = null;
+              "missionScripts.rul" = null;
+              "music.rul" = null;
+              "regions.rul" = null;
+              "research.rul" = null;
+              "soldiers.rul" = null;
+              "startingBase.rul" = null;
+              "terrains.rul" = null;
+              "ufoTrajectories.rul" = null;
+              "ufopaedia.rul" = null;
+              "ufos.rul" = null;
+              "units.rul" = null;
+              "vars.rul" = null;
+            };
+          };
+        };
+        cmake = {
+          modules = [
+            "BuildType.cmake"
+            "Description.txt"
+            "NSIS.template.in"
+            "PostprocessBundle.cmake"
+          ];
+        };
+        deps = {
+          "dummy.txt" = null;
+          include = {
+            SDL = expandClusters [
+              {
+                m = [
+                  ""
+                  "_active"
+                  "_audio"
+                  "_byteorder"
+                  "_cdrom"
+                  "_config"
+                ];
+                p = "SDL";
+                s = ".h";
+              }
+              {
+                m = [
+                  "onfig.h.in"
+                  "onfig_dreamcast.h"
+                  "onfig_macos.h"
+                  "onfig_macosx.h"
+                  "onfig_minimal.h"
+                  "onfig_nds.h"
+                  "onfig_os2.h"
+                  "onfig_symbian.h"
+                  "onfig_win32.h"
+                  "opying.h"
+                  "puinfo.h"
+                ];
+                p = "SDL_c";
+                s = "";
+              }
+              {
+                m = [
+                  "endian"
+                  "error"
+                  "events"
+                  "framerate"
+                  "getenv"
+                  "gfxBlitFunc"
+                  "gfxPrimitives"
+                  "gfxPrimitives_font"
+                  "image"
+                  "imageFilter"
+                  "joystick"
+                  "keyboard"
+                  "keysym"
+                  "loadso"
+                  "main"
+                  "mixer"
+                  "mouse"
+                  "mutex"
+                  "name"
+                  "opengl"
+                  "platform"
+                  "quit"
+                  "rotozoom"
+                  "rwops"
+                  "stdinc"
+                  "syswm"
+                  "thread"
+                  "timer"
+                  "types"
+                  "version"
+                  "video"
+                ];
+                p = "SDL_";
+                s = ".h";
+              }
+              "begin_code.h"
+              "close_code.h"
+            ];
+          };
+          lib = {
+            Win32 = expandClusters [
+              {
+                m = [
+                  "FLAC-8"
+                  "jpeg-8"
+                  "mikmod-2"
+                  "mpg123-0"
+                  "ogg-0"
+                  "png15-15"
+                  "tiff-5"
+                  "vorbis-0"
+                  "vorbisfile-3"
+                  "webp-7"
+                ];
+                p = "lib";
+                s = ".dll";
+              }
+              "SDL.dll"
+              "SDL.lib"
+              "SDL_gfx.dll"
+              "SDL_gfx.lib"
+              "SDL_image.dll"
+              "SDL_image.lib"
+              "SDL_mixer.dll"
+              "SDL_mixer.lib"
+              "SDLmain.lib"
+              "zlib1.dll"
+            ];
+            x64 = expandClusters [
+              {
+                m = [
+                  "FLAC-8"
+                  "jpeg-8"
+                  "mikmod-2"
+                  "mpg123-0"
+                  "ogg-0"
+                  "png15-15"
+                  "tiff-5"
+                  "vorbis-0"
+                  "vorbisfile-3"
+                  "webp-7"
+                ];
+                p = "lib";
+                s = ".dll";
+              }
+              "SDL.dll"
+              "SDL.lib"
+              "SDL_gfx.dll"
+              "SDL_gfx.lib"
+              "SDL_image.dll"
+              "SDL_image.lib"
+              "SDL_mixer.dll"
+              "SDL_mixer.lib"
+              "SDLmain.lib"
+              "zlib1.dll"
+            ];
+          };
+        };
+        docs = [
+          "CMakeLists.txt"
+          "Doxyfile.in"
+          "openxcom.6"
+        ];
+        install = {
+          debian = {
+            changelog = null;
+            compat = null;
+            control = null;
+            copyright = null;
+            docs = null;
+            install = null;
+            rules = null;
+            source = [
+              "format"
+              "options"
+            ];
+          };
+          gentoo = "openxcom-9999.ebuild";
+          opensuse = [
+            "openxcom.changes"
+            "openxcom.spec"
+          ];
+          win = {
+            Language = expandClusters [
+              {
+                m = [
+                  "Bulgari"
+                  "Catal"
+                  "Croati"
+                ];
+                p = "";
+                s = "an.nsh";
+              }
+              {
+                m = [
+                  "Czec"
+                  "Danis"
+                  "Dutc"
+                  "Englis"
+                ];
+                p = "";
+                s = "h.nsh";
+              }
+              {
+                m = [
+                  "impChinese"
+                  "lovak"
+                  "panish"
+                  "panishInternational"
+                  "wedish"
+                ];
+                p = "S";
+                s = ".nsh";
+              }
+              {
+                m = [
+                  "l"
+                  "n-US"
+                  "s-419"
+                  "s-ES"
+                  "t"
+                ];
+                p = "e";
+                s = ".yml";
+              }
+              {
+                m = [
+                  "l"
+                  "t-BR"
+                  "t-PT"
+                ];
+                p = "p";
+                s = ".yml";
+              }
+              "Estonian.nsh"
+              "Finnish.nsh"
+              "French.nsh"
+              "German.nsh"
+              "Greek.nsh"
+              "Hungarian.nsh"
+              "Icelandic.nsh"
+              "Italian.nsh"
+              "Japanese.nsh"
+              "Korean.nsh"
+              "Luxembourgish.nsh"
+              "Polish.nsh"
+              "Portuguese.nsh"
+              "PortugueseBR.nsh"
+              "Romanian.nsh"
+              "Russian.nsh"
+              "TradChinese.nsh"
+              "Turkish.nsh"
+              "Ukrainian.nsh"
+              "bg.yml"
+              "ca-ES.yml"
+              "cs.yml"
+              "da.yml"
+              "de.yml"
+              "fi.yml"
+              "fr.yml"
+              "hr.yml"
+              "hu.yml"
+              "is.yml"
+              "it.yml"
+              "ja.yml"
+              "ko.yml"
+              "lb.yml"
+              "nl.yml"
+              "no.yml"
+              "ro.yml"
+              "ru.yml"
+              "sk.yml"
+              "sv.yml"
+              "tr.yml"
+              "uk.yml"
+              "zh-CN.yml"
+              "zh-TW.yml"
+            ];
+            "convert_lang.py" = null;
+            "installer.nsi" = null;
+            "language.nsh" = null;
+            "logo.bmp" = null;
+            plugins = {
+              x86-ansi = "ShellExecAsUser.dll";
+              x86-unicode = "ShellExecAsUser.dll";
+            };
+            "side.bmp" = null;
+            "version.nsh" = null;
+          };
+        };
+        libs = {
+          miniz = [
+            "ChangeLog.md"
+            "LICENSE"
+            "miniz.c"
+            "miniz.h"
+            "readme.md"
+          ];
+          rapidyaml = {
+            "LICENSE.txt" = null;
+            c4 = {
+              "allocator.hpp" = null;
+              "base64.cpp" = null;
+              "base64.hpp" = null;
+              "bitmask.hpp" = null;
+              "blob.hpp" = null;
+              "c4_pop.hpp" = null;
+              "c4_push.hpp" = null;
+              "c4core.natvis" = null;
+              "char_traits.cpp" = null;
+              "char_traits.hpp" = null;
+              "charconv.hpp" = null;
+              "common.hpp" = null;
+              "compiler.hpp" = null;
+              "config.hpp" = null;
+              "cpu.hpp" = null;
+              "ctor_dtor.hpp" = null;
+              "dump.hpp" = null;
+              "enum.hpp" = null;
+              "error.cpp" = null;
+              "error.hpp" = null;
+              "export.hpp" = null;
+              ext = {
+                debugbreak = "debugbreak.h";
+                "fast_float.hpp" = null;
+                "fast_float_all.h" = null;
+                rng = "rng.hpp";
+                sg14 = [
+                  "README.md"
+                  "inplace_function.h"
+                ];
+              };
+              "format.cpp" = null;
+              "format.hpp" = null;
+              "gcc-4.8.hpp" = null;
+              "hash.hpp" = null;
+              "language.cpp" = null;
+              "language.hpp" = null;
+              "memory_resource.cpp" = null;
+              "memory_resource.hpp" = null;
+              "memory_util.cpp" = null;
+              "memory_util.hpp" = null;
+              "platform.hpp" = null;
+              "preprocessor.hpp" = null;
+              "restrict.hpp" = null;
+              "span.hpp" = null;
+              std = expandClusters [
+                {
+                  m = [
+                    "d"
+                    "d_fwd"
+                    "ring"
+                    "ring_fwd"
+                    "ring_view"
+                  ];
+                  p = "st";
+                  s = ".hpp";
+                }
+                "tuple.hpp"
+                "vector.hpp"
+                "vector_fwd.hpp"
+              ];
+              "substr.hpp" = null;
+              "substr_fwd.hpp" = null;
+              "szconv.hpp" = null;
+              "type_name.hpp" = null;
+              "types.hpp" = null;
+              "unrestrict.hpp" = null;
+              "utf.cpp" = null;
+              "utf.hpp" = null;
+              "windows.hpp" = null;
+              "windows_pop.hpp" = null;
+              "windows_push.hpp" = null;
+              yml = {
+                "common.cpp" = null;
+                "common.hpp" = null;
+                detail = [
+                  "checks.hpp"
+                  "parser_dbg.hpp"
+                  "print.hpp"
+                  "stack.hpp"
+                ];
+                "emit.def.hpp" = null;
+                "emit.hpp" = null;
+                "event_handler_stack.hpp" = null;
+                "event_handler_tree.hpp" = null;
+                "export.hpp" = null;
+                "filter_processor.hpp" = null;
+                "fwd.hpp" = null;
+                "node.cpp" = null;
+                "node.hpp" = null;
+                "node_type.cpp" = null;
+                "node_type.hpp" = null;
+                "parse.cpp" = null;
+                "parse.hpp" = null;
+                "parse_engine.def.hpp" = null;
+                "parse_engine.hpp" = null;
+                "parser_state.hpp" = null;
+                "preprocess.cpp" = null;
+                "preprocess.hpp" = null;
+                "reference_resolver.cpp" = null;
+                "reference_resolver.hpp" = null;
+                std = [
+                  "map.hpp"
+                  "std.hpp"
+                  "string.hpp"
+                  "vector.hpp"
+                ];
+                "tag.cpp" = null;
+                "tag.hpp" = null;
+                "tree.cpp" = null;
+                "tree.hpp" = null;
+                "version.cpp" = null;
+                "version.hpp" = null;
+                "writer.hpp" = null;
+                "yml.hpp" = null;
+              };
+            };
+            "ryml-gdbtypes.py" = null;
+            "ryml.hpp" = null;
+            "ryml.natvis" = null;
+            "ryml_std.hpp" = null;
+          };
+        };
+        obj = ".gitkeep";
+        res = {
+          linux = {
+            icons = expandClusters [
+              {
+                m = [
+                  ".sv"
+                  "_128x128.pn"
+                  "_48x48.pn"
+                ];
+                p = "openxcom";
+                s = "g";
+              }
+            ];
+            "openxcom.desktop" = null;
+          };
+          mac = "AppIcon.icns";
+          "openxcom_block.png" = null;
+          "openxcom_block.svg" = null;
+          "openxcom_wide.png" = null;
+          "openxcom_wide.svg" = null;
+          windows = [
+            "openxcom.ico"
+            "openxcom.manifest"
+          ];
+        };
+        scripts = [
+          "build-openxcom"
+          "git-bash-helpers.sh"
+          "init-build-server.sh"
+          "macports-config.yml"
+        ];
+        src = {
+          Basescape = expandClusters [
+            {
+              m = [
+                "ArmorState.cpp"
+                "ArmorState.h"
+                "EquipmentLoadState.cpp"
+                "EquipmentLoadState.h"
+                "EquipmentSaveState.cpp"
+                "EquipmentSaveState.h"
+                "EquipmentState.cpp"
+                "EquipmentState.h"
+                "InfoState.cpp"
+                "InfoState.h"
+                "PilotSelectState.cpp"
+                "PilotSelectState.h"
+                "PilotsState.cpp"
+                "PilotsState.h"
+                "SoldiersState.cpp"
+                "SoldiersState.h"
+                "WeaponsState.cpp"
+                "WeaponsState.h"
+                "sState.cpp"
+                "sState.h"
+              ];
+              p = "Craft";
+              s = "";
+            }
+            {
+              m = [
+                "AlienContainmentState.cpp"
+                "AlienContainmentState.h"
+                "ManufactureState.cpp"
+                "ManufactureState.h"
+                "ResearchDiaryState.cpp"
+                "ResearchDiaryState.h"
+                "ResearchState.cpp"
+                "ResearchState.h"
+              ];
+              p = "Global";
+              s = "";
+            }
+            {
+              m = [
+                "DependenciesTreeState.cpp"
+                "DependenciesTreeState.h"
+                "InfoState.cpp"
+                "InfoState.h"
+                "StartState.cpp"
+                "StartState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Manufacture";
+              s = "";
+            }
+            {
+              m = [
+                "FacilityState.cpp"
+                "FacilityState.h"
+                "LiftState.cpp"
+                "LiftState.h"
+                "StartFacilityState.cpp"
+                "StartFacilityState.h"
+              ];
+              p = "Place";
+              s = "";
+            }
+            {
+              m = [
+                "InfoState.cpp"
+                "InfoState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Research";
+              s = "";
+            }
+            {
+              m = [
+                "ArmorState.cpp"
+                "ArmorState.h"
+                "AvatarState.cpp"
+                "AvatarState.h"
+                "BonusState.cpp"
+                "BonusState.h"
+                "DiaryLightState.cpp"
+                "DiaryLightState.h"
+                "DiaryMissionState.cpp"
+                "DiaryMissionState.h"
+                "DiaryOverviewState.cpp"
+                "DiaryOverviewState.h"
+                "DiaryPerformanceState.cpp"
+                "DiaryPerformanceState.h"
+                "InfoState.cpp"
+                "InfoState.h"
+                "MemorialState.cpp"
+                "MemorialState.h"
+                "RankState.cpp"
+                "RankState.h"
+                "SortUtil.cpp"
+                "SortUtil.h"
+                "TransformState.cpp"
+                "TransformState.h"
+                "TransformationListState.cpp"
+                "TransformationListState.h"
+                "TransformationState.cpp"
+                "TransformationState.h"
+                "VoiceState.cpp"
+                "VoiceState.h"
+                "sState.cpp"
+                "sState.h"
+              ];
+              p = "Soldier";
+              s = "";
+            }
+            {
+              m = [
+                "SelectState.cpp"
+                "SelectState.h"
+                "ViewerState.cpp"
+                "ViewerState.h"
+              ];
+              p = "TechTree";
+              s = "";
+            }
+            {
+              m = [
+                "BaseState.cpp"
+                "BaseState.h"
+                "ConfirmState.cpp"
+                "ConfirmState.h"
+                "ItemsState.cpp"
+                "ItemsState.h"
+                "sState.cpp"
+                "sState.h"
+              ];
+              p = "Transfer";
+              s = "";
+            }
+            "BaseInfoState.cpp"
+            "BaseInfoState.h"
+            "BaseView.cpp"
+            "BaseView.h"
+            "BasescapeState.cpp"
+            "BasescapeState.h"
+            "BuildFacilitiesState.cpp"
+            "BuildFacilitiesState.h"
+            "DismantleFacilityState.cpp"
+            "DismantleFacilityState.h"
+            "ItemLocationsState.cpp"
+            "ItemLocationsState.h"
+            "ManageAlienContainmentState.cpp"
+            "ManageAlienContainmentState.h"
+            "MiniBaseView.cpp"
+            "MiniBaseView.h"
+            "MonthlyCostsState.cpp"
+            "MonthlyCostsState.h"
+            "NewManufactureListState.cpp"
+            "NewManufactureListState.h"
+            "NewResearchListState.cpp"
+            "NewResearchListState.h"
+            "PurchaseState.cpp"
+            "PurchaseState.h"
+            "SackSoldierState.cpp"
+            "SackSoldierState.h"
+            "SelectStartFacilityState.cpp"
+            "SelectStartFacilityState.h"
+            "SellState.cpp"
+            "SellState.h"
+            "StoresState.cpp"
+            "StoresState.h"
+          ];
+          Battlescape = expandClusters [
+            {
+              m = [
+                "Item.cpp"
+                "Item.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "ActionMenu";
+              s = "";
+            }
+            {
+              m = [
+                "Inventory.cpp"
+                "Inventory.h"
+                "InventoryState.cpp"
+                "InventoryState.h"
+                "sCrashState.cpp"
+                "sCrashState.h"
+              ];
+              p = "Alien";
+              s = "";
+            }
+            {
+              m = [
+                "State.cpp"
+                "State.h"
+                "scapeGame.cpp"
+                "scapeGame.h"
+                "scapeGenerator.cpp"
+                "scapeGenerator.h"
+                "scapeMessage.cpp"
+                "scapeMessage.h"
+                "scapeState.cpp"
+                "scapeState.h"
+              ];
+              p = "Battle";
+              s = "";
+            }
+            {
+              m = [
+                "LightState.cpp"
+                "LightState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Briefing";
+              s = "";
+            }
+            {
+              m = [
+                "LateState.cpp"
+                "LateState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Commendation";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "BState.cpp"
+                "BState.h"
+              ];
+              p = "Explosion";
+              s = "";
+            }
+            {
+              m = [
+                "BattlescapeLinksState.cpp"
+                "BattlescapeLinksState.h"
+                "InventoryLinksState.cpp"
+                "InventoryLinksState.h"
+              ];
+              p = "Extended";
+              s = "";
+            }
+            {
+              m = [
+                "OKState.cpp"
+                "OKState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Infobox";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "LoadState.cpp"
+                "LoadState.h"
+                "PersonalState.cpp"
+                "PersonalState.h"
+                "SaveState.cpp"
+                "SaveState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Inventory";
+              s = "";
+            }
+            {
+              m = [
+                "State.cpp"
+                "State.h"
+                "View.cpp"
+                "View.h"
+              ];
+              p = "Medikit";
+              s = "";
+            }
+            {
+              m = [
+                "State.cpp"
+                "State.h"
+                "View.cpp"
+                "View.h"
+              ];
+              p = "MiniMap";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Node.cpp"
+                "Node.h"
+                "OpenSet.cpp"
+                "OpenSet.h"
+              ];
+              p = "Pathfinding";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "FlyBState.cpp"
+                "FlyBState.h"
+              ];
+              p = "Projectile";
+              s = "";
+            }
+            {
+              m = [
+                "State.cpp"
+                "State.h"
+                "View.cpp"
+                "View.h"
+              ];
+              p = "Scanner";
+              s = "";
+            }
+            "AIModule.cpp"
+            "AIModule.h"
+            "AbortMissionState.cpp"
+            "AbortMissionState.h"
+            "Camera.cpp"
+            "Camera.h"
+            "CannotReequipState.cpp"
+            "CannotReequipState.h"
+            "ConfirmEndMissionState.cpp"
+            "ConfirmEndMissionState.h"
+            "DebriefingState.cpp"
+            "DebriefingState.h"
+            "ExperienceOverviewState.cpp"
+            "ExperienceOverviewState.h"
+            "ItemSprite.cpp"
+            "ItemSprite.h"
+            "Map.cpp"
+            "Map.h"
+            "MeleeAttackBState.cpp"
+            "MeleeAttackBState.h"
+            "NextTurnState.cpp"
+            "NextTurnState.h"
+            "NoExperienceState.cpp"
+            "NoExperienceState.h"
+            "Particle.cpp"
+            "Particle.h"
+            "Position.cpp"
+            "Position.h"
+            "PrimeGrenadeState.cpp"
+            "PrimeGrenadeState.h"
+            "PromotionsState.cpp"
+            "PromotionsState.h"
+            "PsiAttackBState.cpp"
+            "PsiAttackBState.h"
+            "SkillMenuState.cpp"
+            "SkillMenuState.h"
+            "TileEngine.cpp"
+            "TileEngine.h"
+            "TurnDiaryState.cpp"
+            "TurnDiaryState.h"
+            "UnitDieBState.cpp"
+            "UnitDieBState.h"
+            "UnitFallBState.cpp"
+            "UnitFallBState.h"
+            "UnitInfoState.cpp"
+            "UnitInfoState.h"
+            "UnitPanicBState.cpp"
+            "UnitPanicBState.h"
+            "UnitSprite.cpp"
+            "UnitSprite.h"
+            "UnitTurnBState.cpp"
+            "UnitTurnBState.h"
+            "UnitWalkBState.cpp"
+            "UnitWalkBState.h"
+            "WarningMessage.cpp"
+            "WarningMessage.h"
+          ];
+          "CMakeLists.txt" = null;
+          Engine = {
+            "Action.cpp" = null;
+            "Action.h" = null;
+            Adlib = [
+              "adlplayer.cpp"
+              "adlplayer.h"
+              "fmopl.cpp"
+              "fmopl.h"
+            ];
+            "AdlibMusic.cpp" = null;
+            "AdlibMusic.h" = null;
+            "CatFile.cpp" = null;
+            "CatFile.h" = null;
+            "Collections.h" = null;
+            "CrossPlatform.cpp" = null;
+            "CrossPlatform.h" = null;
+            "DosFont.h" = null;
+            "Exception.h" = null;
+            "FastLineClip.cpp" = null;
+            "FastLineClip.h" = null;
+            "FileMap.cpp" = null;
+            "FileMap.h" = null;
+            "FlcPlayer.cpp" = null;
+            "FlcPlayer.h" = null;
+            "Font.cpp" = null;
+            "Font.h" = null;
+            "Functions.h" = null;
+            "GMCat.cpp" = null;
+            "GMCat.h" = null;
+            "Game.cpp" = null;
+            "Game.h" = null;
+            "GraphSubset.h" = null;
+            "HelperMeta.h" = null;
+            "InteractiveSurface.cpp" = null;
+            "InteractiveSurface.h" = null;
+            "Language.cpp" = null;
+            "Language.h" = null;
+            "LanguagePlurality.cpp" = null;
+            "LanguagePlurality.h" = null;
+            "LocalizedText.cpp" = null;
+            "LocalizedText.h" = null;
+            "Logger.h" = null;
+            "ModInfo.cpp" = null;
+            "ModInfo.h" = null;
+            "Music.cpp" = null;
+            "Music.h" = null;
+            "NullableValue.h" = null;
+            "OpenGL.cpp" = null;
+            "OpenGL.h" = null;
+            "OptionInfo.cpp" = null;
+            "OptionInfo.h" = null;
+            "Options.cpp" = null;
+            "Options.h" = null;
+            "Options.inc.h" = null;
+            "Palette.cpp" = null;
+            "Palette.h" = null;
+            "RNG.cpp" = null;
+            "RNG.h" = null;
+            "SDL2Helpers.h" = null;
+            Scalers = expandClusters [
+              {
+                m = [
+                  "2"
+                  "3"
+                  "4"
+                ];
+                p = "hq";
+                s = "x.cpp";
+              }
+              {
+                m = [
+                  "2x.cpp"
+                  "2x.h"
+                  "3x.cpp"
+                  "3x.h"
+                  "bit.cpp"
+                  "bit.h"
+                ];
+                p = "scale";
+                s = "";
+              }
+              "common.h"
+              "config.h"
+              "hqx.h"
+              "init.cpp"
+              "xbrz.cpp"
+              "xbrz.h"
+            ];
+            "Screen.cpp" = null;
+            "Screen.h" = null;
+            "Script.cpp" = null;
+            "Script.h" = null;
+            "ScriptBind.h" = null;
+            "ShaderDraw.h" = null;
+            "ShaderDrawHelper.h" = null;
+            "ShaderMove.h" = null;
+            "ShaderRepeat.h" = null;
+            "Sound.cpp" = null;
+            "Sound.h" = null;
+            "SoundSet.cpp" = null;
+            "SoundSet.h" = null;
+            "State.cpp" = null;
+            "State.h" = null;
+            "Surface.cpp" = null;
+            "Surface.h" = null;
+            "SurfaceSet.cpp" = null;
+            "SurfaceSet.h" = null;
+            "Timer.cpp" = null;
+            "Timer.h" = null;
+            "TouchState.cpp" = null;
+            "TouchState.h" = null;
+            "Unicode.cpp" = null;
+            "Unicode.h" = null;
+            "Yaml.cpp" = null;
+            "Yaml.h" = null;
+            "Zoom.cpp" = null;
+            "Zoom.h" = null;
+          };
+          Geoscape = expandClusters [
+            {
+              m = [
+                "PsiTrainingState.cpp"
+                "PsiTrainingState.h"
+                "TrainingState.cpp"
+                "TrainingState.h"
+              ];
+              p = "Allocate";
+              s = "";
+            }
+            {
+              m = [
+                "fenseState.cpp"
+                "fenseState.h"
+                "stroyedState.cpp"
+                "stroyedState.h"
+              ];
+              p = "BaseDe";
+              s = "";
+            }
+            {
+              m = [
+                "CydoniaState.cpp"
+                "CydoniaState.h"
+                "DestinationState.cpp"
+                "DestinationState.h"
+                "LandingState.cpp"
+                "LandingState.h"
+                "NewBaseState.cpp"
+                "NewBaseState.h"
+              ];
+              p = "Confirm";
+              s = "";
+            }
+            {
+              m = [
+                "ErrorState.cpp"
+                "ErrorState.h"
+                "NotEnoughPilotsState.cpp"
+                "NotEnoughPilotsState.h"
+                "PatrolState.cpp"
+                "PatrolState.h"
+              ];
+              p = "Craft";
+              s = "";
+            }
+            {
+              m = [
+                "ErrorState.cpp"
+                "ErrorState.h"
+                "ExperienceState.cpp"
+                "ExperienceState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Dogfight";
+              s = "";
+            }
+            {
+              m = [
+                "CraftState.cpp"
+                "CraftState.h"
+                "EventState.cpp"
+                "EventState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Geoscape";
+              s = "";
+            }
+            {
+              m = [
+                "CraftState.cpp"
+                "CraftState.h"
+                "FacilityState.cpp"
+                "FacilityState.h"
+                "ManufactureState.cpp"
+                "ManufactureState.h"
+                "PurchaseState.cpp"
+                "PurchaseState.h"
+                "ResearchState.cpp"
+                "ResearchState.h"
+              ];
+              p = "NewPossible";
+              s = "";
+            }
+            {
+              m = [
+                "CompleteState.cpp"
+                "CompleteState.h"
+                "RequiredState.cpp"
+                "RequiredState.h"
+              ];
+              p = "Research";
+              s = "";
+            }
+            {
+              m = [
+                "DestinationState.cpp"
+                "DestinationState.h"
+                "MusicTrackState.cpp"
+                "MusicTrackState.h"
+              ];
+              p = "Select";
+              s = "";
+            }
+            {
+              m = [
+                "FinishedState.cpp"
+                "FinishedState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "Training";
+              s = "";
+            }
+            "AlienBaseState.cpp"
+            "AlienBaseState.h"
+            "BaseNameState.cpp"
+            "BaseNameState.h"
+            "BuildNewBaseState.cpp"
+            "BuildNewBaseState.h"
+            "Cord.h"
+            "ExtendedGeoscapeLinksState.cpp"
+            "ExtendedGeoscapeLinksState.h"
+            "FundingState.cpp"
+            "FundingState.h"
+            "Globe.cpp"
+            "Globe.h"
+            "GraphsState.cpp"
+            "GraphsState.h"
+            "InterceptState.cpp"
+            "InterceptState.h"
+            "ItemsArrivingState.cpp"
+            "ItemsArrivingState.h"
+            "LowFuelState.cpp"
+            "LowFuelState.h"
+            "MissionDetectedState.cpp"
+            "MissionDetectedState.h"
+            "MonthlyReportState.cpp"
+            "MonthlyReportState.h"
+            "MultipleTargetsState.cpp"
+            "MultipleTargetsState.h"
+            "ProductionCompleteState.cpp"
+            "ProductionCompleteState.h"
+            "PsiTrainingState.cpp"
+            "PsiTrainingState.h"
+            "TargetInfoState.cpp"
+            "TargetInfoState.h"
+            "UfoDetectedState.cpp"
+            "UfoDetectedState.h"
+            "UfoLostState.cpp"
+            "UfoLostState.h"
+            "UfoTrackerState.cpp"
+            "UfoTrackerState.h"
+          ];
+          Interface = [
+            "ArrowButton.cpp"
+            "ArrowButton.h"
+            "Bar.cpp"
+            "Bar.h"
+            "BattlescapeButton.cpp"
+            "BattlescapeButton.h"
+            "ComboBox.cpp"
+            "ComboBox.h"
+            "Cursor.cpp"
+            "Cursor.h"
+            "FpsCounter.cpp"
+            "FpsCounter.h"
+            "Frame.cpp"
+            "Frame.h"
+            "ImageButton.cpp"
+            "ImageButton.h"
+            "NumberText.cpp"
+            "NumberText.h"
+            "ProgressBar.cpp"
+            "ProgressBar.h"
+            "ScrollBar.cpp"
+            "ScrollBar.h"
+            "Slider.cpp"
+            "Slider.h"
+            "Text.cpp"
+            "Text.h"
+            "TextButton.cpp"
+            "TextButton.h"
+            "TextEdit.cpp"
+            "TextEdit.h"
+            "TextList.cpp"
+            "TextList.h"
+            "ToggleTextButton.cpp"
+            "ToggleTextButton.h"
+            "Window.cpp"
+            "Window.h"
+          ];
+          Menu = expandClusters [
+            {
+              m = [
+                "OriginalState.cpp"
+                "OriginalState.h"
+                "State.cpp"
+                "State.h"
+              ];
+              p = "ListLoad";
+              s = "";
+            }
+            {
+              m = [
+                "AdvancedState.cpp"
+                "AdvancedState.h"
+                "AudioState.cpp"
+                "AudioState.h"
+                "BaseState.cpp"
+                "BaseState.h"
+                "BattlescapeState.cpp"
+                "BattlescapeState.h"
+                "ConfirmState.cpp"
+                "ConfirmState.h"
+                "ControlsState.cpp"
+                "ControlsState.h"
+                "DefaultsState.cpp"
+                "DefaultsState.h"
+                "FoldersState.cpp"
+                "FoldersState.h"
+                "GeoscapeState.cpp"
+                "GeoscapeState.h"
+                "NoAudioState.cpp"
+                "NoAudioState.h"
+                "VideoState.cpp"
+                "VideoState.h"
+              ];
+              p = "Options";
+              s = "";
+            }
+            "AbandonGameState.cpp"
+            "AbandonGameState.h"
+            "ConfirmLoadState.cpp"
+            "ConfirmLoadState.h"
+            "CutsceneState.cpp"
+            "CutsceneState.h"
+            "DeleteGameState.cpp"
+            "DeleteGameState.h"
+            "ErrorMessageState.cpp"
+            "ErrorMessageState.h"
+            "ListGamesState.cpp"
+            "ListGamesState.h"
+            "ListSaveState.cpp"
+            "ListSaveState.h"
+            "LoadGameState.cpp"
+            "LoadGameState.h"
+            "MainMenuState.cpp"
+            "MainMenuState.h"
+            "ModConfirmExtendedState.cpp"
+            "ModConfirmExtendedState.h"
+            "ModListState.cpp"
+            "ModListState.h"
+            "NewBattleState.cpp"
+            "NewBattleState.h"
+            "NewGameState.cpp"
+            "NewGameState.h"
+            "NotesState.cpp"
+            "NotesState.h"
+            "PauseState.cpp"
+            "PauseState.h"
+            "SaveGameState.cpp"
+            "SaveGameState.h"
+            "SetWindowedRootState.cpp"
+            "SetWindowedRootState.h"
+            "SlideshowState.cpp"
+            "SlideshowState.h"
+            "StartState.cpp"
+            "StartState.h"
+            "StatisticsState.cpp"
+            "StatisticsState.h"
+            "TestPaletteState.cpp"
+            "TestPaletteState.h"
+            "TestState.cpp"
+            "TestState.h"
+            "VideoState.cpp"
+            "VideoState.h"
+          ];
+          Mod = expandClusters [
+            {
+              m = [
+                "Deployment.cpp"
+                "Deployment.h"
+                "Race.cpp"
+                "Race.h"
+              ];
+              p = "Alien";
+              s = "";
+            }
+            {
+              m = [
+                "ounds.cpp"
+                "ounds.h"
+                "prites.cpp"
+                "prites.h"
+                "trings.cpp"
+                "trings.h"
+              ];
+              p = "ExtraS";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Set.cpp"
+                "Set.h"
+              ];
+              p = "MapData";
+              s = "";
+            }
+            {
+              m = [
+                "lienMission.cpp"
+                "lienMission.h"
+                "rcScript.cpp"
+                "rcScript.h"
+              ];
+              p = "RuleA";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Functions.h"
+              ];
+              p = "RuleBaseFacility";
+              s = "";
+            }
+            {
+              m = [
+                "ommendations.cpp"
+                "ommendations.h"
+                "onverter.cpp"
+                "onverter.h"
+                "ountry.cpp"
+                "ountry.h"
+                "raft.cpp"
+                "raft.h"
+                "raftWeapon.cpp"
+                "raftWeapon.h"
+              ];
+              p = "RuleC";
+              s = "";
+            }
+            {
+              m = [
+                "nviroEffects.cpp"
+                "nviroEffects.h"
+                "vent.cpp"
+                "vent.h"
+                "ventScript.cpp"
+                "ventScript.h"
+              ];
+              p = "RuleE";
+              s = "";
+            }
+            {
+              m = [
+                "nterface.cpp"
+                "nterface.h"
+                "nventory.cpp"
+                "nventory.h"
+                "tem.cpp"
+                "tem.h"
+                "temCategory.cpp"
+                "temCategory.h"
+              ];
+              p = "RuleI";
+              s = "";
+            }
+            {
+              m = [
+                "anufacture.cpp"
+                "anufacture.h"
+                "anufactureShortcut.cpp"
+                "anufactureShortcut.h"
+                "issionScript.cpp"
+                "issionScript.h"
+                "usic.cpp"
+                "usic.h"
+              ];
+              p = "RuleM";
+              s = "";
+            }
+            {
+              m = [
+                "gion.cpp"
+                "gion.h"
+                "search.cpp"
+                "search.h"
+              ];
+              p = "RuleRe";
+              s = "";
+            }
+            {
+              m = [
+                "kill.cpp"
+                "kill.h"
+                "oldier.cpp"
+                "oldier.h"
+                "oldierBonus.cpp"
+                "oldierBonus.h"
+                "oldierTransformation.cpp"
+                "oldierTransformation.h"
+                "tartingCondition.cpp"
+                "tartingCondition.h"
+                "tatBonus.cpp"
+                "tatBonus.h"
+              ];
+              p = "RuleS";
+              s = "";
+            }
+            {
+              m = [
+                "ideo.cpp"
+                "ideo.h"
+                "oiceSet.cpp"
+                "oiceSet.h"
+              ];
+              p = "RuleV";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Condition.cpp"
+                "Condition.h"
+              ];
+              p = "StatString";
+              s = "";
+            }
+            "Armor.cpp"
+            "Armor.h"
+            "ArticleDefinition.cpp"
+            "ArticleDefinition.h"
+            "City.cpp"
+            "City.h"
+            "CustomPalettes.cpp"
+            "CustomPalettes.h"
+            "LoadYaml.h"
+            "MCDPatch.cpp"
+            "MCDPatch.h"
+            "MapBlock.cpp"
+            "MapBlock.h"
+            "MapScript.cpp"
+            "MapScript.h"
+            "Mod.cpp"
+            "Mod.h"
+            "ModScript.h"
+            "Polygon.cpp"
+            "Polygon.h"
+            "Polyline.cpp"
+            "Polyline.h"
+            "RuleDamageType.cpp"
+            "RuleDamageType.h"
+            "RuleGlobe.cpp"
+            "RuleGlobe.h"
+            "RuleTerrain.cpp"
+            "RuleTerrain.h"
+            "RuleUfo.cpp"
+            "RuleUfo.h"
+            "RuleWeaponSet.cpp"
+            "RuleWeaponSet.h"
+            "SoldierNamePool.cpp"
+            "SoldierNamePool.h"
+            "SoundDefinition.cpp"
+            "SoundDefinition.h"
+            "Texture.cpp"
+            "Texture.h"
+            "UfoTrajectory.cpp"
+            "UfoTrajectory.h"
+            "Unit.cpp"
+            "Unit.h"
+          ];
+          "OpenXcom.2010.sln" = null;
+          "OpenXcom.2010.vcxproj" = null;
+          "OpenXcom.2010.vcxproj.filters" = null;
+          "OpenXcom.2010.vcxproj.user" = null;
+          "OpenXcom.rc" = null;
+          "OpenXcom.s" = null;
+          Savegame = expandClusters [
+            {
+              m = [
+                "Base.cpp"
+                "Base.h"
+                "Mission.cpp"
+                "Mission.h"
+                "Strategy.cpp"
+                "Strategy.h"
+              ];
+              p = "Alien";
+              s = "";
+            }
+            {
+              m = [
+                "Item.cpp"
+                "Item.h"
+                "Unit.cpp"
+                "Unit.h"
+                "UnitStatistics.h"
+              ];
+              p = "Battle";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Weapon.cpp"
+                "Weapon.h"
+                "WeaponProjectile.cpp"
+                "WeaponProjectile.h"
+              ];
+              p = "Craft";
+              s = "";
+            }
+            {
+              m = [
+                "ite.cpp"
+                "ite.h"
+                "tatistics.h"
+              ];
+              p = "MissionS";
+              s = "";
+            }
+            {
+              m = [
+                "Diary.h"
+                "Project.cpp"
+                "Project.h"
+              ];
+              p = "Research";
+              s = "";
+            }
+            {
+              m = [
+                "BattleGame.cpp"
+                "BattleGame.h"
+                "Game.cpp"
+                "Game.h"
+              ];
+              p = "Saved";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Avatar.cpp"
+                "Avatar.h"
+                "Death.cpp"
+                "Death.h"
+                "Diary.cpp"
+                "Diary.h"
+              ];
+              p = "Soldier";
+              s = "";
+            }
+            "Base.cpp"
+            "Base.h"
+            "BaseFacility.cpp"
+            "BaseFacility.h"
+            "Country.cpp"
+            "Country.h"
+            "EquipmentLayoutItem.cpp"
+            "EquipmentLayoutItem.h"
+            "GameTime.cpp"
+            "GameTime.h"
+            "GeoscapeEvent.cpp"
+            "GeoscapeEvent.h"
+            "HitLog.cpp"
+            "HitLog.h"
+            "ItemContainer.cpp"
+            "ItemContainer.h"
+            "MovingTarget.cpp"
+            "MovingTarget.h"
+            "Node.cpp"
+            "Node.h"
+            "Production.cpp"
+            "Production.h"
+            "RankCount.cpp"
+            "RankCount.h"
+            "Region.cpp"
+            "Region.h"
+            "SaveConverter.cpp"
+            "SaveConverter.h"
+            "SerializationHelper.cpp"
+            "SerializationHelper.h"
+            "Target.cpp"
+            "Target.h"
+            "Tile.cpp"
+            "Tile.h"
+            "Transfer.cpp"
+            "Transfer.h"
+            "Ufo.cpp"
+            "Ufo.h"
+            "Vehicle.cpp"
+            "Vehicle.h"
+            "Waypoint.cpp"
+            "Waypoint.h"
+            "WeightedOptions.cpp"
+            "WeightedOptions.h"
+          ];
+          Ufopaedia = expandClusters [
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Armor.cpp"
+                "Armor.h"
+                "BaseFacility.cpp"
+                "BaseFacility.h"
+                "Craft.cpp"
+                "Craft.h"
+                "CraftWeapon.cpp"
+                "CraftWeapon.h"
+                "Item.cpp"
+                "Item.h"
+                "Soldier.cpp"
+                "Soldier.h"
+                "TFTD.cpp"
+                "TFTD.h"
+                "TFTDArmor.cpp"
+                "TFTDArmor.h"
+                "TFTDCraft.cpp"
+                "TFTDCraft.h"
+                "TFTDCraftWeapon.cpp"
+                "TFTDCraftWeapon.h"
+                "TFTDFacility.cpp"
+                "TFTDFacility.h"
+                "TFTDItem.cpp"
+                "TFTDItem.h"
+                "TFTDUso.cpp"
+                "TFTDUso.h"
+                "TFTDVehicle.cpp"
+                "TFTDVehicle.h"
+                "Text.cpp"
+                "Text.h"
+                "TextImage.cpp"
+                "TextImage.h"
+                "Ufo.cpp"
+                "Ufo.h"
+                "Unit.cpp"
+                "Unit.h"
+                "Vehicle.cpp"
+                "Vehicle.h"
+              ];
+              p = "ArticleState";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "SelectState.cpp"
+                "SelectState.h"
+                "StartState.cpp"
+                "StartState.h"
+              ];
+              p = "Ufopaedia";
+              s = "";
+            }
+            "StatsForNerdsState.cpp"
+            "StatsForNerdsState.h"
+          ];
+          apple = [
+            "SDLMain.h"
+            "SDLMain.m"
+          ];
+          "fallthrough.h" = null;
+          "fmath.h" = null;
+          "git_version.h.in" = null;
+          "lodepng.cpp" = null;
+          "lodepng.h" = null;
+          "main.cpp" = null;
+          "md5.cpp" = null;
+          "md5.h" = null;
+          "resource.h" = null;
+          "ryml.natvis" = null;
+          "version.h" = null;
+        };
+      };
+      hash = "sha1-rl7PUY9xYPo3t7pfvcdHNTvScpc=";
+      rev = "f0134ef8065799c7723953d64b565f7832bfd782";
+      type = "git";
+      url = "https://github.com/MeridianOXC/OpenXcom.git";
+    };
     reePakTool = {
       date = "2026-10-01";
       files = flattenPaths {
@@ -924680,6 +935101,1784 @@ dependencies = [
       type = "git";
       url = "https://github.com/scummvm/scummvm-tools.git";
     };
+    theforceengine = {
+      date = "2026-11-11";
+      files = flattenPaths {
+        ".github" = {
+          workflows = "ubuntu-gcc.yml";
+        };
+        ".gitignore" = null;
+        "CMakeLists.txt" = null;
+        "CreateGitVersionH.cmake" = null;
+        LICENSE = null;
+        "ProjectStructure.md" = null;
+        "README.md" = null;
+        "Roadmap.md" = null;
+        TheForceEngine = {
+          "CMakeLists.txt" = null;
+          Captions = expandClusters [
+            {
+              m = [
+                "de"
+                "en"
+                "fr"
+              ];
+              p = "subtitles-";
+              s = ".txt";
+            }
+            "README.txt"
+          ];
+          Documentation = {
+            internal = "darkforces-manual.pdf";
+            markdown = {
+              "Credits.md" = null;
+              "TheForceEngine.md" = null;
+              "TheForceEngineManual.md" = null;
+              remaster-cutscenes = [
+                "README.md"
+                "architecture.md"
+                "dcss-format.md"
+                "modding-guide.md"
+                "troubleshooting.md"
+                "video-conversion.md"
+              ];
+            };
+          };
+          EditorDef = {
+            DarkForces = expandClusters [
+              {
+                m = [
+                  "Entity"
+                  "Logic"
+                  "Var"
+                ];
+                p = "";
+                s = "Def.ini";
+              }
+            ];
+            Examples = {
+              Level-Editor-WIP = {
+                "CustomEntityDef.ini" = null;
+                "Level Editor WIP.ini" = null;
+                "SECBASE.LEV" = null;
+                "SECBASE.tfl" = null;
+                "SEWERS.LEV" = null;
+                "SEWERS.tfl" = null;
+                Snapshots = {
+                  SECBASE = [
+                    "Blue Area Started.tfl"
+                    "New Station.tfl"
+                    "Release Candidate 2.tfl"
+                    "Water Room 2.tfl"
+                    "Water Room.tfl"
+                  ];
+                };
+                "TALAY.LEV" = null;
+                "TALAY.tfl" = null;
+                "Test.txt" = null;
+                "previewImage.jpg" = null;
+              };
+            };
+            Scripts = [
+              "DrawDoor.fs"
+              "LevelInfo.fs"
+              "Loop.fs"
+              "Test.fs"
+              "VectorMath.fs"
+              "scriptConsole.h"
+            ];
+          };
+          ExternalData = {
+            DarkForces = expandClusters [
+              {
+                m = [
+                  "effect"
+                  "pickup"
+                  "projectile"
+                  "weapon"
+                ];
+                p = "";
+                s = "s.json";
+              }
+            ];
+          };
+          Fonts = expandClusters [
+            {
+              m = [
+                "-Bold"
+                ""
+                "Mono"
+              ];
+              p = "DroidSans";
+              s = ".ttf";
+            }
+            {
+              m = [
+                "Bold"
+                "BoldItalic"
+                "ExtraBold"
+                "ExtraBoldItalic"
+                "Italic"
+                "Light"
+                "LightItalic"
+                "Regular"
+                "Semibold"
+                "SemiboldItalic"
+              ];
+              p = "OpenSans-";
+              s = ".ttf";
+            }
+            "NotoSans-Regular.ttf"
+            "OFL (Noto Sans).txt"
+          ];
+          "Icon.ico" = null;
+          Mods = {
+            TFE = {
+              AdjustableHud = expandClusters [
+                {
+                  m = [
+                    "LeftAddon.bm"
+                    "LeftAddon.png"
+                    "RightAddon.bm"
+                    "RightAddon.png"
+                  ];
+                  p = "HudStatus";
+                  s = "";
+                }
+                "AdjustableHud.txt"
+                "CMakeLists.txt"
+                "Credits.txt"
+              ];
+            };
+          };
+          "Resource.h" = null;
+          "SDL2.dll" = null;
+          "SDL2_image.dll" = null;
+          ScriptTests = expandClusters [
+            {
+              m = [
+                "2"
+                "2x2"
+                "3"
+                "4"
+              ];
+              p = "Test_float";
+              s = ".fs";
+            }
+            "Readme.txt"
+          ];
+          Shaders = expandClusters [
+            {
+              m = [
+                ".vert"
+                "Downsample.frag"
+                "Merge.frag"
+                "Threshold.frag"
+              ];
+              p = "bloom";
+              s = "";
+            }
+            {
+              m = [
+                "modelHologram.frag"
+                "modelHologram.vert"
+                "modelSolid.frag"
+                "modelSolid.vert"
+                "quad.frag"
+                "quad.vert"
+                "sprite.frag"
+                "sprite.vert"
+                "wall.frag"
+                "wall.vert"
+              ];
+              p = "gpu_render_";
+              s = "";
+            }
+            {
+              m = [
+                ".frag"
+                ".vert"
+                "_debug.frag"
+                "_debug.vert"
+              ];
+              p = "line3d";
+              s = "";
+            }
+            {
+              m = [
+                "Color.frag"
+                "Color.vert"
+                "Textured.frag"
+                "Textured.vert"
+              ];
+              p = "tri2d";
+              s = "";
+            }
+            {
+              m = [
+                "Color.frag"
+                "Color.vert"
+                "Texture.frag"
+                "Texture.vert"
+                "TextureClamp.frag"
+                "TextureTrans.frag"
+                "Wall.frag"
+                "Wall.vert"
+              ];
+              p = "tri3d";
+              s = "";
+            }
+            "blit.frag"
+            "blit.vert"
+            "curve.h"
+            "filter.h"
+            "grid.h"
+            "grid2d.frag"
+            "grid2d.vert"
+            "grid3d.frag"
+            "grid3d.vert"
+            "lighting.h"
+            "line2d.frag"
+            "line2d.vert"
+            "mdl3d.frag"
+            "mdl3d.vert"
+            "overlay.frag"
+            "overlay.vert"
+            "quad2d.frag"
+            "quad2d.vert"
+            "textureSampleFunc.h"
+            "yuv2rgb.frag"
+            "yuv2rgb.vert"
+          ];
+          SoundFonts = [
+            "AWE64.sf2"
+            "Roland SC-55.sf2"
+            "soundFonts.txt"
+          ];
+          TFE_A11y = [
+            "CMakeLists.txt"
+            "accessibility.cpp"
+            "accessibility.h"
+            "filePathList.cpp"
+            "filePathList.h"
+          ];
+          TFE_Archive = {
+            "CMakeLists.txt" = null;
+            "archive.cpp" = null;
+            "archive.h" = null;
+            "gobArchive.cpp" = null;
+            "gobArchive.h" = null;
+            "gobMemoryArchive.cpp" = null;
+            "gobMemoryArchive.h" = null;
+            "labArchive.cpp" = null;
+            "labArchive.h" = null;
+            "lfdArchive.cpp" = null;
+            "lfdArchive.h" = null;
+            zip = [
+              "CMakeLists.txt"
+              "miniz.h"
+              "zip.c"
+              "zip.h"
+            ];
+            "zipArchive.cpp" = null;
+            "zipArchive.h" = null;
+            "zstdCompression.cpp" = null;
+            "zstdCompression.h" = null;
+          };
+          TFE_Asset = expandClusters [
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "_Jedi.cpp"
+                "_Jedi.h"
+              ];
+              p = "spriteAsset";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "assetSystem.cpp"
+            "assetSystem.h"
+            "colormapAsset.cpp"
+            "colormapAsset.h"
+            "dfKeywords.cpp"
+            "dfKeywords.h"
+            "fontAsset.cpp"
+            "fontAsset.h"
+            "gameMessages.cpp"
+            "gameMessages.h"
+            "gifWriter.cpp"
+            "gifWriter.h"
+            "gmidAsset.cpp"
+            "gmidAsset.h"
+            "imageAsset.cpp"
+            "imageAsset.h"
+            "levelList.cpp"
+            "levelList.h"
+            "modelAsset_jedi.cpp"
+            "modelAsset_jedi.h"
+            "msf_gif.h"
+            "ogvPlayer.cpp"
+            "ogvPlayer.h"
+            "paletteAsset.cpp"
+            "paletteAsset.h"
+            "srtParser.cpp"
+            "srtParser.h"
+            "textureAsset.cpp"
+            "textureAsset.h"
+            "vocAsset.cpp"
+            "vocAsset.h"
+            "vueAsset.cpp"
+            "vueAsset.h"
+          ];
+          TFE_Audio = {
+            "CMakeLists.txt" = null;
+            MidiSynth = [
+              "Source.txt"
+              "fm4Opl3Device.cpp"
+              "fm4Opl3Device.h"
+              "fm4Tables.h"
+              "opl3.c"
+              "opl3.h"
+              "soundFontDevice.cpp"
+              "soundFontDevice.h"
+              "tsf.h"
+            ];
+            "RtMidi.cpp" = null;
+            "RtMidi.h" = null;
+            "audioDevice.cpp" = null;
+            "audioDevice.h" = null;
+            "audioFilters.cpp" = null;
+            "audioFilters.h" = null;
+            "audioOutput.h" = null;
+            "audioSystem.cpp" = null;
+            "audioSystem.h" = null;
+            "midi.h" = null;
+            "midiDevice.h" = null;
+            "midiPlayer.cpp" = null;
+            "midiPlayer.h" = null;
+            "systemMidiDevice.cpp" = null;
+            "systemMidiDevice.h" = null;
+          };
+          TFE_DarkForces = {
+            Actor = expandClusters [
+              {
+                m = [
+                  ".cpp"
+                  ".h"
+                  "Enhanced.cpp"
+                  "Enhanced.h"
+                  "Internal.h"
+                  "Module.h"
+                  "Serialization.cpp"
+                  "Serialization.h"
+                ];
+                p = "actor";
+                s = "";
+              }
+              {
+                m = [
+                  "One.cpp"
+                  "One.h"
+                  "Three.cpp"
+                  "Three.h"
+                  "Two.cpp"
+                  "Two.h"
+                ];
+                p = "phase";
+                s = "";
+              }
+              "animTables.cpp"
+              "animTables.h"
+              "bobaFett.cpp"
+              "bobaFett.h"
+              "dragon.cpp"
+              "dragon.h"
+              "enemies.cpp"
+              "enemies.h"
+              "exploders.cpp"
+              "exploders.h"
+              "flyers.cpp"
+              "flyers.h"
+              "mousebot.cpp"
+              "mousebot.h"
+              "scenery.cpp"
+              "scenery.h"
+              "sewer.cpp"
+              "sewer.h"
+              "troopers.cpp"
+              "troopers.h"
+              "turret.cpp"
+              "turret.h"
+              "welder.cpp"
+              "welder.h"
+            ];
+            "CMakeLists.txt" = null;
+            GameUI = [
+              "agentMenu.cpp"
+              "agentMenu.h"
+              "delt.cpp"
+              "delt.h"
+              "editBox.cpp"
+              "editBox.h"
+              "escapeMenu.cpp"
+              "escapeMenu.h"
+              "menu.cpp"
+              "menu.h"
+              "missionBriefing.cpp"
+              "missionBriefing.h"
+              "pda.cpp"
+              "pda.h"
+              "uiDraw.cpp"
+              "uiDraw.h"
+            ];
+            Landru = expandClusters [
+              {
+                m = [
+                  ".cpp"
+                  ".h"
+                  "List.cpp"
+                  "List.h"
+                  "_film.cpp"
+                  "_film.h"
+                  "_player.cpp"
+                  "_player.h"
+                ];
+                p = "cutscene";
+                s = "";
+              }
+              {
+                m = [
+                  ".cpp"
+                  ".h"
+                  "Anim.cpp"
+                  "Anim.h"
+                  "Cust.cpp"
+                  "Cust.h"
+                  "Delt.cpp"
+                  "Delt.h"
+                ];
+                p = "lactor";
+                s = "";
+              }
+              "lcanvas.cpp"
+              "lcanvas.h"
+              "ldraw.cpp"
+              "ldraw.h"
+              "lfade.cpp"
+              "lfade.h"
+              "lfont.cpp"
+              "lfont.h"
+              "lmusic.cpp"
+              "lmusic.h"
+              "lpalette.cpp"
+              "lpalette.h"
+              "lrect.cpp"
+              "lrect.h"
+              "lsound.cpp"
+              "lsound.h"
+              "lsystem.cpp"
+              "lsystem.h"
+              "ltimer.cpp"
+              "ltimer.h"
+              "lview.cpp"
+              "lview.h"
+              "textCrawl.cpp"
+              "textCrawl.h"
+            ];
+            Remaster = [
+              "dcssParser.cpp"
+              "dcssParser.h"
+              "remasterCutscenes.cpp"
+              "remasterCutscenes.h"
+            ];
+            Scripting = expandClusters [
+              {
+                m = [
+                  "Elev.cpp"
+                  "Elev.h"
+                  "Object.cpp"
+                  "Object.h"
+                  "Sector.cpp"
+                  "Sector.h"
+                  "Texture.cpp"
+                  "Texture.h"
+                  "Wall.cpp"
+                  "Wall.h"
+                ];
+                p = "script";
+                s = "";
+              }
+              "CMakeLists.txt"
+              "gameScripts.cpp"
+              "gameScripts.h"
+              "gs_game.cpp"
+              "gs_game.h"
+              "gs_level.cpp"
+              "gs_level.h"
+              "gs_player.cpp"
+              "gs_player.h"
+              "gs_system.cpp"
+              "gs_system.h"
+            ];
+            "agent.cpp" = null;
+            "agent.h" = null;
+            "animLogic.cpp" = null;
+            "animLogic.h" = null;
+            "automap.cpp" = null;
+            "automap.h" = null;
+            "briefingList.cpp" = null;
+            "briefingList.h" = null;
+            "cheats.cpp" = null;
+            "cheats.h" = null;
+            "config.cpp" = null;
+            "config.h" = null;
+            "darkForcesMain.cpp" = null;
+            "darkForcesMain.h" = null;
+            "gameMessage.cpp" = null;
+            "gameMessage.h" = null;
+            "gameMusic.cpp" = null;
+            "gameMusic.h" = null;
+            "generator.cpp" = null;
+            "generator.h" = null;
+            "hitEffect.cpp" = null;
+            "hitEffect.h" = null;
+            "hud.cpp" = null;
+            "hud.h" = null;
+            "item.cpp" = null;
+            "item.h" = null;
+            "logic.cpp" = null;
+            "logic.h" = null;
+            "mission.cpp" = null;
+            "mission.h" = null;
+            "pickup.cpp" = null;
+            "pickup.h" = null;
+            "player.cpp" = null;
+            "player.h" = null;
+            "playerCollision.cpp" = null;
+            "playerCollision.h" = null;
+            "playerLogic.h" = null;
+            "projectile.cpp" = null;
+            "projectile.h" = null;
+            "random.cpp" = null;
+            "random.h" = null;
+            "sound.cpp" = null;
+            "sound.h" = null;
+            "time.cpp" = null;
+            "time.h" = null;
+            "updateLogic.cpp" = null;
+            "updateLogic.h" = null;
+            "util.cpp" = null;
+            "util.h" = null;
+            "vueLogic.cpp" = null;
+            "vueLogic.h" = null;
+            "weapon.cpp" = null;
+            "weapon.h" = null;
+            "weaponFireFunc.cpp" = null;
+            "weaponFireFunc.h" = null;
+          };
+          TFE_Editor = {
+            AssetBrowser = [
+              "CMakeLists.txt"
+              "assetBrowser.cpp"
+              "assetBrowser.h"
+            ];
+            "CMakeLists.txt" = null;
+            EditorAsset = expandClusters [
+              {
+                m = [
+                  "3dThumbnails.cpp"
+                  "3dThumbnails.h"
+                  "Asset.cpp"
+                  "Asset.h"
+                  "Colormap.cpp"
+                  "Colormap.h"
+                  "Frame.cpp"
+                  "Frame.h"
+                  "LevelPreview.cpp"
+                  "LevelPreview.h"
+                  "Obj3D.cpp"
+                  "Obj3D.h"
+                  "Sound.cpp"
+                  "Sound.h"
+                  "Sprite.cpp"
+                  "Sprite.h"
+                  "Texture.cpp"
+                  "Texture.h"
+                ];
+                p = "editor";
+                s = "";
+              }
+              "CMakeLists.txt"
+            ];
+            LevelEditor = {
+              "CMakeLists.txt" = null;
+              Rendering = [
+                "CMakeLists.txt"
+                "gizmo.cpp"
+                "gizmo.h"
+                "grid.cpp"
+                "grid.h"
+                "grid2d.cpp"
+                "grid2d.h"
+                "grid3d.cpp"
+                "grid3d.h"
+                "viewport.cpp"
+                "viewport.h"
+              ];
+              Scripting = [
+                "CMakeLists.txt"
+                "levelEditorScripts.cpp"
+                "levelEditorScripts.h"
+                "ls_draw.cpp"
+                "ls_draw.h"
+                "ls_level.cpp"
+                "ls_level.h"
+                "ls_selection.cpp"
+                "ls_selection.h"
+                "ls_system.cpp"
+                "ls_system.h"
+              ];
+              "browser.cpp" = null;
+              "browser.h" = null;
+              "camera.cpp" = null;
+              "camera.h" = null;
+              "confirmDialogs.cpp" = null;
+              "confirmDialogs.h" = null;
+              "contextMenu.cpp" = null;
+              "contextMenu.h" = null;
+              "dragSelect.cpp" = null;
+              "dragSelect.h" = null;
+              "editCommon.cpp" = null;
+              "editCommon.h" = null;
+              "editEntity.cpp" = null;
+              "editEntity.h" = null;
+              "editGeometry.cpp" = null;
+              "editGeometry.h" = null;
+              "editGuidelines.cpp" = null;
+              "editGuidelines.h" = null;
+              "editNotes.cpp" = null;
+              "editNotes.h" = null;
+              "editSector.cpp" = null;
+              "editSector.h" = null;
+              "editSurface.cpp" = null;
+              "editSurface.h" = null;
+              "editTransforms.cpp" = null;
+              "editTransforms.h" = null;
+              "editVertex.cpp" = null;
+              "editVertex.h" = null;
+              "entity.cpp" = null;
+              "entity.h" = null;
+              "error.h" = null;
+              "featureId.cpp" = null;
+              "featureId.h" = null;
+              "findSectorUI.cpp" = null;
+              "findSectorUI.h" = null;
+              "groups.cpp" = null;
+              "groups.h" = null;
+              "guidelines.cpp" = null;
+              "guidelines.h" = null;
+              "hotkeys.cpp" = null;
+              "hotkeys.h" = null;
+              "infoPanel.cpp" = null;
+              "infoPanel.h" = null;
+              "levelDataSnapshot.cpp" = null;
+              "levelDataSnapshot.h" = null;
+              "levelEditor.cpp" = null;
+              "levelEditor.h" = null;
+              "levelEditorData.cpp" = null;
+              "levelEditorData.h" = null;
+              "levelEditorHistory.cpp" = null;
+              "levelEditorHistory.h" = null;
+              "levelEditorInf.cpp" = null;
+              "levelEditorInf.h" = null;
+              "lighting.cpp" = null;
+              "lighting.h" = null;
+              "note.cpp" = null;
+              "note.h" = null;
+              "selection.cpp" = null;
+              "selection.h" = null;
+              "sharedState.h" = null;
+              "shell.cpp" = null;
+              "shell.h" = null;
+              "snapshotUI.cpp" = null;
+              "snapshotUI.h" = null;
+              "tabControl.cpp" = null;
+              "tabControl.h" = null;
+              "testOptions.cpp" = null;
+              "testOptions.h" = null;
+              "userPreferences.cpp" = null;
+              "userPreferences.h" = null;
+            };
+            "editor.cpp" = null;
+            "editor.h" = null;
+            "editorComboBox.cpp" = null;
+            "editorComboBox.h" = null;
+            "editorConfig.cpp" = null;
+            "editorConfig.h" = null;
+            "editorLevel.cpp" = null;
+            "editorLevel.h" = null;
+            "editorMath.cpp" = null;
+            "editorMath.h" = null;
+            "editorProject.cpp" = null;
+            "editorProject.h" = null;
+            "editorResources.cpp" = null;
+            "editorResources.h" = null;
+            "errorMessages.cpp" = null;
+            "errorMessages.h" = null;
+            "history.cpp" = null;
+            "history.h" = null;
+            "historyView.cpp" = null;
+            "historyView.h" = null;
+            "snapshotReaderWriter.cpp" = null;
+            "snapshotReaderWriter.h" = null;
+          };
+          TFE_ExternalData = expandClusters [
+            {
+              m = [
+                "Effect.cpp"
+                "Effect.h"
+                "Projectile.cpp"
+                "Projectile.h"
+              ];
+              p = "custom";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "dfLogics.cpp"
+            "dfLogics.h"
+            "logicTables.cpp"
+            "logicTables.h"
+            "pickupExternal.cpp"
+            "pickupExternal.h"
+            "weaponExternal.cpp"
+            "weaponExternal.h"
+          ];
+          TFE_FileSystem = expandClusters [
+            {
+              m = [
+                "-posix.cpp"
+                ".cpp"
+                ".h"
+              ];
+              p = "filestream";
+              s = "";
+            }
+            {
+              m = [
+                "-posix.cpp"
+                ".cpp"
+                ".h"
+              ];
+              p = "fileutil";
+              s = "";
+            }
+            {
+              m = [
+                "-posix.cpp"
+                ".cpp"
+                ".h"
+              ];
+              p = "paths";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "filewriterAsync.cpp"
+            "filewriterAsync.h"
+            "memorystream.cpp"
+            "memorystream.h"
+            "stream.h"
+          ];
+          TFE_ForceScript = {
+            Angelscript = {
+              "README.txt" = null;
+              add_on = {
+                scriptarray = [
+                  "scriptarray.cpp"
+                  "scriptarray.h"
+                ];
+                scriptbuilder = [
+                  "scriptbuilder.cpp"
+                  "scriptbuilder.h"
+                ];
+                scriptstdstring = expandClusters [
+                  {
+                    m = [
+                      ".cpp"
+                      ".h"
+                      "_utils.cpp"
+                    ];
+                    p = "scriptstdstring";
+                    s = "";
+                  }
+                ];
+              };
+              angelscript = {
+                include = "angelscript.h";
+                source = expandClusters [
+                  {
+                    m = [
+                      ".cpp"
+                      ".h"
+                      "_arm.cpp"
+                      "_arm64.cpp"
+                      "_arm64_gcc.S"
+                      "_arm64_msvc.asm"
+                      "_arm64_xcode.S"
+                      "_arm_gcc.S"
+                      "_arm_msvc.asm"
+                      "_arm_vita.S"
+                      "_arm_xcode.S"
+                      "_e2k.S"
+                      "_e2k.cpp"
+                      "_mips.cpp"
+                      "_ppc.cpp"
+                      "_ppc_64.cpp"
+                      "_riscv64.cpp"
+                      "_riscv64_gcc.S"
+                      "_sh4.cpp"
+                      "_x64_gcc.cpp"
+                      "_x64_mingw.cpp"
+                      "_x64_msvc.cpp"
+                      "_x64_msvc_asm.asm"
+                      "_x86.cpp"
+                      "_xenon.cpp"
+                    ];
+                    p = "as_callfunc";
+                    s = "";
+                  }
+                  {
+                    m = [
+                      "mpiler.cpp"
+                      "mpiler.h"
+                      "nfig.h"
+                      "nfiggroup.cpp"
+                      "nfiggroup.h"
+                      "ntext.cpp"
+                      "ntext.h"
+                    ];
+                    p = "as_co";
+                    s = "";
+                  }
+                  {
+                    m = [
+                      "code.cpp"
+                      "code.h"
+                      "engine.cpp"
+                      "engine.h"
+                      "function.cpp"
+                      "function.h"
+                      "node.cpp"
+                      "node.h"
+                      "object.cpp"
+                      "object.h"
+                    ];
+                    p = "as_script";
+                    s = "";
+                  }
+                  {
+                    m = [
+                      ".cpp"
+                      ".h"
+                      "_util.cpp"
+                      "_util.h"
+                    ];
+                    p = "as_string";
+                    s = "";
+                  }
+                  {
+                    m = [
+                      "def.h"
+                      "izer.cpp"
+                      "izer.h"
+                    ];
+                    p = "as_token";
+                    s = "";
+                  }
+                  "as_array.h"
+                  "as_atomic.cpp"
+                  "as_atomic.h"
+                  "as_builder.cpp"
+                  "as_builder.h"
+                  "as_bytecode.cpp"
+                  "as_bytecode.h"
+                  "as_criticalsection.h"
+                  "as_datatype.cpp"
+                  "as_datatype.h"
+                  "as_debug.h"
+                  "as_gc.cpp"
+                  "as_gc.h"
+                  "as_generic.cpp"
+                  "as_generic.h"
+                  "as_globalproperty.cpp"
+                  "as_map.h"
+                  "as_memory.cpp"
+                  "as_memory.h"
+                  "as_module.cpp"
+                  "as_module.h"
+                  "as_namespace.h"
+                  "as_objecttype.cpp"
+                  "as_objecttype.h"
+                  "as_outputbuffer.cpp"
+                  "as_outputbuffer.h"
+                  "as_parser.cpp"
+                  "as_parser.h"
+                  "as_property.h"
+                  "as_restore.cpp"
+                  "as_restore.h"
+                  "as_symboltable.h"
+                  "as_texts.h"
+                  "as_thread.cpp"
+                  "as_thread.h"
+                  "as_typeinfo.cpp"
+                  "as_typeinfo.h"
+                  "as_variablescope.cpp"
+                  "as_variablescope.h"
+                ];
+              };
+            };
+            "CMakeLists.txt" = null;
+            ScriptAPI-Shared = expandClusters [
+              {
+                m = [
+                  "Math.cpp"
+                  "Math.h"
+                  "Test.cpp"
+                  "Test.h"
+                ];
+                p = "script";
+                s = "";
+              }
+              "CMakeLists.txt"
+              "sharedScriptAPI.cpp"
+              "sharedScriptAPI.h"
+            ];
+            "float2.cpp" = null;
+            "float2.h" = null;
+            "float2x2.cpp" = null;
+            "float2x2.h" = null;
+            "float3.cpp" = null;
+            "float3.h" = null;
+            "float3x3.cpp" = null;
+            "float3x3.h" = null;
+            "float4.cpp" = null;
+            "float4.h" = null;
+            "float4x4.cpp" = null;
+            "float4x4.h" = null;
+            "forceScript.cpp" = null;
+            "forceScript.h" = null;
+            "scriptAPI.h" = null;
+            "scriptInterface.cpp" = null;
+            "scriptInterface.h" = null;
+          };
+          TFE_FrontEndUI = [
+            "CMakeLists.txt"
+            "console.cpp"
+            "console.h"
+            "frontEndUi.cpp"
+            "frontEndUi.h"
+            "modLoader.cpp"
+            "modLoader.h"
+            "profilerView.cpp"
+            "profilerView.h"
+            "uiTexture.cpp"
+            "uiTexture.h"
+          ];
+          TFE_Game = [
+            "CMakeLists.txt"
+            "igame.cpp"
+            "igame.h"
+            "reticle.cpp"
+            "reticle.h"
+            "saveSystem.cpp"
+            "saveSystem.h"
+          ];
+          TFE_Input = expandClusters [
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "Enum.h"
+                "Mapping.cpp"
+                "Mapping.h"
+              ];
+              p = "input";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "replay.cpp"
+            "replay.h"
+          ];
+          TFE_Jedi = {
+            "CMakeLists.txt" = null;
+            Collision = [
+              "collision.cpp"
+              "collision.h"
+            ];
+            IMuse = expandClusters [
+              {
+                m = [
+                  "Sound.cpp"
+                  "Sound.h"
+                  "VolumeTable.h"
+                ];
+                p = "imDigital";
+                s = "";
+              }
+              {
+                m = [
+                  "Cmd.cpp"
+                  "Cmd.h"
+                  "Player.cpp"
+                  "Player.h"
+                ];
+                p = "imMidi";
+                s = "";
+              }
+              "imConst.cpp"
+              "imConst.h"
+              "imList.cpp"
+              "imList.h"
+              "imOpCodes.h"
+              "imSoundFader.cpp"
+              "imSoundFader.h"
+              "imTrigger.cpp"
+              "imTrigger.h"
+              "imuse.cpp"
+              "imuse.h"
+              "midiData.cpp"
+              "midiData.h"
+            ];
+            InfSystem = [
+              "infElevatorUpdateFunc.h"
+              "infPublicTypes.h"
+              "infState.cpp"
+              "infState.h"
+              "infSystem.cpp"
+              "infSystem.h"
+              "infTypesInternal.h"
+              "message.cpp"
+              "message.h"
+            ];
+            Level = expandClusters [
+              {
+                m = [
+                  ".cpp"
+                  ".h"
+                  "Bin.cpp"
+                  "Bin.h"
+                  "Data.cpp"
+                  "Data.h"
+                  "Textures.cpp"
+                  "Textures.h"
+                ];
+                p = "level";
+                s = "";
+              }
+              "rfont.cpp"
+              "rfont.h"
+              "robjData.cpp"
+              "robjData.h"
+              "robject.cpp"
+              "robject.h"
+              "roffscreenBuffer.cpp"
+              "roffscreenBuffer.h"
+              "rsector.cpp"
+              "rsector.h"
+              "rtexture.cpp"
+              "rtexture.h"
+              "rwall.cpp"
+              "rwall.h"
+            ];
+            Math = [
+              "core_math.cpp"
+              "core_math.h"
+              "cosTable.cpp"
+              "cosTable.h"
+              "fixedPoint.h"
+            ];
+            Memory = [
+              "allocator.cpp"
+              "allocator.h"
+              "list.cpp"
+              "list.h"
+            ];
+            Renderer = {
+              RClassic_Fixed = {
+                "rclassicFixed.cpp" = null;
+                "rclassicFixed.h" = null;
+                "rclassicFixedSharedState.cpp" = null;
+                "rclassicFixedSharedState.h" = null;
+                "redgePairFixed.cpp" = null;
+                "redgePairFixed.h" = null;
+                "rflatFixed.cpp" = null;
+                "rflatFixed.h" = null;
+                "rlightingFixed.cpp" = null;
+                "rlightingFixed.h" = null;
+                robj3d_fixed = expandClusters [
+                  {
+                    m = [
+                      ".cpp"
+                      ".h"
+                      "_ClipFunc.h"
+                      "_Clipping.cpp"
+                      "_Clipping.h"
+                      "_Culling.cpp"
+                      "_Culling.h"
+                      "_PolyRenderFunc.h"
+                      "_PolygonDraw.cpp"
+                      "_PolygonDraw.h"
+                      "_PolygonSetup.cpp"
+                      "_PolygonSetup.h"
+                      "_TransformAndLighting.cpp"
+                      "_TransformAndLighting.h"
+                    ];
+                    p = "robj3dFixed";
+                    s = "";
+                  }
+                ];
+                "rsectorFixed.cpp" = null;
+                "rsectorFixed.h" = null;
+                "rwallFixed.cpp" = null;
+                "rwallFixed.h" = null;
+              };
+              RClassic_Float = {
+                "fixedPoint20.h" = null;
+                "rclassicFloat.cpp" = null;
+                "rclassicFloat.h" = null;
+                "rclassicFloatSharedState.cpp" = null;
+                "rclassicFloatSharedState.h" = null;
+                "redgePairFloat.cpp" = null;
+                "redgePairFloat.h" = null;
+                "rflatFloat.cpp" = null;
+                "rflatFloat.h" = null;
+                "rlightingFloat.cpp" = null;
+                "rlightingFloat.h" = null;
+                robj3d_float = expandClusters [
+                  {
+                    m = [
+                      ".cpp"
+                      ".h"
+                      "_ClipFunc.h"
+                      "_Clipping.cpp"
+                      "_Clipping.h"
+                      "_Culling.cpp"
+                      "_Culling.h"
+                      "_PolyRenderFunc.h"
+                      "_PolygonDraw.cpp"
+                      "_PolygonDraw.h"
+                      "_PolygonSetup.cpp"
+                      "_PolygonSetup.h"
+                      "_TransformAndLighting.cpp"
+                      "_TransformAndLighting.h"
+                    ];
+                    p = "robj3dFloat";
+                    s = "";
+                  }
+                ];
+                "rsectorFloat.cpp" = null;
+                "rsectorFloat.h" = null;
+                "rwallFloat.cpp" = null;
+                "rwallFloat.h" = null;
+                "screenDraw.cpp" = null;
+                "screenDraw.h" = null;
+              };
+              RClassic_GPU = [
+                "debug.cpp"
+                "debug.h"
+                "frustum.cpp"
+                "frustum.h"
+                "modelGPU.cpp"
+                "modelGPU.h"
+                "objectPortalPlanes.cpp"
+                "objectPortalPlanes.h"
+                "rclassicGPU.cpp"
+                "rclassicGPU.h"
+                "renderDebug.cpp"
+                "renderDebug.h"
+                "rsectorGPU.cpp"
+                "rsectorGPU.h"
+                "sbuffer.cpp"
+                "sbuffer.h"
+                "screenDrawGPU.cpp"
+                "screenDrawGPU.h"
+                "sectorDisplayList.cpp"
+                "sectorDisplayList.h"
+                "spriteDisplayList.cpp"
+                "spriteDisplayList.h"
+              ];
+              "jediRenderer.cpp" = null;
+              "jediRenderer.h" = null;
+              "rcommon.cpp" = null;
+              "rcommon.h" = null;
+              "redgePair.h" = null;
+              "rlimits.h" = null;
+              "robjectRender.h" = null;
+              "rscanline.cpp" = null;
+              "rscanline.h" = null;
+              "rsectorRender.cpp" = null;
+              "rsectorRender.h" = null;
+              "rwallRender.h" = null;
+              "rwallSegment.h" = null;
+              "screenDraw.cpp" = null;
+              "screenDraw.h" = null;
+              "textureInfo.h" = null;
+              "virtualFramebuffer.cpp" = null;
+              "virtualFramebuffer.h" = null;
+            };
+            Serialization = [
+              "serialization.cpp"
+              "serialization.h"
+            ];
+            Task = [
+              "task.cpp"
+              "task.h"
+              "taskMacros.h"
+            ];
+          };
+          TFE_Memory = [
+            "CMakeLists.txt"
+            "chunkedArray.cpp"
+            "chunkedArray.h"
+            "memoryRegion.cpp"
+            "memoryRegion.h"
+          ];
+          TFE_Outlaws = [
+            "CMakeLists.txt"
+            "outlawsMain.cpp"
+            "outlawsMain.h"
+          ];
+          TFE_Polygon = [
+            "CMakeLists.txt"
+            "clipper.cpp"
+            "clipper.hpp"
+            "polygon.cpp"
+            "polygon.h"
+          ];
+          TFE_PostProcess = expandClusters [
+            {
+              m = [
+                "Downsample.cpp"
+                "Downsample.h"
+                "Merge.cpp"
+                "Merge.h"
+                "Threshold.cpp"
+                "Threshold.h"
+              ];
+              p = "bloom";
+              s = "";
+            }
+            {
+              m = [
+                ".cpp"
+                ".h"
+                "effect.h"
+              ];
+              p = "postprocess";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "blit.cpp"
+            "blit.h"
+            "overlay.cpp"
+            "overlay.h"
+          ];
+          TFE_RenderBackend = {
+            "CMakeLists.txt" = null;
+            Win32OpenGL = expandClusters [
+              {
+                m = [
+                  "Backend.cpp"
+                  "State.cpp"
+                  "Target.cpp"
+                  "Target.h"
+                ];
+                p = "render";
+                s = "";
+              }
+              "CMakeLists.txt"
+              "dynamicTexture.cpp"
+              "gl.h"
+              "glad.c"
+              "glslParser.cpp"
+              "glslParser.h"
+              "indexBuffer.cpp"
+              "khrplatform.h"
+              "openGL_Caps.cpp"
+              "openGL_Caps.h"
+              "screenCapture.cpp"
+              "screenCapture.h"
+              "shader.cpp"
+              "shaderBuffer.cpp"
+              "textureGpu.cpp"
+              "vertexBuffer.cpp"
+            ];
+            "dynamicTexture.h" = null;
+            "indexBuffer.h" = null;
+            "renderBackend.h" = null;
+            "renderState.h" = null;
+            "shader.h" = null;
+            "shaderBuffer.h" = null;
+            "textureGpu.h" = null;
+            "vertexBuffer.h" = null;
+          };
+          TFE_RenderShared = expandClusters [
+            {
+              m = [
+                "2d.cpp"
+                "2d.h"
+                "3d.cpp"
+                "3d.h"
+                "Mode.cpp"
+                "Mode.h"
+              ];
+              p = "lineDraw";
+              s = "";
+            }
+            {
+              m = [
+                "2d.cpp"
+                "2d.h"
+                "3d.cpp"
+                "3d.h"
+              ];
+              p = "triDraw";
+              s = "";
+            }
+            "CMakeLists.txt"
+            "camera3d.h"
+            "gridDef.h"
+            "modelDraw.cpp"
+            "modelDraw.h"
+            "quadDraw2d.cpp"
+            "quadDraw2d.h"
+            "texturePacker.cpp"
+            "texturePacker.h"
+          ];
+          TFE_Settings = {
+            "CMakeLists.txt" = null;
+            "gameSourceData.h" = null;
+            linux = [
+              "steamlnx.cpp"
+              "steamlnx.h"
+              "vdf_parser.hpp"
+            ];
+            "settings.cpp" = null;
+            "settings.h" = null;
+            windows = [
+              "registry.cpp"
+              "registry.h"
+            ];
+          };
+          TFE_System = {
+            "CMakeLists.txt" = null;
+            CrashHandler = expandClusters [
+              {
+                m = [
+                  ".h"
+                  "Linux.cpp"
+                  "Mac.cpp"
+                  "Win32.cpp"
+                ];
+                p = "crashHandler";
+                s = "";
+              }
+            ];
+            "cJSON.c" = null;
+            "cJSON.h" = null;
+            "frameLimiter.cpp" = null;
+            "frameLimiter.h" = null;
+            "iniParser.cpp" = null;
+            "iniParser.h" = null;
+            "log.cpp" = null;
+            "math.cpp" = null;
+            "math.h" = null;
+            "memoryPool.cpp" = null;
+            "memoryPool.h" = null;
+            "parser.cpp" = null;
+            "parser.h" = null;
+            "profiler.cpp" = null;
+            "profiler.h" = null;
+            "system.cpp" = null;
+            "system.h" = null;
+            "tfeMessage.cpp" = null;
+            "tfeMessage.h" = null;
+            "types.h" = null;
+            "utf8.cpp" = null;
+            "utf8.h" = null;
+          };
+          TFE_Ui = {
+            "CMakeLists.txt" = null;
+            imGUI = {
+              Dirent = "dirent.h";
+              "imconfig.h" = null;
+              "imgui.cpp" = null;
+              "imgui.h" = null;
+              "imgui_demo.cpp" = null;
+              "imgui_draw.cpp" = null;
+              "imgui_impl_opengl3.cpp" = null;
+              "imgui_impl_opengl3.h" = null;
+              "imgui_impl_opengl3_loader.h" = null;
+              "imgui_impl_sdl2.cpp" = null;
+              "imgui_impl_sdl2.h" = null;
+              "imgui_internal.h" = null;
+              "imgui_markdown.h" = null;
+              "imgui_tables.cpp" = null;
+              "imgui_tfe_widgets.cpp" = null;
+              "imgui_tfe_widgets.h" = null;
+              "imgui_widgets.cpp" = null;
+              "imstb_rectpack.h" = null;
+              "imstb_textedit.h" = null;
+              "imstb_truetype.h" = null;
+            };
+            "markdown.cpp" = null;
+            "markdown.h" = null;
+            "portable-file-dialogs.h" = null;
+            "ui.cpp" = null;
+            "ui.h" = null;
+          };
+          Tests = {
+            Replays = [
+              "base_replay_log.txt"
+              "base_test.demo"
+            ];
+            "runTests.bat" = null;
+            "runTests.ps1" = null;
+            "runTests.sh" = null;
+          };
+          "TheForceEngine.ico" = null;
+          "TheForceEngine.rc" = null;
+          "TheForceEngine.svg" = null;
+          "TheForceEngine.vcxproj" = null;
+          "TheForceEngine.vcxproj.filters" = null;
+          UI_Images = expandClusters [
+            {
+              m = [
+                "afe"
+                "ound"
+                "pirit"
+              ];
+              p = "S";
+              s = "Object.png";
+            }
+            {
+              m = [
+                "CreditsNormal"
+                "CreditsSelected"
+                "EditorNormal"
+                "EditorSelected"
+                "ExitNormal"
+                "ExitSelected"
+                "LoadNormal"
+                "LoadSelected"
+                "ManualNormal"
+                "ManualSelected"
+                "ModsNormal"
+                "ModsSelected"
+                "SettingsNormal"
+                "SettingsSelected"
+                "StartNormal"
+                "StartSelected"
+                "TitleLogo"
+                "TitleText"
+              ];
+              p = "TFE_";
+              s = ".png";
+            }
+            "Boolean_32x3.png"
+            "Collision.png"
+            "Gradient.png"
+            "IconAtlas.png"
+            "LevelNote.png"
+            "Obj-3d-Icon.png"
+            "PlayerStart.png"
+            "ReticleAtlas.png"
+          ];
+          UI_Text = [
+            "DFRemasteredCredits.txt"
+            "KeyText.txt"
+            "TfeMessages.txt"
+          ];
+          "gitVersion.h" = null;
+          "io.github.theforceengine.tfe.Mod.AdjustableHud.metainfo.xml" = null;
+          "io.github.theforceengine.tfe.desktop" = null;
+          "io.github.theforceengine.tfe.metainfo.xml" = null;
+          "io.github.theforceengine.tfe.png" = null;
+          "main.cpp" = null;
+          "main.h" = null;
+          "ogg.dll" = null;
+          ogg_theora_win32 = {
+            include = {
+              ogg = [
+                "config_types.h"
+                "ogg.h"
+                "os_types.h"
+              ];
+              theora = expandClusters [
+                {
+                  m = [
+                    ""
+                    "dec"
+                    "enc"
+                  ];
+                  p = "theora";
+                  s = ".h";
+                }
+                "codec.h"
+              ];
+              vorbis = [
+                "codec.h"
+                "vorbisenc.h"
+                "vorbisfile.h"
+              ];
+            };
+            lib = {
+              x64 = expandClusters [
+                {
+                  m = [
+                    ""
+                    "dec"
+                    "enc"
+                  ];
+                  p = "theora";
+                  s = ".lib";
+                }
+                {
+                  m = [
+                    ""
+                    "enc"
+                    "file"
+                  ];
+                  p = "vorbis";
+                  s = ".lib";
+                }
+                "ogg.lib"
+              ];
+            };
+          };
+          sdl2_win32 = {
+            "BUGS.txt" = null;
+            "COPYING.txt" = null;
+            "README-SDL.txt" = null;
+            "README.txt" = null;
+            "WhatsNew.txt" = null;
+            cmake = [
+              "sdl2-config-version.cmake"
+              "sdl2-config.cmake"
+            ];
+            docs = expandClusters [
+              {
+                m = [
+                  "-android"
+                  "-cmake"
+                  "-directfb"
+                  "-dynapi"
+                  "-emscripten"
+                  "-gdk"
+                  "-gesture"
+                  "-git"
+                  "-hg"
+                  "-ios"
+                  "-kmsbsd"
+                  "-linux"
+                  "-macos"
+                  "-macosx"
+                  "-n3ds"
+                  "-nacl"
+                  "-ngage"
+                  "-os2"
+                  "-pandora"
+                  "-platforms"
+                  "-porting"
+                  "-ps2"
+                  "-psp"
+                  "-raspberrypi"
+                  "-riscos"
+                  "-touch"
+                  "-versions"
+                  "-visualc"
+                  "-vita"
+                  "-wince"
+                  "-windows"
+                  "-winrt"
+                  ""
+                ];
+                p = "README";
+                s = ".md";
+              }
+              "CONTRIBUTING.md"
+              "doxyfile"
+              "release_checklist.md"
+            ];
+            include = expandClusters [
+              {
+                m = [
+                  ".pc.in"
+                  ".spec"
+                  ".spec.in"
+                  "Config.cmake.in"
+                ];
+                p = "SDL2_image";
+                s = "";
+              }
+              {
+                m = [
+                  "assert"
+                  "atomic"
+                  "audio"
+                  "bits"
+                  "blendmode"
+                  "clipboard"
+                  "config"
+                ];
+                p = "SDL_";
+                s = ".h";
+              }
+              {
+                m = [
+                  "onfig.h.cmake"
+                  "onfig.h.in"
+                  "onfig_android.h"
+                  "onfig_iphoneos.h"
+                  "onfig_macosx.h"
+                  "onfig_minimal.h"
+                  "onfig_pandora.h"
+                  "onfig_psp.h"
+                  "onfig_windows.h"
+                  "onfig_winrt.h"
+                  "onfig_wiz.h"
+                  "opying.h"
+                  "puinfo.h"
+                ];
+                p = "SDL_c";
+                s = "";
+              }
+              {
+                m = [
+                  "egl"
+                  "endian"
+                  "error"
+                  "events"
+                  "filesystem"
+                  "gamecontroller"
+                  "gesture"
+                  "guid"
+                  "haptic"
+                  "hidapi"
+                  "hints"
+                  "image"
+                  "joystick"
+                  "keyboard"
+                  "keycode"
+                  "loadso"
+                  "locale"
+                  "log"
+                  "main"
+                  "messagebox"
+                  "metal"
+                  "misc"
+                  "mouse"
+                  "mutex"
+                  "name"
+                  "opengl"
+                  "opengl_glext"
+                  "opengles"
+                  "opengles2"
+                  "opengles2_gl2"
+                  "opengles2_gl2ext"
+                  "opengles2_gl2platform"
+                  "opengles2_khrplatform"
+                  "pixels"
+                  "platform"
+                  "power"
+                  "quit"
+                  "rect"
+                  "render"
+                  "revision"
+                  "rwops"
+                  "scancode"
+                  "sensor"
+                  "shape"
+                  "stdinc"
+                  "surface"
+                  "system"
+                  "syswm"
+                  "test"
+                  "test_assert"
+                  "test_common"
+                  "test_compare"
+                  "test_crc32"
+                  "test_font"
+                  "test_fuzzer"
+                  "test_harness"
+                  "test_images"
+                  "test_log"
+                  "test_md5"
+                  "test_memory"
+                  "test_random"
+                  "thread"
+                  "timer"
+                  "touch"
+                  "types"
+                  "version"
+                  "video"
+                  "vulkan"
+                ];
+                p = "SDL_";
+                s = ".h";
+              }
+              "README-emscripten.txt"
+              "README.txt"
+              "SDL.h"
+              "begin_code.h"
+              "close_code.h"
+              "miniz.h"
+              "missing"
+              "nanosvg.h"
+              "nanosvgrast.h"
+              "qoi.h"
+              "sdl2_image-config-version.cmake.in"
+              "sdl2_image-config.cmake.in"
+              "showanim.c"
+              "showimage.c"
+              "stb_image.h"
+              "test-driver"
+              "tiny_jpeg.h"
+            ];
+            lib = {
+              x64 = [
+                "SDL2.dll"
+                "SDL2.lib"
+                "SDL2_image.dll"
+                "SDL2_image.lib"
+                "SDL2main.lib"
+                "SDL2test.lib"
+              ];
+              x86 = [
+                "SDL2.dll"
+                "SDL2.lib"
+                "SDL2main.lib"
+                "SDL2test.lib"
+              ];
+            };
+            optional = [
+              "LICENSE.tiff.txt"
+              "LICENSE.webp.txt"
+            ];
+          };
+          "small.ico" = null;
+          "targetver.h" = null;
+          "theora.dll" = null;
+          "version.h" = null;
+          "vorbis.dll" = null;
+        };
+        "TheForceEngine.sln" = null;
+      };
+      hash = "f4787c345830a4a1163d17c2fef66db3d0afad67";
+      rev = "f70602e8a889eac26be609ceb469dc6eb2fa67ac";
+      type = "git";
+      url = "https://github.com/TheForceEngine/TheForceEngine.git";
+    };
     untangle = {
       date = "2018-11-28";
       files = [
@@ -924790,6 +936989,4686 @@ dependencies = [
       rev = "57e8179b62ecc241bbe750f79d40abf3721ad8f4";
       type = "git";
       url = "https://github.com/fragglet/wadptr.git";
+    };
+  };
+  trx = {
+    assets = {
+      tr1 = {
+        files = flattenPaths {
+          games = {
+            tr1 = {
+              images = expandClusters [
+                {
+                  m = [
+                    "atlantis"
+                    "credits_1"
+                    "credits_2"
+                    "credits_3"
+                    "credits_3_alt"
+                    "credits_ps1"
+                    "egypt"
+                    "eidos"
+                    "end"
+                    "greece"
+                    "greece_saturn"
+                    "gym"
+                    "install"
+                    "peru"
+                    "title"
+                    "title_og_alt"
+                  ];
+                  p = "";
+                  s = ".webp";
+                }
+              ];
+            };
+          };
+        };
+        hash = "sha256-cZ4tmPSrT1LqHuV07NJiD9dhCFBRTJCtVq7JrbHltR4=";
+        type = "zip";
+        url = "https://lostartefacts.dev/aux/trx/tr1.zip";
+      };
+      tr2 = {
+        files = flattenPaths {
+          games = {
+            tr2 = {
+              images = {
+                "3x2" = expandClusters [
+                  {
+                    m = [
+                      "china"
+                      "credit01"
+                      "credit02"
+                      "credit03"
+                      "credit04"
+                      "credit05"
+                      "credit06"
+                      "credit07"
+                      "credit08"
+                      "end"
+                      "legal_eu"
+                      "legal_us"
+                      "mansion"
+                      "rig"
+                      "tibet"
+                      "titan"
+                      "title_eu"
+                      "title_us"
+                      "venice"
+                    ];
+                    p = "";
+                    s = ".webp";
+                  }
+                ];
+                "4x3" = expandClusters [
+                  {
+                    m = [
+                      "china"
+                      "credit01"
+                      "credit02"
+                      "credit03"
+                      "credit04"
+                      "credit05"
+                      "credit06"
+                      "credit07"
+                      "credit08"
+                      "end"
+                      "legal_eu"
+                      "legal_us"
+                      "mansion"
+                      "rig"
+                      "tibet"
+                      "titan"
+                      "title_eu"
+                      "title_us"
+                      "venice"
+                    ];
+                    p = "";
+                    s = ".webp";
+                  }
+                ];
+                "china.webp" = null;
+                "credit01.webp" = null;
+                "credit02.webp" = null;
+                "credit03.webp" = null;
+                "credit04.webp" = null;
+                "credit05.webp" = null;
+                "credit06.webp" = null;
+                "credit07.webp" = null;
+                "credit08.webp" = null;
+                "end.webp" = null;
+                "legal_eu.webp" = null;
+                "legal_us.webp" = null;
+                "mansion.webp" = null;
+                og = expandClusters [
+                  {
+                    m = [
+                      "china"
+                      "credit01"
+                      "credit02"
+                      "credit03"
+                      "credit04"
+                      "credit05"
+                      "credit06"
+                      "credit07"
+                      "credit08"
+                      "end"
+                      "legal"
+                      "mansion"
+                      "rig"
+                      "tibet"
+                      "titan"
+                      "title_eu"
+                      "title_us"
+                      "venice"
+                    ];
+                    p = "";
+                    s = ".webp";
+                  }
+                ];
+                "rig.webp" = null;
+                "tibet.webp" = null;
+                "titan.webp" = null;
+                "title_eu.webp" = null;
+                "title_us.webp" = null;
+                "venice.webp" = null;
+              };
+              music = "57.mp3";
+            };
+          };
+        };
+        hash = "sha256-Xl44/PjF5e7wvmf3gjnaM04RuONSNhrZ0SvV3X0SmV0=";
+        type = "zip";
+        url = "https://lostartefacts.dev/aux/trx/tr2.zip";
+      };
+      tr3 = {
+        files = flattenPaths {
+          games = {
+            tr3 = {
+              images = {
+                "3x2" = expandClusters [
+                  {
+                    m = [
+                      "antarc"
+                      "credit01"
+                      "credit02"
+                      "credit03"
+                      "credit04"
+                      "credit05"
+                      "credit06"
+                      "credit07"
+                      "credit08"
+                      "credit09"
+                      "house"
+                      "india"
+                      "legal_eu"
+                      "legal_us"
+                      "london"
+                      "nevada"
+                      "southpac"
+                      "theend"
+                      "theend2"
+                      "title_eu"
+                      "title_us"
+                    ];
+                    p = "";
+                    s = ".webp";
+                  }
+                ];
+                "4x3" = expandClusters [
+                  {
+                    m = [
+                      "antarc"
+                      "credit01"
+                      "credit02"
+                      "credit03"
+                      "credit04"
+                      "credit05"
+                      "credit06"
+                      "credit07"
+                      "credit08"
+                      "credit09"
+                      "house"
+                      "india"
+                      "legal_eu"
+                      "legal_us"
+                      "london"
+                      "nevada"
+                      "southpac"
+                      "theend"
+                      "theend2"
+                      "title_eu"
+                      "title_us"
+                    ];
+                    p = "";
+                    s = ".webp";
+                  }
+                ];
+                "antarc.webp" = null;
+                "credit01.webp" = null;
+                "credit02.webp" = null;
+                "credit03.webp" = null;
+                "credit04.webp" = null;
+                "credit05.webp" = null;
+                "credit06.webp" = null;
+                "credit07.webp" = null;
+                "credit08.webp" = null;
+                "credit09.webp" = null;
+                "house.webp" = null;
+                "india.webp" = null;
+                "legal_eu.webp" = null;
+                "legal_us.webp" = null;
+                "london.webp" = null;
+                "nevada.webp" = null;
+                og = expandClusters [
+                  {
+                    m = [
+                      "antarc"
+                      "credit01"
+                      "credit02"
+                      "credit03"
+                      "credit04"
+                      "credit05"
+                      "credit06"
+                      "credit07"
+                      "credit08"
+                      "credit09"
+                      "house"
+                      "india"
+                      "legal_eu"
+                      "legal_us"
+                      "london"
+                      "nevada"
+                      "southpac"
+                      "theend"
+                      "theend2"
+                      "title_eu"
+                      "title_us"
+                    ];
+                    p = "";
+                    s = ".webp";
+                  }
+                ];
+                "southpac.webp" = null;
+                "theend.webp" = null;
+                "theend2.webp" = null;
+                "title_eu.webp" = null;
+                "title_us.webp" = null;
+              };
+            };
+          };
+        };
+        hash = "sha256-+4eF6Z83WziIx6aYgx6BDabPvxQVRzuIQboDTvEtM58=";
+        type = "zip";
+        url = "https://lostartefacts.dev/aux/trx/tr3.zip";
+      };
+    };
+    engine = {
+      date = "2026-11-02";
+      files = flattenPaths {
+        ".clang-format" = null;
+        ".dockerignore" = null;
+        ".editorconfig" = null;
+        ".emmyrc.json" = null;
+        ".gitattributes" = null;
+        ".github" = {
+          CODEOWNERS = null;
+          ISSUE_TEMPLATE = [
+            "bug_report.yml"
+            "config.yml"
+            "feature_request.yml"
+          ];
+          actions = {
+            prepare_macos_tooling = "action.yml";
+          };
+          docker = "lint.Dockerfile";
+          "pull_request_template.md" = null;
+          workflows = expandClusters [
+            {
+              m = [
+                "build_macos"
+                "build_te"
+                "release"
+              ];
+              p = "job_";
+              s = ".yml";
+            }
+            "build_docker.yml"
+            "build_lint_image.yml"
+            "comment_build.yml"
+            "job_build.yml"
+            "lint.yml"
+            "pr_builds.yml"
+            "prerelease.yml"
+            "release.yml"
+            "test_unit.yml"
+          ];
+        };
+        ".gitignore" = null;
+        ".gitmodules" = null;
+        ".ignore" = null;
+        ".pre-commit-config.yaml" = null;
+        "BUG_REPORTING.md" = null;
+        "CODE_OF_CONDUCT.md" = null;
+        "COPYING.md" = null;
+        "README.md" = null;
+        data = {
+          "OndineLTProRegular.TTF" = null;
+          "Times.ttf" = null;
+          "Timesbd.ttf" = null;
+          common = {
+            glyphs = expandClusters [
+              {
+                m = [
+                  ""
+                  "_basic_latin"
+                  "_combining_diactrics"
+                  "_controller"
+                  "_cyrillic"
+                  "_greek_and_coptic"
+                  "_icons"
+                  "_keyboard"
+                  "_latin-1_supplement"
+                  "_latin_extended-a"
+                  "_latin_extended-b"
+                  "_latin_extended_additional"
+                  "_misc"
+                  "_small"
+                  "_touch"
+                ];
+                p = "mapping";
+                s = ".txt";
+              }
+              "blank.png"
+              "keyboard.png"
+              "touch_glyphs.png"
+            ];
+          };
+          "download_trx.svg" = null;
+          "lostartefacts.png" = null;
+          te = {
+            tr1 = {
+              Engine = {
+                cfg = expandClusters [
+                  {
+                    m = [
+                      "base_strings-de"
+                      "base_strings-en-gb"
+                      "base_strings-es"
+                      "base_strings-fr"
+                      "base_strings-gd"
+                      "base_strings-it"
+                      "base_strings-pl"
+                      "base_strings-ru"
+                      "base_strings-uk"
+                      "base_strings"
+                      "object_combos"
+                      "object_families"
+                      "object_links"
+                      "outfits"
+                      "poses"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                  "shaders"
+                  "ui.json5"
+                ];
+                games = {
+                  tr1-custom = {
+                    "catalog_item_actions.csv" = null;
+                    "catalog_lara_anims.csv" = null;
+                    "catalog_lara_states.csv" = null;
+                    "catalog_music.csv" = null;
+                    "catalog_objects.csv" = null;
+                    "catalog_samples.csv" = null;
+                    "gameflow.json5" = null;
+                    injections = expandClusters [
+                      {
+                        m = [
+                          "animations"
+                          "extra"
+                          "guns"
+                          "outfits"
+                        ];
+                        p = "lara_";
+                        s = ".bin";
+                      }
+                      {
+                        m = [
+                          "da_model"
+                          "hoto"
+                          "ickup_aid"
+                        ];
+                        p = "p";
+                        s = ".bin";
+                      }
+                      "crystal.bin"
+                      "font.bin"
+                      "gun_glow.bin"
+                      "misc_sprites.bin"
+                      "uzi_sfx.bin"
+                    ];
+                    "inv_ring.json5" = null;
+                    scripts = "_game.lua";
+                    "strings.json5" = null;
+                    "weapons.json5" = null;
+                  };
+                };
+                modules = null;
+                scripts = null;
+              };
+              Properties = [
+                "default.xml"
+                "extra.xml"
+              ];
+            };
+            tr2 = {
+              Engine = {
+                cfg = expandClusters [
+                  {
+                    m = [
+                      "base_strings-de"
+                      "base_strings-en-gb"
+                      "base_strings-es"
+                      "base_strings-fr"
+                      "base_strings-gd"
+                      "base_strings-it"
+                      "base_strings-pl"
+                      "base_strings-ru"
+                      "base_strings-uk"
+                      "base_strings"
+                      "object_combos"
+                      "object_families"
+                      "object_links"
+                      "outfits"
+                      "poses"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                  "shaders"
+                  "ui.json5"
+                ];
+                games = {
+                  tr2-custom = {
+                    "catalog_item_actions.csv" = null;
+                    "catalog_lara_anims.csv" = null;
+                    "catalog_lara_states.csv" = null;
+                    "catalog_music.csv" = null;
+                    "catalog_objects.csv" = null;
+                    "catalog_samples.csv" = null;
+                    "gameflow.json5" = null;
+                    injections = expandClusters [
+                      {
+                        m = [
+                          "animations"
+                          "extra"
+                          "guns"
+                          "outfits"
+                        ];
+                        p = "lara_";
+                        s = ".bin";
+                      }
+                      {
+                        m = [
+                          "da_model"
+                          "hoto"
+                          "ickup_aid"
+                        ];
+                        p = "p";
+                        s = ".bin";
+                      }
+                      "boat_bits.bin"
+                      "crystal.bin"
+                      "font.bin"
+                      "misc_sprites.bin"
+                      "secret_models_gm.bin"
+                      "secret_models_og.bin"
+                    ];
+                    "inv_ring.json5" = null;
+                    scripts = "_game.lua";
+                    "strings.json5" = null;
+                    "weapons.json5" = null;
+                  };
+                };
+                modules = null;
+                scripts = null;
+              };
+              Properties = [
+                "default.xml"
+                "extra.xml"
+              ];
+            };
+            tr3 = {
+              Engine = {
+                cfg = expandClusters [
+                  {
+                    m = [
+                      "base_strings-de"
+                      "base_strings-en-gb"
+                      "base_strings-es"
+                      "base_strings-fr"
+                      "base_strings-gd"
+                      "base_strings-it"
+                      "base_strings-pl"
+                      "base_strings-ru"
+                      "base_strings-uk"
+                      "base_strings"
+                      "object_combos"
+                      "object_families"
+                      "object_links"
+                      "outfits"
+                      "poses"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                  "shaders"
+                  "ui.json5"
+                ];
+                games = {
+                  tr3 = "modules";
+                  tr3-custom = {
+                    "catalog_item_actions.csv" = null;
+                    "catalog_lara_anims.csv" = null;
+                    "catalog_lara_states.csv" = null;
+                    "catalog_music.csv" = null;
+                    "catalog_objects.csv" = null;
+                    "catalog_samples.csv" = null;
+                    "gameflow.json5" = null;
+                    injections = expandClusters [
+                      {
+                        m = [
+                          "animations"
+                          "extra"
+                          "guns"
+                          "outfits"
+                        ];
+                        p = "lara_";
+                        s = ".bin";
+                      }
+                      "font.bin"
+                      "globe_model.bin"
+                      "misc_sprites.bin"
+                      "pda_model.bin"
+                      "pickup_aid.bin"
+                      "sparks_gfx.bin"
+                    ];
+                    "inv_ring.json5" = null;
+                    scripts = "_game.lua";
+                    "strings.json5" = null;
+                    "weapons.json5" = null;
+                  };
+                };
+                modules = null;
+                scripts = null;
+              };
+              Properties = [
+                "default.xml"
+                "extra.xml"
+              ];
+            };
+          };
+          "tomb-11.bdf" = null;
+          tr1 = {
+            glyphs = expandClusters [
+              {
+                m = [
+                  ""
+                  "_basic_latin"
+                  "_combining_diactrics"
+                  "_controller"
+                  "_cyrillic"
+                  "_greek_and_coptic"
+                  "_icons"
+                  "_keyboard"
+                  "_latin-1_supplement"
+                  "_latin_extended-a"
+                  "_latin_extended-b"
+                  "_latin_extended_additional"
+                  "_misc"
+                  "_small"
+                  "_touch"
+                ];
+                p = "mapping";
+                s = ".txt";
+              }
+              "buttons.png"
+              "controller.png"
+              "glyphs.png"
+              "keyboard.png"
+              "touch_glyphs.png"
+            ];
+            "logo.png" = null;
+          };
+          tr2 = {
+            glyphs = expandClusters [
+              {
+                m = [
+                  ""
+                  "_basic_latin"
+                  "_combining_diactrics"
+                  "_controller"
+                  "_cyrillic"
+                  "_greek_and_coptic"
+                  "_icons"
+                  "_keyboard"
+                  "_latin-1_supplement"
+                  "_latin_extended-a"
+                  "_latin_extended-b"
+                  "_latin_extended_additional"
+                  "_misc"
+                  "_small"
+                  "_touch"
+                ];
+                p = "mapping";
+                s = ".txt";
+              }
+              "buttons.png"
+              "controller.png"
+              "glyphs.png"
+              "keyboard.png"
+              "touch_glyphs.png"
+            ];
+            "logo.png" = null;
+          };
+          tr3 = {
+            glyphs = expandClusters [
+              {
+                m = [
+                  ""
+                  "_basic_latin"
+                  "_combining_diactrics"
+                  "_controller"
+                  "_cyrillic"
+                  "_greek_and_coptic"
+                  "_icons"
+                  "_keyboard"
+                  "_latin-1_supplement"
+                  "_latin_extended-a"
+                  "_latin_extended-b"
+                  "_latin_extended_additional"
+                  "_misc"
+                  "_small"
+                  "_touch"
+                ];
+                p = "mapping";
+                s = ".txt";
+              }
+              "buttons.png"
+              "controller.png"
+              "keyboard.png"
+              "touch_glyphs.png"
+            ];
+          };
+          tr4 = {
+            glyphs = expandClusters [
+              {
+                m = [
+                  "down"
+                  "left"
+                  "right"
+                  "up"
+                ];
+                p = "arrow_";
+                s = ".png";
+              }
+              {
+                m = [
+                  ""
+                  "_basic_latin"
+                  "_combining_diactrics"
+                  "_controller"
+                  "_cyrillic"
+                  "_greek_and_coptic"
+                  "_icons"
+                  "_keyboard"
+                  "_latin-1_supplement"
+                  "_latin_extended-a"
+                  "_latin_extended-b"
+                  "_latin_extended_additional"
+                  "_misc"
+                  "_small"
+                  "_touch"
+                ];
+                p = "mapping";
+                s = ".txt";
+              }
+              "buttons.png"
+              "controller.png"
+              "keyboard.png"
+              "touch_glyphs.png"
+            ];
+          };
+          trx = {
+            "icon.ico" = null;
+            "icon.png" = null;
+            "icon.rc" = null;
+            mac = [
+              "Info.plist"
+              "icon.icns"
+            ];
+            ship = {
+              cfg = {
+                "base_strings-de.json5" = null;
+                "base_strings-en-gb.json5" = null;
+                "base_strings-es.json5" = null;
+                "base_strings-fr.json5" = null;
+                "base_strings-gd.json5" = null;
+                "base_strings-it.json5" = null;
+                "base_strings-pl.json5" = null;
+                "base_strings-ru.json5" = null;
+                "base_strings-uk.json5" = null;
+                "base_strings.json5" = null;
+                "object_combos.json5" = null;
+                "object_families.json5" = null;
+                "object_links.json5" = null;
+                "outfits.json5" = null;
+                "poses.json5" = null;
+                presets = expandClusters [
+                  {
+                    m = [
+                      "1-moveset"
+                      "1-pc"
+                      "1-ps1"
+                      "2-moveset"
+                      "2-pc"
+                      "2-ps1"
+                      "3-moveset"
+                      "3-pc"
+                      "3-ps1"
+                    ];
+                    p = "tr";
+                    s = ".json5";
+                  }
+                ];
+                shaders = expandClusters [
+                  {
+                    m = [
+                      "2d"
+                      "billboard"
+                      "common"
+                      "fbo"
+                      "fx_blit"
+                      "lights"
+                      "lights_common"
+                      "lights_tr12"
+                      "lights_tr3"
+                      "lights_tr4"
+                      "meshes"
+                      "meshes_tr12"
+                      "meshes_tr3"
+                      "meshes_tr4"
+                      "ui"
+                      "vertex_id"
+                    ];
+                    p = "";
+                    s = ".glsl";
+                  }
+                ];
+                "ui.json5" = null;
+              };
+              games = {
+                tr1 = {
+                  "catalog_item_actions.csv" = null;
+                  "catalog_lara_anims.csv" = null;
+                  "catalog_lara_states.csv" = null;
+                  "catalog_music.csv" = null;
+                  "catalog_objects.csv" = null;
+                  "catalog_samples.csv" = null;
+                  "gameflow.json5" = null;
+                  injections = expandClusters [
+                    {
+                      m = [
+                        "door_sfx"
+                        "fd"
+                        "itemrots"
+                        "ps1_blend"
+                        "textures"
+                      ];
+                      p = "atlantis_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "binocular"
+                        "bubble"
+                        "cat_camera"
+                        "cat_crystal"
+                      ];
+                      p = "";
+                      s = "s.bin";
+                    }
+                    {
+                      m = [
+                        "at_fd"
+                        "at_itemrots"
+                        "at_meshfixes"
+                        "at_textures"
+                        "aves_fd"
+                        "aves_itemrots"
+                        "aves_textures"
+                        "istern_fd"
+                        "istern_itemrots"
+                        "istern_plants"
+                        "istern_ps1_blend"
+                        "istern_skybox"
+                        "istern_textures"
+                        "olosseum_fd"
+                        "olosseum_itemrots"
+                        "olosseum_ps1_blend"
+                        "olosseum_skybox"
+                        "olosseum_textures"
+                        "ontrols_models"
+                        "rystal"
+                        "ut1_ps1_blend"
+                        "ut1_setup"
+                        "ut1_textures"
+                        "ut2_setup"
+                        "ut3_ps1_blend"
+                        "ut3_setup"
+                        "ut3_textures"
+                        "ut4_ps1_blend"
+                        "ut4_setup"
+                        "ut4_textures"
+                      ];
+                      p = "c";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "58_frames"
+                        "59_frames"
+                        "59_sfx"
+                        "60_frames"
+                        "61_sfx"
+                      ];
+                      p = "door";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "gypt_cameras"
+                        "gypt_crystals"
+                        "gypt_fd"
+                        "gypt_itemrots"
+                        "gypt_meshfixes"
+                        "gypt_textures"
+                        "xplosion"
+                      ];
+                      p = "e";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "lly_fd"
+                        "lly_itemrots"
+                        "lly_pickup_meshes"
+                        "lly_ps1_blend"
+                        "lly_textures"
+                        "nt"
+                      ];
+                      p = "fo";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "un_glow"
+                        "ym_ps1_blend"
+                        "ym_textures"
+                      ];
+                      p = "g";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "crystals"
+                        "fd"
+                        "itemrots"
+                        "textures"
+                      ];
+                      p = "hive_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "fd"
+                        "itemrots"
+                        "meshfixes"
+                        "mummy"
+                        "ps1_blend"
+                        "textures"
+                      ];
+                      p = "khamoon_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "animations"
+                        "extra"
+                        "feet_sfx"
+                        "guns"
+                        "gym_guns"
+                        "outfits"
+                      ];
+                      p = "lara_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "das_itemrots"
+                        "das_ps1_blend"
+                        "das_textures"
+                        "nes_cameras"
+                        "nes_door_sfx"
+                        "nes_fd"
+                        "nes_itemrots"
+                        "nes_meshfixes"
+                        "nes_ps1_blend"
+                        "nes_pushblocks"
+                        "nes_textures"
+                        "sc_sprites"
+                      ];
+                      p = "mi";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "fd"
+                        "itemrots"
+                        "meshfixes"
+                        "ps1_blend"
+                        "skybox"
+                        "textures"
+                      ];
+                      p = "obelisk_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "anther_sfx"
+                        "da_model"
+                        "hoto"
+                        "ickup_aid"
+                        "yramid_fd"
+                        "yramid_itemrots"
+                        "yramid_ps1_blend"
+                        "yramid_textures"
+                      ];
+                      p = "p";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "door_sfx"
+                        "fd"
+                        "itemrots"
+                        "ps1_blend"
+                        "textures"
+                      ];
+                      p = "qualopec_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "anctuary_fd"
+                        "anctuary_itemrots"
+                        "anctuary_meshfixes"
+                        "anctuary_ps1_blend"
+                        "anctuary_scion"
+                        "anctuary_textures"
+                        "cion_alignment"
+                        "cion_collision"
+                        "himmy_sfx"
+                        "kate_kid_sfx"
+                        "parks_gfx"
+                        "prite_alignment"
+                        "tronghold_crystals"
+                        "tronghold_fd"
+                        "tronghold_itemrots"
+                        "tronghold_textures"
+                      ];
+                      p = "s";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "hocan_fd"
+                        "hocan_itemrots"
+                        "hocan_ps1_blend"
+                        "hocan_skybox"
+                        "hocan_textures"
+                        "tle_textures"
+                      ];
+                      p = "ti";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "alley_fd"
+                        "alley_itemrots"
+                        "alley_ps1_blend"
+                        "alley_skybox"
+                        "alley_textures"
+                        "ilcabamba_door_sfx"
+                        "ilcabamba_itemrots"
+                        "ilcabamba_ps1_blend"
+                        "ilcabamba_textures"
+                      ];
+                      p = "v";
+                      s = ".bin";
+                    }
+                    "inv_background.bin"
+                    "item_sprites.bin"
+                    "uw_switch_sfx.bin"
+                    "uzi_sfx.bin"
+                    "wall_switch_sfx.bin"
+                    "winston_model.bin"
+                  ];
+                  "inv_ring.json5" = null;
+                  scripts = expandClusters [
+                    {
+                      m = [
+                        "10b"
+                        "3b"
+                        "8c"
+                      ];
+                      p = "level";
+                      s = ".lua";
+                    }
+                    "_game.lua"
+                    "gym.lua"
+                  ];
+                  "strings-de.json5" = null;
+                  "strings-en-gb.json5" = null;
+                  "strings-es.json5" = null;
+                  "strings-fr.json5" = null;
+                  "strings-gd.json5" = null;
+                  "strings-it.json5" = null;
+                  "strings-pl.json5" = null;
+                  "strings-ru.json5" = null;
+                  "strings-uk.json5" = null;
+                  "strings.json5" = null;
+                  "weapons.json5" = null;
+                };
+                tr1-demo-pc = expandClusters [
+                  {
+                    m = [
+                      "gameflow"
+                      "strings-de"
+                      "strings-es"
+                      "strings-fr"
+                      "strings-gd"
+                      "strings-it"
+                      "strings-pl"
+                      "strings-ru"
+                      "strings-uk"
+                      "strings"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                ];
+                tr1-level = expandClusters [
+                  {
+                    m = [
+                      "gameflow"
+                      "strings-de"
+                      "strings-es"
+                      "strings-fr"
+                      "strings-gd"
+                      "strings-it"
+                      "strings-pl"
+                      "strings-ru"
+                      "strings-uk"
+                      "strings"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                ];
+                tr1-ub = {
+                  "gameflow.json5" = null;
+                  scripts = "_game.lua";
+                  "strings-de.json5" = null;
+                  "strings-es.json5" = null;
+                  "strings-fr.json5" = null;
+                  "strings-gd.json5" = null;
+                  "strings-it.json5" = null;
+                  "strings-pl.json5" = null;
+                  "strings-ru.json5" = null;
+                  "strings-uk.json5" = null;
+                  "strings.json5" = null;
+                };
+                tr2 = {
+                  "catalog_item_actions.csv" = null;
+                  "catalog_lara_anims.csv" = null;
+                  "catalog_lara_states.csv" = null;
+                  "catalog_music.csv" = null;
+                  "catalog_objects.csv" = null;
+                  "catalog_samples.csv" = null;
+                  "gameflow.json5" = null;
+                  injections = expandClusters [
+                    {
+                      m = [
+                        "arkhang_cameras"
+                        "arkhang_crystals"
+                        "arkhang_fd"
+                        "arkhang_itemrots"
+                        "arkhang_music_tracks"
+                        "arkhang_pickup_meshes"
+                        "arkhang_ps1_blend"
+                        "arkhang_sfx"
+                        "arkhang_textures"
+                        "artoli_crystals"
+                        "artoli_music_tracks"
+                        "artoli_ps1_blend"
+                        "artoli_secret_fd"
+                        "artoli_textures"
+                        "inoculars"
+                        "oat_bits"
+                        "oat_sfx"
+                        "reakable_tile_sfx"
+                      ];
+                      p = "b";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "atacombs_crystals"
+                        "atacombs_fd"
+                        "atacombs_itemrots"
+                        "atacombs_music_tracks"
+                        "atacombs_ps1_blend"
+                        "atacombs_textures"
+                        "oldwar_crystals"
+                        "oldwar_fd"
+                        "oldwar_itemrots"
+                        "oldwar_music_tracks"
+                        "oldwar_objects"
+                        "oldwar_textures"
+                        "ommon_pickup_meshes"
+                        "ommon_pickup_meshes_gm"
+                        "ontrols_models"
+                        "rystal"
+                        "ut2_setup"
+                        "ut2_textures"
+                        "ut3_gunflash"
+                        "ut3_ps1_blend"
+                        "ut3_setup"
+                        "ut3_textures"
+                        "ut4_setup"
+                        "ut4_textures"
+                      ];
+                      p = "c";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "agger_sprite"
+                        "eck_cameras"
+                        "eck_crystals"
+                        "eck_fd"
+                        "eck_itemrots"
+                        "eck_music_tracks"
+                        "eck_pickup_meshes"
+                        "eck_plants"
+                        "eck_ps1_blend"
+                        "eck_secret_fd"
+                        "eck_textures"
+                        "etonator_lights"
+                        "iving_cameras"
+                        "iving_crystals"
+                        "iving_itemrots"
+                        "iving_music_tracks"
+                        "iving_pickup_meshes"
+                        "iving_ps1_blend"
+                        "iving_sfx"
+                        "iving_textures"
+                        "oor106_sfx"
+                        "oor107_sfx"
+                        "oor108_sfx"
+                        "oor110_sfx"
+                        "oor111_sfx"
+                      ];
+                      p = "d";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "athoms_crystals"
+                        "athoms_goon_sfx"
+                        "athoms_itemrots"
+                        "athoms_music_tracks"
+                        "athoms_plants"
+                        "athoms_ps1_blend"
+                        "athoms_secret_fd"
+                        "athoms_textures"
+                        "loating_crystals"
+                        "loating_fd"
+                        "loating_item_sprites"
+                        "loating_itemrots"
+                        "loating_music_tracks"
+                        "loating_pickup_meshes"
+                        "loating_ps1_blend"
+                        "loating_textures"
+                        "ont"
+                        "ools_crystals"
+                        "ools_itemrots"
+                        "ools_music_tracks"
+                        "ools_pickup_meshes"
+                        "ools_textures"
+                        "urnace_crystals"
+                        "urnace_itemrots"
+                        "urnace_music_tracks"
+                        "urnace_objects"
+                        "urnace_pickup_meshes"
+                        "urnace_textures"
+                      ];
+                      p = "f";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "uardian_death_commands"
+                        "ym_fd"
+                        "ym_music_tracks"
+                        "ym_ps1_blend"
+                        "ym_sfx"
+                        "ym_textures"
+                      ];
+                      p = "g";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "itemrots"
+                        "music_tracks"
+                        "ps1_blend"
+                        "sfx"
+                        "shower_frames"
+                        "textures"
+                      ];
+                      p = "house_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "kingdom_camera"
+                        "kingdom_crystal"
+                        "kingdom_itemrot"
+                        "kingdom_music_track"
+                        "kingdom_texture"
+                        "lair_bartolipo"
+                        "lair_crystal"
+                        "lair_item_sprite"
+                        "lair_music_track"
+                      ];
+                      p = "";
+                      s = "s.bin";
+                    }
+                    {
+                      m = [
+                        "air_ps1_blend"
+                        "air_textures"
+                        "ara_animations"
+                        "ara_extra"
+                        "ara_guns"
+                        "ara_gym_guns"
+                        "ara_house_guns"
+                        "ara_outfits"
+                        "ara_rifle_sfx"
+                        "ara_vegas_guns"
+                        "iving_crystals"
+                        "iving_deck_goon_sfx"
+                        "iving_fd"
+                        "iving_itemrots"
+                        "iving_music_tracks"
+                        "iving_pickup_meshes"
+                        "iving_ps1_blend"
+                        "iving_secret_fd"
+                        "iving_sfx"
+                        "iving_textures"
+                        "oose_boards_sfx"
+                      ];
+                      p = "l";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "fd"
+                        "itemrots"
+                        "music_tracks"
+                        "ps1_blend"
+                        "sfx"
+                        "textures"
+                      ];
+                      p = "opera_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "alace_crystals"
+                        "alace_fd"
+                        "alace_itemrots"
+                        "alace_music_tracks"
+                        "alace_ps1_blend"
+                        "alace_secret_fd"
+                        "alace_textures"
+                        "da_model"
+                        "hoto"
+                        "ickup_aid"
+                        "ortcullis_sfx"
+                      ];
+                      p = "p";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "crystals"
+                        "itemrots"
+                        "music_tracks"
+                        "pickup_meshes"
+                        "ps1_blend"
+                        "textures"
+                      ];
+                      p = "rig_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "cuba_sfx"
+                        "eaweed_collision"
+                        "ecret_models_gm"
+                        "ecret_models_og"
+                        "hark_sfx"
+                        "parks_gfx"
+                      ];
+                      p = "s";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "bet_crystals"
+                        "bet_fd"
+                        "bet_itemrots"
+                        "bet_music_tracks"
+                        "bet_ps1_blend"
+                        "bet_textures"
+                        "tle_ps1_blend"
+                        "tle_textures"
+                      ];
+                      p = "ti";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "gas_crystals"
+                        "gas_fd"
+                        "gas_itemrots"
+                        "gas_music_tracks"
+                        "gas_textures"
+                        "nice_crystals"
+                        "nice_fd"
+                        "nice_itemrots"
+                        "nice_music_tracks"
+                        "nice_ps1_blend"
+                        "nice_textures"
+                      ];
+                      p = "ve";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "all_cameras"
+                        "all_crystals"
+                        "all_itemrots"
+                        "all_music_tracks"
+                        "all_ps1_blend"
+                        "all_switch_sfx"
+                        "all_textures"
+                        "inston_model"
+                        "reck_cameras"
+                        "reck_crystals"
+                        "reck_fd"
+                        "reck_goon_sfx"
+                        "reck_itemrots"
+                        "reck_music_tracks"
+                        "reck_pickup_meshes"
+                        "reck_plants"
+                        "reck_ps1_blend"
+                        "reck_secret_fd"
+                        "reck_textures"
+                      ];
+                      p = "w";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "crystals"
+                        "fd"
+                        "itemrots"
+                        "music_tracks"
+                        "pickup_meshes"
+                        "ps1_blend"
+                        "sfx"
+                        "textures"
+                      ];
+                      p = "xian_";
+                      s = ".bin";
+                    }
+                    "explosion.bin"
+                    "inv_background.bin"
+                    "misc_sprites.bin"
+                    "opera_crystals.bin"
+                  ];
+                  "inv_ring.json5" = null;
+                  scripts = [
+                    "_game.lua"
+                    "assault.lua"
+                    "cut3.lua"
+                    "floating.lua"
+                    "house.lua"
+                    "monastry.lua"
+                  ];
+                  "strings-de.json5" = null;
+                  "strings-en-gb.json5" = null;
+                  "strings-es.json5" = null;
+                  "strings-fr.json5" = null;
+                  "strings-gd.json5" = null;
+                  "strings-it.json5" = null;
+                  "strings-pl.json5" = null;
+                  "strings-ru.json5" = null;
+                  "strings-uk.json5" = null;
+                  "strings.json5" = null;
+                  "weapons.json5" = null;
+                };
+                tr2-gm = {
+                  "gameflow.json5" = null;
+                  scripts = expandClusters [
+                    {
+                      m = [
+                        "1"
+                        "3"
+                        "4"
+                      ];
+                      p = "level";
+                      s = ".lua";
+                    }
+                    "_game.lua"
+                  ];
+                  "strings-de.json5" = null;
+                  "strings-es.json5" = null;
+                  "strings-fr.json5" = null;
+                  "strings-gd.json5" = null;
+                  "strings-it.json5" = null;
+                  "strings-pl.json5" = null;
+                  "strings-ru.json5" = null;
+                  "strings-uk.json5" = null;
+                  "strings.json5" = null;
+                };
+                tr2-level = expandClusters [
+                  {
+                    m = [
+                      "gameflow"
+                      "strings-de"
+                      "strings-es"
+                      "strings-fr"
+                      "strings-gd"
+                      "strings-it"
+                      "strings-pl"
+                      "strings-ru"
+                      "strings-uk"
+                      "strings"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                ];
+                tr3 = {
+                  "catalog_item_actions.csv" = null;
+                  "catalog_lara_anims.csv" = null;
+                  "catalog_lara_states.csv" = null;
+                  "catalog_music.csv" = null;
+                  "catalog_objects.csv" = null;
+                  "catalog_samples.csv" = null;
+                  "gameflow.json5" = null;
+                  injections = expandClusters [
+                    {
+                      m = [
+                        "larm_sfx"
+                        "ldwych_animating_bounds"
+                        "ldwych_demo"
+                        "ldwych_fd"
+                        "ldwych_pickup_meshes"
+                        "ldwych_textures"
+                        "ntarc_airlock"
+                        "ntarc_door134_frames"
+                        "ntarc_fd"
+                        "ntarc_sky"
+                        "ntarc_textures"
+                        "ntarc_wheel_frames"
+                        "rea51_animating_bounds"
+                        "rea51_patrol"
+                        "rea51_sky"
+                        "rea51_textures"
+                      ];
+                      p = "a";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "bat_sprite"
+                        "binocular"
+                        "cavern_door131_frame"
+                      ];
+                      p = "";
+                      s = "s.bin";
+                    }
+                    {
+                      m = [
+                        "avern_fd"
+                        "avern_pickup_meshes"
+                        "avern_sky"
+                        "avern_textures"
+                        "aves_textures"
+                        "ity_textures"
+                        "liff_animating_bounds"
+                        "liff_crystals"
+                        "liff_door132_frames"
+                        "liff_textures"
+                        "oastal_airlock"
+                        "oastal_animating_bounds"
+                        "oastal_fd"
+                        "oastal_sky"
+                        "oastal_spike_sfx"
+                        "oastal_textures"
+                        "oastal_wheel_frames"
+                        "ommon_pickup_meshes"
+                        "ompound_animating_bounds"
+                        "ompound_cine"
+                        "ompound_fd"
+                        "ompound_patrol"
+                        "ompound_textures"
+                        "ontrols_models"
+                        "rash_animating_bounds"
+                        "rash_pickup_meshes"
+                        "rash_sky"
+                        "rash_textures"
+                        "rystal"
+                        "ut11_setup"
+                        "ut12_setup"
+                        "ut1_setup"
+                        "ut2_setup"
+                        "ut3_setup"
+                        "ut4_setup"
+                        "ut5_setup"
+                        "ut5_textures"
+                        "ut6_setup"
+                        "ut7_setup"
+                        "ut8_setup"
+                        "ut9_setup"
+                      ];
+                      p = "c";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "ish_sprites"
+                        "lamethrower_sfx"
+                        "ont"
+                      ];
+                      p = "f";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "anges_animating_bounds"
+                        "anges_demo"
+                        "anges_door131_frames"
+                        "anges_textures"
+                        "lobe_model"
+                        "ym_fd"
+                        "ym_sky"
+                        "ym_textures"
+                      ];
+                      p = "g";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "dia_sky"
+                        "fada_meshes"
+                        "v_background"
+                      ];
+                      p = "in";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "ara_animations"
+                        "ara_extra"
+                        "ara_guns"
+                        "ara_gym_guns"
+                        "ara_outfits"
+                        "ara_rifle_sfx"
+                        "ondon_sky"
+                        "uds_animating_bounds"
+                        "uds_diver_animation"
+                        "uds_fd"
+                        "uds_textures"
+                      ];
+                      p = "l";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "adubu_spike_sfx"
+                        "adubu_textures"
+                        "enu_artefacts"
+                        "enu_artefacts_london"
+                        "ines_animating_bounds"
+                        "ines_textures"
+                        "isc_sprites"
+                      ];
+                      p = "m";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "animating_bounds"
+                        "demo"
+                        "door132_frames"
+                        "sky"
+                        "textures"
+                      ];
+                      p = "nevada_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "da_model"
+                        "ickup_aid"
+                        "ipeman_sfx"
+                        "una_pickup_meshes"
+                        "una_textures"
+                      ];
+                      p = "p";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "apids_sky"
+                        "eunion_crystals"
+                        "eunion_flames"
+                        "eunion_textures"
+                      ];
+                      p = "r";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "cotland_crystals"
+                        "cotland_fd"
+                        "cotland_sky"
+                        "cotland_textures"
+                        "parks_gfx"
+                        "tpaul_animating_bounds"
+                        "tpaul_textures"
+                      ];
+                      p = "s";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "emple_itemrots"
+                        "emple_textures"
+                        "hames_animating_bounds"
+                        "hames_fd"
+                        "hames_textures"
+                        "innos_cameras"
+                        "innos_fd"
+                        "innos_flames"
+                        "innos_textures"
+                        "itle_textures"
+                      ];
+                      p = "t";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "animating_bounds"
+                        "animating_ext"
+                        "crystals"
+                        "fd"
+                        "objects"
+                        "pickup_meshes"
+                        "textures"
+                        "train"
+                        "wheel_frames"
+                      ];
+                      p = "undersea_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "ater_sfx"
+                        "illsden_crystals"
+                        "illsden_heli"
+                        "illsden_textures"
+                        "inston_model"
+                      ];
+                      p = "w";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "crystals"
+                        "textures"
+                        "train"
+                      ];
+                      p = "zoo_";
+                      s = ".bin";
+                    }
+                    "drill_collision.bin"
+                    "hiss_sfx.bin"
+                    "jungle_fd.bin"
+                    "jungle_textures.bin"
+                  ];
+                  "inv_ring.json5" = null;
+                  modules = "quest_items.lua";
+                  scripts = expandClusters [
+                    {
+                      m = [
+                        "hamber"
+                        "ity"
+                        "ompound"
+                        "rash"
+                        "ut3"
+                        "ut8"
+                      ];
+                      p = "c";
+                      s = ".lua";
+                    }
+                    {
+                      m = [
+                        "quadcha"
+                        "rapid"
+                        "roof"
+                      ];
+                      p = "";
+                      s = "s.lua";
+                    }
+                    {
+                      m = [
+                        "emple"
+                        "onyboss"
+                        "ower"
+                        "riboss"
+                      ];
+                      p = "t";
+                      s = ".lua";
+                    }
+                    "_game.lua"
+                    "antarc.lua"
+                    "area51.lua"
+                    "house.lua"
+                    "jungle.lua"
+                    "mines.lua"
+                    "nevada.lua"
+                    "office.lua"
+                    "sewer.lua"
+                    "shore.lua"
+                  ];
+                  "strings-de.json5" = null;
+                  "strings-es.json5" = null;
+                  "strings-fr.json5" = null;
+                  "strings-gd.json5" = null;
+                  "strings-it.json5" = null;
+                  "strings-pl.json5" = null;
+                  "strings-ru.json5" = null;
+                  "strings-uk.json5" = null;
+                  "strings.json5" = null;
+                  "weapons.json5" = null;
+                };
+                tr3-la = {
+                  "gameflow.json5" = null;
+                  scripts = [
+                    "_game.lua"
+                    "chunnel.lua"
+                    "scotland.lua"
+                    "slinc.lua"
+                    "undersea.lua"
+                    "zoo.lua"
+                  ];
+                  "strings-de.json5" = null;
+                  "strings-es.json5" = null;
+                  "strings-fr.json5" = null;
+                  "strings-gd.json5" = null;
+                  "strings-it.json5" = null;
+                  "strings-pl.json5" = null;
+                  "strings-ru.json5" = null;
+                  "strings-uk.json5" = null;
+                  "strings.json5" = null;
+                };
+                tr3-level = expandClusters [
+                  {
+                    m = [
+                      "gameflow"
+                      "strings-de"
+                      "strings-es"
+                      "strings-fr"
+                      "strings-gd"
+                      "strings-it"
+                      "strings-pl"
+                      "strings-ru"
+                      "strings-uk"
+                      "strings"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                ];
+                tr4 = {
+                  "catalog_item_actions.csv" = null;
+                  "catalog_lara_anims.csv" = null;
+                  "catalog_lara_states.csv" = null;
+                  "catalog_music.csv" = null;
+                  "catalog_music_files.csv" = null;
+                  "catalog_objects.csv" = null;
+                  "catalog_samples.csv" = null;
+                  "gameflow.json5" = null;
+                  injections = expandClusters [
+                    {
+                      m = [
+                        "animating_bounds"
+                        "fd"
+                        "textures"
+                      ];
+                      p = "burial_";
+                      s = ".bin";
+                    }
+                    {
+                      m = [
+                        "emerkhet_bolt"
+                        "eth_fd"
+                        "eth_textures"
+                        "hadow_sprite"
+                        "hell_casings"
+                        "parks_gfx"
+                      ];
+                      p = "s";
+                      s = ".bin";
+                    }
+                    "angkor_fd.bin"
+                    "angkor_textures.bin"
+                    "controls_models.bin"
+                    "font.bin"
+                    "guide_gun.bin"
+                    "henchman_jeep.bin"
+                    "inventory_models.bin"
+                    "karnak_fd.bin"
+                    "kv5_textures.bin"
+                    "lara_animations.bin"
+                    "lara_outfits.bin"
+                    "pickup_aid.bin"
+                    "race_fd.bin"
+                    "race_textures.bin"
+                    "title_textures.bin"
+                    "valley_fd.bin"
+                    "valley_textures.bin"
+                  ];
+                  "inv_ring.json5" = null;
+                  modules = [
+                    "cutscenes.lua"
+                    "expanding_blocks.lua"
+                    "fog.lua"
+                    "inv_setup.lua"
+                    "logo.lua"
+                    "race_timer.lua"
+                  ];
+                  scripts = expandClusters [
+                    {
+                      m = [
+                        "lexhub"
+                        "lexhub2"
+                        "ng_race"
+                        "ngkor1"
+                      ];
+                      p = "a";
+                      s = ".lua";
+                    }
+                    {
+                      m = [
+                        "ortyard"
+                        "split1"
+                        "split2"
+                      ];
+                      p = "c";
+                      s = ".lua";
+                    }
+                    {
+                      m = [
+                        "eepchas"
+                        "eepchs2"
+                        "oby1a"
+                        "oby2"
+                        "oby3a"
+                        "oby3b"
+                        "oby4a"
+                        "oby4b"
+                        "oby4c"
+                        "oby5a"
+                        "oby5b"
+                        "oby5c"
+                      ];
+                      p = "j";
+                      s = ".lua";
+                    }
+                    {
+                      m = [
+                        "ake"
+                        "ibend"
+                        "ibrary"
+                        "owstrt"
+                      ];
+                      p = "l";
+                      s = ".lua";
+                    }
+                    {
+                      m = [
+                        "mer"
+                        "mer2"
+                        "ttomb1"
+                        "ttomb2"
+                      ];
+                      p = "se";
+                      s = ".lua";
+                    }
+                    "_game.lua"
+                    "bikebit.lua"
+                    "hall.lua"
+                    "highstrt.lua"
+                    "karnak1.lua"
+                    "nutrench.lua"
+                    "palaces.lua"
+                    "palaces2.lua"
+                    "title.lua"
+                    "train.lua"
+                  ];
+                  "strings-de.json5" = null;
+                  "strings-es.json5" = null;
+                  "strings-fr.json5" = null;
+                  "strings-gd.json5" = null;
+                  "strings-it.json5" = null;
+                  "strings-pl.json5" = null;
+                  "strings-ru.json5" = null;
+                  "strings-uk.json5" = null;
+                  "strings.json5" = null;
+                  "weapons.json5" = null;
+                };
+                tr4-level = expandClusters [
+                  {
+                    m = [
+                      "gameflow"
+                      "strings-de"
+                      "strings-es"
+                      "strings-fr"
+                      "strings-gd"
+                      "strings-it"
+                      "strings-pl"
+                      "strings-ru"
+                      "strings-uk"
+                      "strings"
+                    ];
+                    p = "";
+                    s = ".json5";
+                  }
+                ];
+              };
+              modules = {
+                "ammo_cycle.lua" = null;
+                "inv_ring.lua" = null;
+                "ngplus.lua" = null;
+                "save_crystal.lua" = null;
+                "secret_music.lua" = null;
+                "timer.lua" = null;
+                ui = {
+                  "accent.lua" = null;
+                  "ammo.lua" = null;
+                  "attachment.lua" = null;
+                  "captions.lua" = null;
+                  "compass.lua" = null;
+                  "controls_model.lua" = null;
+                  "delete_save.lua" = null;
+                  "fade.lua" = null;
+                  flat_menu = expandClusters [
+                    {
+                      m = [
+                        "aves"
+                        "ound"
+                        "tats"
+                        "trip"
+                      ];
+                      p = "s";
+                      s = ".lua";
+                    }
+                    "arrows.lua"
+                    "death.lua"
+                    "init.lua"
+                    "items.lua"
+                    "list.lua"
+                    "options.lua"
+                    "pause.lua"
+                    "text.lua"
+                    "title.lua"
+                  ];
+                  hud = {
+                    "assault.lua" = null;
+                    "legend.lua" = null;
+                    overlay = expandClusters [
+                      {
+                        m = [
+                          "hoto_mode"
+                          "ickups"
+                          "lace"
+                        ];
+                        p = "p";
+                        s = ".lua";
+                      }
+                      "ammo.lua"
+                      "bars.lua"
+                      "init.lua"
+                      "readouts.lua"
+                      "speedometer.lua"
+                    ];
+                  };
+                  "level_start.lua" = null;
+                  "menu.lua" = null;
+                  "metrics.lua" = null;
+                  ring = expandClusters [
+                    {
+                      m = [
+                        "motio"
+                        "scree"
+                        "weapo"
+                      ];
+                      p = "";
+                      s = "n.lua";
+                    }
+                    "entries.lua"
+                    "init.lua"
+                  ];
+                  "ring_hints.lua" = null;
+                  screens = {
+                    "combine.lua" = null;
+                    "examine.lua" = null;
+                    "globe.lua" = null;
+                    "level_view.lua" = null;
+                    passport = [
+                      "book.lua"
+                      "init.lua"
+                      "pages.lua"
+                      "rows.lua"
+                    ];
+                    "pause.lua" = null;
+                    "picture.lua" = null;
+                    "settings.lua" = null;
+                    stats = [
+                      "box.lua"
+                      "counts.lua"
+                      "init.lua"
+                      "rows.lua"
+                    ];
+                  };
+                  "scroll.lua" = null;
+                  settings = [
+                    "color_editor.lua"
+                    "controls.lua"
+                    "dialog.lua"
+                    "editor.lua"
+                    "handlers.lua"
+                    "preset_tab.lua"
+                    "presets.lua"
+                    "rows.lua"
+                    "tabs.lua"
+                  ];
+                  "title_page.lua" = null;
+                  "value.lua" = null;
+                  widgets = [
+                    "color.lua"
+                    "hold_button.lua"
+                    "loading_bar.lua"
+                    "requester.lua"
+                    "row_arrows.lua"
+                    "tab_switch.lua"
+                    "text_dialog.lua"
+                    "window.lua"
+                  ];
+                };
+                "water_color.lua" = null;
+                "weapons.lua" = null;
+              };
+              scripts = {
+                "ammo_cycle.lua" = null;
+                bignasty = [
+                  "bfg.bin"
+                  "init.lua"
+                ];
+                "inv_ring.lua" = null;
+                "secret_music.lua" = null;
+                "ui.lua" = null;
+                "weapons.lua" = null;
+              };
+            };
+            "version.rc" = null;
+          };
+        };
+        docs = {
+          "BUILDING.md" = null;
+          "BUILDING_ON_LINUX.md" = null;
+          "BUILDING_ON_MACOS.md" = null;
+          "BUILDING_ON_WINDOWS.md" = null;
+          "CHANGELOG.md" = null;
+          "CHANGE_SUBMISSION.md" = null;
+          "CODING_GUIDELINES.md" = null;
+          "CONTRIBUTING.md" = null;
+          "GLOSSARY.md" = null;
+          "RELEASING.md" = null;
+          "SECRETS.md" = null;
+          "gameflow.schema.json" = null;
+          showcase = [
+            "3d_pickups.jpg"
+            "braid.jpg"
+            "compass_stats.jpg"
+            "console.webp"
+            "draw_distance.webp"
+            "enemy_health_bar_and_scaling.jpg"
+            "fly_cheat.jpg"
+            "free_camera.jpg"
+            "photo_mode.webp"
+            "ps1_ui_and_options.webp"
+            "skybox.jpg"
+            "sprint.webp"
+          ];
+          symbols = expandClusters [
+            {
+              m = [
+                "1"
+                "2-eu"
+                "2-steam"
+                "3"
+                "4"
+                "5"
+              ];
+              p = "tr";
+              s = ".txt";
+            }
+          ];
+          tr1 = [
+            "CHANGELOG.md"
+            "INSTALLING.md"
+          ];
+          tr2 = [
+            "CHANGELOG.md"
+            "INSTALLING.md"
+          ];
+          tr3 = "INSTALLING.md";
+          trx = {
+            "CATALOGS.md" = null;
+            "COMMANDS.md" = null;
+            "COMMAND_LINE.md" = null;
+            "GAME_STRINGS.md" = null;
+            "INJECTIONS.md" = null;
+            "INSTALLING.md" = null;
+            "LEVELS.md" = null;
+            "MIGRATING.md" = null;
+            "MUSIC.md" = null;
+            "OBJECTS.md" = null;
+            "OUTFITS.md" = null;
+            "SAMPLES.md" = null;
+            "SUPPORT.md" = null;
+            "WATER_COLORS.md" = null;
+            "WEAPONS.md" = null;
+            game_flow = {
+              "COMMANDS.md" = null;
+              "GLOBAL_PROPERTIES.md" = null;
+              "README.md" = null;
+              "SEQUENCES.md" = null;
+              "USER_CONFIGURATION.md" = null;
+              levels = expandClusters [
+                {
+                  m = [
+                    "CUTSCENE"
+                    "DEMO"
+                    "FMV"
+                  ];
+                  p = "";
+                  s = "_PROPERTIES.md";
+                }
+                "BONUS_LEVELS.md"
+                "ITEM_DROPS.md"
+                "README.md"
+                "REGULAR_LEVELS.md"
+              ];
+            };
+            lua = {
+              "GETTING_STARTED.md" = null;
+              "README.md" = null;
+              "UI.md" = null;
+              examples = {
+                "README.md" = null;
+                ui = [
+                  "custom_widget.lua"
+                  "dialog.lua"
+                  "hud_widget.lua"
+                  "input_widget.lua"
+                  "menu.lua"
+                  "screen.lua"
+                  "signals.lua"
+                  "tween.lua"
+                ];
+              };
+              reference = expandClusters [
+                {
+                  m = [
+                    "JECT"
+                    "PUT"
+                    "VENTORY"
+                  ];
+                  p = "IN";
+                  s = ".md";
+                }
+                {
+                  m = [
+                    "ATS"
+                    "ORE"
+                    "RINGS"
+                  ];
+                  p = "ST";
+                  s = ".md";
+                }
+                "API.md"
+                "ARGPARSE.md"
+                "ASSAULT.md"
+                "CAMERA.md"
+                "CATALOG.md"
+                "CONFIG.md"
+                "CONSOLE.md"
+                "CREATURES.md"
+                "CUTSCENES.md"
+                "EVENTS.md"
+                "FX.md"
+                "GAME.md"
+                "ITEMS.md"
+                "JSON.md"
+                "LARA.md"
+                "LOCALE.md"
+                "LOG.md"
+                "LUA.md"
+                "MATH.md"
+                "MISC.md"
+                "MOD.md"
+                "MUSIC.md"
+                "OBJECTS.md"
+                "OVERLAY.md"
+                "PATH.md"
+                "QUERY.md"
+                "RANDOM.md"
+                "README.md"
+                "ROOMS.md"
+                "RULES.md"
+                "SAVEGAME.md"
+                "SCENE.md"
+                "SIGNAL.md"
+                "SOUND.md"
+                "UI.md"
+                "WAYPOINTS.md"
+                "WEAPONS.md"
+                "WEATHER.md"
+                "ZONES.md"
+              ];
+            };
+            "water_colors.yml" = null;
+          };
+        };
+        justfile = null;
+        src = {
+          lua = {
+            commands = expandClusters [
+              {
+                m = [
+                  "ebug"
+                  "ie"
+                  "isco"
+                  "ry"
+                ];
+                p = "d";
+                s = ".lua";
+              }
+              {
+                m = [
+                  "asy_config"
+                  "nd_level"
+                  "xit_game"
+                  "xit_to_title"
+                ];
+                p = "e";
+                s = ".lua";
+              }
+              {
+                m = [
+                  "ipmap"
+                  "ood"
+                  "y"
+                ];
+                p = "fl";
+                s = ".lua";
+              }
+              {
+                m = [
+                  "lay_cutscene"
+                  "lay_demo"
+                  "lay_fmv"
+                  "lay_gym"
+                  "lay_level"
+                  "oison"
+                  "os"
+                ];
+                p = "p";
+                s = ".lua";
+              }
+              {
+                m = [
+                  "ave_game"
+                  "creenshot"
+                  "ecret"
+                  "et"
+                  "et_health"
+                  "fx"
+                  "pawn"
+                  "peed"
+                  "trings"
+                ];
+                p = "s";
+                s = ".lua";
+              }
+              {
+                m = [
+                  "eleport"
+                  "est_text"
+                  "rigger"
+                ];
+                p = "t";
+                s = ".lua";
+              }
+              "burn.lua"
+              "clear.lua"
+              "copy.lua"
+              "give.lua"
+              "golden.lua"
+              "heal.lua"
+              "help.lua"
+              "immune.lua"
+              "inf_sprint.lua"
+              "kill.lua"
+              "load_game.lua"
+              "lua.lua"
+              "mod.lua"
+              "music.lua"
+              "outfit.lua"
+              "restart_level.lua"
+              "rule.lua"
+              "version.lua"
+              "weather.lua"
+              "winston.lua"
+            ];
+            trx = {
+              "api.lua" = null;
+              "argparse.lua" = null;
+              "assault.lua" = null;
+              "camera.lua" = null;
+              "catalog.lua" = null;
+              "config.lua" = null;
+              "console.lua" = null;
+              "creatures.lua" = null;
+              "cutscenes.lua" = null;
+              "events.lua" = null;
+              "fx.lua" = null;
+              "game.lua" = null;
+              "inject.lua" = null;
+              "input.lua" = null;
+              internal = [
+                "check.lua"
+                "helpers.lua"
+                "paint.lua"
+                "themes.lua"
+              ];
+              "inventory.lua" = null;
+              "items.lua" = null;
+              "json.lua" = null;
+              "lara.lua" = null;
+              "locale.lua" = null;
+              "log.lua" = null;
+              "lua.lua" = null;
+              "math.lua" = null;
+              "mod.lua" = null;
+              "music.lua" = null;
+              "objects.lua" = null;
+              "overlay.lua" = null;
+              "path.lua" = null;
+              "query.lua" = null;
+              "random.lua" = null;
+              "rooms.lua" = null;
+              "rules.lua" = null;
+              "savegame.lua" = null;
+              "scene.lua" = null;
+              "signal.lua" = null;
+              "sound.lua" = null;
+              "stats.lua" = null;
+              "store.lua" = null;
+              "strings.lua" = null;
+              ui = {
+                "layers.lua" = null;
+                "primitive.lua" = null;
+                "regions.lua" = null;
+                "screens.lua" = null;
+                "tween.lua" = null;
+                widgets = expandClusters [
+                  {
+                    m = [
+                      "abel"
+                      "ayout"
+                      "ist"
+                    ];
+                    p = "l";
+                    s = ".lua";
+                  }
+                  "bar.lua"
+                  "base.lua"
+                  "carousel.lua"
+                  "custom.lua"
+                  "digits.lua"
+                  "image.lua"
+                  "input_hint.lua"
+                  "model.lua"
+                  "sleek_bar.lua"
+                ];
+                "widgets.lua" = null;
+              };
+              "ui.lua" = null;
+              "waypoints.lua" = null;
+              "weapons.lua" = null;
+              "weather.lua" = null;
+              "zones.lua" = null;
+            };
+            ui = "console.lua";
+          };
+          "meson.build" = null;
+          "meson.options" = null;
+          subprojects = {
+            "dwarfstack.wrap" = null;
+            packagefiles = {
+              dwarfstack = [
+                "bound-the-hex-number-writes.patch"
+                "meson.build"
+              ];
+            };
+          };
+          tests = {
+            docs = "examples.c";
+            fakes = [
+              "assault.c"
+              "assault.h"
+              "camera.c"
+              "camera.h"
+              "catalog.c"
+              "config.c"
+              "config.h"
+              "console.c"
+              "console.h"
+              "creatures.c"
+              "creatures.h"
+              "cutseq.c"
+              "cutseq.h"
+              "game.c"
+              "game.h"
+              "input.c"
+              "input.h"
+              "items.c"
+              "items.h"
+              "lara.c"
+              "lara.h"
+              "level.c"
+              "level.h"
+              "locale.c"
+              "log.c"
+              "log.h"
+              "lua.c"
+              "lua.h"
+              "lua_store.c"
+              "lua_tick.c"
+              "music.c"
+              "music.h"
+              "objects.c"
+              "objects.h"
+              "overlay.c"
+              "overlay.h"
+              "path.c"
+              "paths.c"
+              "rooms.c"
+              "rooms.h"
+              "savegame.c"
+              "savegame.h"
+              "settings.c"
+              "settings.h"
+              "snapshot_slots.c"
+              "sound.c"
+              "sound.h"
+              "sprites.c"
+              "sprites.h"
+              "stats.c"
+              "stats.h"
+              "strings.c"
+              "text_wrap.c"
+              "ui.c"
+              "ui.h"
+              "ui_draw.c"
+              "ui_draw.h"
+              "ui_layer.c"
+              "ui_menu.c"
+              "weather.c"
+            ];
+            harness = expandClusters [
+              {
+                m = [
+                  "calls.c"
+                  "calls.h"
+                  "objects.h"
+                ];
+                p = "fake_";
+                s = "";
+              }
+              {
+                m = [
+                  ".c"
+                  "_catalog.c"
+                  "_config_file.c"
+                  "_console.c"
+                  "_enum_map.c"
+                  "_game_script.c"
+                  "_game_script.h"
+                  "_item_action.c"
+                  "_lua_context.c"
+                  "_paths.c"
+                  "_paths.h"
+                  "_result.c"
+                ];
+                p = "stubs";
+                s = "";
+              }
+              "font_bin.c"
+              "font_bin.h"
+              "harness.h"
+              "lua_surface.c"
+              "lua_surface.h"
+              "screen_module.c"
+              "screen_module.h"
+              "takeover_args.c"
+              "takeover_args.h"
+            ];
+            lua = {
+              "boot.c" = null;
+              "boot.lua" = null;
+              commands = [
+                "copy.c"
+                "copy.lua"
+                "give.c"
+                "give.lua"
+                "heal.c"
+                "heal.lua"
+                "help.c"
+                "help.lua"
+                "kill.c"
+                "kill.lua"
+                "load_game.c"
+                "load_game.lua"
+                "music.c"
+                "music.lua"
+                "play_level.c"
+                "play_level.lua"
+                "restart_level.c"
+                "restart_level.lua"
+                "rule.c"
+                "rule.lua"
+                "save_game.c"
+                "save_game.lua"
+                "secret.c"
+                "secret.lua"
+                "set.c"
+                "set.lua"
+                "teleport.c"
+                "teleport.lua"
+                "version.c"
+                "version.lua"
+                "weather.c"
+                "weather.lua"
+              ];
+              docs = "examples.lua";
+              fixtures = "eval_file_target.lua";
+              "harness.lua" = null;
+              modules = {
+                "timer.lua" = null;
+                ui = {
+                  "controls_model.lua" = null;
+                  "fade.lua" = null;
+                  flat_menu = [
+                    "death.lua"
+                    "pause.lua"
+                    "title.lua"
+                  ];
+                  "flat_menu.lua" = null;
+                  hud = [
+                    "assault.lua"
+                    "overlay.lua"
+                  ];
+                  ring = expandClusters [
+                    {
+                      m = [
+                        "motio"
+                        "scree"
+                        "weapo"
+                      ];
+                      p = "";
+                      s = "n.lua";
+                    }
+                    "entries.lua"
+                  ];
+                  screens = expandClusters [
+                    {
+                      m = [
+                        "combin"
+                        "examin"
+                        "glob"
+                      ];
+                      p = "";
+                      s = "e.lua";
+                    }
+                    {
+                      m = [
+                        "assport"
+                        "ause"
+                        "icture"
+                      ];
+                      p = "p";
+                      s = ".lua";
+                    }
+                    "level_view.lua"
+                    "settings.lua"
+                    "stats.lua"
+                  ];
+                  "scroll.lua" = null;
+                  settings = [
+                    "color_editor.lua"
+                    "controls.lua"
+                    "dialog.lua"
+                    "editor.lua"
+                    "preset_tab.lua"
+                    "presets.lua"
+                    "rows.lua"
+                    "tabs.lua"
+                  ];
+                  "value.lua" = null;
+                  widgets = [
+                    "color.lua"
+                    "row_arrows.lua"
+                    "tab_switch.lua"
+                    "text_dialog.lua"
+                    "window.lua"
+                  ];
+                };
+              };
+              "seal.c" = null;
+              "seal.lua" = null;
+              trx = {
+                "api.lua" = null;
+                "argparse.c" = null;
+                "argparse.lua" = null;
+                "assault.c" = null;
+                "assault.lua" = null;
+                "camera.c" = null;
+                "camera.lua" = null;
+                "catalog.c" = null;
+                "catalog.lua" = null;
+                "config.c" = null;
+                "config.lua" = null;
+                "console.c" = null;
+                "console.lua" = null;
+                "creatures.c" = null;
+                "creatures.lua" = null;
+                "events.c" = null;
+                "events.lua" = null;
+                "game.c" = null;
+                "game.lua" = null;
+                "input.c" = null;
+                "input.lua" = null;
+                "inventory.c" = null;
+                "inventory.lua" = null;
+                "items.c" = null;
+                "items.lua" = null;
+                "json.c" = null;
+                "json.lua" = null;
+                "lara.c" = null;
+                "lara.lua" = null;
+                "locale.c" = null;
+                "locale.lua" = null;
+                "log.c" = null;
+                "log.lua" = null;
+                "lua.c" = null;
+                "lua.lua" = null;
+                "math.c" = null;
+                "math.lua" = null;
+                "mod.c" = null;
+                "mod.lua" = null;
+                "music.c" = null;
+                "music.lua" = null;
+                "objects.c" = null;
+                "objects.lua" = null;
+                "path.c" = null;
+                "path.lua" = null;
+                "random.c" = null;
+                "random.lua" = null;
+                "rooms.c" = null;
+                "rooms.lua" = null;
+                "savegame.c" = null;
+                "savegame.lua" = null;
+                "signal.c" = null;
+                "signal.lua" = null;
+                "sound.c" = null;
+                "sound.lua" = null;
+                "stats.c" = null;
+                "stats.lua" = null;
+                "store.c" = null;
+                "store.lua" = null;
+                "strings.c" = null;
+                "strings.lua" = null;
+                ui = [
+                  "layers.c"
+                  "layers.lua"
+                  "screens.c"
+                  "screens.lua"
+                ];
+                "ui.c" = null;
+                "ui.lua" = null;
+                "weapons.c" = null;
+                "weapons.lua" = null;
+                "weather.c" = null;
+                "weather.lua" = null;
+                "zones.c" = null;
+                "zones.lua" = null;
+              };
+            };
+            "meson.build" = null;
+            modules = {
+              "timer.c" = null;
+              ui = {
+                "controls_model.c" = null;
+                "fade.c" = null;
+                flat_menu = [
+                  "death.c"
+                  "pause.c"
+                  "title.c"
+                ];
+                "flat_menu.c" = null;
+                hud = [
+                  "assault.c"
+                  "overlay.c"
+                ];
+                ring = [
+                  "entries.c"
+                  "motion.c"
+                  "screen.c"
+                  "weapon.c"
+                ];
+                screens = [
+                  "combine.c"
+                  "examine.c"
+                  "globe.c"
+                  "level_view.c"
+                  "passport.c"
+                  "pause.c"
+                  "picture.c"
+                  "settings.c"
+                  "stats.c"
+                ];
+                "scroll.c" = null;
+                settings = [
+                  "color_editor.c"
+                  "controls.c"
+                  "dialog.c"
+                  "editor.c"
+                  "preset_tab.c"
+                  "presets.c"
+                  "rows.c"
+                  "tabs.c"
+                ];
+                "value.c" = null;
+                widgets = [
+                  "color.c"
+                  "row_arrows.c"
+                  "tab_switch.c"
+                  "text_dialog.c"
+                  "window.c"
+                ];
+              };
+            };
+            tools = [
+              "cdecls.py"
+              "cfuncs.py"
+              "game_strings.py"
+              "helper.py"
+              "lua_annot.py"
+              "lua_sources.py"
+              "object_taxonomy.py"
+              "update_lua_docs.py"
+            ];
+            trx = {
+              config = [
+                "common.c"
+                "legacy.c"
+                "option.c"
+              ];
+              core = {
+                "bson.c" = null;
+                "completion.c" = null;
+                "dynamic_enum.c" = null;
+                "enum_map.c" = null;
+                "file.c" = null;
+                "filesystem.c" = null;
+                "handle.c" = null;
+                "hash.c" = null;
+                "json.c" = null;
+                math = [
+                  "func.c"
+                  "geom.c"
+                ];
+                strings = [
+                  "common.c"
+                  "fuzzy_match.c"
+                ];
+                "value.c" = null;
+                "vector.c" = null;
+              };
+              game = {
+                console = "completion.c";
+                cutseq = [
+                  "decoder.c"
+                  "pak.c"
+                ];
+                game_flow = "inventory.c";
+                game_strings = [
+                  "entries.c"
+                  "lang_match.c"
+                ];
+                inject = {
+                  "canonical.c" = null;
+                  data = "pathing.c";
+                };
+                input = [
+                  "names.c"
+                  "raw_state.c"
+                ];
+                items = [
+                  "actions.c"
+                  "trigger.c"
+                ];
+                locale = [
+                  "chain.c"
+                  "common.c"
+                  "path.c"
+                ];
+                lua = {
+                  capi = [
+                    "enum.c"
+                    "struct.c"
+                  ];
+                  "common.c" = null;
+                  "field.c" = null;
+                  "guard.c" = null;
+                  "sandbox.c" = null;
+                };
+                "matrix.c" = null;
+                "paths.c" = null;
+                savegame = "resume.c";
+                ui = [
+                  "takeover.c"
+                  "text.c"
+                  "tween.c"
+                ];
+                "ui.c" = null;
+              };
+            };
+          };
+          trview = null;
+          trx = {
+            av = expandClusters [
+              {
+                m = [
+                  ".c"
+                  ".h"
+                  "_decoder.c"
+                  "_decoder.h"
+                  "_filter.c"
+                  "_internal.h"
+                  "_reverb.c"
+                  "_sample.c"
+                  "_stream.c"
+                ];
+                p = "audio";
+                s = "";
+              }
+              "image.c"
+              "image.h"
+              "video.c"
+              "video.h"
+            ];
+            config = expandClusters [
+              {
+                m = [
+                  ""
+                  "_tr1"
+                  "_tr2"
+                  "_tr3"
+                  "_tr4"
+                ];
+                p = "map";
+                s = ".def";
+              }
+              {
+                m = [
+                  ".c"
+                  ".h"
+                  "_text.c"
+                ];
+                p = "option";
+                s = "";
+              }
+              "common.c"
+              "common.h"
+              "const.h"
+              "enum.c"
+              "enum.h"
+              "file.c"
+              "file.h"
+              "legacy.c"
+              "legacy.h"
+              "map.c"
+              "priv.c"
+              "priv.h"
+              "registry.c"
+              "registry.h"
+              "section.c"
+              "section.h"
+              "types.h"
+              "vars.c"
+              "vars.h"
+            ];
+            "config.h" = null;
+            core = {
+              "benchmark.c" = null;
+              "benchmark.h" = null;
+              bson = [
+                "enum.h"
+                "parse.c"
+                "parse.h"
+                "types.h"
+                "write.c"
+                "write.h"
+              ];
+              "bson.h" = null;
+              "colors.c" = null;
+              "colors.h" = null;
+              "completion.c" = null;
+              "completion.h" = null;
+              "csv.c" = null;
+              "csv.h" = null;
+              "dynamic_enum.c" = null;
+              "dynamic_enum.h" = null;
+              "enum_map.c" = null;
+              "enum_map.h" = null;
+              "event_manager.c" = null;
+              "event_manager.h" = null;
+              "file.c" = null;
+              "file.h" = null;
+              filesystem = "priv.h";
+              "filesystem.c" = null;
+              "filesystem.h" = null;
+              "handle.c" = null;
+              "handle.h" = null;
+              "hash.c" = null;
+              "hash.h" = null;
+              json = {
+                "base.c" = null;
+                "base.h" = null;
+                "enum.h" = null;
+                "parse.c" = null;
+                "parse.h" = null;
+                "types.h" = null;
+                util = [
+                  "file.c"
+                  "file.h"
+                  "read_io.c"
+                  "read_io.h"
+                  "value.c"
+                  "value.h"
+                  "write_io.c"
+                  "write_io.h"
+                ];
+                "write.c" = null;
+                "write.h" = null;
+              };
+              "json.h" = null;
+              "log.c" = null;
+              "log.h" = null;
+              "log_linux.c" = null;
+              "log_unknown.c" = null;
+              "log_windows.c" = null;
+              math = [
+                "const.h"
+                "func.c"
+                "func.h"
+                "geom.c"
+                "geom.h"
+                "trig.c"
+                "trig.h"
+                "types.h"
+                "util.c"
+                "util.h"
+              ];
+              "math.h" = null;
+              "memory.c" = null;
+              "memory.h" = null;
+              "result.c" = null;
+              "result.h" = null;
+              "shell.h" = null;
+              strings = [
+                "case_funcs.c"
+                "case_map.def"
+                "common.c"
+                "common.h"
+                "fuzzy_match.c"
+                "fuzzy_match.h"
+              ];
+              "strings.h" = null;
+              "subsystem.c" = null;
+              "subsystem.h" = null;
+              "thread_pool.c" = null;
+              "thread_pool.h" = null;
+              "utils.h" = null;
+              "value.c" = null;
+              "value.h" = null;
+              "vector.c" = null;
+              "vector.h" = null;
+            };
+            "debug.h" = null;
+            game = {
+              anims = [
+                "commands.c"
+                "common.c"
+                "common.h"
+                "enum.h"
+                "frames.c"
+                "types.h"
+                "walk.c"
+                "walk.h"
+              ];
+              "anims.h" = null;
+              camera = [
+                "binoculars.c"
+                "binoculars.h"
+                "box_camera.c"
+                "cinematic.c"
+                "cinematic.h"
+                "common.c"
+                "common.h"
+                "const.h"
+                "enum.h"
+                "environment.c"
+                "environment.h"
+                "fixed.c"
+                "fixed.h"
+                "flyby_mode.c"
+                "flyby_mode.h"
+                "los_camera.c"
+                "photo_mode.c"
+                "photo_mode.h"
+                "spline.c"
+                "spline.h"
+                "types.h"
+                "vars.c"
+                "vars.h"
+              ];
+              "camera.h" = null;
+              catalog = [
+                "families.def"
+                "item_actions.def"
+                "keys.c"
+                "lara_anims.def"
+                "lara_states.def"
+                "manager.c"
+                "manager.h"
+                "music.def"
+                "objects.def"
+                "samples.def"
+                "table.c"
+                "table.h"
+                "weapons.def"
+              ];
+              clock = [
+                "common.c"
+                "common.h"
+                "const.h"
+                "timer.c"
+                "timer.h"
+                "turbo.c"
+                "turbo.h"
+              ];
+              "clock.h" = null;
+              collision = [
+                "common.c"
+                "common.h"
+                "los.c"
+                "los.h"
+                "types.h"
+              ];
+              "collision.h" = null;
+              console = [
+                "common.c"
+                "common.h"
+                "completion.c"
+                "completion.h"
+                "enum.h"
+                "history.c"
+                "history.h"
+                "internal.h"
+                "registry.c"
+                "registry.h"
+                "types.h"
+              ];
+              "console.h" = null;
+              "const.h" = null;
+              creature = [
+                "alert.c"
+                "alert.h"
+                "behavior.c"
+                "common.c"
+                "common.h"
+                "const.h"
+                "enum.h"
+                "shooting.c"
+                "types.h"
+              ];
+              "creature.h" = null;
+              "cutscene.c" = null;
+              "cutscene.h" = null;
+              cutseq = [
+                "decoder.c"
+                "decoder.h"
+                "pak.c"
+                "pak.h"
+                "playback.c"
+                "playback.h"
+              ];
+              "cutseq.h" = null;
+              "demo.c" = null;
+              "demo.h" = null;
+              effects = [
+                "const.h"
+                "draw.c"
+                "draw.h"
+                "manager.c"
+                "manager.h"
+                "types.h"
+              ];
+              "effects.h" = null;
+              "enum.c" = null;
+              "events.c" = null;
+              "events.h" = null;
+              "fader.c" = null;
+              "fader.h" = null;
+              "flyby_mode.c" = null;
+              "flyby_mode.h" = null;
+              "fmv.c" = null;
+              "fmv.h" = null;
+              fx = expandClusters [
+                {
+                  m = [
+                    ".c"
+                    ".h"
+                    "_sight.c"
+                    "_sight.h"
+                  ];
+                  p = "laser";
+                  s = "";
+                }
+                {
+                  m = [
+                    ".c"
+                    ".h"
+                    "_particles.c"
+                  ];
+                  p = "water";
+                  s = "";
+                }
+                "bubble.c"
+                "bubble.h"
+                "common.c"
+                "common.h"
+                "debris.c"
+                "debris.h"
+                "droplets.c"
+                "fire.c"
+                "fire.h"
+                "footprint.c"
+                "footprint.h"
+                "gun_flash.c"
+                "gun_flash.h"
+                "ring.c"
+                "ring.h"
+                "shockwave.c"
+                "shockwave.h"
+                "upv_wake.c"
+                "upv_wake.h"
+                "wake.c"
+                "wake.h"
+                "weather.c"
+                "weather.h"
+              ];
+              "fx.h" = null;
+              game = [
+                "control.c"
+                "control.h"
+                "draw.c"
+                "draw.h"
+                "enum.h"
+                "state.c"
+                "state.h"
+              ];
+              "game.h" = null;
+              "game_buf.c" = null;
+              "game_buf.h" = null;
+              game_flow = expandClusters [
+                {
+                  m = [
+                    ".c"
+                    ".h"
+                    "_events.c"
+                    "_events.h"
+                    "_misc.c"
+                  ];
+                  p = "sequencer";
+                  s = "";
+                }
+                "common.c"
+                "common.h"
+                "enum.h"
+                "inventory.c"
+                "inventory.h"
+                "reader.c"
+                "reader.h"
+                "types.h"
+                "util.c"
+                "util.h"
+                "vars.c"
+                "vars.h"
+              ];
+              "game_flow.h" = null;
+              game_strings = {
+                "entries.c" = null;
+                "entries.def" = null;
+                "entries.h" = null;
+                "lang_match.c" = null;
+                "lang_match.h" = null;
+                "manager.c" = null;
+                "manager.h" = null;
+                table = [
+                  "common.c"
+                  "priv.c"
+                  "priv.h"
+                  "reader.c"
+                ];
+                "table.h" = null;
+              };
+              gun = [
+                "common.c"
+                "common.h"
+                "const.h"
+                "control.c"
+                "control.h"
+                "flare.c"
+                "flare.h"
+                "laser_sight.c"
+                "laser_sight.h"
+                "misc.c"
+                "misc.h"
+                "pistols.c"
+                "pistols.h"
+                "registry.c"
+                "registry.h"
+                "rifle.c"
+                "rifle.h"
+                "routines.c"
+                "routines.h"
+                "smashing.c"
+                "smashing.h"
+                "smoke.c"
+                "smoke.h"
+                "types.h"
+              ];
+              "gun.h" = null;
+              "gym.c" = null;
+              "gym.h" = null;
+              "hub.c" = null;
+              "hub.h" = null;
+              inject = {
+                "canonical.c" = null;
+                "canonical.h" = null;
+                "canonical_append.c" = null;
+                "common.c" = null;
+                "common.h" = null;
+                data = [
+                  "anims.c"
+                  "camera.c"
+                  "meshes.c"
+                  "objects.c"
+                  "pathing.c"
+                  "sound.c"
+                  "symbols.c"
+                  "textures.c"
+                ];
+                "editor.c" = null;
+                "editor.h" = null;
+                editors = [
+                  "anims.c"
+                  "floor_data.c"
+                  "items.c"
+                  "meshes.c"
+                  "objects.c"
+                  "properties.c"
+                  "rooms.c"
+                  "textures.c"
+                ];
+                "enum.h" = null;
+                testers = [
+                  "items.c"
+                  "rooms.c"
+                  "textures.c"
+                  "version.c"
+                ];
+                "types.h" = null;
+                "utils.c" = null;
+                "utils.h" = null;
+              };
+              "inject.h" = null;
+              input = {
+                backends = expandClusters [
+                  {
+                    m = [
+                      "c"
+                      "def"
+                      "h"
+                    ];
+                    p = "controller.";
+                    s = "";
+                  }
+                  {
+                    m = [
+                      "c"
+                      "def"
+                      "h"
+                    ];
+                    p = "keyboard.";
+                    s = "";
+                  }
+                  "base.h"
+                  "internal.c"
+                  "internal.h"
+                  "touch.c"
+                  "touch.h"
+                ];
+                "combo.c" = null;
+                "combo.h" = null;
+                "common.c" = null;
+                "common.h" = null;
+                "enum.h" = null;
+                "names.c" = null;
+                "names.h" = null;
+                "raw.c" = null;
+                "raw.h" = null;
+                "raw_state.c" = null;
+                "raw_state.h" = null;
+                "roles.def" = null;
+                "sdl.h" = null;
+                "update.c" = null;
+              };
+              "input.h" = null;
+              "interpolation.c" = null;
+              "interpolation.h" = null;
+              "inventory.c" = null;
+              "inventory.h" = null;
+              items = {
+                actions = [
+                  "common.c"
+                  "effects.c"
+                  "footprint.c"
+                  "general.c"
+                  "gym_tr3.c"
+                  "ids.c"
+                  "ids.h"
+                  "items.c"
+                  "lara.c"
+                ];
+                "actions.h" = null;
+                "anim.c" = null;
+                "anim.h" = null;
+                "carrier.c" = null;
+                "carrier.h" = null;
+                "col.c" = null;
+                "col.h" = null;
+                "const.h" = null;
+                "draw.c" = null;
+                "draw.h" = null;
+                "enum.h" = null;
+                "manager.c" = null;
+                "manager.h" = null;
+                "trigger.c" = null;
+                "types.h" = null;
+                "utils.c" = null;
+                "utils.h" = null;
+                "walkable.c" = null;
+                "walkable.h" = null;
+              };
+              "items.h" = null;
+              lara = {
+                "breath.c" = null;
+                "breath.h" = null;
+                "cheat.c" = null;
+                "cheat.h" = null;
+                "cheat_keys.c" = null;
+                "cheat_keys.h" = null;
+                col = [
+                  "climb.c"
+                  "crouch.c"
+                  "jump.c"
+                  "land.c"
+                  "monkey.c"
+                  "pole.c"
+                  "rope.c"
+                  "swim.c"
+                  "vault.c"
+                ];
+                "col.c" = null;
+                "col.h" = null;
+                "common.c" = null;
+                "common.h" = null;
+                "const.h" = null;
+                "control.c" = null;
+                "control.h" = null;
+                "draw.c" = null;
+                "draw.h" = null;
+                "electric.c" = null;
+                "electric.h" = null;
+                "enum.h" = null;
+                "hair.c" = null;
+                "hair.h" = null;
+                "interact.c" = null;
+                "interact.h" = null;
+                "look.c" = null;
+                "look.h" = null;
+                "mesh.c" = null;
+                "mesh.h" = null;
+                "misc.c" = null;
+                "misc.h" = null;
+                "poison.c" = null;
+                "poison.h" = null;
+                "pose.c" = null;
+                "pose.h" = null;
+                "rope.c" = null;
+                "rope.h" = null;
+                skin = [
+                  "common.c"
+                  "common.h"
+                  "enum.h"
+                  "gold.c"
+                  "gold.h"
+                  "joints.c"
+                  "joints.h"
+                  "seam.c"
+                  "seam.h"
+                  "storage.c"
+                  "storage.h"
+                  "types.h"
+                ];
+                "skin.h" = null;
+                state = [
+                  "climb.c"
+                  "crouch.c"
+                  "extra.c"
+                  "jump.c"
+                  "land.c"
+                  "monkey.c"
+                  "pole.c"
+                  "rope.c"
+                  "swim.c"
+                ];
+                "state.c" = null;
+                "state.h" = null;
+                "types.h" = null;
+                "util.h" = null;
+                "vehicle.c" = null;
+                "vehicle.h" = null;
+              };
+              "lara.h" = null;
+              level = {
+                "cache.c" = null;
+                "cache.h" = null;
+                "common.c" = null;
+                "common.h" = null;
+                "context.c" = null;
+                "context.h" = null;
+                finalize = [
+                  "animations.c"
+                  "gameplay_objects.c"
+                  "render_assets.c"
+                  "rooms.c"
+                ];
+                "finalize.h" = null;
+                format = expandClusters [
+                  {
+                    m = [
+                      ".h"
+                      "_tr1.c"
+                      "_tr2.c"
+                      "_tr3.c"
+                      "_tr4.c"
+                    ];
+                    p = "format";
+                    s = "";
+                  }
+                  "pipeline.c"
+                  "priv.h"
+                ];
+                "pipeline.c" = null;
+                "pipeline.h" = null;
+                sections = [
+                  "anims.c"
+                  "append.h"
+                  "audio.c"
+                  "cinematics.c"
+                  "meshes.c"
+                  "objects.c"
+                  "pathing.c"
+                  "read.h"
+                  "rooms.c"
+                  "textures.c"
+                ];
+                "settings.c" = null;
+                "settings.def" = null;
+                "settings.h" = null;
+              };
+              "level.h" = null;
+              locale = [
+                "chain.c"
+                "chain.h"
+                "common.c"
+                "common.h"
+                "path.c"
+                "path.h"
+                "types.h"
+              ];
+              "los.h" = null;
+              lua = {
+                "api.c" = null;
+                "api.h" = null;
+                capi = expandClusters [
+                  {
+                    m = [
+                      ".c"
+                      "_spec.c"
+                      "_spec.h"
+                    ];
+                    p = "weapons";
+                    s = "";
+                  }
+                  "api.c"
+                  "assault.c"
+                  "camera.c"
+                  "catalog.c"
+                  "config.c"
+                  "console.c"
+                  "creatures.c"
+                  "cutscenes.c"
+                  "enum.c"
+                  "events.c"
+                  "fade.c"
+                  "fx.c"
+                  "game.c"
+                  "hooks.c"
+                  "inject.c"
+                  "input.c"
+                  "inventory.c"
+                  "items.c"
+                  "json.c"
+                  "lara.c"
+                  "locale.c"
+                  "log.c"
+                  "lua.c"
+                  "math.c"
+                  "mod.c"
+                  "music.c"
+                  "objects.c"
+                  "overlay.c"
+                  "path.c"
+                  "random.c"
+                  "rooms.c"
+                  "rules.c"
+                  "savegame.c"
+                  "scene.c"
+                  "screens.c"
+                  "sound.c"
+                  "stats.c"
+                  "store.c"
+                  "strings.c"
+                  "struct.c"
+                  "tween.c"
+                  "ui.c"
+                  "waypoints.c"
+                  "weather.c"
+                ];
+                "common.c" = null;
+                "common.h" = null;
+                "embedded_scripts.h" = null;
+                events = [
+                  "enum.h"
+                  "manager.c"
+                  "manager.h"
+                  "scene.c"
+                  "scene.h"
+                  "ui.c"
+                  "ui.h"
+                ];
+                "events.h" = null;
+                "field.c" = null;
+                "field.h" = null;
+                "guard.c" = null;
+                "guard.h" = null;
+                hooks = [
+                  "common.c"
+                  "common.h"
+                  "hooks.def"
+                  "objects.c"
+                  "screens.c"
+                ];
+                "hooks.h" = null;
+                "registry.c" = null;
+                "registry.h" = null;
+                "sandbox.c" = null;
+                "sandbox.h" = null;
+                "scripts.c" = null;
+                "scripts.h" = null;
+                "startup.c" = null;
+                "startup.h" = null;
+                "store.c" = null;
+                "store.h" = null;
+                "struct.c" = null;
+                "struct.h" = null;
+                utils = [
+                  "args.c"
+                  "args.h"
+                  "caller.c"
+                  "caller.h"
+                  "game_flow.c"
+                  "game_flow.h"
+                  "item.h"
+                  "level.h"
+                  "module.c"
+                  "module.h"
+                  "savegame.h"
+                  "value.c"
+                  "value.h"
+                ];
+              };
+              "lua.h" = null;
+              "matrix.c" = null;
+              "matrix.h" = null;
+              music = expandClusters [
+                {
+                  m = [
+                    "cdaudio.c"
+                    "cdaudio.h"
+                    "cdaudio_wad.c"
+                    "cdaudio_wad.h"
+                    "files.c"
+                    "files.h"
+                  ];
+                  p = "backend_";
+                  s = "";
+                }
+                "common.c"
+                "common.h"
+                "const.h"
+                "enum.h"
+                "ids.c"
+                "ids.h"
+                "types.h"
+              ];
+              "music.h" = null;
+              objects = {
+                "col.c" = null;
+                "col.h" = null;
+                "combos.c" = null;
+                "combos.h" = null;
+                "common.c" = null;
+                "common.h" = null;
+                creatures = expandClusters [
+                  {
+                    m = [
+                      "1"
+                      "2"
+                      "3"
+                    ];
+                    p = "cultist_";
+                    s = ".c";
+                  }
+                  {
+                    m = [
+                      "axeman.c"
+                      "boss.c"
+                      "boss.h"
+                      "pipeman.c"
+                    ];
+                    p = "tribe_";
+                    s = "";
+                  }
+                  {
+                    m = [
+                      "1"
+                      "2"
+                      "3"
+                    ];
+                    p = "worker_";
+                    s = ".c";
+                  }
+                  {
+                    m = [
+                      "common.c"
+                      "common.h"
+                      "knight.c"
+                      "spearman.c"
+                    ];
+                    p = "xian_";
+                    s = "";
+                  }
+                  "ape.c"
+                  "atlantean.c"
+                  "atlantean.h"
+                  "bacon_lara.c"
+                  "baldy.c"
+                  "bandit_1.c"
+                  "bandit_2.c"
+                  "barracuda.c"
+                  "bartoli.c"
+                  "bat.c"
+                  "bear.c"
+                  "big_eel.c"
+                  "big_spider.c"
+                  "bird.c"
+                  "bird_guardian.c"
+                  "boar.c"
+                  "centaur.c"
+                  "centaur_statue.c"
+                  "civilian.c"
+                  "claw_mutant.c"
+                  "cobra.c"
+                  "compy.c"
+                  "cowboy.c"
+                  "crawler_mutant.c"
+                  "crocodile.c"
+                  "diver.c"
+                  "dog.c"
+                  "dragon.c"
+                  "eel.c"
+                  "enemy_jeep.c"
+                  "guide.c"
+                  "gunman.c"
+                  "henchman.c"
+                  "hybrid_mutant.c"
+                  "jelly.c"
+                  "larson.c"
+                  "lion.c"
+                  "lizard.c"
+                  "mercenary.c"
+                  "monk.c"
+                  "monkey.c"
+                  "mouse.c"
+                  "mp_1.c"
+                  "mummy.c"
+                  "natla.c"
+                  "orca.c"
+                  "patrol_dog.c"
+                  "pierre.c"
+                  "pod.c"
+                  "pod.h"
+                  "prisoner.c"
+                  "punk.c"
+                  "raptor.c"
+                  "rat.c"
+                  "rx_worker_2.c"
+                  "rx_worker_3.c"
+                  "scorpion.c"
+                  "shark.c"
+                  "shiva.c"
+                  "skate_kid.c"
+                  "skidoo_driver.c"
+                  "skidoo_driver.h"
+                  "sophia.c"
+                  "spider.c"
+                  "swat.c"
+                  "tiger.c"
+                  "tony.c"
+                  "torso.c"
+                  "trex.c"
+                  "trex_alpha.c"
+                  "undead_mummy.c"
+                  "von_croy.c"
+                  "wasp_mutant.c"
+                  "willard.c"
+                  "winston.c"
+                  "winston_army.c"
+                  "wolf.c"
+                  "yeti.c"
+                ];
+                "draw.c" = null;
+                "draw.h" = null;
+                effects = [
+                  "blood.c"
+                  "body_part.c"
+                  "body_part.h"
+                  "bubble.c"
+                  "dart_effect.c"
+                  "ember.c"
+                  "explosion.c"
+                  "flame.c"
+                  "flame.h"
+                  "glow.c"
+                  "gun_flash.c"
+                  "gun_shell.c"
+                  "hot_liquid.c"
+                  "pickup_aid.c"
+                  "ricochet.c"
+                  "snow_sprite.c"
+                  "splash.c"
+                  "twinkle.c"
+                  "twinkle.h"
+                  "water_sprite.c"
+                ];
+                "families.c" = null;
+                "families.h" = null;
+                general = {
+                  "ai_node.c" = null;
+                  "alarm_sound.c" = null;
+                  "animating.c" = null;
+                  "animating_ext.c" = null;
+                  "area_51_rocket.c" = null;
+                  "assault_target.c" = null;
+                  "bat_emitter.c" = null;
+                  "bell.c" = null;
+                  "big_bowl.c" = null;
+                  "bird_tweeter.c" = null;
+                  "bridge.c" = null;
+                  "cabin.c" = null;
+                  "camera_target.c" = null;
+                  "carcass.c" = null;
+                  "climbing_pole.c" = null;
+                  "clock_chimes.c" = null;
+                  "cog.c" = null;
+                  "cog_switch.c" = null;
+                  "combat_end.c" = null;
+                  "combat_end.h" = null;
+                  "copter.c" = null;
+                  "cutscene_player.c" = null;
+                  "detonator_box.c" = null;
+                  "ding_dong.c" = null;
+                  "door.c" = null;
+                  "door.h" = null;
+                  "door_interactive.c" = null;
+                  "drawbridge.c" = null;
+                  "earthquake.c" = null;
+                  "earthquake.h" = null;
+                  "expanding_block.c" = null;
+                  "final_cutscene.c" = null;
+                  "flare_item.c" = null;
+                  "flare_item.h" = null;
+                  "floor_switch.c" = null;
+                  "fuse_box.c" = null;
+                  "gas_emitter.c" = null;
+                  "general.c" = null;
+                  "general.h" = null;
+                  "generic_switch.c" = null;
+                  "generic_switch.h" = null;
+                  "gong.c" = null;
+                  "gong_bonger.c" = null;
+                  "henchman_jeep.c" = null;
+                  "keyhole.c" = null;
+                  "keyhole.h" = null;
+                  "kill_all_triggered.c" = null;
+                  "lara_alarm.c" = null;
+                  "lens_flare.c" = null;
+                  "lift.c" = null;
+                  lights = expandClusters [
+                    {
+                      m = [
+                        "beacon"
+                        "colored"
+                        "electrical"
+                        "on_off"
+                        "pulse"
+                        "strobe"
+                      ];
+                      p = "";
+                      s = "_light.c";
+                    }
+                  ];
+                  "mini_copter.c" = null;
+                  "moored_boat.c" = null;
+                  "moving_bar.c" = null;
+                  "moving_floor.c" = null;
+                  "pickup.c" = null;
+                  "pickup.h" = null;
+                  "pulley_switch.c" = null;
+                  "pushable_object.c" = null;
+                  "puzzle_hole.c" = null;
+                  "rope.c" = null;
+                  "sarcophagus.c" = null;
+                  "save_crystal.c" = null;
+                  "save_crystal.h" = null;
+                  "scion3.c" = null;
+                  "scion4.c" = null;
+                  "scion_holder.c" = null;
+                  "shoal.c" = null;
+                  "shoal.h" = null;
+                  "smashable.c" = null;
+                  "smashable.h" = null;
+                  "smoke_emitter.c" = null;
+                  "sphere_of_doom.c" = null;
+                  "switch.c" = null;
+                  "switch.h" = null;
+                  "teleporter.c" = null;
+                  "trapdoor.c" = null;
+                  "trigger_gate.c" = null;
+                  "vehicle_smashable.c" = null;
+                  "waterfall.c" = null;
+                  "waterfall.h" = null;
+                  "waterfall_mist.c" = null;
+                  "zipline.c" = null;
+                };
+                "ids.h" = null;
+                "links.c" = null;
+                "links.def" = null;
+                "links.h" = null;
+                "names.c" = null;
+                "names.def" = null;
+                "names.h" = null;
+                "pickups.def" = null;
+                projectiles = expandClusters [
+                  {
+                    m = [
+                      ".c"
+                      "_tr4.c"
+                      "_tr4.h"
+                    ];
+                    p = "grenade";
+                    s = "";
+                  }
+                  {
+                    m = [
+                      "laser_bolt.c"
+                      "laser_bolt.h"
+                      "plasma_ball.c"
+                      "plasma_ball.h"
+                    ];
+                    p = "sophia_";
+                    s = "";
+                  }
+                  "blast.c"
+                  "blast.h"
+                  "claw_mutant_plasma_ball.c"
+                  "claw_mutant_plasma_ball.h"
+                  "crossbow_bolt.c"
+                  "crossbow_bolt.h"
+                  "dart.c"
+                  "harpoon_bolt.c"
+                  "missile.c"
+                  "natla_gun.c"
+                  "rocket.c"
+                  "tony_fire_ball.c"
+                  "tony_fire_ball.h"
+                  "willard_plasma_ball.c"
+                  "willard_plasma_ball.h"
+                ];
+                "property.c" = null;
+                "property.h" = null;
+                "setup.c" = null;
+                "setup.h" = null;
+                traps = expandClusters [
+                  {
+                    m = [
+                      "blade"
+                      "block"
+                      "ceiling"
+                    ];
+                    p = "falling_";
+                    s = ".c";
+                  }
+                  {
+                    m = [
+                      "ke_ceiling"
+                      "ke_wall"
+                      "kes"
+                      "nning_blade"
+                    ];
+                    p = "spi";
+                    s = ".c";
+                  }
+                  "blade.c"
+                  "bouncing_boulder.c"
+                  "bubble_emitter.c"
+                  "cleaner.c"
+                  "common.c"
+                  "common.h"
+                  "damocles_sword.c"
+                  "dart_emitter.c"
+                  "dying_monk.c"
+                  "electric_fence.c"
+                  "ember_emitter.c"
+                  "fire_head.c"
+                  "flame_emitter.c"
+                  "flame_emitter_tr4.c"
+                  "generic_trap.c"
+                  "gondola.c"
+                  "gondola.h"
+                  "hook.c"
+                  "icicle.c"
+                  "killer_statue.c"
+                  "lava_wedge.c"
+                  "lightning_emitter.c"
+                  "midas_touch.c"
+                  "mine.c"
+                  "movable_block.c"
+                  "movable_block.h"
+                  "pendulum.c"
+                  "plough.c"
+                  "power_saw.c"
+                  "propeller.c"
+                  "propeller.h"
+                  "raptor_emitter.c"
+                  "rolling_ball.c"
+                  "rolling_spikes.c"
+                  "rotating_laser.c"
+                  "scaled_spikes.c"
+                  "scaled_spikes.h"
+                  "security_laser.c"
+                  "sentry_gun.c"
+                  "sliding_pillar.c"
+                  "springboard.c"
+                  "teeth_trap.c"
+                  "thors_hammer.c"
+                  "train.c"
+                  "wasp_emitter.c"
+                ];
+                "types.h" = null;
+                vehicles = expandClusters [
+                  {
+                    m = [
+                      "armed.c"
+                      "armed.h"
+                      "common.c"
+                      "common.h"
+                      "fast.c"
+                    ];
+                    p = "skidoo_";
+                    s = "";
+                  }
+                  "boat.c"
+                  "common.c"
+                  "common.h"
+                  "jeep.c"
+                  "jeep.h"
+                  "kayak.c"
+                  "kayak.h"
+                  "mine_cart.c"
+                  "mine_cart.h"
+                  "mounted_gun.c"
+                  "mounted_gun.h"
+                  "quad_bike.c"
+                  "quad_bike.h"
+                  "rib.c"
+                  "upv.c"
+                  "upv.h"
+                ];
+              };
+              "objects.h" = null;
+              output = {
+                "bind.c" = null;
+                "bind.h" = null;
+                "binocular_mask.c" = null;
+                "binocular_mask.h" = null;
+                "common.c" = null;
+                "common.h" = null;
+                "const.h" = null;
+                "draw.c" = null;
+                "draw.h" = null;
+                "flash.c" = null;
+                "flash.h" = null;
+                "func.c" = null;
+                "func.h" = null;
+                "lens_flares.c" = null;
+                "lens_flares.h" = null;
+                lights = [
+                  "common.c"
+                  "fog_bulbs.c"
+                  "fog_bulbs.h"
+                  "priv.h"
+                  "tr12.c"
+                  "tr3.c"
+                  "tr4.c"
+                ];
+                "lights.h" = null;
+                mesh_batcher = [
+                  "batcher.c"
+                  "batcher.h"
+                  "mesh.c"
+                  "mesh.h"
+                  "mesh_builder.c"
+                  "mesh_builder.h"
+                ];
+                "overlay.h" = null;
+                "quad.c" = null;
+                "quad.h" = null;
+                "scene_compositor.c" = null;
+                "scene_compositor.h" = null;
+                "scene_source.h" = null;
+                shaders = [
+                  "generic.c"
+                  "generic.h"
+                  "mesh.c"
+                  "mesh.h"
+                  "ui.c"
+                  "ui.h"
+                ];
+                "sky.c" = null;
+                "sky.h" = null;
+                sources = expandClusters [
+                  {
+                    m = [
+                      ".c"
+                      ".h"
+                      "_debug.c"
+                      "_debug.h"
+                    ];
+                    p = "rooms";
+                    s = "";
+                  }
+                  "lightnings.c"
+                  "lightnings.h"
+                  "misc.c"
+                  "misc.h"
+                  "objects.c"
+                  "objects.h"
+                  "overlay.c"
+                  "overlay.h"
+                  "poly_fx.c"
+                  "poly_fx.h"
+                  "shadows.c"
+                  "shadows.h"
+                  "sky.c"
+                  "sky.h"
+                  "sprites.c"
+                  "sprites.h"
+                  "ui.c"
+                  "ui.h"
+                ];
+                "state.c" = null;
+                "state.h" = null;
+                "textures.c" = null;
+                "textures.h" = null;
+                "textures_gl.h" = null;
+                "types.h" = null;
+                "uniforms.c" = null;
+                "uniforms.h" = null;
+                "utils.c" = null;
+                "utils.h" = null;
+                "vars.c" = null;
+                "vars.h" = null;
+                "vertex_range.c" = null;
+                "vertex_range.h" = null;
+                water = [
+                  "common.c"
+                  "priv.h"
+                  "tr123.c"
+                  "tr4.c"
+                ];
+                "water.h" = null;
+              };
+              "output.h" = null;
+              pathing = [
+                "box.c"
+                "box.h"
+                "const.h"
+                "lot.c"
+                "lot.h"
+                "types.h"
+              ];
+              "pathing.h" = null;
+              "paths.c" = null;
+              "paths.h" = null;
+              phase = expandClusters [
+                {
+                  m = [
+                    "cutscene.c"
+                    "cutscene.h"
+                    "demo.c"
+                    "demo.h"
+                    "game.c"
+                    "game.h"
+                    "globe_select.c"
+                    "globe_select.h"
+                    "inventory.c"
+                    "inventory.h"
+                    "loading_camera.c"
+                    "loading_camera.h"
+                    "pause.c"
+                    "pause.h"
+                    "photo_mode.c"
+                    "photo_mode.h"
+                    "picture.c"
+                    "picture.h"
+                    "save_load.c"
+                    "save_load.h"
+                    "stats.c"
+                    "stats.h"
+                  ];
+                  p = "phase_";
+                  s = "";
+                }
+                "control.h"
+                "executor.c"
+                "executor.h"
+                "types.h"
+              ];
+              "phase.h" = null;
+              "photo_mode.c" = null;
+              "photo_mode.h" = null;
+              "random.c" = null;
+              "random.h" = null;
+              replay = expandClusters [
+                {
+                  m = [
+                    "corder.c"
+                    "corder.h"
+                    "play.c"
+                    "play.h"
+                  ];
+                  p = "test_re";
+                  s = "";
+                }
+              ];
+              rooms = {
+                "common.c" = null;
+                "common.h" = null;
+                "const.h" = null;
+                "draw.c" = null;
+                "draw.h" = null;
+                "enum.h" = null;
+                "floor_data.c" = null;
+                "floor_data.h" = null;
+                "geometry.c" = null;
+                "geometry.h" = null;
+                "statics.c" = null;
+                "statics.h" = null;
+                triggers = [
+                  "camera.c"
+                  "cutseq.c"
+                  "flip.c"
+                  "general.c"
+                  "item.c"
+                  "music.c"
+                ];
+                "types.h" = null;
+                "utils.h" = null;
+              };
+              "rooms.h" = null;
+              "rope.c" = null;
+              "rope.h" = null;
+              "rules.c" = null;
+              "rules.def" = null;
+              "rules.h" = null;
+              savegame = [
+                "common.c"
+                "common.h"
+                "enum.h"
+                "file.c"
+                "file.h"
+                "file_read.c"
+                "file_write.c"
+                "identity.c"
+                "identity.h"
+                "manager.c"
+                "manager.h"
+                "resume.c"
+                "resume.h"
+                "types.h"
+                "vars.c"
+                "vars.h"
+              ];
+              "savegame.h" = null;
+              "screenshot.c" = null;
+              "screenshot.h" = null;
+              shell = [
+                "args.c"
+                "args.h"
+                "common.c"
+                "common.h"
+                "config.c"
+                "config.h"
+                "const.h"
+                "events.c"
+                "events.h"
+                "flow.c"
+                "flow.h"
+                "input.c"
+                "input.h"
+                "main.c"
+                "mod.c"
+                "mod.h"
+                "platform.c"
+                "platform.h"
+                "session.c"
+                "session.h"
+                "state.c"
+                "state.h"
+                "tombstones.c"
+                "tombstones.h"
+                "window.h"
+              ];
+              "shell.h" = null;
+              sound = [
+                "common.c"
+                "common.h"
+                "enum.h"
+                "ids.c"
+                "ids.h"
+                "types.h"
+              ];
+              "sound.h" = null;
+              sparks = [
+                "enum.h"
+                "manager.c"
+                "manager.h"
+                "spawners.c"
+                "spawners.h"
+                "types.h"
+              ];
+              "sparks.h" = null;
+              "spawn.c" = null;
+              "spawn.h" = null;
+              stats = [
+                "common.c"
+                "common.h"
+                "const.h"
+                "init.c"
+                "init.h"
+                "scan.c"
+                "scan.h"
+                "types.h"
+              ];
+              "stats.h" = null;
+              "types.h" = null;
+              ui = expandClusters [
+                {
+                  m = [
+                    "c"
+                    "def"
+                    "h"
+                  ];
+                  p = "text.";
+                  s = "";
+                }
+                "common.c"
+                "common.h"
+                "draw.c"
+                "draw.h"
+                "events.c"
+                "events.h"
+                "keys.c"
+                "keys.h"
+                "menu.c"
+                "menu.h"
+                "regions.c"
+                "regions.h"
+                "scaler.c"
+                "scaler.h"
+                "takeover.c"
+                "takeover.h"
+                "text_autogen.def"
+                "touch_overlay.c"
+                "touch_overlay.h"
+                "tween.c"
+                "tween.h"
+              ];
+              "ui.h" = null;
+              "viewport.c" = null;
+              "viewport.h" = null;
+              "waypoint.c" = null;
+              "waypoint.h" = null;
+            };
+            gl = [
+              "buffer.c"
+              "buffer.h"
+              "config.h"
+              "context.c"
+              "context.h"
+              "enum.c"
+              "enum.h"
+              "fbo.c"
+              "fbo.h"
+              "gpu_timer.c"
+              "gpu_timer.h"
+              "program.c"
+              "program.h"
+              "renderer.c"
+              "renderer.h"
+              "sampler.c"
+              "sampler.h"
+              "screenshot.c"
+              "screenshot.h"
+              "texture.c"
+              "texture.h"
+              "track.c"
+              "track.h"
+              "utils.c"
+              "utils.h"
+              "vertex_array.c"
+              "vertex_array.h"
+            ];
+            "version.c" = null;
+            "version.h" = null;
+          };
+        };
+        tools = {
+          check_commit_msg = null;
+          download_assets = null;
+          "embed_trx_lua.py" = null;
+          "ffmpeg_flags.txt" = null;
+          find_ps1_semi_faces = null;
+          "gen_lua_signatures.py" = null;
+          generate_icon = null;
+          generate_init = null;
+          generate_rcfile = null;
+          get_version = null;
+          glyphs = expandClusters [
+            {
+              m = [
+                "case_map"
+                "compositions"
+                "defs"
+                "keyboard_map"
+              ];
+              p = "generate_";
+              s = "";
+            }
+            "README.md"
+            "test_alignment.html"
+            "test_language"
+          ];
+          inspect_save = null;
+          installer = {
+            ".gitignore" = null;
+            TRX_Installer = {
+              "App.xaml" = null;
+              "App.xaml.cs" = null;
+              "BoolToVisibilityConverter.cs" = null;
+              "CueFile.cs" = null;
+              "CueTrack.cs" = null;
+              "DiscImageInstallSource.cs" = null;
+              "DownloadFailedException.cs" = null;
+              "DownloadOption.cs" = null;
+              "ExistingTRXInstallSource.cs" = null;
+              "IInstallSource.cs" = null;
+              "IInstallerProgress.cs" = null;
+              "InstallComponent.cs" = null;
+              "InstallComponentFactory.cs" = null;
+              "InstallFileHelper.cs" = null;
+              "InstallMappings.cs" = null;
+              "InstallSourceOption.cs" = null;
+              "InstallerService.cs" = null;
+              "MainWindow.xaml" = null;
+              "MainWindow.xaml.cs" = null;
+              "OptionalDownload.cs" = null;
+              "OriginalDirectoryInstallSource.cs" = null;
+              "Program.cs" = null;
+              Resources = {
+                Lang = [
+                  "en.json"
+                  "it.json"
+                ];
+                "const.json" = null;
+                "icon.ico" = null;
+                "side1.jpg" = null;
+                "side2.jpg" = null;
+                "side3.jpg" = null;
+                "side4.jpg" = null;
+              };
+              "TRX_Installer.csproj" = null;
+            };
+            "TRX_Installer.sln" = null;
+          };
+          lint = {
+            checks = [
+              "banned_syntax"
+              "changelog_guard"
+              "clang_format_markers"
+              "const_primitives"
+              "def_entries"
+              "dismissive_words"
+              "emmylua"
+              "gameflow_schema"
+              "json_validity"
+              "lua_decl_order"
+              "lua_error_case"
+              "lua_module_order"
+              "meson_sort"
+              "module_static"
+              "newlines"
+              "object_property_binding"
+              "preset_keys"
+              "static_order"
+              "test_deps"
+              "test_mirror"
+              "trailing_whitespace"
+            ];
+            emmylua = [
+              "signatures.lua"
+              "trxc.lua"
+            ];
+            gen = [
+              "game_strings"
+              "install_trees"
+              "lua_docs"
+              "object_docs"
+              "outfit_slots"
+              "sort_imports"
+              "te_symlinks"
+              "trxc_meta"
+              "water_colors"
+            ];
+            "harness.py" = null;
+          };
+          output_current_changelog = null;
+          output_package_name = null;
+          output_release_name = null;
+          "package_te_bundle.py" = null;
+          release = null;
+          shared = {
+            "__init__.py" = null;
+            "cdecls.py" = null;
+            "cdefs.py" = null;
+            "cfuncs.py" = null;
+            "changelog.py" = null;
+            docker = {
+              "__init__.py" = null;
+              game-linux = [
+                "Dockerfile"
+                "entrypoint.sh"
+              ];
+              game-win = [
+                "Dockerfile"
+                "entrypoint.sh"
+                "meson_linux_mingw32.txt"
+                "meson_linux_mingw32_deps.txt"
+              ];
+              "game_entrypoint.py" = null;
+              installer = [
+                "Dockerfile"
+                "entrypoint.sh"
+              ];
+              "lua.pc" = null;
+            };
+            "files.py" = null;
+            "git.py" = null;
+            "glyph_mapping.py" = null;
+            "icons.py" = null;
+            "import_sorter.py" = null;
+            "json_utils.py" = null;
+            levels = [
+              "__init__.py"
+              "psx_disc.py"
+              "reader.py"
+              "tr12.py"
+              "types.py"
+            ];
+            "luaannot.py" = null;
+            "luadecls.py" = null;
+            mac = [
+              "bundle_dylibs"
+              "create_installer"
+              "install_tree"
+              "x86-64_cross_file.txt"
+            ];
+            "packaging.py" = null;
+            "paths.py" = null;
+            "tombstones.py" = null;
+            "trxc.py" = null;
+            "utils.py" = null;
+            "versioning.py" = null;
+            "vfs.py" = null;
+          };
+          symbols = "generate_idc";
+          tr2 = [
+            "__init__.py"
+            "read_tombpc_script"
+            "shared"
+          ];
+          tr3 = {
+            objects_tracker = [
+              "objects_dump.json"
+              "objects_support.json"
+              "read_levels"
+              "render"
+            ];
+          };
+          tr4 = {
+            convert_logos = null;
+            generate_object_catalog = null;
+            objects_tracker = [
+              "objects_dump.json"
+              "objects_support.json"
+              "read_levels"
+              "render"
+            ];
+            remap_music_tracks = null;
+            scan_cutscene_triggers = null;
+            scan_item_ocbs = null;
+          };
+        };
+      };
+      hash = "sha1-Ij7Xbs7CiS05voxI6dFyd9wZJNQ=";
+      ref = "refs/tags/trx-1.12";
+      rev = "bbed65a0e4fee48f1aa70956f9f0f4a44a059013";
+      tag = "trx-1.12";
+      type = "git-tag";
+      url = "https://github.com/LostArtefacts/TRX.git";
     };
   };
   wad = {

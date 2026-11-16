@@ -2,12 +2,12 @@
 set -euo pipefail
 
 # Usage: prefetch_steam.sh --appId <id> --depotId <id> --manifestId <id>
-#   --filelist <path> [--output-file <file>]
+#   --filelist <path> [--os <os>] [--output-file <file>]
 
 outFile=""
 while [[ $# -gt 0 ]]; do
   case $1 in
-  --appId | --depotId | --manifestId | --filelist | --output-file)
+  --appId | --depotId | --manifestId | --filelist | --os | --output-file)
     key="${1#--}"
     printf -v "$key" '%s' "$2"
     shift 2
@@ -46,6 +46,7 @@ in
   depotId = ${depotId};
   manifestId = ${manifestId};
   filelist = [ ${filelistNix} ];
+  os = "${os:-linux}";
   sha256 = "${hashVal}";
 }
 EOF
@@ -80,6 +81,7 @@ if [[ -n $outFile ]]; then
     echo "  depotId = ${depotId};"
     echo "  manifestId = ${manifestId};"
     echo "  filelist = [ ${filelistNix} ];"
+    [[ -n ${os:-} ]] && echo "  os = \"${os}\";"
     echo "  sha256 = \"${gotHash}\";"
     echo "}"
   } >>"$outFile"

@@ -35,6 +35,8 @@ Usage:
   ./measure-compression.py --renpy             # only games.renpy.games.*
   ./measure-compression.py --raze              # only games.raze.grps.*
   ./measure-compression.py --ecwolf            # only games.ecwolf.data.*
+  ./measure-compression.py --xash3d            # only games.halfLife.data.*
+  ./measure-compression.py --trx               # only games.trx.data.*
   ./measure-compression.py --list              # print available game names
   ./measure-compression.py --list --missing    # ...only those with no CSV row yet
   ./measure-compression.py --missing           # build only games with no CSV row
@@ -367,6 +369,8 @@ def list_names():
   renpy = builtins.attrNames real.config.games.renpy.games;
   raze = builtins.attrNames real.config.games.raze.grps;
   ecwolf = builtins.attrNames real.config.games.ecwolf.data;
+  xash3d = builtins.attrNames real.config.games.halfLife.data;
+  trx = builtins.attrNames real.config.games.trx.data;
 }""",
         max_jobs=1,
         cores=1,
@@ -485,7 +489,12 @@ def build_measure_body(targets):
     }}) names);""")
     # registries hold raw data; optimize is applied at consumption
     # (mkRaze / ECWolf's xdg.configFile), same as games.doom.wads
-    for cat, registry in (("raze", "raze.grps"), ("ecwolf", "ecwolf.data")):
+    for cat, registry in (
+        ("raze", "raze.grps"),
+        ("ecwolf", "ecwolf.data"),
+        ("xash3d", "halfLife.data"),
+        ("trx", "trx.data"),
+    ):
         if targets[cat]:
             parts.append(f"""
   {cat} = let names = {names_nix(targets[cat])}; in
@@ -510,6 +519,8 @@ def get_drv_paths(targets):
         "renpy": result.get("renpy", {}),
         "raze": result.get("raze", {}),
         "ecwolf": result.get("ecwolf", {}),
+        "xash3d": result.get("xash3d", {}),
+        "trx": result.get("trx", {}),
     }
 
 
@@ -701,6 +712,12 @@ def main():
         "--ecwolf", action="store_true", help="restrict to games.ecwolf.data.*"
     )
     parser.add_argument(
+        "--xash3d", action="store_true", help="restrict to games.halfLife.data.*"
+    )
+    parser.add_argument(
+        "--trx", action="store_true", help="restrict to games.trx.data.*"
+    )
+    parser.add_argument(
         "--sequential",
         action="store_true",
         help="build one game at a time instead of handing the whole batch to one nix build call",
@@ -734,8 +751,21 @@ def main():
         categories.append("raze")
     if args.ecwolf:
         categories.append("ecwolf")
+    if args.xash3d:
+        categories.append("xash3d")
+    if args.trx:
+        categories.append("trx")
     if not categories:
-        categories = ["doom", "scummvm", "emulation", "renpy", "raze", "ecwolf"]
+        categories = [
+            "doom",
+            "scummvm",
+            "emulation",
+            "renpy",
+            "raze",
+            "ecwolf",
+            "xash3d",
+            "trx",
+        ]
 
     names = list_names()
 
@@ -764,7 +794,16 @@ def main():
             if c in categories
             else []
         )
-        for c in ("doom", "scummvm", "emulation", "renpy", "raze", "ecwolf")
+        for c in (
+            "doom",
+            "scummvm",
+            "emulation",
+            "renpy",
+            "raze",
+            "ecwolf",
+            "xash3d",
+            "trx",
+        )
     }
 
     if not any(targets.values()):

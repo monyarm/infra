@@ -30,6 +30,7 @@ benchmark.txt
 .env
 .direnv
 games.list
+depots/
 lib/wasm/*/target
 .decrypted~*.sops
 docs/superpowers

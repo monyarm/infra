@@ -1,0 +1,6 @@
+# Half-Life engine + game libraries. Game data comes from Steam, not here.
+[git]
+hl.xash3d = "https://github.com/FWGS/xash3d-fwgs/continuous"
+hl.hlsdk.valve = "https://github.com/FWGS/hlsdk-portable/master"
+hl.hlsdk.opfor = "https://github.com/FWGS/hlsdk-portable/opfor"
+hl.hlsdk.bshift = "https://github.com/FWGS/hlsdk-portable/bshift"
