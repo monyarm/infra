@@ -39,8 +39,8 @@ THRESHOLD = 160
 # One big raster is silently dropped by the firmware; feed it bands instead.
 BAND_LINES = 24
 BAND_DELAY = 0.2
-# 60 dots clears the head without wasting paper.
-FEED_DOTS = 60
+# 80 dots clears the head and tears off cleanly; 60 is too tight.
+FEED_DOTS = 80
 
 
 def feed(dots):
