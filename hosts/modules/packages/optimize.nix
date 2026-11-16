@@ -74,8 +74,16 @@ let
       builtins.readDir ../../../packages
     )
   );
+  # Runtime game engines, not pipeline tools: root them only through their
+  # enabled game entries, so LIGHT=1 does not drag them (and their media deps)
+  # into the generation.
+  enginePackages = [
+    "openxcom-extended"
+    "realrtcw"
+    "tombraider-trx"
+  ];
   localPackages = lib.filter lib.isDerivation (
-    map (n: pkgs.${n} or null) (lib.subtractLists optimizeToolNames packageNames)
+    map (n: pkgs.${n} or null) (lib.subtractLists (optimizeToolNames ++ enginePackages) packageNames)
   );
 
   roots = [

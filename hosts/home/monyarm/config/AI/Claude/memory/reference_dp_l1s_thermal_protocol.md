@@ -1,10 +1,10 @@
 ---
 name: reference_dp_l1s_thermal_protocol
-description: Where to research the DP-L1S/C&Co 3128 thermal printer protocol, plus verified 2026-11-16 status-query replies, RFCOMM failure modes and feed/print commands
+description: Where to research the DP-L1S/C&Co 3128 thermal printer protocol, plus verified 2026-11-16 status-query replies, RFCOMM failure modes, feed/print commands and CUPS device-uri constraints
 metadata:
   type: reference
   origin: opencode
-  modified: 2026-11-16T15:57:17.141Z
+  modified: 2026-11-16T16:54:06.339Z
 ---
 
 Where to research the DP-L1S / SwitchOn 4326 / Crafts&Co (C&Co) 3128 thermal receipt printer protocol:
@@ -20,4 +20,4 @@ Verified facts (2026-11-16):
 - Opening a fresh RFCOMM connection while the printer is still busy with a previous job fails: `[Errno 104] Connection reset by peer`, then `[Errno 103] Software caused connection abort`. Jobs spaced ~5 s apart are clean, so it is the printer's busy state, not the link, that rejects the new session. Holding one connection open across back-to-back jobs avoids it entirely.
 - Printing is raster-only (GS v 0 bands), so text fonts are drawn client-side with PIL from system font paths; the printer has no font of its own. Head width is 384 dots, so monospace column count must be derived from the chosen font's metrics (`CELL = round(font.getlength("W"))`, `COLUMNS = 384 // CELL`) rather than hardcoded.
 - A form-feed/line-feed `1B 4A 50` (80 dots ≈ 10 mm) is sent before closing the socket to push the last printed line clear of the head; without it the final line sits inside the mechanism.
-- Whether CUPS' `lp` user may open an RFCOMM socket from the world-executable store backend was still untested as of 2026-11-16.
+- CUPS queues for this printer use a raw queue with a custom `thermal://` device-uri whose netloc is the MAC. `lpadmin` parses the device-uri as `scheme://host[:port]`, so a colon-separated MAC makes it fail with `lpadmin: Bad device-uri "thermal://55:55:09:55:C2:D6"` (verified locally against the same cupsd, exit code 1); `thermal://55-55-09-...` (dashes) is accepted. Any code matching MACs therefore has to fold the dashes back to colons. Raw queues also print a deprecation warning but still work.

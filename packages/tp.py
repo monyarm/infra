@@ -542,7 +542,9 @@ def print_info(mac, channel):
 
 def target(uri, mac, channel):
     if uri.startswith("thermal://"):
-        netloc = uri[len("thermal://") :].split("/")[0]
+        # A colon-bearing host is an invalid device-uri for CUPS, so the queue
+        # URI carries the MAC with dashes; fold them back here.
+        netloc = uri[len("thermal://") :].split("/")[0].replace("-", ":")
         if MAC_RE.match(netloc):
             mac = netloc
         else:

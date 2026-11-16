@@ -50,8 +50,10 @@ let
         # existing queue just updates it; retry until cupsd accepts requests.
         ExecStart = pkgs.writeShellScript "thermal-printer-${name}-queue" ''
           for _ in $(seq 30); do
+            # CUPS rejects a colon-bearing host in device-uri ("Bad
+            # device-uri"), so the MAC uses dashes here; tp.py folds them back.
             ${pkgs.cups}/bin/lpadmin -p ${printer.queueName} -E \
-              -v thermal://${printer.mac} -m raw && exit 0
+              -v thermal://${lib.replaceStrings [ ":" ] [ "-" ] printer.mac} -m raw && exit 0
             sleep 1
           done
           exit 1
