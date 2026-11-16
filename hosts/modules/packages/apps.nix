@@ -11,6 +11,8 @@
     flatpak
     nemo
     scrcpy
+    snd
+    snd-workshop
     transmission_4
     winetricks
     wine
