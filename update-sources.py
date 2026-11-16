@@ -716,8 +716,11 @@ def generate_npm_lockfile(tarball_url):
             return f.read()
 
 
-def generate_npm_lockfile_from_source(src_expr, name):
-    """Regenerate a Git source's lockfile when package.json has drifted."""
+def generate_npm_lockfile_from_source(src_expr, name, subdir="", fresh_lock=False):
+    """Regenerate a Git source's lockfile when package.json has drifted.
+
+    subdir points at a monorepo package (e.g. "frontend") whose package.json
+    is not at the repo root."""
     res = subprocess.run(
         [
             "nix",
@@ -748,6 +751,11 @@ def generate_npm_lockfile_from_source(src_expr, name):
         tree = os.path.join(work_dir, "src")
         shutil.copytree(store_path, tree)
         subprocess.run(["chmod", "-R", "u+w", tree], check=True)
+        work_dir_path = os.path.join(tree, subdir) if subdir else tree
+        if fresh_lock:
+            # npm keeps stale entries when the upstream lock is older than its
+            # own format rules; a clean run records `resolved` for every dep.
+            os.remove(os.path.join(work_dir_path, "package-lock.json"))
         subprocess.run(
             [
                 "npm",
@@ -756,10 +764,10 @@ def generate_npm_lockfile_from_source(src_expr, name):
                 "--ignore-scripts",
                 "--install-links",
             ],
-            cwd=tree,
+            cwd=work_dir_path,
             check=True,
         )
-        with open(os.path.join(tree, "package-lock.json")) as f:
+        with open(os.path.join(work_dir_path, "package-lock.json")) as f:
             return f.read()
 
 
@@ -843,6 +851,9 @@ def process_npm(name, raw, results, previous_sources):
     src = results[name]
     _, options = parse_source_spec(raw)
     normalize = options.get("normalize")
+    # monorepo package dir, e.g. "frontend"; empty = repo root
+    subdir = options.get("subdir", "").strip("/")
+    fresh_lock = bool(options.get("freshlock"))
 
     print(f"Checking [npm] {name}...")
     old = previous_sources.get(name)
@@ -851,6 +862,8 @@ def process_npm(name, raw, results, previous_sources):
         and old.get("hash") == src.get("hash")
         and old.get("npmDepsHash")
         and old.get("npmNormalize") == normalize
+        and old.get("npmSubdir", "") == subdir
+        and bool(old.get("npmFreshLock", False)) == fresh_lock
         and old.get("npmNormalizeVersion") == 9
         and (
             old.get("npmLockFile")
@@ -868,19 +881,27 @@ def process_npm(name, raw, results, previous_sources):
             src["npmLockFileNotNeeded"] = True
         if normalize:
             src["npmNormalize"] = normalize
+        if subdir:
+            src["npmSubdir"] = subdir
+        if fresh_lock:
+            src["npmFreshLock"] = True
         return src
 
     print(f"  -> Generating npmDepsHash for {name}...")
     src_expr = make_nix_src_expr(src)
     bindings, normalization_hook = npm_normalization_hook(normalize)
     normalization_inputs = "    nativeBuildInputs = [ pkgs.jq ];\n" if normalize else ""
+    # npm vendoring refuses install scripts in git deps without this
+    git_deps_attr = "    forceGitDeps = true;\n" if options.get("forcegitdeps") else ""
     extra_attrs = ""
     lockfile_path = None
     lockfile_content = None
 
     if src.get("type") in ("git", "git-tag"):
         print(f"  -> Regenerating package-lock.json for {name}...")
-        lockfile_content = generate_npm_lockfile_from_source(src_expr, name)
+        lockfile_content = generate_npm_lockfile_from_source(
+            src_expr, name, subdir, fresh_lock
+        )
         fd, lockfile_path = tempfile.mkstemp(suffix="-package-lock.json")
         with os.fdopen(fd, "w") as f:
             f.write(lockfile_content)
@@ -906,8 +927,9 @@ def process_npm(name, raw, results, previous_sources):
             f"  (pkgs.buildNpmPackage {{\n"
             f'    pname = "npm-vendor-calc";\n'
             f'    version = "0.0.1";\n'
-            f"    inherit src;\n"
+            f"    src = {'"${src}/' + subdir + '"' if subdir else 'src'};\n"
             f"{extra_attrs}"
+            f"{git_deps_attr}"
             f"{normalization_inputs}"
             f"{normalization_hook}"
             f'    npmDepsHash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";\n'
@@ -948,6 +970,10 @@ def process_npm(name, raw, results, previous_sources):
         os.unlink(lockfile_path)
     src["npmDepsHash"] = h
     src["npmNormalizeVersion"] = 9
+    if subdir:
+        src["npmSubdir"] = subdir
+    if fresh_lock:
+        src["npmFreshLock"] = True
     if normalize:
         src["npmNormalize"] = normalize
     return src

@@ -8,13 +8,29 @@
   mkSmoke,
   ...
 }:
-# Owned but no known extractor -- multi-system Steam bundles, so noted here
-# rather than split across single-system files:
-#   Castlevania Dominus Collection (NDS, appId 2369900)
-#   Mega Man Zero/ZX Legacy Collection (GBA+NDS, appId 999020)
-#   Mega Man Legacy Collection 2 (SNES+PS1, appId 495050) -- PS1 entries
-#     (MM9/10) reportedly native reimplementations, not emulated ROMs
-#   Mega Man X Legacy Collection 2 (PS1, appId 743900)
+# Owned Steam collections with nothing to extract. All four are native ports
+# reusing converted assets, not emulated cartridges. Multi-system bundles, so
+# noted here rather than split across single-system files:
+#   Castlevania Dominus (NDS, 2369900) -- one windata/alldata.bin MArchive
+#     (key "Illegal function call", len 92); unpacks to per-file assets, no
+#     .nds and no NTR-/TWL- header anywhere
+#   Mega Man Zero/ZX LC (GBA+NDS, 999020) -- romPC holds only sound SE/BGM,
+#     HD textures and UI and gallery; game data is per-stage .bin under
+#     RZZC/{ZC,ZX,ZXA}/DATA in LZ77Wii chunk containers
+#     (aluigi mega_man_zero_bin.bms), no cartridge header
+#   Mega Man Legacy Collection 2 (SNES+PS1, 495050) -- disc is a ZipCrypto ZIP
+#     of native rm07-rm10 asset trees, res00x/res01x are .womv movies
+#   Mega Man X Legacy Collection 2 (PS1, 743900) -- X5-X8 native like X4 in
+#     XLC1 (see snes/mmxlc.nix); only .arc/.sngw/.xsew/.webm assets
+#
+# TODO: Dungeons & Dragons: Chronicles of Mystara (arcade, 229480) is emulated,
+# and its data/zip/{ddsom,ddtod}_essentials.wad.zip carry main.rom + gfx.rom.
+# Program ROMs are recoverable: main.rom[:0x400000] in 0x80000 slices, 16-bit
+# byte-swapped, is dd2e.03e..10 (ddsom) and dade.03c..07a (ddtod) by CRC.
+# Blocked on gfx.rom being re-swizzled for the PC renderer, on QSound samples
+# re-authored as .sb soundbanks, and on the 20-byte ddsom.key/ddtod.key that
+# MAME needs to decrypt the program; it is not shipped with the depot.
+# Revisit if the key is found in ManaGame.exe or someone cracks the gfx layout.
 let
   inherit
     (

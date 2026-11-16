@@ -1,0 +1,23 @@
+# Sales & Dungeons -- thermal-printer TTRPG tool (packages/snd.nix).
+[git-tag]
+ttrpg.snd = "https://github.com/BigJk/snd"
+
+[git]
+ttrpg.nunjucks = "https://github.com/ogonkov/nunjucks#fix_async_extensions_parse"
+
+# Workshop content (packages/snd-workshop.nix). Upstream only tags three of
+# these and all of them are unmaintained, so track main.
+ttrpg.workshop.default-templates = "https://github.com/BigJk/snd-default-templates"
+ttrpg.workshop.bigjk-templates = "https://github.com/BigJk/snd-bigjk-templates"
+ttrpg.workshop.open5e = "https://github.com/BigJk/snd-open5e"
+ttrpg.workshop.srd-bestiary = "https://github.com/BigJk/snd-srd-bestiary"
+ttrpg.workshop.bfrpg-monster = "https://github.com/BigJk/snd-bfrpg-monster"
+ttrpg.workshop.nbadal-templates = "https://github.com/nbadal/snd-nbadal-templates"
+ttrpg.workshop.evt-templates = "https://github.com/frshbeetz/snd-EVT-templates"
+ttrpg.workshop.sales-and-donkeys = "https://github.com/Elfenspalter/SalesAndDonkeys"
+ttrpg.workshop.sd-mosh = "https://github.com/Elfenspalter/SD_MoSh"
+
+[npm]
+# frontend/ holds the only package.json; the repo root has none.
+ttrpg.snd = "true;subdir=frontend;forcegitdeps;freshlock"
+ttrpg.nunjucks = "true"

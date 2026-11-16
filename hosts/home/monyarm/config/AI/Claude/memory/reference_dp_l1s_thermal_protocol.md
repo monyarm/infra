@@ -1,10 +1,10 @@
 ---
-name: reference-dp-l1s-thermal-protocol
-description: Where to research the DP-L1S/C&Co 3128 thermal printer protocol, plus verified 2026-11-16 status-query replies, RFCOMM failure modes, feed/print commands, CUPS device-uri constraints and raw-queue backend stdin behaviour
+name: reference_dp_l1s_thermal_protocol
+description: Where to research the DP-L1S/C&Co 3128 thermal printer protocol, plus verified 2026-11-16 status-query replies, RFCOMM failure modes, the 24-row raster-height limit, feed/print commands, CUPS device-uri constraints and raw-queue backend stdin behaviour
 metadata:
   type: reference
   origin: opencode
-  modified: 2026-11-16T17:14:03.934Z
+  modified: 2026-11-16T19:09:38.036Z
 ---
 
 Where to research the DP-L1S / SwitchOn 4326 / Crafts&Co (C&Co) 3128 thermal receipt printer protocol:
@@ -14,6 +14,7 @@ Where to research the DP-L1S / SwitchOn 4326 / Crafts&Co (C&Co) 3128 thermal rec
 Verified facts (2026-11-16):
 - ESC/POS over classic Bluetooth SPP/RFCOMM works from an unprivileged user with no pairing; tested unit is `55:55:09:55:C2:D6` (device name `DP_L1S_C2D6`), channel 1.
 - The live test unit identifies as model `L1S-HTC`, firmware `V1.09`, serial `L1SHTC235300641`.
+- Raster height limit: the firmware silently drops any `GS v 0` raster taller than 24 rows — it does not error, it just prints nothing (a job with a single tall raster only shows the trailing feed). Rasters must be split into ≤24-row bands. This is what made Sales & Dungeons sheets come out blank (S&D emits one raster for the whole ~76-row page).
 - Status/info queries all answer over SPP: model, firmware, serial, battery, status (`ready`), density (raw `01 0c 01`), shutdown/off timer (reads back as `20 min`). The speed query gets no reply. A joined all-fields reply echoes `DP_L1S_C2D6|<mac>|<second mac>|V1.09|<serial>|<battery%>`.
 - Battery query `10 FF 50 F1` only answers when wrapped with the enable command + twelve `0x00` wake bytes; reply is 2 bytes: `00 <percent>`. Below ~22% the unit refuses to print (red flashing LED is the only other cue).
 - Status byte query `10 FF 40` does not report the low-battery condition.

@@ -281,6 +281,41 @@ def is_escpos(data):
     return b"\x1d\x76" in data
 
 
+def split_escpos(data):
+    """Re-band incoming GS v 0 rasters; firmware drops rasters over 24 rows."""
+    parts = []
+    pending = bytearray()
+    i = 0
+    while i < len(data):
+        if data[i : i + 3] == b"\x1d\x76\x30" and i + 8 <= len(data):
+            stride = data[i + 4] | (data[i + 5] << 8)
+            height = data[i + 6] | (data[i + 7] << 8)
+            body = i + 8
+            end = body + stride * height
+            if end <= len(data):
+                for top in range(0, height, BAND_LINES):
+                    rows = min(BAND_LINES, height - top)
+                    if pending:
+                        parts.append(bytes(pending))
+                        pending.clear()
+                    header = (
+                        data[i : i + 4]
+                        + data[i + 4 : i + 6]
+                        + rows.to_bytes(2, "little")
+                    )
+                    parts.append(
+                        header
+                        + data[body + top * stride : body + (top + rows) * stride]
+                    )
+                i = end
+                continue
+        pending.append(data[i])
+        i += 1
+    if pending:
+        parts.append(bytes(pending))
+    return parts
+
+
 def read_reply(sock, timeout=0.6):
     sock.settimeout(timeout)
     out = b""
@@ -500,7 +535,7 @@ def print_job(
 ):
     """Route one CUPS job body."""
     if is_escpos(data):
-        run_job([data], mac, channel, feed_dots)
+        run_job(split_escpos(data), mac, channel, feed_dots)
         return
     if data.startswith(PDF_MAGIC):
         body = pdf_text(data)

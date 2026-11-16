@@ -1,14 +1,14 @@
 ---
 name: project-single-local-build-job-temporarily
-description: As of 2026-11-13 the user has other work running on the PC, so run nix builds with a single local job (--max-jobs 1); remote builders are still fine — temporary
+description: The 2026-11-13 temporary "--max-jobs 1" single local job constraint was lifted by the user on 2026-11-16 ("stop doing it as max-jobs 1") — stop forcing it on nix builds
 metadata:
   type: project
   origin: opencode
-  modified: 2026-11-13T21:29:28.943Z
+  modified: 2026-11-16T18:35:09.310Z
 ---
 
-Temporary build constraint (stated 2026-11-13): the user has other stuff running on their PC, so future nix builds should use a single local job — `--max-jobs 1`. Remote builders are explicitly still allowed ("builders are fine").
+Build job limit: LIFTED on 2026-11-16. The user said "stop doing it as max-jobs 1", reversing the 2026-11-13 temporary constraint that the assistant add `--max-jobs 1` to nix builds because other work was running on the PC.
 
-**Why:** Competing local builds were starving the rest of the machine.
+**Why:** The user no longer wants builds throttled to a single local job.
 
-**How to apply:** Add `--max-jobs 1` to `nix build`/similar invocations until the user lifts the constraint; do not disable remote builders. Re-check with the user before going back to parallel local jobs.
+**How to apply:** Do not add `--max-jobs 1` to `nix build`/`nix eval` invocations anymore; let Nix use its normal local parallelism. (Remote builders were always allowed.)
