@@ -25,6 +25,7 @@
     "${dirs.modules}/programs/chromium.nix"
     "${dirs.modules}/programs/shell.nix"
     "${dirs.modules}/config/doas.nix"
+    "${dirs.modules}/printers"
   ];
 
   networking.networkmanager.enable = true;
