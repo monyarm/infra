@@ -1,10 +1,10 @@
 ---
-name: reference_dp_l1s_thermal_protocol
-description: Where to research the DP-L1S/C&Co 3128 thermal printer protocol, plus verified 2026-11-16 status-query replies, RFCOMM failure modes, feed/print commands and CUPS device-uri constraints
+name: reference-dp-l1s-thermal-protocol
+description: Where to research the DP-L1S/C&Co 3128 thermal printer protocol, plus verified 2026-11-16 status-query replies, RFCOMM failure modes, feed/print commands, CUPS device-uri constraints and raw-queue backend stdin behaviour
 metadata:
   type: reference
   origin: opencode
-  modified: 2026-11-16T16:54:06.339Z
+  modified: 2026-11-16T17:14:03.934Z
 ---
 
 Where to research the DP-L1S / SwitchOn 4326 / Crafts&Co (C&Co) 3128 thermal receipt printer protocol:
@@ -21,3 +21,4 @@ Verified facts (2026-11-16):
 - Printing is raster-only (GS v 0 bands), so text fonts are drawn client-side with PIL from system font paths; the printer has no font of its own. Head width is 384 dots, so monospace column count must be derived from the chosen font's metrics (`CELL = round(font.getlength("W"))`, `COLUMNS = 384 // CELL`) rather than hardcoded.
 - A form-feed/line-feed `1B 4A 50` (80 dots ≈ 10 mm) is sent before closing the socket to push the last printed line clear of the head; without it the final line sits inside the mechanism.
 - CUPS queues for this printer use a raw queue with a custom `thermal://` device-uri whose netloc is the MAC. `lpadmin` parses the device-uri as `scheme://host[:port]`, so a colon-separated MAC makes it fail with `lpadmin: Bad device-uri "thermal://55:55:09:55:C2:D6"` (verified locally against the same cupsd, exit code 1); `thermal://55-55-09-...` (dashes) is accepted. Any code matching MACs therefore has to fold the dashes back to colons. Raw queues also print a deprecation warning but still work.
+- Raw-queue backend invocation gotcha (cupsd 2.4.19, verified from source): a local raw queue with a single input file gets no filter inserted, so the backend's stdin is `/dev/null` — the spool filename arrives as the last argv entry, with `argv[0]` being the device-uri. A backend that only reads stdin sees empty input; a text job like that still feeds because an empty body still emits `ESC J`. Backends must therefore fall back to the trailing spool-file argument when stdin is empty. CUPS reports such jobs as completed, so `lp` exit 0 does not prove anything printed.

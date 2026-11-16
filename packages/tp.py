@@ -10,6 +10,7 @@ to a direct connection when it is not running.
 """
 
 import argparse
+import contextlib
 import io
 import os
 import re
@@ -560,6 +561,12 @@ def cups(argv, mac, channel):
     rest = [a for a in argv[1:] if a != "--cups"]
     mac, channel = target(rest[0] if rest else "", mac, channel)
     data = sys.stdin.buffer.read()
+    if not data and rest:
+        # cupsd runs a raw single-file job with no filter, so the document
+        # bytes are not on stdin (that is /dev/null); argv[6], the last arg,
+        # is the spool file path instead.
+        with contextlib.suppress(OSError), open(rest[-1], "rb") as spool:
+            data = spool.read()
     try:
         print_job(data, mac, channel)
     except (LowBattery, OSError, subprocess.CalledProcessError) as err:
