@@ -5,10 +5,12 @@
 }:
 {
   home.packages = with pkgs; [
+    book-keeper
     feh
     geeqie
     # Driven by Flatpak.nix's activation script.
     flatpak
+    gemmaker
     nemo
     scrcpy
     snd

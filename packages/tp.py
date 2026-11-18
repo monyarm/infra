@@ -40,6 +40,12 @@ THRESHOLD = 160
 # One big raster is silently dropped by the firmware; feed it bands instead.
 BAND_LINES = 24
 BAND_DELAY = 0.2
+# tallest job the printer buffers before it stops draining the link
+PAGE_LINES = 40
+# the printer stops draining the link for a moment after a job; back-to-back
+# pages reset the connection with ETIMEDOUT unless spaced out
+PAGE_DELAY = 3
+
 # 80 dots clears the head and tears off cleanly; 60 is too tight.
 FEED_DOTS = 80
 
@@ -125,11 +131,36 @@ STATUS_BITS = [
 ]
 
 
-def ascii_fold(text):
+# A private-use codepoint no font ships, so its mask is the .notdef box.
+MISSING_PROBE = "\ue000"
+
+
+def ascii_fold(text, font=None):
+    """Fold to ASCII, but keep non-ASCII the given font can actually draw.
+
+    Without a font, everything above ASCII is dropped: some other font (or a
+    proportional one) would print missing glyphs as solid boxes. Glyphs a
+    monospace font draws at its own advance are one cell wide, so columns and
+    the 384 px band still line up.
+    """
     for src, dst in LATIN_MAP.items():
         text = text.replace(src, dst)
     text = unicodedata.normalize("NFKD", text)
-    return "".join(c for c in text if ord(c) < 128)
+    if font is None:
+        return "".join(c for c in text if ord(c) < 128)
+    missing = bytes(font.getmask(MISSING_PROBE))
+    seen = {}
+    out = []
+    for c in text:
+        if ord(c) < 128:
+            out.append(c)
+            continue
+        ok = seen.get(c)
+        if ok is None:
+            ok = seen[c] = bytes(font.getmask(c)) != missing
+        if ok:
+            out.append(c)
+    return "".join(out)
 
 
 def wrap(text, columns=COLUMNS):
@@ -187,7 +218,7 @@ def text_image(text, center=False, font_name=None, size=FONT_SIZE, trim=True):
     # default font's own advance is 12.05 px at size 20.
     cell = round(font.getlength("W")) if fixed else 0
     columns = WIDTH // cell if fixed else COLUMNS
-    lines = wrap(ascii_fold(text), columns)
+    lines = wrap(ascii_fold(text, font), columns)
     if trim:
         while lines and not lines[0]:
             lines.pop(0)
@@ -505,6 +536,20 @@ def serve(mac, channel, idle=IDLE_TIMEOUT):
             last_used = time.monotonic()
 
 
+def print_pages(images, mac, channel, feed_dots=FEED_DOTS, reset=False):
+    """One print job per page; non-final pages end in an init instead of a
+    feed, which clears the full print buffer without moving the paper."""
+    images = list(images)
+    for index, image in enumerate(images):
+        last = index == len(images) - 1
+        parts = list(bands(image))
+        if not last or reset:
+            parts.append(b"\x1b\x40")
+        run_job(parts, mac, channel, feed_dots if last else 0)
+        if not last:
+            time.sleep(PAGE_DELAY)
+
+
 def print_text(
     text,
     mac,
@@ -514,13 +559,34 @@ def print_text(
     size=FONT_SIZE,
     trim=True,
     feed_dots=FEED_DOTS,
+    reset=False,
 ):
-    image = text_image(text, center, font_name, size, trim)
-    run_job(bands(image), mac, channel, feed_dots)
+    lines = text.splitlines()
+    pages = [lines[i : i + PAGE_LINES] for i in range(0, len(lines), PAGE_LINES)]
+    print_pages(
+        (
+            text_image("\n".join(page), center, font_name, size, trim)
+            for page in pages or [[]]
+        ),
+        mac,
+        channel,
+        feed_dots,
+        reset,
+    )
 
 
 def print_image(img, mac, channel, feed_dots=FEED_DOTS):
-    run_job(bands(image_raster(img)), mac, channel, feed_dots)
+    raster = image_raster(img)
+    step = PAGE_LINES * 24
+    print_pages(
+        (
+            raster.crop((0, y, WIDTH, min(y + step, raster.height)))
+            for y in range(0, raster.height, step)
+        ),
+        mac,
+        channel,
+        feed_dots,
+    )
 
 
 def print_job(
@@ -678,17 +744,34 @@ def cli(argv, mac, channel):
         return print_info(mac, channel)
 
     if args.file in (None, "-"):
-        text = sys.stdin.buffer.read().decode("utf-8", "replace")
-        print_text(
-            text,
-            mac,
-            channel,
-            args.center,
-            args.font,
-            args.size,
-            args.trim,
-            feed_dots,
-        )
+        # stream by page so a long pipe starts printing immediately; the feed
+        # is only sent once, after the last page
+        page = []
+
+        def flush(last):
+            print_text(
+                "\n".join(page),
+                mac,
+                channel,
+                args.center,
+                args.font,
+                args.size,
+                args.trim,
+                feed_dots if last else 0,
+                reset=not last,
+            )
+            page.clear()
+            if not last:
+                time.sleep(PAGE_DELAY)
+
+        for line in sys.stdin.buffer:
+            page.append(line.decode("utf-8", "replace").rstrip("\n"))
+            if len(page) >= PAGE_LINES:
+                flush(False)
+        if page:
+            flush(True)
+        else:
+            flush(True)
         return 0
 
     with open(args.file, "rb") as handle:

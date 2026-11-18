@@ -5,6 +5,11 @@ ttrpg.snd = "https://github.com/BigJk/snd"
 [git]
 ttrpg.nunjucks = "https://github.com/ogonkov/nunjucks#fix_async_extensions_parse"
 
+# Loot generators -- packages/book-keeper.nix and packages/gemmaker.nix.
+ttrpg.book-keeper = "https://github.com/monyarm/Book-Keeper"
+ttrpg.book-keeper-data = "https://github.com/monyarm/Book-Keeper-Data"
+ttrpg.gemmaker = "https://github.com/monyarm/GemMakerDnD"
+
 # Workshop content (packages/snd-workshop.nix). Upstream only tags three of
 # these and all of them are unmaintained, so track main.
 ttrpg.workshop.default-templates = "https://github.com/BigJk/snd-default-templates"
@@ -21,3 +26,5 @@ ttrpg.workshop.sd-mosh = "https://github.com/Elfenspalter/SD_MoSh"
 # frontend/ holds the only package.json; the repo root has none.
 ttrpg.snd = "true;subdir=frontend;forcegitdeps;freshlock"
 ttrpg.nunjucks = "true"
+ttrpg.book-keeper = "true"
+ttrpg.gemmaker = "true"
